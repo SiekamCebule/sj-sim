@@ -10,10 +10,28 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    simulation/ConditionsInfo.cpp \
+    simulation/Hill.cpp \
+    simulation/JumpData.cpp \
+    simulation/JumpSimulator.cpp \
+    simulation/Jumper.cpp \
+    simulation/JumperSkills.cpp \
+    simulation/Wind.cpp \
+    utilities/ClassWithID.cpp \
+    utilities/IDGenerator.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    simulation/ConditionsInfo.h \
+    simulation/Hill.h \
+    simulation/JumpData.h \
+    simulation/JumpSimulator.h \
+    simulation/Jumper.h \
+    simulation/JumperSkills.h \
+    simulation/Wind.h \
+    utilities/ClassWithID.h \
+    utilities/IDGenerator.h
 
 FORMS += \
     mainwindow.ui
