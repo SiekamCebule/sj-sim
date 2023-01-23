@@ -22,7 +22,11 @@ private:
     Competition * competition;
 
 public:
+    //skok
     void simulate();
+    void setupTakeoffEffect();
+
+
     JumpData getJumpData();
 
 
@@ -40,10 +44,19 @@ public:
     {
         JumpEffect();
 
-        uint duration;
+        int duration;
         QVector<QPair<double, double>> effects; // wysokosc, predkosc
-        uint actualIndex;
+        int actualIndex;
+
+
+
+    public:
+        int getDuration() const;
     };
+
+private:
+    QVector<JumpEffect> allEffects;
+    JumpEffect takeoffEffect;
 };
 
 #endif // JUMPSIMULATOR_H
