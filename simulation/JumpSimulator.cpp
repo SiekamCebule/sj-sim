@@ -1,13 +1,73 @@
 #include "JumpSimulator.h"
+#include "../utilities/functions.h"
+#include "JumpMistake.h"
 
 #include <QDebug>
 #include <tuple>
+#include <QRandomGenerator>
 
 JumpSimulator::JumpSimulator(Jumper *jumper, ConditionsInfo *conditionsInfo, Hill *hill, Competition *competition) : jumper(jumper),
     conditionsInfo(conditionsInfo),
     hill(hill),
     competition(competition)
-{}
+{
+    distance = 0;
+    height = 0;
+}
+
+void JumpSimulator::simulateAll()
+{
+    simulateInrun();
+    simulateTakeoff();
+}
+
+void JumpSimulator::simulateInrun()
+{
+    //predkosc najazdowa
+    speed = hill->getBaseSpeed() + (conditionsInfo->getGate() * hill->getSpeedForGate());
+    if(jumperCharacteristicsContains("very-slow-inrun-speed"))
+        speed -= hill->getBaseSpeed() / 115;
+    else if(jumperCharacteristicsContains("slow-inrun-speed"))
+        speed -= hill->getBaseSpeed() / 170;
+    else if(jumperCharacteristicsContains("little-slow-inrun-speed"))
+        speed -= hill->getBaseSpeed() / 340;
+    else if(jumperCharacteristicsContains("little-fast-inrun-speed"))
+        speed += hill->getBaseSpeed() / 340;
+    else if(jumperCharacteristicsContains("fast-inrun-speed"))
+        speed += hill->getBaseSpeed() / 170;
+    else if(jumperCharacteristicsContains("very-fast-inrun-speed"))
+        speed += hill->getBaseSpeed() / 115;
+
+    speed += randomDouble(-hill->getBaseSpeed() / 450, hill->getBaseSpeed() / 450);
+
+    qDebug()<<"Prędkość najazdowa skoczka: "<<speed<<" km/h";
+}
+
+void JumpSimulator::simulateTakeoff()
+{
+    //wybicie trwa 8% punktu K skoczni z małym mnożnikiem od prędkości
+    double takeoffDuration = (hill->getKPoint() * 0.08) * (0.95 + speed / 850);
+    qDebug()<<"Czas trwania wybicia: "<<QString::number(takeoffDuration, 'f', 1)<<" metrów";
+    distance += takeoffDuration;
+    height += hill->getTableHeight() * 0.96 + (double(jumper->getJumperSkills()->getTakeoffPower()) / 28 + double(jumper->getJumperSkills()->getForm()) / 61) * (speed / 240);
+    qDebug()<<"Wysokość skoczka po wyjściu z progu: "<<height<<" metrów";
+
+    JumpMistake m;
+    m.generateJumpMistake(this, JumpMistake::TakeoffMistake);
+
+
+    //błędy na progu
+    int possibleMistakes = takeoffDuration / 1.75;
+    for(int i=0; i<possibleMistakes; i++)
+    {
+        JumpMistake mistake = JumpMistake::generateJumpMistake(this, JumpMistake::MistakeType::TakeoffMistake);
+        if(mistake.getIsOccurred())
+        {
+            //skutek błędu
+        }
+    }
+
+}
 
 Competition *JumpSimulator::getCompetition() const
 {
@@ -17,6 +77,16 @@ Competition *JumpSimulator::getCompetition() const
 void JumpSimulator::setCompetition(Competition *newCompetition)
 {
     competition = newCompetition;
+}
+
+double JumpSimulator::getDistance() const
+{
+    return distance;
+}
+
+bool JumpSimulator::jumperCharacteristicsContains(QString characteristics)
+{
+    return jumper->getJumperSkills()->getCharacteristics().contains(characteristics);
 }
 
 JumpData JumpSimulator::getJumpData()
@@ -53,122 +123,4 @@ Jumper *JumpSimulator::getJumper() const
 void JumpSimulator::setJumper(Jumper *newJumper)
 {
     jumper = newJumper;
-}
-
-void JumpSimulator::simulate()
-{
-    double height = 0; //max 100
-    double speed = 0; //max 100
-    double distance = 1;
-
-    //TAKEOFF
-    setupTakeoffEffect();
-
-
-
-
-
-    //PĘTLA KAŻDEGO METRA
-
-}
-
-void JumpSimulator::setupTakeoffEffect()
-{
-    takeoffEffect.duration = 10;
-
-    double takeoffHeightSum = 52;
-    double takeoffSpeedSum = 48.5;
-
-    QVector<QPair<double, double>> effectModels; //Jest tam 10 par procentowych dla 10-metrowego efektu skoku (8% ze skoczni K120 = 9.6 = 10)
-    effectModels.push_back(QPair<double, double>(13, 7)); //procenty, procenty
-    effectModels.push_back(QPair<double, double>(12.4, 7.4)); //2
-    effectModels.push_back(QPair<double, double>(12, 8)); //3
-    effectModels.push_back(QPair<double, double>(11.4, 8.7)); //4
-    effectModels.push_back(QPair<double, double>(10.5, 9.1)); //5
-
-    effectModels.push_back(QPair<double, double>(9.8, 10)); //6
-    effectModels.push_back(QPair<double, double>(9, 11)); //7
-    effectModels.push_back(QPair<double, double>(8, 12)); //8
-    effectModels.push_back(QPair<double, double>(7.1, 13)); //9
-    effectModels.push_back(QPair<double, double>(6.8, 13.8)); //10
-
-    if(takeoffEffect.getDuration() == 10)
-        takeoffEffect.effects = effectModels;
-    else{
-        QVector<QPair<double,double>> copyModels = effectModels;
-        if(takeoffEffect.getDuration() < 10) //Dla skoczni mniejszych niż około K120 (dokładnie max K119) --> trzeba scalić te modele w ilość równą takeoffEffect.getDuration()
-        {
-            while(copyModels.length() > takeoffEffect.getDuration())
-            {
-                double heightToDivideSum = copyModels[copyModels.length() - 1].first;
-                double speedToDivideSum = copyModels[copyModels.length() - 1].second;
-                copyModels.erase(copyModels.constEnd() - 1);
-                double heightToDivideOnce = heightToDivideSum / copyModels.length();
-                double speedToDivideOnce = speedToDivideSum / copyModels.length();
-
-                for(auto & model : copyModels)
-                {
-                    model.first += heightToDivideOnce;
-                    model.second += speedToDivideOnce;
-                }
-            }
-            takeoffEffect.effects = copyModels;
-        }
-        else if(takeoffEffect.getDuration() > 10)//dla skoczni wiekszych niz około K120 (dokładnie od K126) --> trzeba rozszerzy te modele w ilość równą takeoffEffect.getDuration()
-        {
-            QVector<std::tuple<bool, double, double>> pairsToInsert; // parzysta, wysokosc, predkosc
-            for(int i=0; i<takeoffEffect.getDuration() - 10; i++)
-            {
-                double newHeight = 0;
-                double newSpeed = 0;
-
-                if(copyModels.length() % 2 == 0) // jest parzysta
-                {
-                    newHeight = (copyModels[copyModels.length() / 2 - 1].first + copyModels[copyModels.length() / 2].first) / 2; //Dwie wartosci w połowie
-                    newSpeed = (copyModels[copyModels.length() / 2 - 1].second + copyModels[copyModels.length() / 2].second) / 2; //Dwie wartosci w połowie
-
-                    pairsToInsert.push_back(std::tuple<bool, double, double>(true, newHeight, newSpeed));
-                }
-                else
-                {
-                    newHeight = (copyModels[copyModels.length() / 2].first - copyModels[copyModels.length() / 2 + 1].first) / 2; //Dwie wartosci w połowie
-                    newSpeed = (copyModels[copyModels.length() / 2].second - copyModels[copyModels.length() / 2 + 1].second) / 2; //Dwie wartosci w połowie
-
-                    pairsToInsert.push_back(std::tuple<bool, double, double>(false, newHeight, newSpeed));
-                }
-                for(auto & model : copyModels)
-                {
-                    model.first -= newHeight / copyModels.length();
-                    model.second -= newSpeed / copyModels.length();
-                }
-            }
-            for(auto & pairs : pairsToInsert)
-            {
-                if(std::get<0>(pairs) == true)
-                    copyModels.insert(copyModels.constBegin() + copyModels.length() / 2 - 1, QPair<double, double>(std::get<1>(pairs), std::get<2>(pairs)));
-                else
-                    copyModels.insert(copyModels.constBegin() + copyModels.length() / 2, QPair<double, double>(std::get<1>(pairs), std::get<2>(pairs)));
-            }
-        }
-        takeoffEffect.effects = copyModels;
-    }
-    qDebug()<<takeoffEffect.effects.length();
-    for(const auto & model : takeoffEffect.effects)
-    {
-        qDebug()<<model.first<<", "<<model.second;
-    }
-
-
-    allEffects.push_back(takeoffEffect);
-}
-
-JumpSimulator::JumpEffect::JumpEffect()
-{
-    actualIndex = 0;
-    duration = 0;
-}
-
-int JumpSimulator::JumpEffect::getDuration() const
-{
-    return duration;
 }

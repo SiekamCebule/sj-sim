@@ -1,4 +1,4 @@
-#ifndef JUMPSIMULATOR_H
+﻿#ifndef JUMPSIMULATOR_H
 #define JUMPSIMULATOR_H
 
 #include <QList>
@@ -23,10 +23,9 @@ private:
 
 public:
     //skok
-    void simulate();
-    void setupTakeoffEffect();
-
-
+    void simulateAll();
+    void simulateInrun();
+    void simulateTakeoff();
     JumpData getJumpData();
 
 
@@ -39,24 +38,19 @@ public:
     Competition *getCompetition() const;
     void setCompetition(Competition *newCompetition);
 
-
-    struct JumpEffect
-    {
-        JumpEffect();
-
-        int duration;
-        QVector<QPair<double, double>> effects; // wysokosc, predkosc
-        int actualIndex;
-
-
-
-    public:
-        int getDuration() const;
-    };
+    double getDistance() const;
 
 private:
-    QVector<JumpEffect> allEffects;
-    JumpEffect takeoffEffect;
+
+    // parametry symulacji
+    double distance;
+    double speed;
+    double height; //w metrach
+
+
+
+    bool jumperCharacteristicsContains(QString characteristics);
+
 };
 
 #endif // JUMPSIMULATOR_H

@@ -23,3 +23,22 @@ void Wind::setValue(double newValue)
 Wind::Wind(short direction, double value) : direction(direction),
     value(value)
 {}
+
+Wind::Wind(double value)
+{
+    if(value == 0)
+    {
+        direction = Null;
+        this->value = 0;
+    }
+    else if(value > 0)
+    {
+        direction == Front;
+        this->value = value;
+    }
+    else //if(value < 0)
+    {
+        direction = Back;
+        this->value = !value;
+    }
+}

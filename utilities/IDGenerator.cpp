@@ -34,6 +34,12 @@ bool IDGenerator::removeID(ulong ID)
     }
 }
 
+void IDGenerator::addExistingID(ulong ID)
+{
+    if(hasValue(ID) == false)
+        values.insert(ID);
+}
+
 ulong IDGenerator::getLastID() const
 {
     return lastID;

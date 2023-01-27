@@ -12,6 +12,7 @@ public:
 
     ulong generateNewID();
     bool removeID(ulong ID);
+    void addExistingID(ulong ID);
     ulong getLastID() const;
 
 private:

@@ -11,6 +11,7 @@ public:
     ulong regenerateID();
     void resetID();
     ulong getID() const;
+    void setID(ulong id);
 
 protected:
     ulong ID;

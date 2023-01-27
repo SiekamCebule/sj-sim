@@ -1,12 +1,15 @@
 #ifndef WIND_H
 #define WIND_H
 
+#include "../utilities/ClassWithID.h"
 
-class Wind
+
+class Wind : public ClassWithID
 {
 public:
 
     Wind(short direction = Null, double value = 0);
+    Wind(double value);
     enum Direction{
         Null,
         Front,

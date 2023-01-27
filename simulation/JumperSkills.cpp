@@ -1,15 +1,36 @@
 #include "JumperSkills.h"
 #include "Jumper.h"
 
-JumperSkills::JumperSkills(short takeoffPower, short takeoffTechnique, short flightStyle, short flightTechnique, short landingStyle, const QSet<QString> &characteristics, Jumper * jumper) : takeoffPower(takeoffPower),
+JumperSkills::JumperSkills(short takeoffPower, short takeoffTechnique, short flightStyle, short flightTechnique, short form, short landingStyle, const QSet<QString> &characteristics, Jumper * jumper) : takeoffPower(takeoffPower),
     takeoffTechnique(takeoffTechnique),
     flightStyle(flightStyle),
     flightTechnique(flightTechnique),
+    form(form),
     landingStyle(landingStyle),
     characteristics(characteristics)
 {
     if(jumper != nullptr)
         jumperID = jumper->getID();
+}
+
+void JumperSkills::insertCharacteristic(const QString &text)
+{
+    characteristics.insert(text);
+}
+
+void JumperSkills::removeCharacteristic(const QString &text)
+{
+    characteristics.remove(text);
+}
+
+short JumperSkills::getForm() const
+{
+    return form;
+}
+
+void JumperSkills::setForm(short newForm)
+{
+    form = newForm;
 }
 
 void JumperSkills::setJumperID(ulong ID)

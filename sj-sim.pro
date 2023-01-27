@@ -14,24 +14,30 @@ SOURCES += \
     simulation/ConditionsInfo.cpp \
     simulation/Hill.cpp \
     simulation/JumpData.cpp \
+    simulation/JumpMistake.cpp \
     simulation/JumpSimulator.cpp \
     simulation/Jumper.cpp \
     simulation/JumperSkills.cpp \
     simulation/Wind.cpp \
     utilities/ClassWithID.cpp \
-    utilities/IDGenerator.cpp
+    utilities/IDGenerator.cpp \
+    utilities/WindsGenerator.cpp \
+    utilities/functions.cpp
 
 HEADERS += \
     mainwindow.h \
     simulation/ConditionsInfo.h \
     simulation/Hill.h \
     simulation/JumpData.h \
+    simulation/JumpMistake.h \
     simulation/JumpSimulator.h \
     simulation/Jumper.h \
     simulation/JumperSkills.h \
     simulation/Wind.h \
     utilities/ClassWithID.h \
-    utilities/IDGenerator.h
+    utilities/IDGenerator.h \
+    utilities/WindsGenerator.h \
+    utilities/functions.h
 
 FORMS += \
     mainwindow.ui

@@ -27,3 +27,12 @@ ulong ClassWithID::getID() const
 {
     return ID;
 }
+
+void ClassWithID::setID(ulong id)
+{
+    if(globalIDGenerator.hasValue(id))
+        globalIDGenerator.removeID(id);
+
+    globalIDGenerator.addExistingID(id);
+    setID(id);
+}
