@@ -56,6 +56,11 @@ void Hill::removeCharacteristic(const QString &text)
     characteristics.remove(text);
 }
 
+double Hill::getLandingHillHeight(double distance)
+{
+
+}
+
 QString Hill::getName() const
 {
     return name;

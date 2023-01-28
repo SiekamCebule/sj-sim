@@ -27,12 +27,13 @@ private:
     double speedForGate; //predkosc dodawana/odejmowana za każdą belkę.
 
 
-
     QSet<QString> characteristics;
 
 public:
     void insertCharacteristic(const QString & text);
     void removeCharacteristic(const QString & text);
+
+    double getLandingHillHeight(double distance);
 
     QString getName() const;
     void setName(const QString &newName);

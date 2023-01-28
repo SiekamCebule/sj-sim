@@ -26,8 +26,12 @@ public:
     void simulateAll();
     void simulateInrun();
     void simulateTakeoff();
+    void setAerodynamicPositionAfterTakeoff();
+    void simulateFlight();
+
     JumpData getJumpData();
 
+    bool jumperCharacteristicsContains(QString characteristics);
 
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
@@ -39,18 +43,23 @@ public:
     void setCompetition(Competition *newCompetition);
 
     double getDistance() const;
+    double getSpeed() const;
+    double getHeight() const;
+    short getAerodynamicPosition() const;
 
 private:
-
     // parametry symulacji
-    double distance;
-    double speed;
-    double height; //w metrach
+    double distance; // w metrach
+    double speed; // w km/h
+    double height; // w metrach
+    short aerodynamicPosition; // od 1 do 50
 
+    double takeoffMistakeHeightEffect;
+    double takeoffMistakeSpeedEffect;
+    short takeoffMistakeAerodynamicPositionEffect;
 
-
-    bool jumperCharacteristicsContains(QString characteristics);
-
+    double heightAboveLandingHill; // Wysokość nad zeskokiem. Np zmniejsza się nad bulą, spowrotem zwiększa się aż do punktu K gdzie powoli się zmniejsza.
+    bool isLanding;
 };
 
 #endif // JUMPSIMULATOR_H
