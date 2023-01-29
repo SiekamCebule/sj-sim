@@ -2,13 +2,14 @@
 #define HILL_H
 
 #include "../utilities/ClassWithID.h"
+#include "Characteristic.h"
 
 #include <QString>
 
 class Hill : public ClassWithID
 {
 public:
-    Hill(const QString &name = "", const QString &country = "", int KPoint = 0, int HSPoint = 0, double pointsForMeter = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double tableHeight = 0, double baseSpeed = 0, double speedForGate = 0, const QSet<QString> &characteristics = QSet<QString>());
+    Hill(const QString &name = "", const QString &country = "", int KPoint = 0, int HSPoint = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double tableHeight = 0, double baseSpeed = 0, double speedForGate = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>());
 
 private:
     QString name, country;
@@ -22,18 +23,24 @@ private:
     double pointsForGate;
 
     //symulacja
-    double tableHeight; //wysokość progu
-    double baseSpeed; //bazowa prędkość na najniższej belce
-    double speedForGate; //predkosc dodawana/odejmowana za każdą belkę.
+    double tableHeight; // wysokość progu
+    double baseSpeed; // bazowa prędkość na najniższej belce
+    double speedForGate; // predkosc dodawana/odejmowana za każdą belkę.
 
 
-    QSet<QString> characteristics;
+    QSet<Characteristic> characteristics; // Uzupełnia wiele cech skoczni których nie ma w parametrach
 
 public:
-    void insertCharacteristic(const QString & text);
-    void removeCharacteristic(const QString & text);
+    void insertCharacteristic(const Characteristic & characteristic);
+    void insertCharacteristic(short level, const QString & type);
+    void removeCharacteristic(Characteristic & characteristic);
+    void removeCharacteristic(const QString & type);
 
-    double getLandingHillHeight(double distance);
+    short getLevelOfCharacteristic(const QString &characteristicType);
+
+    double getRelativeHeightSubstractFromHillProfile(double distance);
+
+    void setupPointsForMeter();
 
     QString getName() const;
     void setName(const QString &newName);
@@ -54,8 +61,8 @@ public:
     void calculatePointsForBackWind();
     double getPointsForGate() const;
     void setPointsForGate(double newPointsForGate);
-    QSet<QString> getCharacteristics() const;
-    void setCharacteristics(const QSet<QString> &newCharacteristics);
+    QSet<Characteristic> getCharacteristics() const;
+    void setCharacteristics(const QSet<Characteristic> &newCharacteristics);
     double getBaseSpeed() const;
     void setBaseSpeed(double newBaseSpeed);
     double getSpeedForGate() const;

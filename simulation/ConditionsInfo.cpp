@@ -9,7 +9,7 @@ ConditionsInfo::ConditionsInfo(int gate, double windSensorsFaulty, const QVector
     gate(gate),
     windSensorsFaulty(windSensorsFaulty)
 {
-    this->winds = generateNewWinds();
+    this->winds = generateNewWinds(0);
 }
 
 Wind ConditionsInfo::getWindSensor(const Wind &wind)
@@ -19,7 +19,7 @@ Wind ConditionsInfo::getWindSensor(const Wind &wind)
     return sensor;
 }
 
-QVector<Wind> ConditionsInfo::generateNewWinds()
+QVector<Wind> ConditionsInfo::generateNewWinds(double flatteningStart)
 {
     QVector<Wind> winds;
     winds.push_back(Wind(Wind::Null, 0));

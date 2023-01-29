@@ -1,10 +1,10 @@
 #include "Hill.h"
 
-Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint, double pointsForMeter, double pointsForFrontWind, double pointsForGate, double tableHeight, double baseSpeed, double speedForGate, const QSet<QString> &characteristics) : name(name),
+
+Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint, double pointsForFrontWind, double pointsForGate, double tableHeight, double baseSpeed, double speedForGate, const QSet<Characteristic> &characteristics) : name(name),
     country(country),
     KPoint(KPoint),
     HSPoint(HSPoint),
-    pointsForMeter(pointsForMeter),
     pointsForFrontWind(pointsForFrontWind),
     pointsForGate(pointsForGate),
     tableHeight(tableHeight),
@@ -12,8 +12,41 @@ Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint,
     speedForGate(speedForGate),
     characteristics(characteristics)
 {
-    pointsForBackWind = 0;
-    recordDistance = 0;
+
+}
+
+void Hill::insertCharacteristic(const Characteristic &characteristic)
+{
+    characteristics.insert(characteristic);
+}
+
+void Hill::insertCharacteristic(short level, const QString &type)
+{
+    characteristics.insert(Characteristic(level, type));
+}
+
+void Hill::removeCharacteristic(Characteristic &characteristic)
+{
+    characteristics.remove(characteristic);
+}
+
+void Hill::removeCharacteristic(const QString &type)
+{
+    characteristics.remove(Characteristic(0, type));
+}
+
+short Hill::getLevelOfCharacteristic(const QString &characteristicType)
+{
+    for(QSet<Characteristic>::iterator it = characteristics.begin(); it != characteristics.end(); it++)
+    {
+        if(it->getType() == characteristicType)
+            return it->getLevel();
+    }
+}
+
+void Hill::setPointsForMeter(double newPointsForMeter)
+{
+    pointsForMeter = newPointsForMeter;
 }
 
 double Hill::getTableHeight() const
@@ -46,19 +79,36 @@ void Hill::setBaseSpeed(double newBaseSpeed)
     baseSpeed = newBaseSpeed;
 }
 
-void Hill::insertCharacteristic(const QString &text)
+double Hill::getRelativeHeightSubstractFromHillProfile(double distance)
 {
-    characteristics.insert(text);
+    double knollLength = 0.34 * KPoint; // długość buli
 }
 
-void Hill::removeCharacteristic(const QString &text)
+void Hill::setupPointsForMeter()
 {
-    characteristics.remove(text);
-}
-
-double Hill::getLandingHillHeight(double distance)
-{
-
+    if(KPoint <= 24)
+        pointsForMeter = 4.8;
+    else if(KPoint <= 29)
+         pointsForMeter = 4.4;
+    else if(KPoint <= 34)
+         pointsForMeter = 4.0;
+    else if(KPoint <= 39)
+         pointsForMeter = 3.6;
+    else if(KPoint <= 49)
+         pointsForMeter = 3.2;
+    else if(KPoint <= 59)
+         pointsForMeter = 2.8;
+    else if(KPoint <= 69)
+         pointsForMeter = 2.4;
+    else if(KPoint <= 79)
+         pointsForMeter = 2.2;
+    else if(KPoint <= 99)
+         pointsForMeter = 2.0;
+    else if(KPoint <= 169)
+         pointsForMeter = 1.8;
+    else if(KPoint >= 170)
+         pointsForMeter = 1.2;
+    else pointsForMeter = 0;
 }
 
 QString Hill::getName() const
@@ -116,11 +166,6 @@ double Hill::getPointsForMeter() const
     return pointsForMeter;
 }
 
-void Hill::setPointsForMeter(double newPointsForMeter)
-{
-    pointsForMeter = newPointsForMeter;
-}
-
 double Hill::getPointsForBackWind() const
 {
     return pointsForBackWind;
@@ -146,12 +191,12 @@ void Hill::setPointsForGate(double newPointsForGate)
     pointsForGate = newPointsForGate;
 }
 
-QSet<QString> Hill::getCharacteristics() const
+QSet<Characteristic> Hill::getCharacteristics() const
 {
     return characteristics;
 }
 
-void Hill::setCharacteristics(const QSet<QString> &newCharacteristics)
+void Hill::setCharacteristics(const QSet<Characteristic> &newCharacteristics)
 {
     characteristics = newCharacteristics;
 }

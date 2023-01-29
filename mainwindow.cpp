@@ -6,6 +6,7 @@
 #include "simulation/JumperSkills.h"
 #include "simulation/ConditionsInfo.h"
 #include "simulation/JumpSimulator.h"
+#include "simulation/Characteristic.h"
 #include "simulation/Hill.h"
 
 #include <QDebug>
@@ -19,12 +20,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Hill * hill = new Hill("Wisła", "POL", 120, 134, 0, 0, 0, 3.0, 84.8, 0.23);
+    Hill * hill = new Hill("Wisła", "POL", 120, 134, 0, 0, 3.0, 84.8, 0.23);
+    hill->setupPointsForMeter();
     JumpSimulator simulator;
-    Jumper * jumper = new Jumper("Kamil", "Stoch", "POL", new JumperSkills(36, 42, 2, 44, 33, 14, QSet<QString>(), nullptr), 0);
-    jumper->getJumperSkills()->insertCharacteristic("slow-inrun-speed");
-    //jumper->getJumperSkills()->insertCharacteristic("high-takeoff");
-
+    Jumper * jumper = new Jumper("Kamil", "Stoch", "POL", new JumperSkills(36, 42, 2, 44, 33, 14, QSet<Characteristic>(), nullptr), 0);
+    jumper->getJumperSkills()->insertCharacteristic(Characteristic(0, "inrun-speed"));
     simulator.setConditionsInfo(new ConditionsInfo(13));
     simulator.setHill(hill);
     simulator.setJumper(jumper);

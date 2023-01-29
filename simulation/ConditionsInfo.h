@@ -31,7 +31,7 @@ private:
     double windSensorsFaulty;
 
 public:
-    QVector<Wind> generateNewWinds();
+    QVector<Wind> generateNewWinds(double flatteningStart);
     const Wind & getWindForActualDistance(int distance, Hill * hill);
     Wind getAveragedWind();
     Wind getWindSensor(const Wind & wind);

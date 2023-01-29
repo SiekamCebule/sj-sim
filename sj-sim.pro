@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    simulation/Characteristic.cpp \
     simulation/ConditionsInfo.cpp \
     simulation/Hill.cpp \
     simulation/JumpData.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
     simulation/JumpSimulator.cpp \
     simulation/Jumper.cpp \
     simulation/JumperSkills.cpp \
+    simulation/SimulationGlobals.cpp \
     simulation/Wind.cpp \
     utilities/ClassWithID.cpp \
     utilities/IDGenerator.cpp \
@@ -26,6 +28,7 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
+    simulation/Characteristic.h \
     simulation/ConditionsInfo.h \
     simulation/Hill.h \
     simulation/JumpData.h \
@@ -33,6 +36,7 @@ HEADERS += \
     simulation/JumpSimulator.h \
     simulation/Jumper.h \
     simulation/JumperSkills.h \
+    simulation/SimulationGlobals.h \
     simulation/Wind.h \
     utilities/ClassWithID.h \
     utilities/IDGenerator.h \

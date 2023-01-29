@@ -1,7 +1,7 @@
 #include "JumperSkills.h"
 #include "Jumper.h"
 
-JumperSkills::JumperSkills(short takeoffPower, short takeoffTechnique, short flightStyle, short flightTechnique, short form, short landingStyle, const QSet<QString> &characteristics, Jumper * jumper) : takeoffPower(takeoffPower),
+JumperSkills::JumperSkills(short takeoffPower, short takeoffTechnique, short flightStyle, short flightTechnique, short form, short landingStyle, const QSet<Characteristic> &characteristics, Jumper * jumper) : takeoffPower(takeoffPower),
     takeoffTechnique(takeoffTechnique),
     flightStyle(flightStyle),
     flightTechnique(flightTechnique),
@@ -13,14 +13,33 @@ JumperSkills::JumperSkills(short takeoffPower, short takeoffTechnique, short fli
         jumperID = jumper->getID();
 }
 
-void JumperSkills::insertCharacteristic(const QString &text)
+void JumperSkills::insertCharacteristic(const Characteristic &characteristic)
 {
-    characteristics.insert(text);
+    characteristics.insert(characteristic);
 }
 
-void JumperSkills::removeCharacteristic(const QString &text)
+void JumperSkills::insertCharacteristic(short level, const QString &type)
 {
-    characteristics.remove(text);
+    characteristics.insert(Characteristic(level, type));
+}
+
+void JumperSkills::removeCharacteristic(const Characteristic &characteristic)
+{
+    characteristics.remove(characteristic);
+}
+
+void JumperSkills::removeCharacteristic(const QString &type)
+{
+    characteristics.remove(Characteristic(0, type));
+}
+
+short JumperSkills::getLevelOfCharacteristic(const QString &characteristicType)
+{
+    for(QSet<Characteristic>::iterator it = characteristics.begin(); it != characteristics.end(); it++)
+    {
+        if(it->getType() == characteristicType)
+            return it->getLevel();
+    }
 }
 
 short JumperSkills::getForm() const
@@ -88,12 +107,12 @@ void JumperSkills::setLandingStyle(short newLandingStyle)
     landingStyle = newLandingStyle;
 }
 
-QSet<QString> JumperSkills::getCharacteristics() const
+QSet<Characteristic> JumperSkills::getCharacteristics() const
 {
     return characteristics;
 }
 
-void JumperSkills::setCharacteristics(const QSet<QString> &newCharacteristics)
+void JumperSkills::setCharacteristics(const QSet<Characteristic> &newCharacteristics)
 {
     characteristics = newCharacteristics;
 }

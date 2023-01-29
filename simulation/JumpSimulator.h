@@ -27,7 +27,7 @@ public:
 
     JumpData getJumpData();
 
-    bool jumperCharacteristicsContains(QString characteristics);
+    bool jumperCharacteristicsContains(const Characteristic & characteristics);
 
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
@@ -40,8 +40,8 @@ public:
 
     double getDistance() const;
     double getSpeed() const;
-    double getHeight() const;
     short getAerodynamicPosition() const;
+    double getRelativeHeight() const;
 
 private:
     //skok
@@ -55,7 +55,7 @@ private:
 
     double distance; // w metrach
     double speed; // w km/h
-    double height; // w metrach
+    double relativeHeight; // wysokość skoczka nad zeskokiem (Ciągle zwiększa się w zależności od profilu zeskoku)
     short aerodynamicPosition; // od 1 do 50
 
     double takeoffMistakeHeightEffect;
