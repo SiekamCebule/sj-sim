@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     simulator.setConditionsInfo(new ConditionsInfo(13));
     simulator.setHill(hill);
     simulator.setJumper(jumper);
-    simulator.simulateAll();
+    simulator.simulateJump();
 
     delete hill;
     delete simulator.getJumper();

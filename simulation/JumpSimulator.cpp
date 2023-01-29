@@ -11,6 +11,7 @@ JumpSimulator::JumpSimulator(Jumper *jumper, ConditionsInfo *conditionsInfo, Hil
     hill(hill),
     competition(competition)
 {
+    takeoffDuration;
     distance = 0;
     height = 0;
     speed = 0;
@@ -22,7 +23,7 @@ JumpSimulator::JumpSimulator(Jumper *jumper, ConditionsInfo *conditionsInfo, Hil
     isLanding = false;
 }
 
-void JumpSimulator::simulateAll()
+void JumpSimulator::simulateJump()
 {
     simulateInrun();
     simulateTakeoff();
@@ -55,7 +56,7 @@ void JumpSimulator::simulateInrun()
 void JumpSimulator::simulateTakeoff()
 {
     //wybicie trwa 6% punktu K skoczni z małym mnożnikiem od prędkości
-    double takeoffDuration = (hill->getKPoint() * 0.06) * (0.95 + speed / 850);
+    takeoffDuration = (hill->getKPoint() * 0.06) * (0.95 + speed / 850);
     //qDebug()<<"Czas trwania wybicia: "<<QString::number(takeoffDuration, 'f', 1)<<" metrów";
     distance += takeoffDuration;
     height += hill->getTableHeight() * 0.96 + (double(jumper->getJumperSkills()->getTakeoffPower()) / 28 + double(jumper->getJumperSkills()->getForm()) / 61) * (speed / 240);
@@ -89,15 +90,24 @@ void JumpSimulator::setAerodynamicPositionAfterTakeoff()
 
 void JumpSimulator::simulateFlight()
 {
-    isLanding = true; //tymczasowo
+    qDebug()<<"Prędkość na "<<QString::number(takeoffDuration, 'f', 1)<<"metrze (wybicie): "<<speed<<", wysokość: "<<height;
     int whichIteration = 1;
+    distance += takeoffDuration;
     while(isLanding == false)
     {
-        speed += (aerodynamicPosition - 27) / 101;
-        aerodynamicPosition += 0;
-        distance += 0;
+        speed += (double(aerodynamicPosition) - 28.5) / 180; // zmiana prędkości przez pozycję aerodynamiczną
+        aerodynamicPosition += 0; // Zmiana pozycji aerodynamicznej
+        height += 0;
+
+        double distanceChange = (speed - 7) / 73;
+        if(distanceChange < 0.04) distanceChange = 0.04;
+        distance += distanceChange; // Zmiana odległości (zawsze przynajmniej 0.04 metra)
+
+        qDebug()<<"Prędkość na "<<QString::number(distance, 'f', 1)<<" metrze: "<<speed<<"km/h";
+
 
         whichIteration++;
+        if(whichIteration == 90) isLanding = true;
     }
 }
 

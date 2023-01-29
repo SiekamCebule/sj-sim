@@ -23,11 +23,7 @@ private:
 
 public:
     //skok
-    void simulateAll();
-    void simulateInrun();
-    void simulateTakeoff();
-    void setAerodynamicPositionAfterTakeoff();
-    void simulateFlight();
+    void simulateJump();
 
     JumpData getJumpData();
 
@@ -48,7 +44,15 @@ public:
     short getAerodynamicPosition() const;
 
 private:
+    //skok
+    void simulateInrun();
+    void simulateTakeoff();
+    void setAerodynamicPositionAfterTakeoff();
+    void simulateFlight();
+
     // parametry symulacji
+    double takeoffDuration;
+
     double distance; // w metrach
     double speed; // w km/h
     double height; // w metrach
