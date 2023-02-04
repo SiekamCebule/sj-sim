@@ -24,6 +24,7 @@ private:
 public:
     //skok
     void simulateJump();
+    void resetTemporaryParameters();
 
     JumpData getJumpData();
 

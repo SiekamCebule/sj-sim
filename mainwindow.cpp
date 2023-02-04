@@ -20,15 +20,22 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Hill * hill = new Hill("Wisła", "POL", 120, 134, 0, 0, 3.0, 84.8, 0.23);
+    Hill * hill = new Hill("Wisła", "POL", 120, 134, 0, 0, 3.0, 85, 0.55, 103);
     hill->setupPointsForMeter();
-    JumpSimulator simulator;
-    Jumper * jumper = new Jumper("Kamil", "Stoch", "POL", new JumperSkills(36, 42, 2, 44, 33, 14, QSet<Characteristic>(), nullptr), 0);
+    JumpSimulator simulator;  
+    Jumper * jumper = new Jumper("Markus", "Eisenbichler", "GER", new JumperSkills(37, 41, 2, 45, 38, 14, QSet<Characteristic>(), nullptr), 0);
     jumper->getJumperSkills()->insertCharacteristic(Characteristic(0, "inrun-speed"));
-    simulator.setConditionsInfo(new ConditionsInfo(13));
+    simulator.setConditionsInfo(new ConditionsInfo(10));
     simulator.setHill(hill);
     simulator.setJumper(jumper);
     simulator.simulateJump();
+
+    /*for(int i=0; i<5; i++){
+        qDebug()<<"ZAWODNIK: "<<jumper->getNameAndSurname();
+    simulator.simulateJump();
+    simulator.resetTemporaryParameters();
+    qDebug()<<"\n";
+    }*/
 
     delete hill;
     delete simulator.getJumper();
@@ -36,22 +43,6 @@ MainWindow::MainWindow(QWidget *parent)
     delete simulator.getConditionsInfo();
 
 }
-
-//SIŁA WYBICIA ZWIEKSZONA O 12
-// K200 9 metrow wiecej
-// K120  5 metrow wiecej
-// K95, 5 metrow wiecej
-
-//TECHNIKA WYBICIA ZWIEKSZONA O 12
-// K200 5 metrow, 4 metry wiecej
-// K120 3 metry, 3 metry wiecej
-// K95 3 metry, 3 metry wiecej
-
-//TECHNIKA LOTU ZWIEKSZONA O 12
-// K200 5 metrow
-// K120 5 metry
-// K95 4 metry
-
 
 
 MainWindow::~MainWindow()

@@ -24,6 +24,7 @@ public:
     void setName(const QString &newName);
     QString getSurname() const;
     void setSurname(const QString &newSurname);
+    QString getNameAndSurname() const;
     QString getCountryCode() const;
     void setCountryCode(const QString &newCountryCode);
     JumperSkills *getJumperSkills() const;

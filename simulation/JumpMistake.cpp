@@ -166,9 +166,9 @@ double JumpMistake::generateJumpMistakeEffect(JumpSimulator * const simulator, J
         case TakeoffMistake:
             switch(mistake->getExactType()){
             case TakeoffMistakeType::TooEarlyTakeoff:
-                return (double(hill->getTableHeight()) / 41 + randomDouble(-0.01, 0.01)) * double(mistake->getHarmfulness());
+                return (double(hill->getTableHeight()) / 50 + randomDouble(-0.007, 0.007, 4)) * double(mistake->getHarmfulness());
             case TakeoffMistakeType::TooLateTakeoff:
-                return (double(hill->getTableHeight()) / 22 + randomDouble(-0.01, 0.01)) * double(mistake->getHarmfulness());
+                return (double(hill->getTableHeight()) / 30 + randomDouble(-0.007, 0.007, 4)) * double(mistake->getHarmfulness());
             default: return 0;
             }
         }
@@ -180,9 +180,9 @@ double JumpMistake::generateJumpMistakeEffect(JumpSimulator * const simulator, J
             switch(mistake->getExactType())
             {
             case TakeoffMistakeType::TooEarlyTakeoff:
-                return (double(hill->getBaseSpeed()) / 215 + randomDouble(-0.11, 0.11)) * double(mistake->getHarmfulness());
+                return (double(hill->getBaseSpeed()) / 270 + randomDouble(-0.085, 0.085, 4)) * double(mistake->getHarmfulness());
             case TakeoffMistakeType::TooLateTakeoff:
-                return (double(hill->getBaseSpeed()) / 398 + randomDouble(-0.13, 0.13)) * double(mistake->getHarmfulness());
+                return (double(hill->getBaseSpeed()) / 460 + randomDouble(-0.10, 0.10)) * double(mistake->getHarmfulness());
             default: return 0;
             }
         }
@@ -194,9 +194,9 @@ double JumpMistake::generateJumpMistakeEffect(JumpSimulator * const simulator, J
             switch(mistake->getExactType())
             {
             case TakeoffMistakeType::TooEarlyTakeoff:
-                return 0.45 * mistake->getHarmfulness();
+                return 0.4 * mistake->getHarmfulness();
             case TakeoffMistakeType::TooLateTakeoff:
-                return 0.20 * mistake->getHarmfulness();
+                return 0.18 * mistake->getHarmfulness();
             default: return 0;
             }
         }

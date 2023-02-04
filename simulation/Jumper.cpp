@@ -32,6 +32,11 @@ void Jumper::setSurname(const QString &newSurname)
     surname = newSurname;
 }
 
+QString Jumper::getNameAndSurname() const
+{
+    return name + " " + surname;
+}
+
 QString Jumper::getCountryCode() const
 {
     return countryCode;

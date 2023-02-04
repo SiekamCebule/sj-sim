@@ -9,7 +9,7 @@
 class Hill : public ClassWithID
 {
 public:
-    Hill(const QString &name = "", const QString &country = "", int KPoint = 0, int HSPoint = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double tableHeight = 0, double baseSpeed = 0, double speedForGate = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>());
+    Hill(const QString &name = "", const QString &country = "", int KPoint = 0, int HSPoint = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double tableHeight = 0, double baseSpeed = 0, double speedForGate = 0, double landingZoneStart = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>());
 
 private:
     QString name, country;
@@ -26,6 +26,7 @@ private:
     double tableHeight; // wysokość progu
     double baseSpeed; // bazowa prędkość na najniższej belce
     double speedForGate; // predkosc dodawana/odejmowana za każdą belkę.
+    double landingZoneStart; //początek strefy lądowania (ta niebieska linia)
 
 
     QSet<Characteristic> characteristics; // Uzupełnia wiele cech skoczni których nie ma w parametrach
@@ -37,8 +38,7 @@ public:
     void removeCharacteristic(const QString & type);
 
     short getLevelOfCharacteristic(const QString &characteristicType);
-
-    double getRelativeHeightSubstractFromHillProfile(double distance);
+    double getRelativeHeightSubstractAfterLandingZone(double distance);
 
     void setupPointsForMeter();
 
@@ -69,6 +69,8 @@ public:
     void setSpeedForGate(double newSpeedForGate);
     double getTableHeight() const;
     void setTableHeight(double newTableHeight);
+    double getLandingZoneStart() const;
+    void setLandingZoneStart(double newLandingZoneStart);
 };
 
 #endif // HILL_H

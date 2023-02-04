@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <tuple>
 #include <QRandomGenerator>
+#include <math.h>
 
 JumpSimulator::JumpSimulator(Jumper *jumper, ConditionsInfo *conditionsInfo, Hill *hill, Competition *competition) : jumper(jumper),
     conditionsInfo(conditionsInfo),
@@ -29,16 +30,31 @@ void JumpSimulator::simulateJump()
     simulateTakeoff();
     setAerodynamicPositionAfterTakeoff();
     simulateFlight();
+    qDebug()<<"Skok zakończył się na "<<(std::floor((distance * 2) + 0.5) / 2)<<" metrze.";
+}
+
+void JumpSimulator::resetTemporaryParameters()
+{
+    takeoffDuration = 0;
+    distance = 0;
+    relativeHeight = 0;
+    speed = 0;
+    aerodynamicPosition = 0;
+    takeoffMistakeHeightEffect = 0;
+    takeoffMistakeSpeedEffect = 0;
+    takeoffMistakeAerodynamicPositionEffect = 0;
+    heightAboveLandingHill = 0;
+    isLanding = false;
 }
 
 void JumpSimulator::simulateInrun()
 {
     //predkosc najazdowa
     speed = hill->getBaseSpeed() + (conditionsInfo->getGate() * hill->getSpeedForGate());
-    speed += randomDouble(-hill->getBaseSpeed() / 450, hill->getBaseSpeed() / 450);
+    speed += randomDouble(-hill->getBaseSpeed() / 460, hill->getBaseSpeed() / 460);
 
     if(jumperCharacteristicsContains(Characteristic("inrun-speed")))
-        speed += 0.22 * jumper->getJumperSkills()->getLevelOfCharacteristic("inrun-speed");
+        speed += 0.28 * jumper->getJumperSkills()->getLevelOfCharacteristic("inrun-speed");
 
     qDebug()<<"Prędkość najazdowa skoczka: "<<speed<<" km/h";
 }
@@ -48,12 +64,12 @@ void JumpSimulator::simulateTakeoff()
     //wybicie trwa 6% punktu K skoczni z małym mnożnikiem od prędkości
     takeoffDuration = (hill->getKPoint() * 0.06) * (0.95 + speed / 850);
     //qDebug()<<"Czas trwania wybicia: "<<QString::number(takeoffDuration, 'f', 1)<<" metrów";
-    distance += takeoffDuration;
+    //distance += takeoffDuration;
     relativeHeight += hill->getTableHeight() * 0.96 + (double(jumper->getJumperSkills()->getTakeoffPower()) / 28 + double(jumper->getJumperSkills()->getForm()) / 61) * (speed / 240);
     qDebug()<<"Wysokość skoczka po wyjściu z progu: "<<relativeHeight<<" metrów";
 
     JumpMistake m;
-    m.generateJumpMistake(this, JumpMistake::TakeoffMistake);
+    m.generateJumpMistake(this, JumpMistake::TakeoffMistake);;
 
     JumpMistake mistake = JumpMistake::generateJumpMistake(this, JumpMistake::MistakeType::TakeoffMistake);
     if(mistake.getIsOccurred())
@@ -80,16 +96,19 @@ void JumpSimulator::setAerodynamicPositionAfterTakeoff()
 
 void JumpSimulator::simulateFlight()
 {
-    qDebug()<<"Prędkość na "<<QString::number(takeoffDuration, 'f', 1)<<"metrze (wybicie): "<<speed<<", wysokość: "<<relativeHeight;
+    //qDebug()<<QString::number(takeoffDuration, 'f', 1)<<"metr (wybicie) --> Prędkość: "<<speed<<", wysokość: "<<relativeHeight;
     int whichIteration = 1;
     distance += takeoffDuration;
     while(isLanding == false)
     {
         speed += (double(aerodynamicPosition) - 28.5) / 180; // zmiana prędkości przez pozycję aerodynamiczną
         aerodynamicPosition += 0; // Zmiana pozycji aerodynamicznej
-        relativeHeight -= 0.25; // grawitacja
+        relativeHeight -= 0.0282; // bazowe odjęcie;
         relativeHeight -= 0; // wiatr w plecy
         relativeHeight += 0; // wiatr pod narty
+        if(distance > hill->getLandingZoneStart())
+            relativeHeight -= hill->getRelativeHeightSubstractAfterLandingZone(distance);
+        //qDebug()<<"Odjecie: "<<hill->getRelativeHeightSubstractAfterLandingZone(distance);
 
         /*Co wpływa na zmianę wysokości względnej?
          * (czynniki zewnętrzne)
@@ -103,15 +122,16 @@ void JumpSimulator::simulateFlight()
          * 1. Profil zeskoku
         */
 
-        double distanceChange = (speed - 7) / 73;
-        if(distanceChange < 0.04) distanceChange = 0.04;
+        double distanceChange = 0.865 + ((speed - 88) / 27);
+        if(distanceChange < 0.02) distanceChange = 0.02;
         distance += distanceChange; // Zmiana odległości (zawsze przynajmniej 0.04 metra)
 
-        qDebug()<<"Prędkość na "<<QString::number(distance, 'f', 1)<<" metrze: "<<speed<<"km/h, a wysokość: "<<relativeHeight;;
+        //qDebug()<<QString::number(distance, 'f', 1)<<"metr --> Prędkość: "<<speed<<", wysokość: "<<relativeHeight;
 
+
+        if(relativeHeight < 0.25) isLanding = true;
 
         whichIteration++;
-        if(whichIteration == 90) isLanding = true;
     }
 }
 

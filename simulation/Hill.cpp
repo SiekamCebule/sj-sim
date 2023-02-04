@@ -1,7 +1,9 @@
 #include "Hill.h"
 
+#include <QDebug>
 
-Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint, double pointsForFrontWind, double pointsForGate, double tableHeight, double baseSpeed, double speedForGate, const QSet<Characteristic> &characteristics) : name(name),
+
+Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint, double pointsForFrontWind, double pointsForGate, double tableHeight, double baseSpeed, double speedForGate, double landingZoneStart, const QSet<Characteristic> &characteristics) : name(name),
     country(country),
     KPoint(KPoint),
     HSPoint(HSPoint),
@@ -10,9 +12,20 @@ Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint,
     tableHeight(tableHeight),
     baseSpeed(baseSpeed),
     speedForGate(speedForGate),
+    landingZoneStart(landingZoneStart),
     characteristics(characteristics)
 {
 
+}
+
+double Hill::getLandingZoneStart() const
+{
+    return landingZoneStart;
+}
+
+void Hill::setLandingZoneStart(double newLandingZoneStart)
+{
+    landingZoneStart = newLandingZoneStart;
 }
 
 void Hill::insertCharacteristic(const Characteristic &characteristic)
@@ -42,6 +55,66 @@ short Hill::getLevelOfCharacteristic(const QString &characteristicType)
         if(it->getType() == characteristicType)
             return it->getLevel();
     }
+    return 0;
+}
+
+double Hill::getRelativeHeightSubstractAfterLandingZone(double distance)
+{
+    double KPointAndLandingZoneDifference = KPoint - landingZoneStart;
+    //qDebug()<<"KPointAndLandingZoneDifference: "<<KPointAndLandingZoneDifference;
+
+    double tempHS = HSPoint;
+    if(characteristics.contains(Characteristic("long-jumps-safety")))
+        tempHS *= double(getLevelOfCharacteristic("long-jumps-safety")) * 2.00;
+
+    double KPointAndHSPointDifference = tempHS - KPoint;
+    //qDebug()<<"KPointAndHSPointDifference: "<<KPointAndHSPointDifference;
+    if(distance < landingZoneStart + KPointAndLandingZoneDifference * 0.5)
+    {
+        return 0.006;
+    }
+    else if(distance < KPoint)
+    {
+        return 0.009;
+    }
+    else if(distance < KPoint + KPointAndHSPointDifference * 0.5)
+    {
+        return 0.015;
+    }
+    else if(distance < KPoint + KPointAndHSPointDifference)
+    {
+        return 0.040;
+    }
+    else if(distance < KPoint + KPointAndHSPointDifference * 1.2)
+    {
+        return 0.060;
+    }
+    else if(distance < KPoint + KPointAndHSPointDifference * 1.35)
+    {
+        return 0.095;
+    }
+    else if(distance < KPoint + KPointAndHSPointDifference * 1.52)
+    {
+        return 0.120;
+    }
+    else if(distance < KPoint + KPointAndHSPointDifference * 1.75)
+    {
+        return 0.140;
+    }
+    else if(distance < KPoint + KPointAndHSPointDifference * 2)
+    {
+        return 0.170;
+    }
+    else if(distance < KPoint + KPointAndHSPointDifference * 2.5)
+    {
+        return 0.240;
+    }
+    else if(distance < KPoint + KPointAndHSPointDifference * 3)
+    {
+        return 0.300;
+    }
+
+    return 0;
 }
 
 void Hill::setPointsForMeter(double newPointsForMeter)
@@ -79,35 +152,30 @@ void Hill::setBaseSpeed(double newBaseSpeed)
     baseSpeed = newBaseSpeed;
 }
 
-double Hill::getRelativeHeightSubstractFromHillProfile(double distance)
-{
-    double knollLength = 0.34 * KPoint; // długość buli
-}
-
 void Hill::setupPointsForMeter()
 {
     if(KPoint <= 24)
         pointsForMeter = 4.8;
     else if(KPoint <= 29)
-         pointsForMeter = 4.4;
+        pointsForMeter = 4.4;
     else if(KPoint <= 34)
-         pointsForMeter = 4.0;
+        pointsForMeter = 4.0;
     else if(KPoint <= 39)
-         pointsForMeter = 3.6;
+        pointsForMeter = 3.6;
     else if(KPoint <= 49)
-         pointsForMeter = 3.2;
+        pointsForMeter = 3.2;
     else if(KPoint <= 59)
-         pointsForMeter = 2.8;
+        pointsForMeter = 2.8;
     else if(KPoint <= 69)
-         pointsForMeter = 2.4;
+        pointsForMeter = 2.4;
     else if(KPoint <= 79)
-         pointsForMeter = 2.2;
+        pointsForMeter = 2.2;
     else if(KPoint <= 99)
-         pointsForMeter = 2.0;
+        pointsForMeter = 2.0;
     else if(KPoint <= 169)
-         pointsForMeter = 1.8;
+        pointsForMeter = 1.8;
     else if(KPoint >= 170)
-         pointsForMeter = 1.2;
+        pointsForMeter = 1.2;
     else pointsForMeter = 0;
 }
 

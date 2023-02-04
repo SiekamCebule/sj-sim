@@ -2,7 +2,10 @@
 
 Characteristic::Characteristic(short level, const QString &type) : level(level),
     type(type)
-{}
+{
+    if(level < -3) level = -3;
+    if(level > 3) level = 3;
+}
 
 Characteristic::Characteristic(const QString &type) : type(type), level(0)
 {
