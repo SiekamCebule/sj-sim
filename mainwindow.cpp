@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Hill * hill = new Hill("Wisła", "POL", 120, 134, 0, 0, 3.0, 85, 0.55, 103);
+    Hill * hill = new Hill("Wisła", "POL", 120, 134, 0, 0, 3.0, 84.5, 0.55, 103);
     hill->setupPointsForMeter();
     JumpSimulator simulator;  
     Jumper * jumper = new Jumper("Markus", "Eisenbichler", "GER", new JumperSkills(37, 41, 2, 45, 38, 14, QSet<Characteristic>(), nullptr), 0);

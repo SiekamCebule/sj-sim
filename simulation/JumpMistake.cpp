@@ -7,13 +7,24 @@
 #include <QVector>
 #include <QDebug>
 
-JumpMistake::JumpMistake(short generalType, short exactType, short harmfulness, bool isOccurred, double distance) : generalType(generalType),
+JumpMistake::JumpMistake(short generalType, short indirectType, short exactType, short harmfulness, bool isOccurred, double distance) : generalType(generalType),
+    indirectType(indirectType),
     exactType(exactType),
     harmfulness(harmfulness),
     isOccurred(isOccurred),
     distance(distance)
 {
 
+}
+
+short JumpMistake::getIndirectType() const
+{
+    return indirectType;
+}
+
+void JumpMistake::setIndirectType(short newIndirectType)
+{
+    indirectType = newIndirectType;
 }
 
 short JumpMistake::getGeneralType() const
@@ -41,24 +52,48 @@ QString JumpMistake::getNote()
     switch(getGeneralType())
     {
     case TakeoffMistake:
-        switch(getExactType())
+        switch(getIndirectType())
         {
-        case TakeoffMistakeType::TooEarlyTakeoff:
-            return "Za wczesne wybicie";
-        case TakeoffMistakeType::TooLateTakeoff:
-            return "Za późne wybicie";
+        case TakeoffMistakeType::TimingMistake:
+            switch(getExactType())
+            {
+            case TakeoffTimingMistakeType::TooEarlyTakeoff:
+                return "Za wczesne wybicie";
+            case TakeoffTimingMistakeType::TooLateTakeoff:
+                return "Za późne wybicie";
+            }
+            break;
+        case TakeoffMistakeType::AggressivenessMistake:
+            switch(getExactType())
+            {
+            case TakeoffAggressivenessMistakeType::TooPassiveTakeoff:
+                return "Zbyt pasywne wybicie";
+            case TakeoffAggressivenessMistakeType::TooAgressiveTakeoff:
+                return "Zbyt agresywne wybicie";
+            }
+            break;
         }
         break;
     case FlightMistake:
-        switch(getExactType())
+        /*switch(getIndirectType())
         {
-        case FlightMistakeType::FlightAggressiveness:
-            return "Nadmiernie agresywny lot";
-        case FlightMistakeType::FlightPassivity:
-            return "Nadmiernie pasywny lot";
-        case FlightMistakeType::FlightInstability:
-            return "Niestabilność w locie";
-        }
+        case TakeoffMistakeType::TimingMistake:
+            switch(getExactType())
+            {
+            case TakeoffTimingMistakeType::TooEarlyTakeoff:
+                return "Za wczesne wybicie";
+            case TakeoffTimingMistakeType::TooLateTakeoff:
+                return "Za późne wybicie";
+            }
+        case TakeoffMistakeType::AgressivnessMistake:
+            switch(getExactType())
+            {
+            case TakeoffAgressivenessMistakeType::TooPassiveTakeoff:
+                return "Zbyt pasywne wybicie";
+            case TakeoffAgressivenessMistakeType::TooAgressiveTakeoff:
+                return "Zbyt agresywne wybicie";
+            }
+        }*/
         break;
     }
     return "";
@@ -93,11 +128,13 @@ JumpMistake JumpMistake::generateJumpMistake(JumpSimulator * const simulator, sh
     if(mistakeType == TakeoffMistake)
     {
         mistake.setGeneralType(TakeoffMistake);
-        mistakeProbabilities.fill(0, 3);
-        mistakeProbabilities[0] = 600 - (double(jumperSkills->getTakeoffTechnique()) * 4.49) - (double(jumperSkills->getForm()) * 8.3) + randomInt(-2, 2); //too early takeoff
-        mistakeProbabilities[1] = 1175 - (double(jumperSkills->getTakeoffTechnique()) * 4.90) - (double(jumperSkills->getForm()) * 13.6) + randomInt(-2, 2); //too late takeoff
+        mistakeProbabilities.fill(0, 5);
+        mistakeProbabilities[0] = 600 - (double(jumperSkills->getTakeoffTechnique()) * 4.49) - (double(jumperSkills->getForm()) * 8.3) + randomInt(-3, 3); //too early takeoff
+        mistakeProbabilities[1] = 1175 - (double(jumperSkills->getTakeoffTechnique()) * 4.90) - (double(jumperSkills->getForm()) * 13.6) + randomInt(-3, 3); //too late takeoff
+        mistakeProbabilities[2] = 1510 - (double(jumperSkills->getTakeoffTechnique()) * 9.10) - (double(jumperSkills->getForm()) * 18) + randomInt(-3, 3); //too passive takeoff
+        mistakeProbabilities[3] = 650 - (double(jumperSkills->getTakeoffTechnique()) * 4.60) - (double(jumperSkills->getForm()) * 8) + randomInt(-3, 3); //too aggressive takeoff
         //qDebug()<<mistakeProbabilities[0]<<", "<<mistakeProbabilities[1];
-        mistakeProbabilities[2] = 230; // Jeśli wylosuje 2, nie ma błędu.
+        mistakeProbabilities[4] = 588; // Jeśli wylosuje 2, nie ma błędu.
         double sum = 0;
         for(const auto & mis : mistakeProbabilities)
             sum += mis;
@@ -109,35 +146,56 @@ JumpMistake JumpMistake::generateJumpMistake(JumpSimulator * const simulator, sh
                 sum2 += mistakeProbabilities[b];
             }
             if(random < sum2){
-                mistake.setExactType(i);
+                if(i == 0 || i == 1){
+                    mistake.setIndirectType(TakeoffMistakeType::TimingMistake);
+                    mistake.setExactType(i);
+                }
+                else if(i == 2 || i == 3){
+                    mistake.setIndirectType(TakeoffMistakeType::AggressivenessMistake);
+                    mistake.setExactType(i-2);
+                }
                 break;
             }
         }
-        if(mistake.getExactType() != mistakeProbabilities.size() - 1){ // nie jest ostatnim elementem
+        if(mistake.getIndirectType() == TakeoffMistakeType::TimingMistake || mistake.getIndirectType() == TakeoffMistakeType::AggressivenessMistake){ // nie jest bez błędu
             mistake.setIsOccurred(true);
             mistake.setDistance(0);
-            mistake.setHarmfulness(generateJumpMistakeHarmfulness(simulator, mistake.getGeneralType(), mistake.getExactType()));
+            mistake.setHarmfulness(generateJumpMistakeHarmfulness(simulator, mistake.getGeneralType(), mistake.getIndirectType(), mistake.getExactType()));
         }
     }
     return mistake;
 }
 
-short JumpMistake::generateJumpMistakeHarmfulness(JumpSimulator * const simulator, short generalType, short exactType)
+short JumpMistake::generateJumpMistakeHarmfulness(JumpSimulator * const simulator, short generalType, short indirectType, short exactType)
 {
     QVector<double> harmProbabilities(10);
     switch(generalType)
     {
     case TakeoffMistake:
-        switch(exactType)
+        switch(indirectType)
         {
-        case TakeoffMistakeType::TooEarlyTakeoff:
-            harmProbabilities = {1, 2.5, 6.3, 14, 35, 76, 165, 390, 805, 1900};
+        case TakeoffMistakeType::TimingMistake:
+            switch(exactType)
+            {
+            case TakeoffTimingMistakeType::TooEarlyTakeoff:
+                harmProbabilities = {1, 2.5, 6.3, 14, 35, 76, 165, 390, 805, 1900};
+                break;
+            case TakeoffTimingMistakeType::TooLateTakeoff:
+                harmProbabilities = {1, 2.5, 4.8, 12, 28.5, 58, 120, 290, 560, 1180};
+                break;
+            }
             break;
-        case TakeoffMistakeType::TooLateTakeoff:
-            harmProbabilities = {1, 2.5, 4.8, 12, 28.5, 58, 120, 290, 560, 1180};
-            break;
+        case TakeoffMistakeType::AggressivenessMistake:
+            switch(exactType)
+            {
+            case TakeoffAggressivenessMistakeType::TooPassiveTakeoff:
+                harmProbabilities = {1, 2.4, 5.5, 13, 33, 70, 150, 400, 850, 2100};
+                break;
+            case TakeoffAggressivenessMistakeType::TooAgressiveTakeoff:
+                harmProbabilities = {1, 2.45, 5.53, 13, 33, 69, 150, 380, 780, 1850};
+                break;
+            }
         }
-
         break;
     }
 
@@ -164,43 +222,80 @@ double JumpMistake::generateJumpMistakeEffect(JumpSimulator * const simulator, J
         switch(mistake->getGeneralType())
         {
         case TakeoffMistake:
-            switch(mistake->getExactType()){
-            case TakeoffMistakeType::TooEarlyTakeoff:
-                return (double(hill->getTableHeight()) / 50 + randomDouble(-0.007, 0.007, 4)) * double(mistake->getHarmfulness());
-            case TakeoffMistakeType::TooLateTakeoff:
-                return (double(hill->getTableHeight()) / 30 + randomDouble(-0.007, 0.007, 4)) * double(mistake->getHarmfulness());
+            switch(mistake->getIndirectType()){
+            case TakeoffMistakeType::TimingMistake:
+                switch(mistake->getExactType())
+                {
+                case TakeoffTimingMistakeType::TooEarlyTakeoff:
+                    return (double(hill->getTableHeight()) / 50 + randomDouble(-0.007, 0.007, 4)) * double(mistake->getHarmfulness());
+                case TakeoffTimingMistakeType::TooLateTakeoff:
+                    return (double(hill->getTableHeight()) / 30 + randomDouble(-0.007, 0.007, 4)) * double(mistake->getHarmfulness());
+                }
+                break;
+            case TakeoffMistakeType::AggressivenessMistake:
+                switch(mistake->getExactType())
+                {
+                case TakeoffAggressivenessMistakeType::TooPassiveTakeoff:
+                    return 0;
+                case TakeoffAggressivenessMistakeType::TooAgressiveTakeoff:
+                    return (double(hill->getTableHeight()) / 26 + randomDouble(-0.009, 0.009, 4)) * double(mistake->getHarmfulness());
+                }
+                break;
             default: return 0;
             }
         }
         break;
     case Speed:
-        switch(mistake->getGeneralType())
-        {
-        case TakeoffMistake:
+        switch(mistake->getIndirectType()){
+        case TakeoffMistakeType::TimingMistake:
             switch(mistake->getExactType())
             {
-            case TakeoffMistakeType::TooEarlyTakeoff:
+            case TakeoffTimingMistakeType::TooEarlyTakeoff:
                 return (double(hill->getBaseSpeed()) / 270 + randomDouble(-0.085, 0.085, 4)) * double(mistake->getHarmfulness());
-            case TakeoffMistakeType::TooLateTakeoff:
+            case TakeoffTimingMistakeType::TooLateTakeoff:
                 return (double(hill->getBaseSpeed()) / 460 + randomDouble(-0.10, 0.10)) * double(mistake->getHarmfulness());
-            default: return 0;
             }
+            break;
+        case TakeoffMistakeType::AggressivenessMistake:
+            switch(mistake->getExactType())
+            {
+            case TakeoffAggressivenessMistakeType::TooPassiveTakeoff:
+                return (double(hill->getBaseSpeed()) / 200 + randomDouble(-0.08, 0.08, 4)) * double(mistake->getHarmfulness());;
+            case TakeoffAggressivenessMistakeType::TooAgressiveTakeoff:
+                return (double(hill->getTableHeight()) / 500 + randomDouble(-0.05, 0.05, 4)) * double(mistake->getHarmfulness());
+            default: break;
+            }
+            break;
+        default: return 0;
         }
         break;
     case AerodynamicPosition:
         switch(mistake->getGeneralType())
         {
         case TakeoffMistake:
-            switch(mistake->getExactType())
-            {
-            case TakeoffMistakeType::TooEarlyTakeoff:
-                return 0.4 * mistake->getHarmfulness();
-            case TakeoffMistakeType::TooLateTakeoff:
-                return 0.18 * mistake->getHarmfulness();
+            switch(mistake->getIndirectType()){
+            case TakeoffMistakeType::TimingMistake:
+                switch(mistake->getExactType())
+                {
+                case TakeoffTimingMistakeType::TooEarlyTakeoff:
+                    return 0.4 * double(mistake->getHarmfulness());
+                case TakeoffTimingMistakeType::TooLateTakeoff:
+                    return 0.18 * double(mistake->getHarmfulness());
+                }
+                break;
+            case TakeoffMistakeType::AggressivenessMistake:
+                switch(mistake->getExactType())
+                {
+                case TakeoffAggressivenessMistakeType::TooPassiveTakeoff:
+                    return 1 * double(mistake->getHarmfulness());
+                case TakeoffAggressivenessMistakeType::TooAgressiveTakeoff:
+                    return 0.215 * double(mistake->getHarmfulness());
+                }
+                break;
             default: return 0;
             }
+            break;
         }
-        break;
     }
 
     return 0;

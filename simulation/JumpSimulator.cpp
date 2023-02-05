@@ -54,36 +54,37 @@ void JumpSimulator::simulateInrun()
     speed += randomDouble(-hill->getBaseSpeed() / 460, hill->getBaseSpeed() / 460);
 
     if(jumperCharacteristicsContains(Characteristic("inrun-speed")))
-        speed += 0.28 * jumper->getJumperSkills()->getLevelOfCharacteristic("inrun-speed");
+        speed += 0.25 * jumper->getJumperSkills()->getLevelOfCharacteristic("inrun-speed");
 
     qDebug()<<"Prędkość najazdowa skoczka: "<<speed<<" km/h";
 }
 
 void JumpSimulator::simulateTakeoff()
 {
-    //wybicie trwa 6% punktu K skoczni z małym mnożnikiem od prędkości
-    takeoffDuration = (hill->getKPoint() * 0.06) * (0.95 + speed / 850);
-    //qDebug()<<"Czas trwania wybicia: "<<QString::number(takeoffDuration, 'f', 1)<<" metrów";
-    //distance += takeoffDuration;
+    takeoffDuration = (hill->getKPoint() * 0.145);
     relativeHeight += hill->getTableHeight() * 0.96 + (double(jumper->getJumperSkills()->getTakeoffPower()) / 28 + double(jumper->getJumperSkills()->getForm()) / 61) * (speed / 240);
     qDebug()<<"Wysokość skoczka po wyjściu z progu: "<<relativeHeight<<" metrów";
 
-    JumpMistake m;
-    m.generateJumpMistake(this, JumpMistake::TakeoffMistake);;
-
     JumpMistake mistake = JumpMistake::generateJumpMistake(this, JumpMistake::MistakeType::TakeoffMistake);
-    if(mistake.getIsOccurred())
-    {
-        takeoffMistakeHeightEffect = JumpMistake::generateJumpMistakeEffect(this, &mistake, JumpMistake::Height);
-        takeoffMistakeSpeedEffect = JumpMistake::generateJumpMistakeEffect(this, &mistake, JumpMistake::Speed);
-        takeoffMistakeAerodynamicPositionEffect = JumpMistake::generateJumpMistakeEffect(this, &mistake, JumpMistake::AerodynamicPosition);
-        qDebug()<<"Popełniono błąd na progu: "<<mistake.getNote()<<" (Szkodliwość błędu "<<mistake.getHarmfulness()<<"/ 10) --> Skutki błędu: utracono "<<QString::number(takeoffMistakeHeightEffect, 'f', 2)<<"metrów wysokości, "<<QString::number(takeoffMistakeSpeedEffect, 'f', 2)<<"km/h prędkości"<<", i pogorszono pozycję aerodynamiczną o "<<takeoffMistakeAerodynamicPositionEffect;
+    short type1, type2;
+    for(int i=0; i<2; i++){
+        if(i==0) type1 = mistake.getIndirectType();
+        else type2 = mistake.getIndirectType();
+        if(mistake.getIsOccurred())
+        {
+            if((i==0) || (i==1 && type2 != type1)){
+                takeoffMistakeHeightEffect = JumpMistake::generateJumpMistakeEffect(this, &mistake, JumpMistake::Height);
+                takeoffMistakeSpeedEffect = JumpMistake::generateJumpMistakeEffect(this, &mistake, JumpMistake::Speed);
+                takeoffMistakeAerodynamicPositionEffect = JumpMistake::generateJumpMistakeEffect(this, &mistake, JumpMistake::AerodynamicPosition);
+                qDebug()<<"Popełniono błąd na progu: "<<mistake.getNote()<<" (Szkodliwość błędu "<<mistake.getHarmfulness()<<"/ 10) --> Skutki błędu: utracono "<<QString::number(takeoffMistakeHeightEffect, 'f', 2)<<"metrów wysokości, "<<QString::number(takeoffMistakeSpeedEffect, 'f', 2)<<"km/h prędkości"<<", i pogorszono pozycję aerodynamiczną o "<<takeoffMistakeAerodynamicPositionEffect;
 
-        relativeHeight -= takeoffMistakeHeightEffect;
-        speed -= takeoffMistakeSpeedEffect;
-        aerodynamicPosition -= takeoffMistakeAerodynamicPositionEffect;
+                relativeHeight -= takeoffMistakeHeightEffect;
+                speed -= takeoffMistakeSpeedEffect;
+                aerodynamicPosition -= takeoffMistakeAerodynamicPositionEffect;
+            }
+        }
+        else qDebug()<<"Idealne wybicie";
     }
-    else qDebug()<<"Idealne wybicie";
 
 }
 
@@ -96,19 +97,18 @@ void JumpSimulator::setAerodynamicPositionAfterTakeoff()
 
 void JumpSimulator::simulateFlight()
 {
-    //qDebug()<<QString::number(takeoffDuration, 'f', 1)<<"metr (wybicie) --> Prędkość: "<<speed<<", wysokość: "<<relativeHeight;
+    qDebug()<<QString::number(takeoffDuration, 'f', 1)<<"metr (wybicie) --> Prędkość: "<<speed<<", wysokość: "<<relativeHeight;
     int whichIteration = 1;
     distance += takeoffDuration;
     while(isLanding == false)
     {
         speed += (double(aerodynamicPosition) - 28.5) / 180; // zmiana prędkości przez pozycję aerodynamiczną
         aerodynamicPosition += 0; // Zmiana pozycji aerodynamicznej
-        relativeHeight -= 0.0282; // bazowe odjęcie;
+        relativeHeight -= 0.0284; // bazowe odjęcie;
         relativeHeight -= 0; // wiatr w plecy
         relativeHeight += 0; // wiatr pod narty
         if(distance > hill->getLandingZoneStart())
             relativeHeight -= hill->getRelativeHeightSubstractAfterLandingZone(distance);
-        //qDebug()<<"Odjecie: "<<hill->getRelativeHeightSubstractAfterLandingZone(distance);
 
         /*Co wpływa na zmianę wysokości względnej?
          * (czynniki zewnętrzne)
