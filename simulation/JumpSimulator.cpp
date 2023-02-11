@@ -3,7 +3,6 @@
 #include "JumpMistake.h"
 
 #include <QDebug>
-#include <tuple>
 #include <QRandomGenerator>
 #include <math.h>
 
@@ -12,132 +11,91 @@ JumpSimulator::JumpSimulator(Jumper *jumper, ConditionsInfo *conditionsInfo, Hil
     hill(hill),
     competition(competition)
 {
-    takeoffDuration = 0;
-    distance = 0;
-    relativeHeight = 0;
-    speed = 0;
-    aerodynamicPosition = 0;
-    takeoffMistakeHeightEffect = 0;
-    takeoffMistakeSpeedEffect = 0;
-    takeoffMistakeAerodynamicPositionEffect = 0;
-    heightAboveLandingHill = 0;
-    isLanding = false;
+    if(jumper != nullptr)
+        jumperSkills = jumper->getJumperSkills();
+
+    takeoffRating = 0;
+    flightRating = 0;
+}
+
+JumperSkills *JumpSimulator::getJumperSkills() const
+{
+    return jumperSkills;
+}
+
+void JumpSimulator::updateJumperSkills()
+{
+    if(jumper != nullptr)
+        jumperSkills = jumper->getJumperSkills();
 }
 
 void JumpSimulator::simulateJump()
 {
-    simulateInrun();
-    simulateTakeoff();
-    setAerodynamicPositionAfterTakeoff();
-    simulateFlight();
-    qDebug()<<"Skok zakończył się na "<<(std::floor((distance * 2) + 0.5) / 2)<<" metrze.";
+    updateJumperSkills();
+    generateTakeoffRating();
+    //generateFlightRating();
+    //qDebug()<<"Skok zakończył się na "<<(std::floor((distance * 2) + 0.5) / 2)<<" metrze.";
+}
+
+void JumpSimulator::generateTakeoffRating()
+{
+    double ratingMultiplier = 0.98 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
+    takeoffRating = jumperSkills->getTakeoffTechnique() * ratingMultiplier;
+
+    ratingMultiplier = 0.5 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect");
+    takeoffRating += jumperSkills->getTakeoffPower() * ratingMultiplier;
+
+    ratingMultiplier = 0.7 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
+    takeoffRating += jumperSkills->getForm() * ratingMultiplier;
+
+    double randomness = 3.25 + 0.75 * hill->getLevelOfCharacteristic("takeoff-randomness-effect");;
+    takeoffRating += randomDouble(-randomness, randomness);
+
+    if(takeoffRating < 0.1)
+        takeoffRating = 0.1;
+
+    qDebug()<<"Ocena wyjścia z progu: "<<takeoffRating;
+}
+
+void JumpSimulator::generateFlightRating()
+{
+    double ratingMultiplier;
+
+    flightRating = (jumperSkills->getFlightTechnique() * 0.60);
+    flightRating += (jumperSkills->getForm() * 0.65);
+    /// WPŁYW STYLU LOTU ----> DO ZROBIENIA
+
+    /// WPŁYW CECH CHARAKTERYSTYCZNYCH ----> DO ZROBIENIA
+
+
+
+    flightRating += randomDouble(-3.75, 3.75);
+}
+
+double JumpSimulator::getFlightRating() const
+{
+    return flightRating;
+}
+
+void JumpSimulator::setFlightRating(double newFlightRating)
+{
+    flightRating = newFlightRating;
+}
+
+double JumpSimulator::getTakeoffRating() const
+{
+    return takeoffRating;
+}
+
+void JumpSimulator::setTakeoffRating(double newTakeoffRating)
+{
+    takeoffRating = newTakeoffRating;
 }
 
 void JumpSimulator::resetTemporaryParameters()
 {
-    takeoffDuration = 0;
-    distance = 0;
-    relativeHeight = 0;
-    speed = 0;
-    aerodynamicPosition = 0;
-    takeoffMistakeHeightEffect = 0;
-    takeoffMistakeSpeedEffect = 0;
-    takeoffMistakeAerodynamicPositionEffect = 0;
-    heightAboveLandingHill = 0;
-    isLanding = false;
-}
-
-void JumpSimulator::simulateInrun()
-{
-    //predkosc najazdowa
-    speed = hill->getBaseSpeed() + (conditionsInfo->getGate() * hill->getSpeedForGate());
-    speed += randomDouble(-hill->getBaseSpeed() / 460, hill->getBaseSpeed() / 460);
-
-    if(jumperCharacteristicsContains(Characteristic("inrun-speed")))
-        speed += 0.25 * jumper->getJumperSkills()->getLevelOfCharacteristic("inrun-speed");
-
-    qDebug()<<"Prędkość najazdowa skoczka: "<<speed<<" km/h";
-}
-
-void JumpSimulator::simulateTakeoff()
-{
-    takeoffDuration = (hill->getKPoint() * 0.145);
-    relativeHeight += hill->getTableHeight() * 0.96 + (double(jumper->getJumperSkills()->getTakeoffPower()) / 28 + double(jumper->getJumperSkills()->getForm()) / 61) * (speed / 240);
-    qDebug()<<"Wysokość skoczka po wyjściu z progu: "<<relativeHeight<<" metrów";
-
-    JumpMistake mistake = JumpMistake::generateJumpMistake(this, JumpMistake::MistakeType::TakeoffMistake);
-    short type1, type2;
-    for(int i=0; i<2; i++){
-        if(i==0) type1 = mistake.getIndirectType();
-        else type2 = mistake.getIndirectType();
-        if(mistake.getIsOccurred())
-        {
-            if((i==0) || (i==1 && type2 != type1)){
-                takeoffMistakeHeightEffect = JumpMistake::generateJumpMistakeEffect(this, &mistake, JumpMistake::Height);
-                takeoffMistakeSpeedEffect = JumpMistake::generateJumpMistakeEffect(this, &mistake, JumpMistake::Speed);
-                takeoffMistakeAerodynamicPositionEffect = JumpMistake::generateJumpMistakeEffect(this, &mistake, JumpMistake::AerodynamicPosition);
-                qDebug()<<"Popełniono błąd na progu: "<<mistake.getNote()<<" (Szkodliwość błędu "<<mistake.getHarmfulness()<<"/ 10) --> Skutki błędu: utracono "<<QString::number(takeoffMistakeHeightEffect, 'f', 2)<<"metrów wysokości, "<<QString::number(takeoffMistakeSpeedEffect, 'f', 2)<<"km/h prędkości"<<", i pogorszono pozycję aerodynamiczną o "<<takeoffMistakeAerodynamicPositionEffect;
-
-                relativeHeight -= takeoffMistakeHeightEffect;
-                speed -= takeoffMistakeSpeedEffect;
-                aerodynamicPosition -= takeoffMistakeAerodynamicPositionEffect;
-            }
-        }
-        else qDebug()<<"Idealne wybicie";
-    }
-
-}
-
-void JumpSimulator::setAerodynamicPositionAfterTakeoff()
-{
-    JumperSkills * const jumperSkills = jumper->getJumperSkills();
-    aerodynamicPosition += (double(jumperSkills->getTakeoffTechnique()) / 2.52) + (double(jumperSkills->getFlightTechnique()) / 7.3) + (double(jumperSkills->getForm()) / 2.68) + randomInt(-2, 2);
-    qDebug()<<"Pozycja aerodynamiczna skoczka po wyjściu z progu: "<<aerodynamicPosition<<"/ 50";
-}
-
-void JumpSimulator::simulateFlight()
-{
-    qDebug()<<QString::number(takeoffDuration, 'f', 1)<<"metr (wybicie) --> Prędkość: "<<speed<<", wysokość: "<<relativeHeight;
-    int whichIteration = 1;
-    distance += takeoffDuration;
-    while(isLanding == false)
-    {
-        speed += (double(aerodynamicPosition) - 28.5) / 180; // zmiana prędkości przez pozycję aerodynamiczną
-        aerodynamicPosition += 0; // Zmiana pozycji aerodynamicznej
-        relativeHeight -= 0.0284; // bazowe odjęcie;
-        relativeHeight -= 0; // wiatr w plecy
-        relativeHeight += 0; // wiatr pod narty
-        if(distance > hill->getLandingZoneStart())
-            relativeHeight -= hill->getRelativeHeightSubstractAfterLandingZone(distance);
-
-        /*Co wpływa na zmianę wysokości względnej?
-         * (czynniki zewnętrzne)
-         * 1. Grawitacja
-         * (skoczek)
-         * 1. Wiatr w plecy
-         * 2. Wiatr pod narty (Podwyższenie wysokości)
-         * 3. Błędy zawodnika
-         * 4. Cechy charakterystyczne dot. wysokości
-         * (skocznia)
-         * 1. Profil zeskoku
-        */
-
-        double distanceChange = 0.865 + ((speed - 88) / 27);
-        if(distanceChange < 0.02) distanceChange = 0.02;
-        distance += distanceChange; // Zmiana odległości (zawsze przynajmniej 0.04 metra)
-
-        //qDebug()<<QString::number(distance, 'f', 1)<<"metr --> Prędkość: "<<speed<<", wysokość: "<<relativeHeight;
-
-
-        if(relativeHeight < 0.25) isLanding = true;
-
-        whichIteration++;
-    }
-}
-
-double JumpSimulator::getRelativeHeight() const
-{
-    return relativeHeight;
+    takeoffRating = 0;
+    flightRating = 0;
 }
 
 Competition *JumpSimulator::getCompetition() const
@@ -148,21 +106,6 @@ Competition *JumpSimulator::getCompetition() const
 void JumpSimulator::setCompetition(Competition *newCompetition)
 {
     competition = newCompetition;
-}
-
-double JumpSimulator::getDistance() const
-{
-    return distance;
-}
-
-double JumpSimulator::getSpeed() const
-{
-    return speed;
-}
-
-short JumpSimulator::getAerodynamicPosition() const
-{
-    return aerodynamicPosition;
 }
 
 bool JumpSimulator::jumperCharacteristicsContains(const Characteristic & characteristics)
@@ -204,4 +147,5 @@ Jumper *JumpSimulator::getJumper() const
 void JumpSimulator::setJumper(Jumper *newJumper)
 {
     jumper = newJumper;
+    updateJumperSkills();
 }

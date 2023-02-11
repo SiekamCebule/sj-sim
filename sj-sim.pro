@@ -21,6 +21,7 @@ SOURCES += \
     simulation/JumperSkills.cpp \
     simulation/SimulationGlobals.cpp \
     simulation/Wind.cpp \
+    utilities/ClassWithCharacteristics.cpp \
     utilities/ClassWithID.cpp \
     utilities/IDGenerator.cpp \
     utilities/WindsGenerator.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     simulation/JumperSkills.h \
     simulation/SimulationGlobals.h \
     simulation/Wind.h \
+    utilities/ClassWithCharacteristics.h \
     utilities/ClassWithID.h \
     utilities/IDGenerator.h \
     utilities/WindsGenerator.h \

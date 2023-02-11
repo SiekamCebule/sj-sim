@@ -9,49 +9,6 @@ ConditionsInfo::ConditionsInfo(int gate, double windSensorsFaulty, const QVector
     gate(gate),
     windSensorsFaulty(windSensorsFaulty)
 {
-    this->winds = generateNewWinds(0);
-}
-
-Wind ConditionsInfo::getWindSensor(const Wind &wind)
-{
-    Wind sensor = wind;
-    qDebug()<<sensor.getValue();
-    return sensor;
-}
-
-QVector<Wind> ConditionsInfo::generateNewWinds(double flatteningStart)
-{
-    QVector<Wind> winds;
-    winds.push_back(Wind(Wind::Null, 0));
-    winds.push_back(Wind(Wind::Null, 0));
-    winds.push_back(Wind(Wind::Null, 0));
-    winds.push_back(Wind(Wind::Null, 0));
-    winds.push_back(Wind(Wind::Null, 0));
-    winds.push_back(Wind(Wind::Null, 0));
-    winds.push_back(Wind(Wind::Null, 0));
-
-    return winds;
-}
-
-const Wind &ConditionsInfo::getWindForActualDistance(int distance, Hill *hill)
-{
-    int i = 0;
-    if(distance >= hill->getKPoint() * 0.10)
-        i = i; //bez zmian
-    if(distance >= hill->getKPoint() * 0.30)
-        i++;
-    if(distance >= hill->getKPoint() * 0.45)
-        i++;
-    if(distance >= hill->getKPoint() * 0.60)
-        i++;
-    if(distance >= hill->getKPoint() * 0.75)
-        i++;
-    if(distance >= hill->getKPoint() * 0.90)
-        i++;
-    if(distance >= hill->getKPoint() * 1.05)
-        i++;
-
-    return winds[i];
 }
 
 Wind ConditionsInfo::getAveragedWind()

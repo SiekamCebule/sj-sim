@@ -1,53 +1,35 @@
 #include "JumperSkills.h"
 #include "Jumper.h"
 
-JumperSkills::JumperSkills(short takeoffPower, short takeoffTechnique, short flightStyle, short flightTechnique, short form, short landingStyle, const QSet<Characteristic> &characteristics, Jumper * jumper) : takeoffPower(takeoffPower),
+JumperSkills::JumperSkills(double takeoffPower, double takeoffTechnique, double flightTechnique, short flightStyle, double form, double landingStyle, const QSet<Characteristic> &characteristics, Jumper * jumper) : takeoffPower(takeoffPower),
     takeoffTechnique(takeoffTechnique),
     flightStyle(flightStyle),
     flightTechnique(flightTechnique),
     form(form),
-    landingStyle(landingStyle),
-    characteristics(characteristics)
+    landingStyle(landingStyle)
 {
     if(jumper != nullptr)
         jumperID = jumper->getID();
+
+    setCharacteristics(characteristics);
 }
 
-void JumperSkills::insertCharacteristic(const Characteristic &characteristic)
+Jumper *JumperSkills::getJumper() const
 {
-    characteristics.insert(characteristic);
+    return jumper;
 }
 
-void JumperSkills::insertCharacteristic(short level, const QString &type)
+void JumperSkills::setJumper(Jumper *newJumper)
 {
-    characteristics.insert(Characteristic(level, type));
+    jumper = newJumper;
 }
 
-void JumperSkills::removeCharacteristic(const Characteristic &characteristic)
-{
-    characteristics.remove(characteristic);
-}
-
-void JumperSkills::removeCharacteristic(const QString &type)
-{
-    characteristics.remove(Characteristic(0, type));
-}
-
-short JumperSkills::getLevelOfCharacteristic(const QString &characteristicType)
-{
-    for(QSet<Characteristic>::iterator it = characteristics.begin(); it != characteristics.end(); it++)
-    {
-        if(it->getType() == characteristicType)
-            return it->getLevel();
-    }
-}
-
-short JumperSkills::getForm() const
+double JumperSkills::getForm() const
 {
     return form;
 }
 
-void JumperSkills::setForm(short newForm)
+void JumperSkills::setForm(double newForm)
 {
     form = newForm;
 }
@@ -57,22 +39,22 @@ void JumperSkills::setJumperID(ulong ID)
     jumperID = ID;
 }
 
-short JumperSkills::getTakeoffPower() const
+double JumperSkills::getTakeoffPower() const
 {
     return takeoffPower;
 }
 
-void JumperSkills::setTakeoffPower(short newTakeoffPower)
+void JumperSkills::setTakeoffPower(double newTakeoffPower)
 {
     takeoffPower = newTakeoffPower;
 }
 
-short JumperSkills::getTakeoffTechnique() const
+double JumperSkills::getTakeoffTechnique() const
 {
     return takeoffTechnique;
 }
 
-void JumperSkills::setTakeoffTechnique(short newTakeoffTechnique)
+void JumperSkills::setTakeoffTechnique(double newTakeoffTechnique)
 {
     takeoffTechnique = newTakeoffTechnique;
 }
@@ -87,22 +69,22 @@ void JumperSkills::setFlightStyle(short newFlightStyle)
     flightStyle = newFlightStyle;
 }
 
-short JumperSkills::getFlightTechnique() const
+double JumperSkills::getFlightTechnique() const
 {
     return flightTechnique;
 }
 
-void JumperSkills::setFlightTechnique(short newFlightTechnique)
+void JumperSkills::setFlightTechnique(double newFlightTechnique)
 {
     flightTechnique = newFlightTechnique;
 }
 
-short JumperSkills::getLandingStyle() const
+double JumperSkills::getLandingStyle() const
 {
     return landingStyle;
 }
 
-void JumperSkills::setLandingStyle(short newLandingStyle)
+void JumperSkills::setLandingStyle(double newLandingStyle)
 {
     landingStyle = newLandingStyle;
 }

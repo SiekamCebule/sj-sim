@@ -34,6 +34,8 @@ public:
         Speed,
         AerodynamicPosition
     };
+
+    //takeoff mistake
     enum TakeoffMistakeType{
         TimingMistake,
         AggressivenessMistake
@@ -45,6 +47,23 @@ public:
     enum TakeoffTimingMistakeType{
         TooEarlyTakeoff,
         TooLateTakeoff,
+    };
+
+    //flight mistake
+    enum FlightMistakeType
+    {
+        BalanceMistake,
+        PositionMistake
+    };
+    enum FlightBalanceMistakeType
+    {
+        UnstableSki, //Niezbyt często, chyba że jest wiatr.
+        PullingToTheSide //Rzadko.
+    };
+    enum FlightPositionMistakeType
+    {
+        TooPassiveFlight, //Dosyć często, słabsi skoczkowie często mają
+        TooAggressiveFlight //Dosyć często, trochę bardziej losowe.
     };
 
 

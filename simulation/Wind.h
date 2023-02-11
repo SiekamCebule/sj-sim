@@ -13,7 +13,11 @@ public:
     enum Direction{
         Null,
         Front,
+        FrontLeft,
+        FrontRight,
         Back,
+        BackLeft,
+        BackRight,
         Left,
         Right
     };

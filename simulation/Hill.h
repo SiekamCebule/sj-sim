@@ -2,14 +2,16 @@
 #define HILL_H
 
 #include "../utilities/ClassWithID.h"
+#include "../utilities/ClassWithCharacteristics.h"
 #include "Characteristic.h"
 
 #include <QString>
+#include <QSet>
 
-class Hill : public ClassWithID
+class Hill : public ClassWithID, public ClassWithCharacteristics
 {
 public:
-    Hill(const QString &name = "", const QString &country = "", int KPoint = 0, int HSPoint = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double tableHeight = 0, double baseSpeed = 0, double speedForGate = 0, double landingZoneStart = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>());
+    Hill(const QString &name = "", const QString &country = "", int KPoint = 0, int HSPoint = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double landingZoneStart = 0, double takeoffEffect = 0, double flightEffect = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>());
 
 private:
     QString name, country;
@@ -23,23 +25,11 @@ private:
     double pointsForGate;
 
     //symulacja
-    double tableHeight; // wysokość progu
-    double baseSpeed; // bazowa prędkość na najniższej belce
-    double speedForGate; // predkosc dodawana/odejmowana za każdą belkę.
+    double takeoffEffect;
+    double flightEffect;
     double landingZoneStart; //początek strefy lądowania (ta niebieska linia)
 
-
-    QSet<Characteristic> characteristics; // Uzupełnia wiele cech skoczni których nie ma w parametrach
-
 public:
-    void insertCharacteristic(const Characteristic & characteristic);
-    void insertCharacteristic(short level, const QString & type);
-    void removeCharacteristic(Characteristic & characteristic);
-    void removeCharacteristic(const QString & type);
-
-    short getLevelOfCharacteristic(const QString &characteristicType);
-    double getRelativeHeightSubstractAfterLandingZone(double distance);
-
     void setupPointsForMeter();
 
     QString getName() const;
@@ -63,14 +53,12 @@ public:
     void setPointsForGate(double newPointsForGate);
     QSet<Characteristic> getCharacteristics() const;
     void setCharacteristics(const QSet<Characteristic> &newCharacteristics);
-    double getBaseSpeed() const;
-    void setBaseSpeed(double newBaseSpeed);
-    double getSpeedForGate() const;
-    void setSpeedForGate(double newSpeedForGate);
-    double getTableHeight() const;
-    void setTableHeight(double newTableHeight);
     double getLandingZoneStart() const;
     void setLandingZoneStart(double newLandingZoneStart);
+    double getTakeoffEffect() const;
+    void setTakeoffEffect(double newTakeoffEffect);
+    double getFlightEffect() const;
+    void setFlightEffect(double newFlightEffect);
 };
 
 #endif // HILL_H

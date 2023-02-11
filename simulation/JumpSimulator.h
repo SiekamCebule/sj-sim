@@ -17,6 +17,7 @@ public:
     JumpSimulator(Jumper *jumper = nullptr, ConditionsInfo *conditionsInfo = nullptr, Hill *hill = nullptr, Competition *competition = nullptr);
 private:
     Jumper * jumper;
+    JumperSkills * jumperSkills; //automatycznie od jumper
     ConditionsInfo * conditionsInfo;
     Hill * hill;
     Competition * competition;
@@ -38,33 +39,20 @@ public:
     void setHill(Hill *newHill);
     Competition *getCompetition() const;
     void setCompetition(Competition *newCompetition);
-
-    double getDistance() const;
-    double getSpeed() const;
-    short getAerodynamicPosition() const;
-    double getRelativeHeight() const;
+    double getTakeoffRating() const;
+    void setTakeoffRating(double newTakeoffRating);
+    double getFlightRating() const;
+    void setFlightRating(double newFlightRating);
+    JumperSkills *getJumperSkills() const;
+    void updateJumperSkills();
 
 private:
-    //skok
-    void simulateInrun();
-    void simulateTakeoff();
-    void setAerodynamicPositionAfterTakeoff();
-    void simulateFlight();
+    void generateTakeoffRating();
+    void generateFlightRating();
 
-    // parametry symulacji
-    double takeoffDuration;
-
-    double distance; // w metrach
-    double speed; // w km/h
-    double relativeHeight; // wysokość skoczka nad zeskokiem (Ciągle zwiększa się w zależności od profilu zeskoku)
-    short aerodynamicPosition; // od 1 do 50
-
-    double takeoffMistakeHeightEffect;
-    double takeoffMistakeSpeedEffect;
-    short takeoffMistakeAerodynamicPositionEffect;
-
-    double heightAboveLandingHill; // Wysokość nad zeskokiem. Np zmniejsza się nad bulą, spowrotem zwiększa się aż do punktu K gdzie powoli się zmniejsza.
-    bool isLanding;
+    //symulacja
+    double takeoffRating;
+    double flightRating;
 };
 
 #endif // JUMPSIMULATOR_H

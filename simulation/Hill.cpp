@@ -3,19 +3,38 @@
 #include <QDebug>
 
 
-Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint, double pointsForFrontWind, double pointsForGate, double tableHeight, double baseSpeed, double speedForGate, double landingZoneStart, const QSet<Characteristic> &characteristics) : name(name),
+Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint, double pointsForFrontWind, double pointsForGate, double landingZoneStart, double takeoffEffect, double flightEffect, const QSet<Characteristic> &characteristics) : name(name),
     country(country),
     KPoint(KPoint),
     HSPoint(HSPoint),
     pointsForFrontWind(pointsForFrontWind),
     pointsForGate(pointsForGate),
-    tableHeight(tableHeight),
-    baseSpeed(baseSpeed),
-    speedForGate(speedForGate),
     landingZoneStart(landingZoneStart),
-    characteristics(characteristics)
+    takeoffEffect(takeoffEffect),
+    flightEffect(flightEffect)
 {
+    calculatePointsForBackWind();
+    setCharacteristics(characteristics);
+}
 
+double Hill::getFlightEffect() const
+{
+    return flightEffect;
+}
+
+void Hill::setFlightEffect(double newFlightEffect)
+{
+    flightEffect = newFlightEffect;
+}
+
+double Hill::getTakeoffEffect() const
+{
+    return takeoffEffect;
+}
+
+void Hill::setTakeoffEffect(double newTakeoffEffect)
+{
+    takeoffEffect = newTakeoffEffect;
 }
 
 double Hill::getLandingZoneStart() const
@@ -28,128 +47,9 @@ void Hill::setLandingZoneStart(double newLandingZoneStart)
     landingZoneStart = newLandingZoneStart;
 }
 
-void Hill::insertCharacteristic(const Characteristic &characteristic)
-{
-    characteristics.insert(characteristic);
-}
-
-void Hill::insertCharacteristic(short level, const QString &type)
-{
-    characteristics.insert(Characteristic(level, type));
-}
-
-void Hill::removeCharacteristic(Characteristic &characteristic)
-{
-    characteristics.remove(characteristic);
-}
-
-void Hill::removeCharacteristic(const QString &type)
-{
-    characteristics.remove(Characteristic(0, type));
-}
-
-short Hill::getLevelOfCharacteristic(const QString &characteristicType)
-{
-    for(QSet<Characteristic>::iterator it = characteristics.begin(); it != characteristics.end(); it++)
-    {
-        if(it->getType() == characteristicType)
-            return it->getLevel();
-    }
-    return 0;
-}
-
-double Hill::getRelativeHeightSubstractAfterLandingZone(double distance)
-{
-    double KPointAndLandingZoneDifference = KPoint - landingZoneStart;
-    //qDebug()<<"KPointAndLandingZoneDifference: "<<KPointAndLandingZoneDifference;
-
-    double tempHS = HSPoint;
-    if(characteristics.contains(Characteristic("long-jumps-safety")))
-        tempHS *= double(getLevelOfCharacteristic("long-jumps-safety")) * 2.00;
-
-    double KPointAndHSPointDifference = tempHS - KPoint;
-    //qDebug()<<"KPointAndHSPointDifference: "<<KPointAndHSPointDifference;
-    if(distance < landingZoneStart + KPointAndLandingZoneDifference * 0.5)
-    {
-        return 0.006;
-    }
-    else if(distance < KPoint)
-    {
-        return 0.009;
-    }
-    else if(distance < KPoint + KPointAndHSPointDifference * 0.5)
-    {
-        return 0.015;
-    }
-    else if(distance < KPoint + KPointAndHSPointDifference)
-    {
-        return 0.040;
-    }
-    else if(distance < KPoint + KPointAndHSPointDifference * 1.2)
-    {
-        return 0.060;
-    }
-    else if(distance < KPoint + KPointAndHSPointDifference * 1.35)
-    {
-        return 0.095;
-    }
-    else if(distance < KPoint + KPointAndHSPointDifference * 1.52)
-    {
-        return 0.120;
-    }
-    else if(distance < KPoint + KPointAndHSPointDifference * 1.75)
-    {
-        return 0.140;
-    }
-    else if(distance < KPoint + KPointAndHSPointDifference * 2)
-    {
-        return 0.170;
-    }
-    else if(distance < KPoint + KPointAndHSPointDifference * 2.5)
-    {
-        return 0.240;
-    }
-    else if(distance < KPoint + KPointAndHSPointDifference * 3)
-    {
-        return 0.300;
-    }
-
-    return 0;
-}
-
 void Hill::setPointsForMeter(double newPointsForMeter)
 {
     pointsForMeter = newPointsForMeter;
-}
-
-double Hill::getTableHeight() const
-{
-    return tableHeight;
-}
-
-void Hill::setTableHeight(double newTableHeight)
-{
-    tableHeight = newTableHeight;
-}
-
-double Hill::getSpeedForGate() const
-{
-    return speedForGate;
-}
-
-void Hill::setSpeedForGate(double newSpeedForGate)
-{
-    speedForGate = newSpeedForGate;
-}
-
-double Hill::getBaseSpeed() const
-{
-    return baseSpeed;
-}
-
-void Hill::setBaseSpeed(double newBaseSpeed)
-{
-    baseSpeed = newBaseSpeed;
 }
 
 void Hill::setupPointsForMeter()

@@ -2,52 +2,47 @@
 #define JUMPERSKILLS_H
 
 #include "../utilities/ClassWithID.h"
+#include "../utilities/ClassWithCharacteristics.h"
 #include "Characteristic.h"
 
 class Jumper;
 
 #include <QSet>
 
-class JumperSkills : public ClassWithID
+class JumperSkills : public ClassWithID, public ClassWithCharacteristics
 {
 public:
-    JumperSkills(short takeoffPower = 0, short takeoffTechnique = 0, short flightStyle = 0, short flightTechnique = 0, short form = 0, short landingStyle = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>(), Jumper * jumper = nullptr);
+    JumperSkills(double takeoffPower = 0, double takeoffTechnique = 0, double flightTechnique = 0, short flightStyle = 0, double form = 0, double landingStyle = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>(), Jumper * jumper = nullptr);
 
 private:
-    short takeoffPower; // 1-50
-    short takeoffTechnique; // 1-50
+    double takeoffPower; // 1-50
+    double takeoffTechnique; // 1-50
     short flightStyle; // 0-klasyczny, 1-Styl V, 2-Nowoczesne V, 3-Szerokie V, 4-Styl H
-    short flightTechnique; // 1-50
-    short form; // 1-50
-    short landingStyle; // 1-15
-    QSet<Characteristic> characteristics;
+    double flightTechnique; // 1-50
+    double form; // 1-50
+    double landingStyle; // 1-15
 
     Jumper * jumper;
     ulong jumperID;
 
 public:
-    void insertCharacteristic(const Characteristic & characteristic);
-    void insertCharacteristic(short level, const QString & type);
-    void removeCharacteristic(const Characteristic & characteristic);
-    void removeCharacteristic(const QString & type);
-
-    short getLevelOfCharacteristic(const QString & characteristicType);
-
     void setJumperID(ulong ID);
-    short getTakeoffPower() const;
-    void setTakeoffPower(short newTakeoffPower);
-    short getTakeoffTechnique() const;
-    void setTakeoffTechnique(short newTakeoffTechnique);
+    double getTakeoffPower() const;
+    void setTakeoffPower(double newTakeoffPower);
+    double getTakeoffTechnique() const;
+    void setTakeoffTechnique(double newTakeoffTechnique);
     short getFlightStyle() const;
     void setFlightStyle(short newFlightStyle);
-    short getFlightTechnique() const;
-    void setFlightTechnique(short newFlightTechnique);
-    short getLandingStyle() const;
-    void setLandingStyle(short newLandingStyle);
+    double getFlightTechnique() const;
+    void setFlightTechnique(double newFlightTechnique);
+    double getLandingStyle() const;
+    void setLandingStyle(double newLandingStyle);
     QSet<Characteristic> getCharacteristics() const;
     void setCharacteristics(const QSet<Characteristic> &newCharacteristics);
-    short getForm() const;
-    void setForm(short newForm);
+    double getForm() const;
+    void setForm(double newForm);
+    Jumper *getJumper() const;
+    void setJumper(Jumper *newJumper);
 };
 
 #endif // JUMPERSKILLS_H

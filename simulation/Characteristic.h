@@ -15,7 +15,7 @@ public:
     operator QString() const {return type;}
 private:
 
-    short level; // -3, -2, -1, 1, 2, 3
+    short level; // od -5 do 5
     QString type;
 
 public:

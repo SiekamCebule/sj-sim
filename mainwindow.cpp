@@ -20,25 +20,35 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Hill * hill = new Hill("Wisła", "POL", 120, 134, 0, 0, 3.0, 84.5, 0.55, 103);
+    Hill * hill = new Hill("Wisła", "POL", 120, 134, 10.8, 7.24, 103, 0.011, 0.014);
+    hill->insertCharacteristic(1, "takeoff-power-effect");
+    hill->insertCharacteristic(-1, "takeoff-technique-effect");
     hill->setupPointsForMeter();
-    JumpSimulator simulator;  
-    Jumper * jumper = new Jumper("Markus", "Eisenbichler", "GER", new JumperSkills(37, 41, 2, 45, 38, 14, QSet<Characteristic>(), nullptr), 0);
-    jumper->getJumperSkills()->insertCharacteristic(Characteristic(0, "inrun-speed"));
+    JumpSimulator simulator;
+
+    //QVector<Jumper>jumpers;
+
+    Jumper * jumper;
+
     simulator.setConditionsInfo(new ConditionsInfo(10));
     simulator.setHill(hill);
+    jumper = new Jumper("Daniel", "Huber", "AUT", new JumperSkills(38, 42, 42, 2, 40, 14, QSet<Characteristic>(), nullptr), 0);
     simulator.setJumper(jumper);
+
+    qDebug()<<"SKOCZNIA: "<<hill->getName()<<" ("<<hill->getCountry()<<")    K"<<hill->getKPoint()<<"  HS"<<hill->getHSPoint();
     simulator.simulateJump();
 
-    /*for(int i=0; i<5; i++){
-        qDebug()<<"ZAWODNIK: "<<jumper->getNameAndSurname();
-    simulator.simulateJump();
-    simulator.resetTemporaryParameters();
-    qDebug()<<"\n";
+    /*for(auto & jum : jumpers)
+    {
+        qDebug()<<"";
+        qDebug()<<jum.getNameAndSurname();
+        simulator.setJumper(&jum);
+        simulator.simulateJump();
+        simulator.resetTemporaryParameters();
     }*/
 
+    delete jumper;
     delete hill;
-    delete simulator.getJumper();
     delete simulator.getJumper()->getJumperSkills();
     delete simulator.getConditionsInfo();
 
