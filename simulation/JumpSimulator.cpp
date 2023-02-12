@@ -49,8 +49,16 @@ void JumpSimulator::generateTakeoffRating()
     ratingMultiplier = 0.7 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
-    double random = MyRandom::reducingChancesRandom(0.1, 32, 0.103, 1.16, 1.028, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger);
-    takeoffRating -= random;
+    double random = 0;
+    short randomType = MyRandom::randomInt(1, 20);
+    if(randomType <= 3)
+        random = MyRandom::reducingChancesRandom(0.1, 8, 0.1, 1.15, 1.15, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger);
+    else
+        random = -(MyRandom::reducingChancesRandom(0.1, 32, 0.1, 1.15, 1.05, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
+
+    qDebug()<<"Takeoff Random: "<<random;
+
+    takeoffRating += random;
 
     if(takeoffRating < 0.1)
         takeoffRating = 0.1;
@@ -66,8 +74,17 @@ void JumpSimulator::generateFlightRating()
     ratingMultiplier = 1.185 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
     flightRating += jumperSkills->getForm() * ratingMultiplier;
 
-    double random = MyRandom::reducingChancesRandom(0.1, 40, 0.103, 1.16, 1.028, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger);
-    flightRating -= random;
+    double random = 0;
+    short randomType = MyRandom::randomInt(1, 20);
+    if(randomType <= 3)
+        random = MyRandom::reducingChancesRandom(0.1, 6, 0.1, 1.15, 1.15, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger);
+    else
+        random = -(MyRandom::reducingChancesRandom(0.1, 40, 0.10, 1.15, 1.05, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
+
+
+    qDebug()<<"Flight Random: "<<random;
+
+    flightRating += random;
 
     if(flightRating < 0.1)
         flightRating = 0.1;

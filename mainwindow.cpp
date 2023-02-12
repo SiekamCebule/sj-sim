@@ -36,7 +36,10 @@ MainWindow::MainWindow(QWidget *parent)
     simulator.setJumper(jumper);
 
     qDebug()<<"SKOCZNIA: "<<hill->getName()<<" ("<<hill->getCountry()<<")    K"<<hill->getKPoint()<<"  HS"<<hill->getHSPoint();
-    simulator.simulateJump();
+    for(int i=0; i<10; i++){
+        simulator.simulateJump();
+        qDebug()<<"";
+    }
     /*for(auto & jum : jumpers)
     {
         qDebug()<<"";
