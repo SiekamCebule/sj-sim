@@ -46,15 +46,17 @@ public:
     double getFlightRating() const;
     void setFlightRating(double newFlightRating);
     JumperSkills *getJumperSkills() const;
-    void updateJumperSkills();
+    double getDistance() const;
+    void setDistance(double newDistance);
 
+    void updateJumperSkills();
 private:
     void generateTakeoffRating();
     void generateFlightRating();
     double getMultiplierForFlightStyleEffect();
-    double getHillProfileDistanceMultiplier();
 
     void generateDistance();
+    void generateWindEffects(); // np. zmiana odległości przez wiatr, albo w przyszłości jakieś nierówności w locie przez taki boczny wiatr.
 
     //symulacja
     double takeoffRating;

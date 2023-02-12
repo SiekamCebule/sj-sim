@@ -1,5 +1,7 @@
 #include "Wind.h"
 
+#include <QDebug>
+
 short Wind::getDirection() const
 {
     return direction;
@@ -20,25 +22,25 @@ void Wind::setValue(double newValue)
     value = newValue;
 }
 
+double Wind::getValueToAveragedWind() const
+{
+    if(getDirection() == Front) return getValue();
+    else if(getDirection() == Back) return -getValue();
+    else return 0;
+}
+
 Wind::Wind(short direction, double value) : direction(direction),
     value(value)
 {}
 
-Wind::Wind(double value)
+Wind::Wind(double value) : value(value)
 {
     if(value == 0)
-    {
         direction = Null;
-        this->value = 0;
-    }
     else if(value > 0)
-    {
-        direction == Front;
-        this->value = value;
-    }
-    else //if(value < 0)
-    {
+        direction = Front;
+    else{
         direction = Back;
-        this->value = !value;
+        this->value = -(this->value);
     }
 }

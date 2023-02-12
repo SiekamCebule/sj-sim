@@ -9,16 +9,26 @@ ConditionsInfo::ConditionsInfo(int gate, double windSensorsFaulty, const QVector
     gate(gate),
     windSensorsFaulty(windSensorsFaulty)
 {
+    this->winds.push_back(Wind(Wind::Right, 8));
+    this->winds.push_back(Wind(Wind::Right, 2.4));
+    this->winds.push_back(Wind(Wind::Right, 2.6));
+    this->winds.push_back(Wind(Wind::FrontRight, 2.09));
+    this->winds.push_back(Wind(Wind::FrontRight, 1.4));
+    this->winds.push_back(Wind(Wind::Front, 0.7));
+    this->winds.push_back(Wind(Wind::Front, 0.3));
 }
 
 Wind ConditionsInfo::getAveragedWind()
 {
-    int percents[7] = {10, 10, 20, 20, 15, 15, 10};
+    double percents[7] = {10, 10, 20, 20, 15, 15, 10};
     double windAvg = 0;
     int i=0;
     for(const auto & wind : winds)
     {
-        windAvg += wind.getValue() * double(percents[i]);
+        if(wind.getDirection() == Wind::Front || wind.getDirection() == Wind::FrontLeft ||wind.getDirection() == Wind::FrontRight)
+            windAvg += wind.getValue() * percents[i];
+        else if((wind.getDirection() == Wind::Back || wind.getDirection() == Wind::BackLeft ||wind.getDirection() == Wind::BackRight))
+            windAvg -= wind.getValue() * percents[i];
         i++;
     }
     windAvg /= 100;

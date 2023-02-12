@@ -33,7 +33,6 @@ private:
 public:
     Wind getAveragedWind();
 
-
     int getGate() const;
     void setGate(int newGate);
     ulong getWindID(int index) const;

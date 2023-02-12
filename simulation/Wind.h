@@ -31,6 +31,7 @@ public:
     void setDirection(short newDirection);
     double getValue() const;
     void setValue(double newValue);
+    double getValueToAveragedWind() const;
 };
 
 #endif // WIND_H
