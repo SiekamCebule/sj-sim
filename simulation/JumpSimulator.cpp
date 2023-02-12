@@ -56,8 +56,8 @@ void JumpSimulator::generateTakeoffRating()
     else
         random = -(MyRandom::reducingChancesRandom(0.1, 32, 0.1, 1.15, 1.05, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
 
+    random *= 1 + (0.15 * hill->getLevelOfCharacteristic("takeoff-randomness-effect"));
     qDebug()<<"Takeoff Random: "<<random;
-
     takeoffRating += random;
 
     if(takeoffRating < 0.1)
@@ -81,9 +81,8 @@ void JumpSimulator::generateFlightRating()
     else
         random = -(MyRandom::reducingChancesRandom(0.1, 40, 0.10, 1.15, 1.05, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
 
-
+    random *= 1 + (0.15 * hill->getLevelOfCharacteristic("flight-randomness-effect"));
     qDebug()<<"Flight Random: "<<random;
-
     flightRating += random;
 
     if(flightRating < 0.1)

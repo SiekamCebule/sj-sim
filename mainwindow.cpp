@@ -23,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
     Hill * hill = new Hill("Wisła", "POL", 120, 134, 10.8, 7.24, 103, 0.4035, 0.5465);
     hill->insertCharacteristic(1, "takeoff-power-effect");
     hill->insertCharacteristic(-1, "takeoff-technique-effect");
+    hill->insertCharacteristic(0, "takeoff-randomness-effect");
+    hill->insertCharacteristic(0, "takeoff-form-effect");
+    hill->insertCharacteristic(0, "flight-technique-effect");
+    hill->insertCharacteristic(0, "flight-randomness-effect");
+    hill->insertCharacteristic(0, "flight-form-effect");
     hill->setupPointsForMeter();
     JumpSimulator simulator;
 
