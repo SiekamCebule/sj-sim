@@ -263,7 +263,7 @@ short JumpMistake::generateJumpMistakeHarmfulness(JumpSimulator * const simulato
         double chance = 1 / (harmProbabilities[i]) * 100;
         //qDebug()<<"chance: "<<chance;
         double random = randomDouble(0, 100, 7);
-        if(random < chance)
+        if(random <= chance)
         {
             //qDebug()<<"random: "<<random<<", chance: "<<chance<<", harmProbab: "<<harmProbabilities[i]<<", exactType: "<<exactType<<", generalType: "<<generalType;
             return i + 1;

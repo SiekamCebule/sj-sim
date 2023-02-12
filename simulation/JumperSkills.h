@@ -26,6 +26,13 @@ private:
     ulong jumperID;
 
 public:
+    enum FlightStyle{
+        VStyle,
+        ModernVStyle,
+        WideVStyle,
+        HStyle
+    };
+
     void setJumperID(ulong ID);
     double getTakeoffPower() const;
     void setTakeoffPower(double newTakeoffPower);

@@ -9,6 +9,8 @@
 #include "ConditionsInfo.h"
 #include "Hill.h"
 
+#include <QMap>
+
 class Competition;
 
 class JumpSimulator
@@ -49,10 +51,15 @@ public:
 private:
     void generateTakeoffRating();
     void generateFlightRating();
+    double getMultiplierForFlightStyleEffect();
+    double getHillProfileDistanceMultiplier();
+
+    void generateDistance();
 
     //symulacja
     double takeoffRating;
     double flightRating;
+    double distance;
 };
 
 #endif // JUMPSIMULATOR_H

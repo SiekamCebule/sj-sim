@@ -1,5 +1,6 @@
 #include "JumpSimulator.h"
 #include "../utilities/functions.h"
+#include "../utilities/MyRandom.h"
 #include "JumpMistake.h"
 
 #include <QDebug>
@@ -14,8 +15,7 @@ JumpSimulator::JumpSimulator(Jumper *jumper, ConditionsInfo *conditionsInfo, Hil
     if(jumper != nullptr)
         jumperSkills = jumper->getJumperSkills();
 
-    takeoffRating = 0;
-    flightRating = 0;
+    resetTemporaryParameters();
 }
 
 JumperSkills *JumpSimulator::getJumperSkills() const
@@ -31,15 +31,16 @@ void JumpSimulator::updateJumperSkills()
 
 void JumpSimulator::simulateJump()
 {
+    resetTemporaryParameters();
     updateJumperSkills();
     generateTakeoffRating();
-    //generateFlightRating();
-    //qDebug()<<"Skok zakończył się na "<<(std::floor((distance * 2) + 0.5) / 2)<<" metrze.";
+    generateFlightRating();
+    generateDistance();
 }
 
 void JumpSimulator::generateTakeoffRating()
 {
-    double ratingMultiplier = 0.98 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
+    double ratingMultiplier = 1.00 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
     takeoffRating = jumperSkills->getTakeoffTechnique() * ratingMultiplier;
 
     ratingMultiplier = 0.5 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect");
@@ -48,28 +49,63 @@ void JumpSimulator::generateTakeoffRating()
     ratingMultiplier = 0.7 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
-    double randomness = 3.25 + 0.75 * hill->getLevelOfCharacteristic("takeoff-randomness-effect");;
-    takeoffRating += randomDouble(-randomness, randomness);
+    double random = MyRandom::reducingChancesRandom(0.1, 32, 0.103, 1.16, 1.028, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger);
+    takeoffRating -= random;
 
     if(takeoffRating < 0.1)
         takeoffRating = 0.1;
 
-    qDebug()<<"Ocena wyjścia z progu: "<<takeoffRating;
+    //qDebug()<<"Ocena wyjścia z progu: "<<takeoffRating;
 }
 
 void JumpSimulator::generateFlightRating()
 {
-    double ratingMultiplier;
+    double ratingMultiplier = 1.015 + 0.12 * hill->getLevelOfCharacteristic("flight-technique-effect");
+    flightRating = jumperSkills->getFlightTechnique() * ratingMultiplier;
 
-    flightRating = (jumperSkills->getFlightTechnique() * 0.60);
-    flightRating += (jumperSkills->getForm() * 0.65);
-    /// WPŁYW STYLU LOTU ----> DO ZROBIENIA
+    ratingMultiplier = 1.185 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
+    flightRating += jumperSkills->getForm() * ratingMultiplier;
 
-    /// WPŁYW CECH CHARAKTERYSTYCZNYCH ----> DO ZROBIENIA
+    double random = MyRandom::reducingChancesRandom(0.1, 40, 0.103, 1.16, 1.028, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger);
+    flightRating -= random;
 
+    if(flightRating < 0.1)
+        flightRating = 0.1;
 
+    //qDebug()<<"Mnożnik za styl lotu: "<<getMultiplierForFlightStyleEffect();
+    flightRating *= getMultiplierForFlightStyleEffect();
 
-    flightRating += randomDouble(-3.75, 3.75);
+    //qDebug()<<"Ocena lotu: "<<flightRating;
+}
+
+double JumpSimulator::getMultiplierForFlightStyleEffect()
+{
+    switch(jumperSkills->getFlightStyle())
+    {
+    case JumperSkills::FlightStyle::VStyle:
+        return 1.024 - ((hill->getFlightEffect() / hill->getTakeoffEffect()) / 41);
+    case JumperSkills::FlightStyle::ModernVStyle:
+        return 0.995 + ((hill->getFlightEffect() / hill->getTakeoffEffect()) / 56); //
+    case JumperSkills::FlightStyle::WideVStyle:
+        return 0.98 + ((hill->getFlightEffect() / hill->getTakeoffEffect()) / 36);
+    case JumperSkills::FlightStyle::HStyle:
+        return 0.960 + ((hill->getFlightEffect() / hill->getTakeoffEffect()) / 27.5);;
+    }
+    return 1.00;
+}
+
+double JumpSimulator::getHillProfileDistanceMultiplier()
+{
+    return 1.00;
+}
+
+void JumpSimulator::generateDistance()
+{
+    distance += takeoffRating * hill->getTakeoffEffect();
+    distance += flightRating * hill->getFlightEffect();
+    distance += conditionsInfo->getGate() * (hill->getPointsForGate() / hill->getPointsForMeter());
+
+    qDebug()<<"Odległość: "<<roundDoubleToHalf(distance);
 }
 
 double JumpSimulator::getFlightRating() const
@@ -96,6 +132,7 @@ void JumpSimulator::resetTemporaryParameters()
 {
     takeoffRating = 0;
     flightRating = 0;
+    distance = 0;
 }
 
 Competition *JumpSimulator::getCompetition() const

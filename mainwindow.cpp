@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Hill * hill = new Hill("Wisła", "POL", 120, 134, 10.8, 7.24, 103, 0.011, 0.014);
+    Hill * hill = new Hill("Wisła", "POL", 120, 134, 10.8, 7.24, 103, 0.4035, 0.5465);
     hill->insertCharacteristic(1, "takeoff-power-effect");
     hill->insertCharacteristic(-1, "takeoff-technique-effect");
     hill->setupPointsForMeter();
@@ -32,12 +32,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     simulator.setConditionsInfo(new ConditionsInfo(10));
     simulator.setHill(hill);
-    jumper = new Jumper("Daniel", "Huber", "AUT", new JumperSkills(38, 42, 42, 2, 40, 14, QSet<Characteristic>(), nullptr), 0);
+    jumper = new Jumper("Daniel", "Huber", "AUT", new JumperSkills(38, 42, 42, 1, 40, 14, QSet<Characteristic>(), nullptr), 0);
     simulator.setJumper(jumper);
 
     qDebug()<<"SKOCZNIA: "<<hill->getName()<<" ("<<hill->getCountry()<<")    K"<<hill->getKPoint()<<"  HS"<<hill->getHSPoint();
     simulator.simulateJump();
-
     /*for(auto & jum : jumpers)
     {
         qDebug()<<"";

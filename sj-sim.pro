@@ -24,6 +24,7 @@ SOURCES += \
     utilities/ClassWithCharacteristics.cpp \
     utilities/ClassWithID.cpp \
     utilities/IDGenerator.cpp \
+    utilities/MyRandom.cpp \
     utilities/WindsGenerator.cpp \
     utilities/functions.cpp
 
@@ -42,6 +43,7 @@ HEADERS += \
     utilities/ClassWithCharacteristics.h \
     utilities/ClassWithID.h \
     utilities/IDGenerator.h \
+    utilities/MyRandom.h \
     utilities/WindsGenerator.h \
     utilities/functions.h
 
