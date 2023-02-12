@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "utilities/IDGenerator.h"
+#include "utilities/functions.h"
 #include "simulation/Jumper.h"
 #include "simulation/JumperSkills.h"
 #include "simulation/ConditionsInfo.h"
@@ -67,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug()<<jumper.getNameAndSurname();
         simulator.setJumper(&jumper);
         simulator.simulateJump();
-        qDebug()<<"Odległość zawodnika: "<<simulator.getDistance();
+        qDebug()<<"Odległość zawodnika: "<<roundDoubleToHalf(simulator.getDistance());
         qDebug()<<"";
     }
 
