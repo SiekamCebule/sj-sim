@@ -9,6 +9,8 @@
 #include "simulation/JumpSimulator.h"
 #include "simulation/Characteristic.h"
 #include "simulation/Hill.h"
+#include "simulation/wind-generation/WindsGenerator.h"
+#include "simulation/wind-generation/WindGenerationSettings.h"
 
 #include <QDebug>
 #include <QVector>
@@ -63,10 +65,22 @@ MainWindow::MainWindow(QWidget *parent)
     jumper = Jumper("Domen", "Prevc", "SLO", new JumperSkills(34, 33, 44, 2, 37, 12.5, QSet<Characteristic>(), nullptr), 0);
     jumpers.push_back(jumper);
 
+    QVector<WindGenerationSettings> windGenerationSettings = {
+        WindGenerationSettings(Wind::Back, 2.8, 0.5, 1.65),
+        WindGenerationSettings(Wind::Back, 8, 0.4, 1.8),
+        WindGenerationSettings(Wind::Back, 4, 0.9, 1.660),
+        WindGenerationSettings(Wind::Back, 4.2, 1.2, 1.4),
+        WindGenerationSettings(Wind::Side, 4, 1.2, 1.20),
+        WindGenerationSettings(Wind::Side, 6, 1.3, 1.20),
+        WindGenerationSettings(Wind::Side, 8, 1.5, 1.40)
+    };
+    WindsGenerator windGenerator(7, windGenerationSettings);
+
     for (auto & jumper : jumpers)
     {
         qDebug()<<jumper.getNameAndSurname();
         simulator.setJumper(&jumper);
+        simulator.getConditionsInfo()->setWinds(windGenerator.generateWinds());
         simulator.simulateJump();
         qDebug()<<"Odległość zawodnika: "<<roundDoubleToHalf(simulator.getDistance());
         qDebug()<<"";

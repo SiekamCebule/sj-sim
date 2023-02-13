@@ -129,7 +129,7 @@ void JumpSimulator::generateWindEffects()
     {
         if(wind.getDirection() == Wind::Back)
         {
-            change = wind.getValue() * (segmentDistance / 5);
+            change = wind.getValue() * (segmentDistance / 3.8);
             change *= MyRandom::randomDouble(0.975, 1.025);
             change *= 1.01 - (jumperSkills->getFlightTechnique() / 2200);
             switch(jumperSkills->getFlightStyle())
@@ -141,9 +141,9 @@ void JumpSimulator::generateWindEffects()
             }
             distance -= change;
         }
-        else if(wind.getDirection() == Wind::BackLeft || wind.getDirection() == Wind::BackRight)
+        else if(wind.getDirection() == Wind::BackSide)
         {
-            change = wind.getValue() * (segmentDistance / 13.75);
+            change = wind.getValue() * (segmentDistance / 13.8);
             change *= MyRandom::randomDouble(0.875, 1.125);
             change *= 1.02 - (jumperSkills->getFlightTechnique() / 1200);
             switch(jumperSkills->getFlightStyle())
@@ -155,7 +155,7 @@ void JumpSimulator::generateWindEffects()
             }
             distance -= change;
         }
-        else if(wind.getDirection() == Wind::Left || wind.getDirection() == Wind::Right)
+        else if(wind.getDirection() == Wind::Side)
         {
             change = MyRandom::randomDouble(-segmentDistance / 23, segmentDistance / 76);
             if(change < 0)
@@ -184,9 +184,9 @@ void JumpSimulator::generateWindEffects()
             }
             distance += change; //dodać, bo i tak jeśli będzie wiatr w plecy to change będzie ujemne
         }
-        else if(wind.getDirection() == Wind::FrontLeft || wind.getDirection() == Wind::FrontRight)
+        else if(wind.getDirection() == Wind::FrontSide)
         {
-            change = wind.getValue() * (segmentDistance / 20.5);
+            change = wind.getValue() * (segmentDistance / 29);
             change *= MyRandom::randomDouble(0.845, 1.155);
             change *= 0.94 + (jumperSkills->getFlightTechnique() / 420);
             switch(jumperSkills->getFlightStyle())
@@ -200,7 +200,7 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::Front)
         {
-            change = wind.getValue() * (segmentDistance / 8.5);
+            change = wind.getValue() * (segmentDistance / 9.65);
             change *= MyRandom::randomDouble(0.82, 1.18);
             change *= 0.88 + (jumperSkills->getFlightTechnique() / 197.5);
             switch(jumperSkills->getFlightStyle())

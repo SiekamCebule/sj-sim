@@ -9,13 +9,29 @@ ConditionsInfo::ConditionsInfo(int gate, double windSensorsFaulty, const QVector
     gate(gate),
     windSensorsFaulty(windSensorsFaulty)
 {
-    this->winds.push_back(Wind(Wind::Right, 8));
+    /*this->winds.push_back(Wind(Wind::Right, 8));
     this->winds.push_back(Wind(Wind::Right, 2.4));
     this->winds.push_back(Wind(Wind::Right, 2.6));
     this->winds.push_back(Wind(Wind::FrontRight, 2.09));
     this->winds.push_back(Wind(Wind::FrontRight, 1.4));
     this->winds.push_back(Wind(Wind::Front, 0.7));
-    this->winds.push_back(Wind(Wind::Front, 0.3));
+    this->winds.push_back(Wind(Wind::Front, 0.3));*/
+
+    /* this->winds.push_back(Wind(Wind::Front, 0));
+    this->winds.push_back(Wind(Wind::Front, 0));
+    this->winds.push_back(Wind(Wind::Front, 0));
+    this->winds.push_back(Wind(Wind::Front, 0));
+    this->winds.push_back(Wind(Wind::Front, 0));
+    this->winds.push_back(Wind(Wind::Front, 0));
+    this->winds.push_back(Wind(Wind::Front, 0));*/
+
+    this->winds.push_back(Wind(Wind::Front, 1));
+    this->winds.push_back(Wind(Wind::Front, 1));
+    this->winds.push_back(Wind(Wind::Front, 1));
+    this->winds.push_back(Wind(Wind::Front, 1));
+    this->winds.push_back(Wind(Wind::Front, 1));
+    this->winds.push_back(Wind(Wind::Front, 1));
+    this->winds.push_back(Wind(Wind::Front, 1));
 }
 
 Wind ConditionsInfo::getAveragedWind()
@@ -25,9 +41,9 @@ Wind ConditionsInfo::getAveragedWind()
     int i=0;
     for(const auto & wind : winds)
     {
-        if(wind.getDirection() == Wind::Front || wind.getDirection() == Wind::FrontLeft ||wind.getDirection() == Wind::FrontRight)
+        if(wind.getDirection() == Wind::Front || wind.getDirection() == Wind::FrontSide)
             windAvg += wind.getValue() * percents[i];
-        else if((wind.getDirection() == Wind::Back || wind.getDirection() == Wind::BackLeft ||wind.getDirection() == Wind::BackRight))
+        else if((wind.getDirection() == Wind::Back || wind.getDirection() == Wind::BackSide))
             windAvg -= wind.getValue() * percents[i];
         i++;
     }

@@ -1,5 +1,7 @@
 #include "IDGenerator.h"
 
+#include <QDebug>
+
 IDGenerator globalIDGenerator;
 
 IDGenerator::IDGenerator() : lastID(0)
@@ -20,6 +22,7 @@ ulong IDGenerator::generateNewID()
     }
     values.insert(i);
     lastID = i;
+    //qDebug()<<"Ile ID: "<<values.size();
     return i;
 }
 

@@ -3,6 +3,7 @@
 
 #include "../utilities/ClassWithID.h"
 
+class QString;
 
 class Wind : public ClassWithID
 {
@@ -12,14 +13,11 @@ public:
     Wind(double value);
     enum Direction{
         Null,
-        Front,
-        FrontLeft,
-        FrontRight,
         Back,
-        BackLeft,
-        BackRight,
-        Left,
-        Right
+        BackSide,
+        Side,
+        FrontSide,
+        Front
     };
 
 private:
@@ -29,6 +27,7 @@ private:
 public:
     short getDirection() const;
     void setDirection(short newDirection);
+    QString getStringDirection(bool windPrefix) const;
     double getValue() const;
     void setValue(double newValue);
     double getValueToAveragedWind() const;

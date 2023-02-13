@@ -21,11 +21,12 @@ SOURCES += \
     simulation/JumperSkills.cpp \
     simulation/SimulationGlobals.cpp \
     simulation/Wind.cpp \
+    simulation/wind-generation/WindGenerationSettings.cpp \
+    simulation/wind-generation/WindsGenerator.cpp \
     utilities/ClassWithCharacteristics.cpp \
     utilities/ClassWithID.cpp \
     utilities/IDGenerator.cpp \
     utilities/MyRandom.cpp \
-    utilities/WindsGenerator.cpp \
     utilities/functions.cpp
 
 HEADERS += \
@@ -40,11 +41,12 @@ HEADERS += \
     simulation/JumperSkills.h \
     simulation/SimulationGlobals.h \
     simulation/Wind.h \
+    simulation/wind-generation/WindGenerationSettings.h \
+    simulation/wind-generation/WindsGenerator.h \
     utilities/ClassWithCharacteristics.h \
     utilities/ClassWithID.h \
     utilities/IDGenerator.h \
     utilities/MyRandom.h \
-    utilities/WindsGenerator.h \
     utilities/functions.h
 
 FORMS += \

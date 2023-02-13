@@ -1,6 +1,7 @@
 #include "Wind.h"
 
 #include <QDebug>
+#include <QString>
 
 short Wind::getDirection() const
 {
@@ -10,6 +11,25 @@ short Wind::getDirection() const
 void Wind::setDirection(short newDirection)
 {
     direction = newDirection;
+}
+
+QString Wind::getStringDirection(bool windPrefix) const
+{
+    QString text;
+    switch(getDirection())
+    {
+    case Null: return "NULL";
+    case Back: text = "tylni"; break;
+    case BackSide: text = "tylno-boczny"; break;
+    case Side: text = "boczny"; break;
+    case FrontSide: text = "przednio-boczny"; break;
+    case Front: text = "przedni"; break;
+    }
+    if(windPrefix == true)
+        text.insert(0, "Wiatr ");
+    else text.replace(0, 1, text[0].toUpper());
+
+    return text;
 }
 
 double Wind::getValue() const
