@@ -28,7 +28,6 @@ private:
      */
 
     int gate;
-    double windSensorsFaulty;
 
 public:
     Wind getAveragedWind();
@@ -41,8 +40,6 @@ public:
     QVector<ulong> getWindsIDs() const;
     void setWindsIDs(const QVector<ulong> &newWindsIDs);
     void setVectorWindID(int index, ulong newID);
-    double getWindSensorsFaulty() const;
-    void setWindSensorsFaulty(double newWindSensorsFaulty);
 };
 
 #endif // CONDITIONSINFO_H

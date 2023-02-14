@@ -53,6 +53,14 @@ void JumpSimulator::generateTakeoffRating()
     ratingMultiplier = 0.7 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
+
+    double perfectLevel = 0;
+    if((hill->getTakeoffEffect() / (hill->getFlightEffect() / 1.00)) > 1)
+        perfectLevel = (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.745));
+    else
+        perfectLevel = -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.745));
+    takeoffRating -= std::abs(perfectLevel - jumper->getJumperSkills()->getLevelOfCharacteristic("takeoff-height")) * 1.15;
+
     double random = 0;
     short randomType = MyRandom::randomInt(1, 20);
     if(randomType <= 3)
@@ -67,7 +75,7 @@ void JumpSimulator::generateTakeoffRating()
     if(takeoffRating < 0.1)
         takeoffRating = 0.1;
 
-    //qDebug()<<"Ocena wyjścia z progu: "<<takeoffRating;
+    qDebug()<<"Ocena wyjścia z progu: "<<takeoffRating;
 }
 
 void JumpSimulator::generateFlightRating()
@@ -77,6 +85,13 @@ void JumpSimulator::generateFlightRating()
 
     ratingMultiplier = 1.185 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
     flightRating += jumperSkills->getForm() * ratingMultiplier;
+
+    double perfectLevel = 0;
+    if((hill->getTakeoffEffect() / (hill->getFlightEffect() / 1.00)) > 1)
+        perfectLevel = (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.745));
+    else
+        perfectLevel = -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.745));
+    takeoffRating -= std::abs(perfectLevel - jumper->getJumperSkills()->getLevelOfCharacteristic("flight-height"));
 
     double random = 0;
     short randomType = MyRandom::randomInt(1, 20);
@@ -95,7 +110,7 @@ void JumpSimulator::generateFlightRating()
     //qDebug()<<"Mnożnik za styl lotu: "<<getMultiplierForFlightStyleEffect();
     flightRating *= getMultiplierForFlightStyleEffect();
 
-    //qDebug()<<"Ocena lotu: "<<flightRating;
+    qDebug()<<"Ocena lotu: "<<flightRating;
 }
 
 double JumpSimulator::getMultiplierForFlightStyleEffect()

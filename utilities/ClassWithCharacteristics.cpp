@@ -26,7 +26,7 @@ void ClassWithCharacteristics::insertCharacteristic(const Characteristic &charac
     characteristics.insert(characteristic);
 }
 
-void ClassWithCharacteristics::insertCharacteristic(short level, const QString &type)
+void ClassWithCharacteristics::insertCharacteristic(const QString &type, short level)
 {
     characteristics.insert(Characteristic(level, type));
 }

@@ -1,6 +1,6 @@
 #include "Characteristic.h"
 
-Characteristic::Characteristic(short level, const QString &type) : level(level),
+Characteristic::Characteristic(double level, const QString &type) : level(level),
     type(type)
 {
     if(level < -3) level = -3;
@@ -11,12 +11,12 @@ Characteristic::Characteristic(const QString &type) : type(type), level(0)
 {
 }
 
-short Characteristic::getLevel() const
+double Characteristic::getLevel() const
 {
     return level;
 }
 
-void Characteristic::setLevel(short newLevel)
+void Characteristic::setLevel(double newLevel)
 {
     level = newLevel;
 }

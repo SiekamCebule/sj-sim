@@ -6,8 +6,7 @@
 
 ConditionsInfo::ConditionsInfo(int gate, double windSensorsFaulty, const QVector<Wind> & winds ) :
     winds(winds),
-    gate(gate),
-    windSensorsFaulty(windSensorsFaulty)
+    gate(gate)
 {
     /*this->winds.push_back(Wind(Wind::Right, 8));
     this->winds.push_back(Wind(Wind::Right, 2.4));
@@ -50,16 +49,6 @@ Wind ConditionsInfo::getAveragedWind()
     windAvg /= 100;
 
     return Wind(windAvg);
-}
-
-double ConditionsInfo::getWindSensorsFaulty() const
-{
-    return windSensorsFaulty;
-}
-
-void ConditionsInfo::setWindSensorsFaulty(double newWindSensorsFaulty)
-{
-    windSensorsFaulty = newWindSensorsFaulty;
 }
 
 QVector<ulong> ConditionsInfo::getWindsIDs() const

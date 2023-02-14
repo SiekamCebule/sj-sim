@@ -10,17 +10,17 @@
 class Characteristic
 {
 public:
-    explicit Characteristic(short level = 0, const QString &type = "");
+    explicit Characteristic(double level = 0, const QString &type = "");
     Characteristic(const QString &type = "");
     operator QString() const {return type;}
 private:
 
-    short level; // od -5 do 5
+    double level; // od -5 do 5
     QString type;
 
 public:
-    short getLevel() const;
-    void setLevel(short newLevel);
+    double getLevel() const;
+    void setLevel(double newLevel);
     QString getType() const;
     void setType(const QString &newType);
 };

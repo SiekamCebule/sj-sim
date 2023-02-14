@@ -15,7 +15,7 @@ public:
     ClassWithCharacteristics();
 
     void insertCharacteristic(const Characteristic & characteristic);
-    void insertCharacteristic(short level, const QString & type);
+    void insertCharacteristic( const QString & type, short level);
     void removeCharacteristic(const Characteristic & characteristic);
     void removeCharacteristic(const QString & type);
     bool characteristicsContains(const QString & type);

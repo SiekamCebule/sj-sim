@@ -36,7 +36,7 @@ QVector<Wind> WindsGenerator::generateWinds()
         double frontSideProb = 250 + settings->getLevelOfCharacteristic("front-side-wind-probability") * 100;
         double frontProb = 250 + settings->getLevelOfCharacteristic("front-wind-probability") * 100;
 
-        const double baseDirectionChanceMultiplier = 35 / settings->getWindDirectionInstability();
+        const double baseDirectionChanceMultiplier = 30 - (settings->getWindDirectionInstability() * 2.75);
 
         switch(settings->getBaseDirection())
         {
@@ -107,9 +107,9 @@ QVector<Wind> WindsGenerator::generateWinds()
         winds.push_back(wind);
     }
 
-    for(const auto & wind : winds)
+    /*for(const auto & wind : winds)
     {
         qDebug()<<"Wiatr "<<wind.getStringDirection(false)<<", o prędkości "<<wind.getValue()<<"m/s";
-    }
+    }*/
     return winds;
 }
