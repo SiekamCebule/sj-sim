@@ -33,7 +33,10 @@ private:
 public:
     void setupPointsForMeter();
 
+    double getKAndRealHSDifference();
+
     double getLandingChanceChangeByHillProfile(double distance, short landingType);
+    double getLandingImbalanceChangeByHillProfile(double distance);
 
     QString getName() const;
     void setName(const QString &newName);

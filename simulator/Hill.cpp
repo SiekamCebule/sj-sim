@@ -86,63 +86,76 @@ void Hill::setupPointsForMeter()
     else pointsForMeter = 0;
 }
 
-double Hill::getLandingChanceChangeByHillProfile(double distance, short landingType)
+double Hill::getKAndRealHSDifference()
 {
     setRealHSByCharacteristic();
-    double KAndRealHSDifference = getRealHS() - double(getKPoint());
-    double flattening = getRealHS() * 1.30;
-    double realHSAndFlatteningDifference = flattening - getRealHS();
+    return getRealHS() - getKPoint();
+}
 
-    double change = 0;
-    double toReturn = 0;
-
+double Hill::getLandingChanceChangeByHillProfile(double distance, short landingType)
+{
     if(distance < getKPoint())
         return 0;
     if(landingType == Landing::TelemarkLanding)
     {
-        if(distance < getKPoint() + KAndRealHSDifference * 0.5)
-            return (distance - getKPoint()) / ((KAndRealHSDifference / 1.1) / 12);
+        if(distance < getKPoint() + getKAndRealHSDifference() * 0.5)
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 12);
         else if(distance <= getRealHS())
-            return (distance - getKPoint()) / ((KAndRealHSDifference / 1.1) / 14);
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 14);
         else if (distance < getRealHS() * 1.12)
-            return (distance - getRealHS()) / ((KAndRealHSDifference / 1.1) / 260);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 260);
         else
-            return (distance - getRealHS()) / ((KAndRealHSDifference / 1.1) / 300);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 300);
     }
     else if(landingType == Landing::BothLegsLanding)
     {
-        if(distance < getKPoint() + KAndRealHSDifference * 0.5)
-            return (distance - getKPoint()) / ((KAndRealHSDifference / 1.1) / 4);
+        if(distance < getKPoint() + getKAndRealHSDifference() * 0.5)
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 4);
         else if(distance <= getRealHS())
-            return (distance - getKPoint()) / ((KAndRealHSDifference / 1.1) / 5);
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 5);
         else if (distance < getRealHS() * 1.12)
-            return (distance - getRealHS()) / ((KAndRealHSDifference / 1.1) / 255);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 255);
         else
-            return (distance - getRealHS()) / ((KAndRealHSDifference / 1.1) / 1);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 1);
     }
     else if(landingType == Landing::SupportLanding)
     {
-        if(distance < getKPoint() + KAndRealHSDifference * 0.5)
-            return (distance - getKPoint()) / ((KAndRealHSDifference / 1.1) / 0.008);
+        if(distance < getKPoint() + getKAndRealHSDifference() * 0.5)
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 0.008);
         else if(distance <= getRealHS())
-            return (distance - getKPoint()) / ((KAndRealHSDifference / 1.1) / 0.02);
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 0.02);
         else if (distance < getRealHS() * 1.12)
-            return (distance - getRealHS()) / ((KAndRealHSDifference / 1.1) / 40);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 40);
         else
-            return (distance - getRealHS()) / ((KAndRealHSDifference / 1.1) / 515);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 515);
     }
     else if(landingType == Landing::Fall)
     {
-        if(distance < getKPoint() + KAndRealHSDifference * 0.5)
-            return (distance - getKPoint()) / ((KAndRealHSDifference / 1.1) / 0.01);
+        if(distance < getKPoint() + getKAndRealHSDifference() * 0.5)
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 0.01);
         else if(distance <= getRealHS())
-            return (distance - getKPoint()) / ((KAndRealHSDifference / 1.1) / 0.018);
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 0.018);
         else if(distance < getRealHS() * 1.12)
-            return (distance - getRealHS()) / ((KAndRealHSDifference / 1.1) / 40);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 40);
         else
-            return (distance - getRealHS()) / ((KAndRealHSDifference / 1.1) / 515);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 515);
     }
     return 0;
+}
+
+double Hill::getLandingImbalanceChangeByHillProfile(double distance)
+{
+    /// czym większa wartość zwracana, tym teorytycznie mniejsze zachwianie przy lądowaniu (a raczej mniejsza szansa na wyższe zachwianie)
+    if(distance <= getKPoint())
+        return 0.07;
+    else if(distance < getKPoint() + getKAndRealHSDifference() * 0.5)
+        return 0.06;
+    else if(distance <= getRealHS())
+        return 0.05;
+    else if(distance <= getRealHS() * 1.12)
+        return 0.04;
+    else
+        return 0.03;
 }
 
 QString Hill::getName() const

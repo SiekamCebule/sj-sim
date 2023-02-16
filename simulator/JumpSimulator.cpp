@@ -41,7 +41,7 @@ void JumpSimulator::simulateJump()
     generateDistance();
     generateWindEffects();
     generateLanding();
-    qDebug()<<"Uśredniony odczyt wiatru: "<<conditionsInfo->getAveragedWind().getValueToAveragedWind()<<"m/s";
+    //qDebug()<<"Uśredniony odczyt wiatru: "<<conditionsInfo->getAveragedWind().getValueToAveragedWind()<<"m/s";
 }
 
 void JumpSimulator::generateTakeoffRating()
@@ -241,10 +241,15 @@ void JumpSimulator::generateLanding()
     probabilities[2] = 0.004 + (1 * hill->getLandingChanceChangeByHillProfile(distance, Landing::SupportLanding));
     probabilities[3] = 0.016 + (1 * hill->getLandingChanceChangeByHillProfile(distance, Landing::Fall));
 
-    qDebug()<<"Szansa na telemark: "<<probabilities[0];
-    qDebug()<<"Szansa na lądowanie na dwie nogi: "<<probabilities[1];
-    qDebug()<<"Szansa na podpórkę: "<<probabilities[2];
-    qDebug()<<"Szansa na upadek: "<<probabilities[3];
+    //qDebug()<<"Szansa na telemark: "<<probabilities[0];
+    //qDebug()<<"Szansa na lądowanie na dwie nogi: "<<probabilities[1];
+    //qDebug()<<"Szansa na podpórkę: "<<probabilities[2];
+    //qDebug()<<"Szansa na upadek: "<<probabilities[3];
+
+    probabilities[0] *= 1 + (jumperSkills->getLevelOfCharacteristic("landing-skill") / 38);
+    probabilities[1] /= 1 + (jumperSkills->getLevelOfCharacteristic("landing-skill") / 38);
+    probabilities[2] /= 1 + (jumperSkills->getLevelOfCharacteristic("landing-skill") / 45);
+    probabilities[3] /= 1 + (jumperSkills->getLevelOfCharacteristic("landing-skill") / 83);
 
     double drawSum = 0;
     for(const auto & probability : probabilities)
@@ -266,6 +271,13 @@ void JumpSimulator::generateLanding()
     }
 
     qDebug()<<"Rodzaj lądowania: "<<landing.getTextLandingType();
+
+
+
+    //stabilność lądowania   -     od 1 do 5
+    double landingImbalance = MyRandom::reducingChancesRandom(0, 5, 0.05, 1, (0.97 + (jumperSkills->getLandingStyle() / 100) + hill->getLandingImbalanceChangeByHillProfile(distance)), MyRandom::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
+    landing.setImbalance(landingImbalance);
+    qDebug()<<"Niestabilność lądowania: "<<landingImbalance<<" / 5";
 }
 
 Landing JumpSimulator::getLanding() const
