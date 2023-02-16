@@ -41,6 +41,7 @@ void JumpSimulator::simulateJump()
     generateDistance();
     generateWindEffects();
     generateLanding();
+    generateJudges();
     //qDebug()<<"Uśredniony odczyt wiatru: "<<conditionsInfo->getAveragedWind().getValueToAveragedWind()<<"m/s";
 }
 
@@ -273,11 +274,88 @@ void JumpSimulator::generateLanding()
     qDebug()<<"Rodzaj lądowania: "<<landing.getTextLandingType();
 
 
-
     //stabilność lądowania   -     od 1 do 5
     double landingImbalance = MyRandom::reducingChancesRandom(0, 5, 0.05, 1, (0.97 + (jumperSkills->getLandingStyle() / 100) + hill->getLandingImbalanceChangeByHillProfile(distance)), MyRandom::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
     landing.setImbalance(landingImbalance);
     qDebug()<<"Niestabilność lądowania: "<<landingImbalance<<" / 5";
+}
+
+void JumpSimulator::generateJudges()
+{
+    judgesRating = 18.4;
+    judgesRating -= landing.getImbalance() / 1.5;
+    judgesRating += ((distance - hill->getKPoint()) / (hill->getKAndRealHSDifference())) / 1.25;
+    switch(landing.getType())
+    {
+    case Landing::TelemarkLanding:
+        judgesRating += MyRandom::randomDouble(-0.05, 0.05);
+        break;
+    case Landing::BothLegsLanding:
+        judgesRating -= MyRandom::randomDouble(1.8, 2.1);
+        break;
+    case Landing::SupportLanding:
+        judgesRating -= MyRandom::randomDouble(5, 5.6);
+        break;
+    case Landing::Fall:
+        judgesRating -= MyRandom::randomDouble(7, 7.8);
+        break;
+    }
+
+    if(judgesRating > 20)
+        judgesRating = 20;
+    else if(judgesRating < 1)
+        judgesRating = 1;
+
+    if(judges.size() != 5)
+        judges.fill(0, 5);
+
+
+    for(auto & jg : judges)
+    {
+        short randomType = MyRandom::randomInt(0, 1);
+        double random = 0;
+
+        jg = judgesRating;
+
+        switch(landing.getType())
+        {
+        case Landing::TelemarkLanding:
+            random = MyRandom::randomDouble(-0.5, 0.5);
+            break;
+        case Landing::BothLegsLanding:
+            random = MyRandom::randomDouble(-0.64, 0.64);
+            break;
+        case Landing::SupportLanding:
+            random = MyRandom::randomDouble(-0.78, 0.78);
+            break;
+        case Landing::Fall:
+            random = MyRandom::randomDouble(-0.72, 0.72);
+            break;
+        }
+        if(randomType == 0)
+            jg -= random;
+        else if(randomType == 1)
+            jg += random;
+        else qDebug()<<"BŁĄD randomType przy lądowaniu ";
+
+        jg = double(roundDoubleToHalf(jg));
+        if(jg > 20) jg = 20;
+        else if(jg < 0.5) jg = 0.5;
+    }
+
+    qDebug()<<"Noty sędziowskie: ";
+    for(const auto & jg : judges)
+        qDebug()<<jg;
+}
+
+QVector<double> JumpSimulator::getJudges() const
+{
+    return judges;
+}
+
+void JumpSimulator::setJudges(const QVector<double> &newJudges)
+{
+    judges = newJudges;
 }
 
 Landing JumpSimulator::getLanding() const
@@ -325,6 +403,7 @@ void JumpSimulator::resetTemporaryParameters()
     takeoffRating = 0;
     flightRating = 0;
     distance = 0;
+    judgesRating = 0;
 }
 
 Competition *JumpSimulator::getCompetition() const

@@ -1,7 +1,7 @@
 ﻿#ifndef JUMPSIMULATOR_H
 #define JUMPSIMULATOR_H
 
-#include <QList>
+#include <QVector>
 #include <QPair>
 
 #include "Jumper.h"
@@ -54,6 +54,9 @@ public:
 
     void updateJumperSkills();
 
+    QVector<double> getJudges() const;
+    void setJudges(const QVector<double> &newJudges);
+
 private:
     void generateTakeoffRating();
     void generateFlightRating();
@@ -62,12 +65,17 @@ private:
     void generateDistance();
     void generateWindEffects(); // np. zmiana odległości przez wiatr, albo w przyszłości jakieś nierówności w locie przez taki boczny wiatr.
     void generateLanding();
+    void generateJudges();
 
     //symulacja
     double takeoffRating;
     double flightRating;
     double distance;
+
     Landing landing;
+    double judgesRating;
+    QVector<double> judges;
+
 };
 
 #endif // JUMPSIMULATOR_H

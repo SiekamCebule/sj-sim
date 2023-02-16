@@ -3,6 +3,7 @@
 
 #include "utilities/IDGenerator.h"
 #include "utilities/functions.h"
+#include "utilities/MyRandom.h"
 #include "simulator/Jumper.h"
 #include "simulator/JumperSkills.h"
 #include "simulator/ConditionsInfo.h"
@@ -93,28 +94,22 @@ MainWindow::MainWindow(QWidget *parent)
     };
     WindsGenerator windGenerator(7, windGenerationSettings);
 
-    double max = 0;
-    double min = 0;
-    //for(int i=0; i<10; i++){
     for(auto & jumper : jumpers)
     {
         qDebug()<<jumper.getNameAndSurname();
         simulator.setJumper(&jumper);
         simulator.getConditionsInfo()->setWinds(windGenerator.generateWinds());
         simulator.simulateJump();
-        if(simulator.getLanding().getImbalance() > max)
-            max = simulator.getLanding().getImbalance();
-        else if(simulator.getLanding().getImbalance() < min)
-            min = simulator.getLanding().getImbalance();
         qDebug()<<"Odległość zawodnika: "<<roundDoubleToHalf(simulator.getDistance());
         qDebug()<<"";
     }
-    //}
-    qDebug()<<"MAX: "<<max;
-    qDebug()<<"MIN: "<<min;
 
-    for(auto & jumper : jumpers)
+    int i =0 ;
+    for(auto & jumper : jumpers){
+        qDebug()<<i;
         delete & jumper;
+        i++;
+    }
 
     delete hill;
     delete simulator.getConditionsInfo();
