@@ -1,5 +1,5 @@
 #include "ClassWithCharacteristics.h"
-#include "../simulation/Characteristic.h"
+#include "../simulator/Characteristic.h"
 
 QSet<Characteristic> ClassWithCharacteristics::getCharacteristics() const
 {

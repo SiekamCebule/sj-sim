@@ -11,13 +11,14 @@
 class Hill : public ClassWithID, public ClassWithCharacteristics
 {
 public:
-    Hill(const QString &name = "", const QString &country = "", int KPoint = 0, int HSPoint = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double landingZoneStart = 0, double takeoffEffect = 0, double flightEffect = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>());
+    Hill(const QString &name = "", const QString &country = "", int KPoint = 0, int HSPoint = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double takeoffEffect = 0, double flightEffect = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>());
 
 private:
     QString name, country;
     double recordDistance;
 
-    int KPoint, HSPoint;
+    int KPoint;
+    int HSPoint; // Jeśli nie ma cechy charakterystycznej, to HSPoint == realHS
 
     double pointsForMeter;
     double pointsForFrontWind;
@@ -27,10 +28,12 @@ private:
     //symulacja
     double takeoffEffect;
     double flightEffect;
-    double landingZoneStart; //początek strefy lądowania (ta niebieska linia)
+    double realHS; // "prawdziwa wielkość skoczni", tam gdzie robi się niebezpicznie
 
 public:
     void setupPointsForMeter();
+
+    double getLandingChanceChangeByHillProfile(double distance, short landingType);
 
     QString getName() const;
     void setName(const QString &newName);
@@ -53,12 +56,13 @@ public:
     void setPointsForGate(double newPointsForGate);
     QSet<Characteristic> getCharacteristics() const;
     void setCharacteristics(const QSet<Characteristic> &newCharacteristics);
-    double getLandingZoneStart() const;
-    void setLandingZoneStart(double newLandingZoneStart);
     double getTakeoffEffect() const;
     void setTakeoffEffect(double newTakeoffEffect);
     double getFlightEffect() const;
     void setFlightEffect(double newFlightEffect);
+    double getRealHS() const;
+    void setRealHS(double newRealHS);
+    void setRealHSByCharacteristic();
 };
 
 #endif // HILL_H

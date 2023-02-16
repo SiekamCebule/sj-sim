@@ -11,18 +11,18 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    simulation/Characteristic.cpp \
-    simulation/ConditionsInfo.cpp \
-    simulation/Hill.cpp \
-    simulation/JumpData.cpp \
-    simulation/JumpMistake.cpp \
-    simulation/JumpSimulator.cpp \
-    simulation/Jumper.cpp \
-    simulation/JumperSkills.cpp \
-    simulation/SimulationGlobals.cpp \
-    simulation/Wind.cpp \
-    simulation/wind-generation/WindGenerationSettings.cpp \
-    simulation/wind-generation/WindsGenerator.cpp \
+    simulator/Characteristic.cpp \
+    simulator/ConditionsInfo.cpp \
+    simulator/Hill.cpp \
+    simulator/JumpData.cpp \
+    simulator/JumpMistake.cpp \
+    simulator/JumpSimulator.cpp \
+    simulator/Jumper.cpp \
+    simulator/JumperSkills.cpp \
+    simulator/Landing.cpp \
+    simulator/Wind.cpp \
+    simulator/wind-generation/WindGenerationSettings.cpp \
+    simulator/wind-generation/WindsGenerator.cpp \
     utilities/ClassWithCharacteristics.cpp \
     utilities/ClassWithID.cpp \
     utilities/IDGenerator.cpp \
@@ -31,18 +31,18 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
-    simulation/Characteristic.h \
-    simulation/ConditionsInfo.h \
-    simulation/Hill.h \
-    simulation/JumpData.h \
-    simulation/JumpMistake.h \
-    simulation/JumpSimulator.h \
-    simulation/Jumper.h \
-    simulation/JumperSkills.h \
-    simulation/SimulationGlobals.h \
-    simulation/Wind.h \
-    simulation/wind-generation/WindGenerationSettings.h \
-    simulation/wind-generation/WindsGenerator.h \
+    simulator/Characteristic.h \
+    simulator/ConditionsInfo.h \
+    simulator/Hill.h \
+    simulator/JumpData.h \
+    simulator/JumpMistake.h \
+    simulator/JumpSimulator.h \
+    simulator/Jumper.h \
+    simulator/JumperSkills.h \
+    simulator/Landing.h \
+    simulator/Wind.h \
+    simulator/wind-generation/WindGenerationSettings.h \
+    simulator/wind-generation/WindsGenerator.h \
     utilities/ClassWithCharacteristics.h \
     utilities/ClassWithID.h \
     utilities/IDGenerator.h \

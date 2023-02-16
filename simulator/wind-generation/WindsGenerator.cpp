@@ -36,47 +36,47 @@ QVector<Wind> WindsGenerator::generateWinds()
         double frontSideProb = 250 + settings->getLevelOfCharacteristic("front-side-wind-probability") * 100;
         double frontProb = 250 + settings->getLevelOfCharacteristic("front-wind-probability") * 100;
 
-        const double baseDirectionChanceMultiplier = 30 - (settings->getWindDirectionInstability() * 2.75);
+        const double baseDirectionChanceMultiplier = 133 - (settings->getWindDirectionInstability() * 13);
 
         switch(settings->getBaseDirection())
         {
         case Wind::Back:
-            backSideProb *= 2.74;
-            sideProb *= 0.97;
-            frontSideProb *= 0.22;
-            frontProb *= 0.07;
+            backSideProb *= 2.55;
+            sideProb *= 0.55;
+            frontSideProb *= 0.07;
+            frontProb *= 0.01;
 
             backProb *= baseDirectionChanceMultiplier;
             break;
         case Wind::BackSide:
-            backProb *= 2.00;
-            sideProb *= 1.53;
-            frontSideProb *= 0.33;
-            frontProb *= 0.15;
+            backProb *= 2.4;
+            sideProb *= 2.0;
+            frontSideProb *= 0.172;
+            frontProb *= 0.028;
 
             backSideProb *= baseDirectionChanceMultiplier;
             break;
         case Wind::Side:
-            backProb *= 0.68;
-            backSideProb *= 1.32;
-            frontSideProb *= 1.32;
-            frontProb *= 0.68;
+            backProb *= 0.13;
+            backSideProb *= 2.5;
+            frontSideProb *= 2.5;
+            frontProb *= 0.13;
 
             sideProb *= baseDirectionChanceMultiplier;
             break;
         case Wind::FrontSide:
-            backProb *= 0.15;
-            backSideProb *= 0.33;
-            sideProb *= 1.53;
-            frontProb *= 2.00;
+            backProb *= 0.028;
+            backSideProb *= 0.172;
+            sideProb *= 2.0;
+            frontProb *= 2.4;
 
             frontSideProb *= baseDirectionChanceMultiplier;
             break;
         case Wind::Front:
-            backProb *= 0.07;
-            backSideProb *= 0.22;
-            sideProb *= 0.97;
-            frontSideProb *= 2.74;
+            backProb *= 0.01;
+            backSideProb *= 0.07;
+            sideProb *= 0.55;
+            frontSideProb *= 2.55;
 
             frontProb *= baseDirectionChanceMultiplier;
             break;
@@ -109,7 +109,7 @@ QVector<Wind> WindsGenerator::generateWinds()
 
     /*for(const auto & wind : winds)
     {
-        qDebug()<<"Wiatr "<<wind.getStringDirection(false)<<", o prędkości "<<wind.getValue()<<"m/s";
+        qDebug()<<"Wiatru "<<wind.getStringDirection(false)<<", o prędkości "<<wind.getValue()<<"m/s";
     }*/
     return winds;
 }

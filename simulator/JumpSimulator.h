@@ -8,6 +8,7 @@
 #include "JumpData.h"
 #include "ConditionsInfo.h"
 #include "Hill.h"
+#include "Landing.h"
 
 #include <QMap>
 
@@ -48,8 +49,11 @@ public:
     JumperSkills *getJumperSkills() const;
     double getDistance() const;
     void setDistance(double newDistance);
+    Landing getLanding() const;
+    void setLanding(const Landing &newLanding);
 
     void updateJumperSkills();
+
 private:
     void generateTakeoffRating();
     void generateFlightRating();
@@ -57,11 +61,13 @@ private:
 
     void generateDistance();
     void generateWindEffects(); // np. zmiana odległości przez wiatr, albo w przyszłości jakieś nierówności w locie przez taki boczny wiatr.
+    void generateLanding();
 
     //symulacja
     double takeoffRating;
     double flightRating;
     double distance;
+    Landing landing;
 };
 
 #endif // JUMPSIMULATOR_H

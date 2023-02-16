@@ -33,12 +33,14 @@ void JumpSimulator::simulateJump()
 {
     resetTemporaryParameters();
     updateJumperSkills();
+    hill->setRealHSByCharacteristic();
 
     generateTakeoffRating();
     generateFlightRating();
 
     generateDistance();
     generateWindEffects();
+    generateLanding();
     qDebug()<<"Uśredniony odczyt wiatru: "<<conditionsInfo->getAveragedWind().getValueToAveragedWind()<<"m/s";
 }
 
@@ -54,11 +56,11 @@ void JumpSimulator::generateTakeoffRating()
     takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
 
-    double perfectLevel = 0;
+    double perfectLevel = 0.5;
     if((hill->getTakeoffEffect() / (hill->getFlightEffect() / 1.00)) > 1)
-        perfectLevel = (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.745));
+        perfectLevel += (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.85));
     else
-        perfectLevel = -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.745));
+        perfectLevel += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
     takeoffRating -= std::abs(perfectLevel - jumper->getJumperSkills()->getLevelOfCharacteristic("takeoff-height")) * 1.15;
 
     double random = 0;
@@ -75,7 +77,7 @@ void JumpSimulator::generateTakeoffRating()
     if(takeoffRating < 0.1)
         takeoffRating = 0.1;
 
-    qDebug()<<"Ocena wyjścia z progu: "<<takeoffRating;
+    //qDebug()<<"Ocena wyjścia z progu: "<<takeoffRating;
 }
 
 void JumpSimulator::generateFlightRating()
@@ -86,12 +88,12 @@ void JumpSimulator::generateFlightRating()
     ratingMultiplier = 1.185 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
     flightRating += jumperSkills->getForm() * ratingMultiplier;
 
-    double perfectLevel = 0;
+    double perfectLevel = 0.6;
     if((hill->getTakeoffEffect() / (hill->getFlightEffect() / 1.00)) > 1)
-        perfectLevel = (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.745));
+        perfectLevel += (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.85));
     else
-        perfectLevel = -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.745));
-    takeoffRating -= std::abs(perfectLevel - jumper->getJumperSkills()->getLevelOfCharacteristic("flight-height"));
+        perfectLevel += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
+    flightRating -= std::abs(perfectLevel - jumper->getJumperSkills()->getLevelOfCharacteristic("flight-height"));
 
     double random = 0;
     short randomType = MyRandom::randomInt(1, 20);
@@ -110,7 +112,7 @@ void JumpSimulator::generateFlightRating()
     //qDebug()<<"Mnożnik za styl lotu: "<<getMultiplierForFlightStyleEffect();
     flightRating *= getMultiplierForFlightStyleEffect();
 
-    qDebug()<<"Ocena lotu: "<<flightRating;
+    //qDebug()<<"Ocena lotu: "<<flightRating;
 }
 
 double JumpSimulator::getMultiplierForFlightStyleEffect()
@@ -228,6 +230,52 @@ void JumpSimulator::generateWindEffects()
             distance += change;
         }
     }
+}
+
+void JumpSimulator::generateLanding()
+{
+    QVector<double> probabilities;
+    probabilities.fill(0, 4);
+    probabilities[0] = 99.3 - (1 * hill->getLandingChanceChangeByHillProfile(distance, Landing::TelemarkLanding));
+    probabilities[1] = 0.68 + (1 * hill->getLandingChanceChangeByHillProfile(distance, Landing::BothLegsLanding));
+    probabilities[2] = 0.004 + (1 * hill->getLandingChanceChangeByHillProfile(distance, Landing::SupportLanding));
+    probabilities[3] = 0.016 + (1 * hill->getLandingChanceChangeByHillProfile(distance, Landing::Fall));
+
+    qDebug()<<"Szansa na telemark: "<<probabilities[0];
+    qDebug()<<"Szansa na lądowanie na dwie nogi: "<<probabilities[1];
+    qDebug()<<"Szansa na podpórkę: "<<probabilities[2];
+    qDebug()<<"Szansa na upadek: "<<probabilities[3];
+
+    double drawSum = 0;
+    for(const auto & probability : probabilities)
+        drawSum += probability;
+
+    double drawRandom = MyRandom::randomDouble(0, drawSum);
+    double actualSum = 0;
+
+    int i=0;
+    for(const auto & probability : probabilities)
+    {
+        actualSum += probability;
+        if(drawRandom < actualSum)
+        {
+            landing.setType(i);
+            break;
+        }
+        i++;
+    }
+
+    qDebug()<<"Rodzaj lądowania: "<<landing.getTextLandingType();
+}
+
+Landing JumpSimulator::getLanding() const
+{
+    return landing;
+}
+
+void JumpSimulator::setLanding(const Landing &newLanding)
+{
+    landing = newLanding;
 }
 
 double JumpSimulator::getDistance() const

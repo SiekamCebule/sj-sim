@@ -5,7 +5,7 @@
 #include <QString>
 
 //class Characteristic;
-#include "../simulation/Characteristic.h"
+#include "../simulator/Characteristic.h"
 
 class ClassWithCharacteristics
 {
