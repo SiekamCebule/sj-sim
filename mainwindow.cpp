@@ -55,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     hill->setupPointsForMeter();
     JumpSimulator simulator;
-    simulator.setConditionsInfo(new ConditionsInfo(17));
+    simulator.getConditionsInfo().setGate(15);
     simulator.setHill(hill);
 
     QVector<Jumper> jumpers;
@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
     jumper.getJumperSkills()->insertCharacteristic("flight-height", -2);
     jumpers.push_back(jumper);
 
-    jumper = Jumper("Clemens", "Aigner", "AUT", new JumperSkills(40, 36.8, 29.5, 1, 36, 12, QSet<Characteristic>(), nullptr), 0);
+    jumper = Jumper("Clemens", "Aigner", "AUT", new JumperSkills(40, 36.8, 29.5, 1, 38, 12, QSet<Characteristic>(), nullptr), 0);
     jumper.getJumperSkills()->insertCharacteristic("takeoff-height", 1);
     jumper.getJumperSkills()->insertCharacteristic("flight-height", 2);
     jumpers.push_back(jumper);
@@ -94,27 +94,27 @@ MainWindow::MainWindow(QWidget *parent)
     };
     WindsGenerator windGenerator(7, windGenerationSettings);
 
+    QVector<JumpData> jumps;
     for(auto & jumper : jumpers)
     {
-        qDebug()<<jumper.getNameAndSurname();
         simulator.setJumper(&jumper);
-        simulator.getConditionsInfo()->setWinds(windGenerator.generateWinds());
+        simulator.getConditionsInfo().setWinds(windGenerator.generateWinds());
         simulator.simulateJump();
-        qDebug()<<"Odległość zawodnika: "<<roundDoubleToHalf(simulator.getDistance());
-        qDebug()<<"";
+        jumps.push_back(simulator.getJumpData());
     }
-
-    int i =0 ;
-    for(auto & jumper : jumpers){
-        qDebug()<<i;
-        delete & jumper;
-        i++;
+    for(const auto & jump : jumps)
+    {
+        qDebug()<<jump.getJumper()->getNameAndSurname();
+        qDebug()<<"Odległość zawodnika: "<<jump.getDistance();
+        qDebug()<<"Lądowanie: "<<jump.getLanding().getTextLandingType();
+        qDebug()<<"Uśredniony odczyt wiatru: "<<jump.getConditionsInfo().getAveragedWind().getValueToAveragedWind()<<" m/s";
+        qDebug()<<"Rekompensata za wiatr: "<<jump.getWindCompensation();
+        qDebug()<<"Noty sędziowskie: "<<"|"<<jump.getJudges().at(0)<<"|"<<jump.getJudges().at(1)<<"|"<<jump.getJudges().at(2)<<"|"<<jump.getJudges().at(3)<<"|"<<jump.getJudges().at(4)<<"|";
+        qDebug()<<"Punkty łącznie: "<<jump.getPoints()<<"\n\n";
     }
 
     delete hill;
-    delete simulator.getConditionsInfo();
 }
-
 
 MainWindow::~MainWindow()
 {

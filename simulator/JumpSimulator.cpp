@@ -7,15 +7,24 @@
 #include <QRandomGenerator>
 #include <math.h>
 
-JumpSimulator::JumpSimulator(Jumper *jumper, ConditionsInfo *conditionsInfo, Hill *hill, Competition *competition) : jumper(jumper),
+JumpSimulator::JumpSimulator(Jumper *jumper, const ConditionsInfo & conditionsInfo, Hill *hill) : jumper(jumper),
     conditionsInfo(conditionsInfo),
-    hill(hill),
-    competition(competition)
+    hill(hill)
 {
     if(jumper != nullptr)
         jumperSkills = jumper->getJumperSkills();
 
     resetTemporaryParameters();
+}
+
+ConditionsInfo &JumpSimulator::getConditionsInfo()
+{
+    return conditionsInfo;
+}
+
+void JumpSimulator::setConditionsInfo(const ConditionsInfo &newConditionsInfo)
+{
+    conditionsInfo = newConditionsInfo;
 }
 
 JumperSkills *JumpSimulator::getJumperSkills() const
@@ -31,9 +40,11 @@ void JumpSimulator::updateJumperSkills()
 
 void JumpSimulator::simulateJump()
 {
+    jumpData = JumpData();
     resetTemporaryParameters();
     updateJumperSkills();
     hill->setRealHSByCharacteristic();
+    setupJumpData();
 
     generateTakeoffRating();
     generateFlightRating();
@@ -42,7 +53,10 @@ void JumpSimulator::simulateJump()
     generateWindEffects();
     generateLanding();
     generateJudges();
-    //qDebug()<<"Uśredniony odczyt wiatru: "<<conditionsInfo->getAveragedWind().getValueToAveragedWind()<<"m/s";
+
+    calculateCompensations();
+    calculatePoints();
+    jumpData.setDistance(roundDoubleToHalf(jumpData.getDistance()));
 }
 
 void JumpSimulator::generateTakeoffRating()
@@ -134,16 +148,17 @@ double JumpSimulator::getMultiplierForFlightStyleEffect()
 
 void JumpSimulator::generateDistance()
 {
-    distance += takeoffRating * hill->getTakeoffEffect();
-    distance += flightRating * hill->getFlightEffect();
-    distance += conditionsInfo->getGate() * (hill->getPointsForGate() / hill->getPointsForMeter());
+    jumpData.distance += takeoffRating * hill->getTakeoffEffect();
+    jumpData.distance += flightRating * hill->getFlightEffect();
+    jumpData.distance += conditionsInfo.getGate() * (hill->getPointsForGate() / hill->getPointsForMeter());
+    jumpData.distance = roundDoubleToHalf(jumpData.getDistance());
 }
 
 void JumpSimulator::generateWindEffects()
 {
-    double segmentDistance = hill->getKPoint() / conditionsInfo->getWinds().size();
+    double segmentDistance = hill->getKPoint() / conditionsInfo.getWinds().size();
     double change = 0;
-    for(const auto & wind : conditionsInfo->getWinds())
+    for(const auto & wind : conditionsInfo.getWinds())
     {
         if(wind.getDirection() == Wind::Back)
         {
@@ -159,7 +174,7 @@ void JumpSimulator::generateWindEffects()
             }
             change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 120);
             change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 60);
-            distance -= change;
+            jumpData.distance -= change;
         }
         else if(wind.getDirection() == Wind::BackSide)
         {
@@ -175,7 +190,7 @@ void JumpSimulator::generateWindEffects()
             }
             change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 120);
             change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 60);
-            distance -= change;
+            jumpData.distance -= change;
         }
         else if(wind.getDirection() == Wind::Side)
         {
@@ -208,7 +223,7 @@ void JumpSimulator::generateWindEffects()
                 change *= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 120);
                 change *= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 60);
             }
-            distance += change; //dodać, bo i tak jeśli będzie wiatr w plecy to change będzie ujemne
+            jumpData.distance += change; //dodać, bo i tak jeśli będzie wiatr w plecy to change będzie ujemne
         }
         else if(wind.getDirection() == Wind::FrontSide)
         {
@@ -222,9 +237,9 @@ void JumpSimulator::generateWindEffects()
             case JumperSkills::WideVStyle: change *= 1.03; break;
             case JumperSkills::HStyle: change *= 1.035; break;
             }
-            change *= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 120);
-            change *= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 60);
-            distance += change;
+            change *= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 110);
+            change *= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 48);
+            jumpData.distance += change;
         }
         else if(wind.getDirection() == Wind::Front)
         {
@@ -238,9 +253,9 @@ void JumpSimulator::generateWindEffects()
             case JumperSkills::WideVStyle: change *= 1.051; break;
             case JumperSkills::HStyle: change *= 1.072; break;
             }
-            change *= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 120);
-            change *= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 60);
-            distance += change;
+            change *= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 110);
+            change *= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 48);
+            jumpData.distance += change;
         }
     }
 }
@@ -249,10 +264,10 @@ void JumpSimulator::generateLanding()
 {
     QVector<double> probabilities;
     probabilities.fill(0, 4);
-    probabilities[0] = 99.3 - (1 * hill->getLandingChanceChangeByHillProfile(distance, Landing::TelemarkLanding)) - (jumperSkills->getLevelOfCharacteristic("both-legs-landing-tendece") * 7);
-    probabilities[1] = 0.68 + (1 * hill->getLandingChanceChangeByHillProfile(distance, Landing::BothLegsLanding)) + (jumperSkills->getLevelOfCharacteristic("both-legs-landing-tendece") * 14);
-    probabilities[2] = 0.004 + (1 * hill->getLandingChanceChangeByHillProfile(distance, Landing::SupportLanding));
-    probabilities[3] = 0.016 + (1 * hill->getLandingChanceChangeByHillProfile(distance, Landing::Fall));
+    probabilities[0] = 99.3 - (1 * hill->getLandingChanceChangeByHillProfile(jumpData.distance, Landing::TelemarkLanding)) - (jumperSkills->getLevelOfCharacteristic("both-legs-landing-tendece") * 7);
+    probabilities[1] = 0.68 + (1 * hill->getLandingChanceChangeByHillProfile(jumpData.distance, Landing::BothLegsLanding)) + (jumperSkills->getLevelOfCharacteristic("both-legs-landing-tendece") * 14);
+    probabilities[2] = 0.004 + (1 * hill->getLandingChanceChangeByHillProfile(jumpData.distance, Landing::SupportLanding));
+    probabilities[3] = 0.016 + (1 * hill->getLandingChanceChangeByHillProfile(jumpData.distance, Landing::Fall));
 
     //qDebug()<<"Szansa na telemark: "<<probabilities[0];
     //qDebug()<<"Szansa na lądowanie na dwie nogi: "<<probabilities[1];
@@ -277,31 +292,35 @@ void JumpSimulator::generateLanding()
         actualSum += probability;
         if(drawRandom < actualSum)
         {
-            landing.setType(i);
+            jumpData.landing.setType(i);
             break;
         }
         i++;
     }
 
-    qDebug()<<"Rodzaj lądowania: "<<landing.getTextLandingType();
 
 
     //stabilność lądowania   -     od 1 do 5
-    double landingImbalance = MyRandom::reducingChancesRandom(0, 5, 0.05, 1, (0.97 + (jumperSkills->getLandingStyle() / 100) + hill->getLandingImbalanceChangeByHillProfile(distance)), MyRandom::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
-    landing.setImbalance(landingImbalance);
-    qDebug()<<"Niestabilność lądowania: "<<landingImbalance<<" / 5";
+    double landingImbalance = MyRandom::reducingChancesRandom(0, 5, 0.05, 1, (0.97 + (jumperSkills->getLandingStyle() / 100) + hill->getLandingImbalanceChangeByHillProfile(jumpData.distance)), MyRandom::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
+    jumpData.landing.setImbalance(landingImbalance);
 }
 
 void JumpSimulator::generateJudges()
 {
+    double level = jumperSkills->getLevelOfCharacteristic("both-legs-landing-tendence");
+
     judgesRating = 18.4;
-    judgesRating -= landing.getImbalance() / 1.5;
-    judgesRating += ((distance - hill->getKPoint()) / (hill->getKAndRealHSDifference())) / 1.25;
-    switch(landing.getType())
+    judgesRating -= jumpData.landing.getImbalance() / 1.5;
+    judgesRating += ((jumpData.distance - hill->getKPoint()) / (hill->getKAndRealHSDifference())) / 1.25;
+    switch(jumpData.landing.getType())
     {
     case Landing::TelemarkLanding:
         judgesRating += MyRandom::randomDouble(-0.05, 0.05);
-        judgesRating += MyRandom::randomDouble(-(jumperSkills->getLevelOfCharacteristic("both-legs-landing-tendence") / 4.65), 0);
+        if(level < 0)
+            judgesRating += MyRandom::randomDouble(-level, 0);
+        else if(level > 0)
+            judgesRating += MyRandom::randomDouble(0, level);
+
         break;
     case Landing::BothLegsLanding:
         judgesRating -= MyRandom::randomDouble(1.8, 2.1);
@@ -319,18 +338,17 @@ void JumpSimulator::generateJudges()
     else if(judgesRating < 1)
         judgesRating = 1;
 
-    if(judges.size() != 5)
-        judges.fill(0, 5);
+    if(jumpData.judges.size() != 5)
+        jumpData.judges.fill(0, 5);
 
-
-    for(auto & jg : judges)
+    for(auto & jg : jumpData.judges)
     {
         short randomType = MyRandom::randomInt(0, 1);
         double random = 0;
 
         jg = judgesRating;
 
-        switch(landing.getType())
+        switch(jumpData.landing.getType())
         {
         case Landing::TelemarkLanding:
             random = MyRandom::randomDouble(-0.5, 0.5);
@@ -355,40 +373,53 @@ void JumpSimulator::generateJudges()
         if(jg > 20) jg = 20;
         else if(jg < 0.5) jg = 0.5;
     }
-
-    qDebug()<<"Noty sędziowskie: ";
-    for(const auto & jg : judges)
-        qDebug()<<jg;
 }
 
-QVector<double> JumpSimulator::getJudges() const
+void JumpSimulator::calculateCompensations()
 {
-    return judges;
+    Wind avgWind = conditionsInfo.getAveragedWind();
+    if(avgWind.getDirection() == Wind::Back)
+        jumpData.setWindCompensation(avgWind.getValue() * hill->getPointsForBackWind());
+    else if(avgWind.getDirection() == Wind::Front)
+        jumpData.setWindCompensation(-(avgWind.getValue() * hill->getPointsForFrontWind()));
+
+    jumpData.setGateCompensation(0); /// na razie nie ma belki startowej
+
+    jumpData.setTotalCompensation(jumpData.getWindCompensation() + jumpData.getGateCompensation());
 }
 
-void JumpSimulator::setJudges(const QVector<double> &newJudges)
+void JumpSimulator::calculatePoints()
 {
-    judges = newJudges;
+    jumpData.points = hill->getPointsForKPoint();
+    jumpData.points += (jumpData.getDistance() - hill->getKPoint()) * hill->getPointsForMeter();
+    jumpData.points += jumpData.getGateCompensation();
+    jumpData.points += jumpData.getWindCompensation();
+
+    double min = 20, max = 0;
+    for(const auto jg : jumpData.getJudges())
+    {
+        if(jg > max) max = jg;
+        else if(jg < min) min = jg;
+        jumpData.judgesPoints += jg;
+    }
+    jumpData.judgesPoints -= min;
+    jumpData.judgesPoints -= max;
+
+    jumpData.points += jumpData.getJudgesPoints();
+
+    jumpData.points = roundDoubleToOnePlace(jumpData.getPoints());
 }
 
-Landing JumpSimulator::getLanding() const
+void JumpSimulator::setupJumpData()
 {
-    return landing;
+    jumpData.jumper = this->getJumper();
+    jumpData.hill = this->getHill();
+    jumpData.conditionsInfo = conditionsInfo;
 }
 
-void JumpSimulator::setLanding(const Landing &newLanding)
+void JumpSimulator::setJumpData(const JumpData &newJumpData)
 {
-    landing = newLanding;
-}
-
-double JumpSimulator::getDistance() const
-{
-    return distance;
-}
-
-void JumpSimulator::setDistance(double newDistance)
-{
-    distance = newDistance;
+    jumpData = newJumpData;
 }
 
 double JumpSimulator::getFlightRating() const
@@ -415,18 +446,8 @@ void JumpSimulator::resetTemporaryParameters()
 {
     takeoffRating = 0;
     flightRating = 0;
-    distance = 0;
+    jumpData.distance = 0;
     judgesRating = 0;
-}
-
-Competition *JumpSimulator::getCompetition() const
-{
-    return competition;
-}
-
-void JumpSimulator::setCompetition(Competition *newCompetition)
-{
-    competition = newCompetition;
 }
 
 bool JumpSimulator::jumperCharacteristicsContains(const Characteristic & characteristics)
@@ -436,7 +457,6 @@ bool JumpSimulator::jumperCharacteristicsContains(const Characteristic & charact
 
 JumpData JumpSimulator::getJumpData()
 {
-    JumpData jumpData;
     return jumpData;
 }
 
@@ -448,16 +468,6 @@ Hill *JumpSimulator::getHill() const
 void JumpSimulator::setHill(Hill *newHill)
 {
     hill = newHill;
-}
-
-ConditionsInfo *JumpSimulator::getConditionsInfo() const
-{
-    return conditionsInfo;
-}
-
-void JumpSimulator::setConditionsInfo(ConditionsInfo *newConditionsInfo)
-{
-    conditionsInfo = newConditionsInfo;
 }
 
 Jumper *JumpSimulator::getJumper() const

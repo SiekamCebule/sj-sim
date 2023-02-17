@@ -16,6 +16,18 @@ Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint,
     calculatePointsForBackWind();
     setCharacteristics(characteristics);
     setRealHSByCharacteristic();
+    setupPointsForKPoint();
+    setupPointsForMeter();
+}
+
+double Hill::getPointsForKPoint() const
+{
+    return pointsForKPoint;
+}
+
+void Hill::setPointsForKPoint(double newPointsForKPoint)
+{
+    pointsForKPoint = newPointsForKPoint;
 }
 
 double Hill::getRealHS() const
@@ -84,6 +96,13 @@ void Hill::setupPointsForMeter()
     else if(KPoint >= 170)
         pointsForMeter = 1.2;
     else pointsForMeter = 0;
+}
+
+void Hill::setupPointsForKPoint()
+{
+    if(KPoint < 170)
+        pointsForKPoint = 60;
+    else pointsForKPoint = 120;
 }
 
 double Hill::getKAndRealHSDifference()

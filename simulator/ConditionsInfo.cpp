@@ -8,29 +8,6 @@ ConditionsInfo::ConditionsInfo(int gate, double windSensorsFaulty, const QVector
     winds(winds),
     gate(gate)
 {
-    /*this->winds.push_back(Wind(Wind::Right, 8));
-    this->winds.push_back(Wind(Wind::Right, 2.4));
-    this->winds.push_back(Wind(Wind::Right, 2.6));
-    this->winds.push_back(Wind(Wind::FrontRight, 2.09));
-    this->winds.push_back(Wind(Wind::FrontRight, 1.4));
-    this->winds.push_back(Wind(Wind::Front, 0.7));
-    this->winds.push_back(Wind(Wind::Front, 0.3));*/
-
-    /* this->winds.push_back(Wind(Wind::Front, 0));
-    this->winds.push_back(Wind(Wind::Front, 0));
-    this->winds.push_back(Wind(Wind::Front, 0));
-    this->winds.push_back(Wind(Wind::Front, 0));
-    this->winds.push_back(Wind(Wind::Front, 0));
-    this->winds.push_back(Wind(Wind::Front, 0));
-    this->winds.push_back(Wind(Wind::Front, 0));*/
-
-    this->winds.push_back(Wind(Wind::Front, 1));
-    this->winds.push_back(Wind(Wind::Front, 1));
-    this->winds.push_back(Wind(Wind::Front, 1));
-    this->winds.push_back(Wind(Wind::Front, 1));
-    this->winds.push_back(Wind(Wind::Front, 1));
-    this->winds.push_back(Wind(Wind::Front, 1));
-    this->winds.push_back(Wind(Wind::Front, 1));
 }
 
 Wind ConditionsInfo::getAveragedWind()

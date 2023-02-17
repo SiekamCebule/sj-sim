@@ -21,6 +21,7 @@ private:
     int HSPoint; // Jeśli nie ma cechy charakterystycznej, to HSPoint == realHS
 
     double pointsForMeter;
+    double pointsForKPoint;
     double pointsForFrontWind;
     double pointsForBackWind; //obliczane na podstawie wiatru przedniego
     double pointsForGate;
@@ -32,6 +33,7 @@ private:
 
 public:
     void setupPointsForMeter();
+    void setupPointsForKPoint();
 
     double getKAndRealHSDifference();
 
@@ -66,6 +68,8 @@ public:
     double getRealHS() const;
     void setRealHS(double newRealHS);
     void setRealHSByCharacteristic();
+    double getPointsForKPoint() const;
+    void setPointsForKPoint(double newPointsForKPoint);
 };
 
 #endif // HILL_H

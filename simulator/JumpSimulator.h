@@ -17,45 +17,40 @@ class Competition;
 class JumpSimulator
 {
 public:
-    JumpSimulator(Jumper *jumper = nullptr, ConditionsInfo *conditionsInfo = nullptr, Hill *hill = nullptr, Competition *competition = nullptr);
+    JumpSimulator(Jumper *jumper = nullptr, const ConditionsInfo & conditionsInfo = ConditionsInfo(), Hill *hill = nullptr);
 private:
     Jumper * jumper;
     JumperSkills * jumperSkills; //automatycznie od jumper
-    ConditionsInfo * conditionsInfo;
+    ConditionsInfo conditionsInfo;
     Hill * hill;
-    Competition * competition;
 
 public:
     //skok
     void simulateJump();
     void resetTemporaryParameters();
 
-    JumpData getJumpData();
-
     bool jumperCharacteristicsContains(const Characteristic & characteristics);
 
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
-    ConditionsInfo *getConditionsInfo() const;
-    void setConditionsInfo(ConditionsInfo *newConditionsInfo);
     Hill *getHill() const;
     void setHill(Hill *newHill);
-    Competition *getCompetition() const;
-    void setCompetition(Competition *newCompetition);
     double getTakeoffRating() const;
     void setTakeoffRating(double newTakeoffRating);
     double getFlightRating() const;
     void setFlightRating(double newFlightRating);
     JumperSkills *getJumperSkills() const;
-    double getDistance() const;
-    void setDistance(double newDistance);
-    Landing getLanding() const;
-    void setLanding(const Landing &newLanding);
 
     void updateJumperSkills();
 
     QVector<double> getJudges() const;
     void setJudges(const QVector<double> &newJudges);
+
+    JumpData getJumpData();
+    void setJumpData(const JumpData &newJumpData);
+
+    ConditionsInfo  & getConditionsInfo();
+    void setConditionsInfo(const ConditionsInfo &newConditionsInfo);
 
 private:
     void generateTakeoffRating();
@@ -66,15 +61,16 @@ private:
     void generateWindEffects(); // np. zmiana odległości przez wiatr, albo w przyszłości jakieś nierówności w locie przez taki boczny wiatr.
     void generateLanding();
     void generateJudges();
+    void calculateCompensations();
+    void calculatePoints();
 
     //symulacja
     double takeoffRating;
     double flightRating;
-    double distance;
-
-    Landing landing;
     double judgesRating;
-    QVector<double> judges;
+
+    JumpData jumpData;
+    void setupJumpData();
 
 };
 
