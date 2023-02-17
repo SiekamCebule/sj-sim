@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>ski-jumper-1.png</file>
+        <file>ski-jumper.png</file>
+        <file>medal.png</file>
+        <file>Crystal_Globe.svg.png</file>
+        <file>help.png</file>
+        <file>database-edit.png</file>
+        <file>settings.png</file>
+    </qresource>
+</RCC>

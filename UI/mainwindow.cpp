@@ -1,17 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "utilities/IDGenerator.h"
-#include "utilities/functions.h"
-#include "utilities/MyRandom.h"
-#include "simulator/Jumper.h"
-#include "simulator/JumperSkills.h"
-#include "simulator/ConditionsInfo.h"
-#include "simulator/JumpSimulator.h"
-#include "simulator/Characteristic.h"
-#include "simulator/Hill.h"
-#include "simulator/wind-generation/WindsGenerator.h"
-#include "simulator/wind-generation/WindGenerationSettings.h"
+#include "../utilities/IDGenerator.h"
+#include "../utilities/functions.h"
+#include "../utilities/MyRandom.h"
+#include "../simulator/Jumper.h"
+#include "../simulator/JumperSkills.h"
+#include "../simulator/ConditionsInfo.h"
+#include "../simulator/JumpSimulator.h"
+#include "../simulator/Characteristic.h"
+#include "../simulator/Hill.h"
+#include "../simulator/wind-generation/WindsGenerator.h"
+#include "../simulator/wind-generation/WindGenerationSettings.h"
 
 #include <QDebug>
 #include <QVector>

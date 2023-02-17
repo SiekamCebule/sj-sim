@@ -10,7 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
+    UI/mainwindow.cpp \
     simulator/Characteristic.cpp \
     simulator/ConditionsInfo.cpp \
     simulator/Hill.cpp \
@@ -30,7 +30,7 @@ SOURCES += \
     utilities/functions.cpp
 
 HEADERS += \
-    mainwindow.h \
+    UI/mainwindow.h \
     simulator/Characteristic.h \
     simulator/ConditionsInfo.h \
     simulator/Hill.h \
@@ -50,9 +50,15 @@ HEADERS += \
     utilities/functions.h
 
 FORMS += \
-    mainwindow.ui
+    UI/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    flaticon_authors
+
+RESOURCES += \
+    assets.qrc
