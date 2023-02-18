@@ -9,6 +9,10 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    UI/DatabaseEditor/DatabaseEditorWindow.cpp \
+    UI/DatabaseEditor/DatabaseListItemWidget.cpp \
+    UI/SingleJumps/SingleJumpsConfigWindow.cpp \
+    global/GlobalDatabase.cpp \
     main.cpp \
     UI/mainwindow.cpp \
     simulator/Characteristic.cpp \
@@ -30,7 +34,11 @@ SOURCES += \
     utilities/functions.cpp
 
 HEADERS += \
+    UI/DatabaseEditor/DatabaseEditorWindow.h \
+    UI/DatabaseEditor/DatabaseListItemWidget.h \
+    UI/SingleJumps/SingleJumpsConfigWindow.h \
     UI/mainwindow.h \
+    global/GlobalDatabase.h \
     simulator/Characteristic.h \
     simulator/ConditionsInfo.h \
     simulator/Hill.h \
@@ -50,6 +58,9 @@ HEADERS += \
     utilities/functions.h
 
 FORMS += \
+    UI/DatabaseEditor/DatabaseEditorWindow.ui \
+    UI/DatabaseEditor/DatabaseListItemWidget.ui \
+    UI/SingleJumps/SingleJumpsConfigWindow.ui \
     UI/mainwindow.ui
 
 # Default rules for deployment.
@@ -57,8 +68,15 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+copydata.commands = $(COPY_DIR) $$PWD/userData $$OUT_PWD
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
+
 DISTFILES += \
-    flaticon_authors
+    flaticon_authors \
+    userData/GlobalDatabase/globalJumpers.json
 
 RESOURCES += \
     assets.qrc

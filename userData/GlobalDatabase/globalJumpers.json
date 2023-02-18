@@ -1,0 +1,66 @@
+{
+"jumpers":[{
+"name": "Markus",
+"surname": "Eisenbichler",
+"countryCode": "GER",
+"takeoff-power": 42,
+"takeoff-technique": 43.5,
+"flight-technique": 46,
+"flight-style": 2,
+"landing-style": 12,
+"form": 35,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": -0.45
+},
+{
+"type": "flight-height",
+"level": -0.45
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Paweł",
+"surname": "Wąsek",
+"countryCode": "POL",
+"takeoff-power": 42.25,
+"takeoff-technique": 40,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 12.7,
+"form": 32,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 0.25
+},
+{
+"type": "flight-height",
+"level": 0.45
+}
+]
+}
+]
+}

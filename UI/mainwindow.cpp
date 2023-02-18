@@ -4,6 +4,7 @@
 #include "../utilities/IDGenerator.h"
 #include "../utilities/functions.h"
 #include "../utilities/MyRandom.h"
+
 #include "../simulator/Jumper.h"
 #include "../simulator/JumperSkills.h"
 #include "../simulator/ConditionsInfo.h"
@@ -12,6 +13,11 @@
 #include "../simulator/Hill.h"
 #include "../simulator/wind-generation/WindsGenerator.h"
 #include "../simulator/wind-generation/WindGenerationSettings.h"
+
+#include "../global/GlobalDatabase.h"
+
+#include "UI/SingleJumps/SingleJumpsConfigWindow.h"
+#include "UI/DatabaseEditor/DatabaseEditorWindow.h"
 
 #include <QDebug>
 #include <QVector>
@@ -24,7 +30,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Hill * hill = new Hill("Wisła", "POL", 120, 134, 10.8, 7.24, 0.35, 0.375);
+    if(GlobalDatabase::get()->loadFromJson() == false)
+        exit(0);
+
+
+    /*Hill * hill = new Hill("Wisła", "POL", 120, 134, 10.8, 7.24, 0.35, 0.375);
     hill->insertCharacteristic("real-hs-point", -1);
     hill->insertCharacteristic("takeoff-power-effect", 1);
     hill->insertCharacteristic("takeoff-technique-effect", -1);
@@ -32,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     hill->insertCharacteristic("takeoff-form-effect", 0);
     hill->insertCharacteristic("flight-technique-effect", 0);
     hill->insertCharacteristic("flight-randomness-effect", 0);
-    hill->insertCharacteristic("flight-form-effect", 0);
+    hill->insertCharacteristic("flight-form-effect", 0);*/
 
     /*Hill * hill = new Hill("Planica", "SLO", 200, 240, 14.40, 8.64, 0.185, 0.965);
     hill->insertCharacteristic("real-hs-point", -1.5);
@@ -53,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
     hill->insertCharacteristic("flight-randomness-effect", 0);
     hill->insertCharacteristic("flight-form-effect", 0);*/
 
-    hill->setupPointsForMeter();
+    /*hill->setupPointsForMeter();
     JumpSimulator simulator;
     simulator.getConditionsInfo().setGate(15);
     simulator.setHill(hill);
@@ -113,11 +123,28 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug()<<"Punkty łącznie: "<<jump.getPoints()<<"\n\n";
     }
 
-    delete hill;
+    delete hill;*/
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::on_pushButton_singleJumps_clicked()
+{
+
+}
+
+
+void MainWindow::on_pushButton_databaseEdit_clicked()
+{
+    DatabaseEditorWindow databaseEditor;
+    databaseEditor.setModal(true);
+    if(databaseEditor.exec() == QDialog::Accepted)
+    {
+        qDebug()<<"accepted";
+    }
 }
 

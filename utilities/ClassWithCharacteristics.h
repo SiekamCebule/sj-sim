@@ -15,11 +15,11 @@ public:
     ClassWithCharacteristics();
 
     void insertCharacteristic(const Characteristic & characteristic);
-    void insertCharacteristic( const QString & type, short level);
+    void insertCharacteristic(const QString & type, double level);
     void removeCharacteristic(const Characteristic & characteristic);
     void removeCharacteristic(const QString & type);
     bool characteristicsContains(const QString & type);
-    short getLevelOfCharacteristic(const QString & characteristicType);
+    double getLevelOfCharacteristic(const QString & characteristicType);
     QSet<Characteristic> getCharacteristics() const;
     void setCharacteristics(const QSet<Characteristic> &newCharacteristics);
 };

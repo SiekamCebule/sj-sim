@@ -1,11 +1,13 @@
 <RCC>
-    <qresource prefix="/img">
-        <file>ski-jumper-1.png</file>
-        <file>ski-jumper.png</file>
-        <file>medal.png</file>
-        <file>Crystal_Globe.svg.png</file>
-        <file>help.png</file>
-        <file>database-edit.png</file>
-        <file>settings.png</file>
+    <qresource prefix="/">
+        <file>img/ski-jumper-1.png</file>
+        <file>img/ski-jumper.png</file>
+        <file>img/settings.png</file>
+        <file>img/medal.png</file>
+        <file>img/help.png</file>
+        <file>img/database-edit.png</file>
+        <file>img/Crystal_Globe.svg.png</file>
+        <file>img/pencil.png</file>
+        <file>img/delete.png</file>
     </qresource>
 </RCC>

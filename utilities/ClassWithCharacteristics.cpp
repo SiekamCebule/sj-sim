@@ -26,7 +26,7 @@ void ClassWithCharacteristics::insertCharacteristic(const Characteristic &charac
     characteristics.insert(characteristic);
 }
 
-void ClassWithCharacteristics::insertCharacteristic(const QString &type, short level)
+void ClassWithCharacteristics::insertCharacteristic(const QString &type, double level)
 {
     characteristics.insert(Characteristic(level, type));
 }
@@ -41,7 +41,7 @@ void ClassWithCharacteristics::removeCharacteristic(const QString &type)
     characteristics.remove(Characteristic(0, type));
 }
 
-short ClassWithCharacteristics::getLevelOfCharacteristic(const QString &characteristicType)
+double ClassWithCharacteristics::getLevelOfCharacteristic(const QString &characteristicType)
 {
     for(QSet<Characteristic>::iterator it = characteristics.begin(); it != characteristics.end(); it++)
     {
