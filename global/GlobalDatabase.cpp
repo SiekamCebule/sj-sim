@@ -89,20 +89,19 @@ bool GlobalDatabase::loadJumpers()
     {
         QJsonObject obj = val.toObject();
         Jumper jumper;
-        jumper.setJumperSkills(new JumperSkills);
         jumper.setName(obj.value("name").toString());
         jumper.setSurname(obj.value("surname").toString());
         jumper.setCountryCode(obj.value("countryCode").toString());
-        jumper.getJumperSkills()->setTakeoffPower(obj.value("takeoff-power").toDouble());
-        jumper.getJumperSkills()->setTakeoffTechnique(obj.value("takeoff-technique").toDouble());
-        jumper.getJumperSkills()->setFlightTechnique(obj.value("flight-technique").toDouble());
-        jumper.getJumperSkills()->setFlightStyle(obj.value("flight-style").toDouble());
-        jumper.getJumperSkills()->setLandingStyle(obj.value("landing-style").toDouble());
-        jumper.getJumperSkills()->setForm(obj.value("form").toDouble());
+        jumper.getJumperSkillsPointer()->setTakeoffPower(obj.value("takeoff-power").toDouble());
+        jumper.getJumperSkillsPointer()->setTakeoffTechnique(obj.value("takeoff-technique").toDouble());
+        jumper.getJumperSkillsPointer()->setFlightTechnique(obj.value("flight-technique").toDouble());
+        jumper.getJumperSkillsPointer()->setFlightStyle(obj.value("flight-style").toDouble());
+        jumper.getJumperSkillsPointer()->setLandingStyle(obj.value("landing-style").toDouble());
+        jumper.getJumperSkillsPointer()->setForm(obj.value("form").toDouble());
 
         QJsonArray characteristicsArray = obj.value("characteristics").toArray();
         for(const auto & val : characteristicsArray){
-            jumper.getJumperSkills()->insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
+            jumper.getJumperSkills().insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
         }
 
         globalJumpers.push_back(jumper);
@@ -111,7 +110,7 @@ bool GlobalDatabase::loadJumpers()
     for(const auto & jp : globalJumpers)
     {
         qDebug()<<jp.getNameAndSurname()<<" ("<<jp.getCountryCode()<<")";
-        JumperSkills * jps = jp.getJumperSkills();
+        JumperSkills * jps = jp.getJumperSkillsPointer();
         qDebug()<<jps->getTakeoffPower()<<", "<<jps->getTakeoffTechnique()<<", "<<jps->getFlightTechnique()<<", "<<jps->getFlightStyle()<<", "<<jps->getLandingStyle()<<", "<<jps->getForm();
         for(const auto & ch : jps->getCharacteristics())
             qDebug()<<ch.getType()<<", "<<ch.getLevel();

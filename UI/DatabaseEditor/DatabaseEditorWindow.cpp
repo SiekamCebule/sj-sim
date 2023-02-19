@@ -8,7 +8,8 @@
 #include <QFont>
 #include <QScrollArea>
 
-DatabaseEditorWindow::DatabaseEditorWindow(QWidget *parent) :
+DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, QWidget *parent) :
+    jumperEditor(jumperEditor),
     QDialog(parent),
     ui(new Ui::DatabaseEditorWindow)
 {
@@ -17,6 +18,11 @@ DatabaseEditorWindow::DatabaseEditorWindow(QWidget *parent) :
 
     if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
         fillJumpersWidget();
+
+    if(this->jumperEditor == nullptr)
+        this->jumperEditor = new JumperEditorWidget();
+
+    ui->tab_jumpers->layout()->addWidget(this->jumperEditor);
 }
 
 DatabaseEditorWindow::~DatabaseEditorWindow()
@@ -39,6 +45,8 @@ void DatabaseEditorWindow::updateItemsSelection(int index)
             item->setIsSelected(false);
         else item->setIsSelected(true);
     }
+    jumperEditor->setJumper(const_cast<Jumper *>(&GlobalDatabase::get()->getGlobalJumpers().at(index)));
+    jumperEditor->fillJumperInfo();
 }
 
 void DatabaseEditorWindow::fillJumpersWidget()
@@ -61,7 +69,7 @@ void DatabaseEditorWindow::fillJumpersWidget()
         QLabel * label = new QLabel(QString::number(itemWidget->getIndex()));
         QFont font = label->font();
         font.setFamily("Ubuntu Light");
-        font.setPointSize(13);
+        font.setPointSize(17);
         label->setFont(font);
         label->setStyleSheet("QLabel{color: #000000; margin-right: 11px;}");
         itemWidget->addLabel(label, 0);
@@ -69,7 +77,7 @@ void DatabaseEditorWindow::fillJumpersWidget()
         label = new QLabel(jumper.getNameAndSurname());
         label->setObjectName("main-label");
         font.setFamily("Ubuntu Light");
-        font.setPointSize(10);
+        font.setPointSize(15);
         label->setFont(font);
         label->setStyleSheet("QLabel{color: #452020; margin-right: 5px;}");
         itemWidget->addLabel(label, 1);

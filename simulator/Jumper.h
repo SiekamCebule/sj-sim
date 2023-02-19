@@ -10,14 +10,13 @@
 class Jumper : public ClassWithID
 {
 public:
-    Jumper(const QString &name = "", const QString &surname = "", const QString &countryCode = "", JumperSkills * jumperSkills = nullptr, ulong jumperSkillsID = 0);
+    Jumper(const QString &name = "", const QString &surname = "", const QString &countryCode = "");
 
 private:
     QString name, surname;
     QString countryCode;
 
-    JumperSkills * jumperSkills;
-    ulong jumperSkillsID;
+    JumperSkills jumperSkills;
 
 public:
     QString getName() const;
@@ -27,10 +26,9 @@ public:
     QString getNameAndSurname() const;
     QString getCountryCode() const;
     void setCountryCode(const QString &newCountryCode);
-    JumperSkills *getJumperSkills() const;
-    void setJumperSkills(JumperSkills *newJumperSkills);
-    void setJumperSkillsID(ulong ID);
-    ulong getJumperSkillsID() const;
+    JumperSkills getJumperSkills() const;
+    JumperSkills * getJumperSkillsPointer() const;
+    void setJumperSkills(const JumperSkills &newJumperSkills);
 };
 
 #endif // JUMPER_H

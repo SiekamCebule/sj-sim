@@ -12,7 +12,7 @@ JumpSimulator::JumpSimulator(Jumper *jumper, const ConditionsInfo & conditionsIn
     hill(hill)
 {
     if(jumper != nullptr)
-        jumperSkills = jumper->getJumperSkills();
+        jumperSkills = jumper->getJumperSkillsPointer();
 
     resetTemporaryParameters();
 }
@@ -35,7 +35,7 @@ JumperSkills *JumpSimulator::getJumperSkills() const
 void JumpSimulator::updateJumperSkills()
 {
     if(jumper != nullptr)
-        jumperSkills = jumper->getJumperSkills();
+        jumperSkills = jumper->getJumperSkillsPointer();
 }
 
 void JumpSimulator::simulateJump()
@@ -76,7 +76,7 @@ void JumpSimulator::generateTakeoffRating()
         perfectLevel += (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.85));
     else
         perfectLevel += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
-    takeoffRating -= std::abs(perfectLevel - jumper->getJumperSkills()->getLevelOfCharacteristic("takeoff-height")) * 1.15;
+    takeoffRating -= std::abs(perfectLevel - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 1.15;
 
     double random = 0;
     short randomType = MyRandom::randomInt(1, 20);
@@ -108,7 +108,7 @@ void JumpSimulator::generateFlightRating()
         perfectLevel += (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.85));
     else
         perfectLevel += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
-    flightRating -= std::abs(perfectLevel - jumper->getJumperSkills()->getLevelOfCharacteristic("flight-height"));
+    flightRating -= std::abs(perfectLevel - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height"));
 
     double random = 0;
     short randomType = MyRandom::randomInt(1, 20);
@@ -452,7 +452,7 @@ void JumpSimulator::resetTemporaryParameters()
 
 bool JumpSimulator::jumperCharacteristicsContains(const Characteristic & characteristics)
 {
-    return jumper->getJumperSkills()->getCharacteristics().contains(characteristics);
+    return jumper->getJumperSkills().getCharacteristics().contains(characteristics);
 }
 
 JumpData JumpSimulator::getJumpData()

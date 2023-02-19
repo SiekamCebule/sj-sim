@@ -1,15 +1,23 @@
 #include "Jumper.h"
 
-Jumper::Jumper(const QString &name, const QString &surname, const QString &countryCode, JumperSkills * jumperSkills, ulong jumperSkillsID) : name(name),
+Jumper::Jumper(const QString &name, const QString &surname, const QString &countryCode) : name(name),
     surname(surname),
-    countryCode(countryCode),
-    jumperSkills(jumperSkills),
-    jumperSkillsID(std::move(jumperSkillsID))
+    countryCode(countryCode)
 {}
 
-void Jumper::setJumperSkillsID(ulong ID)
+JumperSkills Jumper::getJumperSkills() const
 {
-    jumperSkillsID = ID;
+    return jumperSkills;
+}
+
+JumperSkills *Jumper::getJumperSkillsPointer() const
+{
+    return const_cast<JumperSkills*>(&jumperSkills);
+}
+
+void Jumper::setJumperSkills(const JumperSkills &newJumperSkills)
+{
+    jumperSkills = newJumperSkills;
 }
 
 QString Jumper::getName() const
@@ -45,19 +53,4 @@ QString Jumper::getCountryCode() const
 void Jumper::setCountryCode(const QString &newCountryCode)
 {
     countryCode = newCountryCode;
-}
-
-JumperSkills *Jumper::getJumperSkills() const
-{
-    return jumperSkills;
-}
-
-void Jumper::setJumperSkills(JumperSkills *newJumperSkills)
-{
-    jumperSkills = newJumperSkills;
-}
-
-ulong Jumper::getJumperSkillsID() const
-{
-    return jumperSkillsID;
 }
