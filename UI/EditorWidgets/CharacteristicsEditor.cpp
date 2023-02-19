@@ -35,8 +35,6 @@ void CharacteristicsEditor::setCharacteristics(const QSet<Characteristic> &newCh
 {
     characteristics = newCharacteristics;
     emit characteristicsChanged();
-
-    qDebug()<<characteristics.size();
 }
 
 void CharacteristicsEditor::on_pushButton_add_clicked()
@@ -45,8 +43,6 @@ void CharacteristicsEditor::on_pushButton_add_clicked()
     dialog.setModal(true);
     dialog.setExistingCharacteristics(const_cast<QSet<Characteristic> *>(&characteristics));
     dialog.fillComboBox();
-    qDebug()<<"amvc"<<&characteristics;
-    qDebug()<<"am loddi"<<dialog.getExistingCharacteristics();
     if(dialog.exec() == QDialog::Accepted)
     {
         if(dialog.getCharacteristicLevel() != 0){

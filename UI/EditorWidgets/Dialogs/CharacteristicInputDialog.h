@@ -37,11 +37,15 @@ public:
     void setParentType(short newParentType);
     QSet<Characteristic> *getExistingCharacteristics() const;
     void setExistingCharacteristics(QSet<Characteristic> *newExistingCharacteristics);
+    QStringList getDirtyCharacteristicNames() const;
+    void setDirtyCharacteristicNames(const QStringList &newDirtyCharacteristicNames);
 
 private:
     Ui::CharacteristicInputDialog *ui;
     Characteristic * characteristicToEdit;
     QSet<Characteristic> * existingCharacteristics;
+
+    QStringList dirtyCharacteristicNames;
 
     short action;
     short parentType;

@@ -36,7 +36,7 @@ CharacteristicInputDialog::~CharacteristicInputDialog()
 
 QString CharacteristicInputDialog::getCharacteristicType() const
 {
-    return "cecha";
+    return dirtyCharacteristicNames.at(ui->comboBox_type->currentIndex());
 }
 
 double CharacteristicInputDialog::getCharacteristicLevel() const
@@ -89,6 +89,16 @@ void CharacteristicInputDialog::setExistingCharacteristics(QSet<Characteristic> 
     existingCharacteristics = newExistingCharacteristics;
 }
 
+QStringList CharacteristicInputDialog::getDirtyCharacteristicNames() const
+{
+    return dirtyCharacteristicNames;
+}
+
+void CharacteristicInputDialog::setDirtyCharacteristicNames(const QStringList &newDirtyCharacteristicNames)
+{
+    dirtyCharacteristicNames = newDirtyCharacteristicNames;
+}
+
 void CharacteristicInputDialog::fillComboBox()
 {
     QStringListModel * model = new QStringListModel;
@@ -107,6 +117,10 @@ void CharacteristicInputDialog::fillComboBox()
             }
             characteristics.remove(index);
         }
+    }
+    for(auto & characteristic : characteristics){
+        dirtyCharacteristicNames.push_back(characteristic);
+        characteristic = Characteristic::getTypeToDisplay(Characteristic(characteristic));
     }
     model->setStringList(characteristics);
 

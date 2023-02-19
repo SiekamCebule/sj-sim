@@ -1,5 +1,7 @@
 #include "Characteristic.h"
 
+#include <QDebug>
+
 Characteristic::Characteristic(double level, const QString &type) : level(level),
     type(type)
 {
@@ -193,4 +195,20 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
             return "Szansa na przedni wiatr";
     }
     return "<Nieprawidłowa cecha>";
+}
+
+int Characteristic::getCharacteristicsForParentTypeCount(short parentType)
+{
+    return characteristicTypesForSpecificParent(parentType).count();
+}
+
+int Characteristic::getAdditionToCharacteristicComboBoxIndexToGetCharacteristic(short parentType)
+{
+    int addition = 0;
+    for(int i=0; i < parentType + 1; i++)
+    {
+        addition += getCharacteristicsForParentTypeCount(i);
+    }
+    qDebug()<<"addition: "<<addition;
+    return addition;
 }

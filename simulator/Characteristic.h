@@ -33,6 +33,8 @@ public:
 
     static QStringList characteristicTypesForSpecificParent(short parentType, bool transformToDisplay = false);
     static QString getTypeToDisplay(const Characteristic & characteristic);
+    static int getCharacteristicsForParentTypeCount(short parentType);
+    static int getAdditionToCharacteristicComboBoxIndexToGetCharacteristic(short parentType);
 };
 
 inline bool operator==(const Characteristic & char1, const Characteristic char2)
