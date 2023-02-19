@@ -38,20 +38,6 @@ void DatabaseListItemWidget::update()
         ui->horizontalLayout->addWidget(label);
     }
     ui->horizontalLayout->addSpacerItem(new QSpacerItem(5, 5, QSizePolicy::Maximum, QSizePolicy::Maximum));
-
-    /*QPushButton * buttonEdit = new QPushButton;
-    buttonEdit->setFlat(true);
-    buttonEdit->setFixedSize(20, 20);
-    buttonEdit->setIcon(QIcon(":/img/pencil.png"));
-    buttonEdit->setIconSize(QSize(20, 20));
-    ui->horizontalLayout->addWidget(buttonEdit);
-    QPushButton * buttonDelete = new QPushButton;
-    buttonDelete->setFlat(true);
-    buttonDelete->setFixedSize(20, 20);
-    buttonDelete->setIcon(QIcon(":/img/delete.png"));
-    buttonDelete->setIconSize(QSize(20, 20));
-    ui->horizontalLayout->addWidget(buttonDelete);*/
-
    ui->horizontalLayout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding));
 }
 

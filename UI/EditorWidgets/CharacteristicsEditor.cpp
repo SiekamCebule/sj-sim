@@ -43,11 +43,16 @@ void CharacteristicsEditor::on_pushButton_add_clicked()
 {
     CharacteristicInputDialog dialog(CharacteristicInputDialog::Add);
     dialog.setModal(true);
+    dialog.setExistingCharacteristics(const_cast<QSet<Characteristic> *>(&characteristics));
+    dialog.fillComboBox();
+    qDebug()<<"amvc"<<&characteristics;
+    qDebug()<<"am loddi"<<dialog.getExistingCharacteristics();
     if(dialog.exec() == QDialog::Accepted)
     {
-        characteristics.insert(dialog.getCharacteristic());
-        emit characteristicsChanged();
-                qDebug()<<strings.size();
+        if(dialog.getCharacteristicLevel() != 0){
+            characteristics.insert(dialog.getCharacteristic());
+            emit characteristicsChanged();
+        }
     }
 }
 
@@ -56,7 +61,22 @@ void CharacteristicsEditor::updateStrings()
     strings.clear();
     for(const auto & characteristic : qAsConst(characteristics))
     {
-        strings.push_back(characteristic.getType() + " (Poziom " + QString::number(characteristic.getLevel()) + ")");
+        strings.push_back(Characteristic::getTypeToDisplay(characteristic) + " (Poziom " + QString::number(characteristic.getLevel()) + ")");
     }
     model->setStringList(strings);
 }
+
+void CharacteristicsEditor::on_pushButton_edit_clicked()
+{
+    int index = ui->listView_characteristics->selectionModel()->selectedRows().at(0).row();
+    CharacteristicInputDialog dialog(CharacteristicInputDialog::Edit);
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        if(dialog.getCharacteristicLevel() != 0){
+
+        }
+    }
+    // co trzeba zrobić?
+}
+

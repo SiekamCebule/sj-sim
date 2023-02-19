@@ -1,9 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "../utilities/IDGenerator.h"
+#include "../global/IDGenerator.h"
+#include "../global/MyRandom.h"
 #include "../utilities/functions.h"
-#include "../utilities/MyRandom.h"
 
 #include "../simulator/Jumper.h"
 #include "../simulator/JumperSkills.h"

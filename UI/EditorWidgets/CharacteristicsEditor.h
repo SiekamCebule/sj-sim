@@ -31,6 +31,8 @@ private slots:
     void on_pushButton_add_clicked();
     void updateStrings();
 
+    void on_pushButton_edit_clicked();
+
 private:
     Ui::CharacteristicsEditor *ui;
 

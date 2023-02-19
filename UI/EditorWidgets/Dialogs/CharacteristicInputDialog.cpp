@@ -1,11 +1,16 @@
 #include "CharacteristicInputDialog.h"
 #include "ui_CharacteristicInputDialog.h"
 
-CharacteristicInputDialog::CharacteristicInputDialog(short action, Characteristic *characteristicToEdit, QWidget *parent) :
-    action(action),
-    characteristicToEdit(characteristicToEdit),
+#include <QStringList>
+#include <QStringListModel>
+
+CharacteristicInputDialog::CharacteristicInputDialog(short action, short parentType, QSet<Characteristic> * existingCharacteristics, Characteristic *characteristicToEdit, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CharacteristicInputDialog)
+    ui(new Ui::CharacteristicInputDialog),
+    action(action),
+    parentType(parentType),
+    existingCharacteristics(existingCharacteristics),
+    characteristicToEdit(characteristicToEdit)
 {
     ui->setupUi(this);
 
@@ -18,6 +23,10 @@ CharacteristicInputDialog::CharacteristicInputDialog(short action, Characteristi
     case Edit: ui->label_title->setText("Edytuj cechę"); break;
     default: ui->label_title->setText("<Błąd>"); break;
     }
+    setWindowTitle(ui->label_title->text());
+
+    if(getExistingCharacteristics() != nullptr)
+        fillComboBox();
 }
 
 CharacteristicInputDialog::~CharacteristicInputDialog()
@@ -58,4 +67,48 @@ Characteristic *CharacteristicInputDialog::getCharacteristicToEdit() const
 void CharacteristicInputDialog::setCharacteristicToEdit(Characteristic *newCharacteristicToEdit)
 {
     characteristicToEdit = newCharacteristicToEdit;
+}
+
+short CharacteristicInputDialog::getParentType() const
+{
+    return parentType;
+}
+
+void CharacteristicInputDialog::setParentType(short newParentType)
+{
+    parentType = newParentType;
+}
+
+QSet<Characteristic> *CharacteristicInputDialog::getExistingCharacteristics() const
+{
+    return existingCharacteristics;
+}
+
+void CharacteristicInputDialog::setExistingCharacteristics(QSet<Characteristic> *newExistingCharacteristics)
+{
+    existingCharacteristics = newExistingCharacteristics;
+}
+
+void CharacteristicInputDialog::fillComboBox()
+{
+    QStringListModel * model = new QStringListModel;
+
+    QStringList characteristics = Characteristic::characteristicTypesForSpecificParent(parentType, false);
+    for(auto & characteristic : characteristics)
+    {
+        if(existingCharacteristics->contains(Characteristic(characteristic)))
+        {
+            int index = 0;
+            int it;
+            for(it = 0; it < characteristics.size(); it++)
+            {
+                if(characteristics.at(it) == characteristic)
+                    index = it;
+            }
+            characteristics.remove(index);
+        }
+    }
+    model->setStringList(characteristics);
+
+    ui->comboBox_type->setModel(model);
 }

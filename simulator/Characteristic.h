@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QStringList>
 #include <QHash>
 #include <qhashfunctions.h>
 
@@ -15,7 +16,7 @@ public:
     operator QString() const {return type;}
 private:
 
-    double level; // od -5 do 5
+    double level; // od -10 do 10
     QString type;
 
 public:
@@ -23,6 +24,15 @@ public:
     void setLevel(double newLevel);
     QString getType() const;
     void setType(const QString &newType);
+
+    enum ParentType{
+        Jumper,
+        Hill,
+        WindsGeneratorSettings
+    };
+
+    static QStringList characteristicTypesForSpecificParent(short parentType, bool transformToDisplay = false);
+    static QString getTypeToDisplay(const Characteristic & characteristic);
 };
 
 inline bool operator==(const Characteristic & char1, const Characteristic char2)

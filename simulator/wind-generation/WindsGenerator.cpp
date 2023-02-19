@@ -1,6 +1,6 @@
 #include "WindsGenerator.h"
 
-#include "../../utilities/MyRandom.h"
+#include "../../global/MyRandom.h"
 
 #include <QDebug>
 

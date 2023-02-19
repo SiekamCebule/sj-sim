@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Dodaj/Edytuj cechę</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -68,6 +68,9 @@ color: rgb(0, 0, 0);
         <string notr="true">QWidget{
 	color: rgb(41, 41, 41);
 }</string>
+       </property>
+       <property name="minimum">
+        <double>-10.000000000000000</double>
        </property>
        <property name="maximum">
         <double>10.000000000000000</double>

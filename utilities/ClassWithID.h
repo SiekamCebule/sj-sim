@@ -1,7 +1,7 @@
 #ifndef CLASSWITHID_H
 #define CLASSWITHID_H
 
-#include "IDGenerator.h"
+#include "../global/IDGenerator.h"
 
 class ClassWithID
 {

@@ -32,8 +32,8 @@ SOURCES += \
     simulator/wind-generation/WindsGenerator.cpp \
     utilities/ClassWithCharacteristics.cpp \
     utilities/ClassWithID.cpp \
-    utilities/IDGenerator.cpp \
-    utilities/MyRandom.cpp \
+    global/IDGenerator.cpp \
+    global/MyRandom.cpp \
     utilities/functions.cpp
 
 HEADERS += \
@@ -59,8 +59,8 @@ HEADERS += \
     simulator/wind-generation/WindsGenerator.h \
     utilities/ClassWithCharacteristics.h \
     utilities/ClassWithID.h \
-    utilities/IDGenerator.h \
-    utilities/MyRandom.h \
+    global/IDGenerator.h \
+    global/MyRandom.h \
     utilities/functions.h
 
 FORMS += \

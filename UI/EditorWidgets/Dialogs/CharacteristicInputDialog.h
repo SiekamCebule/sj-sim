@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QString>
+#include <QSet>
 #include "../../../simulator/Characteristic.h"
 
 namespace Ui {
@@ -14,7 +15,7 @@ class CharacteristicInputDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CharacteristicInputDialog(short action = 0, Characteristic * characteristicToEdit = nullptr, QWidget *parent = nullptr);
+    explicit CharacteristicInputDialog(short action = 0, short parentType = 0, QSet<Characteristic> * existingCharacteristics = nullptr, Characteristic * characteristicToEdit = nullptr, QWidget *parent = nullptr);
     ~CharacteristicInputDialog();
 
     QString getCharacteristicType() const;
@@ -26,16 +27,24 @@ public:
         Edit
     };
 
+    void fillComboBox();
+
     short getAction() const;
     void setAction(short newAction);
     Characteristic *getCharacteristicToEdit() const;
     void setCharacteristicToEdit(Characteristic *newCharacteristicToEdit);
+    short getParentType() const;
+    void setParentType(short newParentType);
+    QSet<Characteristic> *getExistingCharacteristics() const;
+    void setExistingCharacteristics(QSet<Characteristic> *newExistingCharacteristics);
 
 private:
     Ui::CharacteristicInputDialog *ui;
     Characteristic * characteristicToEdit;
+    QSet<Characteristic> * existingCharacteristics;
 
     short action;
+    short parentType;
 };
 
 #endif // CHARACTERISTICINPUTDIALOG_H

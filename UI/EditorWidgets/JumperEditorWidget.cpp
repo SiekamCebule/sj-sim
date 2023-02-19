@@ -35,7 +35,6 @@ void JumperEditorWidget::fillJumperInfo()
     ui->comboBox_flightStyle->setCurrentIndex(jumper->getJumperSkills().getFlightStyle());
     ui->doubleSpinBox_landingStyle->setValue(jumper->getJumperSkills().getLandingStyle());
     ui->doubleSpinBox_form->setValue(jumper->getJumperSkills().getForm());
-    qDebug()<<jumper->getJumperSkillsPointer()->getCharacteristics().size()<<" no";
     characteristicsEditor->setCharacteristics(jumper->getJumperSkills().getCharacteristics());
 }
 
