@@ -42,6 +42,16 @@
       <string notr="true">QListView{
 	background-color: rgb(246, 245, 244);
 	color: rgb(0, 0, 0);
+}
+QListView::item{
+border: 1px solid rgb(169, 109, 0);
+border-radius: 8px;
+background-color: rgb(255, 255, 220);
+color: black;
+margin-bottom: 3px;
+}
+QListView::item:selected {
+background: transparent;
 }</string>
      </property>
      <property name="autoScroll">

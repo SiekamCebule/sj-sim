@@ -33,11 +33,14 @@ private slots:
 
     void on_pushButton_edit_clicked();
 
+    void on_pushButton_delete_clicked();
+
 private:
     Ui::CharacteristicsEditor *ui;
 
     QSet<Characteristic> characteristics;
     QStringList strings;
+    QStringList dirtyStrings;
     QStringListModel * model;
 };
 
