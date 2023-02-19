@@ -4,8 +4,9 @@
 #include <QWidget>
 #include <QVector>
 #include <QLabel>
+#include <QMouseEvent>
 
-#include "DatabaseEditorWindow.h"
+class DatabaseEditorWindow;
 
 namespace Ui {
 class DatabaseListItemWidget;
@@ -29,11 +30,21 @@ public:
     DatabaseEditorWindow *getEditorParent() const;
     void setEditorParent(DatabaseEditorWindow *newEditorParent);
 
+    bool getIsSelected() const;
+    void setIsSelected(bool newIsSelected);
+
+signals:
+    void itemSelected(int index);
+
+protected:
+    void mousePressEvent(QMouseEvent * event);
+
 private:
     Ui::DatabaseListItemWidget *ui;
     QVector<QLabel *> labels;
 
     int index;
+    bool isSelected;
 
     DatabaseEditorWindow * editorParent;
 };

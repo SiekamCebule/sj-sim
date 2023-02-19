@@ -2,6 +2,9 @@
 #define DATABASEEDITORWINDOW_H
 
 #include <QDialog>
+#include <QVector>
+
+class DatabaseListItemWidget;
 
 namespace Ui {
 class DatabaseEditorWindow;
@@ -16,9 +19,11 @@ public:
     ~DatabaseEditorWindow();
 
     void when_ItemWidgetDeleteButtonClicked(int index);
+    void updateItemsSelection(int index);
 
 private:
     Ui::DatabaseEditorWindow *ui;
+    QVector<DatabaseListItemWidget *> listItems;
 
     void fillJumpersWidget();
 };

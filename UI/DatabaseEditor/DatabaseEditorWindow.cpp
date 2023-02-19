@@ -30,6 +30,17 @@ void DatabaseEditorWindow::when_ItemWidgetDeleteButtonClicked(int index)
     fillJumpersWidget();
 }
 
+void DatabaseEditorWindow::updateItemsSelection(int index)
+{
+    qDebug()<<"slot z indeksem "<<index;
+    for(auto & item : listItems)
+    {
+        if(item->getIndex() != index)
+            item->setIsSelected(false);
+        else item->setIsSelected(true);
+    }
+}
+
 void DatabaseEditorWindow::fillJumpersWidget()
 {
     if(ui->verticalLayout_jumpers != NULL){
@@ -56,6 +67,7 @@ void DatabaseEditorWindow::fillJumpersWidget()
         itemWidget->addLabel(label, 0);
 
         label = new QLabel(jumper.getNameAndSurname());
+        label->setObjectName("main-label");
         font.setFamily("Ubuntu Light");
         font.setPointSize(10);
         label->setFont(font);
@@ -67,6 +79,9 @@ void DatabaseEditorWindow::fillJumpersWidget()
 
         ui->verticalLayout_jumpers->addWidget(itemWidget);
         itemWidget->update();
+        listItems.push_back(itemWidget);
+
+        connect(itemWidget, &DatabaseListItemWidget::itemSelected, this, &DatabaseEditorWindow::updateItemsSelection);
         i++;
     }
     ui->verticalLayout_jumpers->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Ignored, QSizePolicy::Expanding));

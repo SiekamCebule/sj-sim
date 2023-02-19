@@ -39,7 +39,7 @@ void DatabaseListItemWidget::update()
     }
     ui->horizontalLayout->addSpacerItem(new QSpacerItem(5, 5, QSizePolicy::Maximum, QSizePolicy::Maximum));
 
-    QPushButton * buttonEdit = new QPushButton;
+    /*QPushButton * buttonEdit = new QPushButton;
     buttonEdit->setFlat(true);
     buttonEdit->setFixedSize(20, 20);
     buttonEdit->setIcon(QIcon(":/img/pencil.png"));
@@ -50,12 +50,7 @@ void DatabaseListItemWidget::update()
     buttonDelete->setFixedSize(20, 20);
     buttonDelete->setIcon(QIcon(":/img/delete.png"));
     buttonDelete->setIconSize(QSize(20, 20));
-    ui->horizontalLayout->addWidget(buttonDelete);
-
-    connect(buttonDelete, &QPushButton::clicked, this, [this](){
-        dynamic_cast<DatabaseEditorWindow *>(editorParent)->when_ItemWidgetDeleteButtonClicked(this->getIndex());
-    });
-
+    ui->horizontalLayout->addWidget(buttonDelete);*/
 
    ui->horizontalLayout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding));
 }
@@ -80,6 +75,27 @@ DatabaseEditorWindow *DatabaseListItemWidget::getEditorParent() const
 void DatabaseListItemWidget::setEditorParent(DatabaseEditorWindow *newEditorParent)
 {
     editorParent = newEditorParent;
+}
+
+void DatabaseListItemWidget::mousePressEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton)
+    {
+        setStyleSheet("QLabel#main-label{background-color: #b3ffba;}");
+        emit itemSelected(index);
+    }
+}
+
+bool DatabaseListItemWidget::getIsSelected() const
+{
+    return isSelected;
+}
+
+void DatabaseListItemWidget::setIsSelected(bool newIsSelected)
+{
+    isSelected = newIsSelected;
+    if(isSelected == false)
+        setStyleSheet("QWidget{background-color: #ffffff;}");
 }
 
 // PROBLEM: Nie wiem jak podłączyć przycisk usuwania do slotu tak, żeby DatabaseEditorWindow wiedział który widget i którego skoczka z globalnej bazy danych ma usunąć. (W skrócie, potrzebuje indexu usuwanego skoczka.
