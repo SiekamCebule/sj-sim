@@ -10,8 +10,8 @@
 class Characteristic
 {
 public:
-    explicit Characteristic(double level = 0, const QString &type = "");
-    Characteristic(const QString &type = "");
+    Characteristic(double level = 0, const QString &type = "");
+    Characteristic(const QString &type);
     operator QString() const {return type;}
 private:
 

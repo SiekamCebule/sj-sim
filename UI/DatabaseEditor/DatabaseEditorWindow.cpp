@@ -9,9 +9,9 @@
 #include <QScrollArea>
 
 DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, QWidget *parent) :
-    jumperEditor(jumperEditor),
     QDialog(parent),
-    ui(new Ui::DatabaseEditorWindow)
+    ui(new Ui::DatabaseEditorWindow),
+    jumperEditor(jumperEditor)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
@@ -38,7 +38,6 @@ void DatabaseEditorWindow::when_ItemWidgetDeleteButtonClicked(int index)
 
 void DatabaseEditorWindow::updateItemsSelection(int index)
 {
-    qDebug()<<"slot z indeksem "<<index;
     for(auto & item : listItems)
     {
         if(item->getIndex() != index)

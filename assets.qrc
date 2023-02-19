@@ -9,5 +9,6 @@
         <file>img/Crystal_Globe.svg.png</file>
         <file>img/pencil.png</file>
         <file>img/delete.png</file>
+        <file>img/plus.png</file>
     </qresource>
 </RCC>

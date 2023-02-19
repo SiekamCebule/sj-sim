@@ -101,7 +101,7 @@ bool GlobalDatabase::loadJumpers()
 
         QJsonArray characteristicsArray = obj.value("characteristics").toArray();
         for(const auto & val : characteristicsArray){
-            jumper.getJumperSkills().insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
+            jumper.getJumperSkillsPointer()->insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
         }
 
         globalJumpers.push_back(jumper);

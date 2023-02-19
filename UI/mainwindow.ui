@@ -76,7 +76,7 @@
           </property>
           <property name="styleSheet">
            <string notr="true">QLabel{
-color: rgb(0, 0, 0)
+color: rgb(0, 0, 0);
 }</string>
           </property>
           <property name="text">

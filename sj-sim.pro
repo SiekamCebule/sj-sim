@@ -11,6 +11,8 @@ CONFIG += c++17
 SOURCES += \
     UI/DatabaseEditor/DatabaseEditorWindow.cpp \
     UI/DatabaseEditor/DatabaseListItemWidget.cpp \
+    UI/EditorWidgets/CharacteristicsEditor.cpp \
+    UI/EditorWidgets/Dialogs/CharacteristicInputDialog.cpp \
     UI/EditorWidgets/JumperEditorWidget.cpp \
     UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     global/GlobalDatabase.cpp \
@@ -37,6 +39,8 @@ SOURCES += \
 HEADERS += \
     UI/DatabaseEditor/DatabaseEditorWindow.h \
     UI/DatabaseEditor/DatabaseListItemWidget.h \
+    UI/EditorWidgets/CharacteristicsEditor.h \
+    UI/EditorWidgets/Dialogs/CharacteristicInputDialog.h \
     UI/EditorWidgets/JumperEditorWidget.h \
     UI/SingleJumps/SingleJumpsConfigWindow.h \
     UI/mainwindow.h \
@@ -62,6 +66,8 @@ HEADERS += \
 FORMS += \
     UI/DatabaseEditor/DatabaseEditorWindow.ui \
     UI/DatabaseEditor/DatabaseListItemWidget.ui \
+    UI/EditorWidgets/CharacteristicsEditor.ui \
+    UI/EditorWidgets/Dialogs/CharacteristicInputDialog.ui \
     UI/EditorWidgets/JumperEditorWidget.ui \
     UI/SingleJumps/SingleJumpsConfigWindow.ui \
     UI/mainwindow.ui
@@ -82,4 +88,4 @@ DISTFILES += \
     userData/GlobalDatabase/globalJumpers.json
 
 RESOURCES += \
-    assets.qrc
+assets.qrc

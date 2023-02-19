@@ -81,7 +81,8 @@ void DatabaseListItemWidget::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)
     {
-        setStyleSheet("QLabel#main-label{background-color: #b3ffba;}");
+        setStyleSheet("QLabel#main-label{border-radius: 8px; border: 1px solid rgb(20, 59, 23);background-color: rgb(248, 255, 250);padding: 2px;}");
+
         emit itemSelected(index);
     }
 }
@@ -95,7 +96,7 @@ void DatabaseListItemWidget::setIsSelected(bool newIsSelected)
 {
     isSelected = newIsSelected;
     if(isSelected == false)
-        setStyleSheet("QWidget{background-color: #ffffff;}");
+        setStyleSheet("QWidget{background-color: #ffffff;margin: 0px;}");
 }
 
 // PROBLEM: Nie wiem jak podłączyć przycisk usuwania do slotu tak, żeby DatabaseEditorWindow wiedział który widget i którego skoczka z globalnej bazy danych ma usunąć. (W skrócie, potrzebuje indexu usuwanego skoczka.
