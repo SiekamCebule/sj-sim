@@ -61,6 +61,299 @@
 "level": 0.45
 }
 ]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
+},
+{
+"name": "Constantin",
+"surname": "Schmid",
+"countryCode": "GER",
+"takeoff-power": 47,
+"takeoff-technique": 42.5,
+"flight-technique": 35,
+"flight-style": 1,
+"landing-style": 13,
+"form": 34,
+"characteristics":[
+{
+"type": "takeoff-height",
+"level": 2.5
+},
+{
+"type": "flight-height",
+"level": 2.2
+}
+]
 }
 ]
 }
