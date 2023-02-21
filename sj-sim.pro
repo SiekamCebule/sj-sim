@@ -72,12 +72,18 @@ FORMS += \
     UI/SingleJumps/SingleJumpsConfigWindow.ui \
     UI/mainwindow.ui
 
+TRANSLATIONS += \
+    translations/translation_pl.ts \
+    translations/translation_en.ts
+CONFIG += lrelease
+CONFIG += embed_translations
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-copydata.commands = $(COPY_DIR) $$PWD/userData $$OUT_PWD
+copydata.commands = $(COPY_DIR) $$PWD/userData $$PWD/translations $$OUT_PWD
 first.depends = $(first) copydata
 export(first.depends)
 export(copydata.commands)

@@ -1,6 +1,7 @@
 #include "Characteristic.h"
 
 #include <QDebug>
+#include <QObject>
 
 Characteristic::Characteristic(double level, const QString &type) : level(level),
     type(type)
@@ -78,121 +79,121 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
     if(characteristic.getLevel() > 0){
         /// Jumper
         if(characteristic.getType() == "takeoff-height")
-            return "Wysoko wychodzi z progu";
+            return QObject::tr("Wysoko wychodzi z progu");
         else if(characteristic.getType() == "flight-height")
-            return "Lata wysoko nad zeskokiem";
+            return QObject::tr("Lata wysoko nad zeskokiem");
         else if(characteristic.getType() == "landing-skill")
-            return "Dobrze ląduje";
+            return QObject::tr("Dobrze ląduje");
 
         /// Hill
         else if(characteristic.getType() == "real-hs-point")
-            return "Bezpieczne skoki za punktem HS";
+            return QObject::tr("Bezpieczne skoki za punktem HS");
         else if(characteristic.getType() == "takeoff-technique-effect")
-            return "Zwiększony wpływ techniki wybicia";
+            return QObject::tr("Zwiększony wpływ techniki wybicia");
         else if(characteristic.getType() == "takeoff-power-effect")
-            return "Zwiększony wpływ siły wybicia";
+            return QObject::tr("Zwiększony wpływ siły wybicia");
         else if(characteristic.getType() == "takeoff-form-effect")
-            return "Zwiększony wpływ formy przy wybiciu";
+            return QObject::tr("Zwiększony wpływ formy przy wybiciu");
         else if(characteristic.getType() == "takeoff-randomness-effect")
-            return "Zwiększony wpływ losowości przy wybiciu";
+            return QObject::tr("Zwiększony wpływ losowości przy wybiciu");
         else if(characteristic.getType() == "flight-technique-effect")
-            return "Zwiększony wpływ techniki lotu";
+            return QObject::tr("Zwiększony wpływ techniki lotu");
         else if(characteristic.getType() == "flight-form-effect")
-            return "Zwiększony wpływ formy w locie";
+            return QObject::tr("Zwiększony wpływ formy w locie");
         else if(characteristic.getType() == "flight-randomness-effect")
-            return "Zwiększony wpływ losowości w locie";
+            return QObject::tr("Zwiększony wpływ losowości w locie");
 
         /// WindsGenerator
         else if(characteristic.getType() == "back-wind-probability")
-            return "Zwiększona szansa na tylni wiatr";
+            return QObject::tr("Zwiększona szansa na tylni wiatr");
         else if(characteristic.getType() == "back-side-wind-probability")
-            return "Zwiększona szansa na tylnio-boczny wiatr";
+            return QObject::tr("Zwiększona szansa na tylnio-boczny wiatr");
         else if(characteristic.getType() == "side-wind-probability")
-            return "Zwiększona szansa na boczny wiatr";
+            return QObject::tr("Zwiększona szansa na boczny wiatr");
         else if(characteristic.getType() == "front-side-wind-probability")
-            return "Zwiększona szansa na przednio-boczny wiatr";
+            return QObject::tr("Zwiększona szansa na przednio-boczny wiatr");
         else if(characteristic.getType() == "front-wind-probability")
-            return "Zwiększona szansa na przedni wiatr";
+            return QObject::tr("Zwiększona szansa na przedni wiatr");
     }
     else if(characteristic.getLevel() < 0)
     {
         /// Jumper
         if(characteristic.getType() == "takeoff-height")
-            return "Nisko wychodzi z progu";
+            return QObject::tr("Nisko wychodzi z progu");
         else if(characteristic.getType() == "flight-height")
-            return "Lata nisko nad zeskokiem";
+            return QObject::tr("Lata nisko nad zeskokiem");
         else if(characteristic.getType() == "landing-skill")
-            return "Słabo ląduje";
+            return QObject::tr("Słabo ląduje");
 
         /// Hill
         else if(characteristic.getType() == "real-hs-point")
-            return "Niebezpieczne skoki za punktem HS";
+            return QObject::tr("Niebezpieczne skoki za punktem HS");
         else if(characteristic.getType() == "takeoff-technique-effect")
-            return "Zmniejszony wpływ techniki wybicia";
+            return QObject::tr("Zmniejszony wpływ techniki wybicia");
         else if(characteristic.getType() == "takeoff-power-effect")
-            return "Zmniejszony wpływ siły wybicia";
+            return QObject::tr("Zmniejszony wpływ siły wybicia");
         else if(characteristic.getType() == "takeoff-form-effect")
-            return "Zmniejszony wpływ formy przy wybiciu";
+            return QObject::tr("Zmniejszony wpływ formy przy wybiciu");
         else if(characteristic.getType() == "takeoff-randomness-effect")
-            return "Zmniejszony wpływ losowości przy wybiciu";
+            return QObject::tr("Zmniejszony wpływ losowości przy wybiciu");
         else if(characteristic.getType() == "flight-technique-effect")
-            return "Zmniejszony wpływ techniki lotu";
+            return QObject::tr("Zmniejszony wpływ techniki lotu");
         else if(characteristic.getType() == "flight-form-effect")
-            return "Zmniejszony wpływ formy w locie";
+            return QObject::tr("Zmniejszony wpływ formy w locie");
         else if(characteristic.getType() == "flight-randomness-effect")
-            return "Zmniejszony wpływ losowości w locie";
+            return QObject::tr("Zmniejszony wpływ losowości w locie");
 
         /// WindsGenerator
         else if(characteristic.getType() == "back-wind-probability")
-            return "Zmniejszona szansa na tylni wiatr";
+            return QObject::tr("Zmniejszona szansa na tylni wiatr");
         else if(characteristic.getType() == "back-side-wind-probability")
-            return "Zmniejszona szansa na tylnio-boczny wiatr";
+            return QObject::tr("Zmniejszona szansa na tylnio-boczny wiatr");
         else if(characteristic.getType() == "side-wind-probability")
-            return "Zmniejszona szansa na boczny wiatr";
+            return QObject::tr("Zmniejszona szansa na boczny wiatr");
         else if(characteristic.getType() == "front-side-wind-probability")
-            return "Zmniejszona szansa na przednio-boczny wiatr";
+            return QObject::tr("Zmniejszona szansa na przednio-boczny wiatr");
         else if(characteristic.getType() == "front-wind-probability")
-            return "Zmniejszona szansa na przedni wiatr";
+            return QObject::tr("Zmniejszona szansa na przedni wiatr");
     }
     else if(characteristic.getLevel() == 0)
     {
         /// Jumper
         if(characteristic.getType() == "takeoff-height")
-            return "Wysokość wyjścia z progu";
+            return QObject::tr("Wysokość wyjścia z progu");
         else if(characteristic.getType() == "flight-height")
-            return "Wysokość lotu";
+            return QObject::tr("Wysokość lotu");
         else if(characteristic.getType() == "landing-skill")
-            return "Umiejętność lądowania";
+            return QObject::tr("Umiejętność lądowania");
 
         /// Hill
         else if(characteristic.getType() == "real-hs-point")
-            return "Bezpieczeństwo skoków za punktem HS";
+            return QObject::tr("Bezpieczeństwo skoków za punktem HS");
         else if(characteristic.getType() == "takeoff-technique-effect")
-            return "Wpływ techniki wybicia";
+            return QObject::tr("Wpływ techniki wybicia");
         else if(characteristic.getType() == "takeoff-power-effect")
-            return "Wpływ siły wybicia";
+            return QObject::tr("Wpływ siły wybicia");
         else if(characteristic.getType() == "takeoff-form-effect")
-            return "Wpływ formy przy wybiciu";
+            return QObject::tr("Wpływ formy przy wybiciu");
         else if(characteristic.getType() == "takeoff-randomness-effect")
-            return "Wpływ losowości przy wybiciu";
+            return QObject::tr("Wpływ losowości przy wybiciu");
         else if(characteristic.getType() == "flight-technique-effect")
-            return "Wpływ techniki lotu";
+            return QObject::tr("Wpływ techniki lotu");
         else if(characteristic.getType() == "flight-form-effect")
-            return "Wpływ formy w locie";
+            return QObject::tr("Wpływ formy w locie");
         else if(characteristic.getType() == "flight-randomness-effect")
-            return "Wpływ losowości w locie";
+            return QObject::tr("Wpływ losowości w locie");
 
         /// WindsGenerator
         else if(characteristic.getType() == "back-wind-probability")
-            return "Szansa na tylni wiatr";
+            return QObject::tr("Szansa na tylni wiatr");
         else if(characteristic.getType() == "back-side-wind-probability")
-            return "Szansa na tylnio-boczny wiatr";
+            return QObject::tr("Szansa na tylnio-boczny wiatr");
         else if(characteristic.getType() == "side-wind-probability")
-            return "Szansa na boczny wiatr";
+            return QObject::tr("Szansa na boczny wiatr");
         else if(characteristic.getType() == "front-side-wind-probability")
-            return "Szansa na przednio-boczny wiatr";
+            return QObject::tr("Szansa na przednio-boczny wiatr");
         else if(characteristic.getType() == "front-wind-probability")
-            return "Szansa na przedni wiatr";
+            return QObject::tr("Szansa na przedni wiatr");
     }
     return "<Nieprawidłowa cecha>";
 }

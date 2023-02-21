@@ -178,7 +178,7 @@ color: rgb(32, 120, 252);
 }</string>
               </property>
               <property name="text">
-               <string>Pojedyńczy skok</string>
+               <string>Pojedyncze skoki</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -269,7 +269,7 @@ color: rgb(32, 120, 252);
 }</string>
               </property>
               <property name="text">
-               <string>Rozegraj sezon</string>
+               <string>Symuluj sezon</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -373,7 +373,7 @@ color: rgb(32, 120, 252);
 }</string>
               </property>
               <property name="text">
-               <string>Pojedyńczy konkurs</string>
+               <string>Pojedynczy konkurs</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
