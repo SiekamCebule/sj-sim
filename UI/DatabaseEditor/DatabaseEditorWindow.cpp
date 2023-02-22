@@ -27,6 +27,7 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, QW
     ui->tab_jumpers->layout()->addWidget(this->jumperEditor);
 
     connect(ui->tabWidget_main, &QTabWidget::currentChanged, this, &DatabaseEditorWindow::setActualElementType);
+    connect(this->jumperEditor, &JumperEditorWidget::submitted, this, &DatabaseEditorWindow::replaceJumperFromJumperEdit);
 }
 
 DatabaseEditorWindow::~DatabaseEditorWindow()
@@ -170,6 +171,15 @@ void DatabaseEditorWindow::on_pushButton_remove_clicked()
         }
     }
     else qDebug()<<"0 zawodników";
+}
+
+void DatabaseEditorWindow::replaceJumperFromJumperEdit()
+{
+    qDebug()<<"s";
+    GlobalDatabase::get()->getEditableGlobalJumpers().replace(selectedItemIndex - 1, jumperEditor->getJumperFromWidget());
+    qDebug()<<jumperEditor->getJumperFromWidget().getNameAndSurname();
+    qDebug()<<"Aaa";
+    fillJumpersWidget();
 }
 
 //zawsze jak zostaje 1 zawodnik, i się go usuwa, wtedy program sie crashuje.

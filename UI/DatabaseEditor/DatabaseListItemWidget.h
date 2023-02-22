@@ -26,10 +26,8 @@ public:
 
     int getIndex() const;
     void setIndex(int newIndex);
-
     DatabaseEditorWindow *getEditorParent() const;
     void setEditorParent(DatabaseEditorWindow *newEditorParent);
-
     bool getIsSelected() const;
     void setIsSelected(bool newIsSelected);
 

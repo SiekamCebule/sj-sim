@@ -27,6 +27,9 @@ public:
     CharacteristicsEditor *getCharacteristicsEditor() const;
     void setCharacteristicsEditor(CharacteristicsEditor *newCharacteristicsEditor);
 
+signals:
+    void submitted();
+
 private slots:
     void on_pushButton_clicked();
 

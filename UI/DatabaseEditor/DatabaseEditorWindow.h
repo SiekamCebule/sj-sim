@@ -36,8 +36,9 @@ public:
 
 private slots:
     void on_pushButton_add_clicked();
-
     void on_pushButton_remove_clicked();
+
+    void replaceJumperFromJumperEdit();
 
 private:
     Ui::DatabaseEditorWindow *ui;
@@ -46,6 +47,7 @@ private:
     JumperEditorWidget * jumperEditor;
 
     void fillJumpersWidget();
+    void updateOneJumperWidget(int indexFromZero);
     short actualElementType;
     int selectedItemIndex;
 

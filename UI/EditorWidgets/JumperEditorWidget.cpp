@@ -43,6 +43,15 @@ Jumper JumperEditorWidget::getJumperFromWidget()
     Jumper jumper;
     jumper.setName(ui->lineEdit_name->text());
     jumper.setSurname(ui->lineEdit_surname->text());
+    jumper.setCountryCode(ui->lineEdit_countryCode->text());
+    jumper.getJumperSkillsPointer()->setTakeoffPower(ui->doubleSpinBox_takeoffPower->value());
+    jumper.getJumperSkillsPointer()->setTakeoffTechnique(ui->doubleSpinBox_takeoffTechnique->value());
+    jumper.getJumperSkillsPointer()->setFlightTechnique(ui->doubleSpinBox_flightTechnique->value());
+    jumper.getJumperSkillsPointer()->setFlightStyle(ui->comboBox_flightStyle->currentIndex());
+    jumper.getJumperSkillsPointer()->setLandingStyle(ui->doubleSpinBox_landingStyle->value());
+    jumper.getJumperSkillsPointer()->setForm(ui->doubleSpinBox_form->value());
+    jumper.getJumperSkillsPointer()->setCharacteristics(characteristicsEditor->getCharacteristics());
+    return jumper;
 }
 
 Jumper *JumperEditorWidget::getJumper() const
@@ -67,6 +76,6 @@ void JumperEditorWidget::setCharacteristicsEditor(CharacteristicsEditor *newChar
 
 void JumperEditorWidget::on_pushButton_clicked()
 {
-
+    emit submitted();
 }
 

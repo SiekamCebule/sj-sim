@@ -38,7 +38,7 @@ void DatabaseListItemWidget::update()
         ui->horizontalLayout->addWidget(label);
     }
     ui->horizontalLayout->addSpacerItem(new QSpacerItem(5, 5, QSizePolicy::Maximum, QSizePolicy::Maximum));
-   ui->horizontalLayout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    ui->horizontalLayout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding));
 }
 
 // parent zamiast wskazywać na DatabaseEditorWindow, wskazuje na jakiś layout
