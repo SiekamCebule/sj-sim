@@ -56,6 +56,7 @@ void DatabaseEditorWindow::updateItemsSelection(int index)
             item->setStyleSheet("QLabel#main-label{border-radius: 8px; border: 1px solid rgb(20, 59, 23);background-color: rgb(248, 255, 250);padding: 2px;}");
         }
     }
+
     jumperEditor->setJumper(const_cast<Jumper *>(&GlobalDatabase::get()->getGlobalJumpers().at(index-1)));
     jumperEditor->fillJumperInfo();
 }
@@ -139,10 +140,37 @@ void DatabaseEditorWindow::setActualElementType(short newActualElementType)
 
 void DatabaseEditorWindow::on_pushButton_add_clicked()
 {
-    int index = selectedItemIndex - 1;
+    int index = 0;
+    if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
+        index = selectedItemIndex - 1;
+    else index = -1;
+
     GlobalDatabase::get()->getEditableGlobalJumpers().insert(index + 1, Jumper("Name", "Surname", "XXX", JumperSkills()));
     fillJumpersWidget();
     updateIndexes();
     updateItemsSelection(index+2);
 }
+
+
+void DatabaseEditorWindow::on_pushButton_remove_clicked()
+{
+    int index = selectedItemIndex - 1;
+    if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
+    {
+        GlobalDatabase::get()->getEditableGlobalJumpers().remove(index, 1);
+        fillJumpersWidget();
+        updateIndexes();
+
+        qDebug()<<index<<", "<<GlobalDatabase::get()->getGlobalJumpers().size();
+        if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
+        {
+            if(index == GlobalDatabase::get()->getGlobalJumpers().size())
+                updateItemsSelection(index);
+            else updateItemsSelection(index + 1);
+        }
+    }
+    else qDebug()<<"0 zawodników";
+}
+
+//zawsze jak zostaje 1 zawodnik, i się go usuwa, wtedy program sie crashuje.
 

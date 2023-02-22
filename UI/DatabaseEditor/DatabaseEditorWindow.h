@@ -37,6 +37,8 @@ public:
 private slots:
     void on_pushButton_add_clicked();
 
+    void on_pushButton_remove_clicked();
+
 private:
     Ui::DatabaseEditorWindow *ui;
     QVector<DatabaseListItemWidget *> listItems;
