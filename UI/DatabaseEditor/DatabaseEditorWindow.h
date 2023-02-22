@@ -40,6 +40,10 @@ private slots:
 
     void replaceJumperFromJumperEdit();
 
+    void on_pushButton_up_clicked();
+
+    void on_pushButton_down_clicked();
+
 private:
     Ui::DatabaseEditorWindow *ui;
     QVector<DatabaseListItemWidget *> listItems;

@@ -162,7 +162,6 @@ void DatabaseEditorWindow::on_pushButton_remove_clicked()
         fillJumpersWidget();
         updateIndexes();
 
-        qDebug()<<index<<", "<<GlobalDatabase::get()->getGlobalJumpers().size();
         if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
         {
             if(index == GlobalDatabase::get()->getGlobalJumpers().size())
@@ -175,12 +174,35 @@ void DatabaseEditorWindow::on_pushButton_remove_clicked()
 
 void DatabaseEditorWindow::replaceJumperFromJumperEdit()
 {
-    qDebug()<<"s";
     GlobalDatabase::get()->getEditableGlobalJumpers().replace(selectedItemIndex - 1, jumperEditor->getJumperFromWidget());
-    qDebug()<<jumperEditor->getJumperFromWidget().getNameAndSurname();
-    qDebug()<<"Aaa";
     fillJumpersWidget();
 }
 
 //zawsze jak zostaje 1 zawodnik, i się go usuwa, wtedy program sie crashuje.
+
+
+void DatabaseEditorWindow::on_pushButton_up_clicked()
+{
+    int index = selectedItemIndex - 1;
+    if(!(index < 1))
+    {
+        GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(index, index - 1);
+        fillJumpersWidget();
+        updateIndexes();
+        updateItemsSelection(index);
+    }
+}
+
+
+void DatabaseEditorWindow::on_pushButton_down_clicked()
+{
+    int index = selectedItemIndex - 1;
+    if(!(index + 1 >= GlobalDatabase::get()->getGlobalJumpers().size()))
+    {
+        GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(index, index + 1);
+        fillJumpersWidget();
+        updateIndexes();
+        updateItemsSelection(index + 2);
+    }
+}
 
