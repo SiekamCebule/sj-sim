@@ -10,5 +10,8 @@
         <file>img/pencil.png</file>
         <file>img/delete.png</file>
         <file>img/plus.png</file>
+        <file>img/down-arrow.png</file>
+        <file>img/up-arrow.png</file>
+        <file>img/down.png</file>
     </qresource>
 </RCC>

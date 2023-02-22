@@ -64,3 +64,9 @@ void JumperEditorWidget::setCharacteristicsEditor(CharacteristicsEditor *newChar
 {
     characteristicsEditor = newCharacteristicsEditor;
 }
+
+void JumperEditorWidget::on_pushButton_clicked()
+{
+
+}
+

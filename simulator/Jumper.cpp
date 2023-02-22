@@ -1,8 +1,9 @@
 #include "Jumper.h"
 
-Jumper::Jumper(const QString &name, const QString &surname, const QString &countryCode) : name(name),
+Jumper::Jumper(const QString &name, const QString &surname, const QString &countryCode, const JumperSkills &skills) : name(name),
     surname(surname),
-    countryCode(countryCode)
+    countryCode(countryCode),
+    jumperSkills(skills)
 {}
 
 JumperSkills Jumper::getJumperSkills() const

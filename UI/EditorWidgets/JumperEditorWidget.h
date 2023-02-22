@@ -27,6 +27,9 @@ public:
     CharacteristicsEditor *getCharacteristicsEditor() const;
     void setCharacteristicsEditor(CharacteristicsEditor *newCharacteristicsEditor);
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::JumperEditorWidget *ui;
     CharacteristicsEditor * characteristicsEditor;

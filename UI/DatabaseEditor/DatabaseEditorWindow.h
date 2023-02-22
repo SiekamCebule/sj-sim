@@ -4,8 +4,8 @@
 #include <QDialog>
 #include <QVector>
 
-#include "../EditorWidgets/JumperEditorWidget.h"
-
+class JumperEditorWidget;
+class Jumper;
 class DatabaseListItemWidget;
 
 namespace Ui {
@@ -23,6 +23,20 @@ public:
     void when_ItemWidgetDeleteButtonClicked(int index);
     void updateItemsSelection(int index);
 
+    enum class ElementType{
+        Jumper,
+        Hill,
+        WindGenerator
+    };
+
+    short getActualElementType() const;
+    void setActualElementType(short newActualElementType);
+    int getSelectedItemIndex() const;
+    void setSelectedItemIndex(int newSelectedItemIndex);
+
+private slots:
+    void on_pushButton_add_clicked();
+
 private:
     Ui::DatabaseEditorWindow *ui;
     QVector<DatabaseListItemWidget *> listItems;
@@ -30,6 +44,10 @@ private:
     JumperEditorWidget * jumperEditor;
 
     void fillJumpersWidget();
+    short actualElementType;
+    int selectedItemIndex;
+
+    void updateIndexes();
 };
 
 #endif // DATABASEEDITORWINDOW_H

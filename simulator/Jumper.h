@@ -10,7 +10,7 @@
 class Jumper : public ClassWithID
 {
 public:
-    Jumper(const QString &name = "", const QString &surname = "", const QString &countryCode = "");
+    Jumper(const QString &name = "", const QString &surname = "", const QString &countryCode = "", const JumperSkills & skills = JumperSkills());
 
 private:
     QString name, surname;

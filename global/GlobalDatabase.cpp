@@ -42,6 +42,11 @@ void GlobalDatabase::setGlobalJumpers(const QVector<Jumper> &newGlobalJumpers)
     globalJumpers = newGlobalJumpers;
 }
 
+QVector<Jumper> &GlobalDatabase::getEditableGlobalJumpers()
+{
+    return globalJumpers;
+}
+
 GlobalDatabase *GlobalDatabase::get()
 {
     if(m_globalDatabase == nullptr)

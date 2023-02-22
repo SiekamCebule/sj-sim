@@ -67,8 +67,6 @@ void DatabaseListItemWidget::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)
     {
-        setStyleSheet("QLabel#main-label{border-radius: 8px; border: 1px solid rgb(20, 59, 23);background-color: rgb(248, 255, 250);padding: 2px;}");
-
         emit itemSelected(index);
     }
 }

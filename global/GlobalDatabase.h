@@ -29,6 +29,7 @@ public:
 
     QVector<Jumper> getGlobalJumpers() const;
     void setGlobalJumpers(const QVector<Jumper> &newGlobalJumpers);
+    QVector<Jumper> & getEditableGlobalJumpers();
     QVector<Hill> getGlobalHills() const;
     void setGlobalHills(const QVector<Hill> &newGlobalHills);
 };

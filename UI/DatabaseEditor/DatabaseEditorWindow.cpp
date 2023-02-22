@@ -2,6 +2,7 @@
 #include "ui_DatabaseEditorWindow.h"
 
 #include "../../global/GlobalDatabase.h"
+#include "../EditorWidgets/JumperEditorWidget.h"
 
 #include "DatabaseListItemWidget.h"
 
@@ -11,7 +12,8 @@
 DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DatabaseEditorWindow),
-    jumperEditor(jumperEditor)
+    jumperEditor(jumperEditor),
+    actualElementType(0)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
@@ -23,6 +25,8 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, QW
         this->jumperEditor = new JumperEditorWidget();
 
     ui->tab_jumpers->layout()->addWidget(this->jumperEditor);
+
+    connect(ui->tabWidget_main, &QTabWidget::currentChanged, this, &DatabaseEditorWindow::setActualElementType);
 }
 
 DatabaseEditorWindow::~DatabaseEditorWindow()
@@ -41,10 +45,18 @@ void DatabaseEditorWindow::updateItemsSelection(int index)
     for(auto & item : listItems)
     {
         if(item->getIndex() != index)
+        {
             item->setIsSelected(false);
-        else item->setIsSelected(true);
+            item->setStyleSheet("QLabel{}");
+        }
+        else
+        {
+            item->setIsSelected(true);
+            this->setSelectedItemIndex(item->getIndex());
+            item->setStyleSheet("QLabel#main-label{border-radius: 8px; border: 1px solid rgb(20, 59, 23);background-color: rgb(248, 255, 250);padding: 2px;}");
+        }
     }
-    jumperEditor->setJumper(const_cast<Jumper *>(&GlobalDatabase::get()->getGlobalJumpers().at(index)));
+    jumperEditor->setJumper(const_cast<Jumper *>(&GlobalDatabase::get()->getGlobalJumpers().at(index-1)));
     jumperEditor->fillJumperInfo();
 }
 
@@ -58,7 +70,8 @@ void DatabaseEditorWindow::fillJumpersWidget()
             delete item;
         }
     }
-    int i=0;
+    listItems.clear();
+    int i=1;
     for(const auto & jumper : GlobalDatabase::get()->getGlobalJumpers())
     {
         DatabaseListItemWidget * itemWidget = new DatabaseListItemWidget;
@@ -93,3 +106,43 @@ void DatabaseEditorWindow::fillJumpersWidget()
     }
     ui->verticalLayout_jumpers->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Ignored, QSizePolicy::Expanding));
 }
+
+void DatabaseEditorWindow::updateIndexes()
+{
+    int index = 0;
+    for (auto & jum : GlobalDatabase::get()->getEditableGlobalJumpers())
+    {
+        dynamic_cast<DatabaseListItemWidget *>(ui->verticalLayout_jumpers->itemAt(index)->widget())->setIndex(index+1);
+        index++;
+    }
+}
+
+int DatabaseEditorWindow::getSelectedItemIndex() const
+{
+    return selectedItemIndex;
+}
+
+void DatabaseEditorWindow::setSelectedItemIndex(int newSelectedItemIndex)
+{
+    selectedItemIndex = newSelectedItemIndex;
+}
+
+short DatabaseEditorWindow::getActualElementType() const
+{
+    return actualElementType;
+}
+
+void DatabaseEditorWindow::setActualElementType(short newActualElementType)
+{
+    actualElementType = newActualElementType;
+}
+
+void DatabaseEditorWindow::on_pushButton_add_clicked()
+{
+    int index = selectedItemIndex - 1;
+    GlobalDatabase::get()->getEditableGlobalJumpers().insert(index + 1, Jumper("Name", "Surname", "XXX", JumperSkills()));
+    fillJumpersWidget();
+    updateIndexes();
+    updateItemsSelection(index+2);
+}
+
