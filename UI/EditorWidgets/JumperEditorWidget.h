@@ -17,10 +17,9 @@ public:
     explicit JumperEditorWidget(Jumper *jumper = nullptr , CharacteristicsEditor * characteristicsEditor = nullptr, QWidget *parent = nullptr);
     ~JumperEditorWidget();
 
-    void fillJumperInfo();
+    void fillJumperInputs();
 
-    Jumper getJumperFromWidget();
-
+    Jumper getJumperFromWidgetInput();
 
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);

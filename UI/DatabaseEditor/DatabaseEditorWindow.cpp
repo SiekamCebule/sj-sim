@@ -24,6 +24,8 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, QW
     if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
         fillJumpersWidget();
 
+    //if(GlobalDatabase::get()->getGlobalHills().size() > 0)
+
     if(this->jumperEditor == nullptr)
         this->jumperEditor = new JumperEditorWidget();
 
@@ -63,7 +65,7 @@ void DatabaseEditorWindow::updateItemsSelection(int index)
     }
 
     jumperEditor->setJumper(const_cast<Jumper *>(&GlobalDatabase::get()->getGlobalJumpers().at(index-1)));
-    jumperEditor->fillJumperInfo();
+    jumperEditor->fillJumperInputs();
 }
 
 void DatabaseEditorWindow::fillJumpersWidget()
@@ -201,7 +203,7 @@ void DatabaseEditorWindow::on_pushButton_remove_clicked()
 
 void DatabaseEditorWindow::replaceJumperFromJumperEdit()
 {
-    GlobalDatabase::get()->getEditableGlobalJumpers().replace(selectedItemIndex - 1, jumperEditor->getJumperFromWidget());
+    GlobalDatabase::get()->getEditableGlobalJumpers().replace(selectedItemIndex - 1, jumperEditor->getJumperFromWidgetInput());
     fillJumpersWidget();
 }
 

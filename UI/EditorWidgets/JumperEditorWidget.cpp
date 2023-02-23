@@ -12,7 +12,7 @@ JumperEditorWidget::JumperEditorWidget(Jumper *jumper, CharacteristicsEditor *ch
     if(this->characteristicsEditor == nullptr)
         this->characteristicsEditor = new CharacteristicsEditor;
 
-       ui->verticalLayout_characteristicsEditor->insertWidget(0, getCharacteristicsEditor());
+    ui->verticalLayout_characteristicsEditor->insertWidget(0, getCharacteristicsEditor());
 }
 
 JumperEditorWidget::~JumperEditorWidget()
@@ -20,7 +20,7 @@ JumperEditorWidget::~JumperEditorWidget()
     delete ui;
 }
 
-void JumperEditorWidget::fillJumperInfo()
+void JumperEditorWidget::fillJumperInputs()
 {
     if(jumper == nullptr){
         qDebug()<<"Jumper is nullptr!";
@@ -38,7 +38,7 @@ void JumperEditorWidget::fillJumperInfo()
     characteristicsEditor->setCharacteristics(jumper->getJumperSkills().getCharacteristics());
 }
 
-Jumper JumperEditorWidget::getJumperFromWidget()
+Jumper JumperEditorWidget::getJumperFromWidgetInput()
 {
     Jumper jumper;
     jumper.setName(ui->lineEdit_name->text());

@@ -4,8 +4,8 @@
 #include <QDebug>
 
 
-Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint, double pointsForFrontWind, double pointsForGate, double takeoffEffect, double flightEffect, const QSet<Characteristic> &characteristics) : name(name),
-    country(country),
+Hill::Hill(const QString &name, const QString &countryCode, double KPoint, double HSPoint, double pointsForFrontWind, double pointsForGate, double takeoffEffect, double flightEffect, const QSet<Characteristic> &characteristics) : name(name),
+    countryCode(countryCode),
     KPoint(KPoint),
     HSPoint(HSPoint),
     pointsForFrontWind(pointsForFrontWind),
@@ -13,11 +13,47 @@ Hill::Hill(const QString &name, const QString &country, int KPoint, int HSPoint,
     takeoffEffect(takeoffEffect),
     flightEffect(flightEffect)
 {
-    calculatePointsForBackWind();
     setCharacteristics(characteristics);
     setRealHSByCharacteristic();
-    setupPointsForKPoint();
-    setupPointsForMeter();
+}
+
+double Hill::calculatePointsForMeter(double KPoint)
+{
+    if(KPoint <= 24)
+        return 4.8;
+    else if(KPoint <= 29)
+        return 4.4;
+    else if(KPoint <= 34)
+        return 4.0;
+    else if(KPoint <= 39)
+        return 3.6;
+    else if(KPoint <= 49)
+        return 3.2;
+    else if(KPoint <= 59)
+        return 2.8;
+    else if(KPoint <= 69)
+        return 2.4;
+    else if(KPoint <= 79)
+        return 2.2;
+    else if(KPoint <= 99)
+        return 2.0;
+    else if(KPoint <= 169)
+        return 1.8;
+    else if(KPoint >= 170)
+        return 1.2;
+    else return 0;
+}
+
+double Hill::calculatePointsForKPoint(double KPoint)
+{
+    if(KPoint < 170)
+        return 60;
+    else return 120;
+}
+
+double Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(double pointsForFrontWind)
+{
+    return pointsForFrontWind * 1.21;
 }
 
 double Hill::getPointsForKPoint() const
@@ -71,39 +107,6 @@ void Hill::setPointsForMeter(double newPointsForMeter)
     pointsForMeter = newPointsForMeter;
 }
 
-void Hill::setupPointsForMeter()
-{
-    if(KPoint <= 24)
-        pointsForMeter = 4.8;
-    else if(KPoint <= 29)
-        pointsForMeter = 4.4;
-    else if(KPoint <= 34)
-        pointsForMeter = 4.0;
-    else if(KPoint <= 39)
-        pointsForMeter = 3.6;
-    else if(KPoint <= 49)
-        pointsForMeter = 3.2;
-    else if(KPoint <= 59)
-        pointsForMeter = 2.8;
-    else if(KPoint <= 69)
-        pointsForMeter = 2.4;
-    else if(KPoint <= 79)
-        pointsForMeter = 2.2;
-    else if(KPoint <= 99)
-        pointsForMeter = 2.0;
-    else if(KPoint <= 169)
-        pointsForMeter = 1.8;
-    else if(KPoint >= 170)
-        pointsForMeter = 1.2;
-    else pointsForMeter = 0;
-}
-
-void Hill::setupPointsForKPoint()
-{
-    if(KPoint < 170)
-        pointsForKPoint = 60;
-    else pointsForKPoint = 120;
-}
 
 double Hill::getKAndRealHSDifference()
 {
@@ -187,42 +190,32 @@ void Hill::setName(const QString &newName)
     name = newName;
 }
 
-QString Hill::getCountry() const
+QString Hill::getCountryCode() const
 {
-    return country;
+    return countryCode;
 }
 
-void Hill::setCountry(const QString &newCountry)
+void Hill::setCountryCode(const QString &newCountryCode)
 {
-    country = newCountry;
+    countryCode = newCountryCode;
 }
 
-double Hill::getRecordDistance() const
-{
-    return recordDistance;
-}
-
-void Hill::setRecordDistance(double newRecordDistance)
-{
-    recordDistance = newRecordDistance;
-}
-
-int Hill::getKPoint() const
+double Hill::getKPoint() const
 {
     return KPoint;
 }
 
-void Hill::setKPoint(int newKPoint)
+void Hill::setKPoint(double newKPoint)
 {
     KPoint = newKPoint;
 }
 
-int Hill::getHSPoint() const
+double Hill::getHSPoint() const
 {
     return HSPoint;
 }
 
-void Hill::setHSPoint(int newHSPoint)
+void Hill::setHSPoint(double newHSPoint)
 {
     HSPoint = newHSPoint;
 }
@@ -240,11 +233,6 @@ double Hill::getPointsForBackWind() const
 void Hill::setPointsForBackWind(double newPointsForBackWind)
 {
     pointsForBackWind = newPointsForBackWind;
-}
-
-void Hill::calculatePointsForBackWind()
-{
-    pointsForBackWind = pointsForFrontWind * 1.21;
 }
 
 double Hill::getPointsForGate() const

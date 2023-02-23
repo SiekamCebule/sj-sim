@@ -64,16 +64,22 @@ bool GlobalDatabase::loadFromJson()
     globalJumpers.clear();
     globalHills.clear();
 
-    if(loadJumpers() == false)
-        return false;
+    bool ok = loadJumpers();
+    if(ok == true)
+    loadHills();
+    else
+        ok == loadHills();
 
-    return true;
+
+    return ok;
 }
 
 bool GlobalDatabase::writeToJson()
 {
     if(writeJumpers() == false)
         return false;
+    else
+        return true;
 }
 
 bool GlobalDatabase::loadJumpers()
@@ -135,6 +141,72 @@ bool GlobalDatabase::loadJumpers()
     }
 
     return true;
+}
+
+bool GlobalDatabase::loadHills()
+{
+    QFile file("userData/GlobalDatabase/globalHills.json");
+    if(!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku ze skoczniami", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalHills.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    QByteArray bytes = file.readAll();
+    file.close();
+
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(bytes, &error);
+
+    if(error.error != QJsonParseError::NoError)
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu skoczni", "Nie udało się wczytać skoczni z pliku userData/GlobalDatabase/globalHills.json\nTreść błędu: " + error.errorString(), QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+
+    QJsonObject object = document.object();
+    QJsonValue value = object.value("hills");
+    QJsonArray array = value.toArray();
+
+    qDebug()<<array.size();
+
+    for(const auto & val : array)
+    {
+        QJsonObject obj = val.toObject();
+        Hill hill;
+        hill.setName(obj.value("name").toString());
+        hill.setCountryCode(obj.value("country-code").toString());
+        hill.setKPoint(obj.value("k-point").toDouble());
+        hill.setHSPoint(obj.value("hs-point").toDouble());
+
+        if(obj.value("points-for-meter").toString() == "auto")
+            hill.setPointsForMeter(Hill::calculatePointsForMeter(hill.getKPoint()));
+        else hill.setPointsForMeter(obj.value("points-for-meter").toDouble());
+
+        if(obj.value("points-for-k-point").toString() == "auto")
+            hill.setPointsForKPoint(Hill::calculatePointsForKPoint(hill.getKPoint()));
+        else hill.setPointsForKPoint(obj.value("points-for-k-point").toDouble());
+
+        hill.setPointsForGate(obj.value("points-for-gate").toDouble());
+        hill.setPointsForFrontWind(obj.value("points-for-front-wind").toDouble());
+
+        if(obj.value("points-for-back-wind").toString() == "auto")
+            hill.setPointsForBackWind(Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(hill.getKPoint()));
+        else hill.setPointsForBackWind(obj.value("points-for-back-wind").toDouble());
+
+        hill.setTakeoffEffect(obj.value("takeoff-effect").toDouble());
+        hill.setFlightEffect(obj.value("flight-effect").toDouble());
+
+        QJsonArray characteristicsArray = obj.value("characteristics").toArray();
+        for(const auto & val : characteristicsArray){
+            hill.insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
+        }
+
+        globalHills.push_back(hill);
+    }
 }
 
 bool GlobalDatabase::writeJumpers()

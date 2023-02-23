@@ -13,6 +13,7 @@ SOURCES += \
     UI/DatabaseEditor/DatabaseListItemWidget.cpp \
     UI/EditorWidgets/CharacteristicsEditor.cpp \
     UI/EditorWidgets/Dialogs/CharacteristicInputDialog.cpp \
+    UI/EditorWidgets/HillEditorWidget.cpp \
     UI/EditorWidgets/JumperEditorWidget.cpp \
     UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     global/GlobalDatabase.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     UI/DatabaseEditor/DatabaseListItemWidget.h \
     UI/EditorWidgets/CharacteristicsEditor.h \
     UI/EditorWidgets/Dialogs/CharacteristicInputDialog.h \
+    UI/EditorWidgets/HillEditorWidget.h \
     UI/EditorWidgets/JumperEditorWidget.h \
     UI/SingleJumps/SingleJumpsConfigWindow.h \
     UI/mainwindow.h \
@@ -68,6 +70,7 @@ FORMS += \
     UI/DatabaseEditor/DatabaseListItemWidget.ui \
     UI/EditorWidgets/CharacteristicsEditor.ui \
     UI/EditorWidgets/Dialogs/CharacteristicInputDialog.ui \
+    UI/EditorWidgets/HillEditorWidget.ui \
     UI/EditorWidgets/JumperEditorWidget.ui \
     UI/SingleJumps/SingleJumpsConfigWindow.ui \
     UI/mainwindow.ui
@@ -83,14 +86,15 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#copydata.commands = $(COPY_DIR) $$PWD/userData $$PWD/translations $$OUT_PWD
-#first.depends = $(first) copydata
-#export(first.depends)
-#export(copydata.commands)
-#QMAKE_EXTRA_TARGETS += first copydata
+copydata.commands = $(COPY_DIR) $$PWD/userData $$PWD/translations $$OUT_PWD
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
 
 DISTFILES += \
     flaticon_authors \
+    userData/GlobalDatabase/globalHills.json \
     userData/GlobalDatabase/globalJumpers.json
 
 RESOURCES += \

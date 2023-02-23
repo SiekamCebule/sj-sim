@@ -11,14 +11,13 @@
 class Hill : public ClassWithID, public ClassWithCharacteristics
 {
 public:
-    Hill(const QString &name = "", const QString &country = "", int KPoint = 0, int HSPoint = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double takeoffEffect = 0, double flightEffect = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>());
+    Hill(const QString &name = "", const QString &countryCode = "", double KPoint = 0, double HSPoint = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double takeoffEffect = 0, double flightEffect = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>());
 
 private:
-    QString name, country;
-    double recordDistance;
+    QString name, countryCode;
 
-    int KPoint;
-    int HSPoint; // Jeśli nie ma cechy charakterystycznej, to HSPoint == realHS
+    double KPoint;
+    double HSPoint; // Jeśli nie ma cechy charakterystycznej, to HSPoint == realHS
 
     double pointsForMeter;
     double pointsForKPoint;
@@ -32,8 +31,9 @@ private:
     double realHS; // "prawdziwa wielkość skoczni", tam gdzie robi się niebezpicznie
 
 public:
-    void setupPointsForMeter();
-    void setupPointsForKPoint();
+    static double calculatePointsForMeter(double KPoint);
+    static double calculatePointsForKPoint(double KPoint);
+    static double calculatePointsForBackWindBy21PercentsOfFrontWind(double pointsForFrontWind);
 
     double getKAndRealHSDifference();
 
@@ -42,21 +42,18 @@ public:
 
     QString getName() const;
     void setName(const QString &newName);
-    QString getCountry() const;
-    void setCountry(const QString &newCountry);
-    double getRecordDistance() const;
-    void setRecordDistance(double newRecordDistance);
-    int getKPoint() const;
-    void setKPoint(int newKPoint);
-    int getHSPoint() const;
-    void setHSPoint(int newHSPoint);
+    QString getCountryCode() const;
+    void setCountryCode(const QString &newCountryCode);
+    double getKPoint() const;
+    void setKPoint(double newKPoint);
+    double getHSPoint() const;
+    void setHSPoint(double newHSPoint);
     double getPointsForMeter() const;
     void setPointsForMeter(double newPointsForMeter);
     double getPointsForFrontWind() const;
     void setPointsForFrontWind(double newPointsForFrontWind);
     double getPointsForBackWind() const;
     void setPointsForBackWind(double newPointsForBackWind);
-    void calculatePointsForBackWind();
     double getPointsForGate() const;
     void setPointsForGate(double newPointsForGate);
     QSet<Characteristic> getCharacteristics() const;
