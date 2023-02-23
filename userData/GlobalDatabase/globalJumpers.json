@@ -2,7 +2,7 @@
 "jumpers":[{
 "name": "Markus",
 "surname": "Eisenbichler",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 42,
 "takeoff-technique": 43.5,
 "flight-technique": 46,
@@ -23,7 +23,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -44,7 +44,7 @@
 {
 "name": "Paweł",
 "surname": "Wąsek",
-"countryCode": "POL",
+"country-code": "POL",
 "takeoff-power": 42.25,
 "takeoff-technique": 40,
 "flight-technique": 35,
@@ -65,7 +65,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -86,7 +86,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -107,7 +107,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -128,7 +128,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -149,7 +149,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -170,7 +170,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -191,7 +191,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -211,7 +211,7 @@
 },{
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -232,7 +232,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -253,7 +253,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -274,7 +274,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -295,7 +295,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -316,7 +316,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,
@@ -337,7 +337,7 @@
 {
 "name": "Constantin",
 "surname": "Schmid",
-"countryCode": "GER",
+"country-code": "GER",
 "takeoff-power": 47,
 "takeoff-technique": 42.5,
 "flight-technique": 35,

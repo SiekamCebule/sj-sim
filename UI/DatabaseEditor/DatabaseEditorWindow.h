@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QVector>
 
+class QCloseEvent;
+
 class JumperEditorWidget;
 class Jumper;
 class DatabaseListItemWidget;
@@ -34,15 +36,16 @@ public:
     int getSelectedItemIndex() const;
     void setSelectedItemIndex(int newSelectedItemIndex);
 
+protected:
+    void closeEvent(QCloseEvent * event);
+
 private slots:
     void on_pushButton_add_clicked();
     void on_pushButton_remove_clicked();
+    void on_pushButton_up_clicked();
+    void on_pushButton_down_clicked();
 
     void replaceJumperFromJumperEdit();
-
-    void on_pushButton_up_clicked();
-
-    void on_pushButton_down_clicked();
 
 private:
     Ui::DatabaseEditorWindow *ui;

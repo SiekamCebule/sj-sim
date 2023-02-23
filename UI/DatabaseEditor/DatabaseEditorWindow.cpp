@@ -8,12 +8,15 @@
 
 #include <QFont>
 #include <QScrollArea>
+#include <QCloseEvent>
+#include <QMessageBox>
 
 DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DatabaseEditorWindow),
     jumperEditor(jumperEditor),
-    actualElementType(0)
+    actualElementType(0),
+    selectedItemIndex(-1)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
@@ -28,6 +31,7 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, QW
 
     connect(ui->tabWidget_main, &QTabWidget::currentChanged, this, &DatabaseEditorWindow::setActualElementType);
     connect(this->jumperEditor, &JumperEditorWidget::submitted, this, &DatabaseEditorWindow::replaceJumperFromJumperEdit);
+
 }
 
 DatabaseEditorWindow::~DatabaseEditorWindow()
@@ -129,6 +133,29 @@ void DatabaseEditorWindow::setSelectedItemIndex(int newSelectedItemIndex)
     selectedItemIndex = newSelectedItemIndex;
 }
 
+void DatabaseEditorWindow::closeEvent(QCloseEvent *event)
+{
+    QMessageBox message;
+    message.setStyleSheet("background-color: white; color: black;");
+    QMessageBox::StandardButton button;
+    button = message.question(this, "Wyjście z edytora bazy danych", "Czy zapisać zmiany w bazie danych?", QMessageBox::StandardButton::No | QMessageBox::StandardButton::Cancel | QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::Yes);
+    if(button == QMessageBox::Yes)
+    {
+        GlobalDatabase::get()->writeToJson();
+        event->accept();
+    }
+    else if(button == QMessageBox::Cancel)
+    {
+        event->ignore();
+    }
+    else if(button == QMessageBox::No)
+    {
+        event->accept();
+    }
+    else
+        qDebug()<<"invalid button in database editor close event";
+}
+
 short DatabaseEditorWindow::getActualElementType() const
 {
     return actualElementType;
@@ -142,7 +169,7 @@ void DatabaseEditorWindow::setActualElementType(short newActualElementType)
 void DatabaseEditorWindow::on_pushButton_add_clicked()
 {
     int index = 0;
-    if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
+    if(GlobalDatabase::get()->getGlobalJumpers().size() > 0 && selectedItemIndex > (-1))
         index = selectedItemIndex - 1;
     else index = -1;
 
@@ -155,9 +182,9 @@ void DatabaseEditorWindow::on_pushButton_add_clicked()
 
 void DatabaseEditorWindow::on_pushButton_remove_clicked()
 {
-    int index = selectedItemIndex - 1;
-    if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
+    if(GlobalDatabase::get()->getGlobalJumpers().size() > 0 && selectedItemIndex > (-1))
     {
+        int index = selectedItemIndex - 1;
         GlobalDatabase::get()->getEditableGlobalJumpers().remove(index, 1);
         fillJumpersWidget();
         updateIndexes();
@@ -169,7 +196,7 @@ void DatabaseEditorWindow::on_pushButton_remove_clicked()
             else updateItemsSelection(index + 1);
         }
     }
-    else qDebug()<<"0 zawodników";
+    else qDebug()<<"error";
 }
 
 void DatabaseEditorWindow::replaceJumperFromJumperEdit()
@@ -184,7 +211,7 @@ void DatabaseEditorWindow::replaceJumperFromJumperEdit()
 void DatabaseEditorWindow::on_pushButton_up_clicked()
 {
     int index = selectedItemIndex - 1;
-    if(!(index < 1))
+    if((!(index < 1)) && selectedItemIndex > (-1))
     {
         GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(index, index - 1);
         fillJumpersWidget();
@@ -197,7 +224,7 @@ void DatabaseEditorWindow::on_pushButton_up_clicked()
 void DatabaseEditorWindow::on_pushButton_down_clicked()
 {
     int index = selectedItemIndex - 1;
-    if(!(index + 1 >= GlobalDatabase::get()->getGlobalJumpers().size()))
+    if((!(index + 1 >= GlobalDatabase::get()->getGlobalJumpers().size())) && selectedItemIndex > (-1))
     {
         GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(index, index + 1);
         fillJumpersWidget();

@@ -19,6 +19,9 @@ private:
     bool loadJumpers();
     bool loadHills();
 
+    bool writeJumpers();
+    bool writeHills();
+
 public:
     GlobalDatabase(GlobalDatabase &) = delete;
     static GlobalDatabase * get();
@@ -26,6 +29,7 @@ public:
     void removeJumper(int index);
 
     bool loadFromJson();
+    bool writeToJson();
 
     QVector<Jumper> getGlobalJumpers() const;
     void setGlobalJumpers(const QVector<Jumper> &newGlobalJumpers);

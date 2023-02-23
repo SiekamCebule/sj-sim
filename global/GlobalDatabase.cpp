@@ -70,10 +70,22 @@ bool GlobalDatabase::loadFromJson()
     return true;
 }
 
+bool GlobalDatabase::writeToJson()
+{
+    if(writeJumpers() == false)
+        return false;
+}
+
 bool GlobalDatabase::loadJumpers()
 {
     QFile file("userData/GlobalDatabase/globalJumpers.json");
-    file.open(QFile::ReadOnly | QFile::Text);
+    if(!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zawodnikami", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalJumpers.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
     QByteArray bytes = file.readAll();
     file.close();
 
@@ -96,7 +108,7 @@ bool GlobalDatabase::loadJumpers()
         Jumper jumper;
         jumper.setName(obj.value("name").toString());
         jumper.setSurname(obj.value("surname").toString());
-        jumper.setCountryCode(obj.value("countryCode").toString());
+        jumper.setCountryCode(obj.value("country-code").toString());
         jumper.getJumperSkillsPointer()->setTakeoffPower(obj.value("takeoff-power").toDouble());
         jumper.getJumperSkillsPointer()->setTakeoffTechnique(obj.value("takeoff-technique").toDouble());
         jumper.getJumperSkillsPointer()->setFlightTechnique(obj.value("flight-technique").toDouble());
@@ -121,6 +133,54 @@ bool GlobalDatabase::loadJumpers()
             qDebug()<<ch.getType()<<", "<<ch.getLevel();
         qDebug()<<"\n\n";
     }
+
+    return true;
+}
+
+bool GlobalDatabase::writeJumpers()
+{
+    QJsonDocument document;
+    QJsonObject mainObject;
+    QJsonArray array;
+    for(const auto & jumper : getGlobalJumpers())
+    {
+        QJsonObject object;
+        object.insert("name", jumper.getName());
+        object.insert("surname", jumper.getSurname());
+        object.insert("country-code", jumper.getCountryCode());
+        object.insert("takeoff-power", jumper.getJumperSkills().getTakeoffPower());
+        object.insert("takeoff-technique", jumper.getJumperSkills().getTakeoffTechnique());
+        object.insert("flight-technique", jumper.getJumperSkills().getFlightTechnique());
+        object.insert("flight-style", jumper.getJumperSkills().getFlightStyle());
+        object.insert("landing-style", jumper.getJumperSkills().getLandingStyle());
+        object.insert("form", jumper.getJumperSkills().getForm());
+
+        QJsonArray characteristicsArray;
+        for(const auto & characteristic : jumper.getJumperSkills().getCharacteristics())
+        {
+            QJsonObject characteristicObject;
+            characteristicObject.insert("type", characteristic.getType());
+            characteristicObject.insert("level", characteristic.getLevel());
+            characteristicsArray.push_back(characteristicObject);
+        }
+        object.insert("characteristics", characteristicsArray);
+
+        array.push_back(QJsonValue(object));
+    }
+    mainObject.insert("jumpers", QJsonValue(array));
+    document.setObject(mainObject);
+
+    QFile file("userData/GlobalDatabase/globalJumpers.json");
+    if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zawodnikami", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalJumpers.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    file.resize(0);
+    file.write(document.toJson(QJsonDocument::Indented));
+    qDebug()<<document.toJson(QJsonDocument::Indented);
 
     return true;
 }
