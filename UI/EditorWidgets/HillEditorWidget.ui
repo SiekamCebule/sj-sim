@@ -568,7 +568,7 @@ border-radius: 3px;
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="minimum">
           <double>-1000000.000000000000000</double>
@@ -607,6 +607,9 @@ border-radius: 3px;
          </property>
          <property name="text">
           <string>Automatycznie</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -664,7 +667,7 @@ border-radius: 3px;
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="minimum">
           <double>-1000000.000000000000000</double>
@@ -706,6 +709,9 @@ border-radius: 3px;
          </property>
          <property name="text">
           <string>Automatycznie</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -871,7 +877,7 @@ border-radius: 3px;
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="minimum">
           <double>-1000000.000000000000000</double>
@@ -913,6 +919,9 @@ border-radius: 3px;
          </property>
          <property name="text">
           <string>Automatycznie</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

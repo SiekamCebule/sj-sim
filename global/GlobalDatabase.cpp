@@ -73,18 +73,20 @@ bool GlobalDatabase::loadFromJson()
     if(ok == true)
     loadHills();
     else
-        ok == loadHills();
-
+        ok = loadHills();
 
     return ok;
 }
 
 bool GlobalDatabase::writeToJson()
 {
-    if(writeJumpers() == false)
-        return false;
+    bool ok = writeJumpers();
+    if(ok == true)
+        writeHills();
     else
-        return true;
+        ok = writeHills();
+
+    return ok;
 }
 
 bool GlobalDatabase::loadJumpers()
@@ -249,7 +251,7 @@ bool GlobalDatabase::writeJumpers()
     document.setObject(mainObject);
 
     QFile file("userData/GlobalDatabase/globalJumpers.json");
-    if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zawodnikami", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalJumpers.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
         message.setModal(true);
@@ -259,6 +261,55 @@ bool GlobalDatabase::writeJumpers()
     file.resize(0);
     file.write(document.toJson(QJsonDocument::Indented));
 
+    return true;
+}
+
+bool GlobalDatabase::writeHills()
+{
+    QJsonDocument document;
+    QJsonObject mainObject;
+    QJsonArray array;
+    for(const auto & hill : getGlobalHills())
+    {
+        QJsonObject object;
+        object.insert("name", hill.getName());
+        object.insert("country-code", hill.getCountryCode());
+        object.insert("k-point", hill.getKPoint());
+        object.insert("hs-point", hill.getHSPoint());
+        object.insert("points-for-k-point", hill.getPointsForKPoint());
+        object.insert("points-for-meter", hill.getPointsForMeter());
+        object.insert("points-for-gate", hill.getPointsForGate());
+        object.insert("points-for-front-wind", hill.getPointsForFrontWind());
+        object.insert("points-for-back-wind", hill.getPointsForBackWind());
+        object.insert("takeoff-effect", hill.getTakeoffEffect());
+        object.insert("flight-effect", hill.getFlightEffect());
+
+        QJsonArray characteristicsArray;
+        for(const auto & characteristic : hill.getCharacteristics())
+        {
+            QJsonObject characteristicObject;
+            characteristicObject.insert("type", characteristic.getType());
+            characteristicObject.insert("level", characteristic.getLevel());
+            characteristicsArray.push_back(characteristicObject);
+        }
+        object.insert("characteristics", characteristicsArray);
+        array.push_back(QJsonValue(object));
+    }
+
+    mainObject.insert("hills", array);
+    document.setObject(mainObject);
+
+    QFile file("userData/GlobalDatabase/globalHills.json");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku ze skoczniami", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalHills.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    file.resize(0);
+    qDebug()<<document.toJson();
+    file.write(document.toJson(QJsonDocument::Indented));
     return true;
 }
 
