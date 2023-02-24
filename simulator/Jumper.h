@@ -5,7 +5,7 @@
 #include "JumperSkills.h"
 
 #include <QString>
-
+#include <QPixmap>
 
 class Jumper : public ClassWithID
 {
@@ -15,9 +15,9 @@ public:
 private:
     QString name, surname;
     QString countryCode;
+    QPixmap flagPixmap;
 
     JumperSkills jumperSkills;
-
 public:
     QString getName() const;
     void setName(const QString &newName);
@@ -29,6 +29,8 @@ public:
     JumperSkills getJumperSkills() const;
     JumperSkills * getJumperSkillsPointer() const;
     void setJumperSkills(const JumperSkills &newJumperSkills);
+    QPixmap getFlagPixmap() const;
+    void setFlagPixmap(const QPixmap &newFlagPixmap);
 };
 
 #endif // JUMPER_H

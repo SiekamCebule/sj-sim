@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QVector>
+#include <QEvent>
 
 class QCloseEvent;
 

@@ -9,6 +9,7 @@
 #include <QJsonArray>
 #include <QMessageBox>
 
+#include "../global/CountryFlagsManager.h"
 
 GlobalDatabase* GlobalDatabase::m_globalDatabase = nullptr;
 
@@ -146,6 +147,7 @@ bool GlobalDatabase::loadJumpers()
         qDebug()<<"\n\n";
     }
     file.close();
+    setupJumpersFlags();
     return true;
 }
 
@@ -225,7 +227,7 @@ bool GlobalDatabase::writeJumpers()
         QJsonObject object;
         object.insert("name", jumper.getName());
         object.insert("surname", jumper.getSurname());
-        object.insert("country-code", jumper.getCountryCode());
+        object.insert("country-code", jumper.getCountryCode().toUpper());
         object.insert("takeoff-power", jumper.getJumperSkills().getTakeoffPower());
         object.insert("takeoff-technique", jumper.getJumperSkills().getTakeoffTechnique());
         object.insert("flight-technique", jumper.getJumperSkills().getFlightTechnique());
@@ -272,7 +274,7 @@ bool GlobalDatabase::writeHills()
     {
         QJsonObject object;
         object.insert("name", hill.getName());
-        object.insert("country-code", hill.getCountryCode());
+        object.insert("country-code", hill.getCountryCode().toUpper());
         object.insert("k-point", hill.getKPoint());
         object.insert("hs-point", hill.getHSPoint());
         object.insert("points-for-k-point", hill.getPointsForKPoint());
@@ -310,6 +312,14 @@ bool GlobalDatabase::writeHills()
     file.write(document.toJson(QJsonDocument::Indented));
     file.close();
     return true;
+}
+
+void GlobalDatabase::setupJumpersFlags()
+{
+    for(auto & jumper : getEditableGlobalJumpers())
+    {
+        jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
+    }
 }
 
 

@@ -96,11 +96,6 @@ void CharacteristicsEditor::on_pushButton_edit_clicked()
             }
         }
     }
-    // co chce zrobić?
-    // Chcę edytować charakterystykę w taki sposób, że najpierw usuwam wybraną charakterystykę , i w to samo miejsce wstawiam nową.
-    // PYTANIE: Skąd mam wiedzieć, którą charakterystykę usunąć? (Czyli jaka była wybrana przez listę)?
-    // Na pewno mam index wybranego wiersza na liście. Jak odnaleźć charakterystykę na podstawie indeksu na liście?
-
 }
 
 void CharacteristicsEditor::on_pushButton_delete_clicked()

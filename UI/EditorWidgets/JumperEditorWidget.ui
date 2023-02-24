@@ -422,6 +422,9 @@ border-radius: 3px;
 	color: rgb(0, 59, 23);
 }</string>
              </property>
+             <property name="maxLength">
+              <number>3</number>
+             </property>
             </widget>
            </item>
            <item>
@@ -761,6 +764,9 @@ border-radius: 3px;
              <family>Ubuntu</family>
              <pointsize>16</pointsize>
             </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{

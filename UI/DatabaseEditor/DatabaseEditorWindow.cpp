@@ -131,7 +131,8 @@ void DatabaseEditorWindow::fillJumpersWidget()
         label->setStyleSheet("QLabel{color: #452020; margin-right: 5px;}");
         itemWidget->addLabel(label, 1);
 
-        label = new QLabel(jumper.getCountryCode());
+        label = new QLabel();
+        label->setPixmap(jumper.getFlagPixmap().scaled(QSize(39, 29)));
         itemWidget->addLabel(label, 2);
 
         ui->verticalLayout_jumpers->addWidget(itemWidget);
@@ -261,7 +262,6 @@ void DatabaseEditorWindow::setActualElementType(short newActualElementType)
 
 void DatabaseEditorWindow::on_pushButton_add_clicked()
 {
-    qDebug()<<selectedItemIndex;
     int index = 0;
 
     if(actualElementType == JumperElement){

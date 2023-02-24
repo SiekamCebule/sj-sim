@@ -22,6 +22,8 @@ private:
     bool writeJumpers();
     bool writeHills();
 
+    void setupJumpersFlags();
+
 public:
     GlobalDatabase(GlobalDatabase &) = delete;
     static GlobalDatabase * get();

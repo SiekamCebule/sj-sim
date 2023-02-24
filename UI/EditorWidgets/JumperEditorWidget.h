@@ -32,6 +32,10 @@ signals:
 private slots:
     void on_pushButton_clicked();
 
+    void on_lineEdit_countryCode_editingFinished();
+
+    void on_lineEdit_countryCode_textChanged(const QString &arg1);
+
 private:
     Ui::JumperEditorWidget *ui;
     CharacteristicsEditor * characteristicsEditor;

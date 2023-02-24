@@ -16,6 +16,7 @@ SOURCES += \
     UI/EditorWidgets/Dialogs/CharacteristicInputDialog.cpp \
     UI/EditorWidgets/HillEditorWidget.cpp \
     UI/EditorWidgets/JumperEditorWidget.cpp \
+    global/CountryFlagsManager.cpp \
     global/GlobalAppSettings.cpp \
     global/GlobalDatabase.cpp \
     global/GlobalTranslators.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     UI/EditorWidgets/HillEditorWidget.h \
     UI/EditorWidgets/JumperEditorWidget.h \
     UI/mainwindow.h \
+    global/CountryFlagsManager.h \
     global/GlobalAppSettings.h \
     global/GlobalDatabase.h \
     global/GlobalTranslators.h \
@@ -89,8 +91,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-copydata.commands = $(COPY_DIR) $$PWD/translations $$OUT_PWD
-#copydata.commands = $(COPY_DIR) $$PWD/userData $$PWD/translations $$OUT_PWD
+copydata.commands = $(COPY_DIR) $$PWD/translations $$PWD/flags $$OUT_PWD
+#copydata.commands = $(COPY_DIR) $$PWD/userData $$PWD/translations $$PWD/flags $$OUT_PWD
 first.depends = $(first) copydata
 export(first.depends)
 export(copydata.commands)
@@ -98,6 +100,7 @@ QMAKE_EXTRA_TARGETS += first copydata
 
 DISTFILES += \
     flaticon_authors \
+    flags_author \
     userData/GlobalDatabase/globalHills.json \
     userData/GlobalDatabase/globalJumpers.json \
     userData/Settings/appSettings.json

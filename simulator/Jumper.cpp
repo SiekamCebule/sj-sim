@@ -6,6 +6,16 @@ Jumper::Jumper(const QString &name, const QString &surname, const QString &count
     jumperSkills(skills)
 {}
 
+QPixmap Jumper::getFlagPixmap() const
+{
+    return flagPixmap;
+}
+
+void Jumper::setFlagPixmap(const QPixmap &newFlagPixmap)
+{
+    flagPixmap = newFlagPixmap;
+}
+
 JumperSkills Jumper::getJumperSkills() const
 {
     return jumperSkills;
