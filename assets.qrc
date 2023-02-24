@@ -13,5 +13,7 @@
         <file>img/down-arrow.png</file>
         <file>img/up-arrow.png</file>
         <file>img/down.png</file>
+        <file>img/poland.png</file>
+        <file>img/england.png</file>
     </qresource>
 </RCC>

@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="pl_001">
 <context>
+    <name>AppSettingsWindow</name>
+    <message>
+        <location filename="../UI/AppSettings/AppSettingsWindow.ui" line="14"/>
+        <source>Ustawienia aplikacji</source>
+        <translation>Application settings</translation>
+    </message>
+    <message>
+        <location filename="../UI/AppSettings/AppSettingsWindow.ui" line="51"/>
+        <source>Ustawienia</source>
+        <translation>Settings</translation>
+    </message>
+    <message>
+        <location filename="../UI/AppSettings/AppSettingsWindow.ui" line="102"/>
+        <source>Język</source>
+        <translation>Language</translation>
+    </message>
+    <message>
+        <location filename="../UI/AppSettings/AppSettingsWindow.ui" line="201"/>
+        <source>Przywróć domyślne</source>
+        <translation>Restore default</translation>
+    </message>
+</context>
+<context>
     <name>CharacteristicInputDialog</name>
     <message>
         <location filename="../UI/EditorWidgets/Dialogs/CharacteristicInputDialog.ui" line="14"/>
@@ -24,8 +47,8 @@
     <name>CharacteristicsEditor</name>
     <message>
         <location filename="../UI/EditorWidgets/CharacteristicsEditor.ui" line="14"/>
-        <source>Form</source>
-        <translation></translation>
+        <source>Edytor cech</source>
+        <translation>Characteristics editor</translation>
     </message>
     <message>
         <location filename="../UI/EditorWidgets/CharacteristicsEditor.ui" line="32"/>
@@ -47,7 +70,7 @@
         <translation>Jumpers</translation>
     </message>
     <message>
-        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="173"/>
+        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="221"/>
         <source>Skocznie</source>
         <translation>Hills</translation>
     </message>
@@ -62,6 +85,86 @@
         <location filename="../UI/DatabaseEditor/DatabaseListItemWidget.ui" line="20"/>
         <source>Form</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>HillEditorWidget</name>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="22"/>
+        <source>Edytor skoczni</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="47"/>
+        <source>Nazwa</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="70"/>
+        <source>Kod kraju</source>
+        <translation>Country code</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="93"/>
+        <source>Punkt K</source>
+        <translation>K point</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="116"/>
+        <source>Punkt HS</source>
+        <translation>HS point</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="139"/>
+        <source>Punkty za punkt K</source>
+        <translation>Points for K point</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="162"/>
+        <source>Punkty za metr</source>
+        <translation>Points for meter</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="185"/>
+        <source>Punkty za belkę</source>
+        <translation>Points for gate</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="208"/>
+        <source>Punkty za wiatr przedni</source>
+        <translation>Points for front wind</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="231"/>
+        <source>Punkty za wiatr tylni</source>
+        <translation>Points for back wind</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="254"/>
+        <source>Wpływ wybicia</source>
+        <translation>Takeoff effect</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="277"/>
+        <source>Wpływ lotu</source>
+        <translation>Flight effect</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="411"/>
+        <source>IMG</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="609"/>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="711"/>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="921"/>
+        <source>Automatycznie</source>
+        <translation>Automatic</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="1211"/>
+        <source>OK</source>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -117,32 +220,32 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="455"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="461"/>
         <source>IMG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="695"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="701"/>
         <source>Styl V (0)</source>
         <translation>V Style</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="700"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="706"/>
         <source>Nowoczesne V (1)</source>
         <translation>Modern V</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="705"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="711"/>
         <source>Szerokie V (2)</source>
         <translation>Wide V</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="710"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="716"/>
         <source>Styl H (3)</source>
         <translation>H Style</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="771"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="777"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -428,73 +531,22 @@
         <source>Szansa na przedni wiatr</source>
         <translation>Front wind chance</translation>
     </message>
+    <message>
+        <location filename="../UI/AppSettings/AppSettingsWindow.cpp" line="28"/>
+        <source>Polski</source>
+        <translation>Polish</translation>
+    </message>
+    <message>
+        <location filename="../UI/AppSettings/AppSettingsWindow.cpp" line="29"/>
+        <source>Angielski</source>
+        <translation>English</translation>
+    </message>
 </context>
 <context>
     <name>SingleJumpsConfigWindow</name>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="14"/>
         <source>Ustawienia pojedynczego skoku</source>
-        <translation>Single jumps settings</translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="37"/>
-        <source>Pojedyńcze skoki (ustawienia)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="61"/>
-        <source>Skocznia:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="77"/>
-        <source>Punkt K: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="84"/>
-        <source>Punkt HS: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="91"/>
-        <source>Rekord: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="98"/>
-        <source>Punkty za metr: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="105"/>
-        <source>Punkty za belkę: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="112"/>
-        <source>Punkty za wiatr przedni: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="119"/>
-        <source>Punkty za wiatr tylni: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="126"/>
-        <source>Wpływ wybicia (symulacja): </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="133"/>
-        <source>Wpływ lotu (symulacja): </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="154"/>
-        <source>0.0 m</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Single jumps settings</translation>
     </message>
 </context>
 </TS>

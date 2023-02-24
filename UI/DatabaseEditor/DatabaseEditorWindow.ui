@@ -53,7 +53,7 @@
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>22</pointsize>
+         <pointsize>23</pointsize>
          <bold>false</bold>
         </font>
        </property>
@@ -184,7 +184,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>528</width>
-            <height>485</height>
+            <height>483</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -249,7 +249,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>548</width>
-            <height>485</height>
+            <height>483</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">

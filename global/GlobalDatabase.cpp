@@ -7,7 +7,6 @@
 #include <QJsonValue>
 #include <QJsonParseError>
 #include <QJsonArray>
-
 #include <QMessageBox>
 
 
@@ -146,7 +145,7 @@ bool GlobalDatabase::loadJumpers()
             qDebug()<<ch.getType()<<", "<<ch.getLevel();
         qDebug()<<"\n\n";
     }
-
+    file.close();
     return true;
 }
 
@@ -177,8 +176,6 @@ bool GlobalDatabase::loadHills()
     QJsonObject object = document.object();
     QJsonValue value = object.value("hills");
     QJsonArray array = value.toArray();
-
-    qDebug()<<array.size();
 
     for(const auto & val : array)
     {
@@ -214,6 +211,7 @@ bool GlobalDatabase::loadHills()
 
         globalHills.push_back(hill);
     }
+    file.close();
     return true;
 }
 
@@ -261,6 +259,7 @@ bool GlobalDatabase::writeJumpers()
     file.resize(0);
     file.write(document.toJson(QJsonDocument::Indented));
 
+    file.close();
     return true;
 }
 
@@ -308,8 +307,8 @@ bool GlobalDatabase::writeHills()
         return false;
     }
     file.resize(0);
-    qDebug()<<document.toJson();
     file.write(document.toJson(QJsonDocument::Indented));
+    file.close();
     return true;
 }
 

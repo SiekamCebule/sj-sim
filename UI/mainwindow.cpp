@@ -15,11 +15,13 @@
 #include "../simulator/wind-generation/WindGenerationSettings.h"
 
 #include "../global/GlobalDatabase.h"
+#include "../global/GlobalAppSettings.h"
 
-#include "UI/SingleJumps/SingleJumpsConfigWindow.h"
+#include "UI/AppSettings/AppSettingsWindow.h"
 #include "UI/DatabaseEditor/DatabaseEditorWindow.h"
 
 #include <QDebug>
+#include <QCloseEvent>
 #include <QVector>
 
 extern IDGenerator globalIDGenerator;
@@ -53,5 +55,33 @@ void MainWindow::on_pushButton_databaseEdit_clicked()
     {
         qDebug()<<"accepted";
     }
+}
+
+
+void MainWindow::on_pushButton_settings_clicked()
+{
+    AppSettingsWindow settingsWindow;
+    settingsWindow.setMainWindowParent(this);
+    settingsWindow.setModal(true);
+    settingsWindow.setupLanguagesComboBox();
+    if(settingsWindow.exec() == QDialog::Accepted)
+    {
+        ui->retranslateUi(this);
+    }
+}
+
+QApplication *MainWindow::getParentApplication() const
+{
+    return parentApplication;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    GlobalAppSettings::get()->writeToJson();
+}
+
+void MainWindow::setParentApplication(QApplication *newParentApplication)
+{
+    parentApplication = newParentApplication;
 }
 

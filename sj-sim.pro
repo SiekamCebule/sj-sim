@@ -9,14 +9,16 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    UI/AppSettings/AppSettingsWindow.cpp \
     UI/DatabaseEditor/DatabaseEditorWindow.cpp \
     UI/DatabaseEditor/DatabaseListItemWidget.cpp \
     UI/EditorWidgets/CharacteristicsEditor.cpp \
     UI/EditorWidgets/Dialogs/CharacteristicInputDialog.cpp \
     UI/EditorWidgets/HillEditorWidget.cpp \
     UI/EditorWidgets/JumperEditorWidget.cpp \
-    UI/SingleJumps/SingleJumpsConfigWindow.cpp \
+    global/GlobalAppSettings.cpp \
     global/GlobalDatabase.cpp \
+    global/GlobalTranslators.cpp \
     main.cpp \
     UI/mainwindow.cpp \
     simulator/Characteristic.cpp \
@@ -38,15 +40,17 @@ SOURCES += \
     utilities/functions.cpp
 
 HEADERS += \
+    UI/AppSettings/AppSettingsWindow.h \
     UI/DatabaseEditor/DatabaseEditorWindow.h \
     UI/DatabaseEditor/DatabaseListItemWidget.h \
     UI/EditorWidgets/CharacteristicsEditor.h \
     UI/EditorWidgets/Dialogs/CharacteristicInputDialog.h \
     UI/EditorWidgets/HillEditorWidget.h \
     UI/EditorWidgets/JumperEditorWidget.h \
-    UI/SingleJumps/SingleJumpsConfigWindow.h \
     UI/mainwindow.h \
+    global/GlobalAppSettings.h \
     global/GlobalDatabase.h \
+    global/GlobalTranslators.h \
     simulator/Characteristic.h \
     simulator/ConditionsInfo.h \
     simulator/Hill.h \
@@ -66,17 +70,16 @@ HEADERS += \
     utilities/functions.h
 
 FORMS += \
+    UI/AppSettings/AppSettingsWindow.ui \
     UI/DatabaseEditor/DatabaseEditorWindow.ui \
     UI/DatabaseEditor/DatabaseListItemWidget.ui \
     UI/EditorWidgets/CharacteristicsEditor.ui \
     UI/EditorWidgets/Dialogs/CharacteristicInputDialog.ui \
     UI/EditorWidgets/HillEditorWidget.ui \
     UI/EditorWidgets/JumperEditorWidget.ui \
-    UI/SingleJumps/SingleJumpsConfigWindow.ui \
     UI/mainwindow.ui
 
 TRANSLATIONS += \
-    translations/translation_pl.ts \
     translations/translation_en.ts
 CONFIG += lrelease
 CONFIG += embed_translations
@@ -96,7 +99,8 @@ QMAKE_EXTRA_TARGETS += first copydata
 DISTFILES += \
     flaticon_authors \
     userData/GlobalDatabase/globalHills.json \
-    userData/GlobalDatabase/globalJumpers.json
+    userData/GlobalDatabase/globalJumpers.json \
+    userData/Settings/appSettings.json
 
 RESOURCES += \
 assets.qrc
