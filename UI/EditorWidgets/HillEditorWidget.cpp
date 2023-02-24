@@ -7,15 +7,27 @@
 #include "CharacteristicsEditor.h"
 
 HillEditorWidget::HillEditorWidget(CharacteristicsEditor * characteristicsEditor, QWidget *parent) :
+    characteristicsEditor(characteristicsEditor),
     QWidget(parent),
     ui(new Ui::HillEditorWidget)
 {
     ui->setupUi(this);
 
     if(this->characteristicsEditor == nullptr)
-        this->characteristicsEditor = new CharacteristicsEditor;
+        this->characteristicsEditor = new CharacteristicsEditor(Characteristic::Hill);
 
     ui->verticalLayout_characteristicsEditor->insertWidget(0, getCharacteristicsEditor());
+
+    connect(ui->doubleSpinBox_KPoint, &QDoubleSpinBox::valueChanged, this, [this](){
+       if(ui->doubleSpinBox_pointsForKPoint->isReadOnly() == true)
+           ui->doubleSpinBox_pointsForKPoint->setValue(Hill::calculatePointsForKPoint(ui->doubleSpinBox_KPoint->value()));
+       if(ui->doubleSpinBox_pointsForMeter->isReadOnly() == true)
+           ui->doubleSpinBox_pointsForMeter->setValue(Hill::calculatePointsForMeter(ui->doubleSpinBox_KPoint->value()));
+    });
+    connect(ui->doubleSpinBox_frontWindPoints, &QDoubleSpinBox::valueChanged, this, [this](){
+       if(ui->doubleSpinBox_backWindPoints->isReadOnly() == true)
+           ui->doubleSpinBox_backWindPoints->setValue(Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(ui->doubleSpinBox_frontWindPoints->value()));
+    });
 }
 
 HillEditorWidget::~HillEditorWidget()
@@ -41,6 +53,7 @@ void HillEditorWidget::fillHillInputs()
     ui->doubleSpinBox_backWindPoints->setValue(hill->getPointsForBackWind());
     ui->doubleSpinBox_takeoffEffect->setValue(hill->getTakeoffEffect());
     ui->doubleSpinBox_flightEffect->setValue(hill->getFlightEffect());
+    characteristicsEditor->setCharacteristics(hill->getCharacteristics());
 }
 
 Hill HillEditorWidget::getHillFromWidgetInput() const
@@ -57,47 +70,54 @@ Hill HillEditorWidget::getHillFromWidgetInput() const
     hill.setPointsForBackWind(ui->doubleSpinBox_backWindPoints->value());
     hill.setTakeoffEffect(ui->doubleSpinBox_takeoffEffect->value());
     hill.setFlightEffect(ui->doubleSpinBox_flightEffect->value());
+    hill.setCharacteristics(characteristicsEditor->getCharacteristics());
     return hill;
 }
 
 void HillEditorWidget::on_checkBox_autoPointsForKPoint_stateChanged(int arg1)
 {
-    if(arg1 == 1)
+    if(arg1 == 2)
     {
         ui->doubleSpinBox_pointsForKPoint->setValue(Hill::calculatePointsForKPoint(ui->doubleSpinBox_KPoint->value()));
         ui->doubleSpinBox_pointsForKPoint->setReadOnly(true);
+        ui->doubleSpinBox_pointsForKPoint->setStyleSheet(ui->doubleSpinBox_pointsForKPoint->styleSheet());
     }
     else
     {
         ui->doubleSpinBox_pointsForKPoint->setReadOnly(false);
+        ui->doubleSpinBox_pointsForKPoint->setStyleSheet(ui->doubleSpinBox_pointsForKPoint->styleSheet());
     }
 }
 
 
 void HillEditorWidget::on_checkBox_autoPointsForMeter_stateChanged(int arg1)
 {
-    if(arg1 == 1)
+    if(arg1 == 2)
     {
         ui->doubleSpinBox_pointsForMeter->setValue(Hill::calculatePointsForMeter(ui->doubleSpinBox_KPoint->value()));
         ui->doubleSpinBox_pointsForMeter->setReadOnly(true);
+        ui->doubleSpinBox_pointsForMeter->setStyleSheet(ui->doubleSpinBox_pointsForMeter->styleSheet());
     }
     else
     {
         ui->doubleSpinBox_pointsForMeter->setReadOnly(false);
+        ui->doubleSpinBox_pointsForMeter->setStyleSheet(ui->doubleSpinBox_pointsForMeter->styleSheet());
     }
 }
 
 
 void HillEditorWidget::on_checkBox_autoBackWindPoints_stateChanged(int arg1)
 {
-    if(arg1 == 1)
+    if(arg1 == 2)
     {
         ui->doubleSpinBox_backWindPoints->setValue(Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(ui->doubleSpinBox_frontWindPoints->value()));
         ui->doubleSpinBox_backWindPoints->setReadOnly(true);
+        ui->doubleSpinBox_backWindPoints->setStyleSheet(ui->doubleSpinBox_backWindPoints->styleSheet());
     }
     else
     {
         ui->doubleSpinBox_backWindPoints->setReadOnly(false);
+        ui->doubleSpinBox_backWindPoints->setStyleSheet(ui->doubleSpinBox_backWindPoints->styleSheet());
     }
 }
 
@@ -119,5 +139,13 @@ Hill *HillEditorWidget::getHill() const
 void HillEditorWidget::setHill(Hill *newHill)
 {
     hill = newHill;
+}
+
+void HillEditorWidget::on_pushButton_submit_clicked()
+{
+    ui->doubleSpinBox_pointsForKPoint->setReadOnly(false);
+    ui->doubleSpinBox_pointsForKPoint->setReadOnly(false);
+    ui->doubleSpinBox_backWindPoints->setReadOnly(false);
+    emit submitted();
 }
 

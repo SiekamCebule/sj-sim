@@ -6,8 +6,10 @@
 
 class QCloseEvent;
 
+class HillEditorWidget;
 class JumperEditorWidget;
 class Jumper;
+class Hill;
 class DatabaseListItemWidget;
 
 namespace Ui {
@@ -19,22 +21,26 @@ class DatabaseEditorWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit DatabaseEditorWindow(JumperEditorWidget * jumperEditor = nullptr, QWidget *parent = nullptr);
+    explicit DatabaseEditorWindow(JumperEditorWidget * jumperEditor = nullptr, HillEditorWidget * hillEditor = nullptr, QWidget *parent = nullptr);
     ~DatabaseEditorWindow();
 
     void when_ItemWidgetDeleteButtonClicked(int index);
     void updateItemsSelection(int index);
 
-    enum class ElementType{
-        Jumper,
-        Hill,
-        WindGenerator
+    enum ElementType{
+        JumperElement,
+        HillElement,
+        WindGeneratorElement
     };
 
     short getActualElementType() const;
     void setActualElementType(short newActualElementType);
     int getSelectedItemIndex() const;
     void setSelectedItemIndex(int newSelectedItemIndex);
+    QVector<Jumper> getTempGlobalJumpers() const;
+    void setTempGlobalJumpers(const QVector<Jumper> &newTempGlobalJumpers);
+    QVector<Hill> getTempGlobalHills() const;
+    void setTempGlobalHills(const QVector<Hill> &newTempGlobalHills);
 
 protected:
     void closeEvent(QCloseEvent * event);
@@ -45,16 +51,22 @@ private slots:
     void on_pushButton_up_clicked();
     void on_pushButton_down_clicked();
 
-    void replaceJumperFromJumperEdit();
+    void replaceJumperFromJumperEditor();
+    void replaceHillFromHillEditor();
 
 private:
+    QVector<Jumper> tempGlobalJumpers;
+    QVector<Hill> tempGlobalHills;
+
     Ui::DatabaseEditorWindow *ui;
-    QVector<DatabaseListItemWidget *> listItems;
+    QVector<DatabaseListItemWidget *> jumpersListItems;
+    QVector<DatabaseListItemWidget *> hillsListItems;
 
     JumperEditorWidget * jumperEditor;
+    HillEditorWidget * hillEditor;
 
     void fillJumpersWidget();
-    void updateOneJumperWidget(int indexFromZero);
+    void fillHillsWidget();
     short actualElementType;
     int selectedItemIndex;
 

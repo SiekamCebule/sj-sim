@@ -32,6 +32,11 @@ void GlobalDatabase::setGlobalHills(const QVector<Hill> &newGlobalHills)
     globalHills = newGlobalHills;
 }
 
+QVector<Hill> &GlobalDatabase::getEditableGlobalHills()
+{
+    return globalHills;
+}
+
 QVector<Jumper> GlobalDatabase::getGlobalJumpers() const
 {
     return globalJumpers;
@@ -194,7 +199,7 @@ bool GlobalDatabase::loadHills()
         hill.setPointsForFrontWind(obj.value("points-for-front-wind").toDouble());
 
         if(obj.value("points-for-back-wind").toString() == "auto")
-            hill.setPointsForBackWind(Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(hill.getKPoint()));
+            hill.setPointsForBackWind(Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(hill.getPointsForFrontWind()));
         else hill.setPointsForBackWind(obj.value("points-for-back-wind").toDouble());
 
         hill.setTakeoffEffect(obj.value("takeoff-effect").toDouble());
@@ -207,6 +212,7 @@ bool GlobalDatabase::loadHills()
 
         globalHills.push_back(hill);
     }
+    return true;
 }
 
 bool GlobalDatabase::writeJumpers()
@@ -252,7 +258,6 @@ bool GlobalDatabase::writeJumpers()
     }
     file.resize(0);
     file.write(document.toJson(QJsonDocument::Indented));
-    qDebug()<<document.toJson(QJsonDocument::Indented);
 
     return true;
 }

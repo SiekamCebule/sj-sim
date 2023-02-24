@@ -10,7 +10,7 @@ JumperEditorWidget::JumperEditorWidget(Jumper *jumper, CharacteristicsEditor *ch
     ui->setupUi(this);
 
     if(this->characteristicsEditor == nullptr)
-        this->characteristicsEditor = new CharacteristicsEditor;
+        this->characteristicsEditor = new CharacteristicsEditor(Characteristic::Jumper);
 
     ui->verticalLayout_characteristicsEditor->insertWidget(0, getCharacteristicsEditor());
 }

@@ -2,7 +2,9 @@
 #include "ui_DatabaseEditorWindow.h"
 
 #include "../../global/GlobalDatabase.h"
+#include "../../simulator/Hill.h"
 #include "../EditorWidgets/JumperEditorWidget.h"
+#include "../EditorWidgets/HillEditorWidget.h"
 
 #include "DatabaseListItemWidget.h"
 
@@ -11,29 +13,36 @@
 #include <QCloseEvent>
 #include <QMessageBox>
 
-DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, QWidget *parent) :
+DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, HillEditorWidget *hillEditor, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DatabaseEditorWindow),
     jumperEditor(jumperEditor),
+    hillEditor(hillEditor),
     actualElementType(0),
     selectedItemIndex(-1)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
 
+    tempGlobalJumpers = GlobalDatabase::get()->getGlobalJumpers();
+    tempGlobalHills = GlobalDatabase::get()->getGlobalHills();
+
     if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
         fillJumpersWidget();
-
-    //if(GlobalDatabase::get()->getGlobalHills().size() > 0)
+    if(GlobalDatabase::get()->getGlobalHills().size() > 0)
+        fillHillsWidget();
 
     if(this->jumperEditor == nullptr)
         this->jumperEditor = new JumperEditorWidget();
-
     ui->tab_jumpers->layout()->addWidget(this->jumperEditor);
 
-    connect(ui->tabWidget_main, &QTabWidget::currentChanged, this, &DatabaseEditorWindow::setActualElementType);
-    connect(this->jumperEditor, &JumperEditorWidget::submitted, this, &DatabaseEditorWindow::replaceJumperFromJumperEdit);
+    if(this->hillEditor == nullptr)
+        this->hillEditor = new HillEditorWidget();
+    ui->tab_hills->layout()->addWidget(this->hillEditor);
 
+    connect(ui->tabWidget_main, &QTabWidget::currentChanged, this, &DatabaseEditorWindow::setActualElementType);
+    connect(this->jumperEditor, &JumperEditorWidget::submitted, this, &DatabaseEditorWindow::replaceJumperFromJumperEditor);
+    connect(this->hillEditor, &HillEditorWidget::submitted, this, &DatabaseEditorWindow::replaceHillFromHillEditor);
 }
 
 DatabaseEditorWindow::~DatabaseEditorWindow()
@@ -49,28 +58,47 @@ void DatabaseEditorWindow::when_ItemWidgetDeleteButtonClicked(int index)
 
 void DatabaseEditorWindow::updateItemsSelection(int index)
 {
-    for(auto & item : listItems)
-    {
-        if(item->getIndex() != index)
+    if(actualElementType == ElementType::JumperElement){
+        for(auto & item : jumpersListItems)
         {
-            item->setIsSelected(false);
-            item->setStyleSheet("QLabel{}");
+            if(item->getIndex() != index)
+            {
+                item->setIsSelected(false);
+                item->setStyleSheet("QLabel{}");
+            }
+            else
+            {
+                item->setIsSelected(true);
+                this->setSelectedItemIndex(item->getIndex());
+                item->setStyleSheet("QLabel#main-label{border-radius: 8px; border: 1px solid rgb(20, 59, 23);background-color: rgb(248, 255, 250);padding: 2px;}");
+            }
         }
-        else
-        {
-            item->setIsSelected(true);
-            this->setSelectedItemIndex(item->getIndex());
-            item->setStyleSheet("QLabel#main-label{border-radius: 8px; border: 1px solid rgb(20, 59, 23);background-color: rgb(248, 255, 250);padding: 2px;}");
-        }
+        jumperEditor->setJumper(const_cast<Jumper *>(&GlobalDatabase::get()->getGlobalJumpers().at(index-1)));
+        jumperEditor->fillJumperInputs();
     }
-
-    jumperEditor->setJumper(const_cast<Jumper *>(&GlobalDatabase::get()->getGlobalJumpers().at(index-1)));
-    jumperEditor->fillJumperInputs();
+    else if(actualElementType == ElementType::HillElement){
+        for(auto & item : hillsListItems)
+        {
+            if(item->getIndex() != index)
+            {
+                item->setIsSelected(false);
+                item->setStyleSheet("QLabel{}");
+            }
+            else
+            {
+                item->setIsSelected(true);
+                this->setSelectedItemIndex(item->getIndex());
+                item->setStyleSheet("QLabel#main-label{border-radius: 8px; border: 1px solid rgb(20, 59, 23);background-color: rgb(248, 255, 250);padding: 2px;}");
+            }
+        }
+        hillEditor->setHill(const_cast<Hill*>(&GlobalDatabase::get()->getGlobalHills().at(index-1)));
+        hillEditor->fillHillInputs();
+    }
 }
 
 void DatabaseEditorWindow::fillJumpersWidget()
 {
-    if(ui->verticalLayout_jumpers != NULL){
+    if(ui->verticalLayout_jumpers != nullptr){
         QLayoutItem * item;
         while((item = ui->verticalLayout_jumpers->takeAt(0)) != NULL)
         {
@@ -78,11 +106,12 @@ void DatabaseEditorWindow::fillJumpersWidget()
             delete item;
         }
     }
-    listItems.clear();
+    jumpersListItems.clear();
     int i=1;
     for(const auto & jumper : GlobalDatabase::get()->getGlobalJumpers())
     {
         DatabaseListItemWidget * itemWidget = new DatabaseListItemWidget;
+        itemWidget->setParent(this);
         itemWidget->setIndex(i);
         itemWidget->setEditorParent(this);
 
@@ -107,7 +136,7 @@ void DatabaseEditorWindow::fillJumpersWidget()
 
         ui->verticalLayout_jumpers->addWidget(itemWidget);
         itemWidget->update();
-        listItems.push_back(itemWidget);
+        jumpersListItems.push_back(itemWidget);
 
         connect(itemWidget, &DatabaseListItemWidget::itemSelected, this, &DatabaseEditorWindow::updateItemsSelection);
         i++;
@@ -115,13 +144,72 @@ void DatabaseEditorWindow::fillJumpersWidget()
     ui->verticalLayout_jumpers->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Ignored, QSizePolicy::Expanding));
 }
 
+void DatabaseEditorWindow::fillHillsWidget()
+{
+    if(ui->verticalLayout_hills != nullptr){
+        QLayoutItem * item;
+        while((item = ui->verticalLayout_hills->takeAt(0)) != NULL)
+        {
+            delete item->widget();
+            delete item;
+        }
+    }
+    hillsListItems.clear();
+    int i=1;
+    for(const auto & hill : GlobalDatabase::get()->getGlobalHills())
+    {
+        DatabaseListItemWidget * itemWidget = new DatabaseListItemWidget;
+        itemWidget->setParent(this);
+        itemWidget->setIndex(i);
+        itemWidget->setEditorParent(this);
+
+        QLabel * label = new QLabel(QString::number(itemWidget->getIndex()));
+        QFont font = label->font();
+        font.setFamily("Ubuntu Light");
+        font.setPointSize(17);
+        label->setFont(font);
+        label->setStyleSheet("QLabel{color: #000000; margin-right: 11px;}");
+        itemWidget->addLabel(label, 0);
+
+        label = new QLabel(hill.getName() + " HS" +QString::number(hill.getHSPoint()));
+        label->setObjectName("main-label");
+        font.setFamily("Ubuntu Light");
+        font.setPointSize(15);
+        label->setFont(font);
+        label->setStyleSheet("QLabel{color: #452020; margin-right: 5px;}");
+        itemWidget->addLabel(label, 1);
+
+        label = new QLabel(hill.getCountryCode());
+        itemWidget->addLabel(label, 2);
+
+        ui->verticalLayout_hills->addWidget(itemWidget);
+        itemWidget->update();
+        hillsListItems.push_back(itemWidget);
+
+        connect(itemWidget, &DatabaseListItemWidget::itemSelected, this, &DatabaseEditorWindow::updateItemsSelection);
+        i++;
+    }
+    ui->verticalLayout_hills->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Ignored, QSizePolicy::Expanding));
+}
+
 void DatabaseEditorWindow::updateIndexes()
 {
-    int index = 0;
-    for (auto & jum : GlobalDatabase::get()->getEditableGlobalJumpers())
-    {
-        dynamic_cast<DatabaseListItemWidget *>(ui->verticalLayout_jumpers->itemAt(index)->widget())->setIndex(index+1);
-        index++;
+    int index;
+    if(actualElementType == JumperElement){
+        index = 0;
+        for (auto & jum : GlobalDatabase::get()->getEditableGlobalJumpers())
+        {
+            dynamic_cast<DatabaseListItemWidget *>(ui->verticalLayout_jumpers->itemAt(index)->widget())->setIndex(index+1);
+            index++;
+        }
+    }
+    else if(actualElementType == HillElement){
+        index = 0;
+        for (auto & hill : GlobalDatabase::get()->getEditableGlobalHills())
+        {
+            dynamic_cast<DatabaseListItemWidget *>(ui->verticalLayout_hills->itemAt(index)->widget())->setIndex(index+1);
+            index++;
+        }
     }
 }
 
@@ -152,6 +240,8 @@ void DatabaseEditorWindow::closeEvent(QCloseEvent *event)
     }
     else if(button == QMessageBox::No)
     {
+        GlobalDatabase::get()->setGlobalJumpers(tempGlobalJumpers);
+        GlobalDatabase::get()->setGlobalHills(tempGlobalHills);
         event->accept();
     }
     else
@@ -165,18 +255,32 @@ short DatabaseEditorWindow::getActualElementType() const
 
 void DatabaseEditorWindow::setActualElementType(short newActualElementType)
 {
+    selectedItemIndex = -1;
     actualElementType = newActualElementType;
 }
 
 void DatabaseEditorWindow::on_pushButton_add_clicked()
 {
+    qDebug()<<selectedItemIndex;
     int index = 0;
-    if(GlobalDatabase::get()->getGlobalJumpers().size() > 0 && selectedItemIndex > (-1))
-        index = selectedItemIndex - 1;
-    else index = -1;
 
-    GlobalDatabase::get()->getEditableGlobalJumpers().insert(index + 1, Jumper("Name", "Surname", "XXX", JumperSkills()));
-    fillJumpersWidget();
+    if(actualElementType == JumperElement){
+        if(GlobalDatabase::get()->getGlobalJumpers().size() > 0 && selectedItemIndex > (-1))
+            index = selectedItemIndex - 1;
+        else index = -1;
+
+        GlobalDatabase::get()->getEditableGlobalJumpers().insert(index + 1, Jumper("Name", "Surname", "XXX", JumperSkills()));
+        fillJumpersWidget();
+    }
+    else if(actualElementType == HillElement)
+    {
+        if(GlobalDatabase::get()->getGlobalHills().size() > 0 && selectedItemIndex > (-1))
+            index = selectedItemIndex - 1;
+        else index = -1;
+
+        GlobalDatabase::get()->getEditableGlobalHills().insert(index + 1, Hill("Hill", "XXX", 0, 0));
+        fillHillsWidget();
+    }
     updateIndexes();
     updateItemsSelection(index+2);
 }
@@ -184,27 +288,70 @@ void DatabaseEditorWindow::on_pushButton_add_clicked()
 
 void DatabaseEditorWindow::on_pushButton_remove_clicked()
 {
-    if(GlobalDatabase::get()->getGlobalJumpers().size() > 0 && selectedItemIndex > (-1))
-    {
-        int index = selectedItemIndex - 1;
-        GlobalDatabase::get()->getEditableGlobalJumpers().remove(index, 1);
-        fillJumpersWidget();
-        updateIndexes();
-
-        if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
+    if(actualElementType == JumperElement){
+        if(GlobalDatabase::get()->getGlobalJumpers().size() > 0 && selectedItemIndex > (-1))
         {
-            if(index == GlobalDatabase::get()->getGlobalJumpers().size())
-                updateItemsSelection(index);
-            else updateItemsSelection(index + 1);
+            int index = selectedItemIndex - 1;
+            GlobalDatabase::get()->getEditableGlobalJumpers().remove(index, 1);
+            fillJumpersWidget();
+            updateIndexes();
+
+            if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
+            {
+                if(index == GlobalDatabase::get()->getGlobalJumpers().size())
+                    updateItemsSelection(index);
+                else updateItemsSelection(index + 1);
+            }
         }
     }
-    else qDebug()<<"error";
+    else if(actualElementType == HillElement){
+        if(GlobalDatabase::get()->getGlobalHills().size() > 0 && selectedItemIndex > (-1))
+        {
+            int index = selectedItemIndex - 1;
+            GlobalDatabase::get()->getEditableGlobalHills().remove(index, 1);
+            fillHillsWidget();
+            updateIndexes();
+
+            if(GlobalDatabase::get()->getGlobalHills().size() > 0)
+            {
+                if(index == GlobalDatabase::get()->getGlobalHills().size())
+                    updateItemsSelection(index);
+                else updateItemsSelection(index + 1);
+            }
+        }
+    }
 }
 
-void DatabaseEditorWindow::replaceJumperFromJumperEdit()
+void DatabaseEditorWindow::replaceJumperFromJumperEditor()
 {
     GlobalDatabase::get()->getEditableGlobalJumpers().replace(selectedItemIndex - 1, jumperEditor->getJumperFromWidgetInput());
     fillJumpersWidget();
+}
+
+void DatabaseEditorWindow::replaceHillFromHillEditor()
+{
+    GlobalDatabase::get()->getEditableGlobalHills().replace(selectedItemIndex - 1, hillEditor->getHillFromWidgetInput());
+    fillHillsWidget();
+}
+
+QVector<Hill> DatabaseEditorWindow::getTempGlobalHills() const
+{
+    return tempGlobalHills;
+}
+
+void DatabaseEditorWindow::setTempGlobalHills(const QVector<Hill> &newTempGlobalHills)
+{
+    tempGlobalHills = newTempGlobalHills;
+}
+
+QVector<Jumper> DatabaseEditorWindow::getTempGlobalJumpers() const
+{
+    return tempGlobalJumpers;
+}
+
+void DatabaseEditorWindow::setTempGlobalJumpers(const QVector<Jumper> &newTempGlobalJumpers)
+{
+    tempGlobalJumpers = newTempGlobalJumpers;
 }
 
 //zawsze jak zostaje 1 zawodnik, i się go usuwa, wtedy program sie crashuje.
@@ -213,25 +360,46 @@ void DatabaseEditorWindow::replaceJumperFromJumperEdit()
 void DatabaseEditorWindow::on_pushButton_up_clicked()
 {
     int index = selectedItemIndex - 1;
-    if((!(index < 1)) && selectedItemIndex > (-1))
-    {
-        GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(index, index - 1);
-        fillJumpersWidget();
-        updateIndexes();
-        updateItemsSelection(index);
+    if(actualElementType == JumperElement){
+        if((!(index < 1)) && selectedItemIndex > (-1))
+        {
+            GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(index, index - 1);
+            fillJumpersWidget();
+            updateIndexes();
+            updateItemsSelection(index);
+        }
+    }
+    else if(actualElementType == HillElement){
+        if((!(index < 1)) && selectedItemIndex > (-1))
+        {
+            GlobalDatabase::get()->getEditableGlobalHills().swapItemsAt(index, index - 1);
+            fillHillsWidget();
+            updateIndexes();
+            updateItemsSelection(index);
+        }
     }
 }
-
 
 void DatabaseEditorWindow::on_pushButton_down_clicked()
 {
     int index = selectedItemIndex - 1;
-    if((!(index + 1 >= GlobalDatabase::get()->getGlobalJumpers().size())) && selectedItemIndex > (-1))
-    {
-        GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(index, index + 1);
-        fillJumpersWidget();
-        updateIndexes();
-        updateItemsSelection(index + 2);
+    if(actualElementType == JumperElement){
+        if((!(index + 1 >= GlobalDatabase::get()->getGlobalJumpers().size())) && selectedItemIndex > (-1))
+        {
+            GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(index, index + 1);
+            fillJumpersWidget();
+            updateIndexes();
+            updateItemsSelection(index + 2);
+        }
+    }
+    else if(actualElementType == HillElement){
+        if((!(index + 1 >= GlobalDatabase::get()->getGlobalHills().size())) && selectedItemIndex > (-1))
+        {
+            GlobalDatabase::get()->getEditableGlobalHills().swapItemsAt(index, index + 1);
+            fillHillsWidget();
+            updateIndexes();
+            updateItemsSelection(index + 2);
+        }
     }
 }
 

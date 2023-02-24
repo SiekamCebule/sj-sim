@@ -37,6 +37,8 @@ private slots:
     void on_checkBox_autoPointsForMeter_stateChanged(int arg1);
     void on_checkBox_autoBackWindPoints_stateChanged(int arg1);
 
+    void on_pushButton_submit_clicked();
+
 private:
     Ui::HillEditorWidget *ui;
     CharacteristicsEditor * characteristicsEditor;

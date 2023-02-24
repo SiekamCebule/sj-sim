@@ -2,7 +2,7 @@
     "hills": [
         {
             "name": "Garmisch-Partenkirchen",
-            "countryCode": "GER",
+            "country-code": "GER",
             "k-point": 125,
             "hs-point": 142,
             "points-for-meter": 1.8,
@@ -26,7 +26,7 @@
         },
         {
             "name": "Zakopane",
-            "countryCode": "POL",
+            "country-code": "POL",
             "k-point": 125,
             "hs-point": 140,
             "points-for-meter": "auto",

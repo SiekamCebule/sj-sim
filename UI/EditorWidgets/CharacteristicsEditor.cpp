@@ -6,7 +6,8 @@
 #include <QStringListModel>
 #include <QMessageBox>
 
-CharacteristicsEditor::CharacteristicsEditor(QWidget *parent) :
+CharacteristicsEditor::CharacteristicsEditor(short parentType, QWidget *parent) :
+    parentType(parentType),
     QWidget(parent),
     ui(new Ui::CharacteristicsEditor)
 {
@@ -41,6 +42,7 @@ void CharacteristicsEditor::setCharacteristics(const QSet<Characteristic> &newCh
 void CharacteristicsEditor::on_pushButton_add_clicked()
 {
     CharacteristicInputDialog dialog(CharacteristicInputDialog::Add);
+    dialog.setParentType(parentType);
     dialog.setModal(true);
     dialog.setExistingCharacteristics(const_cast<QSet<Characteristic> *>(&characteristics));
     dialog.fillComboBox();
@@ -65,11 +67,22 @@ void CharacteristicsEditor::updateStrings()
     model->setStringList(strings);
 }
 
+short CharacteristicsEditor::getParentType() const
+{
+    return parentType;
+}
+
+void CharacteristicsEditor::setParentType(short newParentType)
+{
+    parentType = newParentType;
+}
+
 void CharacteristicsEditor::on_pushButton_edit_clicked()
 {
     if(ui->listView_characteristics->selectionModel()->selectedRows().size() > 0){
         int index = ui->listView_characteristics->selectionModel()->selectedRows().at(0).row();
         CharacteristicInputDialog dialog(CharacteristicInputDialog::Edit);
+        dialog.setParentType(parentType);
         dialog.setModal(true);
         dialog.setExistingCharacteristics(const_cast<QSet<Characteristic> *>(&characteristics));
         dialog.getExistingCharacteristics()->remove(Characteristic(dirtyStrings.at(index)));

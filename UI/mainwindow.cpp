@@ -30,8 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    if(GlobalDatabase::get()->loadFromJson() == false)
-        exit(0);
+    GlobalDatabase::get()->loadFromJson();
 }
 
 MainWindow::~MainWindow()

@@ -137,7 +137,7 @@ QTabBar::tab:selected{
 }</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -223,6 +223,23 @@ width: 5px;
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QScrollArea" name="scrollArea_hills">
+         <property name="minimumSize">
+          <size>
+           <width>550</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QScrollArea{
+background: transparent;
+}
+QScrollBar::handle{
+border: 2px solid rgb(101, 23, 23);
+background-color: rgb(255, 229, 190);
+height: 10px;
+width: 5px;
+}</string>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -231,7 +248,7 @@ width: 5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>529</width>
+            <width>548</width>
             <height>485</height>
            </rect>
           </property>
