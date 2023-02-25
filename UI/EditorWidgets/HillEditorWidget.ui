@@ -285,13 +285,13 @@ color: rgb(0, 0, 0);
       <widget class="QLineEdit" name="lineEdit_name">
        <property name="minimumSize">
         <size>
-         <width>130</width>
-         <height>28</height>
+         <width>235</width>
+         <height>29</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>235</width>
          <height>28</height>
         </size>
        </property>
@@ -329,13 +329,13 @@ border-radius: 3px;
         <widget class="QLineEdit" name="lineEdit_countryCode">
          <property name="minimumSize">
           <size>
-           <width>130</width>
-           <height>28</height>
+           <width>235</width>
+           <height>29</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>235</width>
            <height>28</height>
           </size>
          </property>
@@ -374,8 +374,8 @@ border-radius: 3px;
         <widget class="QLabel" name="label_countryFlag">
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>28</height>
+           <width>40</width>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -405,13 +405,13 @@ border-radius: 3px;
       <widget class="QDoubleSpinBox" name="doubleSpinBox_KPoint">
        <property name="minimumSize">
         <size>
-         <width>130</width>
-         <height>28</height>
+         <width>235</width>
+         <height>29</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>235</width>
          <height>28</height>
         </size>
        </property>
@@ -456,13 +456,13 @@ border-radius: 3px;
       <widget class="QDoubleSpinBox" name="doubleSpinBox_HSPoint">
        <property name="minimumSize">
         <size>
-         <width>130</width>
-         <height>28</height>
+         <width>235</width>
+         <height>29</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>235</width>
          <height>28</height>
         </size>
        </property>
@@ -708,13 +708,13 @@ border-radius: 3px;
       <widget class="QDoubleSpinBox" name="doubleSpinBox_gatePoints">
        <property name="minimumSize">
         <size>
-         <width>130</width>
-         <height>28</height>
+         <width>235</width>
+         <height>29</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>235</width>
          <height>28</height>
         </size>
        </property>
@@ -762,13 +762,13 @@ border-radius: 3px;
       <widget class="QDoubleSpinBox" name="doubleSpinBox_frontWindPoints">
        <property name="minimumSize">
         <size>
-         <width>130</width>
-         <height>28</height>
+         <width>235</width>
+         <height>29</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>235</width>
          <height>28</height>
         </size>
        </property>
@@ -920,13 +920,13 @@ border-radius: 3px;
         <widget class="QDoubleSpinBox" name="doubleSpinBox_takeoffEffect">
          <property name="minimumSize">
           <size>
-           <width>130</width>
-           <height>28</height>
+           <width>235</width>
+           <height>29</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>235</width>
            <height>28</height>
           </size>
          </property>
@@ -958,6 +958,9 @@ border-radius: 3px;
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+         <property name="decimals">
+          <number>4</number>
          </property>
          <property name="minimum">
           <double>-1000000.000000000000000</double>
@@ -1031,13 +1034,13 @@ border-radius: 3px;
         <widget class="QDoubleSpinBox" name="doubleSpinBox_flightEffect">
          <property name="minimumSize">
           <size>
-           <width>130</width>
-           <height>28</height>
+           <width>235</width>
+           <height>29</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>235</width>
            <height>28</height>
           </size>
          </property>
@@ -1069,6 +1072,9 @@ border-radius: 3px;
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+         <property name="decimals">
+          <number>4</number>
          </property>
          <property name="minimum">
           <double>-1000000.000000000000000</double>
@@ -1199,6 +1205,9 @@ background-color: rgb(153, 253, 174);
        </property>
        <property name="text">
         <string>OK</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

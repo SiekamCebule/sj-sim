@@ -18,11 +18,10 @@ public:
     explicit HillEditorWidget(CharacteristicsEditor *characteristicsEditor = nullptr, QWidget *parent = nullptr);
     ~HillEditorWidget();
 
+    void resetHillInputs();
     void fillHillInputs();
 
-
     Hill getHillFromWidgetInput() const;
-
 
     Hill *getHill() const;
     void setHill(Hill *newHill);

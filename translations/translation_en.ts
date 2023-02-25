@@ -42,6 +42,21 @@
         <source>Poziom</source>
         <translation>Level</translation>
     </message>
+    <message>
+        <location filename="../UI/EditorWidgets/Dialogs/CharacteristicInputDialog.cpp" line="22"/>
+        <source>Dodaj cechę</source>
+        <translation>Add characteristic</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/Dialogs/CharacteristicInputDialog.cpp" line="23"/>
+        <source>Edytuj cechę</source>
+        <translation>Edit characteristic</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/Dialogs/CharacteristicInputDialog.cpp" line="24"/>
+        <source>&lt;Błąd&gt;</source>
+        <translation>&lt;Error&gt;</translation>
+    </message>
 </context>
 <context>
     <name>CharacteristicsEditor</name>
@@ -92,7 +107,7 @@
     <message>
         <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="22"/>
         <source>Edytor skoczni</source>
-        <translation type="unfinished"></translation>
+        <translation>Hill editor</translation>
     </message>
     <message>
         <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="47"/>
@@ -150,19 +165,19 @@
         <translation>Flight effect</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="411"/>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="398"/>
         <source>IMG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="609"/>
-        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="711"/>
-        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="921"/>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="596"/>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="698"/>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="908"/>
         <source>Automatycznie</source>
         <translation>Automatic</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="1211"/>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="1207"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -220,32 +235,32 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="461"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="464"/>
         <source>IMG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="701"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="704"/>
         <source>Styl V (0)</source>
         <translation>V Style</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="706"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="709"/>
         <source>Nowoczesne V (1)</source>
         <translation>Modern V</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="711"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="714"/>
         <source>Szerokie V (2)</source>
         <translation>Wide V</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="716"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="719"/>
         <source>Styl H (3)</source>
         <translation>H Style</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="777"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="783"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>

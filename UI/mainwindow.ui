@@ -222,6 +222,9 @@ color: rgb(32, 120, 252);
              <layout class="QHBoxLayout" name="horizontalLayout_10">
               <item>
                <widget class="QPushButton" name="pushButton_season">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>200</width>
@@ -310,6 +313,9 @@ color: rgb(32, 120, 252);
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
                <widget class="QPushButton" name="pushButton_singleCompetition">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>135</width>
@@ -502,6 +508,9 @@ color: rgb(32, 120, 252);
              <layout class="QHBoxLayout" name="horizontalLayout_7">
               <item>
                <widget class="QPushButton" name="pushButton_help">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>135</width>

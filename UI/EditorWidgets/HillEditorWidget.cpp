@@ -36,6 +36,31 @@ HillEditorWidget::~HillEditorWidget()
     delete ui;
 }
 
+void HillEditorWidget::resetHillInputs()
+{
+    ui->lineEdit_name->setText("");
+    ui->lineEdit_countryCode->setText("");
+    ui->label_countryFlag->setPixmap(QPixmap());
+    ui->doubleSpinBox_KPoint->setValue(0);
+    ui->doubleSpinBox_HSPoint->setValue(0);
+
+    ui->doubleSpinBox_pointsForKPoint->setValue(0);
+    ui->checkBox_autoPointsForKPoint->setChecked(false);
+
+    ui->doubleSpinBox_pointsForMeter->setValue(0);
+    ui->checkBox_autoPointsForMeter->setChecked(false);
+
+    ui->doubleSpinBox_gatePoints->setValue(0);
+    ui->doubleSpinBox_frontWindPoints->setValue(0);
+
+    ui->doubleSpinBox_backWindPoints->setValue(0);
+    ui->checkBox_autoBackWindPoints->setChecked(false);
+
+    ui->doubleSpinBox_takeoffEffect->setValue(0);
+    ui->doubleSpinBox_flightEffect->setValue(0);
+    characteristicsEditor->setCharacteristics(QSet<Characteristic>());
+}
+
 void HillEditorWidget::fillHillInputs()
 {
     if(hill == nullptr)

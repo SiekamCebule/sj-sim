@@ -19,9 +19,9 @@ CharacteristicInputDialog::CharacteristicInputDialog(short action, short parentT
 
     switch(getAction())
     {
-    case Add: ui->label_title->setText("Dodaj cechę"); break;
-    case Edit: ui->label_title->setText("Edytuj cechę"); break;
-    default: ui->label_title->setText("<Błąd>"); break;
+    case Add: ui->label_title->setText(tr("Dodaj cechę")); break;
+    case Edit: ui->label_title->setText(tr("Edytuj cechę")); break;
+    default: ui->label_title->setText(tr("<Błąd>")); break;
     }
     setWindowTitle(ui->label_title->text());
 

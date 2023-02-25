@@ -326,14 +326,20 @@ void DatabaseEditorWindow::on_pushButton_remove_clicked()
 
 void DatabaseEditorWindow::replaceJumperFromJumperEditor()
 {
-    GlobalDatabase::get()->getEditableGlobalJumpers().replace(selectedItemIndex - 1, jumperEditor->getJumperFromWidgetInput());
-    fillJumpersWidget();
+    if(selectedItemIndex > (-1)){
+        GlobalDatabase::get()->getEditableGlobalJumpers().replace(selectedItemIndex - 1, jumperEditor->getJumperFromWidgetInput());
+        fillJumpersWidget();
+    }
+    selectedItemIndex = (-1);
 }
 
 void DatabaseEditorWindow::replaceHillFromHillEditor()
 {
-    GlobalDatabase::get()->getEditableGlobalHills().replace(selectedItemIndex - 1, hillEditor->getHillFromWidgetInput());
-    fillHillsWidget();
+    if(selectedItemIndex > (-1)){
+        GlobalDatabase::get()->getEditableGlobalHills().replace(selectedItemIndex - 1, hillEditor->getHillFromWidgetInput());
+        fillHillsWidget();
+    }
+    selectedItemIndex = (-1);
 }
 
 QVector<Hill> DatabaseEditorWindow::getTempGlobalHills() const

@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     UI/AppSettings/AppSettingsWindow.cpp \
     UI/DatabaseEditor/DatabaseEditorWindow.cpp \
     UI/DatabaseEditor/DatabaseListItemWidget.cpp \
@@ -34,6 +35,8 @@ SOURCES += \
     simulator/Wind.cpp \
     simulator/wind-generation/WindGenerationSettings.cpp \
     simulator/wind-generation/WindsGenerator.cpp \
+    single-jumps/SingleJumpsManager.cpp \
+    single-jumps/SingleJumpsSettings.cpp \
     utilities/ClassWithCharacteristics.cpp \
     utilities/ClassWithID.cpp \
     global/IDGenerator.cpp \
@@ -41,6 +44,7 @@ SOURCES += \
     utilities/functions.cpp
 
 HEADERS += \
+    UI/SingleJumps/SingleJumpsConfigWindow.h \
     UI/AppSettings/AppSettingsWindow.h \
     UI/DatabaseEditor/DatabaseEditorWindow.h \
     UI/DatabaseEditor/DatabaseListItemWidget.h \
@@ -65,6 +69,8 @@ HEADERS += \
     simulator/Wind.h \
     simulator/wind-generation/WindGenerationSettings.h \
     simulator/wind-generation/WindsGenerator.h \
+    single-jumps/SingleJumpsManager.h \
+    single-jumps/SingleJumpsSettings.h \
     utilities/ClassWithCharacteristics.h \
     utilities/ClassWithID.h \
     global/IDGenerator.h \
@@ -72,6 +78,7 @@ HEADERS += \
     utilities/functions.h
 
 FORMS += \
+    UI/SingleJumps/SingleJumpsConfigWindow.ui \
     UI/AppSettings/AppSettingsWindow.ui \
     UI/DatabaseEditor/DatabaseEditorWindow.ui \
     UI/DatabaseEditor/DatabaseListItemWidget.ui \

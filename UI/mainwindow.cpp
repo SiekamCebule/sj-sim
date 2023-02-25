@@ -19,6 +19,7 @@
 
 #include "UI/AppSettings/AppSettingsWindow.h"
 #include "UI/DatabaseEditor/DatabaseEditorWindow.h"
+#include "UI/SingleJumps/SingleJumpsConfigWindow.h"
 
 #include <QDebug>
 #include <QCloseEvent>
@@ -43,7 +44,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_singleJumps_clicked()
 {
+    SingleJumpsConfigWindow singleJumpsConfig;
+    singleJumpsConfig.setModal(true);
+    if(singleJumpsConfig.exec() == QDialog::Accepted)
+    {
 
+    }
 }
 
 
@@ -53,7 +59,7 @@ void MainWindow::on_pushButton_databaseEdit_clicked()
     databaseEditor.setModal(true);
     if(databaseEditor.exec() == QDialog::Accepted)
     {
-        qDebug()<<"accepted";
+
     }
 }
 

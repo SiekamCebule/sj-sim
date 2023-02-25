@@ -23,6 +23,21 @@ JumperEditorWidget::~JumperEditorWidget()
     delete ui;
 }
 
+void JumperEditorWidget::resetJumperInputs()
+{
+    ui->lineEdit_name->setText("");
+    ui->lineEdit_surname->setText("");
+    ui->lineEdit_countryCode->setText("");
+    ui->label_countryFlag->setPixmap(QPixmap());
+    ui->doubleSpinBox_takeoffPower->setValue(0);
+    ui->doubleSpinBox_takeoffTechnique->setValue(0);
+    ui->doubleSpinBox_flightTechnique->setValue(0);
+    ui->comboBox_flightStyle->setCurrentIndex(0);
+    ui->doubleSpinBox_landingStyle->setValue(0);
+    ui->doubleSpinBox_form->setValue(0);
+    characteristicsEditor->setCharacteristics(QSet<Characteristic>());
+}
+
 void JumperEditorWidget::fillJumperInputs()
 {
     if(jumper == nullptr){
