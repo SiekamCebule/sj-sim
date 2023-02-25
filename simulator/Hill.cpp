@@ -1,20 +1,70 @@
 #include "Hill.h"
 #include "Landing.h"
 
+#include "../global/CountryFlagsManager.h"
+
 #include <QDebug>
 
 
-Hill::Hill(const QString &name, const QString &countryCode, double KPoint, double HSPoint, double pointsForFrontWind, double pointsForGate, double takeoffEffect, double flightEffect, const QSet<Characteristic> &characteristics) : name(name),
+Hill::Hill(const QString &name, const QString &countryCode, double KPoint, double HSPoint, double pointsForMeter, double pointsForKPoint, double pointsForFrontWind, double pointsForBackWind, double pointsForGate, double takeoffEffect, double flightEffect, double realHS, bool autoPointsForKPoint, bool autoPointsForMeter, bool autoPointsForBackWind) : name(name),
     countryCode(countryCode),
     KPoint(KPoint),
     HSPoint(HSPoint),
+    pointsForMeter(pointsForMeter),
+    pointsForKPoint(pointsForKPoint),
     pointsForFrontWind(pointsForFrontWind),
+    pointsForBackWind(pointsForBackWind),
     pointsForGate(pointsForGate),
     takeoffEffect(takeoffEffect),
-    flightEffect(flightEffect)
+    flightEffect(flightEffect),
+    realHS(realHS),
+    autoPointsForKPoint(autoPointsForKPoint),
+    autoPointsForMeter(autoPointsForMeter),
+    autoPointsForBackWind(autoPointsForBackWind)
 {
     setCharacteristics(characteristics);
     setRealHSByCharacteristic();
+}
+
+
+bool Hill::getAutoPointsForBackWind() const
+{
+    return autoPointsForBackWind;
+}
+
+void Hill::setAutoPointsForBackWind(bool newAutoPointsForBackWind)
+{
+    autoPointsForBackWind = newAutoPointsForBackWind;
+}
+
+bool Hill::getAutoPointsForMeter() const
+{
+    return autoPointsForMeter;
+}
+
+void Hill::setAutoPointsForMeter(bool newAutoPointsForMeter)
+{
+    autoPointsForMeter = newAutoPointsForMeter;
+}
+
+bool Hill::getAutoPointsForKPoint() const
+{
+    return autoPointsForKPoint;
+}
+
+void Hill::setAutoPointsForKPoint(bool newAutoPointsForKPoint)
+{
+    autoPointsForKPoint = newAutoPointsForKPoint;
+}
+
+QPixmap Hill::getFlagPixmap() const
+{
+    return flagPixmap;
+}
+
+void Hill::setFlagPixmap(const QPixmap &newFlagPixmap)
+{
+    flagPixmap = newFlagPixmap;
 }
 
 double Hill::calculatePointsForMeter(double KPoint)
@@ -180,6 +230,12 @@ double Hill::getLandingImbalanceChangeByHillProfile(double distance)
         return 0.03;
 }
 
+void Hill::updateCountryFlagPixmap(const QString & countryCode)
+{
+    setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(countryCode)));
+    qDebug()<<flagPixmap;
+}
+
 QString Hill::getName() const
 {
     return name;
@@ -198,6 +254,7 @@ QString Hill::getCountryCode() const
 void Hill::setCountryCode(const QString &newCountryCode)
 {
     countryCode = newCountryCode;
+    updateCountryFlagPixmap(newCountryCode);
 }
 
 double Hill::getKPoint() const

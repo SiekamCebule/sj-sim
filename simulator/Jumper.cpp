@@ -1,10 +1,16 @@
 #include "Jumper.h"
+#include "../global/CountryFlagsManager.h"
+
+#include <QObject>
 
 Jumper::Jumper(const QString &name, const QString &surname, const QString &countryCode, const JumperSkills &skills) : name(name),
     surname(surname),
     countryCode(countryCode),
     jumperSkills(skills)
-{}
+{
+    if(countryCode.length() == 3)
+        updateCountryFlagPixmap();
+}
 
 QPixmap Jumper::getFlagPixmap() const
 {
@@ -14,6 +20,11 @@ QPixmap Jumper::getFlagPixmap() const
 void Jumper::setFlagPixmap(const QPixmap &newFlagPixmap)
 {
     flagPixmap = newFlagPixmap;
+}
+
+void Jumper::updateCountryFlagPixmap()
+{
+    setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(getCountryCode())));
 }
 
 JumperSkills Jumper::getJumperSkills() const
@@ -64,4 +75,5 @@ QString Jumper::getCountryCode() const
 void Jumper::setCountryCode(const QString &newCountryCode)
 {
     countryCode = newCountryCode;
+    updateCountryFlagPixmap();
 }

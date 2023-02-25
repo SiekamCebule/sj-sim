@@ -39,6 +39,8 @@ private slots:
 
     void on_pushButton_submit_clicked();
 
+    void on_lineEdit_countryCode_textChanged(const QString &arg1);
+
 private:
     Ui::HillEditorWidget *ui;
     CharacteristicsEditor * characteristicsEditor;

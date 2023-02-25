@@ -6,6 +6,7 @@
 
 #include <QString>
 #include <QPixmap>
+#include <QObject>
 
 class Jumper : public ClassWithID
 {
@@ -31,6 +32,8 @@ public:
     void setJumperSkills(const JumperSkills &newJumperSkills);
     QPixmap getFlagPixmap() const;
     void setFlagPixmap(const QPixmap &newFlagPixmap);
+
+    void updateCountryFlagPixmap();
 };
 
 #endif // JUMPER_H

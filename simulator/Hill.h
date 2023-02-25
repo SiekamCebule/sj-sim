@@ -7,14 +7,17 @@
 
 #include <QString>
 #include <QSet>
+#include <QPixmap>
 
 class Hill : public ClassWithID, public ClassWithCharacteristics
 {
 public:
-    Hill(const QString &name = "", const QString &countryCode = "", double KPoint = 0, double HSPoint = 0, double pointsForFrontWind = 0, double pointsForGate = 0, double takeoffEffect = 0, double flightEffect = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>());
+    Hill(const QString &name = "", const QString &countryCode = "", double KPoint = 0, double HSPoint = 0, double pointsForMeter = 0, double pointsForKPoint = 0, double pointsForFrontWind = 0, double pointsForBackWind = 0, double pointsForGate = 0, double takeoffEffect = 0, double flightEffect = 0, double realHS = 0, bool autoPointsForKPoint = false, bool autoPointsForMeter = false, bool autoPointsForBackWind = false);
 
 private:
-    QString name, countryCode;
+    QString name;
+    QString countryCode;
+    QPixmap flagPixmap;
 
     double KPoint;
     double HSPoint; // Jeśli nie ma cechy charakterystycznej, to HSPoint == realHS
@@ -30,6 +33,10 @@ private:
     double flightEffect;
     double realHS; // "prawdziwa wielkość skoczni", tam gdzie robi się niebezpicznie
 
+    bool autoPointsForKPoint;
+    bool autoPointsForMeter;
+    bool autoPointsForBackWind;
+
 public:
     static double calculatePointsForMeter(double KPoint);
     static double calculatePointsForKPoint(double KPoint);
@@ -39,6 +46,8 @@ public:
 
     double getLandingChanceChangeByHillProfile(double distance, short landingType);
     double getLandingImbalanceChangeByHillProfile(double distance);
+
+    void updateCountryFlagPixmap(const QString &countryCode);
 
     QString getName() const;
     void setName(const QString &newName);
@@ -67,6 +76,14 @@ public:
     void setRealHSByCharacteristic();
     double getPointsForKPoint() const;
     void setPointsForKPoint(double newPointsForKPoint);
+    QPixmap getFlagPixmap() const;
+    void setFlagPixmap(const QPixmap &newFlagPixmap);
+    bool getAutoPointsForKPoint() const;
+    void setAutoPointsForKPoint(bool newAutoPointsForKPoint);
+    bool getAutoPointsForMeter() const;
+    void setAutoPointsForMeter(bool newAutoPointsForMeter);
+    bool getAutoPointsForBackWind() const;
+    void setAutoPointsForBackWind(bool newAutoPointsForBackWind);
 };
 
 #endif // HILL_H

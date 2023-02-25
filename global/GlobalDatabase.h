@@ -23,6 +23,7 @@ private:
     bool writeHills();
 
     void setupJumpersFlags();
+    void setupHillsFlags();
 
 public:
     GlobalDatabase(GlobalDatabase &) = delete;

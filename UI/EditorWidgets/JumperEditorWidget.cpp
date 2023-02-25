@@ -32,7 +32,7 @@ void JumperEditorWidget::fillJumperInputs()
     ui->lineEdit_name->setText(jumper->getName());
     ui->lineEdit_surname->setText(jumper->getSurname());
     ui->lineEdit_countryCode->setText(jumper->getCountryCode());
-    ui->label_countryFlag->setPixmap(jumper->getFlagPixmap().scaled(QSize(39, 29)));
+    ui->label_countryFlag->setPixmap(jumper->getFlagPixmap().scaled(CountryFlagsManager::getFlagPixmapSize()));
     ui->doubleSpinBox_takeoffPower->setValue(jumper->getJumperSkills().getTakeoffPower());
     ui->doubleSpinBox_takeoffTechnique->setValue(jumper->getJumperSkills().getTakeoffTechnique());
     ui->doubleSpinBox_flightTechnique->setValue(jumper->getJumperSkills().getFlightTechnique());
@@ -48,7 +48,7 @@ Jumper JumperEditorWidget::getJumperFromWidgetInput()
     jumper.setName(ui->lineEdit_name->text());
     jumper.setSurname(ui->lineEdit_surname->text());
     jumper.setCountryCode(ui->lineEdit_countryCode->text());
-    jumper.setFlagPixmap(ui->label_countryFlag->pixmap());
+    jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
     jumper.getJumperSkillsPointer()->setTakeoffPower(ui->doubleSpinBox_takeoffPower->value());
     jumper.getJumperSkillsPointer()->setTakeoffTechnique(ui->doubleSpinBox_takeoffTechnique->value());
     jumper.getJumperSkillsPointer()->setFlightTechnique(ui->doubleSpinBox_flightTechnique->value());
@@ -87,6 +87,6 @@ void JumperEditorWidget::on_pushButton_clicked()
 void JumperEditorWidget::on_lineEdit_countryCode_textChanged(const QString &arg1)
 {
     if(arg1.length() > 2)
-        ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(ui->lineEdit_countryCode->text().toLower())).scaled(39, 29));
+        ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(ui->lineEdit_countryCode->text().toLower())).scaled(CountryFlagsManager::getFlagPixmapSize()));
 }
 

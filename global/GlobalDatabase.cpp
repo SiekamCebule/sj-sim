@@ -71,7 +71,7 @@ bool GlobalDatabase::loadFromJson()
 
     bool ok = loadJumpers();
     if(ok == true)
-    loadHills();
+        loadHills();
     else
         ok = loadHills();
 
@@ -189,18 +189,27 @@ bool GlobalDatabase::loadHills()
         hill.setHSPoint(obj.value("hs-point").toDouble());
 
         if(obj.value("points-for-meter").toString() == "auto")
+        {
             hill.setPointsForMeter(Hill::calculatePointsForMeter(hill.getKPoint()));
+            hill.setAutoPointsForMeter(true);
+        }
         else hill.setPointsForMeter(obj.value("points-for-meter").toDouble());
 
         if(obj.value("points-for-k-point").toString() == "auto")
+        {
             hill.setPointsForKPoint(Hill::calculatePointsForKPoint(hill.getKPoint()));
+            hill.setAutoPointsForKPoint(true);
+        }
         else hill.setPointsForKPoint(obj.value("points-for-k-point").toDouble());
 
         hill.setPointsForGate(obj.value("points-for-gate").toDouble());
         hill.setPointsForFrontWind(obj.value("points-for-front-wind").toDouble());
 
         if(obj.value("points-for-back-wind").toString() == "auto")
+        {
             hill.setPointsForBackWind(Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(hill.getPointsForFrontWind()));
+            hill.setAutoPointsForBackWind(true);
+        }
         else hill.setPointsForBackWind(obj.value("points-for-back-wind").toDouble());
 
         hill.setTakeoffEffect(obj.value("takeoff-effect").toDouble());
@@ -214,6 +223,7 @@ bool GlobalDatabase::loadHills()
         globalHills.push_back(hill);
     }
     file.close();
+    setupHillsFlags();
     return true;
 }
 
@@ -277,11 +287,25 @@ bool GlobalDatabase::writeHills()
         object.insert("country-code", hill.getCountryCode().toUpper());
         object.insert("k-point", hill.getKPoint());
         object.insert("hs-point", hill.getHSPoint());
-        object.insert("points-for-k-point", hill.getPointsForKPoint());
-        object.insert("points-for-meter", hill.getPointsForMeter());
+
+        if(hill.getAutoPointsForKPoint() == true){
+            object.insert("points-for-k-point", "auto");
+        }
+        else object.insert("points-for-k-point", hill.getPointsForKPoint());
+
+        if(hill.getAutoPointsForMeter() == true){
+            object.insert("points-for-meter", "auto");
+        }
+        else object.insert("points-for-meter", hill.getPointsForMeter());
+
         object.insert("points-for-gate", hill.getPointsForGate());
         object.insert("points-for-front-wind", hill.getPointsForFrontWind());
-        object.insert("points-for-back-wind", hill.getPointsForBackWind());
+
+        if(hill.getAutoPointsForBackWind() == true){
+            object.insert("points-for-back-wind", "auto");
+        }
+        else object.insert("points-for-back-wind", hill.getPointsForBackWind());
+
         object.insert("takeoff-effect", hill.getTakeoffEffect());
         object.insert("flight-effect", hill.getFlightEffect());
 
@@ -319,6 +343,14 @@ void GlobalDatabase::setupJumpersFlags()
     for(auto & jumper : getEditableGlobalJumpers())
     {
         jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
+    }
+}
+
+void GlobalDatabase::setupHillsFlags()
+{
+    for(auto & hill : getEditableGlobalHills())
+    {
+        hill.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())));
     }
 }
 

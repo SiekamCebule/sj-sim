@@ -392,22 +392,6 @@ border-radius: 3px;
          <property name="styleSheet">
           <string notr="true">QWidget{
 	background: transparent;
-	color: rgb(60, 60, 60);
-	border: 2px solid rgb(65, 0, 0);
-	border-radius: 7px;
-}
-
-QDoubleSpinBox::up-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-		background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}
-QDoubleSpinBox::down-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-	background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
 }</string>
          </property>
          <property name="text">
@@ -1200,7 +1184,7 @@ border-radius: 3px;
         </font>
        </property>
        <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
+        <enum>Qt::StrongFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton{

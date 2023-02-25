@@ -2,6 +2,7 @@
 #include "ui_DatabaseEditorWindow.h"
 
 #include "../../global/GlobalDatabase.h"
+#include "../../global/CountryFlagsManager.h"
 #include "../../simulator/Hill.h"
 #include "../EditorWidgets/JumperEditorWidget.h"
 #include "../EditorWidgets/HillEditorWidget.h"
@@ -132,7 +133,7 @@ void DatabaseEditorWindow::fillJumpersWidget()
         itemWidget->addLabel(label, 1);
 
         label = new QLabel();
-        label->setPixmap(jumper.getFlagPixmap().scaled(QSize(39, 29)));
+        label->setPixmap(jumper.getFlagPixmap().scaled(CountryFlagsManager::getFlagPixmapSize()));
         itemWidget->addLabel(label, 2);
 
         ui->verticalLayout_jumpers->addWidget(itemWidget);
@@ -180,7 +181,8 @@ void DatabaseEditorWindow::fillHillsWidget()
         label->setStyleSheet("QLabel{color: #452020; margin-right: 5px;}");
         itemWidget->addLabel(label, 1);
 
-        label = new QLabel(hill.getCountryCode());
+        label = new QLabel();
+        label->setPixmap(hill.getFlagPixmap().scaled(CountryFlagsManager::getFlagPixmapSize()));
         itemWidget->addLabel(label, 2);
 
         ui->verticalLayout_hills->addWidget(itemWidget);
