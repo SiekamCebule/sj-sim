@@ -233,7 +233,6 @@ double Hill::getLandingImbalanceChangeByHillProfile(double distance)
 void Hill::updateCountryFlagPixmap(const QString & countryCode)
 {
     setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(countryCode)));
-    qDebug()<<flagPixmap;
 }
 
 QString Hill::getName() const
