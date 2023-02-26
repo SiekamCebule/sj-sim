@@ -15,6 +15,8 @@ private:
     QVector<WindGenerationSettings> generationSettings;
 public:
     QVector<Wind> generateWinds();
+
+    static int calculateWindsCountByKPoint(double KPoint);
 };
 
 #endif // WINDSGENERATOR_H

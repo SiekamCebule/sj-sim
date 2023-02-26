@@ -21,6 +21,8 @@ public:
     void resetHillInputs();
     void fillHillInputs();
 
+    void removeSubmitButton();
+
     Hill getHillFromWidgetInput() const;
 
     Hill *getHill() const;
@@ -30,13 +32,14 @@ public:
 
 signals:
     void submitted();
+    void KPointInputChanged(double KPoint);
 
 private slots:
     void on_checkBox_autoPointsForKPoint_stateChanged(int arg1);
     void on_checkBox_autoPointsForMeter_stateChanged(int arg1);
     void on_checkBox_autoBackWindPoints_stateChanged(int arg1);
 
-    void on_pushButton_submit_clicked();
+    void when_submitButtonClicked();
 
     void on_lineEdit_countryCode_textChanged(const QString &arg1);
 

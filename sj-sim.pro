@@ -9,6 +9,8 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
+    UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
     UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     UI/AppSettings/AppSettingsWindow.cpp \
     UI/DatabaseEditor/DatabaseEditorWindow.cpp \
@@ -44,6 +46,8 @@ SOURCES += \
     utilities/functions.cpp
 
 HEADERS += \
+    UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
+    UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
     UI/SingleJumps/SingleJumpsConfigWindow.h \
     UI/AppSettings/AppSettingsWindow.h \
     UI/DatabaseEditor/DatabaseEditorWindow.h \
@@ -78,6 +82,8 @@ HEADERS += \
     utilities/functions.h
 
 FORMS += \
+    UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \
+    UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui \
     UI/SingleJumps/SingleJumpsConfigWindow.ui \
     UI/AppSettings/AppSettingsWindow.ui \
     UI/DatabaseEditor/DatabaseEditorWindow.ui \

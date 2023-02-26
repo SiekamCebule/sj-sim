@@ -800,7 +800,7 @@ border-radius: 3px;
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="pushButton_submit">
            <property name="minimumSize">
             <size>
              <width>80</width>

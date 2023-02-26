@@ -113,3 +113,33 @@ QVector<Wind> WindsGenerator::generateWinds()
     }*/
     return winds;
 }
+
+int WindsGenerator::calculateWindsCountByKPoint(double KPoint)
+{
+    if(KPoint < 30)
+        return 1;
+    else if(KPoint < 55)
+        return 2;
+    else if(KPoint < 75)
+        return 3;
+    else if(KPoint < 90)
+        return 4;
+    else if(KPoint < 103)
+        return 5;
+    else if(KPoint < 115)
+        return 6;
+    else if(KPoint < 132)
+        return 7;
+    else if(KPoint < 156)
+        return 8;
+    else if(KPoint < 177)
+        return 9;
+    else if(KPoint < 205)
+        return 10;
+    else
+    {
+        int i = 11;
+        i += (KPoint - 225) / 35;
+        return i;
+    }
+}

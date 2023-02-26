@@ -3,9 +3,9 @@
 
 #include <QDialog>
 
-class QScrollArea;
 class JumperEditorWidget;
 class HillEditorWidget;
+class WindsGeneratorSettingsEditorWidget;
 
 namespace Ui {
 class SingleJumpsConfigWindow;
@@ -21,7 +21,6 @@ public:
 
 private slots:
     void on_comboBox_existingHill_currentIndexChanged(int index);
-
     void on_comboBox_existingJumper_currentIndexChanged(int index);
 
 private:
@@ -29,7 +28,8 @@ private:
 
     JumperEditorWidget * jumperEditor;
     HillEditorWidget * hillEditor;
-    QScrollArea * scrollArea;
+    WindsGeneratorSettingsEditorWidget * windsGeneratorSettingsEditor;
+
 };
 
 #endif // SINGLEJUMPSCONFIGWINDOW_H

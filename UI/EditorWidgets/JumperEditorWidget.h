@@ -20,6 +20,8 @@ public:
     void resetJumperInputs();
     void fillJumperInputs();
 
+    void removeSubmitButton();
+
     Jumper getJumperFromWidgetInput();
 
     Jumper *getJumper() const;
@@ -31,10 +33,8 @@ signals:
     void submitted();
 
 private slots:
-    void on_pushButton_clicked();
-
+    void when_submittButtonClicked();
     void on_lineEdit_countryCode_editingFinished();
-
     void on_lineEdit_countryCode_textChanged(const QString &arg1);
 
 private:

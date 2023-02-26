@@ -274,6 +274,6 @@ QSize CountryFlagsManager::getFlagPixmapSize(short type)
     switch(type)
     {
     case Normal:
-        return QSize(39, 27);
+        return QSize(38, 22);
     }
 }

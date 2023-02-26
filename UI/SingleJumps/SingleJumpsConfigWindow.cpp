@@ -3,6 +3,7 @@
 
 #include "../EditorWidgets/JumperEditorWidget.h"
 #include "../EditorWidgets/HillEditorWidget.h"
+#include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 
 #include "../../global/GlobalDatabase.h"
 
@@ -19,8 +20,13 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     setWindowFlags(Qt::Window);
 
     jumperEditor = new JumperEditorWidget;
+    jumperEditor->removeSubmitButton();
+
     hillEditor = new HillEditorWidget;
-    scrollArea = new QScrollArea;
+    hillEditor->removeSubmitButton();
+
+    windsGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget;
+    windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);
 
 
     QStringList jumpersStrings;
@@ -41,8 +47,12 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     QStringListModel * hillsStringsModel = new QStringListModel(hillsStrings);
     ui->comboBox_existingHill->setModel(hillsStringsModel);
 
-    ui->verticalLayout_existingJumper->addWidget(jumperEditor);
-    ui->verticalLayout_existingHill->addWidget(hillEditor);
+    ui->verticalLayout_jumperContent->addWidget(jumperEditor);
+    ui->verticalLayout_hillContent->addWidget(hillEditor);
+    ui->verticalLayout_windsGeneratorSettings->addWidget(windsGeneratorSettingsEditor);
+    connect(hillEditor, &HillEditorWidget::KPointInputChanged, windsGeneratorSettingsEditor, &WindsGeneratorSettingsEditorWidget::fillSettingsInputs);
+
+    ui->toolBox->setCurrentIndex(0);
 }
 
 SingleJumpsConfigWindow::~SingleJumpsConfigWindow()
@@ -64,6 +74,7 @@ void SingleJumpsConfigWindow::on_comboBox_existingHill_currentIndexChanged(int i
     if(index > 0){
         hillEditor->setHill(const_cast<Hill *>(&GlobalDatabase::get()->getGlobalHills().at(index - 1)));
         hillEditor->fillHillInputs();
+        emit hillEditor->KPointInputChanged(const_cast<Hill *>(&GlobalDatabase::get()->getGlobalHills().at(index - 1))->getKPoint());
     }
     else hillEditor->resetHillInputs();
 }

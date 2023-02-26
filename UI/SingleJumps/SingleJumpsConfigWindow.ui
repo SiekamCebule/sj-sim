@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1016</width>
-    <height>633</height>
+    <width>1148</width>
+    <height>731</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Konfiguracja pojedynczych skoków</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(236, 236, 236);</string>
@@ -47,7 +47,7 @@ color: rgb(26, 95, 180);
 }</string>
        </property>
        <property name="text">
-        <string>Pojedynczy skok (konfiguracja)</string>
+        <string>Pojedyncze skoki (konfiguracja)</string>
        </property>
       </widget>
      </item>
@@ -67,7 +67,7 @@ color: rgb(26, 95, 180);
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacer_3">
+    <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -77,32 +77,45 @@ color: rgb(26, 95, 180);
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>10</height>
+       <height>15</height>
       </size>
      </property>
     </spacer>
    </item>
    <item>
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>996</width>
-        <height>550</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_underTitle">
+     <item>
+      <widget class="QToolBox" name="toolBox">
+       <property name="font">
+        <font>
+         <pointsize>17</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QToolBox::tab{
+	color: rgb(0, 0, 0);
+}</string>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="page_jumper">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>722</width>
+          <height>523</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Zawodnik</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_jumper">
+            <layout class="QVBoxLayout" name="verticalLayout_jumperContent">
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_existingJumper">
                <item>
@@ -115,144 +128,142 @@ color: rgb(26, 95, 180);
                   </font>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">color: rgb(0, 0, 0);</string>
+                  <string notr="true">color: black;</string>
                  </property>
                  <property name="text">
-                  <string>Istniejący zawodnik: </string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
+                  <string>Wczytaj istniejącego zawodnika</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QComboBox" name="comboBox_existingJumper">
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                  </font>
-                 </property>
                  <property name="styleSheet">
-                  <string notr="true">color: rgb(25, 25, 25);</string>
+                  <string notr="true">color: rgb(36, 36, 36)</string>
                  </property>
-                 <item>
-                  <property name="text">
-                   <string>BRAK</string>
-                  </property>
-                 </item>
                 </widget>
                </item>
               </layout>
              </item>
-             <item>
-              <spacer name="verticalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Maximum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>80</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_hill">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_existingHill">
-             <item>
-              <widget class="QLabel" name="label_existingHill">
-               <property name="font">
-                <font>
-                 <family>Quicksand Medium</family>
-                 <pointsize>12</pointsize>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);</string>
-               </property>
-               <property name="text">
-                <string>Istniejąca skocznia: </string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboBox_existingHill">
-               <property name="font">
-                <font>
-                 <pointsize>9</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(25, 25, 25);</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>BRAK</string>
-                </property>
-               </item>
-              </widget>
-             </item>
             </layout>
            </item>
            <item>
-            <spacer name="verticalSpacer">
+            <spacer name="horizontalSpacer_2">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Horizontal</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>20</width>
-               <height>40</height>
+               <width>40</width>
+               <height>20</height>
               </size>
              </property>
             </spacer>
            </item>
           </layout>
          </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_hill">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>722</width>
+          <height>523</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Skocznia</string>
+        </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_hillContent">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_existingHill">
+               <item>
+                <widget class="QLabel" name="label_existingHill">
+                 <property name="font">
+                  <font>
+                   <family>Quicksand Medium</family>
+                   <pointsize>12</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: black;</string>
+                 </property>
+                 <property name="text">
+                  <string>Wczytaj istniejącą skocznię</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboBox_existingHill">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(36, 36, 36)</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
         </layout>
-       </item>
-      </layout>
-     </widget>
-    </widget>
+       </widget>
+       <widget class="QWidget" name="page_windsGeneratorSettings">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>722</width>
+          <height>523</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Ustawienia generatora wiatru</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_windsGeneratorSettings"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Maximum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>400</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

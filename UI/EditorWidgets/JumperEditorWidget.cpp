@@ -16,6 +16,8 @@ JumperEditorWidget::JumperEditorWidget(Jumper *jumper, CharacteristicsEditor *ch
         this->characteristicsEditor = new CharacteristicsEditor(Characteristic::Jumper);
 
     ui->verticalLayout_characteristicsEditor->insertWidget(0, getCharacteristicsEditor());
+    ui->label_countryFlag->setGeometry(ui->label_countryFlag->x(), ui->label_countryFlag->y(), CountryFlagsManager::getFlagPixmapSize().width(), CountryFlagsManager::getFlagPixmapSize().height());
+    connect(ui->pushButton_submit, &QPushButton::clicked, this, &JumperEditorWidget::when_submittButtonClicked);
 }
 
 JumperEditorWidget::~JumperEditorWidget()
@@ -57,6 +59,13 @@ void JumperEditorWidget::fillJumperInputs()
     characteristicsEditor->setCharacteristics(jumper->getJumperSkills().getCharacteristics());
 }
 
+void JumperEditorWidget::removeSubmitButton()
+{
+    disconnect(ui->pushButton_submit, &QPushButton::clicked, this, &JumperEditorWidget::when_submittButtonClicked);
+    ui->verticalLayout_characteristicsEditor->removeWidget(ui->pushButton_submit);
+    delete ui->pushButton_submit;
+}
+
 Jumper JumperEditorWidget::getJumperFromWidgetInput()
 {
     Jumper jumper;
@@ -94,14 +103,13 @@ void JumperEditorWidget::setCharacteristicsEditor(CharacteristicsEditor *newChar
     characteristicsEditor = newCharacteristicsEditor;
 }
 
-void JumperEditorWidget::on_pushButton_clicked()
-{
-    emit submitted();
-}
-
 void JumperEditorWidget::on_lineEdit_countryCode_textChanged(const QString &arg1)
 {
     if(arg1.length() > 2)
         ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(ui->lineEdit_countryCode->text().toLower())).scaled(CountryFlagsManager::getFlagPixmapSize()));
 }
 
+void JumperEditorWidget::when_submittButtonClicked()
+{
+    emit submitted();
+}

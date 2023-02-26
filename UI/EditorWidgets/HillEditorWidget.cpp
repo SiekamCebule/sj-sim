@@ -29,6 +29,13 @@ HillEditorWidget::HillEditorWidget(CharacteristicsEditor * characteristicsEditor
         if(ui->doubleSpinBox_backWindPoints->isReadOnly() == true)
             ui->doubleSpinBox_backWindPoints->setValue(Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(ui->doubleSpinBox_frontWindPoints->value()));
     });
+
+    connect(ui->pushButton_submit, &QPushButton::clicked, this, &HillEditorWidget::when_submitButtonClicked);
+    connect(ui->doubleSpinBox_KPoint, &QDoubleSpinBox::editingFinished, this, [this](){
+       emit KPointInputChanged(ui->doubleSpinBox_KPoint->value());
+    });
+
+    ui->label_countryFlag->setGeometry(ui->label_countryFlag->x(), ui->label_countryFlag->y(), CountryFlagsManager::getFlagPixmapSize().width(), CountryFlagsManager::getFlagPixmapSize().height());
 }
 
 HillEditorWidget::~HillEditorWidget()
@@ -89,6 +96,13 @@ void HillEditorWidget::fillHillInputs()
     ui->doubleSpinBox_takeoffEffect->setValue(hill->getTakeoffEffect());
     ui->doubleSpinBox_flightEffect->setValue(hill->getFlightEffect());
     characteristicsEditor->setCharacteristics(hill->getCharacteristics());
+}
+
+void HillEditorWidget::removeSubmitButton()
+{
+    disconnect(ui->pushButton_submit, &QPushButton::clicked, this, &HillEditorWidget::when_submitButtonClicked);
+    ui->verticalLayout_characteristicsEditor->removeWidget(ui->pushButton_submit);
+    delete ui->pushButton_submit;
 }
 
 Hill HillEditorWidget::getHillFromWidgetInput() const
@@ -185,15 +199,14 @@ void HillEditorWidget::setHill(Hill *newHill)
     hill = newHill;
 }
 
-void HillEditorWidget::on_pushButton_submit_clicked()
-{
-    emit submitted();
-}
-
-
 void HillEditorWidget::on_lineEdit_countryCode_textChanged(const QString &arg1)
 {
     if(arg1.length() == 3)
         ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(ui->lineEdit_countryCode->text().toLower())).scaled(CountryFlagsManager::getFlagPixmapSize()));
+}
+
+void HillEditorWidget::when_submitButtonClicked()
+{
+    emit submitted();
 }
 

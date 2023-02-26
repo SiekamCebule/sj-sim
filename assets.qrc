@@ -13,7 +13,10 @@
         <file>img/down-arrow.png</file>
         <file>img/up-arrow.png</file>
         <file>img/down.png</file>
-        <file>img/poland.png</file>
-        <file>img/england.png</file>
+        <file>img/horizontal.png</file>
+        <file>img/arrow-up1.png</file>
+        <file>img/arrow-down.png</file>
+        <file>img/back-side.png</file>
+        <file>img/front-side.png</file>
     </qresource>
 </RCC>
