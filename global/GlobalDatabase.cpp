@@ -353,5 +353,3 @@ void GlobalDatabase::setupHillsFlags()
         hill.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())));
     }
 }
-
-

@@ -17,6 +17,8 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->lineEdit_resultsFileName->setAlignment(Qt::AlignHCenter);
+
     setWindowFlags(Qt::Window);
 
     jumperEditor = new JumperEditorWidget;
@@ -78,3 +80,9 @@ void SingleJumpsConfigWindow::on_comboBox_existingHill_currentIndexChanged(int i
     }
     else hillEditor->resetHillInputs();
 }
+
+void SingleJumpsConfigWindow::on_pushButton_submit_clicked()
+{
+    accept();
+}
+

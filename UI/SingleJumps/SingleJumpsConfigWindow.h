@@ -23,6 +23,8 @@ private slots:
     void on_comboBox_existingHill_currentIndexChanged(int index);
     void on_comboBox_existingJumper_currentIndexChanged(int index);
 
+    void on_pushButton_submit_clicked();
+
 private:
     Ui::SingleJumpsConfigWindow *ui;
 

@@ -1,6 +1,7 @@
 #include "WindsGenerator.h"
 
 #include "../../global/MyRandom.h"
+#include "../../utilities/functions.h"
 
 #include <QDebug>
 
@@ -142,4 +143,18 @@ int WindsGenerator::calculateWindsCountByKPoint(double KPoint)
         i += (KPoint - 225) / 35;
         return i;
     }
+}
+
+QPair<double, double> WindsGenerator::getRangeOfWindSector(int sector, double KPoint)
+{
+    int windsCount = WindsGenerator::calculateWindsCountByKPoint(KPoint);
+    double segmentDistance = KPoint / windsCount;
+    if(sector == WindsGenerator::calculateWindsCountByKPoint(KPoint))
+        return QPair<double, double>(roundDoubleToHalf((double)windsCount * segmentDistance), (-1));
+
+    double min = 0, max = 0;
+    min = roundDoubleToHalf((sector - 1) * (segmentDistance));
+    max = roundDoubleToHalf(sector * (segmentDistance));
+
+    return QPair<double, double>(min, max);
 }

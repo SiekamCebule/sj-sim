@@ -25,16 +25,22 @@ WindsGeneratorSettingsEditorWidget::~WindsGeneratorSettingsEditorWidget()
 void WindsGeneratorSettingsEditorWidget::fillSettingsInputs(double KPoint)
 {
     settingsCount = WindsGenerator::calculateWindsCountByKPoint(KPoint);
-    qDebug()<<"Ilosc wiatrow: "<<settingsCount;
 
-    for(int i=0; i<ui->toolBox->count(); i++){
-        ui->toolBox->removeItem(0);
+    int count = ui->toolBox->count();
+    for(int i=0; i<count; i++){
         delete ui->toolBox->widget(0);
     }
 
     for(int i=0; i<settingsCount; i++)
     {
-        ui->toolBox->addItem(new WindsGeneratorSettingsWidgetInputItem, "Sektor wiatru nr " + QString::number(i + 1));
+        QString sectorInfo = tr(" (Od ") + QString::number(WindsGenerator::getRangeOfWindSector(i + 1, KPoint).first) + tr(", do ");
+        if(i + 1 == WindsGenerator::calculateWindsCountByKPoint(KPoint))
+            sectorInfo += tr("końca");
+        else sectorInfo += QString::number(WindsGenerator::getRangeOfWindSector(i + 1, KPoint).second) + "m";
+        sectorInfo += ")";
+
+        ui->toolBox->addItem(new WindsGeneratorSettingsWidgetInputItem, tr("Sektor wiatru nr ") + QString::number(i + 1) + sectorInfo);
+
         dynamic_cast<WindsGeneratorSettingsWidgetInputItem *>(ui->toolBox->widget(i))->removeSubmitButton();
     }
 }

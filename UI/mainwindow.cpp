@@ -48,7 +48,7 @@ void MainWindow::on_pushButton_singleJumps_clicked()
     singleJumpsConfig.setModal(true);
     if(singleJumpsConfig.exec() == QDialog::Accepted)
     {
-
+        qDebug()<<"NASTEPUJE SYMULACJA";
     }
 }
 

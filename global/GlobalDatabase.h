@@ -3,8 +3,10 @@
 
 #include "../simulator/Jumper.h"
 #include "../simulator/Hill.h"
+#include "../simulator/wind-generation/WindGenerationSettings.h"
 
 #include <QVector>
+#include <QStringList>
 
 class GlobalDatabase
 {

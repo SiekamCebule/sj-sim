@@ -5,6 +5,8 @@
 #include "../Wind.h"
 
 #include <QVector>
+#include <QPair>
+#include <QStringList>
 
 class WindsGenerator
 {
@@ -17,6 +19,7 @@ public:
     QVector<Wind> generateWinds();
 
     static int calculateWindsCountByKPoint(double KPoint);
+    static QPair<double, double> getRangeOfWindSector(int sector, double KPoint);
 };
 
 #endif // WINDSGENERATOR_H
