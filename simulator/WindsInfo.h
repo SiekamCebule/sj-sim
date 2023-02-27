@@ -1,5 +1,5 @@
-#ifndef CONDITIONSINFO_H
-#define CONDITIONSINFO_H
+#ifndef WINDSINFO_H
+#define WINDSINFO_H
 
 #include "../utilities/ClassWithID.h"
 #include "Wind.h"
@@ -8,10 +8,10 @@
 #include <QVector>
 
 
-class ConditionsInfo : public ClassWithID
+class WindsInfo : public ClassWithID
 {
 public:
-    ConditionsInfo(int gate = 0, double windSensorsFaulty = 0, const QVector<Wind> & winds =QVector<Wind>());
+    WindsInfo(const QVector<Wind> & winds =QVector<Wind>());
 private:
     QVector<Wind> winds; // łącznie 1 wiatr na 10 metrów.
     QVector<ulong> windsIDs;
@@ -27,13 +27,14 @@ private:
      * 105% punktu K - 10
      */
 
-    int gate;
-
 public:
-    Wind getAveragedWind();
+    enum AverageWindType{
+        Original,
+        Improved
+    };
 
-    int getGate() const;
-    void setGate(int newGate);
+    Wind getAveragedWind(short type);
+
     ulong getWindID(int index) const;
     QVector<Wind> & getWinds();
     void setWinds(const QVector<Wind> &newWinds);
@@ -42,4 +43,4 @@ public:
     void setVectorWindID(int index, ulong newID);
 };
 
-#endif // CONDITIONSINFO_H
+#endif // WINDSINFO_H

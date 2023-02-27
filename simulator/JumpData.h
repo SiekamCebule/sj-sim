@@ -4,7 +4,7 @@
 #include <QVector>
 
 #include "../utilities/ClassWithID.h"
-#include "ConditionsInfo.h"
+#include "WindsInfo.h"
 #include "Landing.h"
 #include "Jumper.h"
 #include "Hill.h"
@@ -19,6 +19,7 @@ public:
     friend class JumpSimulator;
     JumpData(Jumper *jumper = nullptr, Hill *hill = nullptr);
 private:
+    int gate;
     double distance;
     double points;
     double gateCompensation;
@@ -29,11 +30,12 @@ private:
     Landing landing;
     QVector<double> judges;
 
-    ConditionsInfo conditionsInfo;
-
+    WindsInfo windsInfo;
 
     Jumper * jumper;
     Hill * hill;
+
+    JumpSimulator * simulator;
 
 public:
     void reset();
@@ -52,14 +54,20 @@ public:
     void setLanding(const Landing &newLanding);
     QVector<double> getJudges() const;
     void setJudges(const QVector<double> &newJudges);
-    ConditionsInfo getConditionsInfo() const;
-    void setConditionsInfo(const ConditionsInfo &newConditionsInfo);
     double getJudgesPoints() const;
     void setJudgesPoints(double newJudgesPoints);
     Hill *getHill() const;
     void setHill(Hill *newHill);
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
+    WindsInfo getWindsInfo() const;
+    void setWindsInfo(const WindsInfo &newWindsInfo);
+    JumpSimulator *getSimulator() const;
+    void setSimulator(JumpSimulator *newSimulator);
+    int getGate() const;
+    void setGate(int newGate);
 };
+
+QDebug operator<<(QDebug d, const JumpData & jumpData);
 
 #endif // JUMPDATA_H

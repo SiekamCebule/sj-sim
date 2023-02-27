@@ -62,6 +62,7 @@ QStringList Characteristic::characteristicTypesForSpecificParent(short parentTyp
         characteristicTypes.push_back("side-wind-probability");
         characteristicTypes.push_back("front-side-wind-probability");
         characteristicTypes.push_back("front-wind-probability");
+        break;
     }
 
     if(transformToDisplay == true){

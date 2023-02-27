@@ -22,7 +22,7 @@ public:
 
     void removeSubmitButton();
 
-    Jumper getJumperFromWidgetInput();
+    Jumper getJumperFromWidgetInput() const;
 
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);

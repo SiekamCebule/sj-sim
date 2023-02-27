@@ -66,7 +66,7 @@ void JumperEditorWidget::removeSubmitButton()
     delete ui->pushButton_submit;
 }
 
-Jumper JumperEditorWidget::getJumperFromWidgetInput()
+Jumper JumperEditorWidget::getJumperFromWidgetInput() const
 {
     Jumper jumper;
     jumper.setName(ui->lineEdit_name->text());

@@ -4,7 +4,7 @@
 #include <QStringList>
 #include <QStringListModel>
 
-CharacteristicInputDialog::CharacteristicInputDialog(short action, short parentType, QSet<Characteristic> * existingCharacteristics, Characteristic *characteristicToEdit, QWidget *parent) :
+CharacteristicInputDialog::CharacteristicInputDialog(short action, short parentType, const QSet<Characteristic> & existingCharacteristics, Characteristic *characteristicToEdit, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CharacteristicInputDialog),
     action(action),
@@ -24,9 +24,6 @@ CharacteristicInputDialog::CharacteristicInputDialog(short action, short parentT
     default: ui->label_title->setText(tr("<Błąd>")); break;
     }
     setWindowTitle(ui->label_title->text());
-
-    if(getExistingCharacteristics() != nullptr)
-        fillComboBox();
 }
 
 CharacteristicInputDialog::~CharacteristicInputDialog()
@@ -79,16 +76,6 @@ void CharacteristicInputDialog::setParentType(short newParentType)
     parentType = newParentType;
 }
 
-QSet<Characteristic> *CharacteristicInputDialog::getExistingCharacteristics() const
-{
-    return existingCharacteristics;
-}
-
-void CharacteristicInputDialog::setExistingCharacteristics(QSet<Characteristic> *newExistingCharacteristics)
-{
-    existingCharacteristics = newExistingCharacteristics;
-}
-
 QStringList CharacteristicInputDialog::getDirtyCharacteristicNames() const
 {
     return dirtyCharacteristicNames;
@@ -99,14 +86,26 @@ void CharacteristicInputDialog::setDirtyCharacteristicNames(const QStringList &n
     dirtyCharacteristicNames = newDirtyCharacteristicNames;
 }
 
+QSet<Characteristic> CharacteristicInputDialog::getExistingCharacteristics() const
+{
+    return existingCharacteristics;
+}
+
+void CharacteristicInputDialog::setExistingCharacteristics(const QSet<Characteristic> &newExistingCharacteristics)
+{
+    existingCharacteristics = newExistingCharacteristics;
+}
+
 void CharacteristicInputDialog::fillComboBox()
 {
+    ui->comboBox_type->clear();
     QStringListModel * model = new QStringListModel;
 
     QStringList characteristics = Characteristic::characteristicTypesForSpecificParent(parentType, false);
     for(auto & characteristic : characteristics)
     {
-        if(existingCharacteristics->contains(Characteristic(characteristic)))
+        //qDebug()<<"ITERACJA --> "<<characteristic<<",      "<<existingCharacteristics.contains(Characteristic(characteristic));
+        if(existingCharacteristics.contains(Characteristic(characteristic)))
         {
             int index = 0;
             int it;

@@ -26,7 +26,6 @@ SOURCES += \
     main.cpp \
     UI/mainwindow.cpp \
     simulator/Characteristic.cpp \
-    simulator/ConditionsInfo.cpp \
     simulator/Hill.cpp \
     simulator/JumpData.cpp \
     simulator/JumpMistake.cpp \
@@ -35,6 +34,7 @@ SOURCES += \
     simulator/JumperSkills.cpp \
     simulator/Landing.cpp \
     simulator/Wind.cpp \
+    simulator/WindsInfo.cpp \
     simulator/wind-generation/WindGenerationSettings.cpp \
     simulator/wind-generation/WindsGenerator.cpp \
     single-jumps/SingleJumpsManager.cpp \
@@ -62,7 +62,6 @@ HEADERS += \
     global/GlobalDatabase.h \
     global/GlobalTranslators.h \
     simulator/Characteristic.h \
-    simulator/ConditionsInfo.h \
     simulator/Hill.h \
     simulator/JumpData.h \
     simulator/JumpMistake.h \
@@ -71,6 +70,7 @@ HEADERS += \
     simulator/JumperSkills.h \
     simulator/Landing.h \
     simulator/Wind.h \
+    simulator/WindsInfo.h \
     simulator/wind-generation/WindGenerationSettings.h \
     simulator/wind-generation/WindsGenerator.h \
     single-jumps/SingleJumpsManager.h \

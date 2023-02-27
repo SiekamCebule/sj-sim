@@ -19,6 +19,11 @@ public:
 
     void removeSubmitButton();
 
+    double getBaseWindStrengthFromInput();
+    double getWindStrengthChangeFromInput();
+    short getBaseWindDirectionFromInput();
+    double getWindDirectionChangeFromInput();
+
 signals:
     void submitted();
 

@@ -45,6 +45,22 @@ void WindsGeneratorSettingsEditorWidget::fillSettingsInputs(double KPoint)
     }
 }
 
+QVector<WindGenerationSettings> WindsGeneratorSettingsEditorWidget::getWindsGenerationSettingsFromInputs()
+{
+    QVector<WindGenerationSettings> vector;
+
+    for(int i=0; i < settingsCount; i++){
+        WindsGeneratorSettingsWidgetInputItem * item = dynamic_cast<WindsGeneratorSettingsWidgetInputItem *>(ui->toolBox->widget(i));
+        WindGenerationSettings settings;
+        settings.setBaseWindStrength(item->getBaseWindStrengthFromInput());
+        settings.setWindStrengthInstability(item->getWindStrengthChangeFromInput());
+        settings.setBaseDirection(item->getBaseWindDirectionFromInput());
+        settings.setWindDirectionInstability(item->getWindDirectionChangeFromInput());
+        vector.push_back(settings);
+    }
+    return vector;
+}
+
 QVector<WindGenerationSettings> *WindsGeneratorSettingsEditorWidget::getWindGenerationSettings() const
 {
     return windGenerationSettings;

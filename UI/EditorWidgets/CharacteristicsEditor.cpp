@@ -44,7 +44,7 @@ void CharacteristicsEditor::on_pushButton_add_clicked()
     CharacteristicInputDialog dialog(CharacteristicInputDialog::Add);
     dialog.setParentType(parentType);
     dialog.setModal(true);
-    dialog.setExistingCharacteristics(const_cast<QSet<Characteristic> *>(&characteristics));
+    dialog.setExistingCharacteristics(characteristics);
     dialog.fillComboBox();
     if(dialog.exec() == QDialog::Accepted)
     {
@@ -76,16 +76,17 @@ void CharacteristicsEditor::setParentType(short newParentType)
 {
     parentType = newParentType;
 }
-
+// po kazdej probie edycji, usuwa sie jedno z existing count
 void CharacteristicsEditor::on_pushButton_edit_clicked()
 {
     if(ui->listView_characteristics->selectionModel()->selectedRows().size() > 0){
-        int index = ui->listView_characteristics->selectionModel()->selectedRows().at(0).row();
+        int index = ui->listView_characteristics->selectionModel()->selectedRows().first().row();
         CharacteristicInputDialog dialog(CharacteristicInputDialog::Edit);
         dialog.setParentType(parentType);
         dialog.setModal(true);
-        dialog.setExistingCharacteristics(const_cast<QSet<Characteristic> *>(&characteristics));
-        dialog.getExistingCharacteristics()->remove(Characteristic(dirtyStrings.at(index)));
+        dialog.setExistingCharacteristics(characteristics);
+        qDebug()<<Characteristic(dirtyStrings.at(index)).getType();
+        dialog.getExistingCharacteristics().remove(Characteristic(dirtyStrings.at(index)));
         dialog.fillComboBox();
         if(dialog.exec() == QDialog::Accepted)
         {

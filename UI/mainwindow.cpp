@@ -3,11 +3,12 @@
 
 #include "../global/IDGenerator.h"
 #include "../global/MyRandom.h"
+
 #include "../utilities/functions.h"
 
 #include "../simulator/Jumper.h"
 #include "../simulator/JumperSkills.h"
-#include "../simulator/ConditionsInfo.h"
+#include "../simulator/WindsInfo.h"
 #include "../simulator/JumpSimulator.h"
 #include "../simulator/Characteristic.h"
 #include "../simulator/Hill.h"
@@ -20,6 +21,12 @@
 #include "UI/AppSettings/AppSettingsWindow.h"
 #include "UI/DatabaseEditor/DatabaseEditorWindow.h"
 #include "UI/SingleJumps/SingleJumpsConfigWindow.h"
+#include "UI/EditorWidgets/JumperEditorWidget.h"
+#include "UI/EditorWidgets/HillEditorWidget.h"
+#include "UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
+
+#include "single-jumps/SingleJumpsManager.h"
+#include "single-jumps/SingleJumpsSettings.h"
 
 #include <QDebug>
 #include <QCloseEvent>
@@ -48,7 +55,19 @@ void MainWindow::on_pushButton_singleJumps_clicked()
     singleJumpsConfig.setModal(true);
     if(singleJumpsConfig.exec() == QDialog::Accepted)
     {
-        qDebug()<<"NASTEPUJE SYMULACJA";
+        SingleJumpsManager manager;
+        manager.setJumpsCount(singleJumpsConfig.getJumpsCountFromInput());
+        manager.setChangeableWind(singleJumpsConfig.getChangeableWindFromInput());
+        manager.setSaveResultsToFile(singleJumpsConfig.getSaveResultsToFileFromInput());
+        if(manager.getSaveResultsToFile() == true)
+            manager.setResultsFileName(singleJumpsConfig.getResultsFileName());
+        manager.setGate(singleJumpsConfig.getGateFromInput());
+        manager.setJumper(singleJumpsConfig.getJumperEditor()->getJumperFromWidgetInput());
+        manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
+        manager.setWindsGeneratorSettings(singleJumpsConfig.getWindsGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
+        manager.setWindAverageCalculatingType(singleJumpsConfig.getWindAverageCalculatingType());
+
+        manager.simulate();
     }
 }
 
@@ -90,4 +109,3 @@ void MainWindow::setParentApplication(QApplication *newParentApplication)
 {
     parentApplication = newParentApplication;
 }
-

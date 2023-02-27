@@ -6,7 +6,7 @@
 
 #include "Jumper.h"
 #include "JumpData.h"
-#include "ConditionsInfo.h"
+#include "WindsInfo.h"
 #include "Hill.h"
 #include "Landing.h"
 
@@ -17,12 +17,13 @@ class Competition;
 class JumpSimulator
 {
 public:
-    JumpSimulator(Jumper *jumper = nullptr, const ConditionsInfo & conditionsInfo = ConditionsInfo(), Hill *hill = nullptr);
+    JumpSimulator(Jumper *jumper = nullptr, const WindsInfo & conditionsInfo = WindsInfo(), Hill *hill = nullptr);
 private:
     Jumper * jumper;
     JumperSkills * jumperSkills; //automatycznie od jumper
-    ConditionsInfo conditionsInfo;
+    WindsInfo windsInfo;
     Hill * hill;
+    int * gate;
 
 public:
     //skok
@@ -30,6 +31,8 @@ public:
     void resetTemporaryParameters();
 
     bool jumperCharacteristicsContains(const Characteristic & characteristics);
+
+    void updateJumperSkills();
 
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
@@ -40,17 +43,16 @@ public:
     double getFlightRating() const;
     void setFlightRating(double newFlightRating);
     JumperSkills *getJumperSkills() const;
-
-    void updateJumperSkills();
-
     QVector<double> getJudges() const;
     void setJudges(const QVector<double> &newJudges);
-
     JumpData getJumpData();
     void setJumpData(const JumpData &newJumpData);
-
-    ConditionsInfo  & getConditionsInfo();
-    void setConditionsInfo(const ConditionsInfo &newConditionsInfo);
+    int *getGate() const;
+    void setGate(int *newGate);
+    WindsInfo getWindsInfo() const;
+    void setWindsInfo(const WindsInfo &newWindsInfo);
+    short getWindAverageCalculatingType() const;
+    void setWindAverageCalculatingType(short newWindAverageCalculatingType);
 
 private:
     void generateTakeoffRating();
@@ -72,6 +74,7 @@ private:
     JumpData jumpData;
     void setupJumpData();
 
+    short windAverageCalculatingType;
 };
 
 #endif // JUMPSIMULATOR_H

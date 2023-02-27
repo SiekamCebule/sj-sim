@@ -1,17 +1,51 @@
 #include "JumpData.h"
+#include "JumpSimulator.h"
+
+#include <QDebug>
 
 JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill)
 {}
 
+int JumpData::getGate() const
+{
+    return gate;
+}
+
+void JumpData::setGate(int newGate)
+{
+    gate = newGate;
+}
+
+JumpSimulator *JumpData::getSimulator() const
+{
+    return simulator;
+}
+
+void JumpData::setSimulator(JumpSimulator *newSimulator)
+{
+    simulator = newSimulator;
+}
+
+WindsInfo JumpData::getWindsInfo() const
+{
+    return windsInfo;
+}
+
+void JumpData::setWindsInfo(const WindsInfo &newWindsInfo)
+{
+    windsInfo = newWindsInfo;
+}
+
 void JumpData::reset()
 {
-    distance = points = gateCompensation = windCompensation = totalCompensation = 0;
+    distance = points = gateCompensation = windCompensation = totalCompensation = gate = 0;
     landing = Landing();
     judges.clear();
-    conditionsInfo = ConditionsInfo();
+    windsInfo = WindsInfo();
     jumper = nullptr;
     hill = nullptr;
+    simulator = nullptr;
 }
 
 Jumper *JumpData::getJumper() const
@@ -42,16 +76,6 @@ double JumpData::getJudgesPoints() const
 void JumpData::setJudgesPoints(double newJudgesPoints)
 {
     judgesPoints = newJudgesPoints;
-}
-
-ConditionsInfo JumpData::getConditionsInfo() const
-{
-    return conditionsInfo;
-}
-
-void JumpData::setConditionsInfo(const ConditionsInfo &newConditionsInfo)
-{
-    conditionsInfo = newConditionsInfo;
 }
 
 QVector<double> JumpData::getJudges() const
@@ -122,4 +146,13 @@ double JumpData::getDistance() const
 void JumpData::setDistance(double newDistance)
 {
     distance = newDistance;
+}
+
+QDebug operator<<(QDebug d, const JumpData & jumpData)
+{
+    Jumper * jumper = jumpData.getJumper();
+    d <<jumper->getNameAndSurname()<<" ("<<jumper->getCountryCode()<<")";
+    d<<jumpData.getDistance()<<"m ("<<jumpData.getPoints()<<" pts) --> Wiatr: "<<jumpData.getWindsInfo().getAveragedWind(jumpData.getSimulator()->getWindAverageCalculatingType()).getValueToAveragedWind()<<"m/s, ("<<jumpData.getWindCompensation()<<" pts), Belka "<<jumpData.getGate()<<" ("<<jumpData.getGateCompensation()<<"),   |"<<jumpData.getJudges().at(0)<<"|"<<jumpData.getJudges().at(1)<<"|"<<jumpData.getJudges().at(2)<<"|"<<jumpData.getJudges().at(3)<<"|"<<jumpData.getJudges().at(4)<<"|"<<",   Lądowanie: "<<jumpData.getLanding().getTextLandingType();
+
+    return d;
 }

@@ -54,6 +54,8 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     ui->verticalLayout_windsGeneratorSettings->addWidget(windsGeneratorSettingsEditor);
     connect(hillEditor, &HillEditorWidget::KPointInputChanged, windsGeneratorSettingsEditor, &WindsGeneratorSettingsEditorWidget::fillSettingsInputs);
 
+    ui->lineEdit_resultsFileName->setEnabled(false);
+
     ui->toolBox->setCurrentIndex(0);
 }
 
@@ -84,5 +86,58 @@ void SingleJumpsConfigWindow::on_comboBox_existingHill_currentIndexChanged(int i
 void SingleJumpsConfigWindow::on_pushButton_submit_clicked()
 {
     accept();
+}
+
+WindsGeneratorSettingsEditorWidget *SingleJumpsConfigWindow::getWindsGeneratorSettingsEditor() const
+{
+    return windsGeneratorSettingsEditor;
+}
+
+int SingleJumpsConfigWindow::getJumpsCountFromInput()
+{
+    return ui->spinBox_jumpsCount->value();
+}
+
+bool SingleJumpsConfigWindow::getChangeableWindFromInput()
+{
+    return ui->checkBox_changeableWind->isChecked();
+}
+
+bool SingleJumpsConfigWindow::getSaveResultsToFileFromInput()
+{
+    return ui->checkBox_saveResultsFile->isChecked();
+}
+
+QString SingleJumpsConfigWindow::getResultsFileName()
+{
+    return ui->lineEdit_resultsFileName->text();
+}
+
+short SingleJumpsConfigWindow::getWindAverageCalculatingType()
+{
+    return ui->comboBox_windAverageCalculatingType->currentIndex();
+}
+
+int SingleJumpsConfigWindow::getGateFromInput()
+{
+    return ui->spinBox_gate->value();
+}
+
+HillEditorWidget *SingleJumpsConfigWindow::getHillEditor() const
+{
+    return hillEditor;
+}
+
+JumperEditorWidget *SingleJumpsConfigWindow::getJumperEditor() const
+{
+    return jumperEditor;
+}
+
+
+void SingleJumpsConfigWindow::on_checkBox_saveResultsFile_stateChanged(int arg1)
+{
+    if(arg1 == 2)
+        ui->lineEdit_resultsFileName->setEnabled(true);
+    else ui->lineEdit_resultsFileName->setEnabled(false);
 }
 

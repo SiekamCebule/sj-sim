@@ -137,7 +137,7 @@ bool GlobalDatabase::loadJumpers()
         globalJumpers.push_back(jumper);
     }
 
-    for(const auto & jp : globalJumpers)
+    /*for(const auto & jp : globalJumpers)
     {
         qDebug()<<jp.getNameAndSurname()<<" ("<<jp.getCountryCode()<<")";
         JumperSkills * jps = jp.getJumperSkillsPointer();
@@ -145,7 +145,7 @@ bool GlobalDatabase::loadJumpers()
         for(const auto & ch : jps->getCharacteristics())
             qDebug()<<ch.getType()<<", "<<ch.getLevel();
         qDebug()<<"\n\n";
-    }
+    }*/
     file.close();
     setupJumpersFlags();
     return true;

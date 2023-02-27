@@ -21,6 +21,8 @@ public:
 
     void fillSettingsInputs(double KPoint = (-1));
 
+    QVector<WindGenerationSettings> getWindsGenerationSettingsFromInputs();
+
     QVector<WindGenerationSettings> *getWindGenerationSettings() const;
     void setWindGenerationSettings(QVector<WindGenerationSettings> *newWindGenerationSettings);
     int getSettingsCount() const;

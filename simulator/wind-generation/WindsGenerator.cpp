@@ -5,16 +5,31 @@
 
 #include <QDebug>
 
-WindsGenerator::WindsGenerator(int windsCount, const QVector<WindGenerationSettings> &generationSettings) : windsCount(windsCount),
+WindsGenerator::WindsGenerator(const QVector<WindGenerationSettings> &generationSettings) :
     generationSettings(generationSettings)
 {}
+
+int WindsGenerator::getWindsCount() const
+{
+    return generationSettings.count();
+}
+
+QVector<WindGenerationSettings> WindsGenerator::getGenerationSettings() const
+{
+    return generationSettings;
+}
+
+void WindsGenerator::setGenerationSettings(const QVector<WindGenerationSettings> &newGenerationSettings)
+{
+    generationSettings = newGenerationSettings;
+}
 
 
 QVector<Wind> WindsGenerator::generateWinds()
 {
     QVector<Wind> winds;
 
-    for(int i=0; i<windsCount; i++)
+    for(int i=0; i<getWindsCount(); i++)
     {
         Wind wind;
         WindGenerationSettings * settings = &generationSettings[i];

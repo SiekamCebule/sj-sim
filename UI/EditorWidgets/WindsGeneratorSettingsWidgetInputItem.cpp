@@ -31,6 +31,26 @@ void WindsGeneratorSettingsWidgetInputItem::removeSubmitButton()
     delete ui->pushButton_submit;
 }
 
+double WindsGeneratorSettingsWidgetInputItem::getBaseWindStrengthFromInput()
+{
+    return ui->doubleSpinBox_baseWindStrength->value();
+}
+
+double WindsGeneratorSettingsWidgetInputItem::getWindStrengthChangeFromInput()
+{
+    return ui->doubleSpinBox_windStrengthChange->value();
+}
+
+short WindsGeneratorSettingsWidgetInputItem::getBaseWindDirectionFromInput()
+{
+    return ui->comboBox_baseWindDirection->currentIndex();
+}
+
+double WindsGeneratorSettingsWidgetInputItem::getWindDirectionChangeFromInput()
+{
+    return ui->doubleSpinBox_windDirectionChange->value();
+}
+
 void WindsGeneratorSettingsWidgetInputItem::when_submitButtonClicked()
 {
     emit submitted();
