@@ -18,6 +18,8 @@ void SingleJumpsManager::simulate()
     jumpSimulator.setGate(&gate);
     jumpSimulator.setWindAverageCalculatingType(getWindAverageCalculatingType());
 
+    double min = 0, max = 1000, avg = 0;
+
     QVector<Wind> winds;
     if(changeableWind == false)
     {
@@ -42,7 +44,19 @@ void SingleJumpsManager::simulate()
         jumpSimulator.simulateJump();
         jumps.push_back(jumpSimulator.getJumpData());
         qDebug()<<jumpSimulator.getJumpData();
+        double distance = jumpSimulator.getJumpData().getDistance();
+        if(min < distance)
+            min = distance;
+        if(max > distance)
+            max = distance;
+
+        avg += distance;
     }
+    avg /= jumpsCount;
+    qDebug()<<"\n\nROZNICA: "<<max - min<<"m";
+    qDebug()<<"NAJDALSZY: "<<max<<"m";
+    qDebug()<<"NAJKRÓTSZY: "<<min<<"m";
+    qDebug()<<"ŚREDNIA DŁUGOŚĆ SKOKU: "<<avg<<"m";
 }
 
 Jumper SingleJumpsManager::getJumper() const

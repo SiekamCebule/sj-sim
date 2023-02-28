@@ -87,12 +87,12 @@ void JumpSimulator::generateTakeoffRating()
     else
         perfectLevel += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
     //qDebug()<<"takeoff-height BEST LEVEL: "<<perfectLevel;
-    takeoffRating -= std::abs(perfectLevel - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 0.9;
+    takeoffRating -= std::abs(perfectLevel - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 0.85;
 
+    double takeoffHeightLevel = jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height");
     double random = 0;
-    random = -(MyRandom::reducingChancesRandom(0.1, 60, 0.1, 1.05, 1.02, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
-    random *= (1) - (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") * 0.1);
-    random *= 1 + (0.15 * hill->getLevelOfCharacteristic("takeoff-randomness-effect"));
+    random = -(MyRandom::reducingChancesRandom(-5 + (takeoffHeightLevel * 3.2), 80, 0.5, 1, 1.1075 + (takeoffHeightLevel / 105), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
+    random *= 1 + (0.14 * hill->getLevelOfCharacteristic("takeoff-randomness-effect"));
     //qDebug()<<"Takeoff Random: "<<random;
     takeoffRating += random;
 
@@ -126,12 +126,12 @@ void JumpSimulator::generateFlightRating()
     else
         perfectLevel += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
         //qDebug()<<"flight-height BEST LEVEL: "<<perfectLevel;
-    flightRating -= std::abs(perfectLevel - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 2.2);
+    flightRating -= std::abs(perfectLevel - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 2.25);
 
+    double flightHeightLevel = jumper->getJumperSkills().getLevelOfCharacteristic("flight-height");
     double random = 0;
-    random = -(MyRandom::reducingChancesRandom(0.1, 60, 0.10, 1.15, 1.02, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
-    random *= (1) - (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 0.033);
-    random *= 1 + (0.15 * hill->getLevelOfCharacteristic("flight-randomness-effect"));
+    random = -(MyRandom::reducingChancesRandom(-5 + (flightHeightLevel * 1.06), 80, 0.5, 1, 1.1075 + (flightHeightLevel / 315), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
+    random *= 1 + (0.14 * hill->getLevelOfCharacteristic("flight-randomness-effect"));
     //qDebug()<<"Flight Random: "<<random;
     flightRating += random;
 

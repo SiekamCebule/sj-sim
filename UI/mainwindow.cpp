@@ -38,6 +38,23 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+   /* double min = 80, max = 0, avg = 0;
+    for(int i=0; i<200; i++)
+    {
+        //double random = MyRandom::reducingChancesRandom(-5, 80, 0.5, 1, 1.1075, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);//min: -3, max: 30.5, avg: 9.02
+       // double random = MyRandom::reducingChancesRandom(-16.5, 80, 0.5, 1, 1.0625, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger); //min: -8.5, max: 50, avg: 10.75
+    //double random = MyRandom::reducingChancesRandom(4, 80, 0.5, 1, 1.28, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger); //min 4, max: 20.5, avg: 8.16
+        if(random < min)
+            min = random;
+        if(random > max)
+            max = random;
+
+        avg += random;
+    }
+    avg /= 200;
+    qDebug()<<"Najmniejszy: "<<min;
+    qDebug()<<"Największy: "<<max;
+    qDebug()<<"Średnio: "<<avg;*/
     ui->setupUi(this);
 
     GlobalDatabase::get()->loadFromJson();

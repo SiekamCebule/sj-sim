@@ -56,7 +56,6 @@ bool GlobalAppSettings::loadFromJson()
 
     QJsonObject object = document.object();
     setLanguageID(object.value("language-id").toInt());
-    qDebug()<<getLanguageID();
     file.close();
 }
 

@@ -6,8 +6,6 @@
 Characteristic::Characteristic(double level, const QString &type) : level(level),
     type(type)
 {
-    if(level < -10) level = -10;
-    if(level > 10) level = 10;
 }
 
 Characteristic::Characteristic(const QString &type) :

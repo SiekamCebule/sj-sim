@@ -104,7 +104,7 @@ void CharacteristicInputDialog::fillComboBox()
     QStringList characteristics = Characteristic::characteristicTypesForSpecificParent(parentType, false);
     for(auto & characteristic : characteristics)
     {
-        //qDebug()<<"ITERACJA --> "<<characteristic<<",      "<<existingCharacteristics.contains(Characteristic(characteristic));
+        qDebug()<<"ITERACJA --> "<<characteristic<<",      "<<existingCharacteristics.contains(Characteristic(characteristic));
         if(existingCharacteristics.contains(Characteristic(characteristic)))
         {
             int index = 0;
