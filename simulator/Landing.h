@@ -24,6 +24,9 @@ public:
     void setType(short newType);
     double getImbalance() const;
     void setImbalance(double newImbalance);
+
+    static QString getShortLandingTypeTextInfo(short type);
+    static QString getStyleSheetForLandingTypeTextInfo(short type);
 };
 
 #endif // LANDING_H

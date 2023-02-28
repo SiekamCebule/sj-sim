@@ -420,6 +420,7 @@ void JumpSimulator::setupJumpData()
     jumpData.hill = this->getHill();
     jumpData.simulator = this;
     jumpData.windsInfo = windsInfo;
+    jumpData.averagedWind = windsInfo.getAveragedWind(windAverageCalculatingType).getValueToAveragedWind();
     jumpData.setGate(*getGate());
 }
 

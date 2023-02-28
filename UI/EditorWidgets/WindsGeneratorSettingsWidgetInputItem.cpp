@@ -10,11 +10,11 @@ WindsGeneratorSettingsWidgetInputItem::WindsGeneratorSettingsWidgetInputItem(QWi
     characteristicsEditor = new CharacteristicsEditor(Characteristic::ParentType::WindsGeneratorSettings);
     ui->verticalLayout_characteristicsEditor->insertWidget(0, characteristicsEditor);
 
-    ui->comboBox_baseWindDirection->setItemIcon(0, QIcon("://img/arrow-up1"));
-    ui->comboBox_baseWindDirection->setItemIcon(1, QIcon("://img/front-side"));
+    ui->comboBox_baseWindDirection->setItemIcon(0, QIcon("://img/arrow-down.png"));
+    ui->comboBox_baseWindDirection->setItemIcon(1, QIcon("://img/back-side.png"));
     ui->comboBox_baseWindDirection->setItemIcon(2, QIcon("://img/horizontal.png"));
-    ui->comboBox_baseWindDirection->setItemIcon(3, QIcon("://img/back-side.png"));
-    ui->comboBox_baseWindDirection->setItemIcon(4, QIcon("://img/arrow-down.png"));
+    ui->comboBox_baseWindDirection->setItemIcon(3, QIcon("://img/front-side.png"));
+    ui->comboBox_baseWindDirection->setItemIcon(4, QIcon("://img/arrow-up1.png"));
 
     disconnect(ui->pushButton_submit, &QPushButton::clicked, this, &WindsGeneratorSettingsWidgetInputItem::when_submitButtonClicked);
 }

@@ -7,6 +7,16 @@ JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill)
 {}
 
+double JumpData::getAveragedWind() const
+{
+    return averagedWind;
+}
+
+void JumpData::setAveragedWind(double newAveragedWind)
+{
+    averagedWind = newAveragedWind;
+}
+
 int JumpData::getGate() const
 {
     return gate;
@@ -43,6 +53,7 @@ void JumpData::reset()
     landing = Landing();
     judges.clear();
     windsInfo = WindsInfo();
+    averagedWind = 0;
     jumper = nullptr;
     hill = nullptr;
     simulator = nullptr;

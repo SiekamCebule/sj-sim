@@ -101,12 +101,9 @@ void CharacteristicInputDialog::fillComboBox()
     ui->comboBox_type->clear();
     QStringListModel * model = new QStringListModel;
 
-    QVector<int> indexes;
     QStringList characteristics = Characteristic::characteristicTypesForSpecificParent(parentType, false);
     for(auto & characteristic : characteristics)
     {
-        //qDebug()<<"THE LAST ONE: "<<characteristics.last();
-        //qDebug()<<"ITERACJA --> "<<characteristic<<",      "<<existingCharacteristics.contains(Characteristic(characteristic));
         if(existingCharacteristics.contains(Characteristic(characteristic)))
         {
             int index = 0;
@@ -116,7 +113,6 @@ void CharacteristicInputDialog::fillComboBox()
                 if(characteristics.at(it) == characteristic)
                     index = it;
             }
-            indexes.push_back(index);
             characteristics.remove(index);
         }
     }

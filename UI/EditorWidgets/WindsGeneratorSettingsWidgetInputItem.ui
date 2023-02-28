@@ -107,17 +107,7 @@ background: rgb(245, 245, 245);</string>
        </property>
        <item>
         <property name="text">
-         <string>Przedni</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Przednio-boczny</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Boczny</string>
+         <string>Tylni</string>
         </property>
        </item>
        <item>
@@ -127,7 +117,17 @@ background: rgb(245, 245, 245);</string>
        </item>
        <item>
         <property name="text">
-         <string>Tylni</string>
+         <string>Boczny</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Przednio-boczny</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Przedni</string>
         </property>
        </item>
       </widget>

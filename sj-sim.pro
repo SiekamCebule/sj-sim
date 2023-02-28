@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
+    UI/SingleJumps/SingleJumpMiniResultWidget.cpp \
     UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     UI/AppSettings/AppSettingsWindow.cpp \
     UI/DatabaseEditor/DatabaseEditorWindow.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
     UI/EditorWidgets/Dialogs/CharacteristicInputDialog.cpp \
     UI/EditorWidgets/HillEditorWidget.cpp \
     UI/EditorWidgets/JumperEditorWidget.cpp \
+    UI/SingleJumps/SingleJumpsResultsWindow.cpp \
     global/CountryFlagsManager.cpp \
     global/GlobalAppSettings.cpp \
     global/GlobalDatabase.cpp \
@@ -48,6 +50,7 @@ SOURCES += \
 HEADERS += \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
+    UI/SingleJumps/SingleJumpMiniResultWidget.h \
     UI/SingleJumps/SingleJumpsConfigWindow.h \
     UI/AppSettings/AppSettingsWindow.h \
     UI/DatabaseEditor/DatabaseEditorWindow.h \
@@ -56,6 +59,7 @@ HEADERS += \
     UI/EditorWidgets/Dialogs/CharacteristicInputDialog.h \
     UI/EditorWidgets/HillEditorWidget.h \
     UI/EditorWidgets/JumperEditorWidget.h \
+    UI/SingleJumps/SingleJumpsResultsWindow.h \
     UI/mainwindow.h \
     global/CountryFlagsManager.h \
     global/GlobalAppSettings.h \
@@ -84,6 +88,7 @@ HEADERS += \
 FORMS += \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui \
+    UI/SingleJumps/SingleJumpMiniResultWidget.ui \
     UI/SingleJumps/SingleJumpsConfigWindow.ui \
     UI/AppSettings/AppSettingsWindow.ui \
     UI/DatabaseEditor/DatabaseEditorWindow.ui \
@@ -92,6 +97,7 @@ FORMS += \
     UI/EditorWidgets/Dialogs/CharacteristicInputDialog.ui \
     UI/EditorWidgets/HillEditorWidget.ui \
     UI/EditorWidgets/JumperEditorWidget.ui \
+    UI/SingleJumps/SingleJumpsResultsWindow.ui \
     UI/mainwindow.ui
 
 TRANSLATIONS += \

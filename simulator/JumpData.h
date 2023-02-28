@@ -31,6 +31,7 @@ private:
     QVector<double> judges;
 
     WindsInfo windsInfo;
+    double averagedWind;
 
     Jumper * jumper;
     Hill * hill;
@@ -66,6 +67,8 @@ public:
     void setSimulator(JumpSimulator *newSimulator);
     int getGate() const;
     void setGate(int newGate);
+    double getAveragedWind() const;
+    void setAveragedWind(double newAveragedWind);
 };
 
 QDebug operator<<(QDebug d, const JumpData & jumpData);

@@ -21,6 +21,7 @@
 #include "UI/AppSettings/AppSettingsWindow.h"
 #include "UI/DatabaseEditor/DatabaseEditorWindow.h"
 #include "UI/SingleJumps/SingleJumpsConfigWindow.h"
+#include "UI/SingleJumps/SingleJumpsResultsWindow.h"
 #include "UI/EditorWidgets/JumperEditorWidget.h"
 #include "UI/EditorWidgets/HillEditorWidget.h"
 #include "UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
@@ -83,8 +84,15 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
         manager.setWindsGeneratorSettings(singleJumpsConfig.getWindsGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
         manager.setWindAverageCalculatingType(singleJumpsConfig.getWindAverageCalculatingType());
-
         manager.simulate();
+
+        SingleJumpsResultsWindow resultsWindow;
+        resultsWindow.setManager(&manager);
+        resultsWindow.fillMiniJumpsResultsLayout();
+        if(resultsWindow.exec() == QDialog::Accepted)
+        {
+            qDebug()<<"accepted";
+        }
     }
 }
 
