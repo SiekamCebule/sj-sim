@@ -37,7 +37,7 @@ public:
     void setParentType(short newParentType);
     QStringList getDirtyCharacteristicNames() const;
     void setDirtyCharacteristicNames(const QStringList &newDirtyCharacteristicNames);
-    QSet<Characteristic> getExistingCharacteristics() const;
+    QSet<Characteristic> &getExistingCharacteristics();
     void setExistingCharacteristics(const QSet<Characteristic> &newExistingCharacteristics);
 
 private:

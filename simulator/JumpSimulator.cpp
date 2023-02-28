@@ -102,16 +102,6 @@ void JumpSimulator::generateTakeoffRating()
     //qDebug()<<"Ocena wyjścia z progu: "<<takeoffRating;
 }
 
-//wysokie wyjscie z progu: troche bonusy dla mniejszych skoczni, mniejsza szansa na zepsucie wybicia ale przy slabszym typowym wybiciu
-//niskie wyjscie z progu: troche bonusy dla wiekszych skoczni, wieksza szansa na zepsucie wybicia ale przy lepszym "bardzo dobrym" wybiciu
-
-// 1. zwykly random
-// 2. mnozymy tego randoma
-// 3. dodajemy bonus w zaleznosci od perfectLevel
-
-//niski lot:
-//wysoki lot:
-
 void JumpSimulator::generateFlightRating()
 {
     double ratingMultiplier = 1.015 + 0.12 * hill->getLevelOfCharacteristic("flight-technique-effect");

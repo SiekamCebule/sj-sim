@@ -85,7 +85,6 @@ void CharacteristicsEditor::on_pushButton_edit_clicked()
         dialog.setParentType(parentType);
         dialog.setModal(true);
         dialog.setExistingCharacteristics(characteristics);
-        qDebug()<<Characteristic(dirtyStrings.at(index)).getType();
         dialog.getExistingCharacteristics().remove(Characteristic(dirtyStrings.at(index)));
         dialog.fillComboBox();
         if(dialog.exec() == QDialog::Accepted)
