@@ -4,3 +4,4 @@
 #endif // FUNCTIONS_H
 double roundDoubleToHalf(double number);
 double roundDoubleToOnePlace(double number);
+double roundDoubleToTwoPlaces(double number);

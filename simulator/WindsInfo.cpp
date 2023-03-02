@@ -1,5 +1,7 @@
 #include "WindsInfo.h"
 
+#include "../utilities/functions.h"
+
 #include <QRandomGenerator>
 #include <QDebug>
 #include <functional>
@@ -35,6 +37,7 @@ Wind WindsInfo::getAveragedWind(short type)
         i++;
     }
     windAvg /= 100;
+    windAvg = roundDoubleToTwoPlaces(windAvg);
 
     return Wind(windAvg);
 }

@@ -10,3 +10,8 @@ double roundDoubleToOnePlace(double number)
 {
     return static_cast<float>(static_cast<int>(number * 10.)) / 10.;
 }
+
+double roundDoubleToTwoPlaces(double number)
+{
+    return std::ceil(number * 100.0) / 100.0;
+}
