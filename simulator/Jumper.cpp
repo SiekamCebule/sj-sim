@@ -2,6 +2,7 @@
 #include "../global/CountryFlagsManager.h"
 
 #include <QObject>
+#include <QDebug>
 
 Jumper::Jumper(const QString &name, const QString &surname, const QString &countryCode, const JumperSkills &skills) : name(name),
     surname(surname),
@@ -10,6 +11,10 @@ Jumper::Jumper(const QString &name, const QString &surname, const QString &count
 {
     if(countryCode.length() == 3)
         updateCountryFlagPixmap();
+}
+
+Jumper::~Jumper()
+{
 }
 
 QPixmap Jumper::getFlagPixmap() const

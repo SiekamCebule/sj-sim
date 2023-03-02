@@ -57,6 +57,8 @@ bool GlobalAppSettings::loadFromJson()
     QJsonObject object = document.object();
     setLanguageID(object.value("language-id").toInt());
     file.close();
+
+    return true;
 }
 
 bool GlobalAppSettings::writeToJson()
@@ -77,4 +79,6 @@ bool GlobalAppSettings::writeToJson()
     file.resize(0);
     file.write(document.toJson(QJsonDocument::Indented));
     file.close();
+
+    return true;
 }

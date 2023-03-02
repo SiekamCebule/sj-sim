@@ -330,7 +330,6 @@ void DatabaseEditorWindow::replaceJumperFromJumperEditor()
         GlobalDatabase::get()->getEditableGlobalJumpers().replace(selectedItemIndex - 1, jumperEditor->getJumperFromWidgetInput());
         fillJumpersWidget();
     }
-    selectedItemIndex = (-1);
 }
 
 void DatabaseEditorWindow::replaceHillFromHillEditor()
@@ -339,7 +338,6 @@ void DatabaseEditorWindow::replaceHillFromHillEditor()
         GlobalDatabase::get()->getEditableGlobalHills().replace(selectedItemIndex - 1, hillEditor->getHillFromWidgetInput());
         fillHillsWidget();
     }
-    selectedItemIndex = (-1);
 }
 
 QVector<Hill> DatabaseEditorWindow::getTempGlobalHills() const

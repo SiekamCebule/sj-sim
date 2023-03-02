@@ -15,6 +15,8 @@ public:
     void addExistingID(ulong ID);
     ulong getLastID() const;
 
+    QSet<ulong> getValues() const;
+
 private:
     QSet<ulong> values;
     ulong lastID;

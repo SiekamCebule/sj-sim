@@ -49,6 +49,17 @@ double Wind::getValueToAveragedWind() const
     else return 0;
 }
 
+QString Wind::getStyleSheetForAveragedWind(double avgWind)
+{
+    if(avgWind > 0)
+        return "QLabel{color: rgb(74, 189, 68);}";
+    else if(avgWind < 0)
+        return "QLabel{color: rgb(214, 41, 28);}";
+    else return "QLabel{color: rgb(50, 50, 50);}";
+
+    return "QLabel{color: yellow;}";
+}
+
 Wind::Wind(short direction, double value) : direction(direction),
     value(value)
 {}

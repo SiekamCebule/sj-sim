@@ -31,6 +31,8 @@ public:
     double getValue() const;
     void setValue(double newValue);
     double getValueToAveragedWind() const;
+
+    static QString getStyleSheetForAveragedWind(double avgWind);
 };
 
 #endif // WIND_H

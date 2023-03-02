@@ -47,3 +47,8 @@ ulong IDGenerator::getLastID() const
 {
     return lastID;
 }
+
+QSet<ulong> IDGenerator::getValues() const
+{
+    return values;
+}

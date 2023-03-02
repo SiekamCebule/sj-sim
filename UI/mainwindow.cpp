@@ -88,6 +88,8 @@ void MainWindow::on_pushButton_singleJumps_clicked()
 
         SingleJumpsResultsWindow resultsWindow;
         resultsWindow.setManager(&manager);
+        resultsWindow.fillJumperInfo();
+        resultsWindow.fillHillInfo();
         resultsWindow.fillMiniJumpsResultsLayout();
         if(resultsWindow.exec() == QDialog::Accepted)
         {

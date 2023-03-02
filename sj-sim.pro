@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
+    UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp \
     UI/SingleJumps/SingleJumpMiniResultWidget.cpp \
     UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     UI/AppSettings/AppSettingsWindow.cpp \
@@ -50,6 +51,7 @@ SOURCES += \
 HEADERS += \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
+    UI/ResultsShowing/JumpDataDetailedInfoWindow.h \
     UI/SingleJumps/SingleJumpMiniResultWidget.h \
     UI/SingleJumps/SingleJumpsConfigWindow.h \
     UI/AppSettings/AppSettingsWindow.h \
@@ -88,6 +90,7 @@ HEADERS += \
 FORMS += \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui \
+    UI/ResultsShowing/JumpDataDetailedInfoWindow.ui \
     UI/SingleJumps/SingleJumpMiniResultWidget.ui \
     UI/SingleJumps/SingleJumpsConfigWindow.ui \
     UI/AppSettings/AppSettingsWindow.ui \

@@ -4,6 +4,8 @@
 #include <QWidget>
 #include "../../simulator/JumpData.h"
 
+class QMouseEvent;
+
 namespace Ui {
 class SingleJumpMiniResultWidget;
 }
@@ -23,6 +25,12 @@ public:
 
     int getIndexInList() const;
     void setIndexInList(int newIndexInList);
+
+signals:
+    void pressed();
+
+protected:
+    void mousePressEvent(QMouseEvent * event);
 
 private:
     Ui::SingleJumpMiniResultWidget *ui;

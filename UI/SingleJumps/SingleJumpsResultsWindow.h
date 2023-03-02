@@ -16,6 +16,8 @@ public:
     explicit SingleJumpsResultsWindow(QWidget *parent = nullptr);
     ~SingleJumpsResultsWindow();
 
+    void fillJumperInfo();
+    void fillHillInfo();
     void fillMiniJumpsResultsLayout();
 
     SingleJumpsManager *getManager() const;

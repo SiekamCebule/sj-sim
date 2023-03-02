@@ -94,6 +94,11 @@ QVector<JumpData> SingleJumpsManager::getJumps() const
     return jumps;
 }
 
+QVector<JumpData> &SingleJumpsManager::getEditableJumps()
+{
+    return jumps;
+}
+
 void SingleJumpsManager::setJumps(const QVector<JumpData> &newJumps)
 {
     jumps = newJumps;

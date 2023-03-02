@@ -1,6 +1,9 @@
 #include "SingleJumpMiniResultWidget.h"
 #include "ui_SingleJumpMiniResultWidget.h"
 
+#include "../ResultsShowing/JumpDataDetailedInfoWindow.h"
+#include <QMouseEvent>
+
 SingleJumpMiniResultWidget::SingleJumpMiniResultWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SingleJumpMiniResultWidget)
@@ -50,4 +53,12 @@ int SingleJumpMiniResultWidget::getIndexInList() const
 void SingleJumpMiniResultWidget::setIndexInList(int newIndexInList)
 {
     indexInList = newIndexInList;
+}
+
+void SingleJumpMiniResultWidget::mousePressEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton)
+    {
+        emit pressed();
+    }
 }

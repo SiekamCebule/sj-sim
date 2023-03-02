@@ -87,11 +87,11 @@ void JumpSimulator::generateTakeoffRating()
     else
         perfectLevel += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
     //qDebug()<<"takeoff-height BEST LEVEL: "<<perfectLevel;
-    takeoffRating -= std::abs(perfectLevel - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 0.85;
+    takeoffRating -= std::abs(perfectLevel - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 1;
 
     double takeoffHeightLevel = jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height");
     double random = 0;
-    random = -(MyRandom::reducingChancesRandom(-5 + (takeoffHeightLevel * 3.2), 80, 0.5, 1, 1.1075 + (takeoffHeightLevel / 105), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
+    random = -(MyRandom::reducingChancesRandom(-5 + (takeoffHeightLevel * 3.3), 80, 0.5, 1, 1.1075 + (takeoffHeightLevel / 95), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
     random *= 1 + (0.14 * hill->getLevelOfCharacteristic("takeoff-randomness-effect"));
     //qDebug()<<"Takeoff Random: "<<random;
     takeoffRating += random;
@@ -115,12 +115,12 @@ void JumpSimulator::generateFlightRating()
         perfectLevel += (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.85));
     else
         perfectLevel += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
-        //qDebug()<<"flight-height BEST LEVEL: "<<perfectLevel;
-    flightRating -= std::abs(perfectLevel - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 2.25);
+    //qDebug()<<"flight-height BEST LEVEL: "<<perfectLevel;
+    flightRating -= std::abs(perfectLevel - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 3);
 
     double flightHeightLevel = jumper->getJumperSkills().getLevelOfCharacteristic("flight-height");
     double random = 0;
-    random = -(MyRandom::reducingChancesRandom(-5 + (flightHeightLevel * 1.06), 80, 0.5, 1, 1.1075 + (flightHeightLevel / 315), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
+    random = -(MyRandom::reducingChancesRandom(-5 + (flightHeightLevel * 1.1), 80, 0.5, 1, 1.1075 + (flightHeightLevel / 285), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
     random *= 1 + (0.14 * hill->getLevelOfCharacteristic("flight-randomness-effect"));
     //qDebug()<<"Flight Random: "<<random;
     flightRating += random;
@@ -386,10 +386,13 @@ void JumpSimulator::calculateCompensations()
         jumpData.setWindCompensation(avgWind.getValue() * hill->getPointsForBackWind());
     else if(avgWind.getDirection() == Wind::Front)
         jumpData.setWindCompensation(-(avgWind.getValue() * hill->getPointsForFrontWind()));
+    jumpData.setWindCompensation(roundDoubleToOnePlace(jumpData.getWindCompensation()));
 
     jumpData.setGateCompensation(0); /// na razie nie ma belki startowej
+    jumpData.setGateCompensation(roundDoubleToOnePlace(jumpData.getGateCompensation()));
 
     jumpData.setTotalCompensation(jumpData.getWindCompensation() + jumpData.getGateCompensation());
+    jumpData.setTotalCompensation(roundDoubleToOnePlace(jumpData.getTotalCompensation()));
 }
 
 void JumpSimulator::calculatePoints()
@@ -416,8 +419,8 @@ void JumpSimulator::calculatePoints()
 
 void JumpSimulator::setupJumpData()
 {
-    jumpData.jumper = this->getJumper();
-    jumpData.hill = this->getHill();
+    jumpData.jumper = getJumper();
+    jumpData.hill = getHill();
     jumpData.simulator = this;
     jumpData.windsInfo = windsInfo;
     jumpData.averagedWind = windsInfo.getAveragedWind(windAverageCalculatingType).getValueToAveragedWind();
