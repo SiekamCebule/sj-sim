@@ -10,11 +10,12 @@ QString Landing::getTextLandingType() const
 {
     switch(getType())
     {
-    case TelemarkLanding: return "Telemark";
-    case BothLegsLanding: return "Na dwie nogi";
-    case SupportLanding: return "Podpórka";
-    case Fall: return "Upadek";
+    case TelemarkLanding: return QObject::tr("Telemark");
+    case BothLegsLanding: return QObject::tr("Na dwie nogi");
+    case SupportLanding: return QObject::tr("Podpórka");
+    case Fall: return QObject::tr("Upadek");
     }
+    return QObject::tr("error");
 }
 
 short Landing::getType() const

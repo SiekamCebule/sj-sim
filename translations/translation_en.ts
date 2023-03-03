@@ -476,242 +476,257 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="81"/>
+        <location filename="../simulator/Characteristic.cpp" line="82"/>
         <source>Wysoko wychodzi z progu</source>
         <translation>Takes off high</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="83"/>
+        <location filename="../simulator/Characteristic.cpp" line="84"/>
         <source>Lata wysoko nad zeskokiem</source>
         <translation>Flies high</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="85"/>
+        <location filename="../simulator/Characteristic.cpp" line="86"/>
         <source>Dobrze ląduje</source>
         <translation>Lands well</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="89"/>
+        <location filename="../simulator/Characteristic.cpp" line="88"/>
+        <source>Zwiększona tendencja do lądowania na dwie nogi</source>
+        <translation>Increased both legs landing tendence</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Characteristic.cpp" line="92"/>
         <source>Bezpieczne skoki za punktem HS</source>
         <translation>Safe jumps after HS point</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="91"/>
+        <location filename="../simulator/Characteristic.cpp" line="94"/>
         <source>Zwiększony wpływ techniki wybicia</source>
         <translation>Increased takeoff technique effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="93"/>
+        <location filename="../simulator/Characteristic.cpp" line="96"/>
         <source>Zwiększony wpływ siły wybicia</source>
         <translation>Increased power effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="95"/>
+        <location filename="../simulator/Characteristic.cpp" line="98"/>
         <source>Zwiększony wpływ formy przy wybiciu</source>
         <translation>Increased form effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="97"/>
+        <location filename="../simulator/Characteristic.cpp" line="100"/>
         <source>Zwiększony wpływ losowości przy wybiciu</source>
         <translation>Increased randomness effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="99"/>
+        <location filename="../simulator/Characteristic.cpp" line="102"/>
         <source>Zwiększony wpływ techniki lotu</source>
         <translation>Increased flight technique effect in flight</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="101"/>
+        <location filename="../simulator/Characteristic.cpp" line="104"/>
         <source>Zwiększony wpływ formy w locie</source>
         <translation>Increased form effect in flight</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="103"/>
+        <location filename="../simulator/Characteristic.cpp" line="106"/>
         <source>Zwiększony wpływ losowości w locie</source>
         <translation>Increased randomness effect in flight</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="107"/>
+        <location filename="../simulator/Characteristic.cpp" line="110"/>
         <source>Zwiększona szansa na tylni wiatr</source>
         <translation>Increased back wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="109"/>
+        <location filename="../simulator/Characteristic.cpp" line="112"/>
         <source>Zwiększona szansa na tylnio-boczny wiatr</source>
         <translation>Increased back-side wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="111"/>
+        <location filename="../simulator/Characteristic.cpp" line="114"/>
         <source>Zwiększona szansa na boczny wiatr</source>
         <translation>Increased side wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="113"/>
+        <location filename="../simulator/Characteristic.cpp" line="116"/>
         <source>Zwiększona szansa na przednio-boczny wiatr</source>
         <translation>Increased front-side wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="115"/>
+        <location filename="../simulator/Characteristic.cpp" line="118"/>
         <source>Zwiększona szansa na przedni wiatr</source>
         <translation>Increased front wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="121"/>
+        <location filename="../simulator/Characteristic.cpp" line="124"/>
         <source>Nisko wychodzi z progu</source>
         <translation>Takes off low</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="123"/>
+        <location filename="../simulator/Characteristic.cpp" line="126"/>
         <source>Lata nisko nad zeskokiem</source>
         <translation>Flies low</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="125"/>
+        <location filename="../simulator/Characteristic.cpp" line="128"/>
         <source>Słabo ląduje</source>
         <translation>Lands poorly</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="129"/>
+        <location filename="../simulator/Characteristic.cpp" line="130"/>
+        <source>Zmniejszona tendencja do lądowania na dwie nogi</source>
+        <translation>Decreased both legs landing tendence</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Characteristic.cpp" line="134"/>
         <source>Niebezpieczne skoki za punktem HS</source>
         <translation>Unsafe jumps after HS point</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="131"/>
+        <location filename="../simulator/Characteristic.cpp" line="136"/>
         <source>Zmniejszony wpływ techniki wybicia</source>
         <translation>Reduced takeoff technique effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="133"/>
+        <location filename="../simulator/Characteristic.cpp" line="138"/>
         <source>Zmniejszony wpływ siły wybicia</source>
         <translation>Reduced power effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="135"/>
+        <location filename="../simulator/Characteristic.cpp" line="140"/>
         <source>Zmniejszony wpływ formy przy wybiciu</source>
         <translation>Reduced form effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="137"/>
+        <location filename="../simulator/Characteristic.cpp" line="142"/>
         <source>Zmniejszony wpływ losowości przy wybiciu</source>
         <translation>Reduced randomness effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="139"/>
+        <location filename="../simulator/Characteristic.cpp" line="144"/>
         <source>Zmniejszony wpływ techniki lotu</source>
         <translation>Reduced flight technique effect in flight</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="141"/>
+        <location filename="../simulator/Characteristic.cpp" line="146"/>
         <source>Zmniejszony wpływ formy w locie</source>
         <translation>Reduced form effect in flight</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="143"/>
+        <location filename="../simulator/Characteristic.cpp" line="148"/>
         <source>Zmniejszony wpływ losowości w locie</source>
         <translation>Reduced randomness effect in flight</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="147"/>
+        <location filename="../simulator/Characteristic.cpp" line="152"/>
         <source>Zmniejszona szansa na tylni wiatr</source>
         <translation>Reduced back wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="149"/>
+        <location filename="../simulator/Characteristic.cpp" line="154"/>
         <source>Zmniejszona szansa na tylnio-boczny wiatr</source>
         <translation>Reduced back-side wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="151"/>
+        <location filename="../simulator/Characteristic.cpp" line="156"/>
         <source>Zmniejszona szansa na boczny wiatr</source>
         <translation>Reduced side wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="153"/>
+        <location filename="../simulator/Characteristic.cpp" line="158"/>
         <source>Zmniejszona szansa na przednio-boczny wiatr</source>
         <translation>Reduced front-side wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="155"/>
+        <location filename="../simulator/Characteristic.cpp" line="160"/>
         <source>Zmniejszona szansa na przedni wiatr</source>
         <translation>Reduced front wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="161"/>
+        <location filename="../simulator/Characteristic.cpp" line="166"/>
         <source>Wysokość wyjścia z progu</source>
         <translation>Takeoff height</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="163"/>
+        <location filename="../simulator/Characteristic.cpp" line="168"/>
         <source>Wysokość lotu</source>
         <translation>Flight height</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="165"/>
+        <location filename="../simulator/Characteristic.cpp" line="170"/>
         <source>Umiejętność lądowania</source>
         <translation>Landing skill</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="169"/>
+        <location filename="../simulator/Characteristic.cpp" line="172"/>
+        <source>Tendencja do lądowania na dwie nogi</source>
+        <translation>Both legs landing tendence</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Characteristic.cpp" line="176"/>
         <source>Bezpieczeństwo skoków za punktem HS</source>
         <translation>Jumps after HS point-safety</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="171"/>
+        <location filename="../simulator/Characteristic.cpp" line="178"/>
         <source>Wpływ techniki wybicia</source>
         <translation>Takeoff technique effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="173"/>
+        <location filename="../simulator/Characteristic.cpp" line="180"/>
         <source>Wpływ siły wybicia</source>
         <translation>Takeoff power effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="175"/>
+        <location filename="../simulator/Characteristic.cpp" line="182"/>
         <source>Wpływ formy przy wybiciu</source>
         <translation>Form effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="177"/>
+        <location filename="../simulator/Characteristic.cpp" line="184"/>
         <source>Wpływ losowości przy wybiciu</source>
         <translation>Randomness effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="179"/>
+        <location filename="../simulator/Characteristic.cpp" line="186"/>
         <source>Wpływ techniki lotu</source>
         <translation>Flight technique effect in flight</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="181"/>
+        <location filename="../simulator/Characteristic.cpp" line="188"/>
         <source>Wpływ formy w locie</source>
         <translation>Form effect in flight</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="183"/>
+        <location filename="../simulator/Characteristic.cpp" line="190"/>
         <source>Wpływ losowości w locie</source>
         <translation>Randomness effect in flight</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="187"/>
+        <location filename="../simulator/Characteristic.cpp" line="194"/>
         <source>Szansa na tylni wiatr</source>
         <translation>Back wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="189"/>
+        <location filename="../simulator/Characteristic.cpp" line="196"/>
         <source>Szansa na tylnio-boczny wiatr</source>
         <translation>Back-side wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="191"/>
+        <location filename="../simulator/Characteristic.cpp" line="198"/>
         <source>Szansa na boczny wiatr</source>
         <translation>Side wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="193"/>
+        <location filename="../simulator/Characteristic.cpp" line="200"/>
         <source>Szansa na przednio-boczny wiatr</source>
         <translation>Front-side wind chance</translation>
     </message>
     <message>
-        <location filename="../simulator/Characteristic.cpp" line="195"/>
+        <location filename="../simulator/Characteristic.cpp" line="202"/>
         <source>Szansa na przedni wiatr</source>
         <translation>Front wind chance</translation>
     </message>
@@ -726,22 +741,47 @@
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../simulator/Landing.cpp" line="45"/>
+        <location filename="../simulator/Landing.cpp" line="13"/>
+        <source>Telemark</source>
+        <translation>Telemark</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Landing.cpp" line="14"/>
+        <source>Na dwie nogi</source>
+        <translation>Both legs</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Landing.cpp" line="15"/>
+        <source>Podpórka</source>
+        <translation>With support</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Landing.cpp" line="16"/>
+        <source>Upadek</source>
+        <translation>Fall</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Landing.cpp" line="18"/>
+        <source>error</source>
+        <translation>error</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Landing.cpp" line="46"/>
         <source>T</source>
         <translation>T</translation>
     </message>
     <message>
-        <location filename="../simulator/Landing.cpp" line="47"/>
+        <location filename="../simulator/Landing.cpp" line="48"/>
         <source>DN</source>
         <translation>BL</translation>
     </message>
     <message>
-        <location filename="../simulator/Landing.cpp" line="49"/>
+        <location filename="../simulator/Landing.cpp" line="50"/>
         <source>P</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../simulator/Landing.cpp" line="51"/>
+        <location filename="../simulator/Landing.cpp" line="52"/>
         <source>U</source>
         <translation>F</translation>
     </message>

@@ -43,6 +43,7 @@ QStringList Characteristic::characteristicTypesForSpecificParent(short parentTyp
         characteristicTypes.push_back("takeoff-height");
         characteristicTypes.push_back("flight-height");
         characteristicTypes.push_back("landing-skill");
+        characteristicTypes.push_back("both-legs-landing-tendence");
         break;
     case Hill:
         characteristicTypes.push_back("real-hs-point");
@@ -83,6 +84,8 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
             return QObject::tr("Lata wysoko nad zeskokiem");
         else if(characteristic.getType() == "landing-skill")
             return QObject::tr("Dobrze ląduje");
+        else if(characteristic.getType() == "both-legs-landing-tendence")
+            return QObject::tr("Zwiększona tendencja do lądowania na dwie nogi");
 
         /// Hill
         else if(characteristic.getType() == "real-hs-point")
@@ -123,6 +126,8 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
             return QObject::tr("Lata nisko nad zeskokiem");
         else if(characteristic.getType() == "landing-skill")
             return QObject::tr("Słabo ląduje");
+        else if(characteristic.getType() == "both-legs-landing-tendence")
+            return QObject::tr("Zmniejszona tendencja do lądowania na dwie nogi");
 
         /// Hill
         else if(characteristic.getType() == "real-hs-point")
@@ -163,6 +168,8 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
             return QObject::tr("Wysokość lotu");
         else if(characteristic.getType() == "landing-skill")
             return QObject::tr("Umiejętność lądowania");
+        else if(characteristic.getType() == "both-legs-landing-tendence")
+            return QObject::tr("Tendencja do lądowania na dwie nogi");
 
         /// Hill
         else if(characteristic.getType() == "real-hs-point")
