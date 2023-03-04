@@ -10,6 +10,8 @@
 #include <QChart>
 #include <QChartView>
 #include <QSplineSeries>
+#include <QBarSeries>
+#include <QBarSet>
 #include <QEventLoop>
 #include <QMap>
 #include <QDebug>
@@ -20,7 +22,9 @@ SingleJumpsResultsWindow::SingleJumpsResultsWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SingleJumpsResultsWindow),
     maxNumberOfDistancesForChart(0),
-    maxNumberOfJudgesForChart(0)
+    maxNumberOfJudgesForChart(0),
+    maxNumberOfLandingsForChart(0),
+    selectedItemIndex(0)
 {
     ui->setupUi(this);
 
@@ -54,14 +58,10 @@ void SingleJumpsResultsWindow::fillMiniJumpsResultsLayout()
         widget->setJumpData(const_cast<JumpData*>(&jump));
         widget->setIndexInList(i);
         widget->fillUi();
-        /*qDebug()<<"SingleJumpMiniResultWidget.jumpData: "<<widget->getJumpData();
-        qDebug()<<"SingleJumpMiniResultWidget.jumpData.HILL: "<<widget->getJumpData()->getHill();
-        qDebug()<<"SingleJumpMiniResultWidget.jumpData.JUMPER: "<<widget->getJumpData()->getJumper();
-        qDebug()<<"SingleJumpMiniResultWidget.jumpData.SIMULATOR: "<<widget->getJumpData()->getSimulator();
-        qDebug()<<"Widget.adress: "<<widget;
-        qDebug()<<"Manager.adress: "<<manager;*/
 
         ui->verticalLayout_singleJumpResultWidgets->addWidget(widget);
+        miniResultItems.push_back(widget);
+
         connect(widget, &SingleJumpMiniResultWidget::pressed, this, [this, widget, jump](){
             if(ui->verticalLayout_jumpInfos != nullptr){
                 QLayoutItem * item;
@@ -72,18 +72,12 @@ void SingleJumpsResultsWindow::fillMiniJumpsResultsLayout()
                 }
             }
             JumpDataDetailedInfoWindow * jumpInfo = new JumpDataDetailedInfoWindow(widget->getJumpData());
-            /*qDebug()<<"(connect) SingleJumpMiniResultWidget.jumpData: "<<widget->getJumpData();
-            qDebug()<<"(connect) SingleJumpMiniResultWidget.jumpData.JUMPER: "<<widget->getJumpData()->getJumper();
-            qDebug()<<"(connect) Widget.adress: "<<widget;
-            qDebug()<<"(connect) Manager.adress: "<<manager;
-            qDebug()<<"(connect) Manager.jumper.nameAndSurname: "<<manager->getJumper().getNameAndSurname();
-            qDebug()<<"(connect) actualJump.points: "<<jump.getPoints();
-            qDebug()<<"(connect) SingleJumpMiniResultWidget.jumpData.HILL: "<<widget->getJumpData()->getHill();
-            qDebug()<<"(connect) SingleJumpMiniResultWidget.jumpData.DISTANCE: "<<widget->getJumpData()->getDistance();
-            qDebug()<<"(connect) SingleJumpMiniResultWidget.jumpData.HILL: "<<widget->getJumpData()->getHill();*/
-
             jumpInfo->fillJumpInformations();
             ui->verticalLayout_jumpInfos->addWidget(jumpInfo);
+            ui->toolBox->setCurrentIndex(0);
+
+            setSelectedItemIndex(widget->getIndexInList());
+            widget->setIsSelected(true);
         });
 
         i++;
@@ -121,6 +115,21 @@ void SingleJumpsResultsWindow::fillJudgesChart()
     judgesChartView->setRenderHint(QPainter::Antialiasing);
 
     ui->verticalLayout_judgesStatistics->addWidget(judgesChartView);
+}
+
+void SingleJumpsResultsWindow::fillLandingsChart()
+{
+    QChart * landingsChart = new QChart();
+    landingsChart->addSeries(getBarSeriesForLandingsChar());
+    landingsChart->setTitle("Rozkład rodzajów lądowania zawodnika");
+    landingsChart->setTitleFont(QFont("Quicksand Medium", 15, 1, false));
+    landingsChart->createDefaultAxes();
+    landingsChart->axes(Qt::Vertical).first()->setRange(0, maxNumberOfLandingsForChart * 1.15);
+
+    QChartView * landingsChartView = new QChartView(landingsChart);
+    landingsChartView->setRenderHint(QPainter::Antialiasing);
+
+    ui->verticalLayout_landingsStatistics->addWidget(landingsChartView);
 }
 
 SingleJumpsManager *SingleJumpsResultsWindow::getManager() const
@@ -171,7 +180,7 @@ QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForJudgesChart()
                 judges[judge] += 1;
             }
             else{
-                judges.insert(judge, 1);
+                judges[judge] = 1;
             }
         }
     }
@@ -182,6 +191,70 @@ QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForJudgesChart()
     }
 
     return series;
+}
+
+QBarSeries *SingleJumpsResultsWindow::getBarSeriesForLandingsChar()
+{
+    QBarSet * telemarkSet = new QBarSet(tr("Telemark"));
+    QBarSet * bothLegsSet = new QBarSet(tr("Na dwie nogi"));
+    QBarSet * supportSet = new QBarSet(tr("Podpórka"));
+    QBarSet * fallSet = new QBarSet(tr("Upadek"));
+
+    QMap<short, int> landings;
+    for(const auto & jump : manager->getJumps())
+    {
+        short type = jump.getLanding().getType();
+        if(landings.contains(type))
+        {
+            landings[type] += 1;
+        }
+        else{
+            landings[type] = 1;
+        }
+    }
+    for(auto & key : landings.keys())
+    {
+        if(landings.value(key) > maxNumberOfLandingsForChart) maxNumberOfLandingsForChart = landings.value(key);
+    }
+    telemarkSet->append(landings.value(Landing::TelemarkLanding));
+    bothLegsSet->append(landings.value(Landing::BothLegsLanding));
+    supportSet->append(landings.value(Landing::SupportLanding));
+    fallSet->append(landings.value(Landing::Fall));
+
+    QBarSeries * series = new QBarSeries;
+    series->append(telemarkSet);
+    series->append(bothLegsSet);
+    series->append(supportSet);
+    series->append(fallSet);
+
+    return series;
+}
+
+int SingleJumpsResultsWindow::getMaxNumberOfLandingsForChart() const
+{
+    return maxNumberOfLandingsForChart;
+}
+
+int SingleJumpsResultsWindow::getSelectedItemIndex() const
+{
+    return selectedItemIndex;
+}
+
+void SingleJumpsResultsWindow::setSelectedItemIndex(int newSelectedItemIndex)
+{
+    for(auto & item : miniResultItems)
+        item->setIsSelected(false);
+    selectedItemIndex = newSelectedItemIndex;
+}
+
+QVector<SingleJumpMiniResultWidget *> SingleJumpsResultsWindow::getMiniResultItems() const
+{
+    return miniResultItems;
+}
+
+void SingleJumpsResultsWindow::setMiniResultItems(const QVector<SingleJumpMiniResultWidget *> &newMiniResultItems)
+{
+    miniResultItems = newMiniResultItems;
 }
 
 int SingleJumpsResultsWindow::getMaxNumberOfJudgesForChart() const

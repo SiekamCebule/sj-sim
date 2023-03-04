@@ -297,7 +297,7 @@ width: 5px;
           <x>0</x>
           <y>0</y>
           <width>1210</width>
-          <height>513</height>
+          <height>484</height>
          </rect>
         </property>
         <attribute name="label">
@@ -315,7 +315,7 @@ width: 5px;
           <x>0</x>
           <y>0</y>
           <width>1210</width>
-          <height>513</height>
+          <height>484</height>
          </rect>
         </property>
         <attribute name="label">
@@ -333,7 +333,7 @@ width: 5px;
           <x>0</x>
           <y>0</y>
           <width>1210</width>
-          <height>513</height>
+          <height>484</height>
          </rect>
         </property>
         <attribute name="label">
@@ -342,6 +342,16 @@ width: 5px;
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_judgesStatistics"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_landingsStatistics">
+        <attribute name="label">
+         <string>Statystyki rodzajów lądowania</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_landingsStatistics"/>
          </item>
         </layout>
        </widget>

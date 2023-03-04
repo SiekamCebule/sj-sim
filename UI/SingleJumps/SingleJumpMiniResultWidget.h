@@ -22,9 +22,10 @@ public:
 
     JumpData *getJumpData() const;
     void setJumpData(JumpData *newJumpData);
-
     int getIndexInList() const;
-    void setIndexInList(int newIndexInList);
+    void setIndexInList(int newIndexInList); 
+    bool getIsSelected() const;
+    void setIsSelected(bool newIsSelected);
 
 signals:
     void pressed();
@@ -37,6 +38,8 @@ private:
 
     JumpData * jumpData;
     int indexInList;
+
+    bool isSelected;
 };
 
 #endif // SINGLEJUMPMINIRESULTWIDGET_H

@@ -62,3 +62,16 @@ void SingleJumpMiniResultWidget::mousePressEvent(QMouseEvent *event)
         emit pressed();
     }
 }
+
+bool SingleJumpMiniResultWidget::getIsSelected() const
+{
+    return isSelected;
+}
+
+void SingleJumpMiniResultWidget::setIsSelected(bool newIsSelected)
+{
+    isSelected = newIsSelected;
+    if(isSelected == true)
+        ui->label_distance->setStyleSheet("background-color: rgb(255, 255, 225); color: black;");
+    else ui->label_distance->setStyleSheet("background: transparent; color: black;");
+}

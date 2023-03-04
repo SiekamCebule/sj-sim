@@ -94,6 +94,7 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         resultsWindow.fillMiniJumpsResultsLayout();
         resultsWindow.fillDistancesChart();
         resultsWindow.fillJudgesChart();
+        resultsWindow.fillLandingsChart();
         if(resultsWindow.exec() == QDialog::Accepted)
         {
             qDebug()<<"accepted";
