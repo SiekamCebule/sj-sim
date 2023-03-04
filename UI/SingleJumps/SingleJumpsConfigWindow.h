@@ -28,6 +28,7 @@ public:
     bool getSaveResultsToFileFromInput();
     QString getResultsFileName();
     short getWindAverageCalculatingType();
+    short getWindCompensationDistanceEffect();
     int getGateFromInput();
 
 private slots:

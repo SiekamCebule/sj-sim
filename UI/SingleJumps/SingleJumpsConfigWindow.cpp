@@ -118,6 +118,11 @@ short SingleJumpsConfigWindow::getWindAverageCalculatingType()
     return ui->comboBox_windAverageCalculatingType->currentIndex();
 }
 
+short SingleJumpsConfigWindow::getWindCompensationDistanceEffect()
+{
+    return ui->comboBox_windCompensationDistanceEffect->currentIndex();
+}
+
 int SingleJumpsConfigWindow::getGateFromInput()
 {
     return ui->spinBox_gate->value();

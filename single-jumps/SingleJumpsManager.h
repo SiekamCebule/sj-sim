@@ -38,6 +38,9 @@ public:
     short getWindAverageCalculatingType() const;
     void setWindAverageCalculatingType(short newWindAverageCalculatingType);
 
+    short getWindCompensationDistanceEffect() const;
+    void setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect);
+
 private:
     Jumper jumper;
     Hill hill;
@@ -50,6 +53,7 @@ private:
     bool saveResultsToFile;
     QString resultsFileName;
     short windAverageCalculatingType;
+    short windCompensationDistanceEffect;
     int gate;
 
     QVector<JumpData> jumps;

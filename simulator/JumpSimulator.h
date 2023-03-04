@@ -60,7 +60,7 @@ private:
     double getMultiplierForFlightStyleEffect();
 
     void generateDistance();
-    void generateWindEffects(); // np. zmiana odległości przez wiatr, albo w przyszłości jakieś nierówności w locie przez taki boczny wiatr.
+    void generateWindEffects();
     void generateLanding();
     void generateJudges();
     void calculateCompensations();
@@ -75,6 +75,16 @@ private:
     void setupJumpData();
 
     short windAverageCalculatingType;
+    short windCompensationDistanceEffect;
+
+public:
+    enum WindCompensationDistanceEffect{
+        Disabled,
+        Original,
+        Full
+    };
+    short getWindCompensationDistanceEffect() const;
+    void setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect);
 };
 
 #endif // JUMPSIMULATOR_H

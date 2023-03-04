@@ -18,6 +18,7 @@ Wind WindsInfo::getAveragedWind(short type)
     int i=0;
     for(const auto & wind : winds)
     {
+        qDebug()<<"VAL: "<<wind.getValue();
         if(type == Original){
             if(wind.getDirection() == Wind::Front || wind.getDirection() == Wind::FrontSide)
                 windAvg += wind.getValue() * percent;

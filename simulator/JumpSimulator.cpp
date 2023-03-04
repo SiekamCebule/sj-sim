@@ -61,6 +61,7 @@ void JumpSimulator::simulateJump()
     generateFlightRating();
     generateDistance();
     generateWindEffects();
+    if(jumpData.getDistance() < 0) jumpData.distance = 0;
     generateLanding();
     generateJudges();
 
@@ -162,8 +163,10 @@ void JumpSimulator::generateWindEffects()
 {
     double segmentDistance = hill->getKPoint() / windsInfo.getWinds().size();
     double change = 0;
+    int i = 0;
     for(const auto & wind : windsInfo.getWinds())
     {
+        //podczas liczenia w pętli change dla zmian odleglosci przez wiatr, należy dodać warunek "Jeżeli odległość < początek następnego segmentu wiatru" to "Przelicz procent (odległości od początku obecnego segmentu do początku kolejnego) z (całego zakresu między segmentami)". Odjąć otrzymaną wartość przez 1, i przez ten wynik pomnożyć wpływ wiatru
         if(wind.getDirection() == Wind::Back)
         {
             change = wind.getValue() * (segmentDistance / 3.8);
@@ -178,7 +181,6 @@ void JumpSimulator::generateWindEffects()
             }
             change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 120);
             change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 60);
-            jumpData.distance -= change;
         }
         else if(wind.getDirection() == Wind::BackSide)
         {
@@ -194,7 +196,6 @@ void JumpSimulator::generateWindEffects()
             }
             change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 120);
             change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 60);
-            jumpData.distance -= change;
         }
         else if(wind.getDirection() == Wind::Side)
         {
@@ -227,7 +228,6 @@ void JumpSimulator::generateWindEffects()
                 change *= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 120);
                 change *= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 60);
             }
-            jumpData.distance += change; //dodać, bo i tak jeśli będzie wiatr w plecy to change będzie ujemne
         }
         else if(wind.getDirection() == Wind::FrontSide)
         {
@@ -243,7 +243,6 @@ void JumpSimulator::generateWindEffects()
             }
             change *= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 110);
             change *= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 48);
-            jumpData.distance += change;
         }
         else if(wind.getDirection() == Wind::Front)
         {
@@ -259,8 +258,31 @@ void JumpSimulator::generateWindEffects()
             }
             change *= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 110);
             change *= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 48);
-            jumpData.distance += change;
         }
+        if(i != windsInfo.getWinds().count()){
+            if(jumpData.getDistance() < (i + 1) * segmentDistance)
+            {
+                double percent = double( jumpData.getDistance() - (segmentDistance * i)) / ((i + 1) * segmentDistance);
+                if(percent > 1) percent = 1;
+                else if(percent < 0) percent = 0;
+                change *= percent;
+            }
+        }
+        switch(wind.getDirection())
+        {
+        case Wind::Back:
+            jumpData.distance -= change; break;
+        case Wind::BackSide:
+            jumpData.distance -= change; break;
+        case Wind::Side:
+            jumpData.distance += change; break;
+        case Wind::FrontSide:
+            jumpData.distance += change; break;
+        case Wind::Front:
+            jumpData.distance += change; break;
+        }
+
+        i++;
     }
 }
 
@@ -302,7 +324,6 @@ void JumpSimulator::generateLanding()
         }
         i++;
     }
-
 
 
     //stabilność lądowania   -     od 1 do 5
@@ -382,7 +403,23 @@ void JumpSimulator::generateJudges()
 
 void JumpSimulator::calculateCompensations()
 {
-    Wind avgWind = windsInfo.getAveragedWind(windAverageCalculatingType);
+    WindsInfo tempWindsInfo = windsInfo;
+    QVector<Wind> winds = tempWindsInfo.getWinds();
+    double segmentDistance = hill->getKPoint() / windsInfo.getWinds().count();
+    switch(getWindCompensationDistanceEffect()) //
+    {
+    case WindCompensationDistanceEffect::Original:
+        if(jumpData.getDistance() <= (0.75 * hill->getKPoint())){
+            int howManyToRemove = winds.count() - std::round((0.75 * hill->getKPoint()) / segmentDistance);
+            for(int i=0; i<howManyToRemove; i++)
+                winds.remove(winds.count() - 1);
+        }
+        break;
+    }
+    tempWindsInfo.setWinds(winds);
+
+    Wind avgWind = tempWindsInfo.getAveragedWind(windAverageCalculatingType);
+    jumpData.setAveragedWind(avgWind.getValueToAveragedWind());
     if(avgWind.getDirection() == Wind::Back)
         jumpData.setWindCompensation(avgWind.getValue() * hill->getPointsForBackWind());
     else if(avgWind.getDirection() == Wind::Front)
@@ -424,8 +461,18 @@ void JumpSimulator::setupJumpData()
     jumpData.hill = getHill();
     jumpData.simulator = this;
     jumpData.windsInfo = windsInfo;
-    jumpData.averagedWind = windsInfo.getAveragedWind(windAverageCalculatingType).getValueToAveragedWind();
+    //sredni wiatr jest zapisywany w jumpDacie w funkcji calculateCompensations().
     jumpData.setGate(*getGate());
+}
+
+short JumpSimulator::getWindCompensationDistanceEffect() const
+{
+    return windCompensationDistanceEffect;
+}
+
+void JumpSimulator::setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect)
+{
+    windCompensationDistanceEffect = newWindCompensationDistanceEffect;
 }
 
 short JumpSimulator::getWindAverageCalculatingType() const

@@ -17,6 +17,7 @@ void SingleJumpsManager::simulate()
     jumpSimulator.setHill(&hill);
     jumpSimulator.setGate(&gate);
     jumpSimulator.setWindAverageCalculatingType(getWindAverageCalculatingType());
+    jumpSimulator.setWindCompensationDistanceEffect(getWindCompensationDistanceEffect());
 
     double min = 0, max = 1000, avg = 0;
 
@@ -53,9 +54,9 @@ void SingleJumpsManager::simulate()
         avg += distance;
     }
     avg /= jumpsCount;
-    qDebug()<<"\n\nROZNICA: "<<max - min<<"m";
-    qDebug()<<"NAJDALSZY: "<<max<<"m";
-    qDebug()<<"NAJKRÓTSZY: "<<min<<"m";
+    qDebug()<<"\n\nRÓŻNICA: "<<max - min<<"m";
+    qDebug()<<"NAJKRÓTSZY: "<<max<<"m";
+    qDebug()<<"NAJDALSZY: "<<min<<"m";
     qDebug()<<"ŚREDNIA DŁUGOŚĆ SKOKU: "<<avg<<"m";
 }
 
@@ -162,4 +163,14 @@ short SingleJumpsManager::getWindAverageCalculatingType() const
 void SingleJumpsManager::setWindAverageCalculatingType(short newWindAverageCalculatingType)
 {
     windAverageCalculatingType = newWindAverageCalculatingType;
+}
+
+short SingleJumpsManager::getWindCompensationDistanceEffect() const
+{
+    return windCompensationDistanceEffect;
+}
+
+void SingleJumpsManager::setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect)
+{
+    windCompensationDistanceEffect = newWindCompensationDistanceEffect;
 }

@@ -84,6 +84,7 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
         manager.setWindsGeneratorSettings(singleJumpsConfig.getWindsGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
         manager.setWindAverageCalculatingType(singleJumpsConfig.getWindAverageCalculatingType());
+        manager.setWindCompensationDistanceEffect(singleJumpsConfig.getWindCompensationDistanceEffect());
         manager.simulate();
 
         SingleJumpsResultsWindow resultsWindow;

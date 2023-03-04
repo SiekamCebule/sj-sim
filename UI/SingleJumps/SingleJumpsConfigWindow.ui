@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1148</width>
-    <height>731</height>
+    <width>1188</width>
+    <height>757</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(236, 236, 236);</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_7">
+  <layout class="QVBoxLayout" name="verticalLayout_8">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_title">
      <item>
@@ -119,8 +119,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>714</width>
-          <height>523</height>
+          <width>752</width>
+          <height>549</height>
          </rect>
         </property>
         <attribute name="label">
@@ -183,8 +183,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>714</width>
-          <height>523</height>
+          <width>752</width>
+          <height>549</height>
          </rect>
         </property>
         <attribute name="label">
@@ -247,8 +247,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>714</width>
-          <height>523</height>
+          <width>752</width>
+          <height>549</height>
          </rect>
         </property>
         <attribute name="label">
@@ -362,7 +362,7 @@ color: rgb(26, 95, 180);
          <property name="font">
           <font>
            <family>Quicksand Medium</family>
-           <pointsize>12</pointsize>
+           <pointsize>11</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -414,7 +414,7 @@ height: 30px;
          <property name="font">
           <font>
            <family>Quicksand Medium</family>
-           <pointsize>12</pointsize>
+           <pointsize>11</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -437,7 +437,7 @@ height: 30px;
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>30</height>
+           <height>3</height>
           </size>
          </property>
         </spacer>
@@ -455,7 +455,7 @@ height: 30px;
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>11</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -510,6 +510,84 @@ height: 30px;
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>11</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: black;</string>
+             </property>
+             <property name="text">
+              <string>Wpływ odległości na rekompensatę</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_windCompensationDistanceEffect">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>250</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- W opcji &amp;quot;Oryginalny&amp;quot; jeżeli skoczek wyląduje przed czujnikiem wiatru koło 75% punktu K, żaden czujnik powyżej tej odległości się nie wlicza. - - Opcja &amp;quot;Pełny&amp;quot; nie ogranicza się do 75% punktu K, tylko działa na każdej odległości.&lt;/p&gt;&lt;p&gt;- &amp;quot;Wyłączony&amp;quot; w ogóle nie posiada takiej funkcjonalności.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: black;</string>
+             </property>
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <property name="maxCount">
+              <number>100</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>Wyłączony</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Oryginalny</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Pełny</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
           <widget class="QLabel" name="label_2">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -520,7 +598,7 @@ height: 30px;
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>11</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -553,6 +631,9 @@ height: 30px;
             <font>
              <pointsize>10</pointsize>
             </font>
+           </property>
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &amp;quot;Oryginalne&amp;quot; uważa wiatr boczno-przedni lub boczno-tylni za stuprocentowo wiatr przedni-tylni.&lt;/p&gt;&lt;p&gt;- &amp;quot;Ulepszone&amp;quot; uważa mnoży rekompensatę za wiatr boczno-przedni/tylni przez 0.5.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="styleSheet">
             <string notr="true">color: black;</string>
@@ -587,7 +668,7 @@ height: 30px;
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>11</pointsize>
              <bold>true</bold>
             </font>
            </property>
