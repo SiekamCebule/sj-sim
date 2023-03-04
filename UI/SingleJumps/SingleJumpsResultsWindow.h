@@ -22,10 +22,12 @@ public:
     void fillHillInfo();
     void fillMiniJumpsResultsLayout();
     void fillDistancesChart();
+    void fillJudgesChart();
 
     SingleJumpsManager *getManager() const;
     void setManager(SingleJumpsManager *newManager);
     int getMaxNumberOfDistancesForChart() const;
+    int getMaxNumberOfJudgesForChart() const;
 
 private:
     Ui::SingleJumpsResultsWindow *ui;
@@ -34,6 +36,8 @@ private:
 
     QSplineSeries * getSplineSeriesForDistancesChart();
     int maxNumberOfDistancesForChart;
+    QSplineSeries * getSplineSeriesForJudgesChart();
+    int maxNumberOfJudgesForChart;
 };
 
 #endif // SINGLEJUMPSRESULTSWINDOW_H

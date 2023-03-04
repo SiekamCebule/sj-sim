@@ -19,7 +19,8 @@ extern IDGenerator globalIDGenerator;
 SingleJumpsResultsWindow::SingleJumpsResultsWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SingleJumpsResultsWindow),
-    maxNumberOfDistancesForChart(0)
+    maxNumberOfDistancesForChart(0),
+    maxNumberOfJudgesForChart(0)
 {
     ui->setupUi(this);
 
@@ -106,6 +107,22 @@ void SingleJumpsResultsWindow::fillDistancesChart()
     ui->verticalLayout_distanceStatistics->addWidget(distancesChartView);
 }
 
+void SingleJumpsResultsWindow::fillJudgesChart()
+{
+    QChart * judgesChart = new QChart();
+    judgesChart->legend()->hide();
+    judgesChart->addSeries(getSplineSeriesForJudgesChart());
+    judgesChart->setTitle("Rozkład not sędziowskich zawodnika");
+    judgesChart->setTitleFont(QFont("Quicksand Medium", 15, 1, false));
+    judgesChart->createDefaultAxes();
+    judgesChart->axes(Qt::Vertical).first()->setRange(1, maxNumberOfJudgesForChart * 1.15);
+
+    QChartView * judgesChartView = new QChartView(judgesChart);
+    judgesChartView->setRenderHint(QPainter::Antialiasing);
+
+    ui->verticalLayout_judgesStatistics->addWidget(judgesChartView);
+}
+
 SingleJumpsManager *SingleJumpsResultsWindow::getManager() const
 {
     return manager;
@@ -138,8 +155,38 @@ QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForDistancesChart()
         series->append(key, distances.value(key));
     }
 
-    //return series;
     return series;
+}
+
+QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForJudgesChart()
+{
+    QSplineSeries * series = new QSplineSeries();
+    QMap<double, int> judges;
+    for(const auto & jump : manager->getJumps())
+    {
+        for(int i=0; i<5; i++){
+            double judge = std::round(jump.getJudges().at(i));
+            if(judges.contains(judge))
+            {
+                judges[judge] += 1;
+            }
+            else{
+                judges.insert(judge, 1);
+            }
+        }
+    }
+    for(auto & key : judges.keys())
+    {
+        if(judges.value(key) > maxNumberOfJudgesForChart) maxNumberOfJudgesForChart = judges.value(key);
+        series->append(key, judges.value(key));
+    }
+
+    return series;
+}
+
+int SingleJumpsResultsWindow::getMaxNumberOfJudgesForChart() const
+{
+    return maxNumberOfJudgesForChart;
 }
 
 int SingleJumpsResultsWindow::getMaxNumberOfDistancesForChart() const

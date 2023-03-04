@@ -229,7 +229,15 @@ color: rgb(26, 95, 180);
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">QScrollArea{ background: transparent; } QScrollBar::handle{ border: 2px solid rgb(101, 23, 23); background-color: rgb(255, 229, 190); height: 10px; width: 5px; }</string>
+        <string notr="true">QScrollArea{
+background: transparent;
+}
+QScrollBar::handle{
+border: 2px solid rgb(101, 23, 23);
+background-color: rgb(255, 229, 190);
+height: 10px;
+width: 5px;
+}</string>
        </property>
        <property name="widgetResizable">
         <bool>true</bool>
@@ -239,7 +247,7 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>68</width>
+          <width>41</width>
           <height>598</height>
          </rect>
         </property>
@@ -281,14 +289,14 @@ color: rgb(26, 95, 180);
 }</string>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page_jumpInformations">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1183</width>
+          <width>1210</width>
           <height>513</height>
          </rect>
         </property>
@@ -306,7 +314,7 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1183</width>
+          <width>1210</width>
           <height>513</height>
          </rect>
         </property>
@@ -319,18 +327,23 @@ color: rgb(26, 95, 180);
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="page_landingStatistics">
+       <widget class="QWidget" name="page_judgesStatistics">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1183</width>
+          <width>1210</width>
           <height>513</height>
          </rect>
         </property>
         <attribute name="label">
-         <string>Statystyki lądowania</string>
+         <string>Statystyki not sędziowskich</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_judgesStatistics"/>
+         </item>
+        </layout>
        </widget>
       </widget>
      </item>

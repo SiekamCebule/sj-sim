@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background: rgb(245, 245, 245);</string>
+   <string notr="true">background-color: rgb(245, 245, 245);</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
@@ -103,7 +103,7 @@ background: transparent;</string>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(40, 40, 40);
-background: rgb(245, 245, 245);</string>
+background-color: rgb(245, 245, 245);</string>
        </property>
        <item>
         <property name="text">
@@ -141,7 +141,7 @@ background: rgb(245, 245, 245);</string>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(40, 40, 40);
-background: rgb(245, 245, 245);</string>
+background-color: rgb(245, 245, 245);</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -160,7 +160,7 @@ background: rgb(245, 245, 245);</string>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(40, 40, 40);
-background: rgb(245, 245, 245);</string>
+background-color: rgb(245, 245, 245);</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -181,7 +181,7 @@ background: rgb(245, 245, 245);</string>
          </property>
          <property name="styleSheet">
           <string notr="true">color: rgb(40, 40, 40);
-background: rgb(245, 245, 245);</string>
+background-color: rgb(245, 245, 245);</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
