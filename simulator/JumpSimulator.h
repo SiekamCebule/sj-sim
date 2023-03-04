@@ -66,13 +66,13 @@ private:
     void calculateCompensations();
     void calculatePoints();
 
-    //symulacja
-    double takeoffRating;
-    double flightRating;
-    double judgesRating;
-
+    ///symulacja
     JumpData jumpData;
     void setupJumpData();
+
+    JumpSimulationData * simulationData;
+
+    double getWindSegmentDistance();
 
     short windAverageCalculatingType;
     short windCompensationDistanceEffect;

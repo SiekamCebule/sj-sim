@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>649</width>
-    <height>422</height>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -698,7 +698,7 @@
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(20, 20, 20);</string>
+          <string notr="true">color: rgb(80, 17, 17);</string>
          </property>
          <property name="text">
           <string>0</string>
@@ -718,7 +718,7 @@
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(20, 20, 20);</string>
+          <string notr="true">color: rgb(80, 17, 17);</string>
          </property>
          <property name="text">
           <string>0</string>
@@ -738,7 +738,7 @@
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(20, 20, 20);</string>
+          <string notr="true">color: rgb(80, 17, 17);</string>
          </property>
          <property name="text">
           <string>0</string>
@@ -774,7 +774,7 @@
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(20, 20, 20);</string>
+          <string notr="true">color: rgb(80, 17, 17);</string>
          </property>
          <property name="text">
           <string>0</string>

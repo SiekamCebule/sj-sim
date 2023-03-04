@@ -46,6 +46,11 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
         ui->label_judgesPoints->setText(QString::number(jumpData->getJudgesPoints()) + tr("pkt"));
         ui->label_landingType->setText(jumpData->getLanding().getTextLandingType());
         ui->label_landingType->setStyleSheet(Landing::getStyleSheetForLandingTypeTextInfo(jumpData->getLanding().getType()));
+
+        ui->label_takeoffRating->setText(QString::number(jumpData->getSimulationData().getTakeoffRating()));
+        ui->label_flightRating->setText(QString::number(jumpData->getSimulationData().getFlightRating()));
+        ui->label_judgesRating->setText(QString::number(jumpData->getSimulationData().getJudgesRating()));
+        ui->label_landingInstability->setText(QString::number(jumpData->getLanding().getImbalance()));
     }
     else qDebug()<<"jumpData is nullptr!";
 }

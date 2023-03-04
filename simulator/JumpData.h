@@ -8,6 +8,7 @@
 #include "Landing.h"
 #include "Jumper.h"
 #include "Hill.h"
+#include "JumpSimulationData.h"
 
 
 class JumpSimulator;
@@ -29,6 +30,8 @@ private:
 
     Landing landing;
     QVector<double> judges;
+
+    JumpSimulationData simulationData;
 
     WindsInfo windsInfo;
     double averagedWind;
@@ -69,6 +72,8 @@ public:
     void setGate(int newGate);
     double getAveragedWind() const;
     void setAveragedWind(double newAveragedWind);
+    JumpSimulationData getSimulationData() const;
+    void setSimulationData(const JumpSimulationData &newSimulationData);
 };
 
 QDebug operator<<(QDebug d, const JumpData & jumpData);

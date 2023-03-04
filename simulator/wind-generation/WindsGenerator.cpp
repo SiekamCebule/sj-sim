@@ -160,13 +160,13 @@ int WindsGenerator::calculateWindsCountByKPoint(double KPoint)
 QPair<double, double> WindsGenerator::getRangeOfWindSector(int sector, double KPoint)
 {
     int windsCount = WindsGenerator::calculateWindsCountByKPoint(KPoint);
-    double segmentDistance = KPoint / windsCount;
+    double segmentDistance = (KPoint + (KPoint / windsCount)) / windsCount;
     if(sector == WindsGenerator::calculateWindsCountByKPoint(KPoint))
-        return QPair<double, double>(roundDoubleToHalf((double)windsCount * segmentDistance), (-1));
+        return QPair<double, double>(roundDoubleToHalf(((double)windsCount - 1) * segmentDistance), (-1));
 
     double min = 0, max = 0;
     min = roundDoubleToHalf((sector - 1) * (segmentDistance));
-    max = roundDoubleToHalf(sector * (segmentDistance));
+    max = roundDoubleToHalf(sector * segmentDistance);
 
     return QPair<double, double>(min, max);
 }

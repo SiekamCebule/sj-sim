@@ -106,6 +106,28 @@ double Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(double pointsForF
     return pointsForFrontWind * 1.21;
 }
 
+double Hill::calculateBestTakeoffHeightLevel(Hill *hill)
+{
+    double level = 1.075;
+    if((hill->getTakeoffEffect() / (hill->getFlightEffect() / 1.00)) > 1)
+        level += (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.85));
+    else
+        level += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
+
+    return level;
+}
+
+double Hill::calculateBestFlightHeightLevel(Hill *hill)
+{
+    double level = 0.7;
+    if((hill->getTakeoffEffect() / (hill->getFlightEffect() / 1.00)) > 1)
+        level += (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.85));
+    else
+        level += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
+
+    return level;
+}
+
 double Hill::getPointsForKPoint() const
 {
     return pointsForKPoint;

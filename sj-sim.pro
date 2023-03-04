@@ -32,6 +32,7 @@ SOURCES += \
     simulator/Hill.cpp \
     simulator/JumpData.cpp \
     simulator/JumpMistake.cpp \
+    simulator/JumpSimulationData.cpp \
     simulator/JumpSimulator.cpp \
     simulator/Jumper.cpp \
     simulator/JumperSkills.cpp \
@@ -71,6 +72,7 @@ HEADERS += \
     simulator/Hill.h \
     simulator/JumpData.h \
     simulator/JumpMistake.h \
+    simulator/JumpSimulationData.h \
     simulator/JumpSimulator.h \
     simulator/Jumper.h \
     simulator/JumperSkills.h \

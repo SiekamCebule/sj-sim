@@ -7,6 +7,16 @@ JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill)
 {}
 
+JumpSimulationData JumpData::getSimulationData() const
+{
+    return simulationData;
+}
+
+void JumpData::setSimulationData(const JumpSimulationData &newSimulationData)
+{
+    simulationData = newSimulationData;
+}
+
 double JumpData::getAveragedWind() const
 {
     return averagedWind;

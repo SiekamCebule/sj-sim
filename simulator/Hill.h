@@ -41,6 +41,8 @@ public:
     static double calculatePointsForMeter(double KPoint);
     static double calculatePointsForKPoint(double KPoint);
     static double calculatePointsForBackWindBy21PercentsOfFrontWind(double pointsForFrontWind);
+    static double calculateBestTakeoffHeightLevel(Hill * hill);
+    static double calculateBestFlightHeightLevel(Hill * hill);
 
     double getKAndRealHSDifference();
 
