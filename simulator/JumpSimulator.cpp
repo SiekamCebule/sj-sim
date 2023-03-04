@@ -91,7 +91,7 @@ void JumpSimulator::generateTakeoffRating()
 
     double takeoffHeightLevel = jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height");
     double random = 0;
-    random = -(MyRandom::reducingChancesRandom(-5 + (takeoffHeightLevel * 3.2), 80, 0.5, 1, 1.083 + (takeoffHeightLevel / 105), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
+    random = -(MyRandom::reducingChancesRandom(-6.5 + (takeoffHeightLevel * 2.55), 60, 0.5, 1, 1.112 + (takeoffHeightLevel / 120), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
     random *= 1 + (0.14 * hill->getLevelOfCharacteristic("takeoff-randomness-effect"));
     //qDebug()<<"Takeoff Random: "<<random;
     takeoffRating += random;
@@ -120,7 +120,7 @@ void JumpSimulator::generateFlightRating()
 
     double flightHeightLevel = jumper->getJumperSkills().getLevelOfCharacteristic("flight-height");
     double random = 0;
-    random = -(MyRandom::reducingChancesRandom(-5 + (flightHeightLevel * 1.06), 80, 0.5, 1, 1.083 + (flightHeightLevel / 310), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
+    random = -(MyRandom::reducingChancesRandom(-6 + (flightHeightLevel * 0.85), 60, 0.5, 1, 1.112 + (flightHeightLevel / 360), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
     random *= 1 + (0.14 * hill->getLevelOfCharacteristic("flight-randomness-effect"));
     //qDebug()<<"Flight Random: "<<random;
     flightRating += random;

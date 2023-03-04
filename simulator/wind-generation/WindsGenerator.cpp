@@ -46,13 +46,16 @@ QVector<Wind> WindsGenerator::generateWinds()
 
         short windDirection = Wind::Null;
 
+        //qDebug()<<settings->getWindDirectionInstability()<<" (DIRECTION INSTABILITY)";
+        //qDebug()<<Wind::getStringWindDirection(settings->getBaseDirection(), true)<<" (BASE DIRECTION)";
+
         double backProb = 250 + settings->getLevelOfCharacteristic("back-wind-probability") * 100;
         double backSideProb = 250 + settings->getLevelOfCharacteristic("back-side-wind-probability") * 100;
         double sideProb = 250 + settings->getLevelOfCharacteristic("side-wind-probability") * 100;
         double frontSideProb = 250 + settings->getLevelOfCharacteristic("front-side-wind-probability") * 100;
         double frontProb = 250 + settings->getLevelOfCharacteristic("front-wind-probability") * 100;
 
-        const double baseDirectionChanceMultiplier = 133 - (settings->getWindDirectionInstability() * 13);
+        const double baseDirectionChanceMultiplier = 1100 - (settings->getWindDirectionInstability() * 109);
 
         switch(settings->getBaseDirection())
         {
@@ -132,30 +135,24 @@ QVector<Wind> WindsGenerator::generateWinds()
 
 int WindsGenerator::calculateWindsCountByKPoint(double KPoint)
 {
-    if(KPoint < 30)
+    if(KPoint < 25)
         return 1;
-    else if(KPoint < 55)
+    else if(KPoint < 50)
         return 2;
     else if(KPoint < 75)
         return 3;
-    else if(KPoint < 90)
+    else if(KPoint < 100)
         return 4;
-    else if(KPoint < 103)
+    else if(KPoint < 135)
         return 5;
-    else if(KPoint < 115)
+    else if(KPoint < 160)
         return 6;
-    else if(KPoint < 132)
-        return 7;
-    else if(KPoint < 156)
-        return 8;
-    else if(KPoint < 177)
-        return 9;
     else if(KPoint < 205)
-        return 10;
+        return 7;
     else
     {
-        int i = 11;
-        i += (KPoint - 225) / 35;
+        int i = 8;
+        i += (KPoint - 205) / 54;
         return i;
     }
 }

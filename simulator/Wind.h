@@ -27,11 +27,11 @@ private:
 public:
     short getDirection() const;
     void setDirection(short newDirection);
-    QString getStringDirection(bool windPrefix) const;
     double getValue() const;
     void setValue(double newValue);
     double getValueToAveragedWind() const;
 
+    static QString getStringWindDirection(short direction, bool windPrefix);
     static QString getStyleSheetForAveragedWind(double avgWind);
 };
 

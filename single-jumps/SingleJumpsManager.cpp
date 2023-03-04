@@ -43,7 +43,7 @@ void SingleJumpsManager::simulate()
 
         jumpSimulator.simulateJump();
         jumps.push_back(jumpSimulator.getJumpData());
-        qDebug()<<jumpSimulator.getJumpData();
+        qDebug()<<i+1<<". "<<jumpSimulator.getJumpData();
         double distance = jumpSimulator.getJumpData().getDistance();
         if(min < distance)
             min = distance;

@@ -4,6 +4,8 @@
 #include <QDialog>
 #include "../../single-jumps/SingleJumpsManager.h"
 
+class QSplineSeries;
+
 namespace Ui {
 class SingleJumpsResultsWindow;
 }
@@ -19,14 +21,19 @@ public:
     void fillJumperInfo();
     void fillHillInfo();
     void fillMiniJumpsResultsLayout();
+    void fillDistancesChart();
 
     SingleJumpsManager *getManager() const;
     void setManager(SingleJumpsManager *newManager);
+    int getMaxNumberOfDistancesForChart() const;
 
 private:
     Ui::SingleJumpsResultsWindow *ui;
 
     SingleJumpsManager * manager;
+
+    QSplineSeries * getSplineSeriesForDistancesChart();
+    int maxNumberOfDistancesForChart;
 };
 
 #endif // SINGLEJUMPSRESULTSWINDOW_H

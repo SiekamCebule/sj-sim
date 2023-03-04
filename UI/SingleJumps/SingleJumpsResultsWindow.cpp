@@ -6,13 +6,20 @@
 #include "../../global/CountryFlagsManager.h"
 #include "../../global/IDGenerator.h"
 
-extern IDGenerator globalIDGenerator;
-
+#include <math.h>
+#include <QChart>
+#include <QChartView>
+#include <QSplineSeries>
 #include <QEventLoop>
+#include <QMap>
+#include <QDebug>
+
+extern IDGenerator globalIDGenerator;
 
 SingleJumpsResultsWindow::SingleJumpsResultsWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SingleJumpsResultsWindow)
+    ui(new Ui::SingleJumpsResultsWindow),
+    maxNumberOfDistancesForChart(0)
 {
     ui->setupUi(this);
 
@@ -83,6 +90,22 @@ void SingleJumpsResultsWindow::fillMiniJumpsResultsLayout()
     ui->verticalLayout_singleJumpResultWidgets->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
 }
 
+void SingleJumpsResultsWindow::fillDistancesChart()
+{
+    QChart * distancesChart = new QChart();
+    distancesChart->legend()->hide();
+    distancesChart->addSeries(getSplineSeriesForDistancesChart());
+    distancesChart->setTitle("Rozkład odległości zawodnika");
+    distancesChart->setTitleFont(QFont("Quicksand Medium", 15, 1, false));
+    distancesChart->createDefaultAxes();
+    distancesChart->axes(Qt::Vertical).first()->setRange(1, getMaxNumberOfDistancesForChart() * 1.15);
+
+    QChartView * distancesChartView = new QChartView(distancesChart);
+    distancesChartView->setRenderHint(QPainter::Antialiasing);
+
+    ui->verticalLayout_distanceStatistics->addWidget(distancesChartView);
+}
+
 SingleJumpsManager *SingleJumpsResultsWindow::getManager() const
 {
     return manager;
@@ -91,4 +114,35 @@ SingleJumpsManager *SingleJumpsResultsWindow::getManager() const
 void SingleJumpsResultsWindow::setManager(SingleJumpsManager *newManager)
 {
     manager = newManager;
+}
+
+QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForDistancesChart()
+{
+    QSplineSeries * series = new QSplineSeries();
+    QMap<int, int> distances;
+    for(const auto & jump : manager->getJumps())
+    {
+        double distance = std::round(jump.getDistance());
+        if(distances.contains(distance))
+        {
+            distances[distance] += 1;
+        }
+        else{
+            distances.insert(distance, 1);
+        }
+    }
+
+    for(auto & key : distances.keys())
+    {
+        if(distances.value(key) > maxNumberOfDistancesForChart) maxNumberOfDistancesForChart = distances.value(key);
+        series->append(key, distances.value(key));
+    }
+
+    //return series;
+    return series;
+}
+
+int SingleJumpsResultsWindow::getMaxNumberOfDistancesForChart() const
+{
+    return maxNumberOfDistancesForChart;
 }

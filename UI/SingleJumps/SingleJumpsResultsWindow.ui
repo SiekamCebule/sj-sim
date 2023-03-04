@@ -281,7 +281,7 @@ color: rgb(26, 95, 180);
 }</string>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page_jumpInformations">
         <property name="geometry">
@@ -313,6 +313,11 @@ color: rgb(26, 95, 180);
         <attribute name="label">
          <string>Statystyki odległości</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_distanceStatistics"/>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="page_landingStatistics">
         <property name="geometry">

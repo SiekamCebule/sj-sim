@@ -1,87 +1,79 @@
 {
-"jumpers":[{
-"name": "Markus",
-"surname": "Eisenbichler",
-"country-code": "GER",
-"takeoff-power": 42,
-"takeoff-technique": 43.5,
-"flight-technique": 46,
-"flight-style": 2,
-"landing-style": 12,
-"form": 35,
-"characteristics":[
-{
-"type": "takeoff-height",
-"level": -0.45
-},
-{
-"type": "flight-height",
-"level": -0.45
-}
-]
-},
-{
-"name": "Constantin",
-"surname": "Schmid",
-"country-code": "GER",
-"takeoff-power": 47,
-"takeoff-technique": 42.5,
-"flight-technique": 35,
-"flight-style": 1,
-"landing-style": 13,
-"form": 34,
-"characteristics":[
-{
-"type": "takeoff-height",
-"level": 2.5
-},
-{
-"type": "flight-height",
-"level": 2.2
-}
-]
-},
-{
-"name": "Paweł",
-"surname": "Wąsek",
-"country-code": "POL",
-"takeoff-power": 42.25,
-"takeoff-technique": 40,
-"flight-technique": 35,
-"flight-style": 1,
-"landing-style": 12.7,
-"form": 32,
-"characteristics":[
-{
-"type": "takeoff-height",
-"level": 0.25
-},
-{
-"type": "flight-height",
-"level": 0.45
-}
-]
-},
-{
-"name": "Constantin",
-"surname": "Schmid",
-"country-code": "GER",
-"takeoff-power": 47,
-"takeoff-technique": 42.5,
-"flight-technique": 35,
-"flight-style": 1,
-"landing-style": 13,
-"form": 34,
-"characteristics":[
-{
-"type": "takeoff-height",
-"level": 2.5
-},
-{
-"type": "flight-height",
-"level": 2.2
-}
-]
-}
-]
+    "jumpers": [
+        {
+            "characteristics": [
+                {
+                    "level": 0.8,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": 0.5,
+                    "type": "flight-height"
+                },
+                {
+                    "level": 0.25,
+                    "type": "landing-skill"
+                }
+            ],
+            "country-code": "AUT",
+            "flight-style": 1,
+            "flight-technique": 48,
+            "form": 37.75,
+            "landing-style": 12.95,
+            "name": "Jan",
+            "surname": "Hoerl",
+            "takeoff-power": 52,
+            "takeoff-technique": 54
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.5,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": -0.8,
+                    "type": "landing-skill"
+                }
+            ],
+            "country-code": "POL",
+            "flight-style": 2,
+            "flight-technique": 53.5,
+            "form": 37,
+            "landing-style": 12,
+            "name": "Piotr",
+            "surname": "Żyła",
+            "takeoff-power": 54.5,
+            "takeoff-technique": 52
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.55,
+                    "type": "both-legs-landing-tendence"
+                },
+                {
+                    "level": -1.25,
+                    "type": "flight-height"
+                },
+                {
+                    "level": -0.25,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": -1.75,
+                    "type": "landing-skill"
+                }
+            ],
+            "country-code": "KAZ",
+            "flight-style": 2,
+            "flight-technique": 31,
+            "form": 29,
+            "landing-style": 10.5,
+            "name": "Sergey",
+            "surname": "Tkachenko",
+            "takeoff-power": 38.25,
+            "takeoff-technique": 31
+        }
+    ]
 }

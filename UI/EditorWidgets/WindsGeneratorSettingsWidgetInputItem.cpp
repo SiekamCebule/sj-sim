@@ -43,7 +43,7 @@ double WindsGeneratorSettingsWidgetInputItem::getWindStrengthChangeFromInput()
 
 short WindsGeneratorSettingsWidgetInputItem::getBaseWindDirectionFromInput()
 {
-    return ui->comboBox_baseWindDirection->currentIndex();
+    return ui->comboBox_baseWindDirection->currentIndex() + 1;
 }
 
 double WindsGeneratorSettingsWidgetInputItem::getWindDirectionChangeFromInput()
