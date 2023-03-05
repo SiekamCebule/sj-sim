@@ -10,6 +10,7 @@
 #include <QStringList>
 #include <QStringListModel>
 #include <QScrollArea>
+#include <QMessageBox>
 
 SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     QDialog(parent),
@@ -83,7 +84,9 @@ void SingleJumpsConfigWindow::on_comboBox_existingHill_currentIndexChanged(int i
 
 void SingleJumpsConfigWindow::on_pushButton_submit_clicked()
 {
-    accept();
+    if(ui->spinBox_jumpsCount->value() > 0)
+        accept();
+    else QMessageBox::warning(this, tr("Ostrzeżenie"), tr("Ilość skoków musi być większa niż 0"), QMessageBox::Ok);
 }
 
 WindsGeneratorSettingsEditorWidget *SingleJumpsConfigWindow::getWindsGeneratorSettingsEditor() const

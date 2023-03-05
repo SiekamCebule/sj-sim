@@ -35,7 +35,7 @@ QVector<Wind> WindsGenerator::generateWinds()
         WindGenerationSettings * settings = &generationSettings[i];
 
         double windValue = settings->getBaseWindStrength();
-        double random = MyRandom::reducingChancesRandom(0, settings->getBaseWindStrength() * 1.3, settings->getBaseWindStrength() / 45, 1, (1.33 - settings->getWindStrengthInstability() / 30), MyRandom::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
+        double random = MyRandom::reducingChancesRandom(0, settings->getBaseWindStrength() * 1.75, settings->getBaseWindStrength() / 45, 1, (1.437 - settings->getWindStrengthInstability() / 23), MyRandom::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
         short randomType = MyRandom::randomInt(0, 1);
         switch(randomType)
         {
@@ -55,50 +55,71 @@ QVector<Wind> WindsGenerator::generateWinds()
         double frontSideProb = 250 + settings->getLevelOfCharacteristic("front-side-wind-probability") * 100;
         double frontProb = 250 + settings->getLevelOfCharacteristic("front-wind-probability") * 100;
 
-        const double baseDirectionChanceMultiplier = 250 - (settings->getWindDirectionInstability() * 24.75);
+        const double baseDirectionChanceMultiplier = 35 - ((settings->getWindDirectionInstability()) * 3.2);
 
-        switch(settings->getBaseDirection())
+        if(settings->getWindDirectionInstability() == 0)
         {
-        case Wind::Back:
-            backSideProb *= 2.55;
-            sideProb *= 0.55;
-            frontSideProb *= 0.07;
-            frontProb *= 0.01;
+            QVector<double *> probs;
+            probs.push_back(&backProb);
+            probs.push_back(&backSideProb);
+            probs.push_back(&sideProb);
+            probs.push_back(&frontSideProb);
+            probs.push_back(&frontProb);
 
-            backProb *= baseDirectionChanceMultiplier;
-            break;
-        case Wind::BackSide:
-            backProb *= 2.4;
-            sideProb *= 2.0;
-            frontSideProb *= 0.172;
-            frontProb *= 0.028;
+            int i=0;
+            for(auto & prob : probs)
+            {
+                if(i != settings->getBaseDirection())
+                    *prob = 0;
+                else *prob = 1;
+                i++;
+            }
 
-            backSideProb *= baseDirectionChanceMultiplier;
-            break;
-        case Wind::Side:
-            backProb *= 0.13;
-            backSideProb *= 2.5;
-            frontSideProb *= 2.5;
-            frontProb *= 0.13;
+        }
+        else{
+            switch(settings->getBaseDirection())
+            {
+            case Wind::Back:
+                backSideProb *= 2.55;
+                sideProb *= 0.55;
+                frontSideProb *= 0.07;
+                frontProb *= 0.01;
 
-            sideProb *= baseDirectionChanceMultiplier;
-            break;
-        case Wind::FrontSide:
-            backProb *= 0.028;
-            backSideProb *= 0.172;
-            sideProb *= 2.0;
-            frontProb *= 2.4;
+                backProb *= baseDirectionChanceMultiplier;
+                break;
+            case Wind::BackSide:
+                backProb *= 2.4;
+                sideProb *= 2.0;
+                frontSideProb *= 0.172;
+                frontProb *= 0.028;
 
-            frontSideProb *= baseDirectionChanceMultiplier;
-            break;
-        case Wind::Front:
-            backProb *= 0.01;
-            backSideProb *= 0.07;
-            sideProb *= 0.55;
-            frontSideProb *= 2.55;
+                backSideProb *= baseDirectionChanceMultiplier;
+                break;
+            case Wind::Side:
+                backProb *= 0.13;
+                backSideProb *= 2.5;
+                frontSideProb *= 2.5;
+                frontProb *= 0.13;
 
-            frontProb *= baseDirectionChanceMultiplier;
-            break;
+                sideProb *= baseDirectionChanceMultiplier;
+                break;
+            case Wind::FrontSide:
+                backProb *= 0.028;
+                backSideProb *= 0.172;
+                sideProb *= 2.0;
+                frontProb *= 2.4;
+
+                frontSideProb *= baseDirectionChanceMultiplier;
+                break;
+            case Wind::Front:
+                backProb *= 0.01;
+                backSideProb *= 0.07;
+                sideProb *= 0.55;
+                frontSideProb *= 2.55;
+
+                frontProb *= baseDirectionChanceMultiplier;
+                break;
+            }
         }
 
         QVector<double> probabilities;

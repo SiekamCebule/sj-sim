@@ -24,7 +24,8 @@ SingleJumpsResultsWindow::SingleJumpsResultsWindow(QWidget *parent) :
     maxNumberOfDistancesForChart(0),
     maxNumberOfJudgesForChart(0),
     maxNumberOfLandingsForChart(0),
-    selectedItemIndex(0)
+    selectedItemIndex(0),
+    maxNumberOfWindsForChart(0)
 {
     ui->setupUi(this);
 
@@ -132,6 +133,21 @@ void SingleJumpsResultsWindow::fillLandingsChart()
     ui->verticalLayout_landingsStatistics->addWidget(landingsChartView);
 }
 
+void SingleJumpsResultsWindow::fillWindsChart()
+{
+    QChart * windsChart = new QChart();
+    windsChart->addSeries(getSplineSeriesForWindsChart());
+    windsChart->setTitle("Rozkład siły wiatru przy skokach (zaokrąglone do 0.1)");
+    windsChart->setTitleFont(QFont("Quicksand Medium", 15, 1, false));
+    windsChart->createDefaultAxes();
+    windsChart->axes(Qt::Vertical).first()->setRange(0, maxNumberOfWindsForChart * 1.15);
+
+    QChartView * windsChartView = new QChartView(windsChart);
+    windsChartView->setRenderHint(QPainter::Antialiasing);
+
+    ui->verticalLayout_windStatistics->addWidget(windsChartView);
+}
+
 SingleJumpsManager *SingleJumpsResultsWindow::getManager() const
 {
     return manager;
@@ -228,6 +244,40 @@ QBarSeries *SingleJumpsResultsWindow::getBarSeriesForLandingsChar()
     series->append(fallSet);
 
     return series;
+}
+
+QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForWindsChart()
+{
+    QSplineSeries * series = new QSplineSeries();
+    QMap<double, int> winds;
+    for(const auto & jump : manager->getJumps())
+    {
+        double wind = std::round(jump.getAveragedWind() * 10) / 10;
+        if(winds.contains(wind))
+        {
+            winds[wind] += 1;
+        }
+        else{
+            winds.insert(wind, 1);
+        }
+    }
+    for(auto & key : winds.keys())
+    {
+        if(winds.value(key) > maxNumberOfWindsForChart) maxNumberOfWindsForChart = winds.value(key);
+        series->append(key, winds.value(key));
+    }
+
+    return series;
+}
+
+int SingleJumpsResultsWindow::getMaxNumberOfWindsForChart() const
+{
+    return maxNumberOfWindsForChart;
+}
+
+void SingleJumpsResultsWindow::setMaxNumberOfWindsForChart(int newMaxNumberOfWindsForChart)
+{
+    maxNumberOfWindsForChart = newMaxNumberOfWindsForChart;
 }
 
 int SingleJumpsResultsWindow::getMaxNumberOfLandingsForChart() const

@@ -26,6 +26,7 @@ public:
     void fillDistancesChart();
     void fillJudgesChart();
     void fillLandingsChart();
+    void fillWindsChart();
 
     SingleJumpsManager *getManager() const;
     void setManager(SingleJumpsManager *newManager);
@@ -36,6 +37,8 @@ public:
     void setSelectedItemIndex(int newSelectedItemIndex);
     QVector<SingleJumpMiniResultWidget *> getMiniResultItems() const;
     void setMiniResultItems(const QVector<SingleJumpMiniResultWidget *> &newMiniResultItems);
+    int getMaxNumberOfWindsForChart() const;
+    void setMaxNumberOfWindsForChart(int newMaxNumberOfWindsForChart);
 
 private:
     Ui::SingleJumpsResultsWindow *ui;
@@ -51,6 +54,8 @@ private:
     int maxNumberOfJudgesForChart;
     QBarSeries * getBarSeriesForLandingsChar();
     int maxNumberOfLandingsForChart;
+    QSplineSeries * getSplineSeriesForWindsChart();
+    int maxNumberOfWindsForChart;
 };
 
 #endif // SINGLEJUMPSRESULTSWINDOW_H

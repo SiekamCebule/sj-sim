@@ -38,18 +38,26 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    /* double min = 80, max = 0, avg = 0;
-    for(int i=0; i<200; i++)
+    //qDebug()<<"random: "<<0;
+    //double random = MyRandom::reducingChancesRandom(0, (2) * 1.3, (2) / 45, 1, (1.33 - (5) / 30), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
+    //double random = MyRandom::reducingChancesRandom(0, 2.6, 0.044, 1, 1.1, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
+    //qDebug()<<"random: "<<random;
+
+    /*double min = 80, max = 0, avg = 0;
+    for(int i=0; i<30; i++)
     {
         //double random = MyRandom::reducingChancesRandom(-5, 80, 0.5, 1, 1.1075, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);//min: -3, max: 30.5, avg: 9.02
-       // double random = MyRandom::reducingChancesRandom(-16.5, 80, 0.5, 1, 1.0625, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger); //min: -8.5, max: 50, avg: 10.75
-    //double random = MyRandom::reducingChancesRandom(4, 80, 0.5, 1, 1.28, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger); //min 4, max: 20.5, avg: 8.16
+        // double random = MyRandom::reducingChancesRandom(-16.5, 80, 0.5, 1, 1.0625, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger); //min: -8.5, max: 50, avg: 10.75
+        //double random = MyRandom::reducingChancesRandom(4, 80, 0.5, 1, 1.28, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger); //min 4, max: 20.5, avg: 8.16
+            double random = MyRandom::reducingChancesRandom(0, 2.6, 0.044, 1, 1.163, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
         if(random < min)
             min = random;
         if(random > max)
             max = random;
 
         avg += random;
+
+        qDebug()<<"random: "<<random;
     }
     avg /= 200;
     qDebug()<<"Najmniejszy: "<<min;
@@ -78,11 +86,17 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         manager.setResultsFileName(singleJumpsConfig.getResultsFileName());
         manager.setResultsFormat(singleJumpsConfig.getResultsFormatFromInput());
         manager.setGate(singleJumpsConfig.getGateFromInput());
+        qDebug()<<"nom";
         manager.setJumper(singleJumpsConfig.getJumperEditor()->getJumperFromWidgetInput());
+        qDebug()<<"nom";
         manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
+        qDebug()<<"nom";
         manager.setWindsGeneratorSettings(singleJumpsConfig.getWindsGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
+        qDebug()<<"nom";
         manager.setWindAverageCalculatingType(singleJumpsConfig.getWindAverageCalculatingType());
+        qDebug()<<"nom";
         manager.setWindCompensationDistanceEffect(singleJumpsConfig.getWindCompensationDistanceEffect());
+        qDebug()<<"nom";
         manager.simulate();
 
         SingleJumpsResultsWindow resultsWindow;
@@ -93,6 +107,7 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         resultsWindow.fillDistancesChart();
         resultsWindow.fillJudgesChart();
         resultsWindow.fillLandingsChart();
+        resultsWindow.fillWindsChart();
         if(resultsWindow.exec() == QDialog::Accepted)
         {
             qDebug()<<"accepted";

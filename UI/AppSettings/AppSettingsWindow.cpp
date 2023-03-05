@@ -6,8 +6,8 @@
 
 #include "../mainwindow.h"
 #include "../../global/GlobalAppSettings.h"
-
 #include "../../global/GlobalTranslators.h"
+#include "../../global/CountryFlagsManager.h"
 
 AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
     QDialog(parent),
@@ -25,8 +25,8 @@ AppSettingsWindow::~AppSettingsWindow()
 
 void AppSettingsWindow::setupLanguagesComboBox()
 {
-    ui->comboBox_language->addItem(QIcon("://img/poland.png"), QObject::tr("Polski"));
-    ui->comboBox_language->addItem(QIcon("://img/england.png"), QObject::tr("Angielski"));
+    ui->comboBox_language->addItem(QIcon(CountryFlagsManager::getFlagPixmap("pl")), QObject::tr("Polski"));
+    ui->comboBox_language->addItem(QIcon(CountryFlagsManager::getFlagPixmap("gb")), QObject::tr("Angielski"));
 
     ui->comboBox_language->setCurrentIndex(GlobalAppSettings::get()->getLanguageID());
     connect(ui->comboBox_language, &QComboBox::currentIndexChanged, this, &AppSettingsWindow::myConnect_on_comboBox_language_currentIndexChanged);

@@ -12,6 +12,9 @@ MyRandom::MyRandom()
 
 double MyRandom::randomDouble(double min, double max, short precision)
 {
+    if(min >= max)
+        return 0;
+
     QVector<double> results;
     ulong toMultipy = std::pow(10, precision);
     for(int i=0; i<1000; i++)
@@ -21,10 +24,14 @@ double MyRandom::randomDouble(double min, double max, short precision)
         results.push_back(result);
     }
     return results[QRandomGenerator::global()->bounded(0, results.size() - 1)];
+
 }
 
 int MyRandom::randomInt(int min, int max)
 {
+    if(min >= max)
+        return 0;
+
     QVector<int> results;
     for(int i=0; i<1000; i++)
     {

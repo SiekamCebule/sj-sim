@@ -297,7 +297,7 @@ width: 5px;
           <x>0</x>
           <y>0</y>
           <width>1210</width>
-          <height>484</height>
+          <height>455</height>
          </rect>
         </property>
         <attribute name="label">
@@ -315,7 +315,7 @@ width: 5px;
           <x>0</x>
           <y>0</y>
           <width>1210</width>
-          <height>484</height>
+          <height>455</height>
          </rect>
         </property>
         <attribute name="label">
@@ -333,7 +333,7 @@ width: 5px;
           <x>0</x>
           <y>0</y>
           <width>1210</width>
-          <height>484</height>
+          <height>455</height>
          </rect>
         </property>
         <attribute name="label">
@@ -346,12 +346,30 @@ width: 5px;
         </layout>
        </widget>
        <widget class="QWidget" name="page_landingsStatistics">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1210</width>
+          <height>455</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>Statystyki rodzajów lądowania</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_landingsStatistics"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_windStatistics">
+        <attribute name="label">
+         <string>Statystyki wiatru</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_8">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_windStatistics"/>
          </item>
         </layout>
        </widget>
