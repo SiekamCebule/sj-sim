@@ -12,10 +12,34 @@
 class SingleJumpsManager
 {
 public:
-    SingleJumpsManager(int gate = 0, int jumpsCount = 0, bool saveResultsToFile = false, const QString &resultsFileName = "", bool changeableWind = false, const QVector<WindGenerationSettings> &windsGeneratorSettings = QVector<WindGenerationSettings>(), const Jumper &jumper = Jumper(), const Hill &hill = Hill());
+    SingleJumpsManager(int gate = 0, int jumpsCount = 0, bool saveResultsToFile = false, const QString &resultsFileName = "", bool changeableWind = false, short resultsFormat = 0);
 
     void simulate();
 
+    enum ResultsFileFormat{
+        Json,
+        Csv
+    };
+    bool saveResultsToFile(short fileFormat = Json);
+
+private:
+    Jumper jumper;
+    Hill hill;
+    WindsGenerator windsGenerator;
+    QVector<WindGenerationSettings> windsGeneratorSettings;
+    JumpSimulator jumpSimulator;
+
+    int jumpsCount;
+    bool changeableWind;
+    short resultsFormat;
+    QString resultsFileName;
+    short windAverageCalculatingType;
+    short windCompensationDistanceEffect;
+    int gate;
+
+    QVector<JumpData> jumps;
+
+public:
     Jumper getJumper() const;
     void setJumper(const Jumper &newJumper);
     Hill getHill() const;
@@ -29,34 +53,16 @@ public:
     void setWindsGeneratorSettings(const QVector<WindGenerationSettings> &newWindsGeneratorSettings);
     bool getChangeableWind() const;
     void setChangeableWind(bool newChangeableWind);
-    bool getSaveResultsToFile() const;
-    void setSaveResultsToFile(bool newSaveResultsToFile);
     QString getResultsFileName() const;
     void setResultsFileName(const QString &newResultsFileName);
     int getGate() const;
-    void setGate(int newGate);  
+    void setGate(int newGate);
     short getWindAverageCalculatingType() const;
     void setWindAverageCalculatingType(short newWindAverageCalculatingType);
-
     short getWindCompensationDistanceEffect() const;
     void setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect);
-
-private:
-    Jumper jumper;
-    Hill hill;
-    WindsGenerator windsGenerator;
-    QVector<WindGenerationSettings> windsGeneratorSettings;
-    JumpSimulator jumpSimulator;
-
-    int jumpsCount;
-    bool changeableWind;
-    bool saveResultsToFile;
-    QString resultsFileName;
-    short windAverageCalculatingType;
-    short windCompensationDistanceEffect;
-    int gate;
-
-    QVector<JumpData> jumps;
+    short getResultsFormat() const;
+    void setResultsFormat(short newResultsFormat);
 };
 
 #endif // SINGLEJUMPSMANAGER_H

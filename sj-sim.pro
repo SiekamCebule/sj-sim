@@ -42,7 +42,6 @@ SOURCES += \
     simulator/wind-generation/WindGenerationSettings.cpp \
     simulator/wind-generation/WindsGenerator.cpp \
     single-jumps/SingleJumpsManager.cpp \
-    single-jumps/SingleJumpsSettings.cpp \
     utilities/ClassWithCharacteristics.cpp \
     utilities/ClassWithID.cpp \
     global/IDGenerator.cpp \
@@ -82,7 +81,6 @@ HEADERS += \
     simulator/wind-generation/WindGenerationSettings.h \
     simulator/wind-generation/WindsGenerator.h \
     single-jumps/SingleJumpsManager.h \
-    single-jumps/SingleJumpsSettings.h \
     utilities/ClassWithCharacteristics.h \
     utilities/ClassWithID.h \
     global/IDGenerator.h \

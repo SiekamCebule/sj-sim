@@ -20,19 +20,19 @@ Wind WindsInfo::getAveragedWind(short type)
     {
         if(type == Original){
             if(wind.getDirection() == Wind::Front || wind.getDirection() == Wind::FrontSide)
-                windAvg += wind.getValue() * percent;
+                windAvg += wind.getStrength() * percent;
             else if(wind.getDirection() == Wind::Back || wind.getDirection() == Wind::BackSide)
-                windAvg -= wind.getValue() * percent;
+                windAvg -= wind.getStrength() * percent;
         }
         else{
             if(wind.getDirection() == Wind::Front)
-                windAvg += wind.getValue() * percent;
+                windAvg += wind.getStrength() * percent;
             else if(wind.getDirection() == Wind::FrontSide)
-                windAvg += wind.getValue() * 0.5 * percent;
+                windAvg += wind.getStrength() * 0.5 * percent;
             else if(wind.getDirection() == Wind::BackSide)
-                windAvg -= wind.getValue() * 0.5 * percent;
+                windAvg -= wind.getStrength() * 0.5 * percent;
             else if(wind.getDirection() == Wind::Back)
-                windAvg -= wind.getValue() * percent;
+                windAvg -= wind.getStrength() * percent;
         }
         i++;
     }

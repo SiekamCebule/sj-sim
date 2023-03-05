@@ -54,8 +54,6 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     ui->verticalLayout_windsGeneratorSettings->addWidget(windsGeneratorSettingsEditor);
     connect(hillEditor, &HillEditorWidget::KPointInputChanged, windsGeneratorSettingsEditor, &WindsGeneratorSettingsEditorWidget::fillSettingsInputs);
 
-    ui->lineEdit_resultsFileName->setEnabled(false);
-
     ui->toolBox->setCurrentIndex(0);
 }
 
@@ -103,9 +101,9 @@ bool SingleJumpsConfigWindow::getChangeableWindFromInput()
     return ui->checkBox_changeableWind->isChecked();
 }
 
-bool SingleJumpsConfigWindow::getSaveResultsToFileFromInput()
+short SingleJumpsConfigWindow::getResultsFormatFromInput()
 {
-    return ui->checkBox_saveResultsFile->isChecked();
+    return ui->comboBox_fileFormat->currentIndex();
 }
 
 QString SingleJumpsConfigWindow::getResultsFileName()
@@ -136,13 +134,5 @@ HillEditorWidget *SingleJumpsConfigWindow::getHillEditor() const
 JumperEditorWidget *SingleJumpsConfigWindow::getJumperEditor() const
 {
     return jumperEditor;
-}
-
-
-void SingleJumpsConfigWindow::on_checkBox_saveResultsFile_stateChanged(int arg1)
-{
-    if(arg1 == 2)
-        ui->lineEdit_resultsFileName->setEnabled(true);
-    else ui->lineEdit_resultsFileName->setEnabled(false);
 }
 

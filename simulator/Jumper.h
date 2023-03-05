@@ -7,6 +7,7 @@
 #include <QString>
 #include <QPixmap>
 #include <QObject>
+#include <QJsonObject>
 
 class Jumper : public ClassWithID
 {
@@ -21,6 +22,8 @@ private:
 
     JumperSkills jumperSkills;
 public:
+    static QJsonObject getJumperJsonObject(Jumper *jumper, bool saveSkills, bool saveCharacteristics);
+
     QString getName() const;
     void setName(const QString &newName);
     QString getSurname() const;

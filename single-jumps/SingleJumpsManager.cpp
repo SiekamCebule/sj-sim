@@ -1,14 +1,23 @@
 #include "SingleJumpsManager.h"
 #include <QDebug>
 
-SingleJumpsManager::SingleJumpsManager(int gate, int jumpsCount, bool saveResultsToFile, const QString &resultsFileName, bool changeableWind, const QVector<WindGenerationSettings> &windsGeneratorSettings, const Jumper &jumper, const Hill &hill) : jumper(jumper),
-    hill(hill),
-    windsGeneratorSettings(windsGeneratorSettings),
+#include <QFile>
+#include <QByteArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonParseError>
+#include <QJsonArray>
+#include <QMessageBox>
+#include <QObject>
+#include <QDir>
+
+SingleJumpsManager::SingleJumpsManager(int gate, int jumpsCount, bool saveResultsToFile, const QString &resultsFileName, bool changeableWind, short resultsFormat) :
     jumpsCount(jumpsCount),
     changeableWind(changeableWind),
-    saveResultsToFile(saveResultsToFile),
     resultsFileName(resultsFileName),
-    gate(gate)
+    gate(gate),
+    resultsFormat(resultsFormat)
 {}
 
 void SingleJumpsManager::simulate()
@@ -28,7 +37,7 @@ void SingleJumpsManager::simulate()
         {
             Wind wind;
             wind.setDirection(setting.getBaseDirection());
-            wind.setValue(setting.getBaseWindStrength());
+            wind.setStrength(setting.getBaseWindStrength());
             winds.push_back(wind);
         }
     }
@@ -58,6 +67,55 @@ void SingleJumpsManager::simulate()
     qDebug()<<"NAJKRÓTSZY: "<<max<<"m";
     qDebug()<<"NAJDALSZY: "<<min<<"m";
     qDebug()<<"ŚREDNIA DŁUGOŚĆ SKOKU: "<<avg<<"m";
+
+    if(resultsFileName.isEmpty() == false)
+        saveResultsToFile(resultsFormat);
+}
+
+bool SingleJumpsManager::saveResultsToFile(short fileFormat)
+{
+    switch(fileFormat)
+    {
+    case Json:
+        QDir dir(QDir::currentPath());
+        dir.mkpath("results/single-jumps");
+        QFile file("results/single-jumps/" + getResultsFileName() + ".json");
+        if(file.open(QFile::WriteOnly | QFile::Text) == false)
+        {
+            QMessageBox message(QMessageBox::Icon::Critical, QObject::tr("Nie można zapisać wyników"), QObject::tr("Nie udało się otworzyć pliku results/single-jumps/<podana nazwa pliku>\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia"),  QMessageBox::StandardButton::Ok);
+            message.setModal(true);
+            message.exec();
+            return false;
+        }
+        QJsonDocument document;
+        QJsonObject mainObject;
+        mainObject.insert("jumper", Jumper::getJumperJsonObject(&jumper, false, true));
+        QJsonArray array;
+        for (auto & jump : getJumps())
+        {
+            array.push_back(JumpData::getJumpDataJsonObject(&jump, true, true, true));
+        }
+        mainObject.insert("jumps", array);
+        document.setObject(mainObject);
+        QByteArray bytes = document.toJson(QJsonDocument::Indented);
+        file.resize(0);
+        file.write(bytes);
+        file.close();
+
+        return true;
+        break;
+    }
+    return true;
+}
+
+short SingleJumpsManager::getResultsFormat() const
+{
+    return resultsFormat;
+}
+
+void SingleJumpsManager::setResultsFormat(short newResultsFormat)
+{
+    resultsFormat = newResultsFormat;
 }
 
 Jumper SingleJumpsManager::getJumper() const
@@ -123,16 +181,6 @@ bool SingleJumpsManager::getChangeableWind() const
 void SingleJumpsManager::setChangeableWind(bool newChangeableWind)
 {
     changeableWind = newChangeableWind;
-}
-
-bool SingleJumpsManager::getSaveResultsToFile() const
-{
-    return saveResultsToFile;
-}
-
-void SingleJumpsManager::setSaveResultsToFile(bool newSaveResultsToFile)
-{
-    saveResultsToFile = newSaveResultsToFile;
 }
 
 QString SingleJumpsManager::getResultsFileName() const

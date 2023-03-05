@@ -35,7 +35,7 @@ QVector<Wind> WindsGenerator::generateWinds()
         WindGenerationSettings * settings = &generationSettings[i];
 
         double windValue = settings->getBaseWindStrength();
-        double random = MyRandom::reducingChancesRandom(0, settings->getBaseWindStrength() * 1.3, settings->getBaseWindStrength() / 45, 1, (1.33 - settings->getWindStrengthInstability() / 39.5), MyRandom::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
+        double random = MyRandom::reducingChancesRandom(0, settings->getBaseWindStrength() * 1.3, settings->getBaseWindStrength() / 45, 1, (1.33 - settings->getWindStrengthInstability() / 30), MyRandom::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
         short randomType = MyRandom::randomInt(0, 1);
         switch(randomType)
         {
@@ -55,7 +55,7 @@ QVector<Wind> WindsGenerator::generateWinds()
         double frontSideProb = 250 + settings->getLevelOfCharacteristic("front-side-wind-probability") * 100;
         double frontProb = 250 + settings->getLevelOfCharacteristic("front-wind-probability") * 100;
 
-        const double baseDirectionChanceMultiplier = 1100 - (settings->getWindDirectionInstability() * 109);
+        const double baseDirectionChanceMultiplier = 250 - (settings->getWindDirectionInstability() * 24.75);
 
         switch(settings->getBaseDirection())
         {
@@ -120,7 +120,7 @@ QVector<Wind> WindsGenerator::generateWinds()
             }
         }
 
-        wind.setValue(windValue);
+        wind.setStrength(windValue);
         wind.setDirection(windDirection);
 
         winds.push_back(wind);

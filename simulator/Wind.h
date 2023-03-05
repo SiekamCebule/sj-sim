@@ -22,17 +22,16 @@ public:
 
 private:
     short direction;
-    double value;
+    double strength;
 
 public:
     short getDirection() const;
     void setDirection(short newDirection);
-    double getValue() const;
-    void setValue(double newValue);
-    double getValueToAveragedWind() const;
-
+    double getStrengthToAveragedWind() const;
     static QString getStringWindDirection(short direction, bool windPrefix);
     static QString getStyleSheetForAveragedWind(double avgWind);
+    double getStrength() const;
+    void setStrength(double newStrength);
 };
 
 #endif // WIND_H

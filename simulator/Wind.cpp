@@ -15,20 +15,10 @@ void Wind::setDirection(short newDirection)
     direction = newDirection;
 }
 
-double Wind::getValue() const
+double Wind::getStrengthToAveragedWind() const
 {
-    return value;
-}
-
-void Wind::setValue(double newValue)
-{
-    value = newValue;
-}
-
-double Wind::getValueToAveragedWind() const
-{
-    if(getDirection() == Front) return getValue();
-    else if(getDirection() == Back) return -getValue();
+    if(getDirection() == Front) return getStrength();
+    else if(getDirection() == Back) return -getStrength();
     else return 0;
 }
 
@@ -65,10 +55,10 @@ QString Wind::getStyleSheetForAveragedWind(double avgWind)
 }
 
 Wind::Wind(short direction, double value) : direction(direction),
-    value(value)
+    strength(value)
 {}
 
-Wind::Wind(double value) : value(value)
+Wind::Wind(double value) : strength(value)
 {
     if(value == 0)
         direction = Null;
@@ -76,6 +66,16 @@ Wind::Wind(double value) : value(value)
         direction = Front;
     else{
         direction = Back;
-        this->value = -(this->value);
+        this->strength = -(this->strength);
     }
+}
+
+double Wind::getStrength() const
+{
+    return strength;
+}
+
+void Wind::setStrength(double newStrength)
+{
+    strength = newStrength;
 }

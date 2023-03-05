@@ -232,30 +232,9 @@ bool GlobalDatabase::writeJumpers()
     QJsonDocument document;
     QJsonObject mainObject;
     QJsonArray array;
-    for(const auto & jumper : getGlobalJumpers())
+    for(auto & jumper : getGlobalJumpers())
     {
-        QJsonObject object;
-        object.insert("name", jumper.getName());
-        object.insert("surname", jumper.getSurname());
-        object.insert("country-code", jumper.getCountryCode().toUpper());
-        object.insert("takeoff-power", jumper.getJumperSkills().getTakeoffPower());
-        object.insert("takeoff-technique", jumper.getJumperSkills().getTakeoffTechnique());
-        object.insert("flight-technique", jumper.getJumperSkills().getFlightTechnique());
-        object.insert("flight-style", jumper.getJumperSkills().getFlightStyle());
-        object.insert("landing-style", jumper.getJumperSkills().getLandingStyle());
-        object.insert("form", jumper.getJumperSkills().getForm());
-
-        QJsonArray characteristicsArray;
-        for(const auto & characteristic : jumper.getJumperSkills().getCharacteristics())
-        {
-            QJsonObject characteristicObject;
-            characteristicObject.insert("type", characteristic.getType());
-            characteristicObject.insert("level", characteristic.getLevel());
-            characteristicsArray.push_back(characteristicObject);
-        }
-        object.insert("characteristics", characteristicsArray);
-
-        array.push_back(QJsonValue(object));
+        array.push_back(QJsonValue(Jumper::getJumperJsonObject(&jumper, true, true)));
     }
     mainObject.insert("jumpers", QJsonValue(array));
     document.setObject(mainObject);

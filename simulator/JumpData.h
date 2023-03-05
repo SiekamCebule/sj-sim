@@ -9,6 +9,7 @@
 #include "Jumper.h"
 #include "Hill.h"
 #include "JumpSimulationData.h"
+#include <QJsonObject>
 
 
 class JumpSimulator;
@@ -43,6 +44,8 @@ private:
 
 public:
     void reset();
+
+    static QJsonObject getJumpDataJsonObject(JumpData *jumpData, bool saveJudges, bool saveSimulationData, bool saveWinds);
 
     double getDistance() const;
     void setDistance(double newDistance);

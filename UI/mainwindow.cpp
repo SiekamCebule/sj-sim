@@ -27,7 +27,6 @@
 #include "UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 
 #include "single-jumps/SingleJumpsManager.h"
-#include "single-jumps/SingleJumpsSettings.h"
 
 #include <QDebug>
 #include <QCloseEvent>
@@ -39,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-   /* double min = 80, max = 0, avg = 0;
+    /* double min = 80, max = 0, avg = 0;
     for(int i=0; i<200; i++)
     {
         //double random = MyRandom::reducingChancesRandom(-5, 80, 0.5, 1, 1.1075, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);//min: -3, max: 30.5, avg: 9.02
@@ -76,9 +75,8 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         SingleJumpsManager manager;
         manager.setJumpsCount(singleJumpsConfig.getJumpsCountFromInput());
         manager.setChangeableWind(singleJumpsConfig.getChangeableWindFromInput());
-        manager.setSaveResultsToFile(singleJumpsConfig.getSaveResultsToFileFromInput());
-        if(manager.getSaveResultsToFile() == true)
-            manager.setResultsFileName(singleJumpsConfig.getResultsFileName());
+        manager.setResultsFileName(singleJumpsConfig.getResultsFileName());
+        manager.setResultsFormat(singleJumpsConfig.getResultsFormatFromInput());
         manager.setGate(singleJumpsConfig.getGateFromInput());
         manager.setJumper(singleJumpsConfig.getJumperEditor()->getJumperFromWidgetInput());
         manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
