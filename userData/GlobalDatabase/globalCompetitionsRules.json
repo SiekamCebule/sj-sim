@@ -1,0 +1,20 @@
+{
+    "competitionsRules": [
+    {
+    "name": "Experimental World Cup",
+    "95-hs-rule": true,
+    "wind-compensations": false,
+    "gate-compensations": true,
+    "judges-points": true,
+    "competition-type": 0,
+    "rounds": [
+    {
+        "count": 50
+    },
+    {
+        "count": 30
+    }
+    ]
+    }
+    ]
+}

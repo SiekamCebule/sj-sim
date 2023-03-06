@@ -36,8 +36,6 @@ private slots:
     void on_comboBox_existingJumper_currentIndexChanged(int index);
     void on_pushButton_submit_clicked();
 
-    void on_checkBox_saveResultsFile_stateChanged(int arg1);
-
 private:
     Ui::SingleJumpsConfigWindow *ui;
 

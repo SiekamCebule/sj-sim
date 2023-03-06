@@ -8,6 +8,7 @@
 #include <QString>
 #include <QSet>
 #include <QPixmap>
+#include <QJsonObject>
 
 class Hill : public ClassWithID, public ClassWithCharacteristics
 {
@@ -38,6 +39,7 @@ private:
     bool autoPointsForBackWind;
 
 public:
+    static QJsonObject getHillJsonObject(Hill * hill, bool saveKAndHSPoint, bool savePointsInfo, bool saveSimulationParameters);
     static double calculatePointsForMeter(double KPoint);
     static double calculatePointsForKPoint(double KPoint);
     static double calculatePointsForBackWindBy21PercentsOfFrontWind(double pointsForFrontWind);

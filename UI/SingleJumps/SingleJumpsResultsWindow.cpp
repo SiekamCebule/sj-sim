@@ -34,7 +34,9 @@ SingleJumpsResultsWindow::SingleJumpsResultsWindow(QWidget *parent) :
 
 SingleJumpsResultsWindow::~SingleJumpsResultsWindow()
 {
+    qDebug()<<ui;
     delete ui;
+        qDebug()<<"usunieto ui2";
 }
 
 void SingleJumpsResultsWindow::fillJumperInfo()

@@ -275,6 +275,65 @@ width: 5px;
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_competitionRules">
+      <attribute name="title">
+       <string>Zasady konkursów</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QScrollArea" name="scrollArea_competitionRules">
+         <property name="minimumSize">
+          <size>
+           <width>550</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QScrollArea{
+background: transparent;
+}
+QScrollBar::handle{
+border: 2px solid rgb(101, 23, 23);
+background-color: rgb(255, 229, 190);
+height: 10px;
+width: 5px;
+}</string>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidget_competitionsRules">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>548</width>
+            <height>483</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_competitionsRules"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>509</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>

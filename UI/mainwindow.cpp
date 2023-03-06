@@ -70,7 +70,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    qDebug()<<ui;
     delete ui;
+    qDebug()<<"usunieto ui";
 }
 
 
@@ -146,6 +148,7 @@ QApplication *MainWindow::getParentApplication() const
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    qDebug()<<"hehi";
     GlobalAppSettings::get()->writeToJson();
 }
 

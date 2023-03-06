@@ -34,7 +34,6 @@ signals:
 
 private slots:
     void when_submittButtonClicked();
-    void on_lineEdit_countryCode_editingFinished();
     void on_lineEdit_countryCode_textChanged(const QString &arg1);
 
 private:

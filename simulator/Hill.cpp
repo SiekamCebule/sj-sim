@@ -4,6 +4,7 @@
 #include "../global/CountryFlagsManager.h"
 
 #include <QDebug>
+#include <QJsonArray>
 
 
 Hill::Hill(const QString &name, const QString &countryCode, double KPoint, double HSPoint, double pointsForMeter, double pointsForKPoint, double pointsForFrontWind, double pointsForBackWind, double pointsForGate, double takeoffEffect, double flightEffect, double realHS, bool autoPointsForKPoint, bool autoPointsForMeter, bool autoPointsForBackWind) : name(name),
@@ -26,6 +27,42 @@ Hill::Hill(const QString &name, const QString &countryCode, double KPoint, doubl
     setRealHSByCharacteristic();
 }
 
+QJsonObject Hill::getHillJsonObject(Hill *hill, bool saveKAndHSPoint, bool savePointsInfo, bool saveSimulationParameters)
+{
+    QJsonObject object;
+    object.insert("name", hill->getName());
+    object.insert("country-code", hill->getCountryCode());
+    if(saveKAndHSPoint == true)
+    {
+        object.insert("k-point", hill->getKPoint());
+        object.insert("hs-point", hill->getHSPoint());
+    }
+    if(savePointsInfo == true)
+    {
+        object.insert("points-for-meter", hill->getPointsForMeter());
+        object.insert("points-for-k-point", hill->getPointsForKPoint());
+        object.insert("points-for-front-wind", hill->getPointsForFrontWind());
+        object.insert("points-for-back-wind", hill->getPointsForBackWind());
+        object.insert("points-for-gate", hill->getPointsForGate());
+    }
+    if(saveSimulationParameters == true)
+    {
+        object.insert("takeoff-effect", hill->getTakeoffEffect());
+        object.insert("flight-effect", hill->getFlightEffect());
+    }
+
+    QJsonArray characteristicsArray;
+    for(const auto & characteristic : hill->getCharacteristics())
+    {
+        QJsonObject characteristicObject;
+        characteristicObject.insert("type", characteristic.getType());
+        characteristicObject.insert("level", characteristic.getLevel());
+        characteristicsArray.push_back(characteristicObject);
+    }
+    object.insert("characteristics", characteristicsArray);
+
+    return object;
+}
 
 bool Hill::getAutoPointsForBackWind() const
 {

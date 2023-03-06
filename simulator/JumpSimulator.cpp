@@ -411,7 +411,6 @@ void JumpSimulator::calculateCompensations()
                 if(percent > 1) percent = 1;
                 else if(percent < 0) percent = 0;
                 winds[i] = Wind(winds[i].getDirection(), winds[i].getStrength() * percent);
-                qDebug()<<"VALUE ZA SEGMENT: "<<winds[i].getStrength()<<", original it has been "<<winds[i].getStrength() / percent;
             }
         }
     }
@@ -446,6 +445,7 @@ void JumpSimulator::calculatePoints()
         else if(jg < min) min = jg;
         jumpData.judgesPoints += jg;
     }
+    qDebug()<<min<<", "<<max;
     jumpData.judgesPoints -= min;
     jumpData.judgesPoints -= max;
 

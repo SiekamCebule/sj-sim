@@ -9,6 +9,8 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
+    UI/EditorWidgets/RoundInfoEditorWidget.cpp \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
     UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp \
@@ -22,6 +24,8 @@ SOURCES += \
     UI/EditorWidgets/HillEditorWidget.cpp \
     UI/EditorWidgets/JumperEditorWidget.cpp \
     UI/SingleJumps/SingleJumpsResultsWindow.cpp \
+    competitions/CompetitionRules.cpp \
+    competitions/RoundInfo.cpp \
     global/CountryFlagsManager.cpp \
     global/GlobalAppSettings.cpp \
     global/GlobalDatabase.cpp \
@@ -49,6 +53,8 @@ SOURCES += \
     utilities/functions.cpp
 
 HEADERS += \
+    UI/EditorWidgets/CompetitionRulesEditorWidget.h \
+    UI/EditorWidgets/RoundInfoEditorWidget.h \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
     UI/ResultsShowing/JumpDataDetailedInfoWindow.h \
@@ -63,6 +69,8 @@ HEADERS += \
     UI/EditorWidgets/JumperEditorWidget.h \
     UI/SingleJumps/SingleJumpsResultsWindow.h \
     UI/mainwindow.h \
+    competitions/CompetitionRules.h \
+    competitions/RoundInfo.h \
     global/CountryFlagsManager.h \
     global/GlobalAppSettings.h \
     global/GlobalDatabase.h \
@@ -88,6 +96,8 @@ HEADERS += \
     utilities/functions.h
 
 FORMS += \
+    UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
+    UI/EditorWidgets/RoundInfoEditorWidget.ui \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui \
     UI/ResultsShowing/JumpDataDetailedInfoWindow.ui \
@@ -123,6 +133,7 @@ QMAKE_EXTRA_TARGETS += first copydata
 DISTFILES += \
     flaticon_authors \
     flags_author \
+    userData/GlobalDatabase/globalCompetitionsRules.json \
     userData/GlobalDatabase/globalHills.json \
     userData/GlobalDatabase/globalJumpers.json \
     userData/Settings/appSettings.json

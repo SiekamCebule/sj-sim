@@ -3,7 +3,7 @@
 
 #include "../simulator/Jumper.h"
 #include "../simulator/Hill.h"
-#include "../simulator/wind-generation/WindGenerationSettings.h"
+#include "../competitions/CompetitionRules.h"
 
 #include <QVector>
 #include <QStringList>
@@ -17,12 +17,15 @@ private:
 
     QVector<Jumper> globalJumpers;
     QVector<Hill> globalHills;
+    QVector<CompetitionRules> globalCompetitionsRules;
 
     bool loadJumpers();
     bool loadHills();
+    bool loadCompetitionsRules();
 
     bool writeJumpers();
     bool writeHills();
+    bool writeCompetitionsRules();
 
     void setupJumpersFlags();
     void setupHillsFlags();
@@ -42,6 +45,8 @@ public:
     QVector<Hill> getGlobalHills() const;
     void setGlobalHills(const QVector<Hill> &newGlobalHills);
     QVector<Hill> & getEditableGlobalHills();
+    QVector<CompetitionRules> getGlobalCompetitionsRules() const;
+    void setGlobalCompetitionsRules(const QVector<CompetitionRules> &newGlobalCompetitionsRules);
 };
 
 #endif // GLOBALDATABASE_H

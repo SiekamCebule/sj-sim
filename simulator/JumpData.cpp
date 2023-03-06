@@ -108,7 +108,7 @@ QJsonObject JumpData::getJumpDataJsonObject(JumpData * jumpData, bool saveJudges
         for(const auto & wind : jumpData->getWindsInfo().getWinds())
         {
             QJsonObject windObject;
-            windObject.insert("range", QJsonValue(QString::number(WindsGenerator::getRangeOfWindSector(i+i, jumpData->getHill()->getKPoint()).first) + " - " + QString::number(WindsGenerator::getRangeOfWindSector(i+i, jumpData->getHill()->getKPoint()).second)));
+            windObject.insert("range", QJsonValue(QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData->getHill()->getKPoint()).first) + " - " + QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData->getHill()->getKPoint()).second)));
             windObject.insert("direction", wind.getDirection());
             windObject.insert("strength", wind.getStrength());
             windsArray.push_back(windObject);

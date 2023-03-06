@@ -22,6 +22,16 @@ GlobalDatabase::~GlobalDatabase()
 {
 }
 
+QVector<CompetitionRules> GlobalDatabase::getGlobalCompetitionsRules() const
+{
+    return globalCompetitionsRules;
+}
+
+void GlobalDatabase::setGlobalCompetitionsRules(const QVector<CompetitionRules> &newGlobalCompetitionsRules)
+{
+    globalCompetitionsRules = newGlobalCompetitionsRules;
+}
+
 QVector<Hill> GlobalDatabase::getGlobalHills() const
 {
     return globalHills;
@@ -66,27 +76,12 @@ void GlobalDatabase::removeJumper(int index)
 
 bool GlobalDatabase::loadFromJson()
 {
-    globalJumpers.clear();
-    globalHills.clear();
-
-    bool ok = loadJumpers();
-    if(ok == true)
-        loadHills();
-    else
-        ok = loadHills();
-
-    return ok;
+    return (loadJumpers() && loadHills() && loadCompetitionsRules());
 }
 
 bool GlobalDatabase::writeToJson()
 {
-    bool ok = writeJumpers();
-    if(ok == true)
-        writeHills();
-    else
-        ok = writeHills();
-
-    return ok;
+    return (writeJumpers() && writeHills() && writeCompetitionsRules());
 }
 
 bool GlobalDatabase::loadJumpers()
@@ -115,6 +110,7 @@ bool GlobalDatabase::loadJumpers()
     QJsonValue value = object.value("jumpers");
     QJsonArray array = value.toArray();
 
+    globalJumpers.clear();
     for(const auto & val : array)
     {
         QJsonObject obj = val.toObject();
@@ -179,6 +175,7 @@ bool GlobalDatabase::loadHills()
     QJsonValue value = object.value("hills");
     QJsonArray array = value.toArray();
 
+    globalHills.clear();
     for(const auto & val : array)
     {
         QJsonObject obj = val.toObject();
@@ -227,6 +224,60 @@ bool GlobalDatabase::loadHills()
     return true;
 }
 
+bool GlobalDatabase::loadCompetitionsRules()
+{
+    QFile file("userData/GlobalDatabase/globalCompetitionsRules.json");
+    if(!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zasadami konkursów", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalCompetitionsRules.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    QByteArray bytes = file.readAll();
+    file.close();
+
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(bytes, &error);
+    if(error.error != QJsonParseError::NoError)
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu zasad konkursów", "Nie udało się wczytać zawodników z pliku userData/GlobalDatabase/globalCompetitionsRules.json\nTreść błędu: " + error.errorString(), QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+
+    QJsonObject object = document.object();
+    QJsonValue value = object.value("competitionsRules");
+    QJsonArray array = value.toArray();
+
+    globalCompetitionsRules.clear();
+    for(const auto & val : array)
+    {
+        QJsonObject obj = val.toObject();
+        CompetitionRules rules;
+        rules.setName(obj.value("name").toString());
+        rules.setHas95HSRule(obj.value("95-hs-rule").toBool());
+        rules.setHasWindCompensations(obj.value("wind-compensations").toBool());
+        rules.setHasGateCompensations(obj.value("gate-compensations").toBool());
+        rules.setHasJudgesPoints(obj.value("judges-points").toBool());
+        rules.setCompetitionType(obj.value("competition-type").toInt());
+
+        QJsonArray roundsArray = obj.value("rounds").toArray();
+        for(const auto & round : roundsArray)
+        {
+            RoundInfo roundInfo;
+            roundInfo.setCount(round.toObject().value("count").toInt());
+            rules.getEditableRounds().push_back(roundInfo);
+        }
+        globalCompetitionsRules.push_back(rules);
+    }
+
+    file.close();
+    setupJumpersFlags();
+    return true;
+}
+
 bool GlobalDatabase::writeJumpers()
 {
     QJsonDocument document;
@@ -259,47 +310,10 @@ bool GlobalDatabase::writeHills()
     QJsonDocument document;
     QJsonObject mainObject;
     QJsonArray array;
-    for(const auto & hill : getGlobalHills())
+    for(auto & hill : getGlobalHills())
     {
-        QJsonObject object;
-        object.insert("name", hill.getName());
-        object.insert("country-code", hill.getCountryCode().toUpper());
-        object.insert("k-point", hill.getKPoint());
-        object.insert("hs-point", hill.getHSPoint());
-
-        if(hill.getAutoPointsForKPoint() == true){
-            object.insert("points-for-k-point", "auto");
-        }
-        else object.insert("points-for-k-point", hill.getPointsForKPoint());
-
-        if(hill.getAutoPointsForMeter() == true){
-            object.insert("points-for-meter", "auto");
-        }
-        else object.insert("points-for-meter", hill.getPointsForMeter());
-
-        object.insert("points-for-gate", hill.getPointsForGate());
-        object.insert("points-for-front-wind", hill.getPointsForFrontWind());
-
-        if(hill.getAutoPointsForBackWind() == true){
-            object.insert("points-for-back-wind", "auto");
-        }
-        else object.insert("points-for-back-wind", hill.getPointsForBackWind());
-
-        object.insert("takeoff-effect", hill.getTakeoffEffect());
-        object.insert("flight-effect", hill.getFlightEffect());
-
-        QJsonArray characteristicsArray;
-        for(const auto & characteristic : hill.getCharacteristics())
-        {
-            QJsonObject characteristicObject;
-            characteristicObject.insert("type", characteristic.getType());
-            characteristicObject.insert("level", characteristic.getLevel());
-            characteristicsArray.push_back(characteristicObject);
-        }
-        object.insert("characteristics", characteristicsArray);
-        array.push_back(QJsonValue(object));
+        array.push_back(QJsonValue(Hill::getHillJsonObject(&hill, true, true, true)));
     }
-
     mainObject.insert("hills", array);
     document.setObject(mainObject);
 
@@ -307,6 +321,33 @@ bool GlobalDatabase::writeHills()
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku ze skoczniami", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalHills.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    file.resize(0);
+    file.write(document.toJson(QJsonDocument::Indented));
+    file.close();
+    return true;
+}
+
+bool GlobalDatabase::writeCompetitionsRules()
+{
+    QJsonDocument document;
+    QJsonObject mainObject;
+    QJsonArray array;
+
+    for(auto & rules : getGlobalCompetitionsRules())
+    {
+        array.push_back(QJsonValue(CompetitionRules::getCompetitionRulesJsonObject(&rules, true, true, true)));
+    }
+    mainObject.insert("competitionsRules", array);
+    document.setObject(mainObject);
+
+    QFile file("userData/GlobalDatabase/globalCompetitionsRules.json");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zasadami konkursów", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalCompetitionsRules.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
         message.setModal(true);
         message.exec();
         return false;
