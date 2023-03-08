@@ -17,7 +17,7 @@ public:
     ~CompetitionRulesEditorWidget();
 
     void fillCompetitionRulesInputs();
-    void fillRoundsInputs();
+    void fillRoundsInputs(bool setup = false);
 
     QString getNameFromInput();
     QVector<RoundInfo> getRoundsFromInput();
@@ -27,6 +27,11 @@ public:
     bool getHasJudgesPoints();
     short getCompetitionTypeFromInput();
 
+    CompetitionRules getCompetitionRulesFromWidgetInputs();
+
+signals:
+    void submitted();
+
 private:
     Ui::CompetitionRulesEditorWidget *ui;
 
@@ -35,6 +40,8 @@ private:
 public:
     CompetitionRules *getCompetitionRules() const;
     void setCompetitionRules(CompetitionRules *newCompetitionRules);
+private slots:
+    void on_pushButton_submit_clicked();
 };
 
 #endif // COMPETITIONRULESEDITORWIDGET_H

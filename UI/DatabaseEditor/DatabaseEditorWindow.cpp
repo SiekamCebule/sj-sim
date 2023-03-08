@@ -6,6 +6,7 @@
 #include "../../simulator/Hill.h"
 #include "../EditorWidgets/JumperEditorWidget.h"
 #include "../EditorWidgets/HillEditorWidget.h"
+#include "../EditorWidgets/CompetitionRulesEditorWidget.h"
 
 #include "DatabaseListItemWidget.h"
 
@@ -14,11 +15,12 @@
 #include <QCloseEvent>
 #include <QMessageBox>
 
-DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, HillEditorWidget *hillEditor, QWidget *parent) :
+DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, HillEditorWidget *hillEditor, CompetitionRulesEditorWidget * competitionRulesEditor, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DatabaseEditorWindow),
     jumperEditor(jumperEditor),
     hillEditor(hillEditor),
+    competitionRulesEditor(competitionRulesEditor),
     actualElementType(0),
     selectedItemIndex(-1)
 {
@@ -27,11 +29,16 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
 
     tempGlobalJumpers = GlobalDatabase::get()->getGlobalJumpers();
     tempGlobalHills = GlobalDatabase::get()->getGlobalHills();
+    tempGlobalCompetitionRules = GlobalDatabase::get()->getGlobalCompetitionsRules();
 
     if(GlobalDatabase::get()->getGlobalJumpers().size() > 0)
         fillJumpersWidget();
     if(GlobalDatabase::get()->getGlobalHills().size() > 0)
         fillHillsWidget();
+    if(GlobalDatabase::get()->getGlobalCompetitionsRules().size() > 0)
+        fillCompetitionRulesWidget();
+
+    qDebug()<<"a";
 
     if(this->jumperEditor == nullptr)
         this->jumperEditor = new JumperEditorWidget();
@@ -41,9 +48,14 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
         this->hillEditor = new HillEditorWidget();
     ui->tab_hills->layout()->addWidget(this->hillEditor);
 
+    if(this->competitionRulesEditor == nullptr)
+        this->competitionRulesEditor = new CompetitionRulesEditorWidget();
+    ui->tab_competitionRules->layout()->addWidget(this->competitionRulesEditor);
+
     connect(ui->tabWidget_main, &QTabWidget::currentChanged, this, &DatabaseEditorWindow::setActualElementType);
     connect(this->jumperEditor, &JumperEditorWidget::submitted, this, &DatabaseEditorWindow::replaceJumperFromJumperEditor);
     connect(this->hillEditor, &HillEditorWidget::submitted, this, &DatabaseEditorWindow::replaceHillFromHillEditor);
+    connect(this->competitionRulesEditor, &CompetitionRulesEditorWidget::submitted, this, &DatabaseEditorWindow::replaceCompetitionRulesFromEditor);
 }
 
 DatabaseEditorWindow::~DatabaseEditorWindow()
@@ -94,6 +106,24 @@ void DatabaseEditorWindow::updateItemsSelection(int index)
         }
         hillEditor->setHill(const_cast<Hill*>(&GlobalDatabase::get()->getGlobalHills().at(index-1)));
         hillEditor->fillHillInputs();
+    }
+    else if(actualElementType == ElementType::CompetitionRulesElement){
+        for(auto & item : competitionRulesListItems)
+        {
+            if(item->getIndex() != index)
+            {
+                item->setIsSelected(false);
+                item->setStyleSheet("QLabel{}");
+            }
+            else
+            {
+                item->setIsSelected(true);
+                this->setSelectedItemIndex(item->getIndex());
+                item->setStyleSheet("QLabel#main-label{border-radius: 8px; border: 1px solid rgb(20, 59, 23);background-color: rgb(248, 255, 250);padding: 2px;}");
+            }
+        }
+        competitionRulesEditor->setCompetitionRules(const_cast<CompetitionRules*>(&GlobalDatabase::get()->getGlobalCompetitionsRules().at(index - 1)));
+        competitionRulesEditor->fillCompetitionRulesInputs();
     }
 }
 
@@ -195,6 +225,51 @@ void DatabaseEditorWindow::fillHillsWidget()
     ui->verticalLayout_hills->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Ignored, QSizePolicy::Expanding));
 }
 
+void DatabaseEditorWindow::fillCompetitionRulesWidget()
+{
+    if(ui->verticalLayout_competitionsRules != nullptr)
+    {
+        QLayoutItem * item;
+        while((item = ui->verticalLayout_competitionsRules->takeAt(0)) != NULL)
+        {
+            delete item->widget();
+            delete item;
+        }
+    }
+    competitionRulesListItems.clear();
+    int i=1;
+    for(const auto & rules : GlobalDatabase::get()->getGlobalCompetitionsRules())
+    {
+        DatabaseListItemWidget * itemWidget = new DatabaseListItemWidget(this);
+        itemWidget->setIndex(i);
+        itemWidget->setEditorParent(this);
+
+        QLabel * label = new QLabel(QString::number(itemWidget->getIndex()));
+        QFont font = label->font();
+        font.setFamily("Ubuntu Light");
+        font.setPointSize(17);
+        label->setFont(font);
+        label->setStyleSheet("QLabel{color: #000000; margin-right: 11px;}");
+        itemWidget->addLabel(label, 0);
+
+        label = new QLabel(rules.getName());
+        label->setObjectName("main-label");
+        font.setFamily("Ubuntu Light");
+        font.setPointSize(15);
+        label->setFont(font);
+        label->setStyleSheet("QLabel{color: #452020; margin-right: 5px;}");
+        itemWidget->addLabel(label, 1);
+
+        ui->verticalLayout_competitionsRules->addWidget(itemWidget);
+        itemWidget->update();
+        competitionRulesListItems.push_back(itemWidget);
+
+        connect(itemWidget, &DatabaseListItemWidget::itemSelected, this, &DatabaseEditorWindow::updateItemsSelection);
+        i++;
+    }
+    ui->verticalLayout_competitionsRules->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Ignored, QSizePolicy::Expanding));
+}
+
 void DatabaseEditorWindow::updateIndexes()
 {
     int index;
@@ -214,6 +289,15 @@ void DatabaseEditorWindow::updateIndexes()
             index++;
         }
     }
+    else if(actualElementType == CompetitionRulesElement){
+        index = 0;
+        for (auto & rule : GlobalDatabase::get()->getEditableCompetitionRules())
+        {
+            dynamic_cast<DatabaseListItemWidget *>(ui->verticalLayout_competitionsRules->itemAt(index)->widget())->setIndex(index+1);
+            index++;
+        }
+    }
+    qDebug()<<"no";
 }
 
 int DatabaseEditorWindow::getSelectedItemIndex() const
@@ -283,6 +367,15 @@ void DatabaseEditorWindow::on_pushButton_add_clicked()
         GlobalDatabase::get()->getEditableGlobalHills().insert(index + 1, Hill("Hill", "XXX", 0, 0));
         fillHillsWidget();
     }
+    else if(actualElementType == CompetitionRulesElement)
+    {
+        if(GlobalDatabase::get()->getGlobalCompetitionsRules().size() > 0 && selectedItemIndex > (-1))
+            index = selectedItemIndex - 1;
+        else index = -1;
+
+        GlobalDatabase::get()->getEditableCompetitionRules().insert(index + 1, CompetitionRules("Rules"));
+        fillCompetitionRulesWidget();
+    }
     updateIndexes();
     updateItemsSelection(index+2);
 }
@@ -322,6 +415,22 @@ void DatabaseEditorWindow::on_pushButton_remove_clicked()
             }
         }
     }
+    else if(actualElementType == CompetitionRulesElement){
+        if(GlobalDatabase::get()->getGlobalCompetitionsRules().size() > 0 && selectedItemIndex > (-1))
+        {
+            int index = selectedItemIndex - 1;
+            GlobalDatabase::get()->getEditableCompetitionRules().remove(index, 1);
+            fillCompetitionRulesWidget();
+            updateIndexes();
+
+            if(GlobalDatabase::get()->getGlobalHills().size() > 0)
+            {
+                if(index == GlobalDatabase::get()->getGlobalCompetitionsRules().size())
+                    updateItemsSelection(index);
+                else updateItemsSelection(index + 1);
+            }
+        }
+    }
 }
 
 void DatabaseEditorWindow::replaceJumperFromJumperEditor()
@@ -338,6 +447,24 @@ void DatabaseEditorWindow::replaceHillFromHillEditor()
         GlobalDatabase::get()->getEditableGlobalHills().replace(selectedItemIndex - 1, hillEditor->getHillFromWidgetInput());
         fillHillsWidget();
     }
+}
+
+void DatabaseEditorWindow::replaceCompetitionRulesFromEditor()
+{
+    if(selectedItemIndex > (-1)){
+        GlobalDatabase::get()->getEditableCompetitionRules().replace(selectedItemIndex - 1, competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
+        fillCompetitionRulesWidget();
+    }
+}
+
+QVector<CompetitionRules> DatabaseEditorWindow::getTempGlobalCompetitionRules() const
+{
+    return tempGlobalCompetitionRules;
+}
+
+void DatabaseEditorWindow::setTempGlobalCompetitionRules(const QVector<CompetitionRules> &newTempGlobalCompetitionRules)
+{
+    tempGlobalCompetitionRules = newTempGlobalCompetitionRules;
 }
 
 QVector<Hill> DatabaseEditorWindow::getTempGlobalHills() const
@@ -384,6 +511,15 @@ void DatabaseEditorWindow::on_pushButton_up_clicked()
             updateItemsSelection(index);
         }
     }
+    else if(actualElementType == CompetitionRulesElement){
+        if((!(index < 1)) && selectedItemIndex > (-1))
+        {
+            GlobalDatabase::get()->getEditableCompetitionRules().swapItemsAt(index, index - 1);
+            fillCompetitionRulesWidget();
+            updateIndexes();
+            updateItemsSelection(index);
+        }
+    }
 }
 
 void DatabaseEditorWindow::on_pushButton_down_clicked()
@@ -403,6 +539,15 @@ void DatabaseEditorWindow::on_pushButton_down_clicked()
         {
             GlobalDatabase::get()->getEditableGlobalHills().swapItemsAt(index, index + 1);
             fillHillsWidget();
+            updateIndexes();
+            updateItemsSelection(index + 2);
+        }
+    }
+    else if(actualElementType == CompetitionRulesElement){
+        if((!(index + 1 >= GlobalDatabase::get()->getGlobalCompetitionsRules().size())) && selectedItemIndex > (-1))
+        {
+            GlobalDatabase::get()->getEditableCompetitionRules().swapItemsAt(index, index + 1);
+            fillCompetitionRulesWidget();
             updateIndexes();
             updateItemsSelection(index + 2);
         }

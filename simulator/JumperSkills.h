@@ -33,6 +33,8 @@ public:
         HStyle
     };
 
+    void checkSkillsLimits();
+
     void setJumperID(ulong ID);
     double getTakeoffPower() const;
     void setTakeoffPower(double newTakeoffPower);

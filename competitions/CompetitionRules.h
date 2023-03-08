@@ -10,7 +10,7 @@
 class CompetitionRules : ClassWithID
 {
 public:
-    CompetitionRules();
+    CompetitionRules(const QString & name = "");
     enum CompetitionType{
         Individual,
         Team

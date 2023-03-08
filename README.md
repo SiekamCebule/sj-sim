@@ -35,7 +35,7 @@ Wyróżniami 4 style lotu:
 - Szerokie V (Np. Domen Prevc)
 - Styl H (Np. Danil Vassilyev)
 *Im większa skocznia, tym większe bonusy mają "szersze" style, tak samo im lepsze warunki tym większy wpływ mają style bardziej nowoczesne.*<br>
-**Nie ma żadnej górnej granicy umiejętności, ale osobiście zalecam zakres od 1 do 50, z przekroczeniem 50 tylko w przypadku wybitnych zawodników.**
+**Nie ma żadnej górnej granicy umiejętności, ale osobiście zalecam zakres od 1 do 60, z przekroczeniem 60 tylko w przypadku wybitnych zawodników.**
 
 # Parametry skoczni (symulacja, czyli pomijając przeliczniki za belkę itd.)
 - Wpływ wybicia (przemnażany przez ocenę wybicia)

@@ -25,6 +25,7 @@ CompetitionRulesEditorWidget::~CompetitionRulesEditorWidget()
 void CompetitionRulesEditorWidget::fillCompetitionRulesInputs()
 {
     ui->lineEdit_name->setText(competitionRules->getName());
+    ui->spinBox_roundsCount->setValue(competitionRules->getRounds().count());
     ui->checkBox_windCompensation->setChecked(competitionRules->getHasWindCompensations());
     ui->checkBox_gateCompensation->setChecked(competitionRules->getHasGateCompensations());
     ui->checkBox_95HsRule->setChecked(competitionRules->getHas95HSRule());
@@ -32,11 +33,10 @@ void CompetitionRulesEditorWidget::fillCompetitionRulesInputs()
     ui->comboBox_competitionType->setCurrentIndex(competitionRules->getCompetitionType());
 }
 
-void CompetitionRulesEditorWidget::fillRoundsInputs()
+void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)
 {
-    int count = ui->toolBox->count();
     int roundsCount = ui->spinBox_roundsCount->value();
-    while (count > roundsCount))
+    while (ui->toolBox_rounds->count() > roundsCount)
     {
         delete ui->toolBox_rounds->widget(ui->toolBox_rounds->count() - 1);
     }
@@ -47,7 +47,17 @@ void CompetitionRulesEditorWidget::fillRoundsInputs()
     }
     for(int i=0; i<ui->toolBox_rounds->count(); i++)
     {
-        ui->toolBox_rounds->setItemText(i, "Seria " + 1);
+        ui->toolBox_rounds->setItemText(i, "Seria " + QString::number(i+1));
+    }
+    if(setup == true){
+        disconnect(ui->spinBox_roundsCount, &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::fillRoundsInputs);
+        for(int i=0; i<competitionRules->getRounds().count(); i++){
+            dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->setRoundInfo(const_cast<RoundInfo *>(&competitionRules->getRounds().at(i)));
+            dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->fillRoundInfoInput();
+        }
+        connect(ui->spinBox_roundsCount, &QSpinBox::valueChanged, this, [this](){
+            fillRoundsInputs(false);
+        });
     }
 }
 
@@ -93,6 +103,19 @@ short CompetitionRulesEditorWidget::getCompetitionTypeFromInput()
     return ui->comboBox_competitionType->currentIndex();
 }
 
+CompetitionRules CompetitionRulesEditorWidget::getCompetitionRulesFromWidgetInputs()
+{
+    CompetitionRules rules;
+    rules.setName(getNameFromInput());
+    rules.setHas95HSRule(getHas95HSRuleFromInput());
+    rules.setHasWindCompensations(getHasWindCompensations());
+    rules.setHasGateCompensations(getHasGateCompensations());
+    rules.setHasJudgesPoints(getHasJudgesPoints());
+    rules.setCompetitionType(getCompetitionTypeFromInput());
+    rules.setRounds(getRoundsFromInput());
+    return rules;
+}
+
 CompetitionRules *CompetitionRulesEditorWidget::getCompetitionRules() const
 {
     return competitionRules;
@@ -102,3 +125,9 @@ void CompetitionRulesEditorWidget::setCompetitionRules(CompetitionRules *newComp
 {
     competitionRules = newCompetitionRules;
 }
+
+void CompetitionRulesEditorWidget::on_pushButton_submit_clicked()
+{
+    emit submitted();
+}
+

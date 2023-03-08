@@ -3,6 +3,56 @@
         {
             "characteristics": [
                 {
+                    "level": 2.5,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": 1.85,
+                    "type": "flight-height"
+                }
+            ],
+            "country-code": "DEU",
+            "flight-style": 1,
+            "flight-technique": 44,
+            "form": 36.5,
+            "landing-style": 12.65,
+            "name": "Constantin",
+            "surname": "Schmid",
+            "takeoff-power": 54,
+            "takeoff-technique": 49.25
+        },
+        {
+            "characteristics": [
+                {
+                    "level": -3,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": -2.75,
+                    "type": "flight-height"
+                },
+                {
+                    "level": -0.5,
+                    "type": "landing-skill"
+                },
+                {
+                    "level": 0.2,
+                    "type": "both-legs-landing-tendence"
+                }
+            ],
+            "country-code": "SVN",
+            "flight-style": 2,
+            "flight-technique": 52,
+            "form": 39,
+            "landing-style": 12.25,
+            "name": "Domen",
+            "surname": "Prevc",
+            "takeoff-power": 45,
+            "takeoff-technique": 45
+        },
+        {
+            "characteristics": [
+                {
                     "level": 0.8,
                     "type": "takeoff-height"
                 },
@@ -22,7 +72,7 @@
             "landing-style": 12.95,
             "name": "Jan",
             "surname": "Hoerl",
-            "takeoff-power": 52,
+            "takeoff-power": 50.5,
             "takeoff-technique": 54
         },
         {
@@ -43,7 +93,7 @@
             "landing-style": 12,
             "name": "Piotr",
             "surname": "Żyła",
-            "takeoff-power": 54.5,
+            "takeoff-power": 53,
             "takeoff-technique": 52
         },
         {
@@ -67,13 +117,13 @@
             ],
             "country-code": "KAZ",
             "flight-style": 2,
-            "flight-technique": 31,
-            "form": 29,
+            "flight-technique": 30,
+            "form": 26,
             "landing-style": 10.5,
             "name": "Sergey",
             "surname": "Tkachenko",
-            "takeoff-power": 38.25,
-            "takeoff-technique": 31
+            "takeoff-power": 37,
+            "takeoff-technique": 30
         }
     ]
 }

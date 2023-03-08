@@ -2,9 +2,9 @@
 
 #include <QJsonArray>
 
-CompetitionRules::CompetitionRules()
+CompetitionRules::CompetitionRules(const QString & name) : name(name)
 {
-    has95HSRule = hasWindCompensation = hasGateCompensations = hasJudgesPoints = false;
+    has95HSRule = hasWindCompensations = hasGateCompensations = hasJudgesPoints = false;
     competitionType = 0;
 }
 
@@ -22,20 +22,25 @@ QJsonObject CompetitionRules::getCompetitionRulesJsonObject(CompetitionRules *co
 {
     QJsonObject object;
     object.insert("name", competitionRules->getName());
-    object.insert("95-hs-rule", competitionRules->getHas95HSRule());
-    object.insert("wind-compensations", competitionRules->getHasWindCompensations());
-    object.insert("gate-compensations", competitionRules->getHasGateCompensations());
-    object.insert("judges-points", competitionRules->getHasJudgesPoints());
-    object.insert("competitionType", competitionRules->getCompetitionType());
-
-    QJsonArray roundsArray;
-    for(const auto & round : competitionRules->getRounds())
-    {
-        QJsonObject roundObject;
-        roundObject.insert("count", round.getCount());
-        roundsArray.push_back(roundObject);
+    if(savePointsAnd95Rule == true){
+        object.insert("95-hs-rule", competitionRules->getHas95HSRule());
+        object.insert("wind-compensations", competitionRules->getHasWindCompensations());
+        object.insert("gate-compensations", competitionRules->getHasGateCompensations());
+        object.insert("judges-points", competitionRules->getHasJudgesPoints());
     }
-    object.insert("rounds", roundsArray);
+    if(saveCompetitionType == true){
+        object.insert("competition-type", competitionRules->getCompetitionType());
+    }
+    if(saveRounds == true){
+        QJsonArray roundsArray;
+        for(const auto & round : competitionRules->getRounds())
+        {
+            QJsonObject roundObject;
+            roundObject.insert("count", round.getCount());
+            roundsArray.push_back(roundObject);
+        }
+        object.insert("rounds", roundsArray);
+    }
 
     return object;
 }
@@ -87,12 +92,12 @@ void CompetitionRules::setHasGateCompensations(bool newHasGateCompensations)
 
 bool CompetitionRules::getHasWindCompensations() const
 {
-    return hasWindCompensation;
+    return hasWindCompensations;
 }
 
 void CompetitionRules::setHasWindCompensations(bool newHasWindCompensations)
 {
-    hasWindCompensation = newHasWindCompensations;
+    hasWindCompensations = newHasWindCompensations;
 }
 
 bool CompetitionRules::getHas95HSRule() const

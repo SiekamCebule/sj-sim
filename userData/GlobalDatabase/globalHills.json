@@ -16,11 +16,11 @@
             "hs-point": 142,
             "k-point": 125,
             "name": "Garmisch-Partenkirchen",
-            "points-for-back-wind": "auto",
+            "points-for-back-wind": 13.068,
             "points-for-front-wind": 10.8,
             "points-for-gate": 7.67,
-            "points-for-k-point": "auto",
-            "points-for-meter": "auto",
+            "points-for-k-point": 60,
+            "points-for-meter": 1.8,
             "takeoff-effect": 0.27
         },
         {
@@ -39,15 +39,19 @@
             "hs-point": 140,
             "k-point": 125,
             "name": "Zakopane",
-            "points-for-back-wind": "auto",
+            "points-for-back-wind": 13.068,
             "points-for-front-wind": 10.8,
             "points-for-gate": 7.56,
-            "points-for-k-point": "auto",
-            "points-for-meter": "auto",
+            "points-for-k-point": 60,
+            "points-for-meter": 1.8,
             "takeoff-effect": 0.28
         },
         {
             "characteristics": [
+                {
+                    "level": 0.35,
+                    "type": "takeoff-technique-effect"
+                },
                 {
                     "level": -0.2,
                     "type": "takeoff-form-effect"
@@ -63,10 +67,6 @@
                 {
                     "level": 1,
                     "type": "takeoff-power-effect"
-                },
-                {
-                    "level": 0.35,
-                    "type": "takeoff-technique-effect"
                 }
             ],
             "country-code": "SVN",
@@ -74,11 +74,11 @@
             "hs-point": 240,
             "k-point": 200,
             "name": "Planica",
-            "points-for-back-wind": "auto",
+            "points-for-back-wind": 17.424,
             "points-for-front-wind": 14.4,
             "points-for-gate": 8.64,
-            "points-for-k-point": "auto",
-            "points-for-meter": "auto",
+            "points-for-k-point": 120,
+            "points-for-meter": 1.2,
             "takeoff-effect": 0.2
         }
     ]

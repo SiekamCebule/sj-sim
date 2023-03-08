@@ -32,6 +32,11 @@ void GlobalDatabase::setGlobalCompetitionsRules(const QVector<CompetitionRules> 
     globalCompetitionsRules = newGlobalCompetitionsRules;
 }
 
+QVector<CompetitionRules> &GlobalDatabase::getEditableCompetitionRules()
+{
+    return globalCompetitionsRules;
+}
+
 QVector<Hill> GlobalDatabase::getGlobalHills() const
 {
     return globalHills;

@@ -47,6 +47,7 @@ public:
     QVector<Hill> & getEditableGlobalHills();
     QVector<CompetitionRules> getGlobalCompetitionsRules() const;
     void setGlobalCompetitionsRules(const QVector<CompetitionRules> &newGlobalCompetitionsRules);
+    QVector<CompetitionRules> & getEditableCompetitionRules();
 };
 
 #endif // GLOBALDATABASE_H
