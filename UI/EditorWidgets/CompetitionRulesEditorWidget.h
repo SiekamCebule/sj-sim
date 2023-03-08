@@ -17,6 +17,7 @@ public:
     ~CompetitionRulesEditorWidget();
 
     void fillCompetitionRulesInputs();
+    void fillRoundsInputs();
 
     QString getNameFromInput();
     QVector<RoundInfo> getRoundsFromInput();

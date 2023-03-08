@@ -136,7 +136,8 @@ DISTFILES += \
     userData/GlobalDatabase/globalCompetitionsRules.json \
     userData/GlobalDatabase/globalHills.json \
     userData/GlobalDatabase/globalJumpers.json \
-    userData/Settings/appSettings.json
+    userData/Settings/appSettings.json \
+    README.md
 
 RESOURCES += \
 assets.qrc

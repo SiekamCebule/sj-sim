@@ -20,7 +20,7 @@ private:
     QString name;
     QVector<RoundInfo> rounds;
     bool has95HSRule;
-    bool hasWindCompensation;
+    bool hasWindCompensations;
     bool hasGateCompensations;
     bool hasJudgesPoints;
     short competitionType;

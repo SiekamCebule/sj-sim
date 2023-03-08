@@ -14,6 +14,19 @@ JumperSkills::JumperSkills(double takeoffPower, double takeoffTechnique, double 
     setCharacteristics(characteristics);
 }
 
+void JumperSkills::checkSkillsLimits()
+{
+    if(getLandingStyle() < 0)
+        setLandingStyle(0);
+    else if(getLandingStyle() > 20)
+        setLandingStyle(20);
+
+    if(getFlightStyle() < 0)
+        setFlightStyle(0);
+    else if(getFlightStyle() > 3)
+        setFlightStyle(3);
+}
+
 Jumper *JumperSkills::getJumper() const
 {
     return jumper;
