@@ -28,7 +28,12 @@ public:
 
     void uninstallEventFilterForThis();
 
+    bool getIsSelected() const;
+    void setIsSelected(bool newIsSelected);
+
 signals:
+    void selectionChanged();
+    void selected();
     void doubleClicked();
     void activityChanged();
 
@@ -43,6 +48,7 @@ private:
 
     Jumper * jumper;
     int indexInParentList;
+    bool isSelected;
 };
 
 #endif // COMPETITIONSTARTLISTDISPLAYITEMWIDGET_H

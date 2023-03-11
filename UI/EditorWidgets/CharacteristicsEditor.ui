@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>209</width>
-    <height>262</height>
+    <width>174</width>
+    <height>184</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <property name="font">
       <font>
        <family>Quicksand Medium</family>
-       <pointsize>12</pointsize>
+       <pointsize>10</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -42,7 +42,7 @@
    <item>
     <widget class="QListView" name="listView_characteristics">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -100,14 +100,14 @@ background: transparent;
       <widget class="QPushButton" name="pushButton_add">
        <property name="minimumSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="focusPolicy">
@@ -125,8 +125,8 @@ background: transparent;
        </property>
        <property name="iconSize">
         <size>
-         <width>25</width>
-         <height>25</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="flat">
@@ -138,14 +138,14 @@ background: transparent;
       <widget class="QPushButton" name="pushButton_edit">
        <property name="minimumSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="focusPolicy">
@@ -163,8 +163,8 @@ background: transparent;
        </property>
        <property name="iconSize">
         <size>
-         <width>25</width>
-         <height>25</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="flat">
@@ -176,14 +176,14 @@ background: transparent;
       <widget class="QPushButton" name="pushButton_delete">
        <property name="minimumSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="focusPolicy">
@@ -201,8 +201,8 @@ background: transparent;
        </property>
        <property name="iconSize">
         <size>
-         <width>25</width>
-         <height>25</height>
+         <width>20</width>
+         <height>20</height>
         </size>
        </property>
        <property name="flat">
