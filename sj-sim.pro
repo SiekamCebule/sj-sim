@@ -9,11 +9,15 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp \
+    UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp \
     UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
+    UI/EditorWidgets/OtherCompetitionSettingsWidget.cpp \
     UI/EditorWidgets/RoundInfoEditorWidget.cpp \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
     UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp \
+    UI/Competition/CompetitionConfigWindow.cpp \
     UI/SingleJumps/SingleJumpMiniResultWidget.cpp \
     UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     UI/AppSettings/AppSettingsWindow.cpp \
@@ -24,6 +28,7 @@ SOURCES += \
     UI/EditorWidgets/HillEditorWidget.cpp \
     UI/EditorWidgets/JumperEditorWidget.cpp \
     UI/SingleJumps/SingleJumpsResultsWindow.cpp \
+    competitions/CompetitionInfo.cpp \
     competitions/CompetitionRules.cpp \
     competitions/RoundInfo.cpp \
     global/CountryFlagsManager.cpp \
@@ -53,11 +58,15 @@ SOURCES += \
     utilities/functions.cpp
 
 HEADERS += \
+    UI/Competition/StartList/CompetitionStartListDisplayItemWidget.h \
+    UI/Competition/StartList/CompetitionStartListDisplayWidget.h \
     UI/EditorWidgets/CompetitionRulesEditorWidget.h \
+    UI/EditorWidgets/OtherCompetitionSettingsWidget.h \
     UI/EditorWidgets/RoundInfoEditorWidget.h \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
     UI/ResultsShowing/JumpDataDetailedInfoWindow.h \
+    UI/Competition/CompetitionConfigWindow.h \
     UI/SingleJumps/SingleJumpMiniResultWidget.h \
     UI/SingleJumps/SingleJumpsConfigWindow.h \
     UI/AppSettings/AppSettingsWindow.h \
@@ -69,6 +78,7 @@ HEADERS += \
     UI/EditorWidgets/JumperEditorWidget.h \
     UI/SingleJumps/SingleJumpsResultsWindow.h \
     UI/mainwindow.h \
+    competitions/CompetitionInfo.h \
     competitions/CompetitionRules.h \
     competitions/RoundInfo.h \
     global/CountryFlagsManager.h \
@@ -96,11 +106,15 @@ HEADERS += \
     utilities/functions.h
 
 FORMS += \
+    UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui \
+    UI/Competition/StartList/CompetitionStartListDisplayWidget.ui \
     UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
+    UI/EditorWidgets/OtherCompetitionSettingsWidget.ui \
     UI/EditorWidgets/RoundInfoEditorWidget.ui \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui \
     UI/ResultsShowing/JumpDataDetailedInfoWindow.ui \
+    UI/Competition/CompetitionConfigWindow.ui \
     UI/SingleJumps/SingleJumpMiniResultWidget.ui \
     UI/SingleJumps/SingleJumpsConfigWindow.ui \
     UI/AppSettings/AppSettingsWindow.ui \

@@ -49,15 +49,34 @@ void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)
     {
         ui->toolBox_rounds->setItemText(i, "Seria " + QString::number(i+1));
     }
+    qDebug()<<"ano";
     if(setup == true){
+        qDebug()<<"ok";
         disconnect(ui->spinBox_roundsCount, &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::fillRoundsInputs);
+                qDebug()<<"ok";
         for(int i=0; i<competitionRules->getRounds().count(); i++){
+            qDebug()<<"ok";
             dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->setRoundInfo(const_cast<RoundInfo *>(&competitionRules->getRounds().at(i)));
             dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->fillRoundInfoInput();
         }
         connect(ui->spinBox_roundsCount, &QSpinBox::valueChanged, this, [this](){
             fillRoundsInputs(false);
         });
+    }
+}
+
+void CompetitionRulesEditorWidget::removeSubmitButton()
+{
+    disconnect(ui->pushButton_submit, &QPushButton::clicked, this, &CompetitionRulesEditorWidget::on_pushButton_submit_clicked);
+    if(ui->horizontalLayout != nullptr)
+    {
+        QLayoutItem * item;
+        while((item = ui->horizontalLayout->takeAt(0)) != NULL)
+        {
+            delete item->widget();
+            delete item;
+        }
+        delete ui->horizontalLayout;
     }
 }
 

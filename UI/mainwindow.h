@@ -28,6 +28,8 @@ private slots:
     void on_pushButton_databaseEdit_clicked();
     void on_pushButton_settings_clicked();
 
+    void on_pushButton_singleCompetition_clicked();
+
 private:
     Ui::MainWindow *ui;
 

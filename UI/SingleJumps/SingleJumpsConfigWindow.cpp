@@ -31,7 +31,6 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     windsGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget;
     windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);
 
-
     QStringList jumpersStrings;
     jumpersStrings.push_back("BRAK");
     for(const auto & jumper : GlobalDatabase::get()->getGlobalJumpers())

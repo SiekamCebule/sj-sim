@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1108</width>
-    <height>704</height>
+    <width>991</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -137,7 +137,7 @@ QTabBar::tab:selected{
 }</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -184,7 +184,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>528</width>
-            <height>483</height>
+            <height>454</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -249,7 +249,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>548</width>
-            <height>483</height>
+            <height>454</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -308,7 +308,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>548</width>
-            <height>483</height>
+            <height>454</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">

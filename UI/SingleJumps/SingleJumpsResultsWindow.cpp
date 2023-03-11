@@ -192,7 +192,7 @@ QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForJudgesChart()
     for(const auto & jump : manager->getJumps())
     {
         for(int i=0; i<5; i++){
-            double judge = std::round(jump.getJudges().at(i));
+            double judge = jump.getJudges().at(i);//std::round(jump.getJudges().at(i));
             if(judges.contains(judge))
             {
                 judges[judge] += 1;

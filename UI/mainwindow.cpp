@@ -22,6 +22,7 @@
 #include "UI/DatabaseEditor/DatabaseEditorWindow.h"
 #include "UI/SingleJumps/SingleJumpsConfigWindow.h"
 #include "UI/SingleJumps/SingleJumpsResultsWindow.h"
+#include "UI/Competition/CompetitionConfigWindow.h"
 #include "UI/EditorWidgets/JumperEditorWidget.h"
 #include "UI/EditorWidgets/HillEditorWidget.h"
 #include "UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
@@ -78,7 +79,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_singleJumps_clicked()
 {
-    SingleJumpsConfigWindow singleJumpsConfig;
+    SingleJumpsConfigWindow singleJumpsConfig(this);
     singleJumpsConfig.setModal(true);
     if(singleJumpsConfig.exec() == QDialog::Accepted)
     {
@@ -88,17 +89,11 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         manager.setResultsFileName(singleJumpsConfig.getResultsFileName());
         manager.setResultsFormat(singleJumpsConfig.getResultsFormatFromInput());
         manager.setGate(singleJumpsConfig.getGateFromInput());
-        qDebug()<<"nom";
         manager.setJumper(singleJumpsConfig.getJumperEditor()->getJumperFromWidgetInput());
-        qDebug()<<"nom";
         manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
-        qDebug()<<"nom";
         manager.setWindsGeneratorSettings(singleJumpsConfig.getWindsGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
-        qDebug()<<"nom";
         manager.setWindAverageCalculatingType(singleJumpsConfig.getWindAverageCalculatingType());
-        qDebug()<<"nom";
         manager.setWindCompensationDistanceEffect(singleJumpsConfig.getWindCompensationDistanceEffect());
-        qDebug()<<"nom";
         manager.simulate();
 
         SingleJumpsResultsWindow resultsWindow;
@@ -117,6 +112,15 @@ void MainWindow::on_pushButton_singleJumps_clicked()
     }
 }
 
+void MainWindow::on_pushButton_singleCompetition_clicked()
+{
+    CompetitionConfigWindow * configWindow = new CompetitionConfigWindow(CompetitionConfigWindow::Type::SingleCompetition, this);
+    configWindow->setModal(true);
+    if(configWindow->exec() == QDialog::Accepted)
+    {
+
+    }
+}
 
 void MainWindow::on_pushButton_databaseEdit_clicked()
 {

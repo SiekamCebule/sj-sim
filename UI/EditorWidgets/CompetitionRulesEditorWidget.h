@@ -19,6 +19,8 @@ public:
     void fillCompetitionRulesInputs();
     void fillRoundsInputs(bool setup = false);
 
+    void removeSubmitButton();
+
     QString getNameFromInput();
     QVector<RoundInfo> getRoundsFromInput();
     bool getHas95HSRuleFromInput();

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>665</width>
-    <height>413</height>
+    <width>458</width>
+    <height>340</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -63,7 +63,7 @@ color: rgb(0, 0, 0);
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -95,7 +95,7 @@ color: rgb(0, 0, 0);
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -127,7 +127,7 @@ color: rgb(0, 0, 0);
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -159,7 +159,7 @@ color: rgb(0, 0, 0);
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -191,7 +191,7 @@ color: rgb(0, 0, 0);
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -223,7 +223,7 @@ color: rgb(0, 0, 0);
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -255,7 +255,7 @@ color: rgb(0, 0, 0);
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -287,7 +287,7 @@ color: rgb(0, 0, 0);
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -318,19 +318,19 @@ color: rgb(0, 0, 0);
           <widget class="QLineEdit" name="lineEdit_name">
            <property name="minimumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -360,19 +360,19 @@ border-radius: 3px;
           <widget class="QLineEdit" name="lineEdit_surname">
            <property name="minimumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -404,8 +404,14 @@ border-radius: 3px;
             <widget class="QLineEdit" name="lineEdit_countryCode">
              <property name="minimumSize">
               <size>
-               <width>40</width>
-               <height>28</height>
+               <width>80</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>80</width>
+               <height>25</height>
               </size>
              </property>
              <property name="font">
@@ -483,19 +489,19 @@ color: black;
           <widget class="QDoubleSpinBox" name="doubleSpinBox_takeoffPower">
            <property name="minimumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -525,19 +531,19 @@ border-radius: 3px;
           <widget class="QDoubleSpinBox" name="doubleSpinBox_takeoffTechnique">
            <property name="minimumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -567,19 +573,19 @@ border-radius: 3px;
           <widget class="QDoubleSpinBox" name="doubleSpinBox_flightTechnique">
            <property name="minimumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -609,19 +615,19 @@ border-radius: 3px;
           <widget class="QDoubleSpinBox" name="doubleSpinBox_landingStyle">
            <property name="minimumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -663,19 +669,19 @@ border-radius: 3px;
           <widget class="QDoubleSpinBox" name="doubleSpinBox_form">
            <property name="minimumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -705,19 +711,19 @@ border-radius: 3px;
           <widget class="QComboBox" name="comboBox_flightStyle">
            <property name="minimumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>230</width>
-             <height>29</height>
+             <width>190</width>
+             <height>25</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="focusPolicy">
@@ -810,7 +816,7 @@ border-radius: 3px;
            <property name="font">
             <font>
              <family>Ubuntu</family>
-             <pointsize>16</pointsize>
+             <pointsize>15</pointsize>
             </font>
            </property>
            <property name="focusPolicy">

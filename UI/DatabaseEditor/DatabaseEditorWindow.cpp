@@ -38,8 +38,6 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
     if(GlobalDatabase::get()->getGlobalCompetitionsRules().size() > 0)
         fillCompetitionRulesWidget();
 
-    qDebug()<<"a";
-
     if(this->jumperEditor == nullptr)
         this->jumperEditor = new JumperEditorWidget();
     ui->tab_jumpers->layout()->addWidget(this->jumperEditor);
