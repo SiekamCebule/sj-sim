@@ -73,7 +73,6 @@ MainWindow::~MainWindow()
 {
     qDebug()<<ui;
     delete ui;
-    qDebug()<<"usunieto ui";
 }
 
 
@@ -84,16 +83,22 @@ void MainWindow::on_pushButton_singleJumps_clicked()
     if(singleJumpsConfig.exec() == QDialog::Accepted)
     {
         SingleJumpsManager manager;
+        qDebug()<<"no";
         manager.setJumpsCount(singleJumpsConfig.getJumpsCountFromInput());
+        qDebug()<<"no";
         manager.setChangeableWind(singleJumpsConfig.getChangeableWindFromInput());
+        qDebug()<<"no";
         manager.setResultsFileName(singleJumpsConfig.getResultsFileName());
         manager.setResultsFormat(singleJumpsConfig.getResultsFormatFromInput());
+        qDebug()<<"no";
         manager.setGate(singleJumpsConfig.getGateFromInput());
         manager.setJumper(singleJumpsConfig.getJumperEditor()->getJumperFromWidgetInput());
         manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
+        qDebug()<<"no";
         manager.setWindsGeneratorSettings(singleJumpsConfig.getWindsGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
         manager.setWindAverageCalculatingType(singleJumpsConfig.getWindAverageCalculatingType());
         manager.setWindCompensationDistanceEffect(singleJumpsConfig.getWindCompensationDistanceEffect());
+        qDebug()<<"no";
         manager.simulate();
 
         SingleJumpsResultsWindow resultsWindow;

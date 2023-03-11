@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>991</width>
-    <height>675</height>
+    <width>762</width>
+    <height>641</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Edytor bazy danych</string>
@@ -137,7 +143,7 @@ QTabBar::tab:selected{
 }</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -160,7 +166,7 @@ QTabBar::tab:selected{
          </property>
          <property name="minimumSize">
           <size>
-           <width>530</width>
+           <width>470</width>
            <height>0</height>
           </size>
          </property>
@@ -183,8 +189,8 @@ width: 5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>528</width>
-            <height>454</height>
+            <width>664</width>
+            <height>430</height>
            </rect>
           </property>
           <property name="minimumSize">
@@ -206,9 +212,12 @@ width: 5px;
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>1057</width>
+           <width>50</width>
            <height>78</height>
           </size>
          </property>
@@ -249,7 +258,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>548</width>
-            <height>454</height>
+            <height>440</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -284,7 +293,7 @@ width: 5px;
         <widget class="QScrollArea" name="scrollArea_competitionRules">
          <property name="minimumSize">
           <size>
-           <width>550</width>
+           <width>420</width>
            <height>0</height>
           </size>
          </property>
@@ -307,8 +316,8 @@ width: 5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>548</width>
-            <height>454</height>
+            <width>418</width>
+            <height>440</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -358,14 +367,14 @@ width: 5px;
       <widget class="QPushButton" name="pushButton_add">
        <property name="minimumSize">
         <size>
-         <width>65</width>
-         <height>60</height>
+         <width>55</width>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>65</width>
-         <height>60</height>
+         <width>55</width>
+         <height>50</height>
         </size>
        </property>
        <property name="focusPolicy">
@@ -380,8 +389,8 @@ width: 5px;
        </property>
        <property name="iconSize">
         <size>
-         <width>50</width>
-         <height>50</height>
+         <width>45</width>
+         <height>45</height>
         </size>
        </property>
        <property name="autoDefault">
@@ -399,14 +408,14 @@ width: 5px;
       <widget class="QPushButton" name="pushButton_remove">
        <property name="minimumSize">
         <size>
-         <width>65</width>
-         <height>60</height>
+         <width>55</width>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>65</width>
-         <height>60</height>
+         <width>55</width>
+         <height>50</height>
         </size>
        </property>
        <property name="focusPolicy">
@@ -421,8 +430,8 @@ width: 5px;
        </property>
        <property name="iconSize">
         <size>
-         <width>50</width>
-         <height>50</height>
+         <width>45</width>
+         <height>45</height>
         </size>
        </property>
        <property name="autoDefault">
@@ -456,14 +465,14 @@ width: 5px;
       <widget class="QPushButton" name="pushButton_up">
        <property name="minimumSize">
         <size>
-         <width>65</width>
-         <height>60</height>
+         <width>55</width>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>65</width>
-         <height>60</height>
+         <width>55</width>
+         <height>50</height>
         </size>
        </property>
        <property name="focusPolicy">
@@ -478,8 +487,8 @@ width: 5px;
        </property>
        <property name="iconSize">
         <size>
-         <width>50</width>
-         <height>50</height>
+         <width>45</width>
+         <height>45</height>
         </size>
        </property>
        <property name="autoDefault">
@@ -497,14 +506,14 @@ width: 5px;
       <widget class="QPushButton" name="pushButton_down">
        <property name="minimumSize">
         <size>
-         <width>65</width>
-         <height>60</height>
+         <width>55</width>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>65</width>
-         <height>60</height>
+         <width>55</width>
+         <height>50</height>
         </size>
        </property>
        <property name="focusPolicy">
@@ -519,8 +528,8 @@ width: 5px;
        </property>
        <property name="iconSize">
         <size>
-         <width>50</width>
-         <height>50</height>
+         <width>45</width>
+         <height>45</height>
         </size>
        </property>
        <property name="autoDefault">

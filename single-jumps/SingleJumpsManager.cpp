@@ -12,16 +12,18 @@
 #include <QObject>
 #include <QDir>
 
-SingleJumpsManager::SingleJumpsManager(int gate, int jumpsCount, bool saveResultsToFile, const QString &resultsFileName, bool changeableWind, short resultsFormat) :
+SingleJumpsManager::SingleJumpsManager(int gate, int jumpsCount, const QString &resultsFileName, bool changeableWind, short resultsFormat) :
     jumpsCount(jumpsCount),
     changeableWind(changeableWind),
     resultsFileName(resultsFileName),
     gate(gate),
     resultsFormat(resultsFormat)
-{}
+{
+}
 
 void SingleJumpsManager::simulate()
 {
+    qDebug()<<"simulation";
     jumpSimulator.setJumper(&jumper);
     jumpSimulator.setHill(&hill);
     jumpSimulator.setGate(&gate);

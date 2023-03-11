@@ -12,7 +12,7 @@
 class SingleJumpsManager
 {
 public:
-    SingleJumpsManager(int gate = 0, int jumpsCount = 0, bool saveResultsToFile = false, const QString &resultsFileName = "", bool changeableWind = false, short resultsFormat = 0);
+    SingleJumpsManager(int gate = 0, int jumpsCount = 0, const QString &resultsFileName = "", bool changeableWind = false, short resultsFormat = 0);
 
     void simulate();
 

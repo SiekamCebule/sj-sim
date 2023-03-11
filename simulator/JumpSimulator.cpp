@@ -11,6 +11,7 @@ JumpSimulator::JumpSimulator(Jumper *jumper, const WindsInfo & windsInfo, Hill *
     windsInfo(windsInfo),
     hill(hill)
 {
+    simulationData = nullptr;
     if(jumper != nullptr)
         jumperSkills = jumper->getJumperSkillsPointer();
 
@@ -496,7 +497,9 @@ void JumpSimulator::setJumpData(const JumpData &newJumpData)
 
 void JumpSimulator::resetTemporaryParameters()
 {
-    simulationData->reset();
+    if(simulationData != nullptr){
+        simulationData->reset();
+    }
     jumpData.reset();
 }
 

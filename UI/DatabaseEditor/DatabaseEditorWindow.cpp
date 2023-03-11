@@ -147,7 +147,7 @@ void DatabaseEditorWindow::fillJumpersWidget()
         QLabel * label = new QLabel(QString::number(itemWidget->getIndex()));
         QFont font = label->font();
         font.setFamily("Ubuntu Light");
-        font.setPointSize(17);
+        font.setPointSize(15);
         label->setFont(font);
         label->setStyleSheet("QLabel{color: #000000; margin-right: 11px;}");
         itemWidget->addLabel(label, 0);
@@ -155,7 +155,7 @@ void DatabaseEditorWindow::fillJumpersWidget()
         label = new QLabel(jumper.getNameAndSurname());
         label->setObjectName("main-label");
         font.setFamily("Ubuntu Light");
-        font.setPointSize(15);
+        font.setPointSize(13);
         label->setFont(font);
         label->setStyleSheet("QLabel{color: #452020; margin-right: 5px;}");
         itemWidget->addLabel(label, 1);
@@ -196,7 +196,7 @@ void DatabaseEditorWindow::fillHillsWidget()
         QLabel * label = new QLabel(QString::number(itemWidget->getIndex()));
         QFont font = label->font();
         font.setFamily("Ubuntu Light");
-        font.setPointSize(17);
+        font.setPointSize(15);
         label->setFont(font);
         label->setStyleSheet("QLabel{color: #000000; margin-right: 11px;}");
         itemWidget->addLabel(label, 0);
@@ -204,7 +204,7 @@ void DatabaseEditorWindow::fillHillsWidget()
         label = new QLabel(hill.getName() + " HS" +QString::number(hill.getHSPoint()));
         label->setObjectName("main-label");
         font.setFamily("Ubuntu Light");
-        font.setPointSize(15);
+        font.setPointSize(13);
         label->setFont(font);
         label->setStyleSheet("QLabel{color: #452020; margin-right: 5px;}");
         itemWidget->addLabel(label, 1);
@@ -245,7 +245,7 @@ void DatabaseEditorWindow::fillCompetitionRulesWidget()
         QLabel * label = new QLabel(QString::number(itemWidget->getIndex()));
         QFont font = label->font();
         font.setFamily("Ubuntu Light");
-        font.setPointSize(17);
+        font.setPointSize(15);
         label->setFont(font);
         label->setStyleSheet("QLabel{color: #000000; margin-right: 11px;}");
         itemWidget->addLabel(label, 0);
@@ -253,7 +253,7 @@ void DatabaseEditorWindow::fillCompetitionRulesWidget()
         label = new QLabel(rules.getName());
         label->setObjectName("main-label");
         font.setFamily("Ubuntu Light");
-        font.setPointSize(15);
+        font.setPointSize(13);
         label->setFont(font);
         label->setStyleSheet("QLabel{color: #452020; margin-right: 5px;}");
         itemWidget->addLabel(label, 1);
