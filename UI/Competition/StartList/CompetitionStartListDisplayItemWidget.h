@@ -13,7 +13,7 @@ class CompetitionStartListDisplayItemWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit CompetitionStartListDisplayItemWidget(QWidget *parent = nullptr);
+    explicit CompetitionStartListDisplayItemWidget(short competitiorType, QWidget *parent = nullptr);
     ~CompetitionStartListDisplayItemWidget();
 
     void setIsActive(bool arg);
@@ -26,10 +26,11 @@ public:
     int getIndexInParentList() const;
     void setIndexInParentList(int newIndexInParentList);
 
-    void uninstallEventFilterForThis();
-
     bool getIsSelected() const;
     void setIsSelected(bool newIsSelected);
+
+    short getCompetitiorType() const;
+    void setCompetitiorType(short newCompetitiorType);
 
 signals:
     void selectionChanged();
@@ -49,6 +50,8 @@ private:
     Jumper * jumper;
     int indexInParentList;
     bool isSelected;
+
+    short competitiorType;
 };
 
 #endif // COMPETITIONSTARTLISTDISPLAYITEMWIDGET_H

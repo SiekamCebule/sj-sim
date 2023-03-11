@@ -1,10 +1,12 @@
 #include "CompetitionStartListDisplayItemWidget.h"
 #include "ui_CompetitionStartListDisplayItemWidget.h"
 #include "../../../global/CountryFlagsManager.h"
+#include "CompetitionStartListDisplayWidget.h"
 
 #include <QMouseEvent>
 
-CompetitionStartListDisplayItemWidget::CompetitionStartListDisplayItemWidget(QWidget *parent) :
+CompetitionStartListDisplayItemWidget::CompetitionStartListDisplayItemWidget(short competitiorType, QWidget *parent) :
+    competitiorType(competitiorType),
     QWidget(parent),
     ui(new Ui::CompetitionStartListDisplayItemWidget)
 {
@@ -14,19 +16,20 @@ CompetitionStartListDisplayItemWidget::CompetitionStartListDisplayItemWidget(QWi
     ui->label_name->installEventFilter(this);
 
     connect(this, &CompetitionStartListDisplayItemWidget::selectionChanged, this, [this](){
-        if(getIsSelected() == true){
-            QFont font = ui->label_name->font();
-            font.setBold(true);
-            ui->label_name->setFont(font);
-            ui->label_name->setStyleSheet("color: rgb(51, 109, 184);");
-        }
-        else{
-            qDebug()<<"hahahaha";
-            QFont font = ui->label_name->font();
-            font.setBold(false);
-            ui->label_name->setFont(font);
-            ui->label_name->setStyleSheet("color: rgb(10, 10, 10);");
-
+        if(getIsActive() == true){
+            if(getIsSelected() == true){
+                QFont font = ui->label_name->font();
+                font.setBold(true);
+                ui->label_name->setFont(font);
+                ui->label_name->setStyleSheet("color: rgb(51, 109, 184);");
+            }
+            else{
+                qDebug()<<"hahahaha";
+                QFont font = ui->label_name->font();
+                font.setBold(false);
+                ui->label_name->setFont(font);
+                ui->label_name->setStyleSheet("color: rgb(10, 10, 10);");
+            }
         }
     });
 }
@@ -49,9 +52,23 @@ bool CompetitionStartListDisplayItemWidget::getIsActive()
 
 void CompetitionStartListDisplayItemWidget::fillWidget()
 {
-    ui->label_name->setText(jumper->getNameAndSurname());
-    ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_flag->size()));
-    ui->label_index->setText(QString::number(getIndexInParentList()));
+    switch(getCompetitiorType()){
+    case CompetitionStartListDisplayWidget::Jumpers:
+        ui->label_name->setText(jumper->getNameAndSurname());
+        ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+        break;
+    case CompetitionStartListDisplayWidget::Teams:
+        break;
+    }
+
+    if(getIsActive() == true){
+        ui->label_index->setText(QString::number(getIndexInParentList()));
+        ui->label_name->setStyleSheet("color: rgb(0, 0, 0);");
+    }
+    else{
+        ui->label_index->setText("X");
+        ui->label_name->setStyleSheet("color: rgb(90, 90, 90);");
+    }
 }
 
 void CompetitionStartListDisplayItemWidget::on_checkBox_active_stateChanged(int arg1)
@@ -59,11 +76,25 @@ void CompetitionStartListDisplayItemWidget::on_checkBox_active_stateChanged(int 
     if(ui->checkBox_active->isChecked() == true)
     {
         ui->checkBox_active->setText("Aktywny");
+        ui->label_index->setText(QString::number(getIndexInParentList()));
+        ui->label_name->setStyleSheet("color: rgb(0, 0, 0);");
     }
     else{
         ui->checkBox_active->setText("Nieaktywny");
+        ui->label_index->setText("X");
+        ui->label_name->setStyleSheet("color: rgb(90, 90, 90);");
     }
     emit activityChanged();
+}
+
+short CompetitionStartListDisplayItemWidget::getCompetitiorType() const
+{
+    return competitiorType;
+}
+
+void CompetitionStartListDisplayItemWidget::setCompetitiorType(short newCompetitiorType)
+{
+    competitiorType = newCompetitiorType;
 }
 
 bool CompetitionStartListDisplayItemWidget::getIsSelected() const
@@ -87,11 +118,6 @@ void CompetitionStartListDisplayItemWidget::setIndexInParentList(int newIndexInP
     indexInParentList = newIndexInParentList;
 }
 
-void CompetitionStartListDisplayItemWidget::uninstallEventFilterForThis()
-{
-    ui->label_index->removeEventFilter(this);
-}
-
 bool CompetitionStartListDisplayItemWidget::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == ui->label_index)
@@ -105,8 +131,10 @@ bool CompetitionStartListDisplayItemWidget::eventFilter(QObject *watched, QEvent
     {
         if(event->type() == QEvent::MouseButtonPress)
         {
-            setIsSelected(true);
-            emit selected();
+            if(getIsActive() == true){
+                setIsSelected(true);
+                emit selected();
+            }
         }
     }
     return QWidget::eventFilter(watched, event);
