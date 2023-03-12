@@ -74,12 +74,12 @@ void CompetitionStartListDisplayItemWidget::on_checkBox_active_stateChanged(int 
 {
     if(ui->checkBox_active->isChecked() == true)
     {
-        ui->checkBox_active->setText("Aktywny");
+        ui->checkBox_active->setText(tr("Aktywny"));
         ui->label_index->setText(QString::number(getIndexInParentList()));
         ui->label_name->setStyleSheet("color: rgb(0, 0, 0);");
     }
     else{
-        ui->checkBox_active->setText("Nieaktywny");
+        ui->checkBox_active->setText(tr("Nieaktywny"));
         ui->label_index->setText("X");
         ui->label_name->setStyleSheet("color: rgb(90, 90, 90);");
     }

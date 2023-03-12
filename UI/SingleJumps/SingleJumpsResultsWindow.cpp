@@ -295,7 +295,7 @@ void SingleJumpsResultsWindow::askForIndexForJumpInformationShow()
         dialog.setIntMinimum(1);
         dialog.setIntMaximum(manager->getJumpsCount());
         dialog.setStyleSheet("QWidget{background-color: rgb(225, 225, 225); color: black;}");
-        dialog.setWindowTitle(tr("Przejdź do wybranego zawodnika"));
+        dialog.setWindowTitle(tr("Przejdź do wybranej informacji o skoku"));
         dialog.setLabelText(tr("Wpisz numer skoku do którego chcesz się przenieść"));
         if(dialog.exec() == QDialog::Accepted)
         {

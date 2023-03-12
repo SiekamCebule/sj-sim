@@ -72,22 +72,172 @@
     </message>
 </context>
 <context>
+    <name>CompetitionConfigWindow</name>
+    <message>
+        <location filename="../UI/Competition/CompetitionConfigWindow.cpp" line="33"/>
+        <source>Zasady</source>
+        <translation>Rules</translation>
+    </message>
+</context>
+<context>
+    <name>CompetitionRulesEditorWidget</name>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="33"/>
+        <source>Nazwa</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="64"/>
+        <source>Rodzaj konkursu</source>
+        <translation>Competition type</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="76"/>
+        <source>QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 7px;
+}</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="85"/>
+        <source>Indywidualny</source>
+        <translation>Individual</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="90"/>
+        <source>Drużynowy</source>
+        <translation>Team</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="104"/>
+        <source>Ilość rund</source>
+        <translation>Rounds count</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="138"/>
+        <source>Rekompensata za wiatr</source>
+        <translation>Wind compensations</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="152"/>
+        <source>Rekompensata za belkę</source>
+        <translation>Gate compensations</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="166"/>
+        <source>Punkty od sędziów</source>
+        <translation>Judges points</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="180"/>
+        <source>Zasada 95% punktu HS</source>
+        <translation>95% HS rule</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="233"/>
+        <source>Page 1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="246"/>
+        <source>Page 2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/CompetitionRulesEditorWidget.ui" line="312"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>CompetitionStartListDisplayItemWidget</name>
+    <message>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="20"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="41"/>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="79"/>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="120"/>
+        <source>color: black;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="44"/>
+        <source>1.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="82"/>
+        <source>Marius Lindvik</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="179"/>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp" line="82"/>
+        <source>Nieaktywny</source>
+        <translation>Inactive</translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp" line="77"/>
+        <source>Aktywny</source>
+        <translation>Active</translation>
+    </message>
+</context>
+<context>
+    <name>CompetitionStartListDisplayWidget</name>
+    <message>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayWidget.ui" line="20"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayWidget.ui" line="56"/>
+        <source>Lista startowa konkursu</source>
+        <translation>Competition start list</translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp" line="102"/>
+        <source>Zmiana miejsca na liście startowej</source>
+        <translation>Change of place on the starting list</translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp" line="103"/>
+        <source>Podaj nowy numer startowy uczestnika na liście startowej</source>
+        <translation>Enter the participant&apos;s new starting number in the starting list</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseEditorWindow</name>
     <message>
-        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="14"/>
-        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="66"/>
+        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="20"/>
+        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="72"/>
         <source>Edytor bazy danych</source>
         <translation>Database editor</translation>
     </message>
     <message>
-        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="150"/>
+        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="156"/>
         <source>Zawodnicy</source>
         <translation>Jumpers</translation>
     </message>
     <message>
-        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="221"/>
+        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="230"/>
         <source>Skocznie</source>
         <translation>Hills</translation>
+    </message>
+    <message>
+        <location filename="../UI/DatabaseEditor/DatabaseEditorWindow.ui" line="289"/>
+        <source>Zasady konkursów</source>
+        <translation>Competitions rules</translation>
     </message>
     <message>
         <source>Skocznie </source>
@@ -177,7 +327,7 @@
         <translation>Automatic</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="1207"/>
+        <location filename="../UI/EditorWidgets/HillEditorWidget.ui" line="1077"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -359,77 +509,82 @@
         <translation>Jumper editor</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="45"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="48"/>
         <source>Imię</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="77"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="80"/>
         <source>Nazwisko</source>
         <translation>Surname</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="109"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="112"/>
         <source>Kod kraju</source>
         <translation>Country code</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="141"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="144"/>
         <source>Siła wybicia</source>
         <translation>Takeoff power</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="173"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="176"/>
         <source>Technika wybicia</source>
         <translation>Takeoff technique</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="205"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="208"/>
         <source>Technika lotu</source>
         <translation>Flight technique</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="237"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="240"/>
         <source>Styl lotu</source>
         <translation>Flight style</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="269"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="272"/>
         <source>Styl lądowania</source>
         <translation>Landing style</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="301"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="304"/>
         <source>Forma</source>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="476"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="485"/>
         <source>IMG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="752"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="665"/>
         <source>Styl V (0)</source>
         <translation>V Style</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="757"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="670"/>
         <source>Nowoczesne V (1)</source>
         <translation>Modern V</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="762"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="675"/>
         <source>Szerokie V (2)</source>
         <translation>Wide V</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="767"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="680"/>
         <source>Styl H (3)</source>
         <translation>H Style</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="831"/>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="794"/>
+        <source>/ 20</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/JumperEditorWidget.ui" line="859"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -470,6 +625,30 @@
     <message>
         <location filename="../UI/mainwindow.ui" line="686"/>
         <source>0.0.1a</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>OtherCompetitionSettingsWidget</name>
+    <message>
+        <location filename="../UI/EditorWidgets/OtherCompetitionSettingsWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/OtherCompetitionSettingsWidget.ui" line="38"/>
+        <source>Zaśnieżenie torów najazdowych</source>
+        <translation>Inrun snow</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/OtherCompetitionSettingsWidget.ui" line="58"/>
+        <source>Zmoczenie kombinezonów zawodników</source>
+        <translation>Suit wet</translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/OtherCompetitionSettingsWidget.ui" line="93"/>
+        <location filename="../UI/EditorWidgets/OtherCompetitionSettingsWidget.ui" line="127"/>
+        <source>/ 10</source>
         <translation></translation>
     </message>
 </context>
@@ -785,6 +964,98 @@
         <source>U</source>
         <translation>F</translation>
     </message>
+    <message>
+        <location filename="../simulator/Wind.cpp" line="31"/>
+        <source>tylni</source>
+        <translation>back</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Wind.cpp" line="32"/>
+        <source>tylno-boczny</source>
+        <translation>side-back</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Wind.cpp" line="33"/>
+        <source>boczny</source>
+        <translation>side</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Wind.cpp" line="34"/>
+        <source>przednio-boczny</source>
+        <translation>front-side</translation>
+    </message>
+    <message>
+        <location filename="../simulator/Wind.cpp" line="35"/>
+        <source>przedni</source>
+        <translation>front</translation>
+    </message>
+    <message>
+        <location filename="../single-jumps/SingleJumpsManager.cpp" line="87"/>
+        <source>Nie można zapisać wyników</source>
+        <translation>Results cannot be saved</translation>
+    </message>
+    <message>
+        <location filename="../single-jumps/SingleJumpsManager.cpp" line="87"/>
+        <source>Nie udało się otworzyć pliku results/single-jumps/&lt;podana nazwa pliku&gt;
+Upewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia</source>
+        <translation>Failed to open the file results/single-jumps/&lt;entered file name&gt;
+Make sure the file exists or has the correct permissions</translation>
+    </message>
+</context>
+<context>
+    <name>RoundInfoEditorWidget</name>
+    <message>
+        <location filename="../UI/EditorWidgets/RoundInfoEditorWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/RoundInfoEditorWidget.ui" line="28"/>
+        <source>Ilość uczestników</source>
+        <translation>Competitiors count</translation>
+    </message>
+</context>
+<context>
+    <name>SingleCompetitionConfigWindow</name>
+    <message>
+        <location filename="../UI/Competition/CompetitionConfigWindow.ui" line="14"/>
+        <source>Konfiguracja pojedynczego konkursu</source>
+        <translation>Single competition configuration</translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/CompetitionConfigWindow.ui" line="50"/>
+        <source>Konfiguracja konkursu</source>
+        <translation>Competition configuration</translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/CompetitionConfigWindow.ui" line="103"/>
+        <source>Skocznia</source>
+        <translation>Hill</translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/CompetitionConfigWindow.ui" line="116"/>
+        <source>Ustawienia generatora wiatru</source>
+        <translation>Winds generator settings</translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/CompetitionConfigWindow.ui" line="154"/>
+        <source>Belka
+startowa</source>
+        <translation>Starting
+gate</translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/CompetitionConfigWindow.ui" line="193"/>
+        <source>Ilość zawodników 
+w drużynie</source>
+        <translation>Jumpers count
+in team</translation>
+    </message>
+    <message>
+        <location filename="../UI/Competition/CompetitionConfigWindow.ui" line="266"/>
+        <source>Symuluj</source>
+        <translation>Simulate</translation>
+    </message>
 </context>
 <context>
     <name>SingleJumpMiniResultWidget</name>
@@ -794,27 +1065,27 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpMiniResultWidget.ui" line="26"/>
+        <location filename="../UI/SingleJumps/SingleJumpMiniResultWidget.ui" line="29"/>
         <source>1. </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpMiniResultWidget.ui" line="56"/>
+        <location filename="../UI/SingleJumps/SingleJumpMiniResultWidget.ui" line="59"/>
         <source>123.5m</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpMiniResultWidget.ui" line="90"/>
+        <location filename="../UI/SingleJumps/SingleJumpMiniResultWidget.ui" line="93"/>
         <source>(134.8pkt)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpMiniResultWidget.ui" line="123"/>
+        <location filename="../UI/SingleJumps/SingleJumpMiniResultWidget.ui" line="126"/>
         <source>(0.73m/s)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpMiniResultWidget.ui" line="158"/>
+        <location filename="../UI/SingleJumps/SingleJumpMiniResultWidget.ui" line="161"/>
         <source>U</source>
         <translation></translation>
     </message>
@@ -826,89 +1097,143 @@
         <translation type="vanished">Single jumps settings</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="14"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="20"/>
         <source>Konfiguracja pojedynczych skoków</source>
         <translation>Single jumps configuration</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="65"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="71"/>
         <source>Pojedyncze skoki (konfiguracja)</source>
         <translation>Single jumps</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="127"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="117"/>
         <source>Zawodnik</source>
         <translation>Jumper</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="149"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="139"/>
         <source>Wczytaj istniejącego zawodnika</source>
         <translation>Load existing jumper</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="191"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="181"/>
         <source>Skocznia</source>
         <translation>Hill</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="213"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="203"/>
         <source>Wczytaj istniejącą skocznię</source>
         <translation>Load existing hill</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="255"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="245"/>
         <source>Ustawienia generatora wiatru</source>
         <translation>Winds generator settings</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="304"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="294"/>
         <source>Ilość skoków</source>
         <translation>Jumps count</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="370"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="360"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Jeśli zmienny wiatr jest wyłączony, to przy każym skoku będzie wiatr z ustawień generatora wiatru licząc tylko bazowy kierunek i siłę wiatru.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;If changeable wind is disabled, then each jump will have the wind from the wind generator settings calculating only the base wind direction and strength.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="386"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="376"/>
         <source>Zmienny wiatr</source>
         <translation>Changeable wind</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="425"/>
         <source>Zapisywanie wyników do pliku</source>
-        <translation>Saving results to file</translation>
+        <translation type="vanished">Saving results to file</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="466"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="417"/>
         <source>Nazwa pliku z wynikami</source>
         <translation>Results file name</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="531"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="472"/>
+        <source>Format wyników</source>
+        <translation>Results format</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="486"/>
+        <source>Format JSON</source>
+        <translation>JSON format</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="491"/>
+        <source>Format CSV</source>
+        <translation>CSV format</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="534"/>
+        <source>Wpływ odległości na rekompensatę</source>
+        <translation>Compensations distance effect</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="561"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- W opcji &amp;quot;Oryginalny&amp;quot; jeżeli skoczek wyląduje przed czujnikiem wiatru koło 75% punktu K, żaden czujnik powyżej tej odległości się nie wlicza. - - Opcja &amp;quot;Pełny&amp;quot; nie ogranicza się do 75% punktu K, tylko działa na każdej odległości.&lt;/p&gt;&lt;p&gt;- &amp;quot;Wyłączony&amp;quot; w ogóle nie posiada takiej funkcjonalności.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- In the &quot;Original&quot; option if the jumper lands in front of the wind sensor at about 75% of point K, any sensor above this distance does not count. - - Option &quot;Full&quot; is not limited to 75% of the K-spot, but works at any distance.&lt;/p&gt;&lt;p&gt;- &quot;Disabled&quot; has no such functionality at all.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="574"/>
+        <source>Wyłączony</source>
+        <translation>Off</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="579"/>
+        <source>Oryginalny</source>
+        <translation>Original</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="584"/>
+        <source>Pełny</source>
+        <translation>Full</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="610"/>
         <source>Liczenie rekompensaty za wiatr</source>
         <translation>Compensation calculating type</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="565"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="637"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &amp;quot;Oryginalne&amp;quot; uważa wiatr boczno-przedni lub boczno-tylni za stuprocentowo wiatr przedni-tylni.&lt;/p&gt;&lt;p&gt;- &amp;quot;Ulepszone&amp;quot; uważa mnoży rekompensatę za wiatr boczno-przedni/tylni przez 0.5.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &quot;Original&quot; considers side-forward or side-tail wind to be 100% front-tail wind.&lt;/p&gt;&lt;p&gt;- &quot;Enhanced&quot; consider multiplies compensation for side-head/tailwind by 0.5.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="647"/>
         <source>Oryginalne</source>
         <translation>Original</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="570"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="652"/>
         <source>Ulepszone (Zmniejszony wpływ bocznego wiatru na wysokość rekompensaty)</source>
         <translation>Improved (Reduced side wind effect for compensation)</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="598"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="680"/>
         <source>Belka startowa</source>
         <translation>Starting gate</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="682"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.ui" line="764"/>
         <source>Symuluj</source>
         <translation>Simulate</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.cpp" line="88"/>
+        <source>Ostrzeżenie</source>
+        <translation>Warning</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.cpp" line="88"/>
+        <source>Ilość skoków musi być większa niż 0</source>
+        <translation>Jumps count must be higher than 0</translation>
     </message>
 </context>
 <context>
@@ -930,19 +1255,63 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.ui" line="296"/>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.ui" line="304"/>
         <source>Informacje o skoku</source>
         <translation>Jump informations</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.ui" line="314"/>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.ui" line="322"/>
         <source>Statystyki odległości</source>
         <translation>Distance statistics</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.ui" line="327"/>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.ui" line="340"/>
+        <source>Statystyki not sędziowskich</source>
+        <translation>Judges statistics</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.ui" line="358"/>
+        <source>Statystyki rodzajów lądowania</source>
+        <translation>Landing types statistics</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.ui" line="368"/>
+        <source>Statystyki wiatru</source>
+        <translation>Wind statistics</translation>
+    </message>
+    <message>
         <source>Statystyki lądowania</source>
-        <translation>Landing statistics</translation>
+        <translation type="vanished">Landing statistics</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="218"/>
+        <source>Telemark</source>
+        <translation>Telemark</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="219"/>
+        <source>Na dwie nogi</source>
+        <translation>Both legs</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="220"/>
+        <source>Podpórka</source>
+        <translation>With support</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="221"/>
+        <source>Upadek</source>
+        <translation>Fall</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="298"/>
+        <source>Przejdź do wybranej informacji o skoku</source>
+        <translation>Go to chosen jump information</translation>
+    </message>
+    <message>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="299"/>
+        <source>Wpisz numer skoku do którego chcesz się przenieść</source>
+        <translation>Enter the jump index you want to move to</translation>
     </message>
 </context>
 <context>
@@ -1036,12 +1405,18 @@
         <translation>Front</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="213"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="175"/>
         <source>m/s</source>
         <translation>m/s</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="281"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="216"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="254"/>
+        <source>/ 10</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="319"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
