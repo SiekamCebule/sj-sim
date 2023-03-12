@@ -3,12 +3,12 @@
         {
             "characteristics": [
                 {
-                    "level": 2.5,
-                    "type": "takeoff-height"
-                },
-                {
                     "level": 1.85,
                     "type": "flight-height"
+                },
+                {
+                    "level": 2.5,
+                    "type": "takeoff-height"
                 }
             ],
             "country-code": "DEU",
@@ -24,6 +24,10 @@
         {
             "characteristics": [
                 {
+                    "level": 0.2,
+                    "type": "both-legs-landing-tendence"
+                },
+                {
                     "level": -3,
                     "type": "takeoff-height"
                 },
@@ -34,10 +38,6 @@
                 {
                     "level": -0.5,
                     "type": "landing-skill"
-                },
-                {
-                    "level": 0.2,
-                    "type": "both-legs-landing-tendence"
                 }
             ],
             "country-code": "SVN",
@@ -78,12 +78,12 @@
         {
             "characteristics": [
                 {
-                    "level": 0.5,
-                    "type": "takeoff-height"
-                },
-                {
                     "level": -0.8,
                     "type": "landing-skill"
+                },
+                {
+                    "level": 0.5,
+                    "type": "takeoff-height"
                 }
             ],
             "country-code": "POL",
@@ -99,6 +99,10 @@
         {
             "characteristics": [
                 {
+                    "level": -1.75,
+                    "type": "landing-skill"
+                },
+                {
                     "level": 0.55,
                     "type": "both-legs-landing-tendence"
                 },
@@ -109,21 +113,46 @@
                 {
                     "level": -0.25,
                     "type": "takeoff-height"
-                },
-                {
-                    "level": -1.75,
-                    "type": "landing-skill"
                 }
             ],
             "country-code": "KAZ",
             "flight-style": 2,
-            "flight-technique": 30,
+            "flight-technique": 35,
             "form": 26,
             "landing-style": 10.5,
             "name": "Sergey",
             "surname": "Tkachenko",
             "takeoff-power": 37,
-            "takeoff-technique": 30
+            "takeoff-technique": 34.5
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.5,
+                    "type": "both-legs-landing-tendence"
+                },
+                {
+                    "level": 1.5,
+                    "type": "flight-height"
+                },
+                {
+                    "level": 2.2,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": -1.5,
+                    "type": "landing-skill"
+                }
+            ],
+            "country-code": "ROU",
+            "flight-style": 1,
+            "flight-technique": 31.75,
+            "form": 33,
+            "landing-style": 11,
+            "name": "Daniel Andrei",
+            "surname": "Cacina",
+            "takeoff-power": 48,
+            "takeoff-technique": 40
         }
     ]
 }

@@ -3,12 +3,12 @@
         {
             "characteristics": [
                 {
-                    "level": -1,
-                    "type": "real-hs-point"
-                },
-                {
                     "level": 0.86,
                     "type": "takeoff-form-effect"
+                },
+                {
+                    "level": -1,
+                    "type": "real-hs-point"
                 }
             ],
             "country-code": "DEU",
@@ -26,12 +26,12 @@
         {
             "characteristics": [
                 {
-                    "level": 0.4,
-                    "type": "flight-form-effect"
-                },
-                {
                     "level": 0.25,
                     "type": "takeoff-power-effect"
+                },
+                {
+                    "level": 0.4,
+                    "type": "flight-form-effect"
                 }
             ],
             "country-code": "POL",
@@ -49,6 +49,14 @@
         {
             "characteristics": [
                 {
+                    "level": -1,
+                    "type": "real-hs-point"
+                },
+                {
+                    "level": 1,
+                    "type": "takeoff-power-effect"
+                },
+                {
                     "level": 0.35,
                     "type": "takeoff-technique-effect"
                 },
@@ -59,14 +67,6 @@
                 {
                     "level": -0.15,
                     "type": "flight-form-effect"
-                },
-                {
-                    "level": -1,
-                    "type": "real-hs-point"
-                },
-                {
-                    "level": 1,
-                    "type": "takeoff-power-effect"
                 }
             ],
             "country-code": "SVN",
@@ -80,6 +80,37 @@
             "points-for-k-point": 120,
             "points-for-meter": 1.2,
             "takeoff-effect": 0.2
+        },
+        {
+            "characteristics": [
+                {
+                    "level": -0.25,
+                    "type": "flight-randomness-effect"
+                },
+                {
+                    "level": 3,
+                    "type": "real-hs-point"
+                },
+                {
+                    "level": 0.65,
+                    "type": "takeoff-power-effect"
+                },
+                {
+                    "level": -1,
+                    "type": "takeoff-form-effect"
+                }
+            ],
+            "country-code": "ROU",
+            "flight-effect": 0.15,
+            "hs-point": 97,
+            "k-point": 90,
+            "name": "Rasnov",
+            "points-for-back-wind": 12,
+            "points-for-front-wind": 8,
+            "points-for-gate": 7,
+            "points-for-k-point": 60,
+            "points-for-meter": 2,
+            "takeoff-effect": 0.28
         }
     ]
 }
