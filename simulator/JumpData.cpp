@@ -81,6 +81,8 @@ QJsonObject JumpData::getJumpDataJsonObject(JumpData * jumpData, bool saveJudges
     QJsonObject object;
     object.insert("distance", jumpData->getDistance());
     object.insert("points", jumpData->getPoints());
+    object.insert("gate", jumpData->getGate());
+    object.insert("averaged-wind", jumpData->getAveragedWind());
     object.insert("gate-compensation", jumpData->getGateCompensation());
     object.insert("wind-compensation", jumpData->getWindCompensation());
     object.insert("total-compensation", jumpData->getTotalCompensation());

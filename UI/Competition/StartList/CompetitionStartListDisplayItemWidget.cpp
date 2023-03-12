@@ -24,7 +24,6 @@ CompetitionStartListDisplayItemWidget::CompetitionStartListDisplayItemWidget(sho
                 ui->label_name->setStyleSheet("color: rgb(51, 109, 184);");
             }
             else{
-                qDebug()<<"hahahaha";
                 QFont font = ui->label_name->font();
                 font.setBold(false);
                 ui->label_name->setFont(font);

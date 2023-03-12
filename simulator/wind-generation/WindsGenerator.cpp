@@ -4,6 +4,7 @@
 #include "../../utilities/functions.h"
 
 #include <QDebug>
+#include <random> //std
 
 WindsGenerator::WindsGenerator(const QVector<WindGenerationSettings> &generationSettings) :
     generationSettings(generationSettings)
@@ -34,15 +35,27 @@ QVector<Wind> WindsGenerator::generateWinds()
         Wind wind;
         WindGenerationSettings * settings = &generationSettings[i];
 
-        double windValue = settings->getBaseWindStrength();
-        double random = MyRandom::reducingChancesRandom(0, settings->getBaseWindStrength() * 1.75, settings->getBaseWindStrength() / 45, 1, (1.437 - settings->getWindStrengthInstability() / 23), MyRandom::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
+        double windStrength = settings->getBaseWindStrength();
+
+        double base = MyRandom::randomDouble(-settings->getBaseWindStrength() / 20, settings->getBaseWindStrength() / 20);
+        double deviation = settings->getWindStrengthInstability() / 5.75;
+
+        std::random_device rd{};
+        std::mt19937 generator{rd()};
+        std::normal_distribution<double> distribution(base, deviation);
+        double random = 0;
+        if(deviation > 0)
+            random = distribution(generator);
+
         short randomType = MyRandom::randomInt(0, 1);
         switch(randomType)
         {
-        case 0: windValue += random; break;
-        case 1: windValue -= random; break;
+        case 0: windStrength += random; break;
+        case 1: windStrength -= random; break;
         default: break;
         }
+
+        qDebug()<<"(random: "<<QString::number(random)<<")";
 
         short windDirection = Wind::Null;
 
@@ -141,7 +154,10 @@ QVector<Wind> WindsGenerator::generateWinds()
             }
         }
 
-        wind.setStrength(windValue);
+        if(windStrength < 0)
+            windStrength = 0;
+
+        wind.setStrength(windStrength);
         wind.setDirection(windDirection);
 
         winds.push_back(wind);

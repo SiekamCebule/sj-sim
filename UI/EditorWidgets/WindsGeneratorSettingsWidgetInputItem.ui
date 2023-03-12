@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>490</width>
-    <height>355</height>
+    <height>205</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,11 +16,11 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(245, 245, 245);</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2">
+  <layout class="QHBoxLayout" name="horizontalLayout_4">
    <item>
     <layout class="QFormLayout" name="formLayout_main">
      <property name="verticalSpacing">
-      <number>40</number>
+      <number>25</number>
      </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label">
@@ -132,44 +132,6 @@ background-color: rgb(245, 245, 245);</string>
        </item>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_windStrengthChange">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(40, 40, 40);
-background-color: rgb(245, 245, 245);</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="maximum">
-        <double>10.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_windDirectionChange">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(40, 40, 40);
-background-color: rgb(245, 245, 245);</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="maximum">
-        <double>10.000000000000000</double>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -214,6 +176,82 @@ background-color: rgb(245, 245, 245);</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_windDirectionChange">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(40, 40, 40);
+background-color: rgb(245, 245, 245);</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="maximum">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(100, 100, 100);</string>
+         </property>
+         <property name="text">
+          <string>/ 10</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_windStrengthChange">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(40, 40, 40);
+background-color: rgb(245, 245, 245);</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="maximum">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(100, 100, 100);</string>
+         </property>
+         <property name="text">
+          <string>/ 10</string>
          </property>
         </widget>
        </item>

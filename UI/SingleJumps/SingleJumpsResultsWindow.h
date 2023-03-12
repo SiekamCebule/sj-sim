@@ -28,6 +28,8 @@ public:
     void fillLandingsChart();
     void fillWindsChart();
 
+    void installShortcuts();
+
     SingleJumpsManager *getManager() const;
     void setManager(SingleJumpsManager *newManager);
     int getMaxNumberOfDistancesForChart() const;
@@ -56,6 +58,8 @@ private:
     int maxNumberOfLandingsForChart;
     QSplineSeries * getSplineSeriesForWindsChart();
     int maxNumberOfWindsForChart;
+
+    void askForIndexForJumpInformationShow();
 };
 
 #endif // SINGLEJUMPSRESULTSWINDOW_H

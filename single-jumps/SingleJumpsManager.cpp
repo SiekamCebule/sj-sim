@@ -72,8 +72,6 @@ void SingleJumpsManager::simulate()
 
     if(resultsFileName.isEmpty() == false)
         saveResultsToFile(resultsFormat);
-
-    qDebug()<<"noonnonoon";
 }
 
 bool SingleJumpsManager::saveResultsToFile(short fileFormat)

@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1188</width>
-    <height>757</height>
+    <height>653</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Konfiguracja pojedynczych skoków</string>
@@ -104,7 +110,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>752</width>
-          <height>570</height>
+          <height>466</height>
          </rect>
         </property>
         <attribute name="label">
@@ -167,8 +173,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>295</width>
-          <height>617</height>
+          <width>752</width>
+          <height>570</height>
          </rect>
         </property>
         <attribute name="label">
@@ -231,8 +237,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>295</width>
-          <height>617</height>
+          <width>752</width>
+          <height>570</height>
          </rect>
         </property>
         <attribute name="label">

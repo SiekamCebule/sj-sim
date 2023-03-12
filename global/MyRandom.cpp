@@ -14,6 +14,8 @@ double MyRandom::randomDouble(double min, double max, short precision)
 {
     if(min >= max)
         return 0;
+    if(max == 0)
+        return 0;
 
     QVector<double> results;
     ulong toMultipy = std::pow(10, precision);
@@ -30,6 +32,8 @@ double MyRandom::randomDouble(double min, double max, short precision)
 int MyRandom::randomInt(int min, int max)
 {
     if(min >= max)
+        return 0;
+    if(max == 0)
         return 0;
 
     QVector<int> results;

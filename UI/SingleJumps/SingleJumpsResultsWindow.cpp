@@ -15,6 +15,8 @@
 #include <QEventLoop>
 #include <QMap>
 #include <QDebug>
+#include <QAction>
+#include <QInputDialog>
 
 extern IDGenerator globalIDGenerator;
 
@@ -36,7 +38,7 @@ SingleJumpsResultsWindow::~SingleJumpsResultsWindow()
 {
     qDebug()<<ui;
     delete ui;
-        qDebug()<<"usunieto ui2";
+    qDebug()<<"usunieto ui2";
 }
 
 void SingleJumpsResultsWindow::fillJumperInfo()
@@ -139,7 +141,7 @@ void SingleJumpsResultsWindow::fillWindsChart()
 {
     QChart * windsChart = new QChart();
     windsChart->addSeries(getSplineSeriesForWindsChart());
-    windsChart->setTitle("Rozkład siły wiatru przy skokach (zaokrąglone do 0.1)");
+    windsChart->setTitle("Rozkład siły wiatru przy skokach (zaokrąglone do 0.05)");
     windsChart->setTitleFont(QFont("Quicksand Medium", 15, 1, false));
     windsChart->createDefaultAxes();
     windsChart->axes(Qt::Vertical).first()->setRange(0, maxNumberOfWindsForChart * 1.15);
@@ -254,7 +256,10 @@ QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForWindsChart()
     QMap<double, int> winds;
     for(const auto & jump : manager->getJumps())
     {
-        double wind = std::round(jump.getAveragedWind() * 10) / 10;
+        double wind = jump.getAveragedWind();
+        wind *= 20;
+        wind = round(wind);
+        wind *= 0.05;
         if(winds.contains(wind))
         {
             winds[wind] += 1;
@@ -270,6 +275,48 @@ QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForWindsChart()
     }
 
     return series;
+}
+
+void SingleJumpsResultsWindow::installShortcuts()
+{
+    QAction * action = new QAction(this);
+    action->setShortcut(Qt::CTRL | Qt::Key_I);
+    connect(action, &QAction::triggered, this, &SingleJumpsResultsWindow::askForIndexForJumpInformationShow);
+    this->addAction(action);
+}
+
+void SingleJumpsResultsWindow::askForIndexForJumpInformationShow()
+{
+    qDebug()<<"fajne";
+    if(manager->getJumpsCount() > 0){
+        QInputDialog dialog;
+        dialog.setInputMode(QInputDialog::IntInput);
+        dialog.setModal(true);
+        dialog.setIntMinimum(1);
+        dialog.setIntMaximum(manager->getJumpsCount());
+        dialog.setStyleSheet("QWidget{background-color: rgb(225, 225, 225); color: black;}");
+        dialog.setWindowTitle(tr("Przejdź do wybranego zawodnika"));
+        dialog.setLabelText(tr("Wpisz numer skoku do którego chcesz się przenieść"));
+        if(dialog.exec() == QDialog::Accepted)
+        {
+            int index = dialog.intValue() - 1;
+            if(ui->verticalLayout_jumpInfos != nullptr){
+                QLayoutItem * item;
+                while((item = ui->verticalLayout_jumpInfos->takeAt(0)) != NULL)
+                {
+                    delete item->widget();
+                    delete item;
+                }
+            }
+            JumpDataDetailedInfoWindow * jumpInfo = new JumpDataDetailedInfoWindow(const_cast<JumpData *>(&manager->getJumps().at(index)));
+            jumpInfo->fillJumpInformations();
+            ui->verticalLayout_jumpInfos->addWidget(jumpInfo);
+            ui->toolBox->setCurrentIndex(0);
+
+            setSelectedItemIndex(miniResultItems.at(index)->getIndexInList());
+            miniResultItems.at(index)->setIsSelected(true);
+        }
+    }
 }
 
 int SingleJumpsResultsWindow::getMaxNumberOfWindsForChart() const
