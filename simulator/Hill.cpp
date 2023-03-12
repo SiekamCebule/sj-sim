@@ -3,9 +3,14 @@
 
 #include "../global/CountryFlagsManager.h"
 
-#include <QDebug>
+#include <QFile>
+#include <QByteArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonParseError>
 #include <QJsonArray>
-
+#include <QMessageBox>
 
 Hill::Hill(const QString &name, const QString &countryCode, double KPoint, double HSPoint, double pointsForMeter, double pointsForKPoint, double pointsForFrontWind, double pointsForBackWind, double pointsForGate, double takeoffEffect, double flightEffect, double realHS, bool autoPointsForKPoint, bool autoPointsForMeter, bool autoPointsForBackWind) : name(name),
     countryCode(countryCode),
@@ -62,6 +67,78 @@ QJsonObject Hill::getHillJsonObject(Hill *hill, bool saveKAndHSPoint, bool saveP
     object.insert("characteristics", characteristicsArray);
 
     return object;
+}
+
+QVector<Hill> Hill::getHillsVectorFromJson(const QByteArray &bytes)
+{
+    QVector<Hill> hills;
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(bytes, &error);
+    if(error.error != QJsonParseError::NoError)
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu skoczni", "Nie udało się wczytać skoczni z pliku userData/GlobalDatabase/globalHills.json\nTreść błędu: " + error.errorString(), QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return hills;
+    }
+
+    QJsonObject object = document.object();
+    QJsonValue value = object.value("hills");
+    QJsonArray array = value.toArray();
+    for(const auto & val : array)
+    {
+        QJsonObject obj = val.toObject();
+        Hill hill;
+        hill.setName(obj.value("name").toString());
+        hill.setCountryCode(obj.value("country-code").toString());
+        hill.setKPoint(obj.value("k-point").toDouble());
+        hill.setHSPoint(obj.value("hs-point").toDouble());
+
+        if(obj.value("points-for-meter").toString() == "auto")
+        {
+            hill.setPointsForMeter(Hill::calculatePointsForMeter(hill.getKPoint()));
+            hill.setAutoPointsForMeter(true);
+        }
+        else hill.setPointsForMeter(obj.value("points-for-meter").toDouble());
+
+        if(obj.value("points-for-k-point").toString() == "auto")
+        {
+            hill.setPointsForKPoint(Hill::calculatePointsForKPoint(hill.getKPoint()));
+            hill.setAutoPointsForKPoint(true);
+        }
+        else hill.setPointsForKPoint(obj.value("points-for-k-point").toDouble());
+
+        hill.setPointsForGate(obj.value("points-for-gate").toDouble());
+        hill.setPointsForFrontWind(obj.value("points-for-front-wind").toDouble());
+
+        if(obj.value("points-for-back-wind").toString() == "auto")
+        {
+            hill.setPointsForBackWind(Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(hill.getPointsForFrontWind()));
+            hill.setAutoPointsForBackWind(true);
+        }
+        else hill.setPointsForBackWind(obj.value("points-for-back-wind").toDouble());
+
+        hill.setTakeoffEffect(obj.value("takeoff-effect").toDouble());
+        hill.setFlightEffect(obj.value("flight-effect").toDouble());
+
+        QJsonArray characteristicsArray = obj.value("characteristics").toArray();
+        for(const auto & val : characteristicsArray){
+            hill.insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
+        }
+
+        hills.push_back(hill);
+    }
+
+    Hill::setupHillsFlagPixmaps(hills);
+    return hills;
+}
+
+void Hill::setupHillsFlagPixmaps(QVector<Hill> &hills)
+{
+    for(auto & hill : hills)
+    {
+        hill.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())));
+    }
 }
 
 bool Hill::getAutoPointsForBackWind() const

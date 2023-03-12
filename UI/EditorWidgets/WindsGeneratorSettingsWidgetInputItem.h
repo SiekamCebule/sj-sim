@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include "CharacteristicsEditor.h"
+#include "../../simulator/wind-generation/WindGenerationSettings.h"
 
 namespace Ui {
 class WindsGeneratorSettingsWidgetInputItem;
@@ -23,17 +24,25 @@ public:
     double getWindStrengthChangeFromInput();
     short getBaseWindDirectionFromInput();
     double getWindDirectionChangeFromInput();
+    WindGenerationSettings getWindGenerationSettingsFromInputs();
 
+    void fillInputs();
 signals:
     void submitted();
 
 private slots:
-    void when_submitButtonClicked();
+    void on_pushButton_submit_clicked();
 
 private:
     Ui::WindsGeneratorSettingsWidgetInputItem *ui;
 
     CharacteristicsEditor * characteristicsEditor;
+
+    WindGenerationSettings * settings;
+
+public:
+    WindGenerationSettings *getSettings() const;
+    void setSettings(WindGenerationSettings *newSettings);
 };
 
 #endif // WINDSGENERATORSETTINGSWIDGETINPUTITEM_H

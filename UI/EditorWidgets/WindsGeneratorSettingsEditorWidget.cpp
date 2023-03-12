@@ -2,8 +2,13 @@
 #include "ui_WindsGeneratorSettingsEditorWidget.h"
 
 #include "WindsGeneratorSettingsWidgetInputItem.h"
+#include "../../simulator/wind-generation/WindGenerationSettings.h"
 
 #include <QDebug>
+#include <QAction>
+#include <QDialog>
+#include <QPushButton>
+#include <QFont>
 
 WindsGeneratorSettingsEditorWidget::WindsGeneratorSettingsEditorWidget(QWidget *parent) :
     QWidget(parent),
@@ -15,6 +20,17 @@ WindsGeneratorSettingsEditorWidget::WindsGeneratorSettingsEditorWidget(QWidget *
     ui->toolBox->removeItem(0);
     delete ui->widget;
     delete ui->page_2;
+
+    QAction * action = new QAction(this);
+    action->setShortcut(Qt::CTRL | Qt::Key_F);
+    connect(action, &QAction::triggered, this, &WindsGeneratorSettingsEditorWidget::askForSettingsForFillAll);
+    this->addAction(action);
+
+    windGenerationSettings = nullptr;
+
+    connect(this, &WindsGeneratorSettingsEditorWidget::KPointChanged, this, [this](){
+        settingsCount = WindsGenerator::calculateWindsCountByKPoint(getKPoint());
+    });
 }
 
 WindsGeneratorSettingsEditorWidget::~WindsGeneratorSettingsEditorWidget()
@@ -22,16 +38,22 @@ WindsGeneratorSettingsEditorWidget::~WindsGeneratorSettingsEditorWidget()
     delete ui;
 }
 
-void WindsGeneratorSettingsEditorWidget::fillSettingsInputs(double KPoint)
+void WindsGeneratorSettingsEditorWidget::fillWindGenerationSettingsByDefault()
 {
-    settingsCount = WindsGenerator::calculateWindsCountByKPoint(KPoint);
+    windGenerationSettings->fill(WindGenerationSettings(), getSettingsCount());
+}
 
+void WindsGeneratorSettingsEditorWidget::fillSettingsInputs()
+{
     int count = ui->toolBox->count();
     for(int i=0; i<count; i++){
         delete ui->toolBox->widget(0);
     }
 
-    for(int i=0; i<settingsCount; i++)
+    int i=0;
+
+    qDebug()<<windGenerationSettings->count()<<"< count";
+    for(auto & settings : *windGenerationSettings)
     {
         QString sectorInfo = tr(" (Od ") + QString::number(WindsGenerator::getRangeOfWindSector(i + 1, KPoint).first) + tr(", do ");
         if(i + 1 == WindsGenerator::calculateWindsCountByKPoint(KPoint))
@@ -39,9 +61,61 @@ void WindsGeneratorSettingsEditorWidget::fillSettingsInputs(double KPoint)
         else sectorInfo += QString::number(WindsGenerator::getRangeOfWindSector(i + 1, KPoint).second) + "m";
         sectorInfo += ")";
 
-        ui->toolBox->addItem(new WindsGeneratorSettingsWidgetInputItem, tr("Sektor wiatru nr ") + QString::number(i + 1) + sectorInfo);
+        WindsGeneratorSettingsWidgetInputItem * item = new WindsGeneratorSettingsWidgetInputItem;
+        item->setSettings(&settings);
+        item->fillInputs();
+        ui->toolBox->addItem(item, tr("Sektor wiatru nr ") + QString::number(i + 1) + sectorInfo);
 
         dynamic_cast<WindsGeneratorSettingsWidgetInputItem *>(ui->toolBox->widget(i))->removeSubmitButton();
+
+        i++;
+    }
+}
+
+void WindsGeneratorSettingsEditorWidget::askForSettingsForFillAll()
+{
+    if(getSettingsCount() > 0)
+    {
+        QDialog * dialog = new QDialog;
+        dialog->setModal(true);
+        dialog->setWindowFlags(Qt::Window);
+        dialog->setWindowTitle(tr("Wypełnij podanym ustawieniem"));
+        dialog->setStyleSheet("background-color: rgb(225, 225, 225);");
+        dialog->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+        dialog->setFixedSize(dialog->size());
+        dialog->setLayout(new QVBoxLayout(dialog));
+        WindsGeneratorSettingsWidgetInputItem * item = new WindsGeneratorSettingsWidgetInputItem;
+        dialog->layout()->addWidget(item);
+
+        connect(item, &WindsGeneratorSettingsWidgetInputItem::submitted, dialog, &QDialog::accept);
+        if(dialog->exec() == QDialog::Accepted)
+        {
+            int widgetsCount = ui->toolBox->count();
+            for(int i=0; i<widgetsCount; i++){
+                delete ui->toolBox->widget(0);
+            }
+
+            WindGenerationSettings settings = item->getWindGenerationSettingsFromInputs();
+            for(auto & sett : *windGenerationSettings)
+            {
+                sett = settings;
+            }
+            for(int i=0; i<getSettingsCount(); i++)
+            {
+                QString sectorInfo = tr(" (Od ") + QString::number(WindsGenerator::getRangeOfWindSector(i + 1, KPoint).first) + tr(", do ");
+                if(i + 1 == WindsGenerator::calculateWindsCountByKPoint(KPoint))
+                    sectorInfo += tr("końca");
+                else sectorInfo += QString::number(WindsGenerator::getRangeOfWindSector(i + 1, KPoint).second) + "m";
+                sectorInfo += ")";
+
+                WindsGeneratorSettingsWidgetInputItem * item = new WindsGeneratorSettingsWidgetInputItem;
+                item->removeSubmitButton();
+                ui->toolBox->addItem(item, tr("Sektor wiatru nr ") + QString::number(i + 1) + sectorInfo);
+                item->setSettings(&settings);
+                item->fillInputs();
+            }
+            delete item;
+        }
     }
 }
 
@@ -59,6 +133,20 @@ QVector<WindGenerationSettings> WindsGeneratorSettingsEditorWidget::getWindsGene
         vector.push_back(settings);
     }
     return vector;
+}
+
+double WindsGeneratorSettingsEditorWidget::getKPoint() const
+{
+    return KPoint;
+}
+
+void WindsGeneratorSettingsEditorWidget::setKPoint(double newKPoint)
+{
+    double old = KPoint;
+    KPoint = newKPoint;
+
+    if(old != newKPoint)
+        emit KPointChanged();
 }
 
 QVector<WindGenerationSettings> *WindsGeneratorSettingsEditorWidget::getWindGenerationSettings() const

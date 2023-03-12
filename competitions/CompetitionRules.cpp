@@ -1,6 +1,13 @@
 #include "CompetitionRules.h"
 
+#include <QFile>
+#include <QByteArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonParseError>
 #include <QJsonArray>
+#include <QMessageBox>
 
 CompetitionRules::CompetitionRules(const QString & name) : name(name)
 {
@@ -43,6 +50,44 @@ QJsonObject CompetitionRules::getCompetitionRulesJsonObject(CompetitionRules *co
     }
 
     return object;
+}
+
+QVector<CompetitionRules> CompetitionRules::getCompetitionRulesVectorFromJson(const QByteArray &bytes)
+{
+    QVector<CompetitionRules> rulesVector;
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(bytes, &error);
+    if(error.error != QJsonParseError::NoError)
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu zasad konkursów", "Nie udało się wczytać zawodników z pliku userData/GlobalDatabase/globalCompetitionsRules.json\nTreść błędu: " + error.errorString(), QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return rulesVector;
+    }
+    QJsonObject object = document.object();
+    QJsonValue value = object.value("competitionsRules");
+    QJsonArray array = value.toArray();
+    for(const auto & val : array)
+    {
+        QJsonObject obj = val.toObject();
+        CompetitionRules rules;
+        rules.setName(obj.value("name").toString());
+        rules.setHas95HSRule(obj.value("95-hs-rule").toBool());
+        rules.setHasWindCompensations(obj.value("wind-compensations").toBool());
+        rules.setHasGateCompensations(obj.value("gate-compensations").toBool());
+        rules.setHasJudgesPoints(obj.value("judges-points").toBool());
+        rules.setCompetitionType(obj.value("competition-type").toInt());
+
+        QJsonArray roundsArray = obj.value("rounds").toArray();
+        for(const auto & round : roundsArray)
+        {
+            RoundInfo roundInfo;
+            roundInfo.setCount(round.toObject().value("count").toInt());
+            rules.getEditableRounds().push_back(roundInfo);
+        }
+        rulesVector.push_back(rules);
+    }
+    return rulesVector;
 }
 
 QVector<RoundInfo> CompetitionRules::getRounds() const

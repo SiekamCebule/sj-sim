@@ -132,6 +132,11 @@ Hill HillEditorWidget::getHillFromWidgetInput() const
     return hill;
 }
 
+int HillEditorWidget::getKPointFromInput()
+{
+    return ui->doubleSpinBox_KPoint->value();
+}
+
 void HillEditorWidget::on_checkBox_autoPointsForKPoint_stateChanged(int arg1)
 {
     if(arg1 == 2)

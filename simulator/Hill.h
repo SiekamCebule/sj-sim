@@ -9,6 +9,7 @@
 #include <QSet>
 #include <QPixmap>
 #include <QJsonObject>
+#include <QByteArray>
 
 class Hill : public ClassWithID, public ClassWithCharacteristics
 {
@@ -40,6 +41,9 @@ private:
 
 public:
     static QJsonObject getHillJsonObject(Hill * hill, bool saveKAndHSPoint, bool savePointsInfo, bool saveSimulationParameters);
+    static QVector<Hill> getHillsVectorFromJson(const QByteArray & bytes);
+    static void setupHillsFlagPixmaps(QVector<Hill> & hills);
+
     static double calculatePointsForMeter(double KPoint);
     static double calculatePointsForKPoint(double KPoint);
     static double calculatePointsForBackWindBy21PercentsOfFrontWind(double pointsForFrontWind);

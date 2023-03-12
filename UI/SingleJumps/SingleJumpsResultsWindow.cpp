@@ -92,18 +92,29 @@ void SingleJumpsResultsWindow::fillMiniJumpsResultsLayout()
 
 void SingleJumpsResultsWindow::fillDistancesChart()
 {
+    qDebug()<<"in chart";
     QChart * distancesChart = new QChart();
+    qDebug()<<"in chart";
     distancesChart->legend()->hide();
+    qDebug()<<"in chart";
     distancesChart->addSeries(getSplineSeriesForDistancesChart());
+    qDebug()<<"in chart";
     distancesChart->setTitle("Rozkład odległości zawodnika");
+    qDebug()<<"in chart";
     distancesChart->setTitleFont(QFont("Quicksand Medium", 15, 1, false));
+    qDebug()<<"in chart";
     distancesChart->createDefaultAxes();
+    qDebug()<<"in chart";
     distancesChart->axes(Qt::Vertical).first()->setRange(1, getMaxNumberOfDistancesForChart() * 1.15);
+    qDebug()<<"in chart";
 
     QChartView * distancesChartView = new QChartView(distancesChart);
+    qDebug()<<"in chart";
     distancesChartView->setRenderHint(QPainter::Antialiasing);
+    qDebug()<<"in chart";
 
     ui->verticalLayout_distanceStatistics->addWidget(distancesChartView);
+    qDebug()<<"in chart";
 }
 
 void SingleJumpsResultsWindow::fillJudgesChart()

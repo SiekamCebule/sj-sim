@@ -52,7 +52,12 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     ui->verticalLayout_jumperContent->addWidget(jumperEditor);
     ui->verticalLayout_hillContent->addWidget(hillEditor);
     ui->verticalLayout_windsGeneratorSettings->addWidget(windsGeneratorSettingsEditor);
-    connect(hillEditor, &HillEditorWidget::KPointInputChanged, windsGeneratorSettingsEditor, &WindsGeneratorSettingsEditorWidget::fillSettingsInputs);
+    connect(hillEditor, &HillEditorWidget::KPointInputChanged, this, [this](){
+        windsGeneratorSettingsEditor->setKPoint(hillEditor->getKPointFromInput());
+        windsGeneratorSettingsEditor->setWindGenerationSettings(new QVector<WindGenerationSettings>());
+        windsGeneratorSettingsEditor->fillWindGenerationSettingsByDefault();
+        windsGeneratorSettingsEditor->fillSettingsInputs();
+    });
 
     ui->toolBox->setCurrentIndex(0);
 }

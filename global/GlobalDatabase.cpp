@@ -99,56 +99,8 @@ bool GlobalDatabase::loadJumpers()
         message.exec();
         return false;
     }
-    QByteArray bytes = file.readAll();
+    globalJumpers = Jumper::getJumpersVectorFromJson(file.readAll());
     file.close();
-
-    QJsonParseError error;
-    QJsonDocument document = QJsonDocument::fromJson(bytes, &error);
-    if(error.error != QJsonParseError::NoError)
-    {
-        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu zawodników", "Nie udało się wczytać zawodników z pliku userData/GlobalDatabase/globalJumpers.json\nTreść błędu: " + error.errorString(), QMessageBox::StandardButton::Ok);
-        message.setModal(true);
-        message.exec();
-        return false;
-    }
-    QJsonObject object = document.object();
-    QJsonValue value = object.value("jumpers");
-    QJsonArray array = value.toArray();
-
-    globalJumpers.clear();
-    for(const auto & val : array)
-    {
-        QJsonObject obj = val.toObject();
-        Jumper jumper;
-        jumper.setName(obj.value("name").toString());
-        jumper.setSurname(obj.value("surname").toString());
-        jumper.setCountryCode(obj.value("country-code").toString());
-        jumper.getJumperSkillsPointer()->setTakeoffPower(obj.value("takeoff-power").toDouble());
-        jumper.getJumperSkillsPointer()->setTakeoffTechnique(obj.value("takeoff-technique").toDouble());
-        jumper.getJumperSkillsPointer()->setFlightTechnique(obj.value("flight-technique").toDouble());
-        jumper.getJumperSkillsPointer()->setFlightStyle(obj.value("flight-style").toDouble());
-        jumper.getJumperSkillsPointer()->setLandingStyle(obj.value("landing-style").toDouble());
-        jumper.getJumperSkillsPointer()->setForm(obj.value("form").toDouble());
-
-        QJsonArray characteristicsArray = obj.value("characteristics").toArray();
-        for(const auto & val : characteristicsArray){
-            jumper.getJumperSkillsPointer()->insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
-        }
-
-        globalJumpers.push_back(jumper);
-    }
-
-    /*for(const auto & jp : globalJumpers)
-    {
-        qDebug()<<jp.getNameAndSurname()<<" ("<<jp.getCountryCode()<<")";
-        JumperSkills * jps = jp.getJumperSkillsPointer();
-        qDebug()<<jps->getTakeoffPower()<<", "<<jps->getTakeoffTechnique()<<", "<<jps->getFlightTechnique()<<", "<<jps->getFlightStyle()<<", "<<jps->getLandingStyle()<<", "<<jps->getForm();
-        for(const auto & ch : jps->getCharacteristics())
-            qDebug()<<ch.getType()<<", "<<ch.getLevel();
-        qDebug()<<"\n\n";
-    }*/
-    file.close();
-    setupJumpersFlags();
     return true;
 }
 
@@ -162,70 +114,8 @@ bool GlobalDatabase::loadHills()
         message.exec();
         return false;
     }
-    QByteArray bytes = file.readAll();
+    globalHills = Hill::getHillsVectorFromJson(file.readAll());
     file.close();
-
-    QJsonParseError error;
-    QJsonDocument document = QJsonDocument::fromJson(bytes, &error);
-
-    if(error.error != QJsonParseError::NoError)
-    {
-        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu skoczni", "Nie udało się wczytać skoczni z pliku userData/GlobalDatabase/globalHills.json\nTreść błędu: " + error.errorString(), QMessageBox::StandardButton::Ok);
-        message.setModal(true);
-        message.exec();
-        return false;
-    }
-
-    QJsonObject object = document.object();
-    QJsonValue value = object.value("hills");
-    QJsonArray array = value.toArray();
-
-    globalHills.clear();
-    for(const auto & val : array)
-    {
-        QJsonObject obj = val.toObject();
-        Hill hill;
-        hill.setName(obj.value("name").toString());
-        hill.setCountryCode(obj.value("country-code").toString());
-        hill.setKPoint(obj.value("k-point").toDouble());
-        hill.setHSPoint(obj.value("hs-point").toDouble());
-
-        if(obj.value("points-for-meter").toString() == "auto")
-        {
-            hill.setPointsForMeter(Hill::calculatePointsForMeter(hill.getKPoint()));
-            hill.setAutoPointsForMeter(true);
-        }
-        else hill.setPointsForMeter(obj.value("points-for-meter").toDouble());
-
-        if(obj.value("points-for-k-point").toString() == "auto")
-        {
-            hill.setPointsForKPoint(Hill::calculatePointsForKPoint(hill.getKPoint()));
-            hill.setAutoPointsForKPoint(true);
-        }
-        else hill.setPointsForKPoint(obj.value("points-for-k-point").toDouble());
-
-        hill.setPointsForGate(obj.value("points-for-gate").toDouble());
-        hill.setPointsForFrontWind(obj.value("points-for-front-wind").toDouble());
-
-        if(obj.value("points-for-back-wind").toString() == "auto")
-        {
-            hill.setPointsForBackWind(Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(hill.getPointsForFrontWind()));
-            hill.setAutoPointsForBackWind(true);
-        }
-        else hill.setPointsForBackWind(obj.value("points-for-back-wind").toDouble());
-
-        hill.setTakeoffEffect(obj.value("takeoff-effect").toDouble());
-        hill.setFlightEffect(obj.value("flight-effect").toDouble());
-
-        QJsonArray characteristicsArray = obj.value("characteristics").toArray();
-        for(const auto & val : characteristicsArray){
-            hill.insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
-        }
-
-        globalHills.push_back(hill);
-    }
-    file.close();
-    setupHillsFlags();
     return true;
 }
 
@@ -239,47 +129,8 @@ bool GlobalDatabase::loadCompetitionsRules()
         message.exec();
         return false;
     }
-    QByteArray bytes = file.readAll();
+    globalCompetitionsRules = CompetitionRules::getCompetitionRulesVectorFromJson(file.readAll());
     file.close();
-
-    QJsonParseError error;
-    QJsonDocument document = QJsonDocument::fromJson(bytes, &error);
-    if(error.error != QJsonParseError::NoError)
-    {
-        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu zasad konkursów", "Nie udało się wczytać zawodników z pliku userData/GlobalDatabase/globalCompetitionsRules.json\nTreść błędu: " + error.errorString(), QMessageBox::StandardButton::Ok);
-        message.setModal(true);
-        message.exec();
-        return false;
-    }
-
-    QJsonObject object = document.object();
-    QJsonValue value = object.value("competitionsRules");
-    QJsonArray array = value.toArray();
-
-    globalCompetitionsRules.clear();
-    for(const auto & val : array)
-    {
-        QJsonObject obj = val.toObject();
-        CompetitionRules rules;
-        rules.setName(obj.value("name").toString());
-        rules.setHas95HSRule(obj.value("95-hs-rule").toBool());
-        rules.setHasWindCompensations(obj.value("wind-compensations").toBool());
-        rules.setHasGateCompensations(obj.value("gate-compensations").toBool());
-        rules.setHasJudgesPoints(obj.value("judges-points").toBool());
-        rules.setCompetitionType(obj.value("competition-type").toInt());
-
-        QJsonArray roundsArray = obj.value("rounds").toArray();
-        for(const auto & round : roundsArray)
-        {
-            RoundInfo roundInfo;
-            roundInfo.setCount(round.toObject().value("count").toInt());
-            rules.getEditableRounds().push_back(roundInfo);
-        }
-        globalCompetitionsRules.push_back(rules);
-    }
-
-    file.close();
-    setupJumpersFlags();
     return true;
 }
 

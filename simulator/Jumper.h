@@ -23,6 +23,8 @@ private:
     JumperSkills jumperSkills;
 public:
     static QJsonObject getJumperJsonObject(Jumper *jumper, bool saveSkills, bool saveCharacteristics);
+    static QVector<Jumper> getJumpersVectorFromJson(const QByteArray & bytes);
+    static void setupJumpersFlagPixmaps(QVector<Jumper> & jumpers);
 
     QString getName() const;
     void setName(const QString &newName);

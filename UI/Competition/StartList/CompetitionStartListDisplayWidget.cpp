@@ -192,7 +192,7 @@ void CompetitionStartListDisplayWidget::on_pushButton_edit_clicked()
         QDialog * dialog = new QDialog;
         dialog->setWindowFlags(Qt::Window);
         dialog->setWindowTitle("Edytuj uczestnika na liście startowej");
-        dialog->setStyleSheet("background-color: rgb(210, 210, 210);");
+        dialog->setStyleSheet("background-color: rgb(225, 225, 225);");
         dialog->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         dialog->setFixedSize(dialog->size());
         dialog->setLayout(new QVBoxLayout(dialog));

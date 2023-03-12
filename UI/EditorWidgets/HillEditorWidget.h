@@ -25,10 +25,7 @@ public:
 
     Hill getHillFromWidgetInput() const;
 
-    Hill *getHill() const;
-    void setHill(Hill *newHill);
-    CharacteristicsEditor *getCharacteristicsEditor() const;
-    void setCharacteristicsEditor(CharacteristicsEditor *newCharacteristicsEditor);
+    int getKPointFromInput();
 
 signals:
     void submitted();
@@ -48,6 +45,12 @@ private:
     CharacteristicsEditor * characteristicsEditor;
 
     Hill * hill;
+
+public:
+    Hill *getHill() const;
+    void setHill(Hill *newHill);
+    CharacteristicsEditor *getCharacteristicsEditor() const;
+    void setCharacteristicsEditor(CharacteristicsEditor *newCharacteristicsEditor);
 };
 
 #endif // HILLEDITORWIDGET_H

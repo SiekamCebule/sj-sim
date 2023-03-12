@@ -10,6 +10,7 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QMessageBox>
+#include <QByteArray>
 
 Jumper::Jumper(const QString &name, const QString &surname, const QString &countryCode, const JumperSkills &skills) : name(name),
     surname(surname),
@@ -52,6 +53,57 @@ QJsonObject Jumper::getJumperJsonObject(Jumper * jumper, bool saveSkills, bool s
     }
 
     return object;
+}
+
+QVector<Jumper> Jumper::getJumpersVectorFromJson(const QByteArray &bytes)
+{
+    QVector<Jumper> jumpers;
+
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(bytes, &error);
+    if(error.error != QJsonParseError::NoError)
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu zawodników", "Nie udało się wczytać zawodników z pliku userData/GlobalDatabase/globalJumpers.json\nTreść błędu: " + error.errorString(), QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return jumpers;
+    }
+    QJsonObject object = document.object();
+    QJsonValue value = object.value("jumpers");
+    QJsonArray array = value.toArray();
+
+    for(const auto & val : array)
+    {
+        QJsonObject obj = val.toObject();
+        Jumper jumper;
+        jumper.setName(obj.value("name").toString());
+        jumper.setSurname(obj.value("surname").toString());
+        jumper.setCountryCode(obj.value("country-code").toString());
+        jumper.getJumperSkillsPointer()->setTakeoffPower(obj.value("takeoff-power").toDouble());
+        jumper.getJumperSkillsPointer()->setTakeoffTechnique(obj.value("takeoff-technique").toDouble());
+        jumper.getJumperSkillsPointer()->setFlightTechnique(obj.value("flight-technique").toDouble());
+        jumper.getJumperSkillsPointer()->setFlightStyle(obj.value("flight-style").toDouble());
+        jumper.getJumperSkillsPointer()->setLandingStyle(obj.value("landing-style").toDouble());
+        jumper.getJumperSkillsPointer()->setForm(obj.value("form").toDouble());
+
+        QJsonArray characteristicsArray = obj.value("characteristics").toArray();
+        for(const auto & val : characteristicsArray){
+            jumper.getJumperSkillsPointer()->insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
+        }
+
+        jumpers.push_back(jumper);
+    }
+
+    Jumper::setupJumpersFlagPixmaps(jumpers);
+    return jumpers;
+}
+
+void Jumper::setupJumpersFlagPixmaps(QVector<Jumper> & jumpers)
+{
+    for(auto & jumper : jumpers)
+    {
+        jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
+    }
 }
 
 QPixmap Jumper::getFlagPixmap() const

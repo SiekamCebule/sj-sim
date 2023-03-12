@@ -23,14 +23,6 @@ public:
     HillEditorWidget *getHillEditor() const;
     WindsGeneratorSettingsEditorWidget *getWindsGeneratorSettingsEditor() const;
 
-    int getJumpsCountFromInput();
-    bool getChangeableWindFromInput();
-    short getResultsFormatFromInput();
-    QString getResultsFileName();
-    short getWindAverageCalculatingType();
-    short getWindCompensationDistanceEffect();
-    int getGateFromInput();
-
 private slots:
     void on_comboBox_existingHill_currentIndexChanged(int index);
     void on_comboBox_existingJumper_currentIndexChanged(int index);
@@ -42,6 +34,15 @@ private:
     JumperEditorWidget * jumperEditor;
     HillEditorWidget * hillEditor;
     WindsGeneratorSettingsEditorWidget * windsGeneratorSettingsEditor;
+
+public:
+    int getJumpsCountFromInput();
+    bool getChangeableWindFromInput();
+    short getResultsFormatFromInput();
+    QString getResultsFileName();
+    short getWindAverageCalculatingType();
+    short getWindCompensationDistanceEffect();
+    int getGateFromInput();
 };
 
 #endif // SINGLEJUMPSCONFIGWINDOW_H

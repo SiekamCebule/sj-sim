@@ -19,16 +19,14 @@ public:
     explicit WindsGeneratorSettingsEditorWidget(QWidget *parent = nullptr);
     ~WindsGeneratorSettingsEditorWidget();
 
-    void fillSettingsInputs(double KPoint = (-1));
+    void fillWindGenerationSettingsByDefault();
+    void fillSettingsInputs();
+    void askForSettingsForFillAll();
 
     QVector<WindGenerationSettings> getWindsGenerationSettingsFromInputs();
 
-    QVector<WindGenerationSettings> *getWindGenerationSettings() const;
-    void setWindGenerationSettings(QVector<WindGenerationSettings> *newWindGenerationSettings);
-    int getSettingsCount() const;
-    void setSettingsCount(int newSettingsCount);
-    bool getRemovingSubmitButtons() const;
-    void setRemovingSubmitButtons(bool newRemovingSubmitButtons);
+signals:
+    void KPointChanged();
 
 private:
     Ui::WindsGeneratorSettingsEditorWidget *ui;
@@ -36,6 +34,18 @@ private:
     QVector<WindGenerationSettings> * windGenerationSettings;
     int settingsCount;
     bool removingSubmitButtons;
+
+    double KPoint;
+
+public:
+    QVector<WindGenerationSettings> *getWindGenerationSettings() const;
+    void setWindGenerationSettings(QVector<WindGenerationSettings> *newWindGenerationSettings);
+    int getSettingsCount() const;
+    void setSettingsCount(int newSettingsCount);
+    bool getRemovingSubmitButtons() const;
+    void setRemovingSubmitButtons(bool newRemovingSubmitButtons);\
+    double getKPoint() const;
+    void setKPoint(double newKPoint);
 };
 
 #endif // WINDSGENERATORSETTINGSEDITORWIDGET_H

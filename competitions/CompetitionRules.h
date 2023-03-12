@@ -6,6 +6,7 @@
 #include <QVector>
 #include <QString>
 #include <QJsonObject>
+#include <QByteArray>
 
 class CompetitionRules : ClassWithID
 {
@@ -27,6 +28,7 @@ private:
 
 public:
     static QJsonObject getCompetitionRulesJsonObject(CompetitionRules * competitionRules, bool savePointsAnd95Rule, bool saveCompetitionType, bool saveRounds);
+    static QVector<CompetitionRules> getCompetitionRulesVectorFromJson(const QByteArray & bytes);
 
     bool getHas95HSRule() const;
     void setHas95HSRule(bool newHas95HSRule);

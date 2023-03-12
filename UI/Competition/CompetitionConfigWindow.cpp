@@ -1,5 +1,5 @@
 #include "CompetitionConfigWindow.h"
-#include "ui_SingleCompetitionConfigWindow.h"
+#include "ui_CompetitionConfigWindow.h"
 
 #include "../EditorWidgets/HillEditorWidget.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
