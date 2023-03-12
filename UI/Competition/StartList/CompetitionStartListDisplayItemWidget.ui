@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>305</width>
-    <height>45</height>
+    <width>293</width>
+    <height>40</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -34,7 +34,7 @@
      <property name="font">
       <font>
        <family>Quicksand Medium</family>
-       <pointsize>16</pointsize>
+       <pointsize>13</pointsize>
       </font>
      </property>
      <property name="styleSheet">
@@ -72,7 +72,7 @@
      <property name="font">
       <font>
        <family>Quicksand [PfEd]</family>
-       <pointsize>11</pointsize>
+       <pointsize>10</pointsize>
       </font>
      </property>
      <property name="styleSheet">
@@ -156,10 +156,10 @@
 color: black;
 }
 QCheckBox::indicator {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     background-color: gray;
-    border-radius: 10px;
+    border-radius: 8px;
     border-style: solid;
     border-width: 1px;
     border-color: black;

@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Edytor skoczka</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background: transparent;</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -330,7 +333,7 @@ color: rgb(0, 0, 0);
            </property>
            <property name="font">
             <font>
-             <pointsize>11</pointsize>
+             <pointsize>13</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -372,7 +375,7 @@ border-radius: 3px;
            </property>
            <property name="font">
             <font>
-             <pointsize>11</pointsize>
+             <pointsize>13</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -501,7 +504,7 @@ color: black;
            </property>
            <property name="font">
             <font>
-             <pointsize>11</pointsize>
+             <pointsize>13</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -543,7 +546,7 @@ border-radius: 3px;
            </property>
            <property name="font">
             <font>
-             <pointsize>11</pointsize>
+             <pointsize>13</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -585,7 +588,7 @@ border-radius: 3px;
            </property>
            <property name="font">
             <font>
-             <pointsize>11</pointsize>
+             <pointsize>13</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -627,7 +630,7 @@ border-radius: 3px;
            </property>
            <property name="font">
             <font>
-             <pointsize>11</pointsize>
+             <pointsize>13</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -681,7 +684,7 @@ border-radius: 3px;
            </property>
            <property name="font">
             <font>
-             <pointsize>11</pointsize>
+             <pointsize>13</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -723,7 +726,7 @@ border-radius: 3px;
            </property>
            <property name="font">
             <font>
-             <pointsize>11</pointsize>
+             <pointsize>13</pointsize>
             </font>
            </property>
            <property name="focusPolicy">

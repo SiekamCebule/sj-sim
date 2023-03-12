@@ -83,22 +83,16 @@ void MainWindow::on_pushButton_singleJumps_clicked()
     if(singleJumpsConfig.exec() == QDialog::Accepted)
     {
         SingleJumpsManager manager;
-        qDebug()<<"no";
         manager.setJumpsCount(singleJumpsConfig.getJumpsCountFromInput());
-        qDebug()<<"no";
         manager.setChangeableWind(singleJumpsConfig.getChangeableWindFromInput());
-        qDebug()<<"no";
         manager.setResultsFileName(singleJumpsConfig.getResultsFileName());
         manager.setResultsFormat(singleJumpsConfig.getResultsFormatFromInput());
-        qDebug()<<"no";
         manager.setGate(singleJumpsConfig.getGateFromInput());
         manager.setJumper(singleJumpsConfig.getJumperEditor()->getJumperFromWidgetInput());
         manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
-        qDebug()<<"no";
         manager.setWindsGeneratorSettings(singleJumpsConfig.getWindsGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
         manager.setWindAverageCalculatingType(singleJumpsConfig.getWindAverageCalculatingType());
         manager.setWindCompensationDistanceEffect(singleJumpsConfig.getWindCompensationDistanceEffect());
-        qDebug()<<"no";
         manager.simulate();
 
         SingleJumpsResultsWindow resultsWindow;
@@ -133,7 +127,6 @@ void MainWindow::on_pushButton_databaseEdit_clicked()
     databaseEditor.setModal(true);
     if(databaseEditor.exec() == QDialog::Accepted)
     {
-
     }
 }
 
@@ -157,7 +150,6 @@ QApplication *MainWindow::getParentApplication() const
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    qDebug()<<"hehi";
     GlobalAppSettings::get()->writeToJson();
 }
 
