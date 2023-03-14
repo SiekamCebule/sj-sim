@@ -7,6 +7,8 @@
 #include <QLayout>
 #include "../../../utilities/functions.h"
 #include "../../EditorWidgets/JumperEditorWidget.h"
+#include "../../EditorWidgets/TeamsEditing/TeamEditorWidget.h"
+#include "../../Competition/CompetitionConfigWindow.h"
 
 CompetitionStartListDisplayWidget::CompetitionStartListDisplayWidget(QWidget *parent) :
     QWidget(parent),
@@ -37,42 +39,59 @@ void CompetitionStartListDisplayWidget::fillItemsLayout()
     }
     items.clear();
 
-    int index = 1;
-    for(auto & jumper : *jumpers)
-    {
-        CompetitionStartListDisplayItemWidget * item = new CompetitionStartListDisplayItemWidget(Jumpers, this);
-        item->setJumper(&jumper);
-        item->setIndexInParentList(index);
-        item->setIsActive(competitiorsActivity.at(index - 1));
-        item->fillWidget();
-
-        connect(item, &CompetitionStartListDisplayItemWidget::doubleClicked, this, &CompetitionStartListDisplayWidget::askForNewIndex);
-        connect(item, &CompetitionStartListDisplayItemWidget::activityChanged, this, [this, item](){
-            competitiorsActivity.replace(item->getIndexInParentList() - 1, item->getIsActive());
-            if(item->getIsActive() == false)
-            {
-                int indexOfItem = item->getIndexInParentList() - 1;
-                switch(getCompetitiorsType())
-                {
-                case Jumpers:
-                    moveItemToVectorBack(*jumpers, indexOfItem);
-                }
-                moveItemToVectorBack(competitiorsActivity, indexOfItem);
-                fillItemsLayout();
-            }
-        });
-        connect(item, &CompetitionStartListDisplayItemWidget::selected, this, [this, item](){
-            selectedItem = item->getIndexInParentList() - 1;
-            updateItemsSelection();
-        });
-
-        items.push_back(item);
-        ui->verticalLayout_items->addWidget(item);
-        //dynamic_cast<CompetitionStartListDisplayItemWidget *>(item)->uninstallEventFilterForThis();
-
-        index++;
+    int howMany = 0;
+    switch(getCompetitiorsType()){
+    case Jumpers:
+        howMany = jumpers->count();
+        break;
+    case Teams:
+        howMany = teams->count();
+        break;
     }
-    //ui->verticalLayout_items->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    for(int index = 0; index < howMany; index++){
+        if(getCompetitiorsType() == Jumpers || getCompetitiorsType() == Teams)
+        {
+            CompetitionStartListDisplayItemWidget * item = new CompetitionStartListDisplayItemWidget(Null, this);
+            item->setCompetitiorType(getCompetitiorsType());
+            item->setIndexInParentList(index + 1);
+            item->setIsActive(competitiorsActivity.at(index));
+            connect(item, &CompetitionStartListDisplayItemWidget::doubleClicked, this, &CompetitionStartListDisplayWidget::askForNewIndex);
+            connect(item, &CompetitionStartListDisplayItemWidget::activityChanged, this, [this, item](){
+                competitiorsActivity.replace(item->getIndexInParentList() - 1, item->getIsActive());
+                if(item->getIsActive() == false)
+                {
+                    int indexOfItem = item->getIndexInParentList() - 1;
+                    switch(getCompetitiorsType())
+                    {
+                    case Jumpers:
+                        moveItemToVectorBack(*jumpers, indexOfItem);
+                        break;
+                    case Teams:
+                        moveItemToVectorBack(*teams, indexOfItem);
+                        break;
+                    }
+                    moveItemToVectorBack(competitiorsActivity, indexOfItem);
+                    fillItemsLayout();
+                }
+            });
+            connect(item, &CompetitionStartListDisplayItemWidget::selected, this, [this, item](){
+                selectedItem = item->getIndexInParentList() - 1;
+                updateItemsSelection();
+            });
+            switch(getCompetitiorsType())
+            {
+            case Jumpers:
+                item->setJumper(const_cast<Jumper *>(&jumpers->at(index)));
+                break;
+            case Teams:
+                item->setTeam(const_cast<Team *>(&teams->at(index)));
+                break;
+            }
+            items.push_back(item);
+            ui->verticalLayout_items->addWidget(item);
+            item->fillWidget();
+        }
+    }
 }
 
 void CompetitionStartListDisplayWidget::setJumpers(QVector<Jumper> *newJumpers)
@@ -94,7 +113,7 @@ void CompetitionStartListDisplayWidget::askForNewIndex()
         countOfCompetitiors = jumpers->count();
         break;
     case Teams:
-        countOfCompetitiors = 0;
+        countOfCompetitiors = teams->count();
         break;
     }
 
@@ -117,30 +136,12 @@ void CompetitionStartListDisplayWidget::askForNewIndex()
                 jumpers->swapItemsAt(dynamic_cast<CompetitionStartListDisplayItemWidget *>(sender())->getIndexInParentList() - 1, newIndex - 1);
                 break;
             case Teams:
+                teams->swapItemsAt(dynamic_cast<CompetitionStartListDisplayItemWidget *>(sender())->getIndexInParentList() - 1, newIndex - 1);
                 break;
             }
             competitiorsActivity.swapItemsAt(dynamic_cast<CompetitionStartListDisplayItemWidget *>(sender())->getIndexInParentList() - 1, newIndex - 1);
             fillItemsLayout();
         }
-    }
-}
-
-void CompetitionStartListDisplayWidget::on_pushButton_up_clicked()
-{
-    if((!(selectedItem < 1)) && selectedItem > (-1))
-    {
-        switch(getCompetitiorsType())
-        {
-        case Jumpers:
-            jumpers->swapItemsAt(selectedItem, selectedItem - 1);
-            break;
-        case Teams:
-            break;
-        }
-        competitiorsActivity.swapItemsAt(selectedItem, selectedItem - 1);
-        fillItemsLayout();
-        selectedItem = selectedItem - 1;
-        emit items.at(selectedItem)->selected();
     }
 }
 
@@ -157,9 +158,41 @@ void CompetitionStartListDisplayWidget::updateItemsSelection()
         index++;
     }
 }
+
+void CompetitionStartListDisplayWidget::on_pushButton_up_clicked()
+{
+    if((!(selectedItem < 1)) && selectedItem > (-1))
+    {
+        switch(getCompetitiorsType())
+        {
+        case Jumpers:
+            jumpers->swapItemsAt(selectedItem, selectedItem - 1);
+            break;
+        case Teams:
+            teams->swapItemsAt(selectedItem, selectedItem - 1);
+            break;
+        }
+        competitiorsActivity.swapItemsAt(selectedItem, selectedItem - 1);
+        fillItemsLayout();
+        selectedItem = selectedItem - 1;
+        emit items.at(selectedItem)->selected();
+    }
+}
+
 void CompetitionStartListDisplayWidget::on_pushButton_down_clicked()
 {
-    if((!(selectedItem + 1 >= jumpers->size())) && selectedItem > (-1))
+    int size = 0;
+    switch(getCompetitiorsType())
+    {
+    case Jumpers:
+        size = jumpers->size();
+        break;
+    case Teams:
+        size = teams->size();
+        break;
+    }
+
+    if((!(selectedItem + 1 >= size)) && selectedItem > (-1))
     {
         switch(getCompetitiorsType())
         {
@@ -167,6 +200,7 @@ void CompetitionStartListDisplayWidget::on_pushButton_down_clicked()
             jumpers->swapItemsAt(selectedItem, selectedItem + 1);
             break;
         case Teams:
+            teams->swapItemsAt(selectedItem, selectedItem + 1);
             break;
         }
         competitiorsActivity.swapItemsAt(selectedItem, selectedItem + 1);
@@ -197,22 +231,58 @@ void CompetitionStartListDisplayWidget::on_pushButton_edit_clicked()
         dialog->setFixedSize(dialog->size());
         dialog->setLayout(new QVBoxLayout(dialog));
 
+        QWidget * editorPointer = nullptr;
         switch(getCompetitiorsType())
         {
-        case Jumpers:
+        case Jumpers:{
             JumperEditorWidget * editor = new JumperEditorWidget(const_cast<Jumper*>(&jumpers->at(selectedItem)));
             editor->fillJumperInputs();
+            editorPointer = editor;
             dialog->layout()->addWidget(editor);
 
             connect(editor, &JumperEditorWidget::submitted, dialog, &QDialog::accept);
-            if(dialog->exec() == QDialog::Accepted)
-            {
-                jumpers->replace(selectedItem, editor->getJumperFromWidgetInput());
-                fillItemsLayout();
-            }
-            delete editor;
             break;
         }
+        case Teams:{
+            TeamEditorWidget * editor = new TeamEditorWidget(teams->at(selectedItem).getCountryCode(), Team::getJumpersFilteredByCountryCode(*jumpers, teams->at(selectedItem).getCountryCode()), this);
+            editor->setJumpersCount(dynamic_cast<CompetitionConfigWindow *>(parent())->getJumpersCountInTeam());
+            editor->fillWidgetInputs();
+            editorPointer = editor;
+            dialog->layout()->addWidget(editor);
+
+            connect(editor, &TeamEditorWidget::submitted, dialog, &QDialog::accept);
+            break;
+        }
+        }
+        if(dialog->exec() == QDialog::Accepted)
+        {
+            switch(getCompetitiorsType())
+            {
+            case Jumpers:
+                jumpers->replace(selectedItem, dynamic_cast<JumperEditorWidget *>(editorPointer)->getJumperFromWidgetInput());
+                break;
+            case Teams:
+                teams->replace(selectedItem, dynamic_cast<TeamEditorWidget *>(editorPointer)->constructTeamFromWidgetInput());
+                break;
+            }
+            fillItemsLayout();
+            delete editorPointer;
+        }
     }
+}
+
+QVector<Jumper *> CompetitionStartListDisplayWidget::convertToVectorObjectOfPointers(QVector<Jumper> * jumpers)
+{
+    QVector<Jumper*> vector;
+    for(auto & jumper : *jumpers)
+    {
+        vector.push_back(&jumper);
+    }
+    return vector;
+}
+
+void CompetitionStartListDisplayWidget::setTeams(QVector<Team> *newTeams)
+{
+    teams = newTeams;
 }
 

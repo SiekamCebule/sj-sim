@@ -14,6 +14,7 @@ SOURCES += \
     UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
     UI/EditorWidgets/OtherCompetitionSettingsWidget.cpp \
     UI/EditorWidgets/RoundInfoEditorWidget.cpp \
+    UI/EditorWidgets/TeamsEditing/TeamEditorWidget.cpp \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
     UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp \
@@ -40,12 +41,12 @@ SOURCES += \
     simulator/Characteristic.cpp \
     simulator/Hill.cpp \
     simulator/JumpData.cpp \
-    simulator/JumpMistake.cpp \
     simulator/JumpSimulationData.cpp \
     simulator/JumpSimulator.cpp \
     simulator/Jumper.cpp \
     simulator/JumperSkills.cpp \
     simulator/Landing.cpp \
+    simulator/Team.cpp \
     simulator/Wind.cpp \
     simulator/WindsInfo.cpp \
     simulator/wind-generation/WindGenerationSettings.cpp \
@@ -63,6 +64,7 @@ HEADERS += \
     UI/EditorWidgets/CompetitionRulesEditorWidget.h \
     UI/EditorWidgets/OtherCompetitionSettingsWidget.h \
     UI/EditorWidgets/RoundInfoEditorWidget.h \
+    UI/EditorWidgets/TeamsEditing/TeamEditorWidget.h \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
     UI/ResultsShowing/JumpDataDetailedInfoWindow.h \
@@ -88,12 +90,12 @@ HEADERS += \
     simulator/Characteristic.h \
     simulator/Hill.h \
     simulator/JumpData.h \
-    simulator/JumpMistake.h \
     simulator/JumpSimulationData.h \
     simulator/JumpSimulator.h \
     simulator/Jumper.h \
     simulator/JumperSkills.h \
     simulator/Landing.h \
+    simulator/Team.h \
     simulator/Wind.h \
     simulator/WindsInfo.h \
     simulator/wind-generation/WindGenerationSettings.h \
@@ -111,6 +113,7 @@ FORMS += \
     UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
     UI/EditorWidgets/OtherCompetitionSettingsWidget.ui \
     UI/EditorWidgets/RoundInfoEditorWidget.ui \
+    UI/EditorWidgets/TeamsEditing/TeamEditorWidget.ui \
     UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \
     UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui \
     UI/ResultsShowing/JumpDataDetailedInfoWindow.ui \

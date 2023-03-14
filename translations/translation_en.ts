@@ -1226,12 +1226,12 @@ in team</translation>
         <translation>Simulate</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.cpp" line="88"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.cpp" line="93"/>
         <source>Ostrzeżenie</source>
         <translation>Warning</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.cpp" line="88"/>
+        <location filename="../UI/SingleJumps/SingleJumpsConfigWindow.cpp" line="93"/>
         <source>Ilość skoków musi być większa niż 0</source>
         <translation>Jumps count must be higher than 0</translation>
     </message>
@@ -1284,34 +1284,42 @@ in team</translation>
         <translation type="vanished">Landing statistics</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="218"/>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="229"/>
         <source>Telemark</source>
         <translation>Telemark</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="219"/>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="230"/>
         <source>Na dwie nogi</source>
         <translation>Both legs</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="220"/>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="231"/>
         <source>Podpórka</source>
         <translation>With support</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="221"/>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="232"/>
         <source>Upadek</source>
         <translation>Fall</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="298"/>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="309"/>
         <source>Przejdź do wybranej informacji o skoku</source>
         <translation>Go to chosen jump information</translation>
     </message>
     <message>
-        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="299"/>
+        <location filename="../UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="310"/>
         <source>Wpisz numer skoku do którego chcesz się przenieść</source>
         <translation>Enter the jump index you want to move to</translation>
+    </message>
+</context>
+<context>
+    <name>TeamEditorWidget</name>
+    <message>
+        <location filename="../UI/EditorWidgets/TeamsEditing/TeamEditorWidget.ui" line="16"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1332,24 +1340,33 @@ in team</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="36"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="58"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="105"/>
         <source> (Od </source>
         <translation> (From </translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="36"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="58"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="105"/>
         <source>, do </source>
         <translation>, to </translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="38"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="60"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="107"/>
         <source>końca</source>
         <translation>the end</translation>
     </message>
     <message>
-        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="42"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="67"/>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="113"/>
         <source>Sektor wiatru nr </source>
         <translation>Wind sector no </translation>
+    </message>
+    <message>
+        <location filename="../UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp" line="82"/>
+        <source>Wypełnij podanym ustawieniem</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

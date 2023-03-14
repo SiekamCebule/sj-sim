@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "../../../simulator/Jumper.h"
+#include "../../../simulator/Team.h"
 
 namespace Ui {
 class CompetitionStartListDisplayItemWidget;
@@ -20,18 +21,6 @@ public:
     bool getIsActive();
     void fillWidget();
 
-    Jumper *getJumper() const;
-    void setJumper(Jumper *newJumper);
-
-    int getIndexInParentList() const;
-    void setIndexInParentList(int newIndexInParentList);
-
-    bool getIsSelected() const;
-    void setIsSelected(bool newIsSelected);
-
-    short getCompetitiorType() const;
-    void setCompetitiorType(short newCompetitiorType);
-
 signals:
     void selectionChanged();
     void selected();
@@ -48,10 +37,23 @@ private:
     Ui::CompetitionStartListDisplayItemWidget *ui;
 
     Jumper * jumper;
+    Team * team;
     int indexInParentList;
     bool isSelected;
 
     short competitiorType;
+
+public:
+    Jumper *getJumper() const;
+    void setJumper(Jumper *newJumper);
+    Team *getTeam() const;
+    void setTeam(Team *newTeam);
+    int getIndexInParentList() const;
+    void setIndexInParentList(int newIndexInParentList);
+    bool getIsSelected() const;
+    void setIsSelected(bool newIsSelected);
+    short getCompetitiorType() const;
+    void setCompetitiorType(short newCompetitiorType);
 };
 
 #endif // COMPETITIONSTARTLISTDISPLAYITEMWIDGET_H

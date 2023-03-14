@@ -7,15 +7,13 @@
 
 #include "CharacteristicsEditor.h"
 
-HillEditorWidget::HillEditorWidget(CharacteristicsEditor * characteristicsEditor, QWidget *parent) :
-    characteristicsEditor(characteristicsEditor),
+HillEditorWidget::HillEditorWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::HillEditorWidget)
 {
     ui->setupUi(this);
 
-    if(this->characteristicsEditor == nullptr)
-        this->characteristicsEditor = new CharacteristicsEditor(Characteristic::Hill);
+    characteristicsEditor = new CharacteristicsEditor(Characteristic::Hill);
 
     ui->verticalLayout_characteristicsEditor->insertWidget(0, getCharacteristicsEditor());
 

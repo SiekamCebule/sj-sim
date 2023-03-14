@@ -32,6 +32,7 @@ public:
     CompetitionRules getCompetitionRulesFromWidgetInputs();
 
 signals:
+    void competitionTypeChanged();
     void submitted();
 
 private:

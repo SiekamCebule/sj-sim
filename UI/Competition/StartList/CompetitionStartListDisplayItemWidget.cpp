@@ -57,6 +57,8 @@ void CompetitionStartListDisplayItemWidget::fillWidget()
         ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_flag->size()));
         break;
     case CompetitionStartListDisplayWidget::Teams:
+        ui->label_name->setText(team->getCountryCode());
+        ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(team->getCountryCode().toLower())).scaled(ui->label_flag->size()));
         break;
     }
 
@@ -84,6 +86,16 @@ void CompetitionStartListDisplayItemWidget::on_checkBox_active_stateChanged(int 
         ui->label_name->setStyleSheet("color: rgb(90, 90, 90);");
     }
     emit activityChanged();
+}
+
+Team *CompetitionStartListDisplayItemWidget::getTeam() const
+{
+    return team;
+}
+
+void CompetitionStartListDisplayItemWidget::setTeam(Team *newTeam)
+{
+    team = newTeam;
 }
 
 short CompetitionStartListDisplayItemWidget::getCompetitiorType() const

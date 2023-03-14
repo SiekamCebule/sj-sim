@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "../../simulator/Jumper.h"
+#include "../../simulator/Team.h"
 
 class HillEditorWidget;
 class WindsGeneratorSettingsEditorWidget;
@@ -27,6 +28,8 @@ public:
         SeasonCompetition
     };
 
+    int getJumpersCountInTeam() const;
+
 private:
     Ui::SingleCompetitionConfigWindow *ui;
     int type;
@@ -36,6 +39,7 @@ private:
     OtherCompetitionSettingsWidget * otherCompetitionSettingsEditor;
     CompetitionStartListDisplayWidget * startListDisplayWidget;
 
+    QVector<Team> competitionTeams;
     QVector<Jumper> competitionJumpers;
 
 public:
@@ -52,6 +56,8 @@ public:
     CompetitionStartListDisplayWidget *getStartListDisplayWidget() const;
     void setStartListDisplayWidget(CompetitionStartListDisplayWidget *newStartListDisplayWidget);
     QVector<Jumper> getCompetitionJumpers() const;
+    QVector<Team> getCompetitionTeams() const;
+    void setCompetitionTeams(const QVector<Team> &newCompetitionTeams);
 };
 
 #endif // COMPETITIONCONFIGWINDOW_H

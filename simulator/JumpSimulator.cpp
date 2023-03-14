@@ -1,7 +1,6 @@
 #include "JumpSimulator.h"
 #include "../utilities/functions.h"
 #include "../global/MyRandom.h"
-#include "JumpMistake.h"
 
 #include <QDebug>
 #include <QRandomGenerator>

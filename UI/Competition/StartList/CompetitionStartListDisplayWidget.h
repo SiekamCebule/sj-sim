@@ -5,6 +5,7 @@
 #include <QVector>
 #include "CompetitionStartListDisplayItemWidget.h"
 #include "../../../simulator/Jumper.h"
+#include "../../../simulator/Team.h"
 namespace Ui {
 class CompetitionStartListDisplayWidget;
 }
@@ -19,15 +20,11 @@ public:
 
     enum CompetitiorsType{
         Jumpers,
-        Teams
+        Teams,
+        Null
     };
-
     void fillItemsLayout();
-    void setJumpers(QVector<Jumper> *newJumpers);
     void fillCompetitiorsActivity();
-
-    short getCompetitiorsType() const;
-    void setCompetitiorsType(short newCompetitiorsType);
 
 public slots:
     void askForNewIndex();
@@ -35,7 +32,6 @@ public slots:
 private slots:
     void on_pushButton_up_clicked();
     void on_pushButton_down_clicked();
-
     void on_pushButton_edit_clicked();
 
 private:
@@ -43,11 +39,19 @@ private:
 
     QVector<CompetitionStartListDisplayItemWidget *> items;
     QVector<Jumper> * jumpers;
+    QVector<Jumper*> convertToVectorObjectOfPointers(QVector<Jumper> *jumpers);
+    QVector<Team> * teams;
     QVector<bool> competitiorsActivity;
 
     int selectedItem;
     short competitiorsType;
     void updateItemsSelection();
+
+public:
+    void setJumpers(QVector<Jumper> *newJumpers);
+    void setTeams(QVector<Team> *newTeams);
+    short getCompetitiorsType() const;
+    void setCompetitiorsType(short newCompetitiorsType);
 };
 
 #endif // COMPETITIONSTARTLISTDISPLAYWIDGET_H

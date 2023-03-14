@@ -15,6 +15,7 @@ CompetitionRulesEditorWidget::CompetitionRulesEditorWidget(QWidget *parent) :
     delete ui->page_2;
 
     connect(ui->spinBox_roundsCount, &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::fillRoundsInputs);
+    connect(ui->comboBox_competitionType, &QComboBox::currentIndexChanged, this, &CompetitionRulesEditorWidget::competitionTypeChanged);
 }
 
 CompetitionRulesEditorWidget::~CompetitionRulesEditorWidget()

@@ -15,7 +15,7 @@ class HillEditorWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit HillEditorWidget(CharacteristicsEditor *characteristicsEditor = nullptr, QWidget *parent = nullptr);
+    explicit HillEditorWidget(QWidget *parent = nullptr);
     ~HillEditorWidget();
 
     void resetHillInputs();
