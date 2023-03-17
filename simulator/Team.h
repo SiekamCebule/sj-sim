@@ -12,6 +12,7 @@ public:
     Team(const QString & countryCode);
 
     static QVector<Team> constructTeamsVectorByJumpersList(const QVector<Jumper> & jumpers);
+    static QVector<Team> constructTeamsVectorByJumpersList(QVector<Jumper> * const jumpers);
     static QVector<Jumper *> getJumpersFilteredByCountryCode(QVector<Jumper> &jumpers, const QString & countryCode);
 
 private:

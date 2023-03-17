@@ -1,5 +1,6 @@
 #include "TeamEditorWidget.h"
 #include "ui_TeamEditorWidget.h"
+#include <QDebug>
 
 #include "../../../global/CountryFlagsManager.h"
 
@@ -8,6 +9,7 @@ TeamEditorWidget::TeamEditorWidget(const QString &teamCode, const QVector<Jumper
     ui(new Ui::TeamEditorWidget),
     QWidget(parent)
 {
+    qDebug()<<"construct";
     ui->setupUi(this);
 
     model = new QStandardItemModel(this);
@@ -19,6 +21,7 @@ TeamEditorWidget::TeamEditorWidget(const QString &teamCode, const QVector<Jumper
 
 TeamEditorWidget::~TeamEditorWidget()
 {
+    qDebug()<<"destruct";
     delete ui;
 }
 
@@ -59,6 +62,9 @@ void TeamEditorWidget::removeSubmitButton()
 Team TeamEditorWidget::constructTeamFromWidgetInput()
 {
     Team team;
+    team.setCountryCode(getTeamCode());
+    team.setJumpersCount(jumpers.count());
+    team.setJumpers(jumpers);
     return team;
 }
 
@@ -118,10 +124,12 @@ void TeamEditorWidget::on_pushButton_down_clicked()
     if(ui->listView_jumpers->selectionModel()->selectedRows().size() > 0)
         index = ui->listView_jumpers->selectionModel()->selectedRows().first().row();
 
-    if(index > (0) && index < itemsList.count())
+    if(index > (-1) && (index + 1) < itemsList.count())
     {
-        itemsList.swapItemsAt(index, index + 1);
-        emit needToUpdateModel();
+        jumpers.swapItemsAt(index, index + 1);
+        setupItemsList();
+        ui->listView_jumpers->clearSelection();
+        ui->listView_jumpers->setCurrentIndex(model->index(index + 1, 0));
     }
-    setupItemsList();
 }
+

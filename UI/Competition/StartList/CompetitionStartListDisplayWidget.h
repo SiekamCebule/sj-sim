@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QVector>
+#include <QSettings>
 #include "CompetitionStartListDisplayItemWidget.h"
 #include "../../../simulator/Jumper.h"
 #include "../../../simulator/Team.h"
@@ -25,7 +26,10 @@ public:
     };
     void fillItemsLayout();
     void fillCompetitiorsActivity();
+    void setupTeamsJumpersVectors();
 
+signals:
+    void competitiorsTypeChanged();
 public slots:
     void askForNewIndex();
 
@@ -41,14 +45,21 @@ private:
     QVector<Jumper> * jumpers;
     QVector<Jumper*> convertToVectorObjectOfPointers(QVector<Jumper> *jumpers);
     QVector<Team> * teams;
-    QVector<bool> competitiorsActivity;
+
+    QVector<bool> jumpersActivity;
+    QVector<bool> teamsActivity;
+    QVector<bool> * competitiorsActivity;
+
 
     int selectedItem;
     short competitiorsType;
     void updateItemsSelection();
 
+    QSettings settings;
+
 public:
     void setJumpers(QVector<Jumper> *newJumpers);
+    QVector<Jumper> *getJumpers() const;
     void setTeams(QVector<Team> *newTeams);
     short getCompetitiorsType() const;
     void setCompetitiorsType(short newCompetitiorsType);

@@ -24,24 +24,18 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     ui->toolBox->removeItem(0);
     ui->toolBox->removeItem(0);
 
-    qDebug()<<"a";
 
     hillEditor = new HillEditorWidget(this);
     hillEditor->removeSubmitButton();
-    qDebug()<<"a";
     windGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget(this);
     windGeneratorSettingsEditor->setRemovingSubmitButtons(true);
     competitionRulesEditor = new CompetitionRulesEditorWidget(this);
     otherCompetitionSettingsEditor = new OtherCompetitionSettingsWidget(this);
     competitionRulesEditor->setCompetitionRules(new CompetitionRules(tr("Zasady")));
-    qDebug()<<"a";
     competitionRulesEditor->setParent(this);
     competitionRulesEditor->removeSubmitButton();
-    qDebug()<<"a";
     startListDisplayWidget = new CompetitionStartListDisplayWidget(this);
     startListDisplayWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
-
-    qDebug()<<"a";
 
     ui->toolBox->addItem(hillEditor, "Skocznia");
     ui->toolBox->addItem(windGeneratorSettingsEditor, "Ustawienia generatora wiatru");
@@ -67,6 +61,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
         startListDisplayWidget->setJumpers(&competitionJumpers);
         startListDisplayWidget->setTeams(&competitionTeams);
         startListDisplayWidget->fillCompetitiorsActivity();
+        startListDisplayWidget->setupTeamsJumpersVectors();
         startListDisplayWidget->fillItemsLayout();
     }
 
@@ -85,6 +80,11 @@ CompetitionConfigWindow::~CompetitionConfigWindow()
 int CompetitionConfigWindow::getJumpersCountInTeam() const
 {
     return ui->spinBox_jumpersInTeamCount->value();
+}
+
+void CompetitionConfigWindow::setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers)
+{
+    competitionJumpers = newCompetitionJumpers;
 }
 
 QVector<Team> CompetitionConfigWindow::getCompetitionTeams() const

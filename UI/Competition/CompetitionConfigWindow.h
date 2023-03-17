@@ -58,6 +58,7 @@ public:
     QVector<Jumper> getCompetitionJumpers() const;
     QVector<Team> getCompetitionTeams() const;
     void setCompetitionTeams(const QVector<Team> &newCompetitionTeams);
+    void setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers);
 };
 
 #endif // COMPETITIONCONFIGWINDOW_H

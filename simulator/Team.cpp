@@ -27,6 +27,22 @@ QVector<Team> Team::constructTeamsVectorByJumpersList(const QVector<Jumper> &jum
 
     return teams;
 }
+QVector<Team> Team::constructTeamsVectorByJumpersList(QVector<Jumper> * const jumpers)
+{
+    QVector<Team> teams;
+    QStringList codes;
+    for(const auto & jumper : *jumpers)
+    {
+        if(codes.contains(jumper.getCountryCode().toUpper()) == true)
+            continue;
+        else{
+            codes.append(jumper.getCountryCode().toUpper());
+            teams.append(Team(jumper.getCountryCode().toUpper()));
+        }
+    }
+
+    return teams;
+}
 
 QVector<Jumper *> Team::getJumpersFilteredByCountryCode(QVector<Jumper> &jumpers, const QString &countryCode)
 {
