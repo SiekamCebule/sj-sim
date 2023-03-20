@@ -131,7 +131,7 @@ color: rgb(0, 0, 0);
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../assets.qrc">
+                 <iconset resource="../../assets.qrc">
                   <normaloff>:/img/ski-jumper.png</normaloff>:/img/ski-jumper.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -241,7 +241,7 @@ color: rgb(32, 120, 252);
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../assets.qrc">
+                 <iconset resource="../../assets.qrc">
                   <normaloff>:/img/Crystal_Globe.svg.png</normaloff>:/img/Crystal_Globe.svg.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -332,7 +332,7 @@ color: rgb(32, 120, 252);
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../assets.qrc">
+                 <iconset resource="../../assets.qrc">
                   <normaloff>:/img/medal.png</normaloff>:/img/medal.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -446,7 +446,7 @@ color: rgb(32, 120, 252);
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../assets.qrc">
+                 <iconset resource="../../assets.qrc">
                   <normaloff>:/img/database-edit.png</normaloff>:/img/database-edit.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -527,7 +527,7 @@ color: rgb(32, 120, 252);
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../assets.qrc">
+                 <iconset resource="../../assets.qrc">
                   <normaloff>:/img/help.png</normaloff>:/img/help.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -641,7 +641,7 @@ color: rgb(32, 120, 252);
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../assets.qrc">
+         <iconset resource="../../assets.qrc">
           <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
         </property>
         <property name="iconSize">
@@ -706,7 +706,7 @@ color: rgb(32, 120, 252);
   </widget>
  </widget>
  <resources>
-  <include location="../assets.qrc"/>
+  <include location="../../assets.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -8,12 +8,15 @@
 #include "../../global/GlobalAppSettings.h"
 #include "../../global/GlobalTranslators.h"
 #include "../../global/CountryFlagsManager.h"
+#include "../../global/GlobalSimulationSettings.h"
+#include "SimulationSettingsWindow.h"
 
 AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AppSettingsWindow)
 {
     ui->setupUi(this);
+    setFixedSize(size());
 
     setWindowFlags(Qt::Window);
 }
@@ -53,7 +56,6 @@ void AppSettingsWindow::closeEvent(QCloseEvent *event)
     accept();
 }
 
-
 void AppSettingsWindow::myConnect_on_comboBox_language_currentIndexChanged(int index)
 {
     switch(index)
@@ -70,3 +72,32 @@ void AppSettingsWindow::myConnect_on_comboBox_language_currentIndexChanged(int i
         break;
     }
 }
+void AppSettingsWindow::on_pushButton_simulationSettings_clicked()
+{
+    SimulationSettingsWindow window;
+    window.setWindowFlags(Qt::Window);
+    window.fillInputs();
+    connect(&window, &SimulationSettingsWindow::submitted, &SimulationSettingsWindow::accept);
+    if(window.exec() == QDialog::Accepted)
+    {
+        GlobalSimulationSettings * s = GlobalSimulationSettings::get();
+        s->setTakeoffRatingBaseRandomBaseValue(window.getTakeoffRatingBaseRandomBaseValueFromInput());
+        s->setTakeoffRatingBaseRandomDeviationBaseValue(window.getTakeoffRatingBaseRandomDeviationBaseValueFromInput());
+        s->setTakeoffRatingBaseRandomDeviationSubstractCharacteristicDivider(window.getTakeoffRatingBaseRandomDeviationSubstractCharacteristicDividerFromInput());
+        s->setTakeoffRatingLogRandomBaseValue(window.getTakeoffRatingLogRandomBaseValueFromInput());
+        s->setTakeoffRatingLogRandomDeviationBaseValue(window.getTakeoffRatingLogRandomDeviationBaseValueFromInput());
+        s->setTakeoffRatingLogRandomDeviationJumpsEqualityDivider(window.getTakeoffRatingLogRandomDeviationJumpsEqualityDividerFromInput());
+        s->setTakeoffRatingTakeoffHeightAbsValue(window.getTakeoffRatingTakeoffHeightAbsValueFromInput());
+        //
+        s->setFlightRatingBaseRandomBaseValue(window.getFlightRatingBaseRandomBaseValueFromInput());
+        s->setFlightRatingBaseRandomDeviationBaseValue(window.getFlightRatingBaseRandomDeviationBaseValueFromInput());
+        s->setFlightRatingBaseRandomDeviationSubstractCharacteristicDivider(window.getFlightRatingBaseRandomDeviationSubstractCharacteristicDividerFromInput());
+        s->setFlightRatingLogRandomBaseValue(window.getFlightRatingLogRandomBaseValueFromInput());
+        s->setFlightRatingLogRandomDeviationBaseValue(window.getFlightRatingLogRandomDeviationBaseValueFromInput());
+        s->setFlightRatingLogRandomDeviationJumpsEqualityDivider(window.getFlightRatingLogRandomDeviationJumpsEqualityDividerFromInput());
+        s->setFlightRatingFlightHeightAbsValue(window.getFlightRatingFlightHeightAbsValueFromInput());
+
+        s->writeToFile();
+    }
+}
+

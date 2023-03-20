@@ -4,6 +4,10 @@
 #include <QPair>
 #include <QRandomGenerator>
 #include <QDebug>
+#include <random>
+
+std::random_device rd{};
+std::mt19937 generator{rd()};
 
 MyRandom::MyRandom()
 {
@@ -116,4 +120,16 @@ double MyRandom::reducingChancesRandom(double min, double max, double resultNumb
     }
 
     return 0;
+}
+
+double MyRandom::normalDistributionRandom(double base, double deviation)
+{
+    std::normal_distribution<double> distribution(base, deviation);
+    return distribution(generator);
+}
+
+double MyRandom::lognormalDistributionRandom(double base, double deviation)
+{
+    std::lognormal_distribution<double> distribution(base, deviation);
+     return distribution(generator);
 }

@@ -31,6 +31,8 @@ private slots:
     void on_pushButton_defaultSettings_clicked();
     void myConnect_on_comboBox_language_currentIndexChanged(int index);
 
+    void on_pushButton_simulationSettings_clicked();
+
 private:
     Ui::AppSettingsWindow *ui;
 

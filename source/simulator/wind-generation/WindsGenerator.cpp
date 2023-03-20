@@ -41,12 +41,9 @@ QVector<Wind> WindsGenerator::generateWinds()
             double base = MyRandom::randomDouble(-settings->getBaseWindStrength() / 20, settings->getBaseWindStrength() / 20);
             double deviation = settings->getWindStrengthInstability() / 4;
 
-            std::random_device rd{};
-            std::mt19937 generator{rd()};
-            std::normal_distribution<double> distribution(base, deviation);
             double random = 0;
             if(deviation > 0)
-                random = distribution(generator);
+                random = MyRandom::normalDistributionRandom(base, deviation);
 
             short randomType = MyRandom::randomInt(0, 1);
             switch(randomType)

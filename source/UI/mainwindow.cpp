@@ -1,9 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "../global/IDGenerator.h"
-#include "../global/MyRandom.h"
-
 #include "../utilities/functions.h"
 
 #include "../simulator/Jumper.h"
@@ -15,8 +12,13 @@
 #include "../simulator/wind-generation/WindsGenerator.h"
 #include "../simulator/wind-generation/WindGenerationSettings.h"
 
+#include "../global/IDGenerator.h"
+#include "../global/MyRandom.h"
 #include "../global/GlobalDatabase.h"
 #include "../global/GlobalAppSettings.h"
+#include "../global/GlobalSimulationSettings.h"
+
+#include "../single-jumps/SingleJumpsManager.h"
 
 #include "AppSettings/AppSettingsWindow.h"
 #include "DatabaseEditor/DatabaseEditorWindow.h"
@@ -26,8 +28,6 @@
 #include "EditorWidgets/JumperEditorWidget.h"
 #include "EditorWidgets/HillEditorWidget.h"
 #include "EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
-
-#include "../single-jumps/SingleJumpsManager.h"
 
 #include <QDebug>
 #include <QCloseEvent>
@@ -78,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     GlobalDatabase::get()->loadFromJson();
+    GlobalAppSettings::get()->loadFromJson();
+    GlobalSimulationSettings::get()->loadFromFile();
 }
 
 MainWindow::~MainWindow()

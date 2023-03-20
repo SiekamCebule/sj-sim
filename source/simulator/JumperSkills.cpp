@@ -19,20 +19,24 @@ QString JumperSkills::getJumpsEqualityString(short jumpsEquality)
     QStringList strings = JumperSkills::getJumpsEqualityStringList();
     switch(jumpsEquality)
     {
-    case -3:
+    case -4:
         return strings.at(0);
-    case -2:
+    case -3:
         return strings.at(1);
-    case -1:
+    case -2:
         return strings.at(2);
-    case 0:
+    case -1:
         return strings.at(3);
-    case 1:
+    case 0:
         return strings.at(4);
-    case 2:
+    case 1:
         return strings.at(5);
-    case 3:
+    case 2:
         return strings.at(6);
+    case 3:
+        return strings.at(7);
+    case 4:
+        return strings.at(8);
     }
     return QObject::tr("Błąd");
 }
@@ -40,13 +44,15 @@ QString JumperSkills::getJumpsEqualityString(short jumpsEquality)
 QStringList JumperSkills::getJumpsEqualityStringList()
 {
     return QStringList{
-        QObject::tr("Bardzo nierówne"),
+        QObject::tr("Skrajnie nierówne"),
+                 QObject::tr("Bardzo nierówne"),
                 QObject::tr("Nierówne"),
                 QObject::tr("Trochę mniej równe"),
                 QObject::tr("Średnio równe"),
                 QObject::tr("Trochę bardziej równe"),
                 QObject::tr("Równe"),
-                QObject::tr("Bardzo równe")
+                QObject::tr("Bardzo równe"),
+                QObject::tr("Perfekcyjnie równe")
     };
 }
 
@@ -72,10 +78,10 @@ void JumperSkills::checkSkillsLimits()
     else if(getFlightStyle() > 3)
         setFlightStyle(3);
 
-    if(getJumpsEquality() > 7)
-        setJumpsEquality(7);
-    else if(getJumpsEquality() < 1)
-        setJumpsEquality(1);
+    if(getJumpsEquality() > 5)
+        setJumpsEquality(5);
+    else if(getJumpsEquality() < -5)
+        setJumpsEquality(-5);
 }
 
 Jumper *JumperSkills::getJumper() const

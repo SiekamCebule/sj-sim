@@ -1,6 +1,7 @@
 #include "JumpSimulator.h"
 #include "../utilities/functions.h"
 #include "../global/MyRandom.h"
+#include "../global/GlobalSimulationSettings.h"
 
 #include <QDebug>
 #include <QRandomGenerator>
@@ -80,19 +81,14 @@ void JumpSimulator::generateTakeoffRating()
     ratingMultiplier = 0.825 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     simulationData->takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
-    simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 1;
+    simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * GlobalSimulationSettings::get()->getTakeoffRatingTakeoffHeightAbsValue();
 
-    double takeoffHeightLevel = jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height");
-    double random = 0;
-    random = -(MyRandom::reducingChancesRandom(-7 + (takeoffHeightLevel * 2.4), 60, 0.5, 1, 1.112 + (takeoffHeightLevel / 110), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
+    double random = JumpSimulator::getRandomForJumpSimulation(JumpSimulator::TakeoffRating, jumper);
     random *= 1 + (0.14 * hill->getLevelOfCharacteristic("takeoff-randomness-effect"));
-    //qDebug()<<"Takeoff Random: "<<random;
     simulationData->takeoffRating += random;
 
     if(simulationData->takeoffRating < 0.1)
         simulationData->takeoffRating = 0.1;
-
-    //qDebug()<<"Ocena wyjścia z progu: "<<takeoffRating;
 }
 
 void JumpSimulator::generateFlightRating()
@@ -103,22 +99,16 @@ void JumpSimulator::generateFlightRating()
     ratingMultiplier = 1.35 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
     simulationData->flightRating += jumperSkills->getForm() * ratingMultiplier;
 
-    simulationData->flightRating -= std::abs(Hill::calculateBestFlightHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 3);
+    simulationData->flightRating -= std::abs(Hill::calculateBestFlightHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * GlobalSimulationSettings::get()->getFlightRatingFlightHeightAbsValue());
 
-    double flightHeightLevel = jumper->getJumperSkills().getLevelOfCharacteristic("flight-height");
-    double random = 0;
-    random = -(MyRandom::reducingChancesRandom(7 + (flightHeightLevel * 0.8), 60, 0.5, 1, 1.112 + (flightHeightLevel / 330), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::ResultNumbersType::FromSmallerToLarger));
+    double random = JumpSimulator::getRandomForJumpSimulation(JumpSimulator::FlightRating, jumper);
     random *= 1 + (0.14 * hill->getLevelOfCharacteristic("flight-randomness-effect"));
-    //qDebug()<<"Flight Random: "<<random;
     simulationData->flightRating += random;
 
     if(simulationData->flightRating < 0.1)
         simulationData->flightRating = 0.1;
 
-    //qDebug()<<"Mnożnik za styl lotu: "<<getMultiplierForFlightStyleEffect();
     simulationData->flightRating *= getMultiplierForFlightStyleEffect();
-
-    //qDebug()<<"Ocena lotu: "<<flightRating;
 }
 
 double JumpSimulator::getMultiplierForFlightStyleEffect()
@@ -139,7 +129,7 @@ double JumpSimulator::getMultiplierForFlightStyleEffect()
 
 void JumpSimulator::generateDistance()
 {
-    jumpData.distance += simulationData->takeoffRating * hill->getTakeoffEffect();
+    jumpData.distance += simulationData->flightRating * hill->getTakeoffEffect();
     jumpData.distance += simulationData->flightRating * hill->getFlightEffect();
     jumpData.distance += *getGate() * (hill->getPointsForGate() / hill->getPointsForMeter());
     jumpData.distance = roundDoubleToHalf(jumpData.getDistance());
@@ -516,11 +506,6 @@ void JumpSimulator::resetTemporaryParameters()
     jumpData.reset();
 }
 
-bool JumpSimulator::jumperCharacteristicsContains(const Characteristic & characteristics)
-{
-    return jumper->getJumperSkills().getCharacteristics().contains(characteristics);
-}
-
 JumpData JumpSimulator::getJumpData()
 {
     return jumpData;
@@ -586,4 +571,36 @@ double JumpSimulator::getDSQBaseProbability() const
 void JumpSimulator::setDSQBaseProbability(double newDSQBaseProbability)
 {
     DSQBaseProbability = newDSQBaseProbability;
+}
+
+double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper)
+{
+    GlobalSimulationSettings * s = GlobalSimulationSettings::get();
+    switch(parameter)
+    {
+    case JumpSimulator::TakeoffRating:
+    {
+        int randomType = MyRandom::randomInt(1, 1000);
+        if(randomType < 86)
+            randomType = 1;
+        else randomType = 0;
+        switch(randomType)
+        {
+        case 0: //Odjęcie
+            /*double deviation = 12.85;
+            deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 1.7);
+            double random = MyRandom::normalDistributionRandom(7, deviation);
+            random += MyRandom::lognormalDistributionRandom(0, 1.39 - jumper->getJumperSkills().getJumpsEquality() / 9);
+            if(random < 0) random =0;
+            return random;*/
+            double deviation = s->getTakeoffRatingBaseRandomDeviationBaseValue();
+            deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / s->getTakeoffRatingBaseRandomDeviationSubstractCharacteristicDivider());
+            double random = MyRandom::normalDistributionRandom(s->getTakeoffRatingBaseRandomBaseValue(), deviation);
+            random += MyRandom::lognormalDistributionRandom(s->getTakeoffRatingLogRandomBaseValue(), s->getTakeoffRatingLogRandomDeviationBaseValue() - jumper->getJumperSkills().getJumpsEquality() / s->getTakeoffRatingLogRandomDeviationJumpsEqualityDivider());
+            if(random < 0) random =0;
+            qDebug()<<"JUMP takeoff RATING RANDOM: "<<random;
+            return random;
+        }
+    }
+    }
 }

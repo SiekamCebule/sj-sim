@@ -31,11 +31,10 @@ private:
 public:
     //skok
     void simulateJump();
+
     void resetTemporaryParameters();
-
-    bool jumperCharacteristicsContains(const Characteristic & characteristics);
-
     void updateJumperSkills();
+public:
 
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
@@ -62,6 +61,13 @@ public:
     void setDSQBaseProbability(double newDSQBaseProbability);
 
 private:
+    enum RandomParameters{
+        TakeoffRating,
+        FlightRating,
+        LandingInstability
+    };
+    static double getRandomForJumpSimulation(short parameter, Jumper * jumper);
+
     bool generateDSQ();
     void generateTakeoffRating();
     void generateFlightRating();

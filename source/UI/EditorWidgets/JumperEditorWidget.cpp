@@ -14,12 +14,6 @@ JumperEditorWidget::JumperEditorWidget(Jumper *jumper, CharacteristicsEditor *ch
 {
     ui->setupUi(this);
 
-    for(int i=0; i<7; i++)
-    {
-        ui->comboBox_jumpsEquality->addItem(QIcon(":/img/" + QString::number(i+1) + ".png"),JumperSkills::getJumpsEqualityString(i-3) + " (" + QString::number(i-3) + ")");
-    }
-    ui->comboBox_jumpsEquality->setCurrentIndex(3);
-
     if(this->characteristicsEditor == nullptr)
         this->characteristicsEditor = new CharacteristicsEditor(Characteristic::Jumper);
 
@@ -43,9 +37,9 @@ void JumperEditorWidget::resetJumperInputs()
     ui->doubleSpinBox_takeoffTechnique->setValue(0);
     ui->doubleSpinBox_flightTechnique->setValue(0);
     ui->comboBox_flightStyle->setCurrentIndex(0);
-    ui->comboBox_flightStyle->setCurrentIndex(0);
     ui->doubleSpinBox_landingStyle->setValue(0);
     ui->doubleSpinBox_form->setValue(0);
+    ui->doubleSpinBox_jumpsEquality->setValue(0);;
     characteristicsEditor->setCharacteristics(QSet<Characteristic>());
 }
 
@@ -65,7 +59,7 @@ void JumperEditorWidget::fillJumperInputs()
     ui->comboBox_flightStyle->setCurrentIndex(jumper->getJumperSkills().getFlightStyle());
     ui->doubleSpinBox_landingStyle->setValue(jumper->getJumperSkills().getLandingStyle());
     ui->doubleSpinBox_form->setValue(jumper->getJumperSkills().getForm());
-    ui->comboBox_jumpsEquality->setCurrentIndex(jumper->getJumperSkills().getJumpsEquality() + 3);
+    ui->doubleSpinBox_jumpsEquality->setValue(jumper->getJumperSkills().getJumpsEquality());
     characteristicsEditor->setCharacteristics(jumper->getJumperSkills().getCharacteristics());
 }
 
@@ -89,7 +83,7 @@ Jumper JumperEditorWidget::getJumperFromWidgetInput() const
     jumper.getJumperSkillsPointer()->setFlightStyle(ui->comboBox_flightStyle->currentIndex());
     jumper.getJumperSkillsPointer()->setLandingStyle(ui->doubleSpinBox_landingStyle->value());
     jumper.getJumperSkillsPointer()->setForm(ui->doubleSpinBox_form->value());
-    jumper.getJumperSkillsPointer()->setJumpsEquality(ui->comboBox_jumpsEquality->currentIndex() - 3);
+    jumper.getJumperSkillsPointer()->setJumpsEquality(ui->doubleSpinBox_jumpsEquality->value());
     jumper.getJumperSkillsPointer()->setCharacteristics(characteristicsEditor->getCharacteristics());
     return jumper;
 }

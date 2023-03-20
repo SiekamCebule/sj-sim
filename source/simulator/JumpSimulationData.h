@@ -21,8 +21,8 @@ public:
     void setDSQProbability(int newDSQProbability);
 
 private:
-    double takeoffRating;
     double flightRating;
+    double takeoffRating;
     double judgesRating;
     int DSQProbability;
 };
