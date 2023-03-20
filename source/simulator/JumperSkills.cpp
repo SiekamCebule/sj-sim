@@ -14,6 +14,52 @@ JumperSkills::JumperSkills(double takeoffPower, double takeoffTechnique, double 
     setCharacteristics(characteristics);
 }
 
+QString JumperSkills::getJumpsEqualityString(short jumpsEquality)
+{
+    QStringList strings = JumperSkills::getJumpsEqualityStringList();
+    switch(jumpsEquality)
+    {
+    case -3:
+        return strings.at(0);
+    case -2:
+        return strings.at(1);
+    case -1:
+        return strings.at(2);
+    case 0:
+        return strings.at(3);
+    case 1:
+        return strings.at(4);
+    case 2:
+        return strings.at(5);
+    case 3:
+        return strings.at(6);
+    }
+    return QObject::tr("Błąd");
+}
+
+QStringList JumperSkills::getJumpsEqualityStringList()
+{
+    return QStringList{
+        QObject::tr("Bardzo nierówne"),
+                QObject::tr("Nierówne"),
+                QObject::tr("Trochę mniej równe"),
+                QObject::tr("Średnio równe"),
+                QObject::tr("Trochę bardziej równe"),
+                QObject::tr("Równe"),
+                QObject::tr("Bardzo równe")
+    };
+}
+
+short JumperSkills::getJumpsEquality() const
+{
+    return jumpsEquality;
+}
+
+void JumperSkills::setJumpsEquality(short newJumpsEquality)
+{
+    jumpsEquality = newJumpsEquality;
+}
+
 void JumperSkills::checkSkillsLimits()
 {
     if(getLandingStyle() < 0)
@@ -25,6 +71,11 @@ void JumperSkills::checkSkillsLimits()
         setFlightStyle(0);
     else if(getFlightStyle() > 3)
         setFlightStyle(3);
+
+    if(getJumpsEquality() > 7)
+        setJumpsEquality(7);
+    else if(getJumpsEquality() < 1)
+        setJumpsEquality(1);
 }
 
 Jumper *JumperSkills::getJumper() const

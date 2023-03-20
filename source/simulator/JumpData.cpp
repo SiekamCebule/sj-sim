@@ -116,10 +116,9 @@ QJsonObject JumpData::getJumpDataJsonObject(const JumpData &jumpData, bool saveJ
     object.insert("landing-imbalance", jumpData.getLanding().getImbalance());
     if(saveJudges == true){
         QJsonArray judgesArray;
-        QVectorIterator<double> it(jumpData.getJudges());
-        while(it.hasNext())
+        for(const auto & jg : jumpData.getJudges())
         {
-            judgesArray.push_back(QJsonValue(it.next()));
+            judgesArray.push_back(QJsonValue(jg));
         }
         object.insert("judges", judgesArray);
     }

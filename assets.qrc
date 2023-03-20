@@ -18,5 +18,12 @@
         <file>img/arrow-down.png</file>
         <file>img/back-side.png</file>
         <file>img/front-side.png</file>
+        <file>img/1.png</file>
+        <file>img/2.png</file>
+        <file>img/3.png</file>
+        <file>img/4.png</file>
+        <file>img/5.png</file>
+        <file>img/6.png</file>
+        <file>img/7.png</file>
     </qresource>
 </RCC>

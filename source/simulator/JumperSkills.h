@@ -8,6 +8,7 @@
 class Jumper;
 
 #include <QSet>
+#include <QStringList>
 
 class JumperSkills : public ClassWithID, public ClassWithCharacteristics
 {
@@ -20,6 +21,7 @@ private:
     short flightStyle; // 0-klasyczny, 1-Styl V, 2-Nowoczesne V, 3-Szerokie V, 4-Styl H
     double flightTechnique; // 1-50
     double form; // 1-50
+    short jumpsEquality; // 1- bardzo nierówne,   2-  Nierówne,    3- Trochę nierówne,   4- Średnio równe,     5- Trochę bardziej równe,   6- Równe -    7- równe
     double landingStyle; // 1-15
 
     Jumper * jumper;
@@ -35,6 +37,9 @@ public:
 
     void checkSkillsLimits();
 
+    static QString getJumpsEqualityString(short jumpsEquality);
+    static QStringList getJumpsEqualityStringList();
+public:
     void setJumperID(ulong ID);
     double getTakeoffPower() const;
     void setTakeoffPower(double newTakeoffPower);
@@ -52,6 +57,8 @@ public:
     void setForm(double newForm);
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
+    short getJumpsEquality() const;
+    void setJumpsEquality(short newJumpsEquality);
 };
 
 #endif // JUMPERSKILLS_H

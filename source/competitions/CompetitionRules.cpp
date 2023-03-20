@@ -66,11 +66,12 @@ QJsonObject CompetitionRules::getCompetitionRulesJsonObject(const CompetitionRul
     }
     if(saveRounds == true){
         QJsonArray roundsArray;
-        QSetIterator<RoundInfo> it(competitionRules.getRounds());
-        while(it.hasNext())
+        QVector<RoundInfo> rds = competitionRules.getRounds();
+        rds.detach();
+        for(QVector<RoundInfo>::iterator it = rds.begin(); it != rds.end(); ++it)
         {
             QJsonObject roundObject;
-            roundObject.insert("count", it.next().getCount());
+            roundObject.insert("count", it->getCount());
             roundsArray.push_back(roundObject);
         }
         object.insert("rounds", roundsArray);

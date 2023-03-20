@@ -52,18 +52,20 @@ double MyRandom::reducingChancesRandom(double min, double max, double resultNumb
     if(drawType == AddingChances)
     {
         double chance = startingChance;
-        if(resultNumbersType == FromSmallerToLarger)
+        if(resultNumbersType == FromSmallerToLarger){
             for(double i=min; i<max; i+=resultNumbersChange)
             {
                 drawInfo.push_back(QPair<double, double>(i, chance));
                 chance /= chancesChangeMultiplier;
             }
-        else if(resultNumbersType == FromLargerToSmaller)
+        }
+        else if(resultNumbersType == FromLargerToSmaller){
             for(double i=max; i>min; i-=resultNumbersChange)
             {
                 drawInfo.push_back(QPair<double, double>(i, chance));
                 chance /= chancesChangeMultiplier;
             }
+        }
 
         // losowanie
         double sum = 0;
@@ -82,23 +84,21 @@ double MyRandom::reducingChancesRandom(double min, double max, double resultNumb
     }
     else if(drawType == InTurnFromTheHighestChanceNumber)
     {
-        //smaller to larger
-        /// czym wieksza szansa, tym mniejszy result
-        /// starting chance to najwieksza szansa
-        ///
         double chance = startingChance;
-        if(resultNumbersType == FromSmallerToLarger)
+        if(resultNumbersType == FromSmallerToLarger){
             for(double i=min; i<max; i+=resultNumbersChange)
             {
                 drawInfo.push_back(QPair<double, double>(i, chance));
                 chance *= chancesChangeMultiplier;
             }
-        else if(resultNumbersChange == FromLargerToSmaller)
+        }
+        else if(resultNumbersType == FromLargerToSmaller){
             for(double i=max; i>min; i-=resultNumbersChange)
             {
                 drawInfo.push_back(QPair<double, double>(i, chance));
                 chance *= chancesChangeMultiplier;
             }
+        }
 
         // 1, 2.2, 6.6, (..) 150, 400
 

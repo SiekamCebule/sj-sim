@@ -57,11 +57,13 @@ QJsonObject Hill::getHillJsonObject(const Hill & hill, bool saveKAndHSPoint, boo
     }
 
     QJsonArray characteristicsArray;
-    for(const auto & characteristic : hill.getCharacteristics())
+    QSet<Characteristic> cs = hill.getCharacteristics();
+    cs.detach();
+    for(QSet<Characteristic>::iterator it = cs.begin(); it != cs.end(); ++it)
     {
         QJsonObject characteristicObject;
-        characteristicObject.insert("type", characteristic.getType());
-        characteristicObject.insert("level", characteristic.getLevel());
+        characteristicObject.insert("type", it->getType());
+        characteristicObject.insert("level", it->getLevel());
         characteristicsArray.push_back(characteristicObject);
     }
     object.insert("characteristics", characteristicsArray);

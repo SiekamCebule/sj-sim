@@ -38,21 +38,22 @@ QJsonObject Jumper::getJumperJsonObject(const Jumper & jumper, bool saveSkills, 
         object.insert("flight-style", jumper.getJumperSkills().getFlightStyle());
         object.insert("landing-style", jumper.getJumperSkills().getLandingStyle());
         object.insert("form", jumper.getJumperSkills().getForm());
+        object.insert("jumps-equality", jumper.getJumperSkills().getJumpsEquality());
     }
 
     if(saveCharacteristics == true){
         QJsonArray characteristicsArray;
-        QSetIterator<Characteristic> it(jumper.getJumperSkills().getCharacteristics());
-        while(it.hasNext())
+        QSet<Characteristic> cs = jumper.getJumperSkills().getCharacteristics();
+        cs.detach();
+        for(QSet<Characteristic>::iterator it = cs.begin(); it != cs.end(); ++it)
         {
             QJsonObject characteristicObject;
-            characteristicObject.insert("type", it.next().getType());
-            characteristicObject.insert("level", it.next().getLevel());
+            characteristicObject.insert("type", it->getType());
+            characteristicObject.insert("level", it->getLevel());
             characteristicsArray.push_back(characteristicObject);
         }
         object.insert("characteristics", characteristicsArray);
     }
-
     return object;
 }
 
@@ -94,6 +95,7 @@ QVector<Jumper> Jumper::getJumpersVectorFromJson(const QByteArray &bytes)
         jumper.getJumperSkillsPointer()->setFlightStyle(obj.value("flight-style").toDouble());
         jumper.getJumperSkillsPointer()->setLandingStyle(obj.value("landing-style").toDouble());
         jumper.getJumperSkillsPointer()->setForm(obj.value("form").toDouble());
+        jumper.getJumperSkillsPointer()->setJumpsEquality(obj.value("jumps-equality").toInt(0));
 
         QJsonArray characteristicsArray = obj.value("characteristics").toArray();
         for(const auto & val : characteristicsArray){

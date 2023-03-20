@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>466</width>
-    <height>342</height>
+    <width>502</width>
+    <height>377</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">background: transparent;</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
@@ -61,6 +61,51 @@ color: rgb(0, 0, 0);
            </property>
           </widget>
          </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="lineEdit_name">
+           <property name="minimumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 6px;
+}
+
+QDoubleSpinBox::up-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+		background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}
+QDoubleSpinBox::down-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+	background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}</string>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_2">
            <property name="font">
@@ -90,6 +135,51 @@ color: rgb(0, 0, 0);
            </property>
            <property name="indent">
             <number>-1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="lineEdit_surname">
+           <property name="minimumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 6px;
+}
+
+QDoubleSpinBox::up-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+		background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}
+QDoubleSpinBox::down-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+	background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}</string>
            </property>
           </widget>
          </item>
@@ -125,302 +215,31 @@ color: rgb(0, 0, 0);
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_4">
-           <property name="font">
-            <font>
-             <family>Quicksand Medium</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QLabel{
-background: transparent;
-color: rgb(0, 0, 0);
-}</string>
-           </property>
-           <property name="text">
-            <string>Siła wybicia</string>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="margin">
-            <number>3</number>
-           </property>
-           <property name="indent">
-            <number>-1</number>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="font">
-            <font>
-             <family>Quicksand Medium</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QLabel{
-background: transparent;
-color: rgb(0, 0, 0);
-}</string>
-           </property>
-           <property name="text">
-            <string>Technika wybicia</string>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="margin">
-            <number>3</number>
-           </property>
-           <property name="indent">
-            <number>-1</number>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="font">
-            <font>
-             <family>Quicksand Medium</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QLabel{
-background: transparent;
-color: rgb(0, 0, 0);
-}</string>
-           </property>
-           <property name="text">
-            <string>Technika lotu</string>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="margin">
-            <number>3</number>
-           </property>
-           <property name="indent">
-            <number>-1</number>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_7">
-           <property name="font">
-            <font>
-             <family>Quicksand Medium</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QLabel{
-background: transparent;
-color: rgb(0, 0, 0);
-}</string>
-           </property>
-           <property name="text">
-            <string>Styl lotu</string>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="margin">
-            <number>3</number>
-           </property>
-           <property name="indent">
-            <number>-1</number>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QLabel" name="label_8">
-           <property name="font">
-            <font>
-             <family>Quicksand Medium</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QLabel{
-background: transparent;
-color: rgb(0, 0, 0);
-}</string>
-           </property>
-           <property name="text">
-            <string>Styl lądowania</string>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="margin">
-            <number>3</number>
-           </property>
-           <property name="indent">
-            <number>-1</number>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="0">
-          <widget class="QLabel" name="label_9">
-           <property name="font">
-            <font>
-             <family>Quicksand Medium</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QLabel{
-background: transparent;
-color: rgb(0, 0, 0);
-}</string>
-           </property>
-           <property name="text">
-            <string>Forma</string>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="margin">
-            <number>3</number>
-           </property>
-           <property name="indent">
-            <number>-1</number>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit_name">
-           <property name="minimumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>13</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QWidget{
-	background-color: rgb(222, 221, 218);
-	color: rgb(60, 60, 60);
-	border: 2px solid rgb(65, 0, 0);
-	border-radius: 6px;
-}
-
-QDoubleSpinBox::up-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-		background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}
-QDoubleSpinBox::down-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-	background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_surname">
-           <property name="minimumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>13</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QWidget{
-	background-color: rgb(222, 221, 218);
-	color: rgb(60, 60, 60);
-	border: 2px solid rgb(65, 0, 0);
-	border-radius: 6px;
-}
-
-QDoubleSpinBox::up-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-		background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}
-QDoubleSpinBox::down-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-	background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout_country">
            <item>
             <widget class="QLineEdit" name="lineEdit_countryCode">
              <property name="minimumSize">
               <size>
-               <width>80</width>
+               <width>70</width>
                <height>25</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>80</width>
+               <width>70</width>
                <height>25</height>
               </size>
              </property>
              <property name="font">
               <font>
-               <pointsize>13</pointsize>
+               <family>Quicksand [PfEd]</family>
+               <pointsize>14</pointsize>
+               <bold>true</bold>
               </font>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="styleSheet">
               <string notr="true">QWidget{
@@ -443,8 +262,14 @@ border-radius: 3px;
 	color: rgb(0, 59, 23);
 }</string>
              </property>
+             <property name="text">
+              <string/>
+             </property>
              <property name="maxLength">
               <number>3</number>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
@@ -488,143 +313,49 @@ color: black;
            </item>
           </layout>
          </item>
-         <item row="4" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_takeoffTechnique">
-           <property name="minimumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_4">
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <family>Quicksand Medium</family>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">QWidget{
-	background-color: rgb(222, 221, 218);
-	color: rgb(60, 60, 60);
-	border: 2px solid rgb(65, 0, 0);
-	border-radius: 6px;
-}
-
-QDoubleSpinBox::up-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-		background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}
-QDoubleSpinBox::down-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-	background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
+            <string notr="true">QLabel{
+background: transparent;
+color: rgb(0, 0, 0);
 }</string>
+           </property>
+           <property name="text">
+            <string>Siła wybicia</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="margin">
+            <number>3</number>
+           </property>
+           <property name="indent">
+            <number>-1</number>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_flightTechnique">
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_takeoffPower">
            <property name="minimumSize">
             <size>
-             <width>190</width>
+             <width>225</width>
              <height>25</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>13</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QWidget{
-	background-color: rgb(222, 221, 218);
-	color: rgb(60, 60, 60);
-	border: 2px solid rgb(65, 0, 0);
-	border-radius: 6px;
-}
-
-QDoubleSpinBox::up-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-		background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}
-QDoubleSpinBox::down-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-	background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_form">
-           <property name="minimumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>13</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QWidget{
-	background-color: rgb(222, 221, 218);
-	color: rgb(60, 60, 60);
-	border: 2px solid rgb(65, 0, 0);
-	border-radius: 6px;
-}
-
-QDoubleSpinBox::up-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-		background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}
-QDoubleSpinBox::down-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-	background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QComboBox" name="comboBox_flightStyle">
-           <property name="minimumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>190</width>
+             <width>225</width>
              <height>25</height>
             </size>
            </property>
@@ -634,7 +365,238 @@ border-radius: 3px;
             </font>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::WheelFocus</enum>
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 6px;
+}
+
+QDoubleSpinBox::up-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+		background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}
+QDoubleSpinBox::down-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+	background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel{
+background: transparent;
+color: rgb(0, 0, 0);
+}</string>
+           </property>
+           <property name="text">
+            <string>Technika wybicia</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="margin">
+            <number>3</number>
+           </property>
+           <property name="indent">
+            <number>-1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_takeoffTechnique">
+           <property name="minimumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 6px;
+}
+
+QDoubleSpinBox::up-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+		background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}
+QDoubleSpinBox::down-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+	background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel{
+background: transparent;
+color: rgb(0, 0, 0);
+}</string>
+           </property>
+           <property name="text">
+            <string>Technika lotu</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="margin">
+            <number>3</number>
+           </property>
+           <property name="indent">
+            <number>-1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_flightTechnique">
+           <property name="minimumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 6px;
+}
+
+QDoubleSpinBox::up-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+		background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}
+QDoubleSpinBox::down-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+	background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel{
+background: transparent;
+color: rgb(0, 0, 0);
+}</string>
+           </property>
+           <property name="text">
+            <string>Styl lotu</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="margin">
+            <number>3</number>
+           </property>
+           <property name="indent">
+            <number>-1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QComboBox" name="comboBox_flightStyle">
+           <property name="minimumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QWidget{
@@ -682,45 +644,35 @@ border-radius: 3px;
            </item>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_takeoffPower">
-           <property name="minimumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>190</width>
-             <height>25</height>
-            </size>
-           </property>
+         <item row="7" column="0">
+          <widget class="QLabel" name="label_8">
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <family>Quicksand Medium</family>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">QWidget{
-	background-color: rgb(222, 221, 218);
-	color: rgb(60, 60, 60);
-	border: 2px solid rgb(65, 0, 0);
-	border-radius: 6px;
-}
-
-QDoubleSpinBox::up-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-		background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}
-QDoubleSpinBox::down-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-	background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
+            <string notr="true">QLabel{
+background: transparent;
+color: rgb(0, 0, 0);
 }</string>
+           </property>
+           <property name="text">
+            <string>Styl lądowania</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="margin">
+            <number>3</number>
+           </property>
+           <property name="indent">
+            <number>-1</number>
            </property>
           </widget>
          </item>
@@ -730,13 +682,13 @@ border-radius: 3px;
             <widget class="QDoubleSpinBox" name="doubleSpinBox_landingStyle">
              <property name="minimumSize">
               <size>
-               <width>190</width>
+               <width>225</width>
                <height>25</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>190</width>
+               <width>225</width>
                <height>25</height>
               </size>
              </property>
@@ -744,6 +696,9 @@ border-radius: 3px;
               <font>
                <pointsize>13</pointsize>
               </font>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="styleSheet">
               <string notr="true">QWidget{
@@ -796,6 +751,163 @@ border-radius: 3px;
             </widget>
            </item>
           </layout>
+         </item>
+         <item row="8" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel{
+background: transparent;
+color: rgb(0, 0, 0);
+}</string>
+           </property>
+           <property name="text">
+            <string>Forma</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="margin">
+            <number>3</number>
+           </property>
+           <property name="indent">
+            <number>-1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_form">
+           <property name="minimumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 6px;
+}
+
+QDoubleSpinBox::up-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+		background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}
+QDoubleSpinBox::down-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+	background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="1">
+          <widget class="QComboBox" name="comboBox_jumpsEquality">
+           <property name="minimumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 6px;
+}
+
+QDoubleSpinBox::up-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+		background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}
+QDoubleSpinBox::down-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+	background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}</string>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>10</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel{
+background: transparent;
+color: rgb(0, 0, 0);
+}</string>
+           </property>
+           <property name="text">
+            <string>Równość skoków</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="margin">
+            <number>3</number>
+           </property>
+           <property name="indent">
+            <number>-1</number>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
