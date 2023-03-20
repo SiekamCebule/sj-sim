@@ -152,7 +152,7 @@ background-color: rgb(245, 245, 245);</string>
           <number>2</number>
          </property>
          <property name="maximum">
-          <double>1000.000000000000000</double>
+          <double>10000.000000000000000</double>
          </property>
          <property name="singleStep">
           <double>0.500000000000000</double>
@@ -223,7 +223,7 @@ background-color: rgb(245, 245, 245);</string>
           <string notr="true">color: rgb(100, 100, 100);</string>
          </property>
          <property name="text">
-          <string>/ 10</string>
+          <string>/ 5</string>
          </property>
         </widget>
        </item>
@@ -246,7 +246,7 @@ background-color: rgb(245, 245, 245);</string>
           <set>Qt::AlignCenter</set>
          </property>
          <property name="maximum">
-          <double>10.000000000000000</double>
+          <double>10000.000000000000000</double>
          </property>
         </widget>
        </item>

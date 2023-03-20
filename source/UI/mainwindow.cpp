@@ -82,7 +82,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    qDebug()<<ui;
     delete ui;
 }
 
@@ -116,30 +115,21 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         manager.simulate();
 
         SingleJumpsResultsWindow resultsWindow;
-        qDebug()<<"ok";
         resultsWindow.setManager(&manager);
-        qDebug()<<"ok";
         resultsWindow.fillJumperInfo();
-        qDebug()<<"ok";
         resultsWindow.fillHillInfo();
-        qDebug()<<"ok";
         resultsWindow.fillMiniJumpsResultsLayout();
-        qDebug()<<"ok";
         resultsWindow.fillDistancesChart();
-        qDebug()<<"ok";
         resultsWindow.fillPointsChart();
-        qDebug()<<"ok";
         resultsWindow.fillJudgesChart();
-        qDebug()<<"ok";
         resultsWindow.fillLandingsChart();
-        qDebug()<<"ok";
         resultsWindow.fillWindsChart();
-        qDebug()<<"ok";
         resultsWindow.installShortcuts();
-        qDebug()<<"before";
         if(resultsWindow.exec() == QDialog::Rejected)
         {
-            qDebug()<<"rejected";
+            if(manager.getResultsFileName().isNull() == false){
+                manager.saveResultsToFile(SingleJumpsManager::Json);
+            }
         }
     }
 }

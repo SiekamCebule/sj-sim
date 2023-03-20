@@ -36,23 +36,25 @@ QVector<Wind> WindsGenerator::generateWinds()
         WindGenerationSettings * settings = &generationSettings[i];
 
         double windStrength = settings->getBaseWindStrength();
+        if(settings->getWindStrengthInstability() > 0){
 
-        double base = MyRandom::randomDouble(-settings->getBaseWindStrength() / 20, settings->getBaseWindStrength() / 20);
-        double deviation = settings->getWindStrengthInstability() / 4;
+            double base = MyRandom::randomDouble(-settings->getBaseWindStrength() / 20, settings->getBaseWindStrength() / 20);
+            double deviation = settings->getWindStrengthInstability() / 4;
 
-        std::random_device rd{};
-        std::mt19937 generator{rd()};
-        std::normal_distribution<double> distribution(base, deviation);
-        double random = 0;
-        if(deviation > 0)
-            random = distribution(generator);
+            std::random_device rd{};
+            std::mt19937 generator{rd()};
+            std::normal_distribution<double> distribution(base, deviation);
+            double random = 0;
+            if(deviation > 0)
+                random = distribution(generator);
 
-        short randomType = MyRandom::randomInt(0, 1);
-        switch(randomType)
-        {
-        case 0: windStrength += random; break;
-        case 1: windStrength -= random; break;
-        default: break;
+            short randomType = MyRandom::randomInt(0, 1);
+            switch(randomType)
+            {
+            case 0: windStrength += random; break;
+            case 1: windStrength -= random; break;
+            default: break;
+            }
         }
 
         //qDebug()<<"(random: "<<QString::number(random)<<")";
@@ -68,7 +70,7 @@ QVector<Wind> WindsGenerator::generateWinds()
         double frontSideProb = 250 + settings->getLevelOfCharacteristic("front-side-wind-probability") * 100;
         double frontProb = 250 + settings->getLevelOfCharacteristic("front-wind-probability") * 100;
 
-        const double baseDirectionChanceMultiplier = 260 - ((settings->getWindDirectionInstability()) * 25.75);
+        const double baseDirectionChanceMultiplier = 95 - ((settings->getWindDirectionInstability()) * 23.53);
 
         if(settings->getWindDirectionInstability() == 0)
         {
@@ -137,19 +139,19 @@ QVector<Wind> WindsGenerator::generateWinds()
             }
         }
 
-        qDebug()<<"base: "<<settings->getBaseDirection();
+        //qDebug()<<"base: "<<settings->getBaseDirection();
         QVector<double> probabilities;
         double drawSum = backProb + backSideProb + sideProb + frontSideProb + frontProb;
         probabilities.push_back(backProb);
-        qDebug()<<"backProb: "<<backProb;
+        //qDebug()<<"backProb: "<<backProb;
         probabilities.push_back(backSideProb);
-        qDebug()<<"backSideProb: "<<backSideProb;
+        //qDebug()<<"backSideProb: "<<backSideProb;
         probabilities.push_back(sideProb);
-        qDebug()<<"sideProb: "<<sideProb;
+        //qDebug()<<"sideProb: "<<sideProb;
         probabilities.push_back(frontSideProb);
-        qDebug()<<"frontSideProb: "<<frontSideProb;
+        //qDebug()<<"frontSideProb: "<<frontSideProb;
         probabilities.push_back(frontProb);
-        qDebug()<<"frontProb: "<<frontProb;
+        //qDebug()<<"frontProb: "<<frontProb;
         double drawRandom = MyRandom::randomDouble(0, drawSum);
 
         double actualSum = 0;

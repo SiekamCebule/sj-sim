@@ -45,31 +45,32 @@ void CompetitionRules::setName(const QString &newName)
     name = newName;
 }
 
-QJsonObject CompetitionRules::getCompetitionRulesJsonObject(CompetitionRules *competitionRules, bool savePointsAndCompensations, bool saveCompetitionType, bool save95HSRuleAndDsq, bool saveJumpersInTeamCount, bool saveRounds)
+QJsonObject CompetitionRules::getCompetitionRulesJsonObject(const CompetitionRules &competitionRules, bool savePointsAndCompensations, bool saveCompetitionType, bool save95HSRuleAndDsq, bool saveJumpersInTeamCount, bool saveRounds)
 {
     QJsonObject object;
-    object.insert("name", competitionRules->getName());
+    object.insert("name", competitionRules.getName());
     if(savePointsAndCompensations == true){
-        object.insert("wind-compensations", competitionRules->getHasWindCompensations());
-        object.insert("gate-compensations", competitionRules->getHasGateCompensations());
-        object.insert("judges-points", competitionRules->getHasJudgesPoints());
+        object.insert("wind-compensations", competitionRules.getHasWindCompensations());
+        object.insert("gate-compensations", competitionRules.getHasGateCompensations());
+        object.insert("judges-points", competitionRules.getHasJudgesPoints());
     }
     if(saveJumpersInTeamCount == true){
-        object.insert("jumpers-in-team-count", competitionRules->getJumpersInTeamCount());
+        object.insert("jumpers-in-team-count", competitionRules.getJumpersInTeamCount());
     }
     if(save95HSRuleAndDsq == true){
-        object.insert("95-hs-rule", competitionRules->getHas95HSRule());
-        object.insert("dsq", competitionRules->getHasDsq());
+        object.insert("95-hs-rule", competitionRules.getHas95HSRule());
+        object.insert("dsq", competitionRules.getHasDsq());
     }
     if(saveCompetitionType == true){
-        object.insert("competition-type", competitionRules->getCompetitionType());
+        object.insert("competition-type", competitionRules.getCompetitionType());
     }
     if(saveRounds == true){
         QJsonArray roundsArray;
-        for(const auto & round : competitionRules->getRounds())
+        QSetIterator<RoundInfo> it(competitionRules.getRounds());
+        while(it.hasNext())
         {
             QJsonObject roundObject;
-            roundObject.insert("count", round.getCount());
+            roundObject.insert("count", it.next().getCount());
             roundsArray.push_back(roundObject);
         }
         object.insert("rounds", roundsArray);

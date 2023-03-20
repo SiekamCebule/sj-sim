@@ -142,7 +142,7 @@ bool GlobalDatabase::writeJumpers()
     QJsonArray array;
     for(auto & jumper : getGlobalJumpers())
     {
-        array.push_back(QJsonValue(Jumper::getJumperJsonObject(&jumper, true, true)));
+        array.push_back(QJsonValue(Jumper::getJumperJsonObject(jumper, true, true)));
     }
     mainObject.insert("jumpers", QJsonValue(array));
     document.setObject(mainObject);
@@ -169,7 +169,7 @@ bool GlobalDatabase::writeHills()
     QJsonArray array;
     for(auto & hill : getGlobalHills())
     {
-        array.push_back(QJsonValue(Hill::getHillJsonObject(&hill, true, true, true)));
+        array.push_back(QJsonValue(Hill::getHillJsonObject(hill, true, true, true)));
     }
     mainObject.insert("hills", array);
     document.setObject(mainObject);
@@ -196,7 +196,7 @@ bool GlobalDatabase::writeCompetitionsRules()
 
     for(auto & rules : getGlobalCompetitionsRules())
     {
-        array.push_back(QJsonValue(CompetitionRules::getCompetitionRulesJsonObject(&rules, true, true, true, true, true)));
+        array.push_back(QJsonValue(CompetitionRules::getCompetitionRulesJsonObject(rules, true, true, true, true, true)));
     }
     mainObject.insert("competitionsRules", array);
     document.setObject(mainObject);

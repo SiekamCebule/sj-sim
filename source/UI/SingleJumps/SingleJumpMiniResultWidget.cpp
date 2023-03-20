@@ -8,6 +8,8 @@ SingleJumpMiniResultWidget::SingleJumpMiniResultWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SingleJumpMiniResultWidget)
 {
+    jumpData = nullptr;
+    indexInList = isSelected = 0;
     ui->setupUi(this);
 }
 

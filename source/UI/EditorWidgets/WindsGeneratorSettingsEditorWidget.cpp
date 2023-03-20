@@ -15,6 +15,7 @@ WindsGeneratorSettingsEditorWidget::WindsGeneratorSettingsEditorWidget(QWidget *
     ui(new Ui::WindsGeneratorSettingsEditorWidget)
 {
     KPoint = 0;
+    settingsCount = removingSubmitButtons = 0;
     ui->setupUi(this);
 
     ui->toolBox->removeItem(0);

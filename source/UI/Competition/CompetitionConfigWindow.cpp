@@ -22,6 +22,19 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     ui(new Ui::SingleCompetitionConfigWindow),
     type(type)
 {
+    competitionRulesParentWidget = nullptr;
+    competitionRulesToolBoxItemLayout = nullptr;
+    existingRulesLabelAndComboBoxLayout = nullptr;
+    existingCompetitionRulesLabel = nullptr;
+    existingCompetitionRulesComboBox = nullptr;
+    otherCompetitionSettingsEditor = nullptr;
+    hillEditor = nullptr;
+    windGeneratorSettingsEditor = nullptr;
+    startListDisplayWidget = nullptr;
+    startListParentWidget = nullptr;
+    startListParentLayout = nullptr;
+    pushButton_loadJumpersList = nullptr;
+
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);

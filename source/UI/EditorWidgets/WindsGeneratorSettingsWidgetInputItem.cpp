@@ -5,6 +5,7 @@ WindsGeneratorSettingsWidgetInputItem::WindsGeneratorSettingsWidgetInputItem(QWi
     QWidget(parent),
     ui(new Ui::WindsGeneratorSettingsWidgetInputItem)
 {
+    settings = nullptr;
     ui->setupUi(this);
 
     characteristicsEditor = new CharacteristicsEditor(Characteristic::ParentType::WindsGeneratorSettings);

@@ -29,7 +29,7 @@ private:
     int jumpersInTeamCount;
 
 public:
-    static QJsonObject getCompetitionRulesJsonObject(CompetitionRules * competitionRules, bool savePointsAndCompensations, bool saveCompetitionType, bool save95HSRuleAndDsq, bool saveJumpersInTeamCount, bool saveRounds);
+    static QJsonObject getCompetitionRulesJsonObject(const CompetitionRules &competitionRules, bool savePointsAndCompensations, bool saveCompetitionType, bool save95HSRuleAndDsq, bool saveJumpersInTeamCount, bool saveRounds);
     static QVector<CompetitionRules> getCompetitionRulesVectorFromJson(const QByteArray & bytes);
 
     bool getHas95HSRule() const;

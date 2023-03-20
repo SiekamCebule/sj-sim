@@ -5,6 +5,7 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RoundInfoEditorWidget)
 {
+    roundInfo = nullptr;
     ui->setupUi(this);
 }
 

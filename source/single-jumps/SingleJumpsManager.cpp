@@ -10,6 +10,7 @@
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QObject>
+#include <QObject>
 #include <QDir>
 
 SingleJumpsManager::SingleJumpsManager(int gate, int jumpsCount, const QString &resultsFileName, bool changeableWind, short resultsFormat) :
@@ -19,6 +20,7 @@ SingleJumpsManager::SingleJumpsManager(int gate, int jumpsCount, const QString &
     gate(gate),
     resultsFormat(resultsFormat)
 {
+    windAverageCalculatingType = windCompensationDistanceEffect = DSQProbability = 0;
 }
 
 void SingleJumpsManager::simulate()
@@ -66,8 +68,6 @@ void SingleJumpsManager::simulate()
     }
     avg /= jumpsCount;
 
-    if(resultsFileName.isEmpty() == false)
-        saveResultsToFile(resultsFormat);
     qDebug()<<"\n\nRÓŻNICA: "<<max - min<<"m";
     qDebug()<<"NAJKRÓTSZY: "<<max<<"m";
     qDebug()<<"NAJDALSZY: "<<min<<"m";
@@ -78,13 +78,13 @@ bool SingleJumpsManager::saveResultsToFile(short fileFormat)
 {
     switch(fileFormat)
     {
-    case Json:
+    case Json:{
         if(getResultsFileName().isEmpty()) setResultsFileName("filee");
         QDir dir(QDir::currentPath());
         dir.mkpath("results/single-jumps");
         QFile file("results/single-jumps/" + getResultsFileName() + ".json");
         file.resize(0);
-        if(file.open(QFile::WriteOnly | QFile::Text) == false)
+        if(!(file.open(QIODevice::ReadWrite | QIODevice::Text)))
         {
             QMessageBox message(QMessageBox::Icon::Critical, QObject::tr("Nie można zapisać wyników"), QObject::tr("Nie udało się otworzyć pliku results/single-jumps/<podana nazwa pliku>\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia"),  QMessageBox::StandardButton::Ok);
             message.setModal(true);
@@ -93,11 +93,12 @@ bool SingleJumpsManager::saveResultsToFile(short fileFormat)
         }
         QJsonDocument document;
         QJsonObject mainObject;
-        mainObject.insert("jumper", Jumper::getJumperJsonObject(&jumper, false, true));
+        mainObject.insert("jumper", Jumper::getJumperJsonObject(jumper, true, true));
         QJsonArray array;
-        for (auto & jump : getJumps())
+        for(auto & jump : getEditableJumps())
         {
-            array.push_back(JumpData::getJumpDataJsonObject(&jump, true, true, true));
+            array.push_back(JumpData::getJumpDataJsonObject(jump, true, true, true));
+           array.push_back(QJsonObject());
         }
         mainObject.insert("jumps", array);
         document.setObject(mainObject);
@@ -105,7 +106,10 @@ bool SingleJumpsManager::saveResultsToFile(short fileFormat)
         file.write(bytes);
         file.close();
 
-        return true;
+        break;
+    }
+
+    case Csv:
         break;
     }
 

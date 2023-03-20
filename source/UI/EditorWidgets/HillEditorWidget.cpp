@@ -11,6 +11,7 @@ HillEditorWidget::HillEditorWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::HillEditorWidget)
 {
+    hill = nullptr;
     ui->setupUi(this);
 
     characteristicsEditor = new CharacteristicsEditor(Characteristic::Hill);

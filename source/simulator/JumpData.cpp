@@ -9,6 +9,7 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QMessageBox>
+#include <QForeach>
 
 JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill)
@@ -100,41 +101,42 @@ void JumpData::reset()
     simulationData.reset();
 }
 
-QJsonObject JumpData::getJumpDataJsonObject(JumpData * jumpData, bool saveJudges, bool saveSimulationData, bool saveWinds)
+QJsonObject JumpData::getJumpDataJsonObject(const JumpData &jumpData, bool saveJudges, bool saveSimulationData, bool saveWinds)
 {
     QJsonObject object;
-    object.insert("distance", jumpData->getDistance());
-    object.insert("points", jumpData->getPoints());
-    object.insert("gate", jumpData->getGate());
-    object.insert("averaged-wind", jumpData->getAveragedWind());
-    object.insert("gate-compensation", jumpData->getGateCompensation());
-    object.insert("wind-compensation", jumpData->getWindCompensation());
-    object.insert("total-compensation", jumpData->getTotalCompensation());
-    object.insert("judges-points", jumpData->getJudgesPoints());
-    object.insert("landing-type", jumpData->getLanding().getTextLandingType());
-    object.insert("landing-imbalance", jumpData->getLanding().getImbalance());
+    object.insert("distance", jumpData.getDistance());
+    object.insert("points", jumpData.getPoints());
+    object.insert("gate", jumpData.getGate());
+    object.insert("averaged-wind", jumpData.getAveragedWind());
+    object.insert("gate-compensation", jumpData.getGateCompensation());
+    object.insert("wind-compensation", jumpData.getWindCompensation());
+    object.insert("total-compensation", jumpData.getTotalCompensation());
+    object.insert("judges-points", jumpData.getJudgesPoints());
+    object.insert("landing-type", jumpData.getLanding().getTextLandingType());
+    object.insert("landing-imbalance", jumpData.getLanding().getImbalance());
     if(saveJudges == true){
         QJsonArray judgesArray;
-        for(const auto & jg : jumpData->getJudges())
+        QVectorIterator<double> it(jumpData.getJudges());
+        while(it.hasNext())
         {
-            judgesArray.push_back(QJsonValue(jg));
+            judgesArray.push_back(QJsonValue(it.next()));
         }
         object.insert("judges", judgesArray);
     }
     if(saveSimulationData == true){
         QJsonObject simulationDataObject;
-        simulationDataObject.insert("takeoff-rating", jumpData->getSimulationData().getTakeoffRating());
-        simulationDataObject.insert("flight-rating", jumpData->getSimulationData().getFlightRating());
-        simulationDataObject.insert("judges-rating", jumpData->getSimulationData().getJudgesRating());
+        simulationDataObject.insert("takeoff-rating", jumpData.getSimulationData().getTakeoffRating());
+        simulationDataObject.insert("flight-rating", jumpData.getSimulationData().getFlightRating());
+        simulationDataObject.insert("judges-rating", jumpData.getSimulationData().getJudgesRating());
         object.insert("simulation-data", simulationDataObject);
     }
     if(saveWinds == true){
         QJsonArray windsArray;
         int i=0;
-        for(const auto & wind : jumpData->getWindsInfo().getWinds())
+        for(const auto & wind : qAsConst(jumpData.getWindsInfo().getWinds()))
         {
             QJsonObject windObject;
-            windObject.insert("range", QJsonValue(QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData->getHill()->getKPoint()).first) + " - " + QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData->getHill()->getKPoint()).second)));
+            windObject.insert("range", QJsonValue(QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData.getHill()->getKPoint()).first) + " - " + QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData.getHill()->getKPoint()).second)));
             windObject.insert("direction", wind.getDirection());
             windObject.insert("strength", wind.getStrength());
             windsArray.push_back(windObject);
