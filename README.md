@@ -26,6 +26,7 @@ Tak samo jak z wybiciem, cecha charakterystyczna "wysokość lotu" ma swój wpł
 - Technika lotu
 - Styl lotu
 - Styl lądowania (**Wyjątkowo, ZAKRES OD 1 DO 15**) (teorytycznie do 20 ale są to wtedy "niespotykani" obecnie styliści)
+- Równość skoków (Od -5 do 5)
 - Forma
 
 ## Styl lotu skoczka
