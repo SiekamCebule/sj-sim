@@ -9,7 +9,6 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    source/UI/AppSettings/SimulationSettingsWindow.cpp \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
@@ -61,7 +60,6 @@ SOURCES += \
     source/utilities/functions.cpp
 
 HEADERS += \
-    source/UI/AppSettings/SimulationSettingsWindow.h \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.h \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
@@ -112,7 +110,6 @@ HEADERS += \
     source/utilities/functions.h
 
 FORMS += \
-    source/UI/AppSettings/SimulationSettingsWindow.ui \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \

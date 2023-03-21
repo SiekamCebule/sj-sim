@@ -3,6 +3,66 @@
         {
             "characteristics": [
                 {
+                    "level": 0.7,
+                    "type": "flight-height"
+                },
+                {
+                    "level": 0.75,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": -0.75,
+                    "type": "landing-skill"
+                },
+                {
+                    "level": -1,
+                    "type": "dsq-probability"
+                }
+            ],
+            "country-code": "DEU",
+            "flight-style": 1,
+            "flight-technique": 43,
+            "form": 40,
+            "jumps-equality": -1,
+            "landing-style": 12.25,
+            "name": "Philipp",
+            "surname": "Raimund",
+            "takeoff-power": 47.5,
+            "takeoff-technique": 47
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 1.4,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": 0.8,
+                    "type": "flight-height"
+                },
+                {
+                    "level": 0.2,
+                    "type": "landing-skill"
+                },
+                {
+                    "level": 0.15,
+                    "type": "both-legs-landing-tendence"
+                }
+            ],
+            "country-code": "DEU",
+            "flight-style": 1,
+            "flight-technique": 52,
+            "form": 45,
+            "jumps-equality": 2,
+            "landing-style": 12.5,
+            "name": "Karl",
+            "surname": "Geiger",
+            "takeoff-power": 55.5,
+            "takeoff-technique": 55
+        },
+        {
+            "characteristics": [
+                {
                     "level": 1.85,
                     "type": "flight-height"
                 },
@@ -14,12 +74,27 @@
             "country-code": "DEU",
             "flight-style": 1,
             "flight-technique": 44,
-            "form": 36.5,
+            "form": 40,
+            "jumps-equality": 1,
             "landing-style": 12.65,
             "name": "Constantin",
             "surname": "Schmid",
             "takeoff-power": 54,
             "takeoff-technique": 49.25
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "DEU",
+            "flight-style": 2,
+            "flight-technique": 54.25,
+            "form": 46,
+            "jumps-equality": -1,
+            "landing-style": 11.9,
+            "name": "Markus",
+            "surname": "Eisenbichler",
+            "takeoff-power": 46,
+            "takeoff-technique": 46
         },
         {
             "characteristics": [
@@ -43,7 +118,8 @@
             "country-code": "SVN",
             "flight-style": 2,
             "flight-technique": 52,
-            "form": 39,
+            "form": 43,
+            "jumps-equality": -2,
             "landing-style": 12.25,
             "name": "Domen",
             "surname": "Prevc",
@@ -68,7 +144,8 @@
             "country-code": "AUT",
             "flight-style": 1,
             "flight-technique": 48,
-            "form": 37.75,
+            "form": 42,
+            "jumps-equality": 2,
             "landing-style": 12.95,
             "name": "Jan",
             "surname": "Hoerl",
@@ -89,7 +166,8 @@
             "country-code": "POL",
             "flight-style": 2,
             "flight-technique": 53.5,
-            "form": 37,
+            "form": 35,
+            "jumps-equality": -1,
             "landing-style": 12,
             "name": "Piotr",
             "surname": "Żyła",
@@ -118,7 +196,8 @@
             "country-code": "KAZ",
             "flight-style": 2,
             "flight-technique": 35,
-            "form": 26,
+            "form": 30,
+            "jumps-equality": 0,
             "landing-style": 10.5,
             "name": "Sergey",
             "surname": "Tkachenko",
@@ -147,7 +226,8 @@
             "country-code": "ROU",
             "flight-style": 1,
             "flight-technique": 31.75,
-            "form": 33,
+            "form": 32,
+            "jumps-equality": 0,
             "landing-style": 11,
             "name": "Daniel Andrei",
             "surname": "Cacina",

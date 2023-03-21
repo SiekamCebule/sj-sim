@@ -129,7 +129,6 @@ QVector<WindGenerationSettings> WindsGeneratorSettingsEditorWidget::getWindsGene
         WindGenerationSettings settings;
         settings.setBaseWindStrength(item->getBaseWindStrengthFromInput());
         settings.setWindStrengthInstability(item->getWindStrengthChangeFromInput());
-        qDebug()<<"BASFRINPT: "<<item->getBaseWindDirectionFromInput();
         settings.setBaseDirection(item->getBaseWindDirectionFromInput());
         settings.setWindDirectionInstability(item->getWindDirectionChangeFromInput());
         vector.push_back(settings);

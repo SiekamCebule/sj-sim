@@ -9,7 +9,6 @@
 #include "../../global/GlobalTranslators.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../../global/GlobalSimulationSettings.h"
-#include "SimulationSettingsWindow.h"
 
 AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
     QDialog(parent),
@@ -17,8 +16,10 @@ AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setFixedSize(size());
-
     setWindowFlags(Qt::Window);
+
+    ui->doubleSpinBox_simulationMultiplier->setValue(GlobalSimulationSettings::get()->getSimulationMultiplier());
+    ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
 }
 
 AppSettingsWindow::~AppSettingsWindow()
@@ -52,8 +53,8 @@ void AppSettingsWindow::setMainWindowParent(MainWindow *newMainWindowParent)
 
 void AppSettingsWindow::closeEvent(QCloseEvent *event)
 {
+    GlobalSimulationSettings::get()->writeToFile();
     event->accept();
-    accept();
 }
 
 void AppSettingsWindow::myConnect_on_comboBox_language_currentIndexChanged(int index)
@@ -72,32 +73,15 @@ void AppSettingsWindow::myConnect_on_comboBox_language_currentIndexChanged(int i
         break;
     }
 }
-void AppSettingsWindow::on_pushButton_simulationSettings_clicked()
-{
-    SimulationSettingsWindow window;
-    window.setWindowFlags(Qt::Window);
-    window.fillInputs();
-    connect(&window, &SimulationSettingsWindow::submitted, &SimulationSettingsWindow::accept);
-    if(window.exec() == QDialog::Accepted)
-    {
-        GlobalSimulationSettings * s = GlobalSimulationSettings::get();
-        s->setTakeoffRatingBaseRandomBaseValue(window.getTakeoffRatingBaseRandomBaseValueFromInput());
-        s->setTakeoffRatingBaseRandomDeviationBaseValue(window.getTakeoffRatingBaseRandomDeviationBaseValueFromInput());
-        s->setTakeoffRatingBaseRandomDeviationSubstractCharacteristicDivider(window.getTakeoffRatingBaseRandomDeviationSubstractCharacteristicDividerFromInput());
-        s->setTakeoffRatingLogRandomBaseValue(window.getTakeoffRatingLogRandomBaseValueFromInput());
-        s->setTakeoffRatingLogRandomDeviationBaseValue(window.getTakeoffRatingLogRandomDeviationBaseValueFromInput());
-        s->setTakeoffRatingLogRandomDeviationJumpsEqualityDivider(window.getTakeoffRatingLogRandomDeviationJumpsEqualityDividerFromInput());
-        s->setTakeoffRatingTakeoffHeightAbsValue(window.getTakeoffRatingTakeoffHeightAbsValueFromInput());
-        //
-        s->setFlightRatingBaseRandomBaseValue(window.getFlightRatingBaseRandomBaseValueFromInput());
-        s->setFlightRatingBaseRandomDeviationBaseValue(window.getFlightRatingBaseRandomDeviationBaseValueFromInput());
-        s->setFlightRatingBaseRandomDeviationSubstractCharacteristicDivider(window.getFlightRatingBaseRandomDeviationSubstractCharacteristicDividerFromInput());
-        s->setFlightRatingLogRandomBaseValue(window.getFlightRatingLogRandomBaseValueFromInput());
-        s->setFlightRatingLogRandomDeviationBaseValue(window.getFlightRatingLogRandomDeviationBaseValueFromInput());
-        s->setFlightRatingLogRandomDeviationJumpsEqualityDivider(window.getFlightRatingLogRandomDeviationJumpsEqualityDividerFromInput());
-        s->setFlightRatingFlightHeightAbsValue(window.getFlightRatingFlightHeightAbsValueFromInput());
 
-        s->writeToFile();
-    }
+void AppSettingsWindow::on_doubleSpinBox_simulationMultiplier_valueChanged(double arg1)
+{
+    GlobalSimulationSettings::get()->setSimulationMultiplier(arg1);
+}
+
+
+void AppSettingsWindow::on_spinBox_dsqProbability_valueChanged(int arg1)
+{
+    GlobalSimulationSettings::get()->setBaseDsqProbability(arg1);
 }
 

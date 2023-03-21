@@ -31,7 +31,6 @@ QVector<Team> Team::constructTeamsVectorByJumpersList(QVector<Jumper> * const ju
 {
     QVector<Team> teams;
     QStringList codes;
-    qDebug()<<jumpers->count();
     int i= -1;
     for(const auto & jumper : *jumpers)
     {
@@ -47,7 +46,6 @@ QVector<Team> Team::constructTeamsVectorByJumpersList(QVector<Jumper> * const ju
 
             i++;
         }
-        qDebug()<<i;
     }
 
     return teams;

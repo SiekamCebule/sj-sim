@@ -7,6 +7,7 @@
 
 #include "../../global/GlobalDatabase.h"
 #include "../../global/CountryFlagsManager.h"
+#include "../../global/GlobalSimulationSettings.h"
 
 #include <QStringList>
 #include <QStringListModel>
@@ -18,10 +19,9 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     ui(new Ui::SingleJumpsConfigWindow)
 {
     ui->setupUi(this);
-
-    ui->lineEdit_resultsFileName->setAlignment(Qt::AlignHCenter);
-
     setWindowFlags(Qt::Window);
+    ui->lineEdit_resultsFileName->setAlignment(Qt::AlignHCenter);
+    ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
 
     jumperEditor = new JumperEditorWidget;
     jumperEditor->removeSubmitButton();

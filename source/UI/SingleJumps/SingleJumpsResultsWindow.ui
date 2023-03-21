@@ -251,6 +251,12 @@ width: 5px;
           <height>598</height>
          </rect>
         </property>
+        <property name="toolTip">
+         <string>Wciśnij Ctrl+I aby przejść do wybranej informacji o skoku</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_singleJumpResultWidgets"/>
@@ -328,6 +334,14 @@ width: 5px;
         </layout>
        </widget>
        <widget class="QWidget" name="page_pointsStatistics">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1210</width>
+          <height>426</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>Rozkład punktów</string>
         </attribute>

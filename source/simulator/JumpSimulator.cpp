@@ -81,7 +81,7 @@ void JumpSimulator::generateTakeoffRating()
     ratingMultiplier = 0.825 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     simulationData->takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
-    simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * GlobalSimulationSettings::get()->getTakeoffRatingTakeoffHeightAbsValue();
+    simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 3;
 
     double random = JumpSimulator::getRandomForJumpSimulation(JumpSimulator::TakeoffRating, jumper);
     random *= 1 + (0.14 * hill->getLevelOfCharacteristic("takeoff-randomness-effect"));
@@ -99,7 +99,7 @@ void JumpSimulator::generateFlightRating()
     ratingMultiplier = 1.35 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
     simulationData->flightRating += jumperSkills->getForm() * ratingMultiplier;
 
-    simulationData->flightRating -= std::abs(Hill::calculateBestFlightHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * GlobalSimulationSettings::get()->getFlightRatingFlightHeightAbsValue());
+    simulationData->flightRating -= std::abs(Hill::calculateBestFlightHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 3);
 
     double random = JumpSimulator::getRandomForJumpSimulation(JumpSimulator::FlightRating, jumper);
     random *= 1 + (0.14 * hill->getLevelOfCharacteristic("flight-randomness-effect"));
@@ -129,7 +129,7 @@ double JumpSimulator::getMultiplierForFlightStyleEffect()
 
 void JumpSimulator::generateDistance()
 {
-    jumpData.distance += simulationData->flightRating * hill->getTakeoffEffect();
+    jumpData.distance += simulationData->takeoffRating * hill->getTakeoffEffect();
     jumpData.distance += simulationData->flightRating * hill->getFlightEffect();
     jumpData.distance += *getGate() * (hill->getPointsForGate() / hill->getPointsForMeter());
     jumpData.distance = roundDoubleToHalf(jumpData.getDistance());
@@ -576,6 +576,7 @@ void JumpSimulator::setDSQBaseProbability(double newDSQBaseProbability)
 double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper)
 {
     GlobalSimulationSettings * s = GlobalSimulationSettings::get();
+    double multi = s->getSimulationMultiplier();
     switch(parameter)
     {
     case JumpSimulator::TakeoffRating:
@@ -586,21 +587,64 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         else randomType = 0;
         switch(randomType)
         {
-        case 0: //Odjęcie
-            /*double deviation = 12.85;
-            deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 1.7);
-            double random = MyRandom::normalDistributionRandom(7, deviation);
-            random += MyRandom::lognormalDistributionRandom(0, 1.39 - jumper->getJumperSkills().getJumpsEquality() / 9);
-            if(random < 0) random =0;
-            return random;*/
-            double deviation = s->getTakeoffRatingBaseRandomDeviationBaseValue();
-            deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / s->getTakeoffRatingBaseRandomDeviationSubstractCharacteristicDivider());
-            double random = MyRandom::normalDistributionRandom(s->getTakeoffRatingBaseRandomBaseValue(), deviation);
-            random += MyRandom::lognormalDistributionRandom(s->getTakeoffRatingLogRandomBaseValue(), s->getTakeoffRatingLogRandomDeviationBaseValue() - jumper->getJumperSkills().getJumpsEquality() / s->getTakeoffRatingLogRandomDeviationJumpsEqualityDivider());
-            if(random < 0) random =0;
-            qDebug()<<"JUMP takeoff RATING RANDOM: "<<random;
+        case 0:{
+            double deviation = 0.56;
+            deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 55);
+            double random = MyRandom::lognormalDistributionRandom(1.7, deviation);
+
+            random += MyRandom::lognormalDistributionRandom(0.92, (0.62) - (jumper->getJumperSkills().getJumpsEquality() / 38));
+
+            random *= multi;
+            if(random < 0) random = 0;
+            random = (-random);
             return random;
         }
+        case 1:
+            double deviation = 0.54;
+            deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 70);
+            double random = MyRandom::lognormalDistributionRandom(0.65, deviation);
+
+            random += MyRandom::lognormalDistributionRandom(0.3, (0.49) - (jumper->getJumperSkills().getJumpsEquality() / 130));
+
+            random *= multi;
+            if(random < 0) random = 0;
+            return random;
+        }
+        break;
+    }
+    case JumpSimulator::FlightRating:
+    {
+        int randomType = MyRandom::randomInt(1, 1000);
+        if(randomType < 68)
+            randomType = 1;
+        else randomType = 0;
+        switch(randomType)
+        {
+        case 0:{
+            double deviation = 0.58;
+            deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") / 45);
+            double random = MyRandom::lognormalDistributionRandom(1.7, deviation);
+
+            random += MyRandom::lognormalDistributionRandom(0.94, (0.63) - (jumper->getJumperSkills().getJumpsEquality() / 25.75));
+
+            random *= multi;
+            if(random < 0) random = 0;
+            random = (-random);
+            return random;
+        }
+        case 1:
+            double deviation = 0.52;
+            deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") / 66);
+            double random = MyRandom::lognormalDistributionRandom(0.65, deviation);
+
+            random += MyRandom::lognormalDistributionRandom(0.27, (0.45) - (jumper->getJumperSkills().getJumpsEquality() / 178));
+
+            random *= multi;
+            if(random < 0) random = 0;
+            return random;
+        }
+        break;
     }
     }
+    return 0;
 }

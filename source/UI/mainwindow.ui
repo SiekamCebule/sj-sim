@@ -669,11 +669,12 @@ color: rgb(32, 120, 252);
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_version">
         <property name="font">
          <font>
-          <family>Noto Sans</family>
-          <pointsize>11</pointsize>
+          <family>Quicksand [PfEd]</family>
+          <pointsize>15</pointsize>
+          <bold>true</bold>
          </font>
         </property>
         <property name="styleSheet">
@@ -683,7 +684,7 @@ color: rgb(32, 120, 252);
 </string>
         </property>
         <property name="text">
-         <string>0.0.1a</string>
+         <string>x.x.x</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

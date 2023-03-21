@@ -3,8 +3,10 @@
         {
             "95-hs-rule": true,
             "competition-type": 0,
+            "dsq": false,
             "gate-compensations": true,
             "judges-points": true,
+            "jumpers-in-team-count": 4,
             "name": "World Cup",
             "rounds": [
                 {
@@ -12,6 +14,30 @@
                 },
                 {
                     "count": 30
+                }
+            ],
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": false,
+            "competition-type": 1,
+            "dsq": true,
+            "gate-compensations": true,
+            "judges-points": false,
+            "jumpers-in-team-count": 4,
+            "name": "Team Scandinavian Cup",
+            "rounds": [
+                {
+                    "count": 12
+                },
+                {
+                    "count": 6
+                },
+                {
+                    "count": 4
+                },
+                {
+                    "count": 3
                 }
             ],
             "wind-compensations": true

@@ -43,9 +43,7 @@ bool GlobalAppSettings::loadFromJson()
         return false;
     }
     QJsonParseError error;
-    QByteArray bytes = file.readAll();
-    QJsonDocument document = QJsonDocument::fromJson(bytes, &error);
-
+    QJsonDocument document = QJsonDocument::fromJson(file.readAll(), &error);
     if(error.error != QJsonParseError::NoError)
     {
         QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu ustawień aplikacji", "Nie udało się wczytać ustawień aplikacji z pliku userData/Settings/appSettings.json\nTreść błędu: " + error.errorString(), QMessageBox::StandardButton::Ok);
@@ -55,8 +53,15 @@ bool GlobalAppSettings::loadFromJson()
     }
 
     QJsonObject object = document.object();
-    setLanguageID(object.value("language-id").toInt());
-    file.close();
+    QJsonValue value = object.value("settings");
+    if(!value.isObject())
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu ustawień aplikacji", "Prawdopodobnie w tym pliku nie ma obiektu z ustawieniami\nUpewnij się, że wybrałeś właściwy plik!");
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    setLanguageID(value.toObject().value("language-id").toInt());
 
     return true;
 }
@@ -73,7 +78,10 @@ bool GlobalAppSettings::writeToJson()
     }
     QJsonDocument document;
     QJsonObject mainObject;
-    mainObject.insert("language-id", getLanguageID());
+    QJsonObject settingsObject;
+    settingsObject.insert("language-id", getLanguageID());
+
+    mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);
 
     file.resize(0);

@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QApplication>
 
+extern const QString appVersion;
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE

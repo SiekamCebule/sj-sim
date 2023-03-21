@@ -39,7 +39,7 @@ QVector<Wind> WindsGenerator::generateWinds()
         if(settings->getWindStrengthInstability() > 0){
 
             double base = MyRandom::randomDouble(-settings->getBaseWindStrength() / 20, settings->getBaseWindStrength() / 20);
-            double deviation = settings->getWindStrengthInstability() / 4;
+            double deviation = settings->getWindStrengthInstability() / 2.6;
 
             double random = 0;
             if(deviation > 0)
@@ -54,12 +54,7 @@ QVector<Wind> WindsGenerator::generateWinds()
             }
         }
 
-        //qDebug()<<"(random: "<<QString::number(random)<<")";
-
         short windDirection = Wind::Null;
-
-        //qDebug()<<settings->getWindDirectionInstability()<<" (DIRECTION INSTABILITY)";
-        //qDebug()<<Wind::getStringWindDirection(settings->getBaseDirection(), true)<<" (BASE DIRECTION)";
 
         double backProb = 250 + settings->getLevelOfCharacteristic("back-wind-probability") * 100;
         double backSideProb = 250 + settings->getLevelOfCharacteristic("back-side-wind-probability") * 100;
@@ -86,7 +81,6 @@ QVector<Wind> WindsGenerator::generateWinds()
                 else *prob = 1;
                 i++;
             }
-
         }
         else{
             switch(settings->getBaseDirection())
@@ -136,19 +130,13 @@ QVector<Wind> WindsGenerator::generateWinds()
             }
         }
 
-        //qDebug()<<"base: "<<settings->getBaseDirection();
         QVector<double> probabilities;
         double drawSum = backProb + backSideProb + sideProb + frontSideProb + frontProb;
         probabilities.push_back(backProb);
-        //qDebug()<<"backProb: "<<backProb;
         probabilities.push_back(backSideProb);
-        //qDebug()<<"backSideProb: "<<backSideProb;
         probabilities.push_back(sideProb);
-        //qDebug()<<"sideProb: "<<sideProb;
         probabilities.push_back(frontSideProb);
-        //qDebug()<<"frontSideProb: "<<frontSideProb;
         probabilities.push_back(frontProb);
-        //qDebug()<<"frontProb: "<<frontProb;
         double drawRandom = MyRandom::randomDouble(0, drawSum);
 
         double actualSum = 0;
@@ -156,12 +144,10 @@ QVector<Wind> WindsGenerator::generateWinds()
         {
             actualSum += probabilities[i];
             if(drawRandom < actualSum){
-                windDirection = i+1; // tak jak w enumie Wind::Direction
+                windDirection = i+1;
                 break;
             }
         }
-
-        //qDebug()<<windStrength<<", "<<windDirection;
 
         if(windStrength < 0)
             windStrength = 0;

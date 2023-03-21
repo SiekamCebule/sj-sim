@@ -35,12 +35,15 @@
 #include <random>
 
 extern IDGenerator globalIDGenerator;
+const QString appVersion = "0.3.0 beta";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    ui->setupUi(this);
     parentApplication = nullptr;
+    ui->label_version->setText(appVersion);
     //qDebug()<<"random: "<<0;
     //double random = MyRandom::reducingChancesRandom(0, (2) * 1.3, (2) / 45, 1, (1.33 - (5) / 30), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
     //double random = MyRandom::reducingChancesRandom(0, 2.6, 0.044, 1, 1.1, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
@@ -74,8 +77,6 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug()<<"Najmniejszy: "<<min;
     qDebug()<<"Największy: "<<max;
     qDebug()<<"Średnio: "<<avg;*/
-
-    ui->setupUi(this);
 
     GlobalDatabase::get()->loadFromJson();
     GlobalAppSettings::get()->loadFromJson();

@@ -3,6 +3,41 @@
         {
             "characteristics": [
                 {
+                    "level": 0.15,
+                    "type": "real-hs-point"
+                },
+                {
+                    "level": 0.4,
+                    "type": "takeoff-technique-effect"
+                },
+                {
+                    "level": -0.15,
+                    "type": "takeoff-power-effect"
+                },
+                {
+                    "level": 0.15,
+                    "type": "takeoff-randomness-effect"
+                },
+                {
+                    "level": 0.25,
+                    "type": "flight-randomness-effect"
+                }
+            ],
+            "country-code": "FIN",
+            "flight-effect": 0.315,
+            "hs-point": 130,
+            "k-point": 116,
+            "name": "Lahti",
+            "points-for-back-wind": 13.07,
+            "points-for-front-wind": 10.8,
+            "points-for-gate": 7.67,
+            "points-for-k-point": 60,
+            "points-for-meter": 1.8,
+            "takeoff-effect": 0.265
+        },
+        {
+            "characteristics": [
+                {
                     "level": 0.86,
                     "type": "takeoff-form-effect"
                 },

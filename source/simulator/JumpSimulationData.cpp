@@ -7,17 +7,17 @@ JumpSimulationData::JumpSimulationData()
 
 void JumpSimulationData::reset()
 {
-    flightRating = flightRating = judgesRating = DSQProbability = 0;
+    takeoffRating = flightRating = judgesRating = DSQProbability = 0;
 }
 
 double JumpSimulationData::getTakeoffRating() const
 {
-    return flightRating;
+    return takeoffRating;
 }
 
 void JumpSimulationData::setTakeoffRating(double newTakeoffRating)
 {
-    flightRating = newTakeoffRating;
+    takeoffRating = newTakeoffRating;
 }
 
 double JumpSimulationData::getFlightRating() const
