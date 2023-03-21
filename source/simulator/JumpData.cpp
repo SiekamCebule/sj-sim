@@ -9,7 +9,7 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QMessageBox>
-#include <QForeach>
+//#include <QForeach>
 
 JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill)

@@ -19,7 +19,17 @@
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="201"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="177"/>
+        <source>Mnożnik symulacji</source>
+        <translation>Simulation multiplier</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="259"/>
+        <source>Bazowe prawdopodobieństwo dyskwalifikacji</source>
+        <translation>Base Disqualification Probability</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="384"/>
         <source>Przywróć domyślne</source>
         <translation>Restore default</translation>
     </message>
@@ -557,77 +567,87 @@ Are you sure?</translation>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="80"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="128"/>
         <source>Nazwisko</source>
         <translation>Surname</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="112"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="208"/>
         <source>Kod kraju</source>
         <translation>Country code</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="144"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="338"/>
         <source>Siła wybicia</source>
         <translation>Takeoff power</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="176"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="418"/>
         <source>Technika wybicia</source>
         <translation>Takeoff technique</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="208"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="498"/>
         <source>Technika lotu</source>
         <translation>Flight technique</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="240"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="578"/>
         <source>Styl lotu</source>
         <translation>Flight style</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="272"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="678"/>
         <source>Styl lądowania</source>
         <translation>Landing style</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="304"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="789"/>
         <source>Forma</source>
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="485"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="316"/>
         <source>IMG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="665"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="642"/>
         <source>Styl V (0)</source>
         <translation>V Style</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="670"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="647"/>
         <source>Nowoczesne V (1)</source>
         <translation>Modern V</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="675"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="652"/>
         <source>Szerokie V (2)</source>
         <translation>Wide V</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="680"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="657"/>
         <source>Styl H (3)</source>
         <translation>H Style</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="794"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="767"/>
         <source>/ 20</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="859"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="869"/>
+        <source>Równość skoków</source>
+        <translation>Jumps Equality</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="953"/>
+        <source>-5 / 5</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="1021"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -666,8 +686,8 @@ Are you sure?</translation>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../source/UI/mainwindow.ui" line="686"/>
-        <source>0.0.1a</source>
+        <location filename="../source/UI/mainwindow.ui" line="687"/>
+        <source>x.x.x</source>
         <translation></translation>
     </message>
 </context>
@@ -968,12 +988,12 @@ Are you sure?</translation>
         <translation>Front wind chance</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="28"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="32"/>
         <source>Polski</source>
         <translation>Polish</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="29"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="33"/>
         <source>Angielski</source>
         <translation>English</translation>
     </message>
@@ -1058,6 +1078,56 @@ Are you sure?</translation>
 Upewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia</source>
         <translation>Failed to open the file results/single-jumps/&lt;entered file name&gt;
 Make sure the file exists or has the correct permissions</translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/JumperSkills.cpp" line="41"/>
+        <source>Błąd</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/JumperSkills.cpp" line="47"/>
+        <source>Skrajnie nierówne</source>
+        <translation>Extremely uneven</translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/JumperSkills.cpp" line="48"/>
+        <source>Bardzo nierówne</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/JumperSkills.cpp" line="49"/>
+        <source>Nierówne</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/JumperSkills.cpp" line="50"/>
+        <source>Trochę mniej równe</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/JumperSkills.cpp" line="51"/>
+        <source>Średnio równe</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/JumperSkills.cpp" line="52"/>
+        <source>Trochę bardziej równe</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/JumperSkills.cpp" line="53"/>
+        <source>Równe</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/JumperSkills.cpp" line="54"/>
+        <source>Bardzo równe</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/JumperSkills.cpp" line="55"/>
+        <source>Perfekcyjnie równe</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1343,27 +1413,32 @@ in team</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="304"/>
+        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="255"/>
+        <source>Wciśnij Ctrl+I aby przejść do wybranej informacji o skoku</source>
+        <translation>Press Ctrl+I for go to selected jump information</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="310"/>
         <source>Informacje o skoku</source>
         <translation>Jump informations</translation>
     </message>
     <message>
-        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="322"/>
+        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="328"/>
         <source>Rozkład odległości</source>
         <translation>Distances distribution</translation>
     </message>
     <message>
-        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="332"/>
+        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="346"/>
         <source>Rozkład punktów</source>
         <translation>Points distribution</translation>
     </message>
     <message>
-        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="350"/>
+        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="364"/>
         <source>Rozkład not sędziowskich</source>
         <translation>Judges distribution</translation>
     </message>
     <message>
-        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="386"/>
+        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="400"/>
         <source>Rozkład wiatru</source>
         <translation>Wind distribution</translation>
     </message>
@@ -1376,7 +1451,7 @@ in team</translation>
         <translation type="vanished">Judges statistics</translation>
     </message>
     <message>
-        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="368"/>
+        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.ui" line="382"/>
         <source>Statystyki rodzajów lądowania</source>
         <translation>Landing types statistics</translation>
     </message>
@@ -1455,12 +1530,17 @@ in team</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui" line="32"/>
+        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui" line="20"/>
+        <source>Wciśnij Ctrl+F aby wypełnić automatycznie</source>
+        <translation>Press Ctrl+F for fill automaticaly</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui" line="38"/>
         <source>Page 1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui" line="45"/>
+        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui" line="51"/>
         <source>Page 2</source>
         <translation></translation>
     </message>
@@ -1504,12 +1584,12 @@ in team</translation>
     <message>
         <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="39"/>
         <source>Bazowa siła wiatru: </source>
-        <translation>Base wind strength</translation>
+        <translation>Base wind strength: </translation>
     </message>
     <message>
         <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="57"/>
         <source>Zmienność siły wiatru: </source>
-        <translation>Wind strength change </translation>
+        <translation>Wind strength change: </translation>
     </message>
     <message>
         <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="75"/>
@@ -1519,7 +1599,7 @@ in team</translation>
     <message>
         <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="93"/>
         <source>Zmienność kierunku wiatru:</source>
-        <translation>Wind direction change</translation>
+        <translation>Wind direction change:</translation>
     </message>
     <message>
         <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="110"/>

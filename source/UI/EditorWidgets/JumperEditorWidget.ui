@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>511</width>
-    <height>379</height>
+    <width>531</width>
+    <height>380</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,7 +81,7 @@ color: rgb(0, 0, 0);
             </font>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
+            <enum>Qt::ClickFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QWidget{
@@ -161,7 +161,7 @@ color: rgb(0, 0, 0);
             </font>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
+            <enum>Qt::ClickFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QWidget{
@@ -245,7 +245,7 @@ color: rgb(0, 0, 0);
               </font>
              </property>
              <property name="focusPolicy">
-              <enum>Qt::NoFocus</enum>
+              <enum>Qt::ClickFocus</enum>
              </property>
              <property name="styleSheet">
               <string notr="true">QWidget{
@@ -371,7 +371,7 @@ color: rgb(0, 0, 0);
             </font>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
+            <enum>Qt::ClickFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QWidget{
@@ -451,7 +451,7 @@ color: rgb(0, 0, 0);
             </font>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
+            <enum>Qt::ClickFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QWidget{
@@ -531,7 +531,7 @@ color: rgb(0, 0, 0);
             </font>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
+            <enum>Qt::ClickFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QWidget{
@@ -611,7 +611,7 @@ color: rgb(0, 0, 0);
             </font>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
+            <enum>Qt::ClickFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QWidget{
@@ -713,7 +713,7 @@ color: rgb(0, 0, 0);
               </font>
              </property>
              <property name="focusPolicy">
-              <enum>Qt::NoFocus</enum>
+              <enum>Qt::ClickFocus</enum>
              </property>
              <property name="styleSheet">
               <string notr="true">QWidget{
@@ -822,7 +822,7 @@ color: rgb(0, 0, 0);
             </font>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
+            <enum>Qt::ClickFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QWidget{
@@ -905,7 +905,7 @@ color: rgb(0, 0, 0);
               </font>
              </property>
              <property name="focusPolicy">
-              <enum>Qt::NoFocus</enum>
+              <enum>Qt::ClickFocus</enum>
              </property>
              <property name="styleSheet">
               <string notr="true">QWidget{
