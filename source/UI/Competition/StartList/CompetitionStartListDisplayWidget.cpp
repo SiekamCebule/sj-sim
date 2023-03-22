@@ -270,6 +270,7 @@ void CompetitionStartListDisplayWidget::on_pushButton_edit_clicked()
         }
         case Teams:{
             TeamEditorWidget * editor = new TeamEditorWidget(teams->at(selectedItem).getCountryCode(), teams->at(selectedItem).getJumpers()); //teams->at(selectedItem).getCountryCode()), this);
+            qDebug()<<"parent:    "<<parent()->objectName();
             editor->setJumpersCount(dynamic_cast<CompetitionConfigWindow *>(parent())->getJumpersCountInTeam());
             editor->fillWidgetInputs();
             editorPointer = editor;

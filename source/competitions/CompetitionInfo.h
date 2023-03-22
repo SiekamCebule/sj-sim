@@ -2,8 +2,9 @@
 #define COMPETITIONINFO_H
 
 class Hill;
-class CompetitionResults;
-class CompetitionRules;
+#include "CompetitionRules.h"
+#include "CompetitionResults.h"
+#include "CompetitionInfo.h"
 
 #include <QDate>
 
@@ -21,7 +22,7 @@ public:
 
 private:
     Hill * hill;
-    //CompetitionResults * results;
+    CompetitionResults * results;
     CompetitionRules * rules;
     QDate date;
 };

@@ -20,7 +20,7 @@
       <string>Wciśnij Ctrl+F aby wypełnić automatycznie</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">QToolTip{ background: black; }</string>
+      <string notr="true"/>
      </property>
      <property name="currentIndex">
       <number>0</number>

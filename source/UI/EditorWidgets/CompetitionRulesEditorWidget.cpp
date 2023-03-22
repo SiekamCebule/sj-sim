@@ -36,6 +36,8 @@ void CompetitionRulesEditorWidget::resetInputs()
     ui->checkBox_dsq->setChecked(true);
     ui->spinBox_jumpersInTeamCount->setValue(0);
     ui->comboBox_competitionType->setCurrentIndex(CompetitionRules::Individual);
+    ui->comboBox_windAverageCalculatingType->setCurrentIndex(0);
+    ui->comboBox_windCompensationDistanceEffect->setCurrentIndex(0);
 }
 
 void CompetitionRulesEditorWidget::fillCompetitionRulesInputs()
@@ -56,6 +58,8 @@ void CompetitionRulesEditorWidget::fillCompetitionRulesInputs()
         ui->spinBox_jumpersInTeamCount->setEnabled(false);
     }
     ui->comboBox_competitionType->setCurrentIndex(competitionRules->getCompetitionType());
+    ui->comboBox_windAverageCalculatingType->setCurrentIndex(competitionRules->getWindAverageCalculatingType());
+    ui->comboBox_windCompensationDistanceEffect->setCurrentIndex(competitionRules->getWindCompensationDistanceEffect());
 }
 
 void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)

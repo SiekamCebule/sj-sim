@@ -11,8 +11,28 @@
 
 CompetitionRules::CompetitionRules(const QString & name) : name(name)
 {
-    has95HSRule = hasWindCompensations = hasGateCompensations = hasJudgesPoints = false;
-    competitionType = 0;
+    has95HSRule = hasWindCompensations = hasGateCompensations = hasJudgesPoints = hasDsq = false;
+    competitionType = jumpersInTeamCount = windAverageCalculatingType = windCompensationDistanceEffect = 0;
+}
+
+short CompetitionRules::getWindCompensationDistanceEffect() const
+{
+    return windCompensationDistanceEffect;
+}
+
+void CompetitionRules::setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect)
+{
+    windCompensationDistanceEffect = newWindCompensationDistanceEffect;
+}
+
+short CompetitionRules::getWindAverageCalculatingType() const
+{
+    return windAverageCalculatingType;
+}
+
+void CompetitionRules::setWindAverageCalculatingType(short newWindAverageCalculatingType)
+{
+    windAverageCalculatingType = newWindAverageCalculatingType;
 }
 
 bool CompetitionRules::getHasDsq() const
@@ -45,37 +65,30 @@ void CompetitionRules::setName(const QString &newName)
     name = newName;
 }
 
-QJsonObject CompetitionRules::getCompetitionRulesJsonObject(const CompetitionRules &competitionRules, bool savePointsAndCompensations, bool saveCompetitionType, bool save95HSRuleAndDsq, bool saveJumpersInTeamCount, bool saveRounds)
+QJsonObject CompetitionRules::getCompetitionRulesJsonObject(const CompetitionRules &competitionRules)
 {
     QJsonObject object;
     object.insert("name", competitionRules.getName());
-    if(savePointsAndCompensations == true){
-        object.insert("wind-compensations", competitionRules.getHasWindCompensations());
-        object.insert("gate-compensations", competitionRules.getHasGateCompensations());
-        object.insert("judges-points", competitionRules.getHasJudgesPoints());
+    object.insert("wind-compensations", competitionRules.getHasWindCompensations());
+    object.insert("gate-compensations", competitionRules.getHasGateCompensations());
+    object.insert("judges-points", competitionRules.getHasJudgesPoints());
+    object.insert("jumpers-in-team-count", competitionRules.getJumpersInTeamCount());
+    object.insert("95-hs-rule", competitionRules.getHas95HSRule());
+    object.insert("dsq", competitionRules.getHasDsq());
+    object.insert("competition-type", competitionRules.getCompetitionType());
+    object.insert("wind-compensation-distance-effect", competitionRules.getWindCompensationDistanceEffect());
+    object.insert("wind-average-calculating-type", competitionRules.getWindAverageCalculatingType());
+
+    QJsonArray roundsArray;
+    QVector<RoundInfo> rds = competitionRules.getRounds();
+    rds.detach();
+    for(QVector<RoundInfo>::iterator it = rds.begin(); it != rds.end(); ++it)
+    {
+        QJsonObject roundObject;
+        roundObject.insert("count", it->getCount());
+        roundsArray.push_back(roundObject);
     }
-    if(saveJumpersInTeamCount == true){
-        object.insert("jumpers-in-team-count", competitionRules.getJumpersInTeamCount());
-    }
-    if(save95HSRuleAndDsq == true){
-        object.insert("95-hs-rule", competitionRules.getHas95HSRule());
-        object.insert("dsq", competitionRules.getHasDsq());
-    }
-    if(saveCompetitionType == true){
-        object.insert("competition-type", competitionRules.getCompetitionType());
-    }
-    if(saveRounds == true){
-        QJsonArray roundsArray;
-        QVector<RoundInfo> rds = competitionRules.getRounds();
-        rds.detach();
-        for(QVector<RoundInfo>::iterator it = rds.begin(); it != rds.end(); ++it)
-        {
-            QJsonObject roundObject;
-            roundObject.insert("count", it->getCount());
-            roundsArray.push_back(roundObject);
-        }
-        object.insert("rounds", roundsArray);
-    }
+    object.insert("rounds", roundsArray);
 
     return object;
 }
@@ -115,6 +128,8 @@ QVector<CompetitionRules> CompetitionRules::getCompetitionRulesVectorFromJson(co
         rules.setHasDsq(obj.value("dsq").toBool());
         rules.setJumpersInTeamCount(obj.value("jumpers-in-team-count").toInt());
         rules.setCompetitionType(obj.value("competition-type").toInt());
+        rules.setWindCompensationDistanceEffect(obj.value("wind-compensation-distance-effect").toInt());
+        rules.setWindAverageCalculatingType(obj.value("wind-average-calculating-type").toInt());
 
         QJsonArray roundsArray = obj.value("rounds").toArray();
         for(const auto & round : roundsArray)

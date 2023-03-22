@@ -9,6 +9,7 @@
 #include "WindsInfo.h"
 #include "Hill.h"
 #include "Landing.h"
+#include "JumpManipulator.h"
 
 #include <QMap>
 
@@ -25,40 +26,16 @@ private:
     Hill * hill;
     int * gate;
     double DSQBaseProbability;
+    JumpManipulator * manipulator;
 
-    CompetitionRules * jumpDataCompetitionRules;
+    CompetitionRules * competitionRules;
 
 public:
     //skok
-    void simulateJump();
+    void simulateJump(bool manipulate = false);
 
     void resetTemporaryParameters();
     void updateJumperSkills();
-public:
-
-    Jumper *getJumper() const;
-    void setJumper(Jumper *newJumper);
-    Hill *getHill() const;
-    void setHill(Hill *newHill);
-    double getTakeoffRating() const;
-    void setTakeoffRating(double newTakeoffRating);
-    double getFlightRating() const;
-    void setFlightRating(double newFlightRating);
-    JumperSkills *getJumperSkills() const;
-    QVector<double> getJudges() const;
-    void setJudges(const QVector<double> &newJudges);
-    JumpData getJumpData();
-    void setJumpData(const JumpData &newJumpData);
-    int *getGate() const;
-    void setGate(int *newGate);
-    WindsInfo getWindsInfo() const;
-    void setWindsInfo(const WindsInfo &newWindsInfo);
-    short getWindAverageCalculatingType() const;
-    void setWindAverageCalculatingType(short newWindAverageCalculatingType);
-    short getWindCompensationDistanceEffect() const;
-    void setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect);
-    double getDSQBaseProbability() const;
-    void setDSQBaseProbability(double newDSQBaseProbability);
 
 private:
     enum RandomParameters{
@@ -88,17 +65,35 @@ private:
 
     double getWindSegmentDistance();
 
-    short windAverageCalculatingType;
-    short windCompensationDistanceEffect;
-
 public:
     enum WindCompensationDistanceEffect{
         Disabled,
         Original,
         Full
     };
-    CompetitionRules *getJumpDataCompetitionRules() const;
-    void setJumpDataCompetitionRules(CompetitionRules *newJumpDataCompetitionRules);
+    JumpManipulator *getManipulator() const;
+    void setManipulator(JumpManipulator *newManipulator);
+    Jumper *getJumper() const;
+    void setJumper(Jumper *newJumper);
+    Hill *getHill() const;
+    void setHill(Hill *newHill);
+    double getTakeoffRating() const;
+    void setTakeoffRating(double newTakeoffRating);
+    double getFlightRating() const;
+    void setFlightRating(double newFlightRating);
+    JumperSkills *getJumperSkills() const;
+    QVector<double> getJudges() const;
+    void setJudges(const QVector<double> &newJudges);
+    JumpData getJumpData();
+    void setJumpData(const JumpData &newJumpData);
+    int *getGate() const;
+    void setGate(int *newGate);
+    WindsInfo getWindsInfo() const;
+    void setWindsInfo(const WindsInfo &newWindsInfo);
+    double getDSQBaseProbability() const;
+    void setDSQBaseProbability(double newDSQBaseProbability);
+    CompetitionRules *getCompetitionRules() const;
+    void setCompetitionRules(CompetitionRules *newCompetitionRules);
 };
 
 #endif // JUMPSIMULATOR_H

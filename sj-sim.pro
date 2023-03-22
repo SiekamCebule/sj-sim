@@ -29,8 +29,13 @@ SOURCES += \
     source/UI/EditorWidgets/HillEditorWidget.cpp \
     source/UI/EditorWidgets/JumperEditorWidget.cpp \
     source/UI/SingleJumps/SingleJumpsResultsWindow.cpp \
+    source/competitions/AbstractCompetitionManager.cpp \
+    source/competitions/AbstractCompetitionResult.cpp \
     source/competitions/CompetitionInfo.cpp \
+    source/competitions/CompetitionResults.cpp \
     source/competitions/CompetitionRules.cpp \
+    source/competitions/IndividualCompetitions/IndividualCompetitionManager.cpp \
+    source/competitions/IndividualCompetitions/IndividualCompetitionResult.cpp \
     source/competitions/RoundInfo.cpp \
     source/global/CountryFlagsManager.cpp \
     source/global/GlobalAppSettings.cpp \
@@ -42,6 +47,7 @@ SOURCES += \
     source/simulator/Characteristic.cpp \
     source/simulator/Hill.cpp \
     source/simulator/JumpData.cpp \
+    source/simulator/JumpManipulator.cpp \
     source/simulator/JumpSimulationData.cpp \
     source/simulator/JumpSimulator.cpp \
     source/simulator/Jumper.cpp \
@@ -81,8 +87,13 @@ HEADERS += \
     source/UI/EditorWidgets/JumperEditorWidget.h \
     source/UI/SingleJumps/SingleJumpsResultsWindow.h \
     source/UI/mainwindow.h \
+    source/competitions/AbstractCompetitionManager.h \
+    source/competitions/AbstractCompetitionResult.h \
     source/competitions/CompetitionInfo.h \
+    source/competitions/CompetitionResults.h \
     source/competitions/CompetitionRules.h \
+    source/competitions/IndividualCompetitions/IndividualCompetitionManager.h \
+    source/competitions/IndividualCompetitions/IndividualCompetitionResult.h \
     source/competitions/RoundInfo.h \
     source/global/CountryFlagsManager.h \
     source/global/GlobalAppSettings.h \
@@ -92,6 +103,7 @@ HEADERS += \
     source/simulator/Characteristic.h \
     source/simulator/Hill.h \
     source/simulator/JumpData.h \
+    source/simulator/JumpManipulator.h \
     source/simulator/JumpSimulationData.h \
     source/simulator/JumpSimulator.h \
     source/simulator/Jumper.h \

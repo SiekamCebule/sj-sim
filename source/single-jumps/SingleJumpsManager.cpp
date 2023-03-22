@@ -28,10 +28,8 @@ void SingleJumpsManager::simulate()
     jumpSimulator.setJumper(&jumper);
     jumpSimulator.setHill(&hill);
     jumpSimulator.setGate(&gate);
-    jumpSimulator.setWindAverageCalculatingType(getWindAverageCalculatingType());
-    jumpSimulator.setWindCompensationDistanceEffect(getWindCompensationDistanceEffect());
     jumpSimulator.setDSQBaseProbability(getDSQProbability());
-    jumpSimulator.setJumpDataCompetitionRules(&rules);
+    jumpSimulator.setCompetitionRules(&rules);
 
     double min = 0, max = 1000, avg = 0;
 

@@ -28,6 +28,8 @@ public:
     void fillCompetitiorsActivity();
     void setupTeamsJumpersVectors();
 
+    static QVector<Jumper*> convertToVectorObjectOfPointers(QVector<Jumper> *jumpers);
+
 signals:
     void competitiorsTypeChanged();
 public slots:
@@ -43,7 +45,6 @@ private:
 
     QVector<CompetitionStartListDisplayItemWidget *> items;
     QVector<Jumper> * jumpers;
-    QVector<Jumper*> convertToVectorObjectOfPointers(QVector<Jumper> *jumpers);
     QVector<Team> * teams;
 
     QVector<bool> jumpersActivity;

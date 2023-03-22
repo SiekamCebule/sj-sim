@@ -104,8 +104,6 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         manager.setJumper(singleJumpsConfig.getJumperEditor()->getJumperFromWidgetInput());
         manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
         manager.setWindsGeneratorSettings(singleJumpsConfig.getWindsGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
-        manager.setWindAverageCalculatingType(singleJumpsConfig.getWindAverageCalculatingType());
-        manager.setWindCompensationDistanceEffect(singleJumpsConfig.getWindCompensationDistanceEffect());
         if(singleJumpsConfig.getDSQProbabilityFromInput() > (-1)){
             manager.getRules().setHasDsq(true);
             manager.setDSQProbability(singleJumpsConfig.getDSQProbabilityFromInput());
@@ -115,6 +113,8 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         manager.getRules().setHasJudgesPoints(singleJumpsConfig.getHasJudgesFromInput());
         manager.getRules().setHasWindCompensations(singleJumpsConfig.getHasWindCompensationFromInput());
         manager.getRules().setHasGateCompensations(false);
+        manager.getRules().setWindAverageCalculatingType(singleJumpsConfig.getWindAverageCalculatingType());
+        manager.getRules().setWindCompensationDistanceEffect(singleJumpsConfig.getWindCompensationDistanceEffect());
         manager.simulate();
 
         SingleJumpsResultsWindow resultsWindow;

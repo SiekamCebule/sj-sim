@@ -37,7 +37,7 @@ private:
     Ui::SingleCompetitionConfigWindow *ui;
     int type;
     HillEditorWidget * hillEditor;
-    WindsGeneratorSettingsEditorWidget * windGeneratorSettingsEditor;
+    WindsGeneratorSettingsEditorWidget * windsGeneratorSettingsEditor;
 
     void setupHillToolBoxItem();
     //
@@ -80,6 +80,8 @@ public:
     QVector<Team> getCompetitionTeams() const;
     void setCompetitionTeams(const QVector<Team> &newCompetitionTeams);
     void setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers);
+private slots:
+    void on_pushButton_submit_clicked();
 };
 
 #endif // COMPETITIONCONFIGWINDOW_H

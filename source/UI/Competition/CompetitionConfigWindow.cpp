@@ -8,6 +8,7 @@
 #include "StartList/CompetitionStartListDisplayWidget.h"
 #include "../../global/GlobalDatabase.h"
 #include "../../global/CountryFlagsManager.h"
+#include "../../competitions/IndividualCompetitions/IndividualCompetitionManager.h"
 
 #include <QSizePolicy>
 #include <QStringListModel>
@@ -22,7 +23,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     ui(new Ui::SingleCompetitionConfigWindow),
     type(type)
 {
-    competitionRulesParentWidget = nullptr;
+    /*competitionRulesParentWidget = nullptr;
     competitionRulesToolBoxItemLayout = nullptr;
     existingRulesLabelAndComboBoxLayout = nullptr;
     existingCompetitionRulesLabel = nullptr;
@@ -33,15 +34,17 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     startListDisplayWidget = nullptr;
     startListParentWidget = nullptr;
     startListParentLayout = nullptr;
-    pushButton_loadJumpersList = nullptr;
+    pushButton_loadJumpersList = nullptr;*/
 
     ui->setupUi(this);
+    delete ui->page_2;
+    ui->toolBox->removeItem(1);
 
     setWindowFlags(Qt::Window);
     setupHillToolBoxItem();
 
-    windGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget(this);
-    windGeneratorSettingsEditor->setRemovingSubmitButtons(true);
+    windsGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget(this);
+    windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);
     competitionRulesEditor = new CompetitionRulesEditorWidget(this);
     otherCompetitionSettingsEditor = new OtherCompetitionSettingsWidget(this);
     competitionRulesEditor->setCompetitionRules(new CompetitionRules(tr("Zasady")));
@@ -103,6 +106,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
 
     ui->toolBox->raise();
     ui->label_title->raise();
+    ui->toolBox->addItem(windsGeneratorSettingsEditor, "Ustawienia generatora wiatru");
     setupCompetitionRulesToolBoxItem();
     ui->toolBox->addItem(otherCompetitionSettingsEditor, "Inne opcje");
 
@@ -128,7 +132,12 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
         startListDisplayWidget->fillItemsLayout();
     }
 
-    connect(hillEditor, &HillEditorWidget::KPointInputChanged, windGeneratorSettingsEditor, &WindsGeneratorSettingsEditorWidget::fillSettingsInputs);
+    connect(hillEditor, &HillEditorWidget::KPointInputChanged, this, [this](){
+        windsGeneratorSettingsEditor->setKPoint(hillEditor->getKPointFromInput());
+        windsGeneratorSettingsEditor->setWindGenerationSettings(new QVector<WindGenerationSettings>());
+        windsGeneratorSettingsEditor->fillWindGenerationSettingsByDefault();
+        windsGeneratorSettingsEditor->fillSettingsInputs();
+    });
     connect(competitionRulesEditor, &CompetitionRulesEditorWidget::competitionTypeChanged, this, [this](){
         startListDisplayWidget->setCompetitiorsType(competitionRulesEditor->getCompetitionTypeFromInput());
         startListDisplayWidget->fillItemsLayout();
@@ -163,6 +172,7 @@ void CompetitionConfigWindow::setupHillToolBoxItem()
         if(selected > 0){
             hillEditor->setHill(&GlobalDatabase::get()->getGlobalHills()[selected - 1]);
             hillEditor->fillHillInputs();
+            emit hillEditor->KPointInputChanged(hillEditor->getHill()->getKPoint());
         }
         else hillEditor->resetHillInputs();
     });
@@ -273,12 +283,12 @@ void CompetitionConfigWindow::setCompetitionRulesEditor(CompetitionRulesEditorWi
 
 WindsGeneratorSettingsEditorWidget *CompetitionConfigWindow::getWindGeneratorSettingsEditor() const
 {
-    return windGeneratorSettingsEditor;
+    return windsGeneratorSettingsEditor;
 }
 
 void CompetitionConfigWindow::setWindGeneratorSettingsEditor(WindsGeneratorSettingsEditorWidget *newWindsGeneratorSettingsEditor)
 {
-    windGeneratorSettingsEditor = newWindsGeneratorSettingsEditor;
+    windsGeneratorSettingsEditor = newWindsGeneratorSettingsEditor;
 }
 
 short CompetitionConfigWindow::getType() const
@@ -290,3 +300,20 @@ void CompetitionConfigWindow::setType(short newType)
 {
     type = newType;
 }
+
+void CompetitionConfigWindow::on_pushButton_submit_clicked()
+{
+    CompetitionInfo info;
+    CompetitionRules rules = GlobalDatabase::get()->getGlobalCompetitionsRules().at(0);
+    info.setHill(&GlobalDatabase::get()->getEditableGlobalHills()[0]);
+
+    IndividualCompetitionManager * competitionManager = new IndividualCompetitionManager();
+    competitionManager->setStartingJumpers(CompetitionStartListDisplayWidget::convertToVectorObjectOfPointers(&competitionJumpers));
+    competitionManager->setCompetitionInfo(&info);
+    competitionManager->setCompetitionRules(rules);
+    competitionManager->setActualJumperIndex(0);
+    competitionManager->setActualWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
+
+    competitionManager->simulateNext();
+}
+

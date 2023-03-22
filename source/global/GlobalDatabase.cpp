@@ -196,7 +196,7 @@ bool GlobalDatabase::writeCompetitionsRules()
 
     for(auto & rules : getGlobalCompetitionsRules())
     {
-        array.push_back(QJsonValue(CompetitionRules::getCompetitionRulesJsonObject(rules, true, true, true, true, true)));
+        array.push_back(QJsonValue(CompetitionRules::getCompetitionRulesJsonObject(rules)));
     }
     mainObject.insert("competitionsRules", array);
     document.setObject(mainObject);

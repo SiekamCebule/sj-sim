@@ -27,9 +27,11 @@ private:
     bool hasDsq;
     short competitionType;
     int jumpersInTeamCount;
+    short windAverageCalculatingType;
+    short windCompensationDistanceEffect;
 
 public:
-    static QJsonObject getCompetitionRulesJsonObject(const CompetitionRules &competitionRules, bool savePointsAndCompensations, bool saveCompetitionType, bool save95HSRuleAndDsq, bool saveJumpersInTeamCount, bool saveRounds);
+    static QJsonObject getCompetitionRulesJsonObject(const CompetitionRules &competitionRule);
     static QVector<CompetitionRules> getCompetitionRulesVectorFromJson(const QByteArray & bytes);
 
     bool getHas95HSRule() const;
@@ -51,6 +53,10 @@ public:
     void setJumpersInTeamCount(int newJumpersInTeamCount);
     bool getHasDsq() const;
     void setHasDsq(bool newHasDsq);
+    short getWindAverageCalculatingType() const;
+    void setWindAverageCalculatingType(short newWindAverageCalculatingType);
+    short getWindCompensationDistanceEffect() const;
+    void setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect);
 };
 
 #endif // COMPETITIONRULES_H
