@@ -37,24 +37,25 @@ QJsonObject Hill::getHillJsonObject(const Hill & hill, bool saveKAndHSPoint, boo
     QJsonObject object;
     object.insert("name", hill.getName());
     object.insert("country-code", hill.getCountryCode());
-    if(saveKAndHSPoint == true)
-    {
-        object.insert("k-point", hill.getKPoint());
-        object.insert("hs-point", hill.getHSPoint());
-    }
-    if(savePointsInfo == true)
-    {
-        object.insert("points-for-meter", hill.getPointsForMeter());
-        object.insert("points-for-k-point", hill.getPointsForKPoint());
-        object.insert("points-for-front-wind", hill.getPointsForFrontWind());
-        object.insert("points-for-back-wind", hill.getPointsForBackWind());
-        object.insert("points-for-gate", hill.getPointsForGate());
-    }
-    if(saveSimulationParameters == true)
-    {
-        object.insert("takeoff-effect", hill.getTakeoffEffect());
-        object.insert("flight-effect", hill.getFlightEffect());
-    }
+    object.insert("k-point", hill.getKPoint());
+    object.insert("hs-point", hill.getHSPoint());
+
+    if(hill.getAutoPointsForKPoint() == true)
+        object.insert("points-for-meter", "auto");
+    else object.insert("points-for-meter", hill.getPointsForMeter());
+
+    if(hill.getAutoPointsForKPoint() == true)
+        object.insert("points-for-k-point", "auto");
+    else object.insert("points-for-k-point", hill.getPointsForKPoint());
+
+    if(hill.getAutoPointsForBackWind() == true)
+        object.insert("points-for-back-wind", "auto");
+    else object.insert("points-for-back-wind", hill.getPointsForBackWind());
+
+    object.insert("points-for-front-wind", hill.getPointsForFrontWind());
+    object.insert("points-for-gate", hill.getPointsForGate());
+    object.insert("takeoff-effect", hill.getTakeoffEffect());
+    object.insert("flight-effect", hill.getFlightEffect());
 
     QJsonArray characteristicsArray;
     QSet<Characteristic> cs = hill.getCharacteristics();
@@ -123,7 +124,7 @@ QVector<Hill> Hill::getHillsVectorFromJson(const QByteArray &bytes)
 
         if(obj.value("points-for-back-wind").toString() == "auto")
         {
-            hill.setPointsForBackWind(Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(hill.getPointsForFrontWind()));
+            hill.setPointsForBackWind(Hill::calculatePointsForBackWindBy50PercentsOfFrontWind(hill.getPointsForFrontWind()));
             hill.setAutoPointsForBackWind(true);
         }
         else hill.setPointsForBackWind(obj.value("points-for-back-wind").toDouble());
@@ -225,9 +226,9 @@ double Hill::calculatePointsForKPoint(double KPoint)
     else return 120;
 }
 
-double Hill::calculatePointsForBackWindBy21PercentsOfFrontWind(double pointsForFrontWind)
+double Hill::calculatePointsForBackWindBy50PercentsOfFrontWind(double pointsForFrontWind)
 {
-    return pointsForFrontWind * 1.21;
+    return pointsForFrontWind * 1.50;
 }
 
 double Hill::calculateBestTakeoffHeightLevel(Hill *hill)

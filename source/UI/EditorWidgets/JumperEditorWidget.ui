@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
-    <height>380</height>
+    <width>429</width>
+    <height>379</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -764,7 +764,7 @@ border-radius: 3px;
               <string notr="true">color: rgb(100, 100, 100);</string>
              </property>
              <property name="text">
-              <string>/ 20</string>
+              <string>/ 15</string>
              </property>
             </widget>
            </item>
@@ -978,52 +978,6 @@ border-radius: 3px;
         <layout class="QVBoxLayout" name="verticalLayout_characteristicsEditor">
          <item>
           <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_submit">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Ubuntu</family>
-             <pointsize>15</pointsize>
-            </font>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton{
-border: 1px solid rgb(0, 59, 23);
-border-radius: 6px;
-color: rgb(0, 0, 0);
-background-color: rgb(123, 220, 144);
-}
-QPushButton:hover{
-background-color: rgb(153, 253, 174);
-}</string>
-           </property>
-           <property name="text">
-            <string>OK</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_3">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>

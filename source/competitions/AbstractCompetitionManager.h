@@ -38,6 +38,10 @@ public:
     void setCompetitionRules(const CompetitionRules &newCompetitionRules);
     QVector<WindGenerationSettings> getActualWindGenerationSettings() const;
     void setActualWindGenerationSettings(const QVector<WindGenerationSettings> &newActualWindGenerationSettings);
+    short getType() const;
+    void setType(short newType);
+    int getActualGate() const;
+    void setActualGate(int newActualGate);
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

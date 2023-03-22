@@ -20,8 +20,6 @@ public:
     void fillCompetitionRulesInputs();
     void fillRoundsInputs(bool setup = false);
 
-    void removeSubmitButton();
-
     QString getNameFromInput();
     QVector<RoundInfo> getRoundsFromInput();
     bool getHas95HSRuleFromInput();
@@ -37,18 +35,18 @@ public:
 signals:
     void jumpersCountInTeamChanged();
     void competitionTypeChanged();
-    void submitted();
+    void changed();
 
 private:
     Ui::CompetitionRulesEditorWidget *ui;
 
     CompetitionRules * competitionRules;
+    void setupConnectsForWidgetChange();
+    void removeConnectsForWidgetChange();
 
 public:
     CompetitionRules *getCompetitionRules() const;
     void setCompetitionRules(CompetitionRules *newCompetitionRules);
-private slots:
-    void on_pushButton_submit_clicked();
 };
 
 #endif // COMPETITIONRULESEDITORWIDGET_H

@@ -51,9 +51,9 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
     ui->tab_competitionRules->layout()->addWidget(this->competitionRulesEditor);
 
     connect(ui->tabWidget_main, &QTabWidget::currentChanged, this, &DatabaseEditorWindow::setActualElementType);
-    connect(this->jumperEditor, &JumperEditorWidget::submitted, this, &DatabaseEditorWindow::replaceJumperFromJumperEditor);
-    connect(this->hillEditor, &HillEditorWidget::submitted, this, &DatabaseEditorWindow::replaceHillFromHillEditor);
-    connect(this->competitionRulesEditor, &CompetitionRulesEditorWidget::submitted, this, &DatabaseEditorWindow::replaceCompetitionRulesFromEditor);
+    connect(this->jumperEditor, &JumperEditorWidget::changed, this, &DatabaseEditorWindow::replaceJumperFromJumperEditor);
+    connect(this->hillEditor, &HillEditorWidget::changed, this, &DatabaseEditorWindow::replaceHillFromHillEditor);
+    connect(this->competitionRulesEditor, &CompetitionRulesEditorWidget::changed, this, &DatabaseEditorWindow::replaceCompetitionRulesFromEditor);
 }
 
 DatabaseEditorWindow::~DatabaseEditorWindow()
@@ -436,6 +436,7 @@ void DatabaseEditorWindow::replaceJumperFromJumperEditor()
     if(selectedItemIndex > (-1)){
         GlobalDatabase::get()->getEditableGlobalJumpers().replace(selectedItemIndex - 1, jumperEditor->getJumperFromWidgetInput());
         fillJumpersWidget();
+        updateItemsSelection(selectedItemIndex);
     }
 }
 
@@ -444,6 +445,7 @@ void DatabaseEditorWindow::replaceHillFromHillEditor()
     if(selectedItemIndex > (-1)){
         GlobalDatabase::get()->getEditableGlobalHills().replace(selectedItemIndex - 1, hillEditor->getHillFromWidgetInput());
         fillHillsWidget();
+        updateItemsSelection(selectedItemIndex);
     }
 }
 
@@ -452,6 +454,7 @@ void DatabaseEditorWindow::replaceCompetitionRulesFromEditor()
     if(selectedItemIndex > (-1)){
         GlobalDatabase::get()->getEditableCompetitionRules().replace(selectedItemIndex - 1, competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
         fillCompetitionRulesWidget();
+        updateItemsSelection(selectedItemIndex);
     }
 }
 

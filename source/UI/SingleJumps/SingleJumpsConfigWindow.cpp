@@ -12,6 +12,7 @@
 #include <QStringList>
 #include <QStringListModel>
 #include <QScrollArea>
+#include <QCloseEvent>
 #include <QMessageBox>
 
 SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
@@ -24,10 +25,9 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
 
     jumperEditor = new JumperEditorWidget;
-    jumperEditor->removeSubmitButton();
+    //jumperEditor->removeSubmitButton();
 
     hillEditor = new HillEditorWidget;
-    hillEditor->removeSubmitButton();
 
     windsGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget;
     windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);

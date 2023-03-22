@@ -23,6 +23,9 @@ public:
     HillEditorWidget *getHillEditor() const;
     WindsGeneratorSettingsEditorWidget *getWindsGeneratorSettingsEditor() const;
 
+signals:
+    void goToResultsWindow();
+
 private slots:
     void on_comboBox_existingHill_currentIndexChanged(int index);
     void on_comboBox_existingJumper_currentIndexChanged(int index);

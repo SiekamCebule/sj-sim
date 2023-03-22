@@ -2,6 +2,8 @@
 #define FUNCTIONS_H
 
 #include <QVector>
+#include <QWidget>
+#include <QRegularExpression>
 
 template<typename T>
 void moveItemToVectorBack(QVector<T> & vector, size_t itemIndex)
@@ -9,6 +11,11 @@ void moveItemToVectorBack(QVector<T> & vector, size_t itemIndex)
     auto it = vector.begin() + itemIndex;
     std::rotate(it, it+1, vector.end());
 }
+
+class MyFunctions{
+public:
+    static QVector<QWidget *> getWidgetsVector(QWidget *parent, QString search);
+};
 
 double roundDoubleToHalf(double number);
 double roundDoubleToOnePlace(double number);

@@ -9,6 +9,7 @@
 #include "../../global/GlobalDatabase.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../../competitions/IndividualCompetitions/IndividualCompetitionManager.h"
+#include "CompetitionManagerWindow.h"
 
 #include <QSizePolicy>
 #include <QStringListModel>
@@ -49,7 +50,6 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     otherCompetitionSettingsEditor = new OtherCompetitionSettingsWidget(this);
     competitionRulesEditor->setCompetitionRules(new CompetitionRules(tr("Zasady")));
     competitionRulesEditor->setParent(this);
-    competitionRulesEditor->removeSubmitButton();
 
     startListDisplayWidget = new CompetitionStartListDisplayWidget(this);
     startListDisplayWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
@@ -164,7 +164,6 @@ void CompetitionConfigWindow::setupHillToolBoxItem()
     }
 
     hillEditor = new HillEditorWidget(this);
-    hillEditor->removeSubmitButton();
     ui->verticalLayout_hillEditorWidget->addWidget(hillEditor);
 
     connect(ui->comboBox_existingHill, &QComboBox::currentIndexChanged, this, [this](){
@@ -303,17 +302,38 @@ void CompetitionConfigWindow::setType(short newType)
 
 void CompetitionConfigWindow::on_pushButton_submit_clicked()
 {
-    CompetitionInfo info;
-    CompetitionRules rules = GlobalDatabase::get()->getGlobalCompetitionsRules().at(0);
-    info.setHill(&GlobalDatabase::get()->getEditableGlobalHills()[0]);
+    switch(getType())
+    {
+    case SingleCompetition:{
+        CompetitionInfo info;
+        info.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
+        CompetitionRules rules = GlobalDatabase::get()->getGlobalCompetitionsRules().at(0);
+        info.setRules(&rules);
+        info.setDate(QDate::currentDate());
 
-    IndividualCompetitionManager * competitionManager = new IndividualCompetitionManager();
-    competitionManager->setStartingJumpers(CompetitionStartListDisplayWidget::convertToVectorObjectOfPointers(&competitionJumpers));
-    competitionManager->setCompetitionInfo(&info);
-    competitionManager->setCompetitionRules(rules);
-    competitionManager->setActualJumperIndex(0);
-    competitionManager->setActualWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
+        IndividualCompetitionManager * competitionManager = new IndividualCompetitionManager;
+        competitionManager->setStartingJumpers(CompetitionStartListDisplayWidget::convertToVectorObjectOfPointers(&competitionJumpers));
+        competitionManager->setActualRoundJumpers(competitionManager->getStartingJumpers()); // Ponieważ nie ma kwalifikacji
+        competitionManager->setCompetitionInfo(&info);
+        competitionManager->setCompetitionRules(rules);
+        competitionManager->setActualJumperIndex(0);
+        competitionManager->setActualWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
+        competitionManager->setActualGate(ui->spinBox_startGate->value());
 
-    competitionManager->simulateNext();
+        competitionManager->simulateNext();
+
+        qDebug()<<"ok";
+
+        CompetitionManagerWindow * window = new CompetitionManagerWindow(competitionManager, this);
+        if(window->exec() == QDialog::Accepted)
+        {
+
+        }
+
+        delete info.getHill();
+        delete competitionManager;
+    }
+    }
+
 }
 

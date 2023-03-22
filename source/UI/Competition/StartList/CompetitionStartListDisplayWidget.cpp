@@ -265,7 +265,7 @@ void CompetitionStartListDisplayWidget::on_pushButton_edit_clicked()
             editorPointer = editor;
             dialog->layout()->addWidget(editor);
 
-            connect(editor, &JumperEditorWidget::submitted, dialog, &QDialog::accept);
+            connect(editor, &JumperEditorWidget::destroyed, dialog, &QDialog::accept);
             break;
         }
         case Teams:{

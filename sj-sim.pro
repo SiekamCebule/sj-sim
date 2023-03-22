@@ -9,8 +9,10 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    source/UI/Competition/CompetitionManagerWindow.cpp \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp \
+    source/UI/Competition/StartList/StartListModel.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
     source/UI/EditorWidgets/OtherCompetitionSettingsWidget.cpp \
     source/UI/EditorWidgets/RoundInfoEditorWidget.cpp \
@@ -66,8 +68,10 @@ SOURCES += \
     source/utilities/functions.cpp
 
 HEADERS += \
+    source/UI/Competition/CompetitionManagerWindow.h \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.h \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.h \
+    source/UI/Competition/StartList/StartListModel.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
     source/UI/EditorWidgets/OtherCompetitionSettingsWidget.h \
     source/UI/EditorWidgets/RoundInfoEditorWidget.h \
@@ -122,6 +126,7 @@ HEADERS += \
     source/utilities/functions.h
 
 FORMS += \
+    source/UI/Competition/CompetitionManagerWindow.ui \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \

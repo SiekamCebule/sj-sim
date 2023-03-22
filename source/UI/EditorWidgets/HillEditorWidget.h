@@ -28,7 +28,7 @@ public:
     int getKPointFromInput();
 
 signals:
-    void submitted();
+    void changed();
     void KPointInputChanged(double KPoint);
 
 private slots:
@@ -36,15 +36,15 @@ private slots:
     void on_checkBox_autoPointsForMeter_stateChanged(int arg1);
     void on_checkBox_autoBackWindPoints_stateChanged(int arg1);
 
-    void when_submitButtonClicked();
-
     void on_lineEdit_countryCode_textChanged(const QString &arg1);
 
 private:
     Ui::HillEditorWidget *ui;
-    CharacteristicsEditor * characteristicsEditor;
 
-    Hill * hill;
+    CharacteristicsEditor * characteristicsEditor;
+    Hill * hill; 
+    void setupConnectsForWidgetChange();
+    void removeConnectsForWidgetChange();
 
 public:
     Hill *getHill() const;

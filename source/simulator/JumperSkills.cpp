@@ -12,6 +12,7 @@ JumperSkills::JumperSkills(double takeoffPower, double takeoffTechnique, double 
         jumperID = jumper->getID();
 
     setCharacteristics(characteristics);
+    jumpsEquality = 0;
 }
 
 QString JumperSkills::getJumpsEqualityString(short jumpsEquality)

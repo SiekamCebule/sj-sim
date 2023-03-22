@@ -7,6 +7,26 @@ AbstractCompetitionManager::AbstractCompetitionManager(short type) : type(type)
     actualGate = 0;
 }
 
+int AbstractCompetitionManager::getActualGate() const
+{
+    return actualGate;
+}
+
+void AbstractCompetitionManager::setActualGate(int newActualGate)
+{
+    actualGate = newActualGate;
+}
+
+short AbstractCompetitionManager::getType() const
+{
+    return type;
+}
+
+void AbstractCompetitionManager::setType(short newType)
+{
+    type = newType;
+}
+
 QVector<WindGenerationSettings> AbstractCompetitionManager::getActualWindGenerationSettings() const
 {
     return actualWindGenerationSettings;

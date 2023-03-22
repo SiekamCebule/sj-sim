@@ -10,29 +10,61 @@ IndividualCompetitionManager::IndividualCompetitionManager() :
 
 void IndividualCompetitionManager::simulateNext(const JumpManipulator& manipulator)
 {
-    qDebug()<<"Konkurs czas zacząć!!! BIG VOGGEN ARENAA";
     simulator.setGate(&actualGate);
-    qDebug()<<"gate";
     simulator.setJumper(actualJumper);
-    qDebug()<<"jumper";
     simulator.setHill(competitionInfo->getHill());
-    qDebug()<<"hill";
     simulator.setManipulator(const_cast<JumpManipulator *>(&manipulator));
-    qDebug()<<"manipulator";
     simulator.setCompetitionRules(&competitionRules);
-    qDebug()<<"cr";
 
     windsGenerator.setGenerationSettings(actualWindGenerationSettings);
     simulator.setWindsInfo(WindsInfo(windsGenerator.generateWinds()));
 
     simulator.simulateJump(manipulator.getIsActive());
-    qDebug()<<"simulate";
     JumpData jump = simulator.getJumpData();
 
     qDebug()<<"SKOK: "<<jump;
 
     //KONIEC
     setActualJumperIndex(getActualJumperIndex() + 1); // zmień skoczka na następnego
+}
+
+QVector<Jumper *> IndividualCompetitionManager::setupFirstRoundJumpers(CompetitionResults *qualificationsResults)
+{
+    // Na podstawie rankingu kwalifikacji przefiltruj zawodników. Wybierz np. TOP50 podanych wyników, i stwórz z tego QVector ( i go zwróć)
+}
+
+int IndividualCompetitionManager::getActualJumperIndex() const
+{
+    return actualJumperIndex;
+}
+
+QVector<Jumper *> * IndividualCompetitionManager::getActualRoundJumpersPointer() const
+{
+    return const_cast<QVector<Jumper *> *>(&actualRoundJumpers);
+}
+
+void IndividualCompetitionManager::setActualRoundJumpers(const QVector<Jumper *> &newActualRoundJumpers)
+{
+    actualRoundJumpers = newActualRoundJumpers;
+    qDebug()<<actualRoundJumpers.count();
+}
+
+void IndividualCompetitionManager::setActualJumperIndex(int newActualJumperIndex)
+{
+    actualJumperIndex = newActualJumperIndex;
+    emit actualJumperIndexChanged();
+}
+
+void IndividualCompetitionManager::inncrementActualJumperIndex()
+{
+    actualJumperIndex++;
+    emit actualJumperIndexChanged();
+}
+
+void IndividualCompetitionManager::decrementActualJumperIndex()
+{
+    actualJumperIndex--;
+    emit actualJumperIndexChanged();
 }
 
 QVector<Jumper *> IndividualCompetitionManager::getStartingJumpers() const
@@ -43,21 +75,4 @@ QVector<Jumper *> IndividualCompetitionManager::getStartingJumpers() const
 void IndividualCompetitionManager::setStartingJumpers(const QVector<Jumper *> & newStartingJumpers)
 {
     startingJumpers = newStartingJumpers;
-    actualRoundJumpers = startingJumpers;
-}
-
-void IndividualCompetitionManager::setupFirstRoundJumpers(CompetitionResults *qualificationsResults)
-{
-
-}
-
-int IndividualCompetitionManager::getActualJumperIndex() const
-{
-    return actualJumperIndex;
-}
-
-void IndividualCompetitionManager::setActualJumperIndex(int newActualJumperIndex)
-{
-    actualJumperIndex = newActualJumperIndex;
-        emit actualJumperIndexChanged();
 }

@@ -24,13 +24,17 @@ private:
     int actualJumperIndex;
 
 public:
-    void setupFirstRoundJumpers(CompetitionResults * qualificationsResults);
+    QVector<Jumper *> setupFirstRoundJumpers(CompetitionResults * qualificationsResults);
 
 public:
     void setActualJumperIndex(int newActualJumperIndex);
     int getActualJumperIndex() const;
     QVector<Jumper *> getStartingJumpers() const;
     void setStartingJumpers(const QVector<Jumper *> &newStartingJumpers);
+    QVector<Jumper *> *getActualRoundJumpersPointer() const;
+    void setActualRoundJumpers(const QVector<Jumper *> &newActualRoundJumpers);
+    void inncrementActualJumperIndex();
+    void decrementActualJumperIndex();
 };
 
 #endif // INDIVIDUALCOMPETITIONMANAGER_H

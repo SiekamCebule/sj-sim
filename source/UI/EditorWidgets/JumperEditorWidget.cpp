@@ -3,6 +3,7 @@
 
 #include "../../global/GlobalDatabase.h"
 #include "../../global/CountryFlagsManager.h"
+#include "../../utilities/functions.h"
 
 #include <QIcon>
 
@@ -13,13 +14,16 @@ JumperEditorWidget::JumperEditorWidget(Jumper *jumper, CharacteristicsEditor *ch
     ui(new Ui::JumperEditorWidget)
 {
     ui->setupUi(this);
+    setupConnectsForWidgetChange();
 
     if(this->characteristicsEditor == nullptr)
         this->characteristicsEditor = new CharacteristicsEditor(Characteristic::Jumper);
 
     ui->verticalLayout_characteristicsEditor->insertWidget(0, getCharacteristicsEditor());
     ui->label_countryFlag->setGeometry(ui->label_countryFlag->x(), ui->label_countryFlag->y(), CountryFlagsManager::getFlagPixmapSize().width(), CountryFlagsManager::getFlagPixmapSize().height());
-    connect(ui->pushButton_submit, &QPushButton::clicked, this, &JumperEditorWidget::when_submittButtonClicked);
+
+    connect(this, &JumperEditorWidget::changed, this, [this](){
+    });
 }
 
 JumperEditorWidget::~JumperEditorWidget()
@@ -29,6 +33,7 @@ JumperEditorWidget::~JumperEditorWidget()
 
 void JumperEditorWidget::resetJumperInputs()
 {
+    removeConnectsForWidgetChange();
     ui->lineEdit_name->setText("");
     ui->lineEdit_surname->setText("");
     ui->lineEdit_countryCode->setText("");
@@ -41,10 +46,12 @@ void JumperEditorWidget::resetJumperInputs()
     ui->doubleSpinBox_form->setValue(0);
     ui->doubleSpinBox_jumpsEquality->setValue(0);;
     characteristicsEditor->setCharacteristics(QSet<Characteristic>());
+    setupConnectsForWidgetChange();
 }
 
 void JumperEditorWidget::fillJumperInputs()
 {
+    removeConnectsForWidgetChange();
     if(jumper == nullptr){
         qDebug()<<"Jumper is nullptr!";
         return;
@@ -61,15 +68,8 @@ void JumperEditorWidget::fillJumperInputs()
     ui->doubleSpinBox_form->setValue(jumper->getJumperSkills().getForm());
     ui->doubleSpinBox_jumpsEquality->setValue(jumper->getJumperSkills().getJumpsEquality());
     characteristicsEditor->setCharacteristics(jumper->getJumperSkills().getCharacteristics());
+    setupConnectsForWidgetChange();
 }
-
-void JumperEditorWidget::removeSubmitButton()
-{
-    disconnect(ui->pushButton_submit, &QPushButton::clicked, this, &JumperEditorWidget::when_submittButtonClicked);
-    ui->verticalLayout_characteristicsEditor->removeWidget(ui->pushButton_submit);
-    delete ui->pushButton_submit;
-}
-
 Jumper JumperEditorWidget::getJumperFromWidgetInput() const
 {
     Jumper jumper;
@@ -114,7 +114,28 @@ void JumperEditorWidget::on_lineEdit_countryCode_textChanged(const QString &arg1
         ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(ui->lineEdit_countryCode->text().toLower())).scaled(CountryFlagsManager::getFlagPixmapSize()));
 }
 
-void JumperEditorWidget::when_submittButtonClicked()
+void JumperEditorWidget::removeConnectsForWidgetChange()
 {
-    emit submitted();
+    for(auto & w : MyFunctions::getWidgetsVector(this, "lineEdit")){
+        disconnect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &JumperEditorWidget::changed);
+    }
+    for(auto & w : MyFunctions::getWidgetsVector(this, "doubleSpinBox")){
+        disconnect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::editingFinished, this, &JumperEditorWidget::changed);
+    }
+    for(auto & w : MyFunctions::getWidgetsVector(this, "comboBox")){
+        disconnect(dynamic_cast<QComboBox *>(w), &QComboBox::currentIndexChanged, this, &JumperEditorWidget::changed);
+    }
+}
+
+void JumperEditorWidget::setupConnectsForWidgetChange()
+{
+    for(auto & w : MyFunctions::getWidgetsVector(this, "lineEdit")){
+        connect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &JumperEditorWidget::changed);
+    }
+    for(auto & w : MyFunctions::getWidgetsVector(this, "doubleSpinBox")){
+        connect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::editingFinished, this, &JumperEditorWidget::changed);
+    }
+    for(auto & w : MyFunctions::getWidgetsVector(this, "comboBox")){
+        connect(dynamic_cast<QComboBox *>(w), &QComboBox::currentIndexChanged, this, &JumperEditorWidget::changed);
+    }
 }

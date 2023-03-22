@@ -20,8 +20,6 @@ public:
     void resetJumperInputs();
     void fillJumperInputs();
 
-    void removeSubmitButton();
-
     Jumper getJumperFromWidgetInput() const;
 
     Jumper *getJumper() const;
@@ -30,17 +28,18 @@ public:
     void setCharacteristicsEditor(CharacteristicsEditor *newCharacteristicsEditor);
 
 signals:
-    void submitted();
+    void changed();
 
 private slots:
-    void when_submittButtonClicked();
     void on_lineEdit_countryCode_textChanged(const QString &arg1);
 
 private:
     Ui::JumperEditorWidget *ui;
-    CharacteristicsEditor * characteristicsEditor;
 
+    CharacteristicsEditor * characteristicsEditor;
     Jumper * jumper;
+    void setupConnectsForWidgetChange();
+    void removeConnectsForWidgetChange();
 };
 
 #endif // JUMPEREDITORWIDGET_H
