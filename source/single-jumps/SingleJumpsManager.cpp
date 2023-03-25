@@ -48,10 +48,10 @@ void SingleJumpsManager::simulate()
     for(int i=0; i<jumpsCount; i++){
         if(getChangeableWind() == true){
             windsGenerator.setGenerationSettings(getWindsGeneratorSettings());
-            jumpSimulator.setWindsInfo(WindsInfo(windsGenerator.generateWinds()));
+            jumpSimulator.setWinds(windsGenerator.generateWinds());
         }
         else{
-            jumpSimulator.setWindsInfo(WindsInfo(winds));
+            jumpSimulator.setWinds(winds);
         }
         jumpSimulator.simulateJump();
         jumps.push_back(jumpSimulator.getJumpData());

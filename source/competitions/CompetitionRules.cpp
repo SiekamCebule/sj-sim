@@ -86,6 +86,7 @@ QJsonObject CompetitionRules::getCompetitionRulesJsonObject(const CompetitionRul
     {
         QJsonObject roundObject;
         roundObject.insert("count", it->getCount());
+        roundObject.insert("sort-start-list", it->getSortStartList());
         roundsArray.push_back(roundObject);
     }
     object.insert("rounds", roundsArray);
@@ -136,6 +137,8 @@ QVector<CompetitionRules> CompetitionRules::getCompetitionRulesVectorFromJson(co
         {
             RoundInfo roundInfo;
             roundInfo.setCount(round.toObject().value("count").toInt());
+            qDebug()<<roundInfo.getCount()<<" kałnt";
+            roundInfo.setCount(round.toObject().value("sort-start-list").toBool(true));
             rules.getEditableRounds().push_back(roundInfo);
         }
         rulesVector.push_back(rules);

@@ -15,6 +15,16 @@ JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill)
 {}
 
+QVector<Wind> JumpData::getWinds() const
+{
+    return winds;
+}
+
+void JumpData::setWinds(const QVector<Wind> &newWinds)
+{
+    winds = newWinds;
+}
+
 CompetitionRules *JumpData::getRules() const
 {
     return rules;
@@ -75,23 +85,13 @@ void JumpData::setSimulator(JumpSimulator *newSimulator)
     simulator = newSimulator;
 }
 
-WindsInfo JumpData::getWindsInfo() const
-{
-    return windsInfo;
-}
-
-void JumpData::setWindsInfo(const WindsInfo &newWindsInfo)
-{
-    windsInfo = newWindsInfo;
-}
-
 void JumpData::reset()
 {
     distance = points = gateCompensation = windCompensation = totalCompensation = gate = judgesPoints = 0;
     landing = Landing();
     judges.clear();
     judges.fill(0, 5);
-    windsInfo = WindsInfo();
+    winds.clear();
     averagedWind = 0;
     jumper = nullptr;
     hill = nullptr;
@@ -132,7 +132,7 @@ QJsonObject JumpData::getJumpDataJsonObject(const JumpData &jumpData, bool saveJ
     if(saveWinds == true){
         QJsonArray windsArray;
         int i=0;
-        for(const auto & wind : qAsConst(jumpData.getWindsInfo().getWinds()))
+        for(const auto & wind : jumpData.getWinds())
         {
             QJsonObject windObject;
             windObject.insert("range", QJsonValue(QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData.getHill()->getKPoint()).first) + " - " + QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData.getHill()->getKPoint()).second)));
@@ -251,7 +251,7 @@ QDebug operator<<(QDebug d, const JumpData & jumpData)
 {
     Jumper * jumper = jumpData.getJumper();
     d <<jumper->getNameAndSurname()<<" ("<<jumper->getCountryCode()<<")";
-    d<<jumpData.getDistance()<<"m ("<<jumpData.getPoints()<<" pts) --> Wiatr: "<<jumpData.getWindsInfo().getAveragedWind(jumpData.getSimulator()->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()<<"m/s, ("<<jumpData.getWindCompensation()<<" pts), Belka "<<jumpData.getGate()<<" ("<<jumpData.getGateCompensation()<<"),   |"<<jumpData.getJudges().at(0)<<"|"<<jumpData.getJudges().at(1)<<"|"<<jumpData.getJudges().at(2)<<"|"<<jumpData.getJudges().at(3)<<"|"<<jumpData.getJudges().at(4)<<"|"<<",   Lądowanie: "<<jumpData.getLanding().getTextLandingType();
+    d<<jumpData.getDistance()<<"m ("<<jumpData.getPoints()<<" pts) --> Wiatr: "<<WindsCalculator::getAveragedWind(jumpData.getWinds(), jumpData.getSimulator()->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()<<"m/s, ("<<jumpData.getWindCompensation()<<" pts), Belka "<<jumpData.getGate()<<" ("<<jumpData.getGateCompensation()<<"),   |"<<jumpData.getJudges().at(0)<<"|"<<jumpData.getJudges().at(1)<<"|"<<jumpData.getJudges().at(2)<<"|"<<jumpData.getJudges().at(3)<<"|"<<jumpData.getJudges().at(4)<<"|"<<",   Lądowanie: "<<jumpData.getLanding().getTextLandingType();
 
     return d;
 }

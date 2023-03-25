@@ -7,8 +7,10 @@
 #include "../EditorWidgets/OtherCompetitionSettingsWidget.h"
 #include "StartList/CompetitionStartListDisplayWidget.h"
 #include "../../global/GlobalDatabase.h"
+#include "../../global/GlobalSimulationSettings.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../../competitions/IndividualCompetitions/IndividualCompetitionManager.h"
+#include "../../competitions/IndividualCompetitions/IndividualCompetitionResults.h"
 #include "CompetitionManagerWindow.h"
 
 #include <QSizePolicy>
@@ -24,20 +26,10 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     ui(new Ui::SingleCompetitionConfigWindow),
     type(type)
 {
-    /*competitionRulesParentWidget = nullptr;
-    competitionRulesToolBoxItemLayout = nullptr;
-    existingRulesLabelAndComboBoxLayout = nullptr;
-    existingCompetitionRulesLabel = nullptr;
-    existingCompetitionRulesComboBox = nullptr;
-    otherCompetitionSettingsEditor = nullptr;
-    hillEditor = nullptr;
-    windGeneratorSettingsEditor = nullptr;
-    startListDisplayWidget = nullptr;
-    startListParentWidget = nullptr;
-    startListParentLayout = nullptr;
-    pushButton_loadJumpersList = nullptr;*/
-
     ui->setupUi(this);
+
+    ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
+
     delete ui->page_2;
     ui->toolBox->removeItem(1);
 
@@ -121,6 +113,11 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     }
     else if(getType() == SingleCompetition)
     {
+        checkBox_singleCompetitionQualifications = new QCheckBox("Przeprowadzenie kwalifikacji", this);
+        checkBox_singleCompetitionQualifications->setStyleSheet("color: rgb(30, 30, 30);\nQCheckBox::indicator{\nwidth: 40px;\nheight: 30px;\n}");
+        checkBox_singleCompetitionQualifications->setFont(QFont("Quicksand Medium", 12, 650));
+        ui->formLayout_competitionOptions->addWidget(checkBox_singleCompetitionQualifications);
+
         setWindowTitle("Konfiguracja pojedynczego konkursu");
         competitionJumpers = GlobalDatabase::get()->getGlobalJumpers();
         competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers);
@@ -194,8 +191,9 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
     competitionRulesParentWidget->setLayout(competitionRulesToolBoxItemLayout);
     existingRulesLabelAndComboBoxLayout = new QVBoxLayout(competitionRulesParentWidget);
     competitionRulesToolBoxItemLayout->addLayout(existingRulesLabelAndComboBoxLayout);
-    competitionRulesToolBoxItemLayout->addSpacerItem(new QSpacerItem(35, 35, QSizePolicy::Maximum, QSizePolicy::Maximum));
+    //competitionRulesToolBoxItemLayout->addSpacerItem(new QSpacerItem(35, 35, QSizePolicy::Maximum, QSizePolicy::Maximum));
     competitionRulesToolBoxItemLayout->addWidget(competitionRulesEditor);
+    //competitionRulesToolBoxItemLayout->addSpacerItem(new QSpacerItem(35, 35, QSizePolicy::Expanding, QSizePolicy::Expanding));
 
     existingCompetitionRulesLabel = new QLabel("Istniejące zasady konkursu", competitionRulesParentWidget);
     existingCompetitionRulesLabel->setStyleSheet("color: rgb(20, 20, 20);");
@@ -307,20 +305,23 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
     case SingleCompetition:{
         CompetitionInfo info;
         info.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
-        CompetitionRules rules = GlobalDatabase::get()->getGlobalCompetitionsRules().at(0);
-        info.setRules(&rules);
+        info.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
         info.setDate(QDate::currentDate());
+        info.setResults(new IndividualCompetitionResults());
 
         IndividualCompetitionManager * competitionManager = new IndividualCompetitionManager;
         competitionManager->setStartingJumpers(CompetitionStartListDisplayWidget::convertToVectorObjectOfPointers(&competitionJumpers));
-        competitionManager->setActualRoundJumpers(competitionManager->getStartingJumpers()); // Ponieważ nie ma kwalifikacji
         competitionManager->setCompetitionInfo(&info);
-        competitionManager->setCompetitionRules(rules);
-        competitionManager->setActualJumperIndex(0);
+        competitionManager->setCompetitionRules(info.getRulesPointer());
+        competitionManager->setResults(info.getResults());
         competitionManager->setActualWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
         competitionManager->setActualGate(ui->spinBox_startGate->value());
-
-        competitionManager->simulateNext();
+        competitionManager->setRunQualificationsForSingleCompetition(checkBox_singleCompetitionQualifications->isChecked());
+        competitionManager->initActualRound();
+        competitionManager->setupJumpersForActualRound();
+        competitionManager->setActualJumperIndex(0);
+        competitionManager->fillCompletedJumpsToStartOfRound();
+        competitionManager->setDSQBaseProbability(ui->spinBox_dsqProbability->value());
 
         qDebug()<<"ok";
 

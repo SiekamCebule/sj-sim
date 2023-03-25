@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     source/UI/Competition/CompetitionManagerWindow.cpp \
+    source/UI/Competition/Results/ResultsTableModel.cpp \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp \
     source/UI/Competition/StartList/StartListModel.cpp \
@@ -32,12 +33,14 @@ SOURCES += \
     source/UI/EditorWidgets/JumperEditorWidget.cpp \
     source/UI/SingleJumps/SingleJumpsResultsWindow.cpp \
     source/competitions/AbstractCompetitionManager.cpp \
-    source/competitions/AbstractCompetitionResult.cpp \
+    source/competitions/AbstractCompetitionResults.cpp \
+    source/competitions/AbstractCompetitionSingleResult.cpp \
     source/competitions/CompetitionInfo.cpp \
     source/competitions/CompetitionResults.cpp \
     source/competitions/CompetitionRules.cpp \
     source/competitions/IndividualCompetitions/IndividualCompetitionManager.cpp \
-    source/competitions/IndividualCompetitions/IndividualCompetitionResult.cpp \
+    source/competitions/IndividualCompetitions/IndividualCompetitionResults.cpp \
+    source/competitions/IndividualCompetitions/IndividualCompetitionSingleResult.cpp \
     source/competitions/RoundInfo.cpp \
     source/global/CountryFlagsManager.cpp \
     source/global/GlobalAppSettings.cpp \
@@ -57,7 +60,7 @@ SOURCES += \
     source/simulator/Landing.cpp \
     source/simulator/Team.cpp \
     source/simulator/Wind.cpp \
-    source/simulator/WindsInfo.cpp \
+    source/simulator/WindsCalculator.cpp \
     source/simulator/wind-generation/WindGenerationSettings.cpp \
     source/simulator/wind-generation/WindsGenerator.cpp \
     source/single-jumps/SingleJumpsManager.cpp \
@@ -69,6 +72,7 @@ SOURCES += \
 
 HEADERS += \
     source/UI/Competition/CompetitionManagerWindow.h \
+    source/UI/Competition/Results/ResultsTableModel.h \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.h \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.h \
     source/UI/Competition/StartList/StartListModel.h \
@@ -92,12 +96,14 @@ HEADERS += \
     source/UI/SingleJumps/SingleJumpsResultsWindow.h \
     source/UI/mainwindow.h \
     source/competitions/AbstractCompetitionManager.h \
-    source/competitions/AbstractCompetitionResult.h \
+    source/competitions/AbstractCompetitionResults.h \
+    source/competitions/AbstractCompetitionSingleResult.h \
     source/competitions/CompetitionInfo.h \
     source/competitions/CompetitionResults.h \
     source/competitions/CompetitionRules.h \
     source/competitions/IndividualCompetitions/IndividualCompetitionManager.h \
-    source/competitions/IndividualCompetitions/IndividualCompetitionResult.h \
+    source/competitions/IndividualCompetitions/IndividualCompetitionResults.h \
+    source/competitions/IndividualCompetitions/IndividualCompetitionSingleResult.h \
     source/competitions/RoundInfo.h \
     source/global/CountryFlagsManager.h \
     source/global/GlobalAppSettings.h \
@@ -115,7 +121,7 @@ HEADERS += \
     source/simulator/Landing.h \
     source/simulator/Team.h \
     source/simulator/Wind.h \
-    source/simulator/WindsInfo.h \
+    source/simulator/WindsCalculator.h \
     source/simulator/wind-generation/WindGenerationSettings.h \
     source/simulator/wind-generation/WindsGenerator.h \
     source/single-jumps/SingleJumpsManager.h \

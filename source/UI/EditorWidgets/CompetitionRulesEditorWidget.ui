@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>463</width>
-    <height>508</height>
+    <width>403</width>
+    <height>567</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -25,7 +31,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -38,7 +44,7 @@ color: black;</string>
       <widget class="QLineEdit" name="lineEdit_name">
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -56,7 +62,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -69,7 +75,7 @@ color: black;</string>
       <widget class="QComboBox" name="comboBox_competitionType">
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -97,7 +103,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -114,7 +120,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -131,7 +137,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -148,7 +154,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -164,7 +170,7 @@ color: black;</string>
       <widget class="QLabel" name="label_8">
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -178,7 +184,7 @@ w drużynie</string>
       <widget class="QSpinBox" name="spinBox_jumpersInTeamCount">
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -199,7 +205,7 @@ margin-top: 6px;
       <widget class="QLabel" name="label_7">
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -212,7 +218,7 @@ margin-top: 6px;
       <widget class="QSpinBox" name="spinBox_roundsCount">
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -233,7 +239,7 @@ margin-top: 6px;
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -261,7 +267,7 @@ margin-top: 6px;
        </property>
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="toolTip">
@@ -309,7 +315,7 @@ margin-top: 6px;
        <property name="font">
         <font>
          <family>Ubuntu</family>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -344,7 +350,7 @@ margin-top: 6px;
        </property>
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="toolTip">
@@ -384,7 +390,7 @@ margin-top: 6px;
        <property name="font">
         <font>
          <family>Ubuntu</family>
-         <pointsize>13</pointsize>
+         <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -407,6 +413,12 @@ margin-top: 6px;
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="styleSheet">
       <string notr="true">QScrollArea{
 background: transparent;
@@ -426,13 +438,19 @@ width: 5px;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>429</width>
-        <height>137</height>
+        <width>383</width>
+        <height>180</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QToolBox" name="toolBox_rounds">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <family>Quicksand Medium</family>
@@ -447,8 +465,8 @@ width: 5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>411</width>
-            <height>41</height>
+            <width>365</width>
+            <height>90</height>
            </rect>
           </property>
           <attribute name="label">
@@ -460,8 +478,8 @@ width: 5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>411</width>
-            <height>41</height>
+            <width>365</width>
+            <height>90</height>
            </rect>
           </property>
           <attribute name="label">
@@ -469,19 +487,6 @@ width: 5px;
           </attribute>
          </widget>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>

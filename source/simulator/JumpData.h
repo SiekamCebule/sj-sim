@@ -2,15 +2,15 @@
 #define JUMPDATA_H
 
 #include <QVector>
+#include <QJsonObject>
 
 #include "../utilities/ClassWithID.h"
 #include "../competitions/CompetitionRules.h"
-#include "WindsInfo.h"
+#include "WindsCalculator.h"
 #include "Landing.h"
 #include "Jumper.h"
 #include "Hill.h"
 #include "JumpSimulationData.h"
-#include <QJsonObject>
 
 
 class JumpSimulator;
@@ -36,7 +36,7 @@ private:
     JumpSimulationData simulationData;
     CompetitionRules * rules;
 
-    WindsInfo windsInfo;
+    QVector<Wind> winds;
     double averagedWind;
 
     bool isDSQOccured;
@@ -70,8 +70,6 @@ public:
     void setHill(Hill *newHill);
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
-    WindsInfo getWindsInfo() const;
-    void setWindsInfo(const WindsInfo &newWindsInfo);
     JumpSimulator *getSimulator() const;
     void setSimulator(JumpSimulator *newSimulator);
     int getGate() const;
@@ -84,6 +82,8 @@ public:
     void setIsDSQOccured(bool newIsDSQOccured);
     CompetitionRules *getRules() const;
     void setRules(CompetitionRules *newRules);
+    QVector<Wind> getWinds() const;
+    void setWinds(const QVector<Wind> &newWinds);
 };
 
 QDebug operator<<(QDebug d, const JumpData & jumpData);

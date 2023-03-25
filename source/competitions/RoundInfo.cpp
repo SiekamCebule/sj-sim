@@ -14,3 +14,13 @@ void RoundInfo::setCount(int newCount)
 {
     count = newCount;
 }
+
+bool RoundInfo::getSortStartList() const
+{
+    return sortStartList;
+}
+
+void RoundInfo::setSortStartList(bool newSortStartList)
+{
+    sortStartList = newSortStartList;
+}

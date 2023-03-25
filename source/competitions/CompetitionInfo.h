@@ -3,7 +3,7 @@
 
 class Hill;
 #include "CompetitionRules.h"
-#include "CompetitionResults.h"
+#include "AbstractCompetitionResults.h"
 #include "CompetitionInfo.h"
 
 #include <QDate>
@@ -12,19 +12,24 @@ class CompetitionInfo
 {
 public:
     CompetitionInfo();
-
-    QDate getDate() const;
-    void setDate(const QDate &newDate);
-    CompetitionRules *getRules() const;
-    void setRules(CompetitionRules *newRules);
-    Hill *getHill() const;
-    void setHill(Hill *newHill);
+    ~CompetitionInfo();
 
 private:
     Hill * hill;
-    CompetitionResults * results;
-    CompetitionRules * rules;
+    CompetitionRules rules;
+    AbstractCompetitionResults * results;
     QDate date;
+
+public:
+    QDate getDate() const;
+    void setDate(const QDate &newDate);
+    Hill *getHill() const;
+    void setHill(Hill *newHill);
+    CompetitionRules getRules() const;
+    CompetitionRules * getRulesPointer() {return &rules;}
+    void setRules(const CompetitionRules &newRules);
+    AbstractCompetitionResults *getResults() const;
+    void setResults(AbstractCompetitionResults *newResults);
 };
 
 #endif // COMPETITIONINFO_H

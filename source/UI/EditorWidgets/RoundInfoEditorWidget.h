@@ -18,6 +18,7 @@ public:
 
     void fillRoundInfoInput();
     int getCountFromInput();
+    bool getSortStartListFromInput();
 
     RoundInfo *getRoundInfo() const;
     void setRoundInfo(RoundInfo *newRoundInfo);

@@ -24,6 +24,7 @@ CompetitionRulesEditorWidget::CompetitionRulesEditorWidget(QWidget *parent) :
 
 CompetitionRulesEditorWidget::~CompetitionRulesEditorWidget()
 {
+    removeConnectsForWidgetChange();
     delete ui;
 }
 
@@ -108,6 +109,7 @@ QVector<RoundInfo> CompetitionRulesEditorWidget::getRoundsFromInput()
     {
         RoundInfo round;
         round.setCount(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getCountFromInput());
+        round.setSortStartList(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getSortStartListFromInput());
         rounds.push_back(round);
     }
     return rounds;
@@ -148,6 +150,16 @@ short CompetitionRulesEditorWidget::getCompetitionTypeFromInput()
     return ui->comboBox_competitionType->currentIndex();
 }
 
+short CompetitionRulesEditorWidget::getWindCompensationDistanceEffectFromInput()
+{
+    return ui->comboBox_windCompensationDistanceEffect->currentIndex();
+}
+
+short CompetitionRulesEditorWidget::getWindAverageCalculatingTypeFromInput()
+{
+    return ui->comboBox_windAverageCalculatingType->currentIndex();
+}
+
 CompetitionRules CompetitionRulesEditorWidget::getCompetitionRulesFromWidgetInputs()
 {
     CompetitionRules rules;
@@ -156,8 +168,11 @@ CompetitionRules CompetitionRulesEditorWidget::getCompetitionRulesFromWidgetInpu
     rules.setHasWindCompensations(getHasWindCompensations());
     rules.setHasGateCompensations(getHasGateCompensations());
     rules.setHasJudgesPoints(getHasJudgesPoints());
+    rules.setHasDsq(getHasDsq());
     rules.setCompetitionType(getCompetitionTypeFromInput());
     rules.setRounds(getRoundsFromInput());
+    rules.setWindAverageCalculatingType(getWindAverageCalculatingTypeFromInput());
+    rules.setWindCompensationDistanceEffect(getWindCompensationDistanceEffectFromInput());
     return rules;
 }
 
@@ -167,7 +182,7 @@ void CompetitionRulesEditorWidget::removeConnectsForWidgetChange()
         disconnect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &CompetitionRulesEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "spinBox")){
-        disconnect(dynamic_cast<QSpinBox *>(w), &QSpinBox::editingFinished, this, &CompetitionRulesEditorWidget::changed);
+        disconnect(dynamic_cast<QSpinBox *>(w), &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "comboBox")){
         disconnect(dynamic_cast<QComboBox *>(w), &QComboBox::currentIndexChanged, this, &CompetitionRulesEditorWidget::changed);
@@ -183,7 +198,7 @@ void CompetitionRulesEditorWidget::setupConnectsForWidgetChange()
         connect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &CompetitionRulesEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "spinBox")){
-        connect(dynamic_cast<QSpinBox *>(w), &QSpinBox::editingFinished, this, &CompetitionRulesEditorWidget::changed);
+        connect(dynamic_cast<QSpinBox *>(w), &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "comboBox")){
         connect(dynamic_cast<QComboBox *>(w), &QComboBox::currentIndexChanged, this, &CompetitionRulesEditorWidget::changed);

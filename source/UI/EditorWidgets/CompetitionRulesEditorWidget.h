@@ -29,6 +29,8 @@ public:
     bool getHasDsq();
     int getJumpersCountInTeam();
     short getCompetitionTypeFromInput();
+    short getWindCompensationDistanceEffectFromInput();
+    short getWindAverageCalculatingTypeFromInput();
 
     CompetitionRules getCompetitionRulesFromWidgetInputs();
 

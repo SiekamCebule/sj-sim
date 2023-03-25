@@ -28,6 +28,7 @@ JumperEditorWidget::JumperEditorWidget(Jumper *jumper, CharacteristicsEditor *ch
 
 JumperEditorWidget::~JumperEditorWidget()
 {
+    removeConnectsForWidgetChange();
     delete ui;
 }
 
@@ -116,11 +117,12 @@ void JumperEditorWidget::on_lineEdit_countryCode_textChanged(const QString &arg1
 
 void JumperEditorWidget::removeConnectsForWidgetChange()
 {
+    //qDebug()<<"disconnect";
     for(auto & w : MyFunctions::getWidgetsVector(this, "lineEdit")){
         disconnect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &JumperEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "doubleSpinBox")){
-        disconnect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::editingFinished, this, &JumperEditorWidget::changed);
+        disconnect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::valueChanged, this, &JumperEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "comboBox")){
         disconnect(dynamic_cast<QComboBox *>(w), &QComboBox::currentIndexChanged, this, &JumperEditorWidget::changed);
@@ -133,7 +135,7 @@ void JumperEditorWidget::setupConnectsForWidgetChange()
         connect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &JumperEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "doubleSpinBox")){
-        connect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::editingFinished, this, &JumperEditorWidget::changed);
+        connect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::valueChanged, this, &JumperEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "comboBox")){
         connect(dynamic_cast<QComboBox *>(w), &QComboBox::currentIndexChanged, this, &JumperEditorWidget::changed);

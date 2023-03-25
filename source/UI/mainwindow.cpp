@@ -5,7 +5,7 @@
 
 #include "../simulator/Jumper.h"
 #include "../simulator/JumperSkills.h"
-#include "../simulator/WindsInfo.h"
+#include "../simulator/WindsCalculator.h"
 #include "../simulator/JumpSimulator.h"
 #include "../simulator/Characteristic.h"
 #include "../simulator/Hill.h"

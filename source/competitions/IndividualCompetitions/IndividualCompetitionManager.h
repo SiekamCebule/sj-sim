@@ -13,6 +13,14 @@ class IndividualCompetitionManager : public AbstractCompetitionManager
 public:
     IndividualCompetitionManager();
     void simulateNext(const JumpManipulator &manipulator = JumpManipulator());
+    bool checkRoundEnd();
+    bool checkCompetitionEnd();
+
+    void setupNextRound();
+    void fillCompletedJumpsToStartOfRound();
+
+    int getCompetitiorsCountForActualRound();
+    bool getSortStartListForActualRound();
 
 signals:
     void actualJumperIndexChanged();
@@ -24,7 +32,7 @@ private:
     int actualJumperIndex;
 
 public:
-    QVector<Jumper *> setupFirstRoundJumpers(CompetitionResults * qualificationsResults);
+    void setupJumpersForActualRound();
 
 public:
     void setActualJumperIndex(int newActualJumperIndex);
@@ -35,6 +43,7 @@ public:
     void setActualRoundJumpers(const QVector<Jumper *> &newActualRoundJumpers);
     void inncrementActualJumperIndex();
     void decrementActualJumperIndex();
+    Jumper *getActualJumper() const;
 };
 
 #endif // INDIVIDUALCOMPETITIONMANAGER_H

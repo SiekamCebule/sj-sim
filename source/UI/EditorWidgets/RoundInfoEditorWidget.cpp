@@ -20,12 +20,18 @@ void RoundInfoEditorWidget::fillRoundInfoInput()
         qDebug()<<"roundInfo is nullptr!";
     else{
         ui->spinBox_count->setValue(roundInfo->getCount());
+        ui->checkBox_sortStartList->setChecked(roundInfo->getSortStartList());
     }
 }
 
 int RoundInfoEditorWidget::getCountFromInput()
 {
     return ui->spinBox_count->value();
+}
+
+bool RoundInfoEditorWidget::getSortStartListFromInput()
+{
+    return ui->checkBox_sortStartList->isChecked();
 }
 
 RoundInfo *RoundInfoEditorWidget::getRoundInfo() const

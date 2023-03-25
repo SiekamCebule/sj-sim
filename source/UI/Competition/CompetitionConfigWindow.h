@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QCheckBox>
 #include "../../simulator/Jumper.h"
 #include "../../simulator/Team.h"
 
@@ -49,6 +50,8 @@ private:
     QComboBox * existingCompetitionRulesComboBox;
     void setupCompetitionRulesToolBoxItem();
     //
+
+    QCheckBox * checkBox_singleCompetitionQualifications;
 
 
     OtherCompetitionSettingsWidget * otherCompetitionSettingsEditor;

@@ -62,7 +62,7 @@ QVector<Wind> WindsGenerator::generateWinds()
         double frontSideProb = 250 + settings->getLevelOfCharacteristic("front-side-wind-probability") * 100;
         double frontProb = 250 + settings->getLevelOfCharacteristic("front-wind-probability") * 100;
 
-        const double baseDirectionChanceMultiplier = 95 - ((settings->getWindDirectionInstability()) * 23.53);
+        const double baseDirectionChanceMultiplier = 95 - ((settings->getWindDirectionInstability()) * 18.5);
 
         if(settings->getWindDirectionInstability() == 0)
         {

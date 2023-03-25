@@ -2,12 +2,30 @@
 
 #include "../simulator/Hill.h"
 #include "CompetitionRules.h"
+#include "AbstractCompetitionResults.h"
 
 #include <QDate>
 
 CompetitionInfo::CompetitionInfo()
 {
 
+}
+
+CompetitionInfo::~CompetitionInfo()
+{
+    if(results != nullptr){
+        delete results;
+    }
+}
+
+AbstractCompetitionResults *CompetitionInfo::getResults() const
+{
+    return results;
+}
+
+void CompetitionInfo::setResults(AbstractCompetitionResults *newResults)
+{
+    results = newResults;
 }
 
 QDate CompetitionInfo::getDate() const
@@ -20,16 +38,6 @@ void CompetitionInfo::setDate(const QDate &newDate)
     date = newDate;
 }
 
-CompetitionRules *CompetitionInfo::getRules() const
-{
-    return rules;
-}
-
-void CompetitionInfo::setRules(CompetitionRules *newRules)
-{
-    rules = newRules;
-}
-
 Hill *CompetitionInfo::getHill() const
 {
     return hill;
@@ -38,4 +46,14 @@ Hill *CompetitionInfo::getHill() const
 void CompetitionInfo::setHill(Hill *newHill)
 {
     hill = newHill;
+}
+
+CompetitionRules CompetitionInfo::getRules() const
+{
+    return rules;
+}
+
+void CompetitionInfo::setRules(const CompetitionRules &newRules)
+{
+    rules = newRules;
 }

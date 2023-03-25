@@ -7,8 +7,8 @@
 #include <QRandomGenerator>
 #include <math.h>
 
-JumpSimulator::JumpSimulator(Jumper *jumper, const WindsInfo & windsInfo, Hill *hill) : jumper(jumper),
-    windsInfo(windsInfo),
+JumpSimulator::JumpSimulator(Jumper *jumper, const QVector<Wind> &winds, Hill *hill) : jumper(jumper),
+    winds(winds),
     hill(hill)
 {
     simulationData = nullptr;
@@ -22,8 +22,11 @@ JumpSimulator::JumpSimulator(Jumper *jumper, const WindsInfo & windsInfo, Hill *
 bool JumpSimulator::generateDSQ()
 {
     if(jumpData.rules->getHasDsq() == true){
-        int probability = getDSQBaseProbability() / (1 + (jumperSkills->getLevelOfCharacteristic("dsq-probability") / 7));
-        qDebug()<<probability;
+        int probability = 0;
+        if(manipulator->getExactDSQProbability() > (-1))
+            probability = manipulator->getExactDSQProbability();
+        else probability = getDSQBaseProbability() / (1 + (jumperSkills->getLevelOfCharacteristic("dsq-probability") / 7));
+
         int random = MyRandom::randomInt(0, probability + 1);
         if(random == probability)
             return true;
@@ -31,20 +34,16 @@ bool JumpSimulator::generateDSQ()
     return false;
 }
 
-void JumpSimulator::simulateJump(bool manipulate)
+void JumpSimulator::simulateJump()
 {
-    qDebug()<<"jumper: "<<jumper;
     jumpData = JumpData();
     jumpData.setSimulator(this);
     simulationData = &jumpData.simulationData;
-    qDebug()<<"dz";
 
     resetTemporaryParameters();
     updateJumperSkills();
-    qDebug()<<"dz";
     hill->setRealHSByCharacteristic();
     setupJumpData();
-    qDebug()<<"dz";
     if(generateDSQ() == true)
     {
         jumpData.setIsDSQOccured(true);
@@ -52,56 +51,55 @@ void JumpSimulator::simulateJump(bool manipulate)
     }
     jumpData.setIsDSQOccured(false);
 
-    qDebug()<<"kz";
+    if(manipulator->getExactWinds().size() > 0){
+        this->setWinds(manipulator->getExactWinds());
+    }
     generateTakeoffRating();
-    qDebug()<<"dz";
     generateFlightRating();
     generateDistance();
     generateWindEffects();
-    qDebug()<<"dz";
     if(jumpData.getDistance() < 0) jumpData.distance = 0;
     generateLanding();
     generateJudges();
-    qDebug()<<"dz";
 
     calculateCompensations();
-    qDebug()<<"bb";
     calculatePoints();
-    qDebug()<<"bb";
     jumpData.setDistance(roundDoubleToHalf(jumpData.getDistance()));
-    qDebug()<<"bb";
 }
 
 void JumpSimulator::generateTakeoffRating()
 {
-    double ratingMultiplier = 0.825  + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
+    double ratingMultiplier = 0.76 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
     simulationData->takeoffRating = jumperSkills->getTakeoffTechnique() * ratingMultiplier;
 
-    ratingMultiplier = 0.55 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect");
+    ratingMultiplier = 0.59 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect");
     simulationData->takeoffRating += jumperSkills->getTakeoffPower() * ratingMultiplier;
 
-    ratingMultiplier = 0.825 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
+    ratingMultiplier = 0.85 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     simulationData->takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
-    simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 3;
+    simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 0.96;
 
     double random = JumpSimulator::getRandomForJumpSimulation(JumpSimulator::TakeoffRating, jumper);
     random *= 1 + (0.14 * hill->getLevelOfCharacteristic("takeoff-randomness-effect"));
     simulationData->takeoffRating += random;
 
-    if(simulationData->takeoffRating < 0.1)
-        simulationData->takeoffRating = 0.1;
+    simulationData->takeoffRating += manipulator->getTakeoffRatingBonus();
+    if(simulationData->takeoffRating < manipulator->getTakeoffRatingRange().first)
+        simulationData->takeoffRating = manipulator->getTakeoffRatingRange().first;
+    else if(simulationData->takeoffRating > manipulator->getTakeoffRatingRange().second && manipulator->getTakeoffRatingRange().second > (-1))
+        simulationData->takeoffRating = manipulator->getTakeoffRatingRange().second;
 }
 
 void JumpSimulator::generateFlightRating()
 {
-    double ratingMultiplier = 0.85  + 0.12 * hill->getLevelOfCharacteristic("flight-technique-effect");
+    double ratingMultiplier = 0.97  + 0.12 * hill->getLevelOfCharacteristic("flight-technique-effect");
     simulationData->flightRating = jumperSkills->getFlightTechnique() * ratingMultiplier;
 
-    ratingMultiplier = 1.35 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
+    ratingMultiplier = 1.23 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
     simulationData->flightRating += jumperSkills->getForm() * ratingMultiplier;
 
-    simulationData->flightRating -= std::abs(Hill::calculateBestFlightHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 3);
+    simulationData->flightRating -= std::abs(Hill::calculateBestFlightHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 1.525);
 
     double random = JumpSimulator::getRandomForJumpSimulation(JumpSimulator::FlightRating, jumper);
     random *= 1 + (0.14 * hill->getLevelOfCharacteristic("flight-randomness-effect"));
@@ -111,6 +109,12 @@ void JumpSimulator::generateFlightRating()
         simulationData->flightRating = 0.1;
 
     simulationData->flightRating *= getMultiplierForFlightStyleEffect();
+
+    simulationData->flightRating += manipulator->getFlightRatingBonus();
+    if(simulationData->flightRating < manipulator->getFlightRatingRange().first)
+        simulationData->flightRating = manipulator->getFlightRatingRange().first;
+    else if(simulationData->flightRating > manipulator->getFlightRatingRange().second && manipulator->getFlightRatingRange().second > (-1))
+        simulationData->flightRating = manipulator->getFlightRatingRange().second;
 }
 
 double JumpSimulator::getMultiplierForFlightStyleEffect()
@@ -135,17 +139,24 @@ void JumpSimulator::generateDistance()
     jumpData.distance += simulationData->flightRating * hill->getFlightEffect();
     jumpData.distance += *getGate() * (hill->getPointsForGate() / hill->getPointsForMeter());
     jumpData.distance = roundDoubleToHalf(jumpData.getDistance());
+
+    jumpData.distance += manipulator->getDistanceBonus();
+
+    if(jumpData.distance < manipulator->getDistanceRange().first)
+        jumpData.distance = manipulator->getDistanceRange().first;
+    else if(jumpData.distance > manipulator->getDistanceRange().second && manipulator->getDistanceRange().second > (-1))
+        jumpData.distance = manipulator->getDistanceRange().second;
 }
 
 void JumpSimulator::generateWindEffects()
 {
     double change = 0;
     int i = 0;
-    for(const auto & wind : windsInfo.getWinds())
+    for(const auto & wind : getWinds())
     {
         if(wind.getDirection() == Wind::Back)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 4.5);
+            change = wind.getStrength() * (getWindSegmentDistance() / 6);
             change *= MyRandom::randomDouble(0.975, 1.025);
             change *= 1.01 - (jumperSkills->getFlightTechnique() / 2200);
             switch(jumperSkills->getFlightStyle())
@@ -160,7 +171,7 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::BackSide)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 16.5);
+            change = wind.getStrength() * (getWindSegmentDistance() / 20);
             change *= MyRandom::randomDouble(0.875, 1.125);
             change *= 1.02 - (jumperSkills->getFlightTechnique() / 1200);
             switch(jumperSkills->getFlightStyle())
@@ -179,7 +190,7 @@ void JumpSimulator::generateWindEffects()
             if(change < 0)
             {
                 change *= MyRandom::randomDouble(0.88, 1.12);
-                change *= 1.03 - (jumperSkills->getFlightTechnique() / 400);
+                change *= 1.03 - (jumperSkills->getFlightTechnique() / 510);
                 switch(jumperSkills->getFlightStyle())
                 {
                 case JumperSkills::VStyle: change *= 0.995; break;
@@ -193,7 +204,7 @@ void JumpSimulator::generateWindEffects()
             else if(change > 0)
             {
                 change *= MyRandom::randomDouble(0.80, 1.20);
-                change *= 0.985 + (jumperSkills->getFlightTechnique() / 500);
+                change *= 0.985 + (jumperSkills->getFlightTechnique() / 677);
                 switch(jumperSkills->getFlightStyle())
                 {
                 case JumperSkills::VStyle: change *= 0.992; break;
@@ -207,9 +218,9 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::FrontSide)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 35);
+            change = wind.getStrength() * (getWindSegmentDistance() / 50);
             change *= MyRandom::randomDouble(0.845, 1.155);
-            change *= 0.94 + (jumperSkills->getFlightTechnique() / 420);
+            change *= 0.94 + (jumperSkills->getFlightTechnique() / 400);
             switch(jumperSkills->getFlightStyle())
             {
             case JumperSkills::VStyle: change *= 0.97; break;
@@ -222,9 +233,9 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::Front)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 10.5);
+            change = wind.getStrength() * (getWindSegmentDistance() / 15.75);
             change *= MyRandom::randomDouble(0.82, 1.18);
-            change *= 0.88 + (jumperSkills->getFlightTechnique() / 197.5);
+            change *= 0.88 + (jumperSkills->getFlightTechnique() / 180);
             switch(jumperSkills->getFlightStyle())
             {
             case JumperSkills::VStyle: change *= 0.95; break;
@@ -235,7 +246,7 @@ void JumpSimulator::generateWindEffects()
             change *= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 110);
             change *= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 48);
         }
-        if(i != windsInfo.getWinds().count()){
+        if(i != getWinds().count()){
             if(jumpData.getDistance() < (i + 1) * getWindSegmentDistance())
             {
                 double percent = double(jumpData.getDistance() - (getWindSegmentDistance() * i)) / ((i + 1) * getWindSegmentDistance());
@@ -301,10 +312,18 @@ void JumpSimulator::generateLanding()
         i++;
     }
 
+    if(manipulator->getExactLandingType() > (-1))
+        jumpData.landing.setType(manipulator->getExactLandingType());
 
     //stabilność lądowania   -     od 1 do 5
     double landingImbalance = MyRandom::reducingChancesRandom(0, 5, 0.05, 1, (0.97 + (jumperSkills->getLandingStyle() / 100) + hill->getLandingImbalanceChangeByHillProfile(jumpData.distance)), MyRandom::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
-    jumpData.landing.setImbalance(landingImbalance);
+
+    jumpData.landing.setImbalance(landingImbalance + manipulator->getLandingInstabilityBonus());
+    if(jumpData.landing.getImbalance() < manipulator->getLandingInstabilityRange().first)
+        jumpData.landing.setImbalance(manipulator->getLandingInstabilityRange().first);
+    else if(jumpData.landing.getImbalance() > manipulator->getLandingInstabilityRange().second && manipulator->getLandingInstabilityRange().second > (-1))
+        jumpData.landing.setImbalance(manipulator->getLandingInstabilityRange().second);
+
 }
 
 void JumpSimulator::generateJudges()
@@ -335,6 +354,12 @@ void JumpSimulator::generateJudges()
             simulationData->judgesRating -= MyRandom::randomDouble(7, 7.8);
             break;
         }
+
+        simulationData->judgesRating += manipulator->getJudgesRatingBonus();
+        if(simulationData->judgesRating < manipulator->getJudgesRatingRange().first)
+            simulationData->judgesRating = manipulator->getJudgesRatingRange().first;
+        else if(simulationData->judgesRating > manipulator->getJudgesRatingRange().second && manipulator->getJudgesRatingRange().second > (-1))
+            simulationData->judgesRating = manipulator->getJudgesRatingRange().second;
 
         if(simulationData->judgesRating > 20)
             simulationData->judgesRating = 20;
@@ -381,23 +406,18 @@ void JumpSimulator::generateJudges()
         simulationData->setJudgesRating(0);
         jumpData.judges.fill(0, 5);
     }
+    if(manipulator->getExactJudges().size() == 5)
+        jumpData.judges = manipulator->getExactJudges();
 }
 
 void JumpSimulator::calculateCompensations()
 {
-    qDebug()<<jumpData.rules->getHasDsq();
     jumpData.setWindCompensation(0);
     if(jumpData.rules->getHasWindCompensations() == true){
-        WindsInfo tempWindsInfo = windsInfo;
-        QVector<Wind> winds = tempWindsInfo.getWinds();
-        qDebug()<<"s";
-        qDebug()<<competitionRules->getWindCompensationDistanceEffect();
+        QVector<Wind> tempWinds = getWinds();
         switch(competitionRules->getWindCompensationDistanceEffect()) //
         {
         case WindCompensationDistanceEffect::Original:
-            qDebug()<<jumpData.getDistance();
-            qDebug()<<", "<<hill->getKPoint();
-            qDebug()<<winds.count()<<", "<<hill->getKPoint();
             if(jumpData.getDistance() <= (0.75 * hill->getKPoint())){
                 int howManyToRemove = winds.count() - std::round((0.75 * hill->getKPoint()) / getWindSegmentDistance());
                 for(int i=0; i<howManyToRemove; i++)
@@ -405,7 +425,7 @@ void JumpSimulator::calculateCompensations()
             }
             break;
         case WindCompensationDistanceEffect::Full:
-            for(int i=0; i<tempWindsInfo.getWinds().count(); i++)
+            for(int i=0; i<tempWinds.count(); i++)
             {
                 if(jumpData.getDistance() < (i + 1) * getWindSegmentDistance())
                 {
@@ -416,9 +436,15 @@ void JumpSimulator::calculateCompensations()
                 }
             }
         }
-        tempWindsInfo.setWinds(winds);
+        tempWinds = winds;
 
-        Wind avgWind = tempWindsInfo.getAveragedWind(competitionRules->getWindAverageCalculatingType());
+        Wind avgWind = WindsCalculator::getAveragedWind(tempWinds, competitionRules->getWindAverageCalculatingType());
+        avgWind.setStrength(avgWind.getStrength() + manipulator->getAveragedWindBonus());
+        if(avgWind.getStrength() < manipulator->getAveragedWindRange().first)
+            avgWind.setStrength(manipulator->getAveragedWindRange().first);
+        else if(avgWind.getStrength() > manipulator->getAveragedWindRange().second && manipulator->getAveragedWindRange().second > (-1))
+            avgWind.setStrength(manipulator->getAveragedWindRange().second);
+
         jumpData.setAveragedWind(avgWind.getStrengthToAveragedWind());
         if(avgWind.getDirection() == Wind::Back)
             jumpData.setWindCompensation(avgWind.getStrength() * hill->getPointsForBackWind());
@@ -426,7 +452,6 @@ void JumpSimulator::calculateCompensations()
             jumpData.setWindCompensation(-(avgWind.getStrength() * hill->getPointsForFrontWind()));
         jumpData.setWindCompensation(roundDoubleToOnePlace(jumpData.getWindCompensation()));
     }
-    qDebug()<<"elo";
 
     jumpData.setGateCompensation(0);
     if(jumpData.rules->getHasGateCompensations() == true){
@@ -469,7 +494,7 @@ void JumpSimulator::setupJumpData()
     jumpData.jumper = getJumper();
     jumpData.hill = getHill();
     jumpData.simulator = this;
-    jumpData.windsInfo = windsInfo;
+    jumpData.winds = winds;
     //sredni wiatr jest zapisywany w jumpDacie w funkcji calculateCompensations().
     jumpData.setGate(*getGate());
     jumpData.rules = getCompetitionRules();
@@ -477,7 +502,7 @@ void JumpSimulator::setupJumpData()
 
 double JumpSimulator::getWindSegmentDistance()
 {
-    return (hill->getKPoint() + (hill->getKPoint() / windsInfo.getWinds().count())) / windsInfo.getWinds().count();
+    return (hill->getKPoint() + (hill->getKPoint() / getWinds().count())) / getWinds().count();
 }
 
 void JumpSimulator::setJumpData(const JumpData &newJumpData)
@@ -517,16 +542,6 @@ void JumpSimulator::setJumper(Jumper *newJumper)
 {
     jumper = newJumper;
     updateJumperSkills();
-}
-
-WindsInfo JumpSimulator::getWindsInfo() const
-{
-    return windsInfo;
-}
-
-void JumpSimulator::setWindsInfo(const WindsInfo &newWindsInfo)
-{
-    windsInfo = newWindsInfo;
 }
 
 int *JumpSimulator::getGate() const
@@ -579,7 +594,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
             deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 55);
             double random = MyRandom::lognormalDistributionRandom(1.7, deviation);
 
-            random += MyRandom::lognormalDistributionRandom(0.94, (0.68) - (jumper->getJumperSkills().getJumpsEquality() / 36));
+            random += MyRandom::lognormalDistributionRandom(0.93, (0.61) - (jumper->getJumperSkills().getJumpsEquality() / 36));
 
             random *= multi;
             if(random < 0) random = 0;
@@ -589,9 +604,9 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         case 1:
             double deviation = 0.54;
             deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 70);
-            double random = MyRandom::lognormalDistributionRandom(0.65, deviation);
+            double random = MyRandom::lognormalDistributionRandom(0.61, deviation);
 
-            random += MyRandom::lognormalDistributionRandom(0.3, (0.59) - (jumper->getJumperSkills().getJumpsEquality() / 124.5));
+            random += MyRandom::lognormalDistributionRandom(0.3, (0.45) - (jumper->getJumperSkills().getJumpsEquality() / 124.5));
 
             random *= multi;
             if(random < 0) random = 0;
@@ -612,7 +627,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
             deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") / 45);
             double random = MyRandom::lognormalDistributionRandom(1.7, deviation);
 
-            random += MyRandom::lognormalDistributionRandom(0.96, (0.695) - (jumper->getJumperSkills().getJumpsEquality() / 25));
+            random += MyRandom::lognormalDistributionRandom(0.95, (0.61) - (jumper->getJumperSkills().getJumpsEquality() / 25));
 
             random *= multi;
             if(random < 0) random = 0;
@@ -622,9 +637,9 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         case 1:
             double deviation = 0.52;
             deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") / 66);
-            double random = MyRandom::lognormalDistributionRandom(0.65, deviation);
+            double random = MyRandom::lognormalDistributionRandom(0.61, deviation);
 
-            random += MyRandom::lognormalDistributionRandom(0.27, (0.465) - (jumper->getJumperSkills().getJumpsEquality() / 161.6));
+            random += MyRandom::lognormalDistributionRandom(0.27, (0.36) - (jumper->getJumperSkills().getJumpsEquality() / 161.6));
 
             random *= multi;
             if(random < 0) random = 0;
@@ -654,4 +669,13 @@ JumpManipulator *JumpSimulator::getManipulator() const
 void JumpSimulator::setManipulator(JumpManipulator *newManipulator)
 {
     manipulator = newManipulator;
+}
+QVector<Wind> JumpSimulator::getWinds() const
+{
+    return winds;
+}
+
+void JumpSimulator::setWinds(const QVector<Wind> &newWinds)
+{
+    winds = newWinds;
 }

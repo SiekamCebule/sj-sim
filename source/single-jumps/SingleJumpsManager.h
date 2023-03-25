@@ -4,7 +4,7 @@
 #include <QVector>
 #include "../simulator/JumpData.h"
 #include "../simulator/Hill.h"
-#include "../simulator/WindsInfo.h"
+#include "../simulator/WindsCalculator.h"
 #include "../simulator/wind-generation/WindsGenerator.h"
 #include "../simulator/wind-generation/WindGenerationSettings.h"
 #include "../simulator/JumpSimulator.h"

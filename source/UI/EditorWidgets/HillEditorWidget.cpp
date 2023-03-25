@@ -41,6 +41,7 @@ HillEditorWidget::HillEditorWidget(QWidget *parent) :
 
 HillEditorWidget::~HillEditorWidget()
 {
+    removeConnectsForWidgetChange();
     delete ui;
 }
 
@@ -214,7 +215,7 @@ void HillEditorWidget::removeConnectsForWidgetChange()
         disconnect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &HillEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "doubleSpinBox")){
-        disconnect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::editingFinished, this, &HillEditorWidget::changed);
+        disconnect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::valueChanged, this, &HillEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "checkBox")){
         disconnect(dynamic_cast<QCheckBox *>(w), &QCheckBox::stateChanged, this, &HillEditorWidget::changed);
@@ -227,7 +228,7 @@ void HillEditorWidget::setupConnectsForWidgetChange()
         connect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &HillEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "doubleSpinBox")){
-        connect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::editingFinished, this, &HillEditorWidget::changed);
+        connect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::valueChanged, this, &HillEditorWidget::changed);
     }
     for(auto & w : MyFunctions::getWidgetsVector(this, "checkBox")){
         connect(dynamic_cast<QCheckBox *>(w), &QCheckBox::stateChanged, this, &HillEditorWidget::changed);

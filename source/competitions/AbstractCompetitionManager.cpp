@@ -4,7 +4,87 @@
 
 AbstractCompetitionManager::AbstractCompetitionManager(short type) : type(type)
 {
-    actualGate = 0;
+    actualGate = actualRound = runQualificationsForSingleCompetition = 0;
+    results = nullptr;
+    competitionRules = nullptr;
+    competitionInfo = nullptr;
+}
+
+void AbstractCompetitionManager::initActualRound()
+{
+    if(getRunQualificationsForSingleCompetition() == true)
+        actualRound = 0;
+    else actualRound = 1;
+}
+
+int AbstractCompetitionManager::getDSQBaseProbability() const
+{
+    return DSQBaseProbability;
+}
+
+void AbstractCompetitionManager::setDSQBaseProbability(int newDSQBaseProbability)
+{
+    DSQBaseProbability = newDSQBaseProbability;
+}
+
+AbstractCompetitionResults *AbstractCompetitionManager::getResults() const
+{
+    return results;
+}
+
+void AbstractCompetitionManager::setResults(AbstractCompetitionResults *newResults)
+{
+    results = newResults;
+}
+
+CompetitionRules *AbstractCompetitionManager::getCompetitionRules() const
+{
+    return competitionRules;
+}
+
+void AbstractCompetitionManager::setCompetitionRules(CompetitionRules *newCompetitionRules)
+{
+    competitionRules = newCompetitionRules;
+}
+
+AbstractCompetitionResults AbstractCompetitionManager::getQualificationsResults() const
+{
+    return qualificationsResults;
+}
+
+QVector<bool> * AbstractCompetitionManager::getCompletedJumpsPointer()
+{
+    return &completedJumps;
+}
+
+QSet<int> * AbstractCompetitionManager::getHasDSQPointer()
+{
+    return &hasDSQ;
+}
+
+QSet<int> * AbstractCompetitionManager::getHasDNSPointer()
+{
+    return &hasDNS;
+}
+
+bool AbstractCompetitionManager::getRunQualificationsForSingleCompetition() const
+{
+    return runQualificationsForSingleCompetition;
+}
+
+void AbstractCompetitionManager::setRunQualificationsForSingleCompetition(bool newRunQualificationsForSingleCompetition)
+{
+    runQualificationsForSingleCompetition = newRunQualificationsForSingleCompetition;
+}
+
+int AbstractCompetitionManager::getActualRound() const
+{
+    return actualRound;
+}
+
+void AbstractCompetitionManager::setActualRound(int newActualRound)
+{
+    actualRound = newActualRound;
 }
 
 int AbstractCompetitionManager::getActualGate() const
@@ -35,16 +115,6 @@ QVector<WindGenerationSettings> AbstractCompetitionManager::getActualWindGenerat
 void AbstractCompetitionManager::setActualWindGenerationSettings(const QVector<WindGenerationSettings> &newActualWindGenerationSettings)
 {
     actualWindGenerationSettings = newActualWindGenerationSettings;
-}
-
-CompetitionRules AbstractCompetitionManager::getCompetitionRules() const
-{
-    return competitionRules;
-}
-
-void AbstractCompetitionManager::setCompetitionRules(const CompetitionRules &newCompetitionRules)
-{
-    competitionRules = newCompetitionRules;
 }
 
 CompetitionInfo *AbstractCompetitionManager::getCompetitionInfo() const

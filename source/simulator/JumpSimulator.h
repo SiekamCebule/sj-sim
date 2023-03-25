@@ -6,7 +6,7 @@
 
 #include "Jumper.h"
 #include "JumpData.h"
-#include "WindsInfo.h"
+#include "WindsCalculator.h"
 #include "Hill.h"
 #include "Landing.h"
 #include "JumpManipulator.h"
@@ -18,11 +18,11 @@ class Competition;
 class JumpSimulator
 {
 public:
-    JumpSimulator(Jumper *jumper = nullptr, const WindsInfo & conditionsInfo = WindsInfo(), Hill *hill = nullptr);
+    JumpSimulator(Jumper *jumper = nullptr, const QVector<Wind> & winds = QVector<Wind>(), Hill *hill = nullptr);
 private:
     Jumper * jumper;
     JumperSkills * jumperSkills; //automatycznie od jumper
-    WindsInfo windsInfo;
+    QVector<Wind> winds;
     Hill * hill;
     int * gate;
     double DSQBaseProbability;
@@ -32,7 +32,7 @@ private:
 
 public:
     //skok
-    void simulateJump(bool manipulate = false);
+    void simulateJump();
 
     void resetTemporaryParameters();
     void updateJumperSkills();
@@ -88,12 +88,12 @@ public:
     void setJumpData(const JumpData &newJumpData);
     int *getGate() const;
     void setGate(int *newGate);
-    WindsInfo getWindsInfo() const;
-    void setWindsInfo(const WindsInfo &newWindsInfo);
     double getDSQBaseProbability() const;
     void setDSQBaseProbability(double newDSQBaseProbability);
     CompetitionRules *getCompetitionRules() const;
     void setCompetitionRules(CompetitionRules *newCompetitionRules);
+    QVector<Wind> getWinds() const;
+    void setWinds(const QVector<Wind> &newWinds);
 };
 
 #endif // JUMPSIMULATOR_H

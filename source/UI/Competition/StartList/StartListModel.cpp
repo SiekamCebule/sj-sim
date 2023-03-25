@@ -1,15 +1,20 @@
 #include "StartListModel.h"
 #include "../../../global/CountryFlagsManager.h"
+#include "../../../competitions/AbstractCompetitionManager.h"
 #include <QIcon>
 #include <QFont>
 #include <QColor>
 #include <QBrush>
 
-StartListModel::StartListModel(QObject *parent)
+StartListModel::StartListModel(AbstractCompetitionManager * manager, QObject *parent)
     : QAbstractListModel(parent)
 {
     jumpers = nullptr;
     teams = nullptr;
+
+    completedJumps = manager->getCompletedJumpsPointer();
+    hasDSQ = manager->getHasDSQPointer();
+    hasDNS = manager->getHasDNSPointer();
 }
 
 QVariant StartListModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -52,32 +57,51 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
         return Qt::AlignHCenter;
     }
     else if(role == Qt::ForegroundRole){
-        return QBrush(QColor(qRgb(35, 35, 35)));
+        if(completedJumps->count() > index.row()){
+            if(completedJumps->at(index.row()) == true){
+                return QBrush(QColor(qRgb(77, 77, 77)));
+            }
+            else{
+                return QBrush(QColor("black"));
+            }
+        }
     }
     else if(role == Qt::BackgroundRole){
-        if(completedJumps.count() < index.row()){
-            if(completedJumps.at(index.row() == true))
-                return QBrush(QColor(qRgb(228, 237, 230)));
-            else return QBrush(QColor("white"));
+        if(completedJumps->count() > index.row()){
+            if(completedJumps->at(index.row()) == true){
+                return QBrush(QColor(qRgb(242, 242, 242)));
+            }
+            else{
+                return QBrush(QColor("white"));
+            }
         }
     }
     else if(role == Qt::FontRole){
-        return QFont("Ubuntu", 10);
+        if(completedJumps->count() > index.row()){
+            QFont font("Ubuntu", 10);
+            if(completedJumps->at(index.row()) == true){
+                font.setItalic(true);
+            }
+            else{
+                font.setPointSize(11);
+            }
+        }
     }
 
-    if(completedJumps.count() > index.row())
+    if(completedJumps->count() > index.row())
     {
         if(type == IndividualCompetiton){
             if(jumpers->count() > index.row())
             {
-                //qDebug()<<"row: "<<index.row();
+                //Trzeba dodać numer startowy do "stringa"
+                QString string = jumpers->at(index.row())->getNameAndSurname();
                 if(role == Qt::DisplayRole){
-                    if(std::find(hasDNS.begin(), hasDNS.end(), index.row()) != hasDNS.end())
-                        return jumpers->at(index.row())->getNameAndSurname() + "   (Nie wystartował)";
-                    else if(std::find(hasDSQ.begin(), hasDSQ.end(), index.row()) != hasDSQ.end())
-                        return jumpers->at(index.row())->getNameAndSurname() + "   (Dyskwalifikacja)";
+                    if(hasDNS->contains(index.row()))
+                        return string + "   (Nie wystartował)";
+                    else if(hasDSQ->contains(index.row()))
+                        return string + "   (Dyskwalifikacja)";
                     else
-                        return jumpers->at(index.row())->getNameAndSurname();
+                        return string;
                 }
                 else if(role == Qt::DecorationRole){
                     return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumpers->at(index.row())->getCountryCode().toLower())));
@@ -87,9 +111,9 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
         else if(type == TeamCompetition){
             if(role == Qt::DisplayRole){
                 QString string = teams->at(index.row())->getCountryCode() + " (" + jumpers->at(index.row())->getNameAndSurname() +")";
-                if(std::find(hasDNS.begin(), hasDNS.end(), index.row()) != hasDNS.end())
+                if(hasDNS->contains(index.row()))
                     return  string + "  (Nie wystartował)";
-                else if(std::find(hasDSQ.begin(), hasDSQ.end(), index.row()) != hasDSQ.end())
+                else if(hasDSQ->contains(index.row()))
                     return string + "  (Dyskwalifikacja)";
                 else
                     return string;
@@ -104,14 +128,24 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void StartListModel::fillCompletedJumpsWithFalse()
+QSet<int> *StartListModel::getHasDSQ() const
 {
-    switch(type){
-    case IndividualCompetiton:
-        completedJumps.fill(false, jumpers->count()); break;
-    case TeamCompetition:
-        completedJumps.fill(false, teams->count()); break;
-    }
+    return hasDSQ;
+}
+
+void StartListModel::setHasDSQ(QSet<int> *newHasDSQ)
+{
+    hasDSQ = newHasDSQ;
+}
+
+QSet<int> *StartListModel::getHasDNS() const
+{
+    return hasDNS;
+}
+
+void StartListModel::setHasDNS(QSet<int> *newHasDNS)
+{
+    hasDNS = newHasDNS;
 }
 
 short StartListModel::getType() const
@@ -142,34 +176,4 @@ QVector<Jumper *> *StartListModel::getJumpers() const
 void StartListModel::setJumpers(QVector<Jumper *> *newJumpers)
 {
     jumpers = newJumpers;
-}
-
-QVector<int> StartListModel::getHasDSQ() const
-{
-    return hasDSQ;
-}
-
-void StartListModel::setHasDSQ(const QVector<int> &newHasDSQ)
-{
-    hasDSQ = newHasDSQ;
-}
-
-QVector<int> StartListModel::getHasDNS() const
-{
-    return hasDNS;
-}
-
-void StartListModel::setHasDNS(const QVector<int> &newHasDNS)
-{
-    hasDNS = newHasDNS;
-}
-
-QVector<bool> StartListModel::getCompletedJumps() const
-{
-    return completedJumps;
-}
-
-void StartListModel::setCompletedJumps(const QVector<bool> &newCompletedJumps)
-{
-    completedJumps = newCompletedJumps;
 }

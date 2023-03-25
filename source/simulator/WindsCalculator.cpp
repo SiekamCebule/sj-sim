@@ -1,4 +1,4 @@
-#include "WindsInfo.h"
+#include "WindsCalculator.h"
 
 #include "../utilities/functions.h"
 
@@ -6,12 +6,7 @@
 #include <QDebug>
 #include <functional>
 
-WindsInfo::WindsInfo(const QVector<Wind> & winds ) :
-    winds(winds)
-{
-}
-
-Wind WindsInfo::getAveragedWind(short type)
+Wind WindsCalculator::getAveragedWind(const QVector<Wind> & winds, short type)
 {
     double percent = 100 / winds.count();
     double windAvg = 0;
@@ -40,37 +35,4 @@ Wind WindsInfo::getAveragedWind(short type)
     windAvg = roundDoubleToTwoPlaces(windAvg);
 
     return Wind(windAvg);
-}
-
-QVector<ulong> WindsInfo::getWindsIDs() const
-{
-    return windsIDs;
-}
-
-void WindsInfo::setWindsIDs(const QVector<ulong> &newWindsIDs)
-{
-    windsIDs = newWindsIDs;
-}
-
-void WindsInfo::setVectorWindID(int index, ulong newID)
-{
-    if(index < windsIDs.size())
-        windsIDs.insert(index, newID);
-    else
-        windsIDs.replace(index, newID);
-}
-
-QVector<Wind> & WindsInfo::getWinds()
-{
-    return winds;
-}
-
-void WindsInfo::setWinds(const QVector<Wind> &newWinds)
-{
-    winds = newWinds;
-}
-
-ulong WindsInfo::getWindID(int index) const
-{
-    return winds.at(index).getID();
 }

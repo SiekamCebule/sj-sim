@@ -3,7 +3,9 @@
 
 #include <QDialog>
 #include "StartList/StartListModel.h"
+#include "Results/ResultsTableModel.h"
 #include "../../competitions/AbstractCompetitionManager.h"
+#include "../../simulator/JumpManipulator.h"
 
 namespace Ui {
 class CompetitionManagerWindow;
@@ -23,11 +25,18 @@ private:
     short type;
 
     StartListModel * startListModel;
+    ResultsTableModel * resultsTableModel;
+    JumpManipulator currentInputJumpManipulator;
 
 public:
     AbstractCompetitionManager *getManager() const;
     short getType() const;
     void setType(short newType);
+    JumpManipulator getCurrentInputJumpManipulator() const;
+    void setCurrentInputJumpManipulator(const JumpManipulator &newCurrentInputJumpManipulator);
+
+private slots:
+    void on_pushButton_jump_clicked();
 };
 
 #endif // COMPETITIONMANAGERWINDOW_H
