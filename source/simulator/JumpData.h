@@ -40,6 +40,7 @@ private:
     double averagedWind;
 
     bool isDSQOccured;
+    bool DNS;
 
     Jumper * jumper;
     Hill * hill;
@@ -83,7 +84,10 @@ public:
     CompetitionRules *getRules() const;
     void setRules(CompetitionRules *newRules);
     QVector<Wind> getWinds() const;
+    QVector<Wind>* getWindsPointer();
     void setWinds(const QVector<Wind> &newWinds);
+    bool getDNS() const;
+    void setDNS(bool newDNS);
 };
 
 QDebug operator<<(QDebug d, const JumpData & jumpData);

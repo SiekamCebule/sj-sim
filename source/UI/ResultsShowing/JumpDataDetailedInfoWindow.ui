@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>632</width>
-    <height>430</height>
+    <width>476</width>
+    <height>330</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Informacje o skoku</string>
@@ -16,11 +22,11 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(235, 235, 235);</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_4">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <layout class="QHBoxLayout" name="horizontalLayout_jumperInfoTitle">
        <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
@@ -35,13 +41,13 @@
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_nameSurnameAndFlag">
          <item>
           <widget class="QLabel" name="label_nameAndSurname">
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>26</pointsize>
+             <pointsize>20</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -110,14 +116,17 @@
      </item>
      <item>
       <layout class="QFormLayout" name="formLayout_mainInformations">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
        <property name="verticalSpacing">
-        <number>12</number>
+        <number>6</number>
        </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label_3">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -134,7 +143,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>14</pointsize>
+           <pointsize>11</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -153,7 +162,7 @@
         <widget class="QLabel" name="label_4">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -170,7 +179,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>14</pointsize>
+           <pointsize>11</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -189,7 +198,7 @@
         <widget class="QLabel" name="label_5">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -206,7 +215,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>14</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -225,7 +234,7 @@
         <widget class="QLabel" name="label_6">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -242,7 +251,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>14</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -261,7 +270,7 @@
         <widget class="QLabel" name="label_7">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -278,7 +287,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>14</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -297,7 +306,7 @@
         <widget class="QLabel" name="label_8">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -314,7 +323,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>14</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -333,7 +342,7 @@
         <widget class="QLabel" name="label_15">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -350,7 +359,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>14</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -369,7 +378,7 @@
         <widget class="QLabel" name="label">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -386,7 +395,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>14</pointsize>
+           <pointsize>11</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -405,7 +414,7 @@
         <widget class="QLabel" name="label_2">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -422,7 +431,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>14</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -441,7 +450,7 @@
         <widget class="QLabel" name="label_10">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -458,7 +467,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>14</pointsize>
+           <pointsize>11</pointsize>
           </font>
          </property>
          <property name="styleSheet">
@@ -473,6 +482,26 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_windsInfo">
+       <property name="spacing">
+        <number>2</number>
+       </property>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -495,12 +524,12 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_others">
      <item>
-      <layout class="QFormLayout" name="formLayout_2">
+      <layout class="QFormLayout" name="formLayout_weatherInfos">
        <item row="0" column="0">
         <widget class="QLabel" name="label_12">
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>8</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -523,7 +552,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>15</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -542,6 +571,7 @@
         <widget class="QLabel" name="label_14">
          <property name="font">
           <font>
+           <pointsize>8</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -564,7 +594,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>15</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -598,12 +628,15 @@
       </spacer>
      </item>
      <item>
-      <layout class="QFormLayout" name="formLayout_3">
+      <layout class="QFormLayout" name="formLayout_simulationRating">
+       <property name="verticalSpacing">
+        <number>4</number>
+       </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label_16">
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
+           <pointsize>8</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -619,7 +652,7 @@
         <widget class="QLabel" name="label_17">
          <property name="font">
           <font>
-           <pointsize>9</pointsize>
+           <pointsize>8</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -635,6 +668,7 @@
         <widget class="QLabel" name="label_18">
          <property name="font">
           <font>
+           <pointsize>8</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -651,7 +685,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>15</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -671,7 +705,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>15</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -691,7 +725,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>15</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>
@@ -710,7 +744,7 @@
         <widget class="QLabel" name="label_19">
          <property name="font">
           <font>
-           <pointsize>9</pointsize>
+           <pointsize>8</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -727,7 +761,7 @@
          <property name="font">
           <font>
            <family>Quicksand [PfEd]</family>
-           <pointsize>15</pointsize>
+           <pointsize>11</pointsize>
            <bold>false</bold>
           </font>
          </property>

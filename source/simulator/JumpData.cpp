@@ -15,9 +15,24 @@ JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill)
 {}
 
+bool JumpData::getDNS() const
+{
+    return DNS;
+}
+
+void JumpData::setDNS(bool newDNS)
+{
+    DNS = newDNS;
+}
+
 QVector<Wind> JumpData::getWinds() const
 {
     return winds;
+}
+
+QVector<Wind> *JumpData::getWindsPointer()
+{
+    return &winds;
 }
 
 void JumpData::setWinds(const QVector<Wind> &newWinds)

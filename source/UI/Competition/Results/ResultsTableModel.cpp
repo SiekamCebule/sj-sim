@@ -25,14 +25,18 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
             IndividualCompetitionResults * indResults = dynamic_cast<IndividualCompetitionResults *>(results);
             switch(index.column()){
             case 0:
-                return indResults->getEditableJumpersResults().at(index.row()).getJumper()->getNameAndSurname();
+                return index.row() + 1;
+                //return indResults->getEditableJumpersResults().at(index.row()).getPosition();
                 break;
             case 1:
+                return indResults->getEditableJumpersResults().at(index.row()).getJumper()->getNameAndSurname();
+                break;
+            case 2:
                 return indResults->getEditableJumpersResults().at(index.row()).getPointsSum();
                 break;
             }
-            if(index.column() > 1){
-                int col = index.column() - 2;
+            if(index.column() > 2){
+                int col = index.column() - 3;
                 int m = 1;
                 int jump = 0;
                 while(true){
@@ -54,12 +58,14 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         }
         }
     }
+    else if(role == Qt::BackgroundRole){
+    }
     else if(role == Qt::DecorationRole){
         switch(type){
         case CompetitionRules::Individual:{
             IndividualCompetitionResults * indResults = dynamic_cast<IndividualCompetitionResults *>(results);
             switch(index.column()){
-            case 0:
+            case 1:
                 return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(indResults->getEditableJumpersResults().at(index.row()).getJumps().at(std::round((index.column() - 3) / 4)).getJumper()->getCountryCode().toLower())).scaled(35, 26);
                 break;
             }
@@ -76,15 +82,22 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         else return QColor(qRgb(50, 50, 50));
     }
     else if(role == Qt::FontRole){
-        QFont font("Quicksand Medium", 12, 500);
+        QFont font("Quicksand Medium", 11, 500);
         if(index.column() == 0){
             font.setBold(true);
             return font;
         }
         else if(index.column() == 1)
             return font;
-        font.setItalic(true);
-        return font;
+        else if(index.column() == 2){
+            font.setItalic(true);
+            font.setBold(true);
+            return font;
+        }
+        else{
+            font.setItalic(true);
+            return font;
+        }
     }
     else if(role == Qt::TextAlignmentRole){
         return Qt::AlignCenter;
@@ -103,12 +116,14 @@ QVariant ResultsTableModel::headerData(int section, Qt::Orientation orientation,
             case Qt::Horizontal:
                 switch(section){
                 case 0:
-                    return tr("Imię i nazwisko");
+                    return tr("Poz.");
                 case 1:
+                    return tr("Imię i nazwisko");
+                case 2:
                     return tr("Suma punktów");
                 }
-                if(section > 1){
-                    int col = section - 2;
+                if(section > 2){
+                    int col = section - 3;
                     int m = 1;
                     int jump = 0;
                     while(true){
@@ -125,20 +140,18 @@ QVariant ResultsTableModel::headerData(int section, Qt::Orientation orientation,
                     }
                 }
                 break;
-            case Qt::Vertical:
-                return section + 1;
             }
         }
     }
     else if(role == Qt::FontRole){
         switch(orientation){
         case Qt::Horizontal:{
-            QFont f("Ubuntu", 9, 600);
+            QFont f("Ubuntu", 8, 600);
             f.setBold(true);
             return f;
         }
         case Qt::Vertical:
-            return QFont("Ubuntu", 7, 450);
+            return QFont("Ubuntu", 6, 450);
         }
     }
     else if(role == Qt::ForegroundRole){
@@ -180,7 +193,7 @@ int ResultsTableModel::columnCount(const QModelIndex &parent) const
         if(max == 0)
             return 0;
         else
-            return (max * 2) + 2;
+            return (max * 2) + 3;
     }
     case CompetitionRules::Team:
         return 0;

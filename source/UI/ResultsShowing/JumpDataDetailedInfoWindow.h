@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "../../simulator/JumpData.h"
+#include "JumpWindInfoWidget.h"
 
 namespace Ui {
 class JumpDataDetailedInfoWindow;
@@ -18,13 +19,18 @@ public:
 
     void fillJumpInformations();
 
-    JumpData *getJumpData() const;
-    void setJumpData(JumpData *newJumpData);
+    void removeJumperInfoTitle();
+    void removeSimulationInformationsLayouts();
+    void removeWindsInfoLayout();
 
 private:
     Ui::JumpDataDetailedInfoWindow *ui;
 
     JumpData * jumpData;
+    JumpWindInfoWidget * windInfoWidget;
+public:
+    JumpData *getJumpData() const;
+    void setJumpData(JumpData *newJumpData);
 };
 
 #endif // JUMPDATADETAILEDINFOWINDOW_H

@@ -168,7 +168,7 @@ width: 5px;
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../assets.qrc">
+          <iconset resource="../../../../assets.qrc">
            <normaloff>:/img/up-arrow.png</normaloff>:/img/up-arrow.png</iconset>
          </property>
          <property name="iconSize">
@@ -203,7 +203,7 @@ width: 5px;
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../assets.qrc">
+          <iconset resource="../../../../assets.qrc">
            <normaloff>:/img/down.png</normaloff>:/img/down.png</iconset>
          </property>
          <property name="iconSize">
@@ -253,7 +253,7 @@ width: 5px;
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../assets.qrc">
+        <iconset resource="../../../../assets.qrc">
          <normaloff>:/img/pencil.png</normaloff>:/img/pencil.png</iconset>
        </property>
        <property name="iconSize">
@@ -272,7 +272,7 @@ width: 5px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../assets.qrc"/>
+  <include location="../../../../assets.qrc"/>
  </resources>
  <connections/>
 </ui>

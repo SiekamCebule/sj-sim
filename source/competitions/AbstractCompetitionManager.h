@@ -53,6 +53,10 @@ protected:
 
     int DSQBaseProbability;
 
+    bool roundShouldBeEnded;
+    bool competiitonShouldBeEnded;
+    bool lastJump;
+
 public:
     CompetitionInfo *getCompetitionInfo() const;
     void setCompetitionInfo(CompetitionInfo *newCompetitionInfo);
@@ -76,6 +80,12 @@ public:
     void setResults(AbstractCompetitionResults *newResults);
     int getDSQBaseProbability() const;
     void setDSQBaseProbability(int newDSQBaseProbability);
+    bool getRoundShouldBeEnded() const;
+    void setRoundShouldBeEnded(bool newRoundShouldBeEnded);
+    bool getCompetiitonShouldBeEnded() const;
+    void setCompetiitonShouldBeEnded(bool newCompetiitonShouldBeEnded);
+    bool getLastJump() const;
+    void setLastJump(bool newLastJump);
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

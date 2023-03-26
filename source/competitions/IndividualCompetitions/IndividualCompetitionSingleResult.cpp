@@ -2,11 +2,13 @@
 
 IndividualCompetitionSingleResult::IndividualCompetitionSingleResult()
 {
-    pointsSum = 0;
+    pointsSum = position = 0;
+    jumper = nullptr;
 }
 
 IndividualCompetitionSingleResult::IndividualCompetitionSingleResult(const JumpData &jump)
 {
+    pointsSum = position = 0;
     jumps.push_back(jump);
     setJumper(jump.getJumper());
 }
@@ -27,6 +29,16 @@ void IndividualCompetitionSingleResult::updatePointsSum()
     for(auto & res : jumps){
         pointsSum += res.getPoints();
     }
+}
+
+int IndividualCompetitionSingleResult::getPosition() const
+{
+    return position;
+}
+
+void IndividualCompetitionSingleResult::setPosition(int newPosition)
+{
+    position = newPosition;
 }
 
 Jumper *IndividualCompetitionSingleResult::getJumper() const

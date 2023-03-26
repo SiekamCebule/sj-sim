@@ -137,8 +137,7 @@ QVector<CompetitionRules> CompetitionRules::getCompetitionRulesVectorFromJson(co
         {
             RoundInfo roundInfo;
             roundInfo.setCount(round.toObject().value("count").toInt());
-            qDebug()<<roundInfo.getCount()<<" kałnt";
-            roundInfo.setCount(round.toObject().value("sort-start-list").toBool(true));
+            roundInfo.setSortStartList(round.toObject().value("sort-start-list").toBool(true));
             rules.getEditableRounds().push_back(roundInfo);
         }
         rulesVector.push_back(rules);

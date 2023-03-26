@@ -32,6 +32,10 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     resultsTableModel = new ResultsTableModel(getType(), manager->getResults(), manager->getCompetitionInfo(), this);
     ui->tableView_results->setModel(resultsTableModel);
     ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    jumperResultsWidget = new JumperCompetitionResultsWidget(this);
+    jumperResultsWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    ui->verticalLayout_jumperResult->addWidget(jumperResultsWidget);
 }
 
 CompetitionManagerWindow::~CompetitionManagerWindow()
@@ -70,7 +74,20 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     {
     case CompetitionRules::Individual:{
         IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+        IndividualCompetitionResults * indRes = dynamic_cast<IndividualCompetitionResults *>(m->getResults());
         m->simulateNext(JumpManipulator());
+
+        if(m->getLastJump() == true){
+            jumperResultsWidget->setJumperResult(indRes->getResultsOfJumper(m->getActualRoundJumpersPointer()->at(m->getActualJumperIndex())));
+        }
+        else
+            jumperResultsWidget->setJumperResult(indRes->getResultsOfJumper(m->getActualRoundJumpersPointer()->at(m->getActualJumperIndex() - 1)));
+        jumperResultsWidget->fillWidget();
+
+        if(m->getRoundShouldBeEnded()){
+            m->setupNextRound();
+        }
+
         emit startListModel->dataChanged(startListModel->index(m->getActualJumperIndex() - 1), startListModel->index(m->getActualJumperIndex() - 1));
         ui->tableView_results->setModel(nullptr);
         ui->tableView_results->setModel(resultsTableModel);
@@ -78,6 +95,16 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
         break;
     }
+    }
+}
+
+void CompetitionManagerWindow::on_tableView_results_doubleClicked(const QModelIndex &index)
+{
+    IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+    IndividualCompetitionResults * indRes = dynamic_cast<IndividualCompetitionResults *>(m->getResults());
+    if(index.column() == 1){
+        jumperResultsWidget->setJumperResult(indRes->getPointerOfExactJumperResults(index.row()));
+        jumperResultsWidget->fillWidget();
     }
 }
 

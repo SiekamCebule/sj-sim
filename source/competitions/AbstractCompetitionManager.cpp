@@ -17,6 +17,36 @@ void AbstractCompetitionManager::initActualRound()
     else actualRound = 1;
 }
 
+bool AbstractCompetitionManager::getLastJump() const
+{
+    return lastJump;
+}
+
+void AbstractCompetitionManager::setLastJump(bool newLastJump)
+{
+    lastJump = newLastJump;
+}
+
+bool AbstractCompetitionManager::getCompetiitonShouldBeEnded() const
+{
+    return competiitonShouldBeEnded;
+}
+
+void AbstractCompetitionManager::setCompetiitonShouldBeEnded(bool newCompetiitonShouldBeEnded)
+{
+    competiitonShouldBeEnded = newCompetiitonShouldBeEnded;
+}
+
+bool AbstractCompetitionManager::getRoundShouldBeEnded() const
+{
+    return roundShouldBeEnded;
+}
+
+void AbstractCompetitionManager::setRoundShouldBeEnded(bool newRoundShouldBeEnded)
+{
+    roundShouldBeEnded = newRoundShouldBeEnded;
+}
+
 int AbstractCompetitionManager::getDSQBaseProbability() const
 {
     return DSQBaseProbability;

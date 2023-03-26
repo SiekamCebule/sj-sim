@@ -150,7 +150,7 @@ QVector<Wind> WindsGenerator::generateWinds()
         }
 
         if(windStrength < 0)
-            windStrength = 0;
+            windStrength = (-windStrength);
 
         wind.setStrength(windStrength);
         wind.setDirection(windDirection);

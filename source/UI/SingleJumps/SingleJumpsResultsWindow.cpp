@@ -78,6 +78,7 @@ void SingleJumpsResultsWindow::fillMiniJumpsResultsLayout()
             }
             JumpDataDetailedInfoWindow * jumpInfo = new JumpDataDetailedInfoWindow(widget->getJumpData());
             jumpInfo->fillJumpInformations();
+            jumpInfo->removeJumperInfoTitle();
             ui->verticalLayout_jumpInfos->addWidget(jumpInfo);
             ui->toolBox->setCurrentIndex(0);
 

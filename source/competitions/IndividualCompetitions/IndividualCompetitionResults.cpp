@@ -5,6 +5,10 @@ IndividualCompetitionResults::IndividualCompetitionResults()
 
 }
 
+void IndividualCompetitionResults::updatePositions()
+{
+}
+
 QVector<IndividualCompetitionSingleResult> IndividualCompetitionResults::getJumpersResults() const
 {
     return jumpersResults;
@@ -13,6 +17,11 @@ QVector<IndividualCompetitionSingleResult> IndividualCompetitionResults::getJump
 QVector<IndividualCompetitionSingleResult> &IndividualCompetitionResults::getEditableJumpersResults()
 {
     return jumpersResults;
+}
+
+IndividualCompetitionSingleResult *IndividualCompetitionResults::getPointerOfExactJumperResults(int index) const
+{
+    return const_cast<IndividualCompetitionSingleResult *>(&jumpersResults[index]);
 }
 
 void IndividualCompetitionResults::setJumpersResults(const QVector<IndividualCompetitionSingleResult> &newJumpersResults)

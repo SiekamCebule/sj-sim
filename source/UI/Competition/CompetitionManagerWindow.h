@@ -2,6 +2,7 @@
 #define COMPETITIONMANAGERWINDOW_H
 
 #include <QDialog>
+#include "JumperCompetitionResultsWidget.h"
 #include "StartList/StartListModel.h"
 #include "Results/ResultsTableModel.h"
 #include "../../competitions/AbstractCompetitionManager.h"
@@ -28,6 +29,8 @@ private:
     ResultsTableModel * resultsTableModel;
     JumpManipulator currentInputJumpManipulator;
 
+    JumperCompetitionResultsWidget * jumperResultsWidget;
+
 public:
     AbstractCompetitionManager *getManager() const;
     short getType() const;
@@ -37,6 +40,7 @@ public:
 
 private slots:
     void on_pushButton_jump_clicked();
+    void on_tableView_results_doubleClicked(const QModelIndex &index);
 };
 
 #endif // COMPETITIONMANAGERWINDOW_H

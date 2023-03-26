@@ -44,6 +44,7 @@ public:
     void inncrementActualJumperIndex();
     void decrementActualJumperIndex();
     Jumper *getActualJumper() const;
+    QVector<Jumper *> getActualRoundJumpers() const;
 };
 
 #endif // INDIVIDUALCOMPETITIONMANAGER_H

@@ -19,6 +19,7 @@ public:
 private:
     QVector<JumpData> jumps;
     Jumper * jumper;
+    int position;
 
 public:
     int jumpsCount() {return jumps.count();}
@@ -27,6 +28,8 @@ public:
     QVector<JumpData> & getEditableJumps();
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
+    int getPosition() const;
+    void setPosition(int newPosition);
 };
 
 #endif // INDIVIDUALCOMPETITIONSINGLERESULT_H

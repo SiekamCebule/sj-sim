@@ -7,7 +7,7 @@ IndividualCompetitionManager::IndividualCompetitionManager() :
     connect(this, &IndividualCompetitionManager::actualJumperIndexChanged, this, [this](){
         actualJumper = actualRoundJumpers.at(actualJumperIndex);
     });
-    connect(this, &IndividualCompetitionManager::roundEnd, this, &IndividualCompetitionManager::setupNextRound);
+    //connect(this, &IndividualCompetitionManager::roundEnd, this, &IndividualCompetitionManager::setupNextRound);
 }
 
 void IndividualCompetitionManager::simulateNext(const JumpManipulator& manipulator)
@@ -58,16 +58,24 @@ void IndividualCompetitionManager::simulateNext(const JumpManipulator& manipulat
     }
     //qDebug()<<"Dziala";
     std::sort(indResults->getEditableJumpersResults().begin(), indResults->getEditableJumpersResults().end(), std::greater<IndividualCompetitionSingleResult>());
-    qDebug()<<"Aktualny lider: "<<indResults->getEditableJumpersResults().at(0).getJumper()->getNameAndSurname()<<",     ŁĄCZNIE: "<<indResults->getEditableJumpersResults().at(0).getPointsSum()<<"pkt";
+    indResults->updatePositions();
 
     if(checkRoundEnd() == true){
-        if(checkCompetitionEnd() == false)
-            emit roundEnd();
-        else
-            emit competitionEnd();
+        lastJump = true;
+        if(checkCompetitionEnd() == false){
+            roundShouldBeEnded = true;
+            competiitonShouldBeEnded = false;
+        }
+        else{
+            competiitonShouldBeEnded = true;
+            roundShouldBeEnded = false;
+        }
     }
     else{
-        setActualJumperIndex(getActualJumperIndex() + 1); // zmień skoczka na następnego
+        roundShouldBeEnded = false;
+        competiitonShouldBeEnded = false;
+        lastJump = false;
+        setActualJumperIndex(getActualJumperIndex() + 1);// zmień skoczka na następnego
     }
 }
 
@@ -99,6 +107,8 @@ void IndividualCompetitionManager::setupNextRound()
     setupJumpersForActualRound(); //filtruje zawodników względem wyników z poprzedniej rundy
     setActualJumperIndex(0);
     completedJumps.fill(false, actualRoundJumpers.count());
+    hasDNS.clear();
+    hasDSQ.clear();
 }
 
 void IndividualCompetitionManager::fillCompletedJumpsToStartOfRound()
@@ -114,6 +124,11 @@ int IndividualCompetitionManager::getCompetitiorsCountForActualRound()
 bool IndividualCompetitionManager::getSortStartListForActualRound()
 {
     return competitionRules->getRounds().at(actualRound - 1).getSortStartList();
+}
+
+QVector<Jumper *> IndividualCompetitionManager::getActualRoundJumpers() const
+{
+    return actualRoundJumpers;
 }
 
 Jumper *IndividualCompetitionManager::getActualJumper() const

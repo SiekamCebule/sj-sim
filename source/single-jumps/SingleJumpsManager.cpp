@@ -1,6 +1,6 @@
 #include "SingleJumpsManager.h"
-#include <QDebug>
 
+#include <QDebug>
 #include <QFile>
 #include <QByteArray>
 #include <QJsonDocument>
@@ -12,6 +12,8 @@
 #include <QObject>
 #include <QObject>
 #include <QDir>
+
+#include "../simulator/JumpManipulator.h"
 
 SingleJumpsManager::SingleJumpsManager(int gate, int jumpsCount, const QString &resultsFileName, bool changeableWind, short resultsFormat) :
     jumpsCount(jumpsCount),
@@ -30,6 +32,7 @@ void SingleJumpsManager::simulate()
     jumpSimulator.setGate(&gate);
     jumpSimulator.setDSQBaseProbability(getDSQProbability());
     jumpSimulator.setCompetitionRules(&rules);
+    jumpSimulator.setManipulator(new JumpManipulator());
 
     double min = 0, max = 1000, avg = 0;
 
@@ -70,6 +73,7 @@ void SingleJumpsManager::simulate()
     qDebug()<<"NAJKRÓTSZY: "<<max<<"m";
     qDebug()<<"NAJDALSZY: "<<min<<"m";
     qDebug()<<"ŚREDNIA DŁUGOŚĆ SKOKU: "<<avg<<"m";
+    delete jumpSimulator.getManipulator();
 }
 
 bool SingleJumpsManager::saveResultsToFile(short fileFormat)

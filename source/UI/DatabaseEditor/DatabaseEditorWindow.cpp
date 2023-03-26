@@ -35,8 +35,10 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
         fillJumpersWidget();
     if(GlobalDatabase::get()->getGlobalHills().size() > 0)
         fillHillsWidget();
+    qDebug()<<GlobalDatabase::get()->getGlobalCompetitionsRules().at(0).getRounds().at(0).getCount()<<" PRZED";
     if(GlobalDatabase::get()->getGlobalCompetitionsRules().size() > 0)
         fillCompetitionRulesWidget();
+    qDebug()<<GlobalDatabase::get()->getGlobalCompetitionsRules().at(0).getRounds().at(0).getCount()<<" PO";
 
     if(this->jumperEditor == nullptr)
         this->jumperEditor = new JumperEditorWidget();

@@ -9,6 +9,7 @@ class IndividualCompetitionResults : public AbstractCompetitionResults
 {
 public:
     IndividualCompetitionResults();
+    void updatePositions();
 
 private:
     QVector<IndividualCompetitionSingleResult> jumpersResults;
@@ -16,6 +17,7 @@ private:
 public:
     QVector<IndividualCompetitionSingleResult> getJumpersResults() const;
     QVector<IndividualCompetitionSingleResult> &getEditableJumpersResults();
+    IndividualCompetitionSingleResult * getPointerOfExactJumperResults(int index) const;
     void setJumpersResults(const QVector<IndividualCompetitionSingleResult> &newJumpersResults);
     IndividualCompetitionSingleResult *getResultsOfJumper(Jumper * jumper);
 };

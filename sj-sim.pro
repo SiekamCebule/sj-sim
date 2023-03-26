@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     source/UI/Competition/CompetitionManagerWindow.cpp \
+    source/UI/Competition/JumperCompetitionResultsWidget.cpp \
     source/UI/Competition/Results/ResultsTableModel.cpp \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp \
@@ -22,6 +23,8 @@ SOURCES += \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp \
     source/UI/Competition/CompetitionConfigWindow.cpp \
+    source/UI/ResultsShowing/JumpWindInfoWidget.cpp \
+    source/UI/ResultsShowing/JumpWindInfoWidgetItem.cpp \
     source/UI/SingleJumps/SingleJumpMiniResultWidget.cpp \
     source/UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     source/UI/AppSettings/AppSettingsWindow.cpp \
@@ -72,6 +75,7 @@ SOURCES += \
 
 HEADERS += \
     source/UI/Competition/CompetitionManagerWindow.h \
+    source/UI/Competition/JumperCompetitionResultsWidget.h \
     source/UI/Competition/Results/ResultsTableModel.h \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.h \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.h \
@@ -84,6 +88,8 @@ HEADERS += \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.h \
     source/UI/Competition/CompetitionConfigWindow.h \
+    source/UI/ResultsShowing/JumpWindInfoWidget.h \
+    source/UI/ResultsShowing/JumpWindInfoWidgetItem.h \
     source/UI/SingleJumps/SingleJumpMiniResultWidget.h \
     source/UI/SingleJumps/SingleJumpsConfigWindow.h \
     source/UI/AppSettings/AppSettingsWindow.h \
@@ -133,6 +139,7 @@ HEADERS += \
 
 FORMS += \
     source/UI/Competition/CompetitionManagerWindow.ui \
+    source/UI/Competition/JumperCompetitionResultsWidget.ui \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
@@ -143,6 +150,8 @@ FORMS += \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui \
     source/UI/Competition/CompetitionConfigWindow.ui \
+    source/UI/ResultsShowing/JumpWindInfoWidget.ui \
+    source/UI/ResultsShowing/JumpWindInfoWidgetItem.ui \
     source/UI/SingleJumps/SingleJumpMiniResultWidget.ui \
     source/UI/SingleJumps/SingleJumpsConfigWindow.ui \
     source/UI/AppSettings/AppSettingsWindow.ui \

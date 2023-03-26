@@ -81,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent)
     GlobalDatabase::get()->loadFromJson();
     GlobalAppSettings::get()->loadFromJson();
     GlobalSimulationSettings::get()->loadFromFile();
+
 }
 
 MainWindow::~MainWindow()

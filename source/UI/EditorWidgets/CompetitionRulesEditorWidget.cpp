@@ -66,6 +66,7 @@ void CompetitionRulesEditorWidget::fillCompetitionRulesInputs()
     ui->comboBox_competitionType->setCurrentIndex(competitionRules->getCompetitionType());
     ui->comboBox_windAverageCalculatingType->setCurrentIndex(competitionRules->getWindAverageCalculatingType());
     ui->comboBox_windCompensationDistanceEffect->setCurrentIndex(competitionRules->getWindCompensationDistanceEffect());
+    fillRoundsInputs(true);
     setupConnectsForWidgetChange();
 }
 

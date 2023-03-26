@@ -11,6 +11,9 @@ JumpDataDetailedInfoWindow::JumpDataDetailedInfoWindow(JumpData *jumpData, QWidg
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
+    windInfoWidget = new JumpWindInfoWidget;
+    windInfoWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    ui->verticalLayout_windsInfo->addWidget(windInfoWidget);
 }
 
 JumpDataDetailedInfoWindow::~JumpDataDetailedInfoWindow()
@@ -51,8 +54,67 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
         ui->label_flightRating->setText(QString::number(jumpData->getSimulationData().getFlightRating()));
         ui->label_judgesRating->setText(QString::number(jumpData->getSimulationData().getJudgesRating()));
         ui->label_landingInstability->setText(QString::number(jumpData->getLanding().getImbalance()));
+
+        windInfoWidget->setWinds(jumpData->getWindsPointer());
+        windInfoWidget->setKPoint(jumpData->getHill()->getKPoint());
+        windInfoWidget->fillItemsLayout();
     }
     else qDebug()<<"jumpData is nullptr!";
+}
+
+void JumpDataDetailedInfoWindow::removeJumperInfoTitle()
+{
+    if(ui->horizontalLayout_nameSurnameAndFlag != nullptr){
+        QLayoutItem * item;
+        while((item = ui->horizontalLayout_nameSurnameAndFlag->takeAt(0)) != NULL)
+        {
+            delete item->widget();
+            delete item;
+        }
+    }
+    delete ui->horizontalLayout_nameSurnameAndFlag;
+    if(ui->horizontalLayout_jumperInfoTitle != nullptr){
+        QLayoutItem * item;
+        while((item = ui->horizontalLayout_jumperInfoTitle->takeAt(0)) != NULL)
+        {
+            delete item->widget();
+            delete item;
+        }
+    }
+    delete ui->horizontalLayout_jumperInfoTitle;
+}
+
+void JumpDataDetailedInfoWindow::removeSimulationInformationsLayouts()
+{
+    if (ui->formLayout_simulationRating) {
+        while(ui->formLayout_simulationRating->count() > 0){
+            QLayoutItem *item = ui->formLayout_simulationRating->takeAt(0);
+            delete item->widget();
+            delete item;
+        }
+    }
+    delete ui->formLayout_simulationRating;
+
+    if (ui->formLayout_weatherInfos) {
+        while(ui->formLayout_weatherInfos->count() > 0){
+            QLayoutItem *item = ui->formLayout_weatherInfos->takeAt(0);
+            delete item->widget();
+            delete item;
+        }
+    }
+    delete ui->formLayout_weatherInfos;
+}
+
+void JumpDataDetailedInfoWindow::removeWindsInfoLayout()
+{
+    if (ui->verticalLayout_windsInfo){
+        while(ui->verticalLayout_windsInfo->count() > 0){
+            QLayoutItem *item = ui->verticalLayout_windsInfo->takeAt(0);
+            delete item->widget();
+            delete item;
+        }
+    }
+    delete ui->verticalLayout_windsInfo;
 }
 
 JumpData *JumpDataDetailedInfoWindow::getJumpData() const
