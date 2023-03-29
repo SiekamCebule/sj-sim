@@ -25,6 +25,7 @@ private:
     QVector<Wind> winds;
     Hill * hill;
     int * gate;
+    int competitionStartGate;
     double DSQBaseProbability;
     JumpManipulator * manipulator;
 
@@ -94,6 +95,8 @@ public:
     void setCompetitionRules(CompetitionRules *newCompetitionRules);
     QVector<Wind> getWinds() const;
     void setWinds(const QVector<Wind> &newWinds);
+    int getCompetitionStartGate() const;
+    void setCompetitionStartGate(int newCompetitionStartGate);
 };
 
 #endif // JUMPSIMULATOR_H

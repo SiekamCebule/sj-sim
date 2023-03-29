@@ -120,6 +120,12 @@ void WindsGeneratorSettingsEditorWidget::askForSettingsForFillAll()
     }
 }
 
+void WindsGeneratorSettingsEditorWidget::removeSubmitButton()
+{
+    disconnect(ui->pushButton_submit, &QPushButton::clicked, this, &WindsGeneratorSettingsEditorWidget::on_pushButton_submit_clicked);
+    delete ui->pushButton_submit;
+}
+
 QVector<WindGenerationSettings> WindsGeneratorSettingsEditorWidget::getWindsGenerationSettingsFromInputs()
 {
     QVector<WindGenerationSettings> vector;
@@ -179,3 +185,9 @@ void WindsGeneratorSettingsEditorWidget::setRemovingSubmitButtons(bool newRemovi
 {
     removingSubmitButtons = newRemovingSubmitButtons;
 }
+
+void WindsGeneratorSettingsEditorWidget::on_pushButton_submit_clicked()
+{
+    emit submitted();
+}
+

@@ -4,9 +4,9 @@
 #include "../utilities/ClassWithID.h"
 #include "Wind.h"
 #include "Hill.h"
+#include "JumpManipulator.h"
 
 #include <QVector>
-
 
 class WindsCalculator
 {
@@ -16,6 +16,8 @@ public:
         Improved
     };
     static Wind getAveragedWind(const QVector<Wind> &winds, short type);
+    static double getWindCompensation(Wind avgWind, Hill * hill);
+    static double getGateCompensation(int startGate, int actualGate, Hill * hill);
 };
 
 #endif // WINDSCALCULATOR_H

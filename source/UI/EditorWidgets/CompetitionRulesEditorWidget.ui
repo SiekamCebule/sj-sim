@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>403</width>
-    <height>567</height>
+    <height>576</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -439,7 +439,7 @@ width: 5px;
         <x>0</x>
         <y>0</y>
         <width>383</width>
-        <height>180</height>
+        <height>141</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -466,7 +466,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>365</width>
-            <height>90</height>
+            <height>51</height>
            </rect>
           </property>
           <attribute name="label">
@@ -479,7 +479,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>365</width>
-            <height>90</height>
+            <height>51</height>
            </rect>
           </property>
           <attribute name="label">
@@ -491,6 +491,71 @@ width: 5px;
       </layout>
      </widget>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_OKButton_2">
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_submit">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>18</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+color: rgb(0, 0, 0);
+background-color: rgb(123, 220, 144);
+}
+QPushButton:hover{
+background-color: rgb(153, 253, 174);
+}</string>
+       </property>
+       <property name="text">
+        <string>OK</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

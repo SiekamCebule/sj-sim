@@ -14,27 +14,21 @@ JumperEditorWidget::JumperEditorWidget(Jumper *jumper, CharacteristicsEditor *ch
     ui(new Ui::JumperEditorWidget)
 {
     ui->setupUi(this);
-    setupConnectsForWidgetChange();
 
     if(this->characteristicsEditor == nullptr)
         this->characteristicsEditor = new CharacteristicsEditor(Characteristic::Jumper);
 
     ui->verticalLayout_characteristicsEditor->insertWidget(0, getCharacteristicsEditor());
     ui->label_countryFlag->setGeometry(ui->label_countryFlag->x(), ui->label_countryFlag->y(), CountryFlagsManager::getFlagPixmapSize().width(), CountryFlagsManager::getFlagPixmapSize().height());
-
-    connect(this, &JumperEditorWidget::changed, this, [this](){
-    });
 }
 
 JumperEditorWidget::~JumperEditorWidget()
 {
-    removeConnectsForWidgetChange();
     delete ui;
 }
 
 void JumperEditorWidget::resetJumperInputs()
 {
-    removeConnectsForWidgetChange();
     ui->lineEdit_name->setText("");
     ui->lineEdit_surname->setText("");
     ui->lineEdit_countryCode->setText("");
@@ -47,12 +41,10 @@ void JumperEditorWidget::resetJumperInputs()
     ui->doubleSpinBox_form->setValue(0);
     ui->doubleSpinBox_jumpsEquality->setValue(0);;
     characteristicsEditor->setCharacteristics(QSet<Characteristic>());
-    setupConnectsForWidgetChange();
 }
 
 void JumperEditorWidget::fillJumperInputs()
 {
-    removeConnectsForWidgetChange();
     if(jumper == nullptr){
         qDebug()<<"Jumper is nullptr!";
         return;
@@ -60,7 +52,7 @@ void JumperEditorWidget::fillJumperInputs()
     ui->lineEdit_name->setText(jumper->getName());
     ui->lineEdit_surname->setText(jumper->getSurname());
     ui->lineEdit_countryCode->setText(jumper->getCountryCode());
-    ui->label_countryFlag->setPixmap(jumper->getFlagPixmap().scaled(CountryFlagsManager::getFlagPixmapSize()));
+    ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_countryFlag->size()));
     ui->doubleSpinBox_takeoffPower->setValue(jumper->getJumperSkills().getTakeoffPower());
     ui->doubleSpinBox_takeoffTechnique->setValue(jumper->getJumperSkills().getTakeoffTechnique());
     ui->doubleSpinBox_flightTechnique->setValue(jumper->getJumperSkills().getFlightTechnique());
@@ -69,7 +61,6 @@ void JumperEditorWidget::fillJumperInputs()
     ui->doubleSpinBox_form->setValue(jumper->getJumperSkills().getForm());
     ui->doubleSpinBox_jumpsEquality->setValue(jumper->getJumperSkills().getJumpsEquality());
     characteristicsEditor->setCharacteristics(jumper->getJumperSkills().getCharacteristics());
-    setupConnectsForWidgetChange();
 }
 Jumper JumperEditorWidget::getJumperFromWidgetInput() const
 {
@@ -87,6 +78,13 @@ Jumper JumperEditorWidget::getJumperFromWidgetInput() const
     jumper.getJumperSkillsPointer()->setJumpsEquality(ui->doubleSpinBox_jumpsEquality->value());
     jumper.getJumperSkillsPointer()->setCharacteristics(characteristicsEditor->getCharacteristics());
     return jumper;
+}
+
+void JumperEditorWidget::removeSubmitButton()
+{
+    disconnect(ui->pushButton_submit, &QPushButton::clicked, this, &JumperEditorWidget::on_pushButton_submit_clicked);
+    //ui->verticalLayout_characteristicsEditor->removeWidget(ui->pushButton_submit);
+    delete ui->pushButton_submit;
 }
 
 Jumper *JumperEditorWidget::getJumper() const
@@ -115,29 +113,8 @@ void JumperEditorWidget::on_lineEdit_countryCode_textChanged(const QString &arg1
         ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(ui->lineEdit_countryCode->text().toLower())).scaled(CountryFlagsManager::getFlagPixmapSize()));
 }
 
-void JumperEditorWidget::removeConnectsForWidgetChange()
+void JumperEditorWidget::on_pushButton_submit_clicked()
 {
-    //qDebug()<<"disconnect";
-    for(auto & w : MyFunctions::getWidgetsVector(this, "lineEdit")){
-        disconnect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &JumperEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "doubleSpinBox")){
-        disconnect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::valueChanged, this, &JumperEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "comboBox")){
-        disconnect(dynamic_cast<QComboBox *>(w), &QComboBox::currentIndexChanged, this, &JumperEditorWidget::changed);
-    }
+    emit submitted();
 }
 
-void JumperEditorWidget::setupConnectsForWidgetChange()
-{
-    for(auto & w : MyFunctions::getWidgetsVector(this, "lineEdit")){
-        connect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &JumperEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "doubleSpinBox")){
-        connect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::valueChanged, this, &JumperEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "comboBox")){
-        connect(dynamic_cast<QComboBox *>(w), &QComboBox::currentIndexChanged, this, &JumperEditorWidget::changed);
-    }
-}

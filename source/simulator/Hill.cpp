@@ -140,16 +140,7 @@ QVector<Hill> Hill::getHillsVectorFromJson(const QByteArray &bytes)
         hills.push_back(hill);
     }
 
-    Hill::setupHillsFlagPixmaps(hills);
     return hills;
-}
-
-void Hill::setupHillsFlagPixmaps(QVector<Hill> &hills)
-{
-    for(auto & hill : hills)
-    {
-        hill.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())));
-    }
 }
 
 bool Hill::getAutoPointsForBackWind() const
@@ -180,16 +171,6 @@ bool Hill::getAutoPointsForKPoint() const
 void Hill::setAutoPointsForKPoint(bool newAutoPointsForKPoint)
 {
     autoPointsForKPoint = newAutoPointsForKPoint;
-}
-
-QPixmap Hill::getFlagPixmap() const
-{
-    return flagPixmap;
-}
-
-void Hill::setFlagPixmap(const QPixmap &newFlagPixmap)
-{
-    flagPixmap = newFlagPixmap;
 }
 
 double Hill::calculatePointsForMeter(double KPoint)
@@ -377,11 +358,6 @@ double Hill::getLandingImbalanceChangeByHillProfile(double distance)
         return 0.03;
 }
 
-void Hill::updateCountryFlagPixmap(const QString & countryCode)
-{
-    setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(countryCode)));
-}
-
 QString Hill::getName() const
 {
     return name;
@@ -400,7 +376,6 @@ QString Hill::getCountryCode() const
 void Hill::setCountryCode(const QString &newCountryCode)
 {
     countryCode = newCountryCode;
-    updateCountryFlagPixmap(newCountryCode);
 }
 
 double Hill::getKPoint() const

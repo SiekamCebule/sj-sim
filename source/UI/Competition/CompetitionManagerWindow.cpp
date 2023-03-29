@@ -2,6 +2,7 @@
 #include "ui_CompetitionManagerWindow.h"
 #include "../../competitions/IndividualCompetitions/IndividualCompetitionManager.h"
 #include "../../global/CountryFlagsManager.h"
+#include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 
 CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *manager, QWidget *parent) :
     QDialog(parent),
@@ -11,8 +12,10 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
 
-    if(manager != nullptr)
+    if(manager != nullptr){
         type = manager->getType();
+        ui->spinBox_actualGate->setValue(manager->getRoundStartingGate());
+    }
 
     startListModel = new StartListModel(manager, this);
     startListModel->setType(getType());
@@ -36,11 +39,48 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     jumperResultsWidget = new JumperCompetitionResultsWidget(this);
     jumperResultsWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     ui->verticalLayout_jumperResult->addWidget(jumperResultsWidget);
+
+    connect(ui->spinBox_actualGate, &QSpinBox::valueChanged, this, [this, manager](){
+        if(manager->getActualJumperIndex() == 0){
+            manager->setRoundStartingGate(ui->spinBox_actualGate->value());
+            manager->setActualGate(ui->spinBox_actualGate->value());
+        }
+        else{
+            manager->setActualGate(ui->spinBox_actualGate->value());
+            manager->updateToBeatDistance();
+            ui->label_toBeatDistance->setText(QString::number(manager->getToBeatDistance()) + "m");
+        }
+    });
 }
 
 CompetitionManagerWindow::~CompetitionManagerWindow()
 {
     delete ui;
+}
+
+void CompetitionManagerWindow::updateToBeatDistanceLabel()
+{
+    IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+    m->updateToBeatDistance();
+    ui->label_toBeatDistance->setText(QString::number(m->getToBeatDistance()) + "m");
+}
+
+void CompetitionManagerWindow::updateToAdvanceDistanceLabel()
+{
+    IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+    m->updateToAdvanceDistance();
+    if(m->getToAdvanceDistance() == (-1))
+        ui->label_toAdvancementDistance->setText("-");
+    else ui->label_toAdvancementDistance->setText(QString::number(m->getToAdvanceDistance()) + "m");
+}
+
+void CompetitionManagerWindow::updatePointsToTheLeaderLabel()
+{
+    IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+    m->updateActualJumperPointsToTheLeader();
+    if(m->getActualJumperPointsToTheLeader() == (-1))
+        ui->label_pointsBehindLeader->setText("");
+    else ui->label_pointsBehindLeader->setText(QString::number(m->getActualJumperPointsToTheLeader()) + "pkt");
 }
 
 JumpManipulator CompetitionManagerWindow::getCurrentInputJumpManipulator() const
@@ -76,6 +116,13 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
         IndividualCompetitionResults * indRes = dynamic_cast<IndividualCompetitionResults *>(m->getResults());
         m->simulateNext(JumpManipulator());
+        m->updateLeaderResult();
+        m->generateActualWinds();
+        updateToBeatDistanceLabel();
+        updateToAdvanceDistanceLabel();
+        updatePointsToTheLeaderLabel();
+
+        ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(m->getActualWinds(), m->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
 
         if(m->getLastJump() == true){
             jumperResultsWidget->setJumperResult(indRes->getResultsOfJumper(m->getActualRoundJumpersPointer()->at(m->getActualJumperIndex())));
@@ -93,6 +140,9 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         ui->tableView_results->setModel(resultsTableModel);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+        if(m->getCompetiitonShouldBeEnded() == true)
+            emit m->competitionEnd();
         break;
     }
     }
@@ -106,5 +156,48 @@ void CompetitionManagerWindow::on_tableView_results_doubleClicked(const QModelIn
         jumperResultsWidget->setJumperResult(indRes->getPointerOfExactJumperResults(index.row()));
         jumperResultsWidget->fillWidget();
     }
+}
+
+
+void CompetitionManagerWindow::on_pushButton_generateNewWinds_clicked()
+{
+    IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+    m->generateActualWinds();
+    if(m->getActualJumperIndex() > 0){
+        m->updateLeaderResult();
+        m->updateToBeatDistance();
+    }
+    ui->label_toBeatDistance->setText(QString::number(m->getToBeatDistance()));
+    ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(m->getActualWinds(), m->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
+}
+
+
+void CompetitionManagerWindow::on_pushButton_windsGeneratorSettings_clicked()
+{
+    QDialog * dialog = new QDialog;
+    dialog->setWindowFlags(Qt::Window);
+    dialog->setWindowTitle("Edytuj ustawienia generatora wiatru");
+    dialog->setStyleSheet("background-color: rgb(225, 225, 225);");
+    dialog->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    dialog->setFixedSize(dialog->size());
+    dialog->setLayout(new QVBoxLayout(dialog));
+
+    IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+    WindsGeneratorSettingsEditorWidget * editor = new WindsGeneratorSettingsEditorWidget;
+    editor->setWindGenerationSettings(m->getActualWindGenerationSettingsPointer());
+    editor->setRemovingSubmitButtons(true);
+    editor->setKPoint(m->getCompetitionInfo()->getHill()->getKPoint());
+    editor->setSettingsCount(WindsGenerator::calculateWindsCountByKPoint(editor->getKPoint()));
+    editor->fillSettingsInputs();
+
+    dialog->layout()->addWidget(editor);
+    connect(editor, &WindsGeneratorSettingsEditorWidget::submitted, dialog, &QDialog::accept);
+
+    if(dialog->exec() == QDialog::Accepted){
+        m->setActualWindGenerationSettings(editor->getWindsGenerationSettingsFromInputs());
+        delete editor;
+        delete dialog;
+    }
+
 }
 

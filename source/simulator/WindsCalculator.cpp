@@ -36,3 +36,21 @@ Wind WindsCalculator::getAveragedWind(const QVector<Wind> & winds, short type)
 
     return Wind(windAvg);
 }
+
+double WindsCalculator::getWindCompensation(Wind avgWind, Hill *hill)
+{
+    double compensation;
+
+    if(avgWind.getDirection() == Wind::Back)
+        compensation = (avgWind.getStrength() * hill->getPointsForBackWind());
+    else if(avgWind.getDirection() == Wind::Front)
+        compensation = (-(avgWind.getStrength() * hill->getPointsForFrontWind()));
+
+    compensation = (roundDoubleToOnePlace(compensation));
+    return compensation;
+}
+
+double WindsCalculator::getGateCompensation(int startGate, int actualGate, Hill *hill)
+{
+    return (startGate - actualGate) * hill->getPointsForGate();
+}

@@ -59,6 +59,7 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         }
     }
     else if(role == Qt::BackgroundRole){
+        IndividualCompetitionResults * indResults = dynamic_cast<IndividualCompetitionResults *>(results);
     }
     else if(role == Qt::DecorationRole){
         switch(type){

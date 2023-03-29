@@ -22,11 +22,13 @@ public:
     void fillWindGenerationSettingsByDefault();
     void fillSettingsInputs();
     void askForSettingsForFillAll();
+    void removeSubmitButton();
 
     QVector<WindGenerationSettings> getWindsGenerationSettingsFromInputs();
 
 signals:
     void KPointChanged();
+    void submitted();
 
 private:
     Ui::WindsGeneratorSettingsEditorWidget *ui;
@@ -46,6 +48,8 @@ public:
     void setRemovingSubmitButtons(bool newRemovingSubmitButtons);\
     double getKPoint() const;
     void setKPoint(double newKPoint);
+private slots:
+    void on_pushButton_submit_clicked();
 };
 
 #endif // WINDSGENERATORSETTINGSEDITORWIDGET_H

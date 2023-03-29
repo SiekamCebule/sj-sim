@@ -14,9 +14,8 @@ class AbstractCompetitionManager : public QObject
 {
     Q_OBJECT
 public:
-    AbstractCompetitionManager(short type = CompetitionRules::Individual);
+    AbstractCompetitionManager(short type = CompetitionRules::Individual, int startingGate = 0);
 
-    void initActualRound();
     virtual void simulateNext() {}
     virtual bool checkRoundEnd() {return false;}
     virtual bool checkCompetitionEnd() {return false;}
@@ -27,9 +26,18 @@ public:
     virtual int getCompetitiorsCountForActualRound() {return 0;}
     virtual bool getSortStartListForActualRound() {return false;}
 
+    virtual void updateToBeatDistance() {}
+    virtual void updateToAdvanceDistance() {}
+    virtual void updateLeaderResult() {}
+    virtual void updateActualJumperPointsToTheLeader() {}
+
+    void generateActualWinds();
+
 signals:
     void roundEnd();
     void competitionEnd();
+
+    void actualJumperIndexChanged();
 
 protected:
     short type;
@@ -42,10 +50,17 @@ protected:
     AbstractCompetitionResults * results;
     CompetitionInfo * competitionInfo;
 
+    int roundStartingGate;
     int actualGate;
     int actualRound; //liczone od 1.   0 - kwalifikacje (poj. konkurs)
-    bool runQualificationsForSingleCompetition;
-    AbstractCompetitionResults qualificationsResults;
+    double toBeatDistance;
+    double toAdvanceDistance;
+
+    QVector<Wind> actualWinds;
+
+    Jumper * actualJumper;
+    int actualJumperIndex;
+    double actualJumperPointsToTheLeader;
 
     QVector<bool> completedJumps;
     QSet<int> hasDNS;
@@ -59,8 +74,10 @@ protected:
 
 public:
     CompetitionInfo *getCompetitionInfo() const;
+    CompetitionInfo *getEditableCompetitionInfo();
     void setCompetitionInfo(CompetitionInfo *newCompetitionInfo);
     QVector<WindGenerationSettings> getActualWindGenerationSettings() const;
+    QVector<WindGenerationSettings> * getActualWindGenerationSettingsPointer();
     void setActualWindGenerationSettings(const QVector<WindGenerationSettings> &newActualWindGenerationSettings);
     short getType() const;
     void setType(short newType);
@@ -68,13 +85,12 @@ public:
     void setActualGate(int newActualGate);
     int getActualRound() const;
     void setActualRound(int newActualRound);
-    bool getRunQualificationsForSingleCompetition() const;
-    void setRunQualificationsForSingleCompetition(bool newRunQualificationsForSingleCompetition);
     AbstractCompetitionResults getQualificationsResults() const;
     QVector<bool> * getCompletedJumpsPointer();
     QSet<int> *getHasDSQPointer();
     QSet<int> * getHasDNSPointer();
     CompetitionRules *getCompetitionRules() const;
+    CompetitionRules *getEditableCompetitionRules();
     void setCompetitionRules(CompetitionRules *newCompetitionRules);
     AbstractCompetitionResults *getResults() const;
     void setResults(AbstractCompetitionResults *newResults);
@@ -86,6 +102,22 @@ public:
     void setCompetiitonShouldBeEnded(bool newCompetiitonShouldBeEnded);
     bool getLastJump() const;
     void setLastJump(bool newLastJump);
+    double getToBeatDistance() const;
+    void setToBeatDistance(double newToBeatDistance);
+    int getRoundStartingGate() const;
+    void setRoundStartingGate(int newRoundStartingGate);
+    QVector<Wind> getNextJumperWinds() const;
+    void setNextJumperWinds(const QVector<Wind> &newNextJumperWinds);
+    QVector<Wind> getActualWinds() const;
+    void setActualWinds(const QVector<Wind> &newActualWinds);
+    Jumper *getActualJumper() const;
+    void setActualJumper(Jumper *newActualJumper);
+    int getActualJumperIndex() const;
+    void setActualJumperIndex(int newActualJumperIndex);
+    double getToAdvanceDistance() const;
+    void setToAdvanceDistance(double newToAdvanceDistance);
+    double getActualJumperPointsToTheLeader() const;
+    void setActualJumperPointsToTheLeader(double newActualJumperPointsToTheLeader);
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

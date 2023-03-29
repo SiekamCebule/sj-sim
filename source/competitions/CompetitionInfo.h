@@ -14,15 +14,21 @@ public:
     CompetitionInfo();
     ~CompetitionInfo();
 
+    enum SerieType{
+        Competition,
+        Qualifications,
+        TrialRound,
+        Training
+    };
+
 private:
     Hill * hill;
     CompetitionRules rules;
     AbstractCompetitionResults * results;
-    QDate date;
+    short serieType;
+    int exceptionalRoundsCount;
 
 public:
-    QDate getDate() const;
-    void setDate(const QDate &newDate);
     Hill *getHill() const;
     void setHill(Hill *newHill);
     CompetitionRules getRules() const;
@@ -30,6 +36,10 @@ public:
     void setRules(const CompetitionRules &newRules);
     AbstractCompetitionResults *getResults() const;
     void setResults(AbstractCompetitionResults *newResults);
+    short getSerieType() const;
+    void setSerieType(short newSerieType);
+    int getExceptionalRoundsCount() const;
+    void setExceptionalRoundsCount(int newExceptionalRoundsCount);
 };
 
 #endif // COMPETITIONINFO_H

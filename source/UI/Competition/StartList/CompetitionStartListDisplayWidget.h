@@ -27,6 +27,7 @@ public:
     void fillItemsLayout();
     void fillCompetitiorsActivity();
     void setupTeamsJumpersVectors();
+    QVector<Jumper*> getIndividualCompetitionJumpers();
 
     static QVector<Jumper*> convertToVectorObjectOfPointers(QVector<Jumper> *jumpers);
 

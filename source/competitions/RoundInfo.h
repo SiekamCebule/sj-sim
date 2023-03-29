@@ -5,7 +5,7 @@
 class RoundInfo
 {
 public:
-    RoundInfo();
+    RoundInfo(int count = 0, bool sortStartList = false);
 
     int getCount() const;
     void setCount(int newCount);

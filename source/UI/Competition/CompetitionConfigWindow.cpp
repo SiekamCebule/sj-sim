@@ -4,7 +4,6 @@
 #include "../EditorWidgets/HillEditorWidget.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/CompetitionRulesEditorWidget.h"
-#include "../EditorWidgets/OtherCompetitionSettingsWidget.h"
 #include "StartList/CompetitionStartListDisplayWidget.h"
 #include "../../global/GlobalDatabase.h"
 #include "../../global/GlobalSimulationSettings.h"
@@ -38,8 +37,9 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
 
     windsGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget(this);
     windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);
+    windsGeneratorSettingsEditor->removeSubmitButton();
     competitionRulesEditor = new CompetitionRulesEditorWidget(this);
-    otherCompetitionSettingsEditor = new OtherCompetitionSettingsWidget(this);
+    competitionRulesEditor->removeSubmitButton();
     competitionRulesEditor->setCompetitionRules(new CompetitionRules(tr("Zasady")));
     competitionRulesEditor->setParent(this);
 
@@ -100,7 +100,6 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     ui->label_title->raise();
     ui->toolBox->addItem(windsGeneratorSettingsEditor, "Ustawienia generatora wiatru");
     setupCompetitionRulesToolBoxItem();
-    ui->toolBox->addItem(otherCompetitionSettingsEditor, "Inne opcje");
 
 
     if(getType() == SeasonCompetition)
@@ -161,13 +160,19 @@ void CompetitionConfigWindow::setupHillToolBoxItem()
     }
 
     hillEditor = new HillEditorWidget(this);
+    hillEditor->removeSubmitButton();
     ui->verticalLayout_hillEditorWidget->addWidget(hillEditor);
 
     connect(ui->comboBox_existingHill, &QComboBox::currentIndexChanged, this, [this](){
         int selected = ui->comboBox_existingHill->currentIndex();
         if(selected > 0){
+            qDebug()<<GlobalDatabase::get()->getGlobalHills()[selected - 1].getFlightEffect();
+            qDebug()<<GlobalDatabase::get()->getGlobalHills()[selected - 1].getCharacteristics().size();
             hillEditor->setHill(&GlobalDatabase::get()->getGlobalHills()[selected - 1]);
+            qDebug()<<hillEditor->getHill()->getFlightEffect();
+            qDebug()<<hillEditor->getHill()->getCharacteristics().size();
             hillEditor->fillHillInputs();
+            qDebug()<<"a";
             emit hillEditor->KPointInputChanged(hillEditor->getHill()->getKPoint());
         }
         else hillEditor->resetHillInputs();
@@ -248,16 +253,6 @@ void CompetitionConfigWindow::setStartListDisplayWidget(CompetitionStartListDisp
     startListDisplayWidget = newStartListDisplayWidget;
 }
 
-OtherCompetitionSettingsWidget *CompetitionConfigWindow::getOtherCompetitionSettingsEditor() const
-{
-    return otherCompetitionSettingsEditor;
-}
-
-void CompetitionConfigWindow::setOtherCompetitionSettingsEditor(OtherCompetitionSettingsWidget *newOtherCompetitionSettingsEditor)
-{
-    otherCompetitionSettingsEditor = newOtherCompetitionSettingsEditor;
-}
-
 HillEditorWidget *CompetitionConfigWindow::getHillEditor() const
 {
     return hillEditor;
@@ -303,38 +298,100 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
     switch(getType())
     {
     case SingleCompetition:{
-        CompetitionInfo info;
-        info.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
-        info.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
-        info.setDate(QDate::currentDate());
-        info.setResults(new IndividualCompetitionResults());
-
-        IndividualCompetitionManager * competitionManager = new IndividualCompetitionManager;
-        competitionManager->setStartingJumpers(CompetitionStartListDisplayWidget::convertToVectorObjectOfPointers(&competitionJumpers));
-        competitionManager->setCompetitionInfo(&info);
-        competitionManager->setCompetitionRules(info.getRulesPointer());
-        competitionManager->setResults(info.getResults());
-        competitionManager->setActualWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
-        competitionManager->setActualGate(ui->spinBox_startGate->value());
-        competitionManager->setRunQualificationsForSingleCompetition(checkBox_singleCompetitionQualifications->isChecked());
-        competitionManager->initActualRound();
-        competitionManager->setupJumpersForActualRound();
-        competitionManager->setActualJumperIndex(0);
-        competitionManager->fillCompletedJumpsToStartOfRound();
-        competitionManager->setDSQBaseProbability(ui->spinBox_dsqProbability->value());
-
-        qDebug()<<"ok";
-
-        CompetitionManagerWindow * window = new CompetitionManagerWindow(competitionManager, this);
-        if(window->exec() == QDialog::Accepted)
+        switch(competitionRulesEditor->getCompetitionTypeFromInput()){
+        case CompetitionRules::Individual:
         {
+            CompetitionInfo qualsInfo;
+            qualsInfo.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
+            qualsInfo.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
+            qualsInfo.setResults(new IndividualCompetitionResults());
+            qualsInfo.setSerieType(CompetitionInfo::Qualifications);
+            qualsInfo.setExceptionalRoundsCount(1);
 
+            IndividualCompetitionManager * competitionManager = new IndividualCompetitionManager(CompetitionRules::Individual, ui->spinBox_startGate->value());
+
+            IndividualCompetitionResults * qualificationsResults = nullptr;
+            IndividualCompetitionManager * qualificationsManager = nullptr;
+            if(checkBox_singleCompetitionQualifications->isChecked() == true){
+                qualificationsResults = new IndividualCompetitionResults();
+                qualificationsManager = new IndividualCompetitionManager(CompetitionRules::Individual, ui->spinBox_startGate->value());
+                qualificationsManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
+                qualificationsManager->setCompetitionInfo(&qualsInfo);
+                qualificationsManager->getEditableCompetitionInfo()->setSerieType(CompetitionInfo::Qualifications);
+                qualificationsManager->setCompetitionRules(qualsInfo.getRulesPointer());
+                qualificationsManager->setResults(qualificationsResults);
+                qualificationsManager->setActualWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
+                qualificationsManager->setActualGate(ui->spinBox_startGate->value());
+                qualificationsManager->setActualRound(1);
+                qualificationsManager->setActualRoundJumpers(qualificationsManager->getStartingJumpers());
+                qualificationsManager->setActualJumperIndex(0);
+                qualificationsManager->fillCompletedJumpsToStartOfRound();
+                qualificationsManager->setDSQBaseProbability(ui->spinBox_dsqProbability->value());
+                QVector<RoundInfo> qualsRounds = {
+                    RoundInfo(0, false),
+                    RoundInfo(qualificationsManager->getCompetitionRules()->getRounds().at(0).getCount(), qualificationsManager->getCompetitionRules()->getRounds().at(0).getSortStartList())
+                };
+                qualificationsManager->getEditableCompetitionRules()->setRounds(qualsRounds);
+
+                CompetitionManagerWindow * qualsWindow = new CompetitionManagerWindow(qualificationsManager, this);
+                connect(qualsWindow->getManager(), &AbstractCompetitionManager::competitionEnd, qualsWindow, [this, qualsWindow](){
+                    QMessageBox * box = new QMessageBox(this);
+                    box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
+                    box->setIcon(QMessageBox::Information);
+                    box->setWindowTitle("Zakończenie kwalifikacji");
+                    box->setText(tr("Aby przejść do konkursu, wciśnij \"OK\"."));
+                    QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
+                    //box->setAttribute(Qt::WA_DeleteOnClose); // delete pointer after close
+                    connect(box, &QMessageBox::accepted, qualsWindow, [this, box, qualsWindow](){
+                        qDebug()<<"accepted message";
+                        this->show();
+                        qualsWindow->accept();
+                    });
+                    this->hide();
+                    box->setModal(true);
+                    box->show();
+                });
+                qualsWindow->exec();
+            }
+
+            CompetitionInfo info;
+            info.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
+            info.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
+            info.setResults(new IndividualCompetitionResults());
+            info.setSerieType(CompetitionInfo::Competition);
+            if(qualificationsResults != nullptr){
+                competitionManager->setStartingJumpers(IndividualCompetitionManager::getFilteredJumpersVector(qualificationsManager->getActualRoundJumpersPointer(), qualificationsResults, qualificationsManager->getCompetitionRules(), 2)); //2 zamiast 1, ponieważ wcześniej ustawiliśmy dla kwalifikacji vector rounds o wielkości 2, gdzie właściwa ilość skoczków jest jako druga a nie pierwsza
+                competitionManager->setRoundStartingGate(qualificationsManager->getActualGate());
+            }
+            else
+                competitionManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
+            competitionManager->setCompetitionInfo(&info);
+            competitionManager->setCompetitionRules(info.getRulesPointer());
+            competitionManager->setResults(info.getResults());
+            competitionManager->setActualWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
+            competitionManager->setActualGate(ui->spinBox_startGate->value());
+            competitionManager->setActualRound(1);
+            competitionManager->setActualRoundJumpers(competitionManager->getStartingJumpers());
+            competitionManager->setActualJumperIndex(0);
+            competitionManager->fillCompletedJumpsToStartOfRound();
+            competitionManager->setDSQBaseProbability(ui->spinBox_dsqProbability->value());
+            CompetitionManagerWindow * window = new CompetitionManagerWindow(competitionManager, this);
+            if(window->exec() == QDialog::Accepted)
+            {
+
+            }
+
+            delete info.getHill();
+            delete competitionManager;
+            if(qualificationsManager != nullptr)
+                delete qualificationsManager;
+            if(qualificationsResults != nullptr)
+                delete qualificationsResults;
         }
-
-        delete info.getHill();
-        delete competitionManager;
+            break;
+        }
     }
+        break;
     }
 
 }
-

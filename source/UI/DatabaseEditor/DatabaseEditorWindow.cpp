@@ -35,13 +35,11 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
         fillJumpersWidget();
     if(GlobalDatabase::get()->getGlobalHills().size() > 0)
         fillHillsWidget();
-    qDebug()<<GlobalDatabase::get()->getGlobalCompetitionsRules().at(0).getRounds().at(0).getCount()<<" PRZED";
     if(GlobalDatabase::get()->getGlobalCompetitionsRules().size() > 0)
         fillCompetitionRulesWidget();
-    qDebug()<<GlobalDatabase::get()->getGlobalCompetitionsRules().at(0).getRounds().at(0).getCount()<<" PO";
 
     if(this->jumperEditor == nullptr)
-        this->jumperEditor = new JumperEditorWidget();
+        this->jumperEditor = new JumperEditorWidget;
     ui->tab_jumpers->layout()->addWidget(this->jumperEditor);
 
     if(this->hillEditor == nullptr)
@@ -53,9 +51,9 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
     ui->tab_competitionRules->layout()->addWidget(this->competitionRulesEditor);
 
     connect(ui->tabWidget_main, &QTabWidget::currentChanged, this, &DatabaseEditorWindow::setActualElementType);
-    connect(this->jumperEditor, &JumperEditorWidget::changed, this, &DatabaseEditorWindow::replaceJumperFromJumperEditor);
-    connect(this->hillEditor, &HillEditorWidget::changed, this, &DatabaseEditorWindow::replaceHillFromHillEditor);
-    connect(this->competitionRulesEditor, &CompetitionRulesEditorWidget::changed, this, &DatabaseEditorWindow::replaceCompetitionRulesFromEditor);
+    connect(this->jumperEditor, &JumperEditorWidget::submitted, this, &DatabaseEditorWindow::replaceJumperFromJumperEditor);
+    connect(this->hillEditor, &HillEditorWidget::submitted, this, &DatabaseEditorWindow::replaceHillFromHillEditor);
+    connect(this->competitionRulesEditor, &CompetitionRulesEditorWidget::submitted, this, &DatabaseEditorWindow::replaceCompetitionRulesFromEditor);
 }
 
 DatabaseEditorWindow::~DatabaseEditorWindow()
@@ -163,7 +161,8 @@ void DatabaseEditorWindow::fillJumpersWidget()
         itemWidget->addLabel(label, 1);
 
         label = new QLabel();
-        label->setPixmap(jumper.getFlagPixmap().scaled(CountryFlagsManager::getFlagPixmapSize()));
+        label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        label->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())).scaled(CountryFlagsManager::getFlagPixmapSize()));
         itemWidget->addLabel(label, 2);
 
         ui->verticalLayout_jumpers->addWidget(itemWidget);
@@ -212,7 +211,10 @@ void DatabaseEditorWindow::fillHillsWidget()
         itemWidget->addLabel(label, 1);
 
         label = new QLabel();
-        label->setPixmap(hill.getFlagPixmap().scaled(CountryFlagsManager::getFlagPixmapSize()));
+        label->setMinimumSize(QSize(CountryFlagsManager::getFlagPixmapSize()));
+        label->setMaximumSize(QSize(CountryFlagsManager::getFlagPixmapSize()));
+        label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        label->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())).scaled(label->size()));
         itemWidget->addLabel(label, 2);
 
         ui->verticalLayout_hills->addWidget(itemWidget);

@@ -14,7 +14,6 @@ HillEditorWidget::HillEditorWidget(QWidget *parent) :
 {
     hill = nullptr;
     ui->setupUi(this);
-    setupConnectsForWidgetChange();
 
     characteristicsEditor = new CharacteristicsEditor(Characteristic::Hill);
     characteristicsEditor->setParent(this);
@@ -41,13 +40,11 @@ HillEditorWidget::HillEditorWidget(QWidget *parent) :
 
 HillEditorWidget::~HillEditorWidget()
 {
-    removeConnectsForWidgetChange();
     delete ui;
 }
 
 void HillEditorWidget::resetHillInputs()
 {
-    removeConnectsForWidgetChange();
     ui->lineEdit_name->setText("");
     ui->lineEdit_countryCode->setText("");
     ui->label_countryFlag->setPixmap(QPixmap());
@@ -69,22 +66,30 @@ void HillEditorWidget::resetHillInputs()
     ui->doubleSpinBox_takeoffEffect->setValue(0);
     ui->doubleSpinBox_flightEffect->setValue(0);
     characteristicsEditor->setCharacteristics(QSet<Characteristic>());
-    setupConnectsForWidgetChange();
 }
 
 void HillEditorWidget::fillHillInputs()
 {
-    removeConnectsForWidgetChange();
+    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
     if(hill == nullptr)
     {
         qDebug()<<"Hill is nullptr!";
         return;
     }
+    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
     ui->lineEdit_name->setText(hill->getName());
+
+    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
     ui->lineEdit_countryCode->setText(hill->getCountryCode());
-    ui->label_countryFlag->setPixmap(hill->getFlagPixmap().scaled(CountryFlagsManager::getFlagPixmapSize()));
+    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
+    ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_countryCode->size()));
+    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
     ui->doubleSpinBox_KPoint->setValue(hill->getKPoint());
+    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
     ui->doubleSpinBox_HSPoint->setValue(hill->getHSPoint());
+    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
+
+    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
 
     ui->doubleSpinBox_pointsForKPoint->setValue(hill->getPointsForKPoint());
     ui->checkBox_autoPointsForKPoint->setChecked(hill->getAutoPointsForKPoint());
@@ -100,8 +105,21 @@ void HillEditorWidget::fillHillInputs()
 
     ui->doubleSpinBox_takeoffEffect->setValue(hill->getTakeoffEffect());
     ui->doubleSpinBox_flightEffect->setValue(hill->getFlightEffect());
+
+    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
+    qDebug()<<hill->getFlightEffect();
+
+    qDebug()<<"hja";
+    qDebug()<<hill->getCharacteristics().count();
     characteristicsEditor->setCharacteristics(hill->getCharacteristics());
-    setupConnectsForWidgetChange();
+    qDebug()<<"czka";
+}
+
+void HillEditorWidget::removeSubmitButton()
+{
+    disconnect(ui->pushButton_submit, &QPushButton::clicked, this, &HillEditorWidget::on_pushButton_submit_clicked);
+    //ui->verticalLayout_characteristicsEditor->removeWidget(ui->pushButton_submit);
+    delete ui->pushButton_submit;
 }
 
 Hill HillEditorWidget::getHillFromWidgetInput() const
@@ -109,7 +127,6 @@ Hill HillEditorWidget::getHillFromWidgetInput() const
     Hill hill;
     hill.setName(ui->lineEdit_name->text());
     hill.setCountryCode(ui->lineEdit_countryCode->text());
-    hill.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())));
     hill.setKPoint(ui->doubleSpinBox_KPoint->value());
     hill.setHSPoint(ui->doubleSpinBox_HSPoint->value());
 
@@ -209,28 +226,8 @@ void HillEditorWidget::on_lineEdit_countryCode_textChanged(const QString &arg1)
         ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(ui->lineEdit_countryCode->text().toLower())).scaled(CountryFlagsManager::getFlagPixmapSize()));
 }
 
-void HillEditorWidget::removeConnectsForWidgetChange()
+void HillEditorWidget::on_pushButton_submit_clicked()
 {
-    for(auto & w : MyFunctions::getWidgetsVector(this, "lineEdit")){
-        disconnect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &HillEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "doubleSpinBox")){
-        disconnect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::valueChanged, this, &HillEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "checkBox")){
-        disconnect(dynamic_cast<QCheckBox *>(w), &QCheckBox::stateChanged, this, &HillEditorWidget::changed);
-    }
+    emit submitted();
 }
 
-void HillEditorWidget::setupConnectsForWidgetChange()
-{
-    for(auto & w : MyFunctions::getWidgetsVector(this, "lineEdit")){
-        connect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &HillEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "doubleSpinBox")){
-        connect(dynamic_cast<QDoubleSpinBox *>(w), &QDoubleSpinBox::valueChanged, this, &HillEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "checkBox")){
-        connect(dynamic_cast<QCheckBox *>(w), &QCheckBox::stateChanged, this, &HillEditorWidget::changed);
-    }
-}

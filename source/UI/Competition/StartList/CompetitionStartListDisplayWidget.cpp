@@ -124,6 +124,16 @@ void CompetitionStartListDisplayWidget::setupTeamsJumpersVectors()
     }
 }
 
+QVector<Jumper *> CompetitionStartListDisplayWidget::getIndividualCompetitionJumpers()
+{
+    QVector<Jumper *> vec;
+    for(int i = 0; i<jumpers->count(); i++){
+        if(jumpersActivity.at(i) == true)
+            vec.push_back(const_cast<Jumper *>(&jumpers->at(i)));
+    }
+    return vec;
+}
+
 void CompetitionStartListDisplayWidget::askForNewIndex()
 {
     int countOfCompetitiors = 0;

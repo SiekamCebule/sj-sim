@@ -16,7 +16,6 @@ SOURCES += \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp \
     source/UI/Competition/StartList/StartListModel.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
-    source/UI/EditorWidgets/OtherCompetitionSettingsWidget.cpp \
     source/UI/EditorWidgets/RoundInfoEditorWidget.cpp \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.cpp \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
@@ -81,7 +80,6 @@ HEADERS += \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.h \
     source/UI/Competition/StartList/StartListModel.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
-    source/UI/EditorWidgets/OtherCompetitionSettingsWidget.h \
     source/UI/EditorWidgets/RoundInfoEditorWidget.h \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.h \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
@@ -143,7 +141,6 @@ FORMS += \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
-    source/UI/EditorWidgets/OtherCompetitionSettingsWidget.ui \
     source/UI/EditorWidgets/RoundInfoEditorWidget.ui \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.ui \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \

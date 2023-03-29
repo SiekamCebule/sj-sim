@@ -43,7 +43,9 @@ void ClassWithCharacteristics::removeCharacteristic(const QString &type)
 
 double ClassWithCharacteristics::getLevelOfCharacteristic(const QString &characteristicType)
 {
-    for(QSet<Characteristic>::iterator it = characteristics.begin(); it != characteristics.end(); it++)
+    QSet<Characteristic> cs = getCharacteristics();
+    cs.detach();
+    for(QSet<Characteristic>::iterator it = cs.begin(); it != cs.end(); ++it)
     {
         if(it->getType() == characteristicType)
             return it->getLevel();

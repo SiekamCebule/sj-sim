@@ -25,12 +25,14 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
 
     jumperEditor = new JumperEditorWidget;
-    //jumperEditor->removeSubmitButton();
+    jumperEditor->removeSubmitButton();
 
     hillEditor = new HillEditorWidget;
+    hillEditor->removeSubmitButton();
 
     windsGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget;
     windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);
+    windsGeneratorSettingsEditor->removeSubmitButton();
 
     ui->comboBox_existingJumper->addItem("BRAK");
     for(const auto & jumper : GlobalDatabase::get()->getGlobalJumpers())

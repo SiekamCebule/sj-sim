@@ -2,19 +2,89 @@
 
 #include <QDebug>
 
-AbstractCompetitionManager::AbstractCompetitionManager(short type) : type(type)
+AbstractCompetitionManager::AbstractCompetitionManager(short type, int startingGate) : type(type), roundStartingGate(startingGate)
 {
-    actualGate = actualRound = runQualificationsForSingleCompetition = 0;
+    actualGate = actualRound = 0;
     results = nullptr;
     competitionRules = nullptr;
     competitionInfo = nullptr;
 }
 
-void AbstractCompetitionManager::initActualRound()
+void AbstractCompetitionManager::generateActualWinds()
 {
-    if(getRunQualificationsForSingleCompetition() == true)
-        actualRound = 0;
-    else actualRound = 1;
+    windsGenerator.setGenerationSettings(actualWindGenerationSettings);
+    actualWinds = windsGenerator.generateWinds();
+}
+
+double AbstractCompetitionManager::getActualJumperPointsToTheLeader() const
+{
+    return actualJumperPointsToTheLeader;
+}
+
+void AbstractCompetitionManager::setActualJumperPointsToTheLeader(double newActualJumperPointsToTheLeader)
+{
+    actualJumperPointsToTheLeader = newActualJumperPointsToTheLeader;
+}
+
+double AbstractCompetitionManager::getToAdvanceDistance() const
+{
+    return toAdvanceDistance;
+}
+
+void AbstractCompetitionManager::setToAdvanceDistance(double newToAdvanceDistance)
+{
+    toAdvanceDistance = newToAdvanceDistance;
+}
+
+int AbstractCompetitionManager::getActualJumperIndex() const
+{
+    return actualJumperIndex;
+}
+
+void AbstractCompetitionManager::setActualJumperIndex(int newActualJumperIndex)
+{
+    actualJumperIndex = newActualJumperIndex;
+    emit actualJumperIndexChanged();
+}
+
+Jumper *AbstractCompetitionManager::getActualJumper() const
+{
+    return actualJumper;
+}
+
+void AbstractCompetitionManager::setActualJumper(Jumper *newActualJumper)
+{
+    actualJumper = newActualJumper;
+}
+
+QVector<Wind> AbstractCompetitionManager::getActualWinds() const
+{
+    return actualWinds;
+}
+
+void AbstractCompetitionManager::setActualWinds(const QVector<Wind> &newActualWinds)
+{
+    actualWinds = newActualWinds;
+}
+
+int AbstractCompetitionManager::getRoundStartingGate() const
+{
+    return roundStartingGate;
+}
+
+void AbstractCompetitionManager::setRoundStartingGate(int newRoundStartingGate)
+{
+    roundStartingGate = newRoundStartingGate;
+}
+
+double AbstractCompetitionManager::getToBeatDistance() const
+{
+    return toBeatDistance;
+}
+
+void AbstractCompetitionManager::setToBeatDistance(double newToBeatDistance)
+{
+    toBeatDistance = newToBeatDistance;
 }
 
 bool AbstractCompetitionManager::getLastJump() const
@@ -72,14 +142,14 @@ CompetitionRules *AbstractCompetitionManager::getCompetitionRules() const
     return competitionRules;
 }
 
+CompetitionRules *AbstractCompetitionManager::getEditableCompetitionRules()
+{
+    return competitionRules;
+}
+
 void AbstractCompetitionManager::setCompetitionRules(CompetitionRules *newCompetitionRules)
 {
     competitionRules = newCompetitionRules;
-}
-
-AbstractCompetitionResults AbstractCompetitionManager::getQualificationsResults() const
-{
-    return qualificationsResults;
 }
 
 QVector<bool> * AbstractCompetitionManager::getCompletedJumpsPointer()
@@ -95,16 +165,6 @@ QSet<int> * AbstractCompetitionManager::getHasDSQPointer()
 QSet<int> * AbstractCompetitionManager::getHasDNSPointer()
 {
     return &hasDNS;
-}
-
-bool AbstractCompetitionManager::getRunQualificationsForSingleCompetition() const
-{
-    return runQualificationsForSingleCompetition;
-}
-
-void AbstractCompetitionManager::setRunQualificationsForSingleCompetition(bool newRunQualificationsForSingleCompetition)
-{
-    runQualificationsForSingleCompetition = newRunQualificationsForSingleCompetition;
 }
 
 int AbstractCompetitionManager::getActualRound() const
@@ -142,12 +202,22 @@ QVector<WindGenerationSettings> AbstractCompetitionManager::getActualWindGenerat
     return actualWindGenerationSettings;
 }
 
+QVector<WindGenerationSettings> * AbstractCompetitionManager::getActualWindGenerationSettingsPointer()
+{
+    return &actualWindGenerationSettings;
+}
+
 void AbstractCompetitionManager::setActualWindGenerationSettings(const QVector<WindGenerationSettings> &newActualWindGenerationSettings)
 {
     actualWindGenerationSettings = newActualWindGenerationSettings;
 }
 
 CompetitionInfo *AbstractCompetitionManager::getCompetitionInfo() const
+{
+    return competitionInfo;
+}
+
+CompetitionInfo *AbstractCompetitionManager::getEditableCompetitionInfo()
 {
     return competitionInfo;
 }

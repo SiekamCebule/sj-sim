@@ -222,11 +222,3 @@ void GlobalDatabase::setupJumpersFlags()
         jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
     }
 }
-
-void GlobalDatabase::setupHillsFlags()
-{
-    for(auto & hill : getEditableGlobalHills())
-    {
-        hill.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())));
-    }
-}

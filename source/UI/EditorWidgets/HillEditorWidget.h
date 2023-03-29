@@ -28,7 +28,7 @@ public:
     int getKPointFromInput();
 
 signals:
-    void changed();
+    void submitted();
     void KPointInputChanged(double KPoint);
 
 private slots:
@@ -38,13 +38,13 @@ private slots:
 
     void on_lineEdit_countryCode_textChanged(const QString &arg1);
 
+    void on_pushButton_submit_clicked();
+
 private:
     Ui::HillEditorWidget *ui;
 
     CharacteristicsEditor * characteristicsEditor;
     Hill * hill; 
-    void setupConnectsForWidgetChange();
-    void removeConnectsForWidgetChange();
 
 public:
     Hill *getHill() const;

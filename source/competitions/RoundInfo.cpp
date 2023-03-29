@@ -1,9 +1,8 @@
 #include "RoundInfo.h"
 
-RoundInfo::RoundInfo()
-{
-
-}
+RoundInfo::RoundInfo(int count, bool sortStartList) : count(count),
+    sortStartList(sortStartList)
+{}
 
 int RoundInfo::getCount() const
 {

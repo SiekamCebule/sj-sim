@@ -9,7 +9,6 @@ CompetitionRulesEditorWidget::CompetitionRulesEditorWidget(QWidget *parent) :
     ui(new Ui::CompetitionRulesEditorWidget)
 {
     ui->setupUi(this);
-    setupConnectsForWidgetChange();
     competitionRules = nullptr;
 
     ui->toolBox_rounds->removeItem(0);
@@ -24,13 +23,11 @@ CompetitionRulesEditorWidget::CompetitionRulesEditorWidget(QWidget *parent) :
 
 CompetitionRulesEditorWidget::~CompetitionRulesEditorWidget()
 {
-    removeConnectsForWidgetChange();
     delete ui;
 }
 
 void CompetitionRulesEditorWidget::resetInputs()
 {
-    removeConnectsForWidgetChange();
     ui->lineEdit_name->clear();
     ui->spinBox_roundsCount->setValue(0);
     ui->checkBox_windCompensation->setChecked(true);
@@ -42,12 +39,10 @@ void CompetitionRulesEditorWidget::resetInputs()
     ui->comboBox_competitionType->setCurrentIndex(CompetitionRules::Individual);
     ui->comboBox_windAverageCalculatingType->setCurrentIndex(0);
     ui->comboBox_windCompensationDistanceEffect->setCurrentIndex(0);
-    setupConnectsForWidgetChange();
 }
 
 void CompetitionRulesEditorWidget::fillCompetitionRulesInputs()
 {
-    removeConnectsForWidgetChange();
     ui->lineEdit_name->setText(competitionRules->getName());
     ui->spinBox_roundsCount->setValue(competitionRules->getRounds().count());
     ui->checkBox_windCompensation->setChecked(competitionRules->getHasWindCompensations());
@@ -67,7 +62,6 @@ void CompetitionRulesEditorWidget::fillCompetitionRulesInputs()
     ui->comboBox_windAverageCalculatingType->setCurrentIndex(competitionRules->getWindAverageCalculatingType());
     ui->comboBox_windCompensationDistanceEffect->setCurrentIndex(competitionRules->getWindCompensationDistanceEffect());
     fillRoundsInputs(true);
-    setupConnectsForWidgetChange();
 }
 
 void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)
@@ -96,6 +90,13 @@ void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)
             fillRoundsInputs(false);
         });
     }
+}
+
+void CompetitionRulesEditorWidget::removeSubmitButton()
+{
+    disconnect(ui->pushButton_submit, &QPushButton::clicked, this, &CompetitionRulesEditorWidget::on_pushButton_submit_clicked);
+    //ui->verticalLayout_characteristicsEditor->removeWidget(ui->pushButton_submit);
+    delete ui->pushButton_submit;
 }
 
 QString CompetitionRulesEditorWidget::getNameFromInput()
@@ -177,38 +178,6 @@ CompetitionRules CompetitionRulesEditorWidget::getCompetitionRulesFromWidgetInpu
     return rules;
 }
 
-void CompetitionRulesEditorWidget::removeConnectsForWidgetChange()
-{
-    for(auto & w : MyFunctions::getWidgetsVector(this, "lineEdit")){
-        disconnect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &CompetitionRulesEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "spinBox")){
-        disconnect(dynamic_cast<QSpinBox *>(w), &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "comboBox")){
-        disconnect(dynamic_cast<QComboBox *>(w), &QComboBox::currentIndexChanged, this, &CompetitionRulesEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "checkBox")){
-        disconnect(dynamic_cast<QCheckBox *>(w), &QCheckBox::stateChanged, this, &CompetitionRulesEditorWidget::changed);
-    }
-}
-
-void CompetitionRulesEditorWidget::setupConnectsForWidgetChange()
-{
-    for(auto & w : MyFunctions::getWidgetsVector(this, "lineEdit")){
-        connect(dynamic_cast<QLineEdit *>(w), &QLineEdit::textChanged, this, &CompetitionRulesEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "spinBox")){
-        connect(dynamic_cast<QSpinBox *>(w), &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "comboBox")){
-        connect(dynamic_cast<QComboBox *>(w), &QComboBox::currentIndexChanged, this, &CompetitionRulesEditorWidget::changed);
-    }
-    for(auto & w : MyFunctions::getWidgetsVector(this, "checkBox")){
-        connect(dynamic_cast<QCheckBox *>(w), &QCheckBox::stateChanged, this, &CompetitionRulesEditorWidget::changed);
-    }
-}
-
 CompetitionRules *CompetitionRulesEditorWidget::getCompetitionRules() const
 {
     return competitionRules;
@@ -218,3 +187,9 @@ void CompetitionRulesEditorWidget::setCompetitionRules(CompetitionRules *newComp
 {
     competitionRules = newCompetitionRules;
 }
+
+void CompetitionRulesEditorWidget::on_pushButton_submit_clicked()
+{
+    emit submitted();
+}
+

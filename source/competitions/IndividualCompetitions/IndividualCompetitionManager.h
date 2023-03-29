@@ -7,44 +7,51 @@
 #include "../AbstractCompetitionManager.h"
 #include "../../simulator/Jumper.h"
 
+class IndividualCompetitionResults;
+class IndividualCompetitionSingleResult;
+
 class IndividualCompetitionManager : public AbstractCompetitionManager
 {
     Q_OBJECT
 public:
-    IndividualCompetitionManager();
+    IndividualCompetitionManager(short type = CompetitionRules::Individual, int startingGate = 0);
+
     void simulateNext(const JumpManipulator &manipulator = JumpManipulator());
     bool checkRoundEnd();
     bool checkCompetitionEnd();
 
     void setupNextRound();
     void fillCompletedJumpsToStartOfRound();
+    void updateToBeatDistance();
+    void updateToAdvanceDistance();
+    void updateLeaderResult();
+    void updateActualJumperPointsToTheLeader();
 
     int getCompetitiorsCountForActualRound();
     bool getSortStartListForActualRound();
 
-signals:
-    void actualJumperIndexChanged();
-
 private:
     QVector<Jumper *> startingJumpers;
     QVector<Jumper *> actualRoundJumpers;
-    Jumper * actualJumper;
-    int actualJumperIndex;
+
+    IndividualCompetitionSingleResult * leaderResult;
 
 public:
-    void setupJumpersForActualRound();
+    static QVector<Jumper *> getFilteredJumpersVector(QVector<Jumper *> *previousRoundJumpers, IndividualCompetitionResults * results, CompetitionRules * rules, int round);
 
 public:
-    void setActualJumperIndex(int newActualJumperIndex);
-    int getActualJumperIndex() const;
     QVector<Jumper *> getStartingJumpers() const;
+    QVector<Jumper *> * getStartingJumpersPointer();
     void setStartingJumpers(const QVector<Jumper *> &newStartingJumpers);
     QVector<Jumper *> *getActualRoundJumpersPointer() const;
     void setActualRoundJumpers(const QVector<Jumper *> &newActualRoundJumpers);
-    void inncrementActualJumperIndex();
+    void incrementActualJumperIndex();
     void decrementActualJumperIndex();
-    Jumper *getActualJumper() const;
     QVector<Jumper *> getActualRoundJumpers() const;
+    IndividualCompetitionSingleResult *getLeaderResult() const;
+    void setLeaderResult(IndividualCompetitionSingleResult *newLeaderResult);
+    QVector<Wind> getNextJumperWinds() const;
+    void setNextJumperWinds(const QVector<Wind> &newNextJumperWinds);
 };
 
 #endif // INDIVIDUALCOMPETITIONMANAGER_H

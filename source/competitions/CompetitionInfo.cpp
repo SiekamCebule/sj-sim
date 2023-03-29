@@ -8,7 +8,7 @@
 
 CompetitionInfo::CompetitionInfo()
 {
-
+    exceptionalRoundsCount = (-1);
 }
 
 CompetitionInfo::~CompetitionInfo()
@@ -16,6 +16,26 @@ CompetitionInfo::~CompetitionInfo()
     if(results != nullptr){
         delete results;
     }
+}
+
+int CompetitionInfo::getExceptionalRoundsCount() const
+{
+    return exceptionalRoundsCount;
+}
+
+void CompetitionInfo::setExceptionalRoundsCount(int newExceptionalRoundsCount)
+{
+    exceptionalRoundsCount = newExceptionalRoundsCount;
+}
+
+short CompetitionInfo::getSerieType() const
+{
+    return serieType;
+}
+
+void CompetitionInfo::setSerieType(short newSerieType)
+{
+    serieType = newSerieType;
 }
 
 AbstractCompetitionResults *CompetitionInfo::getResults() const
@@ -26,16 +46,6 @@ AbstractCompetitionResults *CompetitionInfo::getResults() const
 void CompetitionInfo::setResults(AbstractCompetitionResults *newResults)
 {
     results = newResults;
-}
-
-QDate CompetitionInfo::getDate() const
-{
-    return date;
-}
-
-void CompetitionInfo::setDate(const QDate &newDate)
-{
-    date = newDate;
 }
 
 Hill *CompetitionInfo::getHill() const

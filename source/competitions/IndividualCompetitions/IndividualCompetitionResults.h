@@ -10,6 +10,7 @@ class IndividualCompetitionResults : public AbstractCompetitionResults
 public:
     IndividualCompetitionResults();
     void updatePositions();
+    void sortJumpersResultsInDescendingOrder();
 
 private:
     QVector<IndividualCompetitionSingleResult> jumpersResults;

@@ -95,7 +95,7 @@ QVector<Jumper> Jumper::getJumpersVectorFromJson(const QByteArray &bytes)
         jumper.getJumperSkillsPointer()->setFlightStyle(obj.value("flight-style").toDouble());
         jumper.getJumperSkillsPointer()->setLandingStyle(obj.value("landing-style").toDouble());
         jumper.getJumperSkillsPointer()->setForm(obj.value("form").toDouble());
-        jumper.getJumperSkillsPointer()->setJumpsEquality(obj.value("jumps-equality").toInt(0));
+        jumper.getJumperSkillsPointer()->setJumpsEquality(obj.value("jumps-equality").toDouble());
 
         QJsonArray characteristicsArray = obj.value("characteristics").toArray();
         for(const auto & val : characteristicsArray){

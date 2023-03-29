@@ -19,7 +19,6 @@ public:
 private:
     QString name;
     QString countryCode;
-    QPixmap flagPixmap;
 
     double KPoint;
     double HSPoint; // Jeśli nie ma cechy charakterystycznej, to HSPoint == realHS
@@ -84,8 +83,6 @@ public:
     void setRealHSByCharacteristic();
     double getPointsForKPoint() const;
     void setPointsForKPoint(double newPointsForKPoint);
-    QPixmap getFlagPixmap() const;
-    void setFlagPixmap(const QPixmap &newFlagPixmap);
     bool getAutoPointsForKPoint() const;
     void setAutoPointsForKPoint(bool newAutoPointsForKPoint);
     bool getAutoPointsForMeter() const;

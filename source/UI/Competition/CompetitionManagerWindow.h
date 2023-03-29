@@ -20,6 +20,10 @@ public:
     explicit CompetitionManagerWindow(AbstractCompetitionManager * manager = nullptr,  QWidget *parent = nullptr);
     ~CompetitionManagerWindow();
 
+    void updateToBeatDistanceLabel();
+    void updateToAdvanceDistanceLabel();
+    void updatePointsToTheLeaderLabel();
+
 private:
     Ui::CompetitionManagerWindow *ui;
     AbstractCompetitionManager * manager;
@@ -41,6 +45,8 @@ public:
 private slots:
     void on_pushButton_jump_clicked();
     void on_tableView_results_doubleClicked(const QModelIndex &index);
+    void on_pushButton_generateNewWinds_clicked();
+    void on_pushButton_windsGeneratorSettings_clicked();
 };
 
 #endif // COMPETITIONMANAGERWINDOW_H
