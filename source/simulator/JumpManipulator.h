@@ -18,6 +18,7 @@ private:
     QPair<double, double> flightRatingRange;
     QPair<double, double> judgesRatingRange;
     QPair<double, double> averagedWindRange;
+    bool averagedWindRangeEnabled;
 
     double distanceBonus;
     double landingInstabilityBonus;
@@ -65,6 +66,8 @@ public:
     void setExactWinds(const QVector<Wind> &newExactWinds);
     int getExactDSQProbability() const;
     void setExactDSQProbability(int newExactDSQProbability);
+    bool getAveragedWindRangeEnabled() const;
+    void setAveragedWindRangeEnabled(bool newAveragedWindRangeEnabled);
 };
 
 #endif // JUMPMANIPULATOR_H

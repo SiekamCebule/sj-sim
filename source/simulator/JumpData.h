@@ -42,6 +42,10 @@ private:
     bool isDSQOccured;
     bool DNS;
 
+    bool hasCoachGate;
+    int coachGate;
+    bool beats95HSPercents;
+
     Jumper * jumper;
     Hill * hill;
     JumpSimulator * simulator;
@@ -88,6 +92,12 @@ public:
     void setWinds(const QVector<Wind> &newWinds);
     bool getDNS() const;
     void setDNS(bool newDNS);
+    bool getHasCoachGate() const;
+    void setHasCoachGate(bool newHasCoachGate);
+    int getCoachGate() const;
+    void setCoachGate(int newCoachGate);
+    bool getBeats95HSPercents() const;
+    void setBeats95HSPercents(bool newBeats95HSPercents);
 };
 
 QDebug operator<<(QDebug d, const JumpData & jumpData);

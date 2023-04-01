@@ -3,6 +3,9 @@
 #include "../../competitions/IndividualCompetitions/IndividualCompetitionManager.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
+#include "../JumpManipulation/JumpManipulatorConfigWindow.h"
+#include <QInputDialog>
+#include <QMessageBox>
 
 CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *manager, QWidget *parent) :
     QDialog(parent),
@@ -32,7 +35,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     }
     ui->listView_startList->setModel(startListModel);
 
-    resultsTableModel = new ResultsTableModel(getType(), manager->getResults(), manager->getCompetitionInfo(), this);
+    resultsTableModel = new ResultsTableModel(getType(), manager->getResults(), manager, this);
     ui->tableView_results->setModel(resultsTableModel);
     ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
@@ -80,7 +83,7 @@ void CompetitionManagerWindow::updatePointsToTheLeaderLabel()
     m->updateActualJumperPointsToTheLeader();
     if(m->getActualJumperPointsToTheLeader() == (-1))
         ui->label_pointsBehindLeader->setText("");
-    else ui->label_pointsBehindLeader->setText(QString::number(m->getActualJumperPointsToTheLeader()) + "pkt");
+    else ui->label_pointsBehindLeader->setText(" + " + QString::number(m->getActualJumperPointsToTheLeader()) + "pkt");
 }
 
 JumpManipulator CompetitionManagerWindow::getCurrentInputJumpManipulator() const
@@ -115,8 +118,9 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     case CompetitionRules::Individual:{
         IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
         IndividualCompetitionResults * indRes = dynamic_cast<IndividualCompetitionResults *>(m->getResults());
-        m->simulateNext(JumpManipulator());
+        m->simulateNext();
         m->updateLeaderResult();
+        m->updateLastQualifiedResult();
         m->generateActualWinds();
         updateToBeatDistanceLabel();
         updateToAdvanceDistanceLabel();
@@ -125,15 +129,15 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(m->getActualWinds(), m->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
 
         if(m->getLastJump() == true){
+            qDebug()<<"LAST";
             jumperResultsWidget->setJumperResult(indRes->getResultsOfJumper(m->getActualRoundJumpersPointer()->at(m->getActualJumperIndex())));
         }
-        else
+        else{
+            qDebug()<<"NORMAL";
             jumperResultsWidget->setJumperResult(indRes->getResultsOfJumper(m->getActualRoundJumpersPointer()->at(m->getActualJumperIndex() - 1)));
-        jumperResultsWidget->fillWidget();
-
-        if(m->getRoundShouldBeEnded()){
-            m->setupNextRound();
         }
+        jumperResultsWidget->fillWidget();
+        qDebug()<<"UZUPEPE";
 
         emit startListModel->dataChanged(startListModel->index(m->getActualJumperIndex() - 1), startListModel->index(m->getActualJumperIndex() - 1));
         ui->tableView_results->setModel(nullptr);
@@ -141,8 +145,28 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-        if(m->getCompetiitonShouldBeEnded() == true)
+        manager->setIsCoachGate(false);
+        manager->setActualCoachGate(0);
+
+        if(m->getRoundShouldBeEnded()){
+            QMessageBox * box = new QMessageBox(this);
+            box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
+            box->setIcon(QMessageBox::Information);
+            box->setWindowTitle("Zakończenie " + QString::number(manager->getActualRound()) + " serii");
+            box->setText(tr("Aby przejść do następnej serii, wciśnij \"OK\"."));
+            QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
+            //box->setAttribute(Qt::WA_DeleteOnClose); // delete pointer after close
+            connect(box, &QMessageBox::accepted, this, [this, box, m](){
+                qDebug()<<"akcepted message";
+                m->setupNextRound();
+            });
+            box->setModal(true);
+            box->show();
+        }
+
+        if(m->getCompetiitonShouldBeEnded() == true){
             emit m->competitionEnd();
+        }
         break;
     }
     }
@@ -163,11 +187,11 @@ void CompetitionManagerWindow::on_pushButton_generateNewWinds_clicked()
 {
     IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
     m->generateActualWinds();
-    if(m->getActualJumperIndex() > 0){
+    if(m->getActualJumperIndex() > 1){
         m->updateLeaderResult();
-        m->updateToBeatDistance();
+        updateToBeatDistanceLabel();
+        updateToAdvanceDistanceLabel();
     }
-    ui->label_toBeatDistance->setText(QString::number(m->getToBeatDistance()));
     ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(m->getActualWinds(), m->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
 }
 
@@ -199,5 +223,30 @@ void CompetitionManagerWindow::on_pushButton_windsGeneratorSettings_clicked()
         delete dialog;
     }
 
+}
+
+
+void CompetitionManagerWindow::on_pushButton_manipulateJump_clicked()
+{
+    JumpManipulatorConfigWindow * window = new JumpManipulatorConfigWindow;
+    window->setWindGenerationSettings(manager->getActualWindGenerationSettingsPointer());
+    window->setKPoint(manager->getCompetitionInfo()->getHill()->getKPoint());
+    connect(window, &JumpManipulatorConfigWindow::submitted, window, &JumpManipulatorConfigWindow::accept);
+    if(window->exec() == QDialog::Accepted){
+        manager->setActualJumpManipulator(window->getJumpManipulatorFromInputs());
+        qDebug()<<manager->getActualJumpManipulator().getExactLandingType();
+    }
+}
+
+
+void CompetitionManagerWindow::on_pushButton_coachGate_clicked()
+{
+    int howMany = QInputDialog::getInt(this, "Obniżenie belki na życzenie trenera", "O ile stopni obniżyć belkę?\nAby uzyskać dodatkową rekompensatę, zawodnik musi osiągnąć 95% punktu HS", 1, 0);
+    if(howMany > 0){
+        manager->setIsCoachGate(true);
+        manager->setActualCoachGate(manager->getActualGate() - howMany);
+        updateToAdvanceDistanceLabel();
+        updateToBeatDistanceLabel();
+    }
 }
 

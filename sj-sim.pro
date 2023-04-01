@@ -20,6 +20,7 @@ SOURCES += \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.cpp \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
+    source/UI/JumpManipulation/JumpManipulatorConfigWindow.cpp \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp \
     source/UI/Competition/CompetitionConfigWindow.cpp \
     source/UI/ResultsShowing/JumpWindInfoWidget.cpp \
@@ -84,6 +85,7 @@ HEADERS += \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.h \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
+    source/UI/JumpManipulation/JumpManipulatorConfigWindow.h \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.h \
     source/UI/Competition/CompetitionConfigWindow.h \
     source/UI/ResultsShowing/JumpWindInfoWidget.h \
@@ -145,6 +147,7 @@ FORMS += \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.ui \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui \
+    source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui \
     source/UI/Competition/CompetitionConfigWindow.ui \
     source/UI/ResultsShowing/JumpWindInfoWidget.ui \

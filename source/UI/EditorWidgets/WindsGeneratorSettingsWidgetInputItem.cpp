@@ -44,7 +44,6 @@ double WindsGeneratorSettingsWidgetInputItem::getWindStrengthChangeFromInput()
 
 short WindsGeneratorSettingsWidgetInputItem::getBaseWindDirectionFromInput()
 {
-    //qDebug()<<ui->comboBox_baseWindDirection->currentIndex()<<"<hhh "<<ui->comboBox_baseWindDirection->currentIndex()+1;
     return ui->comboBox_baseWindDirection->currentIndex() + 1;
 }
 
@@ -74,6 +73,29 @@ void WindsGeneratorSettingsWidgetInputItem::fillInputs()
     else ui->comboBox_baseWindDirection->setCurrentIndex(0);
     ui->doubleSpinBox_windDirectionChange->setValue(settings->getWindDirectionInstability());
     characteristicsEditor->setCharacteristics(settings->getCharacteristics());
+}
+
+void WindsGeneratorSettingsWidgetInputItem::fillInputsToExactWindEditor()
+{
+    ui->formLayout_main->removeWidget(ui->label_strengthChange);
+    delete ui->label_strengthChange;
+    ui->formLayout_main->removeWidget(ui->doubleSpinBox_windStrengthChange);
+    delete ui->doubleSpinBox_windStrengthChange;
+    ui->formLayout_main->removeWidget(ui->label_directionChange);
+    delete ui->label_directionChange;
+    ui->formLayout_main->removeWidget(ui->doubleSpinBox_windDirectionChange);
+    delete ui->doubleSpinBox_windDirectionChange;
+    ui->formLayout_main->removeWidget(ui->label_5);
+    delete ui->label_5;
+    ui->formLayout_main->removeWidget(ui->label_strengthChangeMS);
+    delete ui->label_strengthChangeMS;
+    ui->verticalLayout_characteristicsEditor->removeWidget(characteristicsEditor);
+    delete characteristicsEditor;
+
+    ui->doubleSpinBox_baseWindStrength->setValue(settings->getBaseWindStrength());
+    if(settings->getBaseDirection() > 0)
+        ui->comboBox_baseWindDirection->setCurrentIndex(settings->getBaseDirection() - 1);
+
 }
 
 void WindsGeneratorSettingsWidgetInputItem::on_pushButton_submit_clicked()

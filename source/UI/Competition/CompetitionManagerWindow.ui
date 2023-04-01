@@ -90,7 +90,7 @@ color: rgb(26, 95, 180);
     <rect>
      <x>260</x>
      <y>30</y>
-     <width>945</width>
+     <width>1005</width>
      <height>134</height>
     </rect>
    </property>
@@ -873,6 +873,31 @@ generatora</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_coachGate">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+color: rgb(0, 0, 0);
+background-color: rgb(245, 220, 255);
+padding: 3px;
+}
+QPushButton:hover{
+background-color: rgb(253, 227, 255);
+}</string>
+          </property>
+          <property name="text">
+           <string>Obniż na
+życzenie trenera</string>
           </property>
          </widget>
         </item>

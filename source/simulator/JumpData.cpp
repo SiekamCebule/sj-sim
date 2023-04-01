@@ -9,11 +9,40 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QMessageBox>
-//#include <QForeach>
 
 JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill)
 {}
+
+bool JumpData::getBeats95HSPercents() const
+{
+    return beats95HSPercents;
+}
+
+void JumpData::setBeats95HSPercents(bool newBeats95HSPercents)
+{
+    beats95HSPercents = newBeats95HSPercents;
+}
+
+int JumpData::getCoachGate() const
+{
+    return coachGate;
+}
+
+void JumpData::setCoachGate(int newCoachGate)
+{
+    coachGate = newCoachGate;
+}
+
+bool JumpData::getHasCoachGate() const
+{
+    return hasCoachGate;
+}
+
+void JumpData::setHasCoachGate(bool newHasCoachGate)
+{
+    hasCoachGate = newHasCoachGate;
+}
 
 bool JumpData::getDNS() const
 {

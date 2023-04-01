@@ -73,6 +73,33 @@ void WindsGeneratorSettingsEditorWidget::fillSettingsInputs()
     }
 }
 
+void WindsGeneratorSettingsEditorWidget::fillSettingsInputsToExactWindsEditor()
+{
+    int count = ui->toolBox->count();
+    for(int i=0; i<count; i++){
+        delete ui->toolBox->widget(0);
+    }
+
+    int i=0;
+    for(auto & settings : *windGenerationSettings)
+    {
+        QString sectorInfo = tr(" (Od ") + QString::number(WindsGenerator::getRangeOfWindSector(i + 1, KPoint).first) + tr(", do ");
+        if(i + 1 == WindsGenerator::calculateWindsCountByKPoint(KPoint))
+            sectorInfo += tr("końca");
+        else sectorInfo += QString::number(WindsGenerator::getRangeOfWindSector(i + 1, KPoint).second) + "m";
+        sectorInfo += ")";
+
+        WindsGeneratorSettingsWidgetInputItem * item = new WindsGeneratorSettingsWidgetInputItem;
+        item->setSettings(&settings);
+        item->fillInputsToExactWindEditor();
+        ui->toolBox->addItem(item, tr("Sektor wiatru nr ") + QString::number(i + 1) + sectorInfo);
+
+        dynamic_cast<WindsGeneratorSettingsWidgetInputItem *>(ui->toolBox->widget(i))->removeSubmitButton();
+
+        i++;
+    }
+}
+
 void WindsGeneratorSettingsEditorWidget::askForSettingsForFillAll()
 {
     if(getSettingsCount() > 0)
@@ -138,6 +165,22 @@ QVector<WindGenerationSettings> WindsGeneratorSettingsEditorWidget::getWindsGene
         settings.setBaseDirection(item->getBaseWindDirectionFromInput());
         settings.setWindDirectionInstability(item->getWindDirectionChangeFromInput());
         vector.push_back(settings);
+    }
+    return vector;
+}
+
+QVector<Wind> WindsGeneratorSettingsEditorWidget::getExactWindsFromInputs()
+{
+    QVector<Wind> vector;
+    qDebug()<<"settc: "<<settingsCount;
+
+    for(int i=0; i < settingsCount; i++){
+        WindsGeneratorSettingsWidgetInputItem * item = dynamic_cast<WindsGeneratorSettingsWidgetInputItem *>(ui->toolBox->widget(i));
+        Wind wind;
+        wind.setDirection(item->getBaseWindDirectionFromInput());
+        qDebug()<<wind.getDirection();
+        wind.setStrength(item->getBaseWindStrengthFromInput());
+        vector.push_back(wind);
     }
     return vector;
 }

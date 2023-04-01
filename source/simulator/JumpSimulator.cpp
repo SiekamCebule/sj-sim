@@ -20,6 +20,26 @@ JumpSimulator::JumpSimulator(Jumper *jumper, const QVector<Wind> &winds, Hill *h
     resetTemporaryParameters();
 }
 
+int JumpSimulator::getCoachGate() const
+{
+    return coachGate;
+}
+
+void JumpSimulator::setCoachGate(int newCoachGate)
+{
+    coachGate = newCoachGate;
+}
+
+bool JumpSimulator::getHasCoachGate() const
+{
+    return hasCoachGate;
+}
+
+void JumpSimulator::setHasCoachGate(bool newHasCoachGate)
+{
+    hasCoachGate = newHasCoachGate;
+}
+
 bool JumpSimulator::generateDSQ()
 {
     if(jumpData.rules->getHasDsq() == true){
@@ -41,6 +61,11 @@ void JumpSimulator::simulateJump()
     jumpData.setSimulator(this);
     simulationData = &jumpData.simulationData;
 
+    if(manipulator->getExactWinds().size() > 0){
+        this->setWinds(manipulator->getExactWinds());
+        qDebug()<<"set WINDS";
+    }
+
     resetTemporaryParameters();
     updateJumperSkills();
     hill->setRealHSByCharacteristic();
@@ -52,9 +77,6 @@ void JumpSimulator::simulateJump()
     }
     jumpData.setIsDSQOccured(false);
 
-    if(manipulator->getExactWinds().size() > 0){
-        this->setWinds(manipulator->getExactWinds());
-    }
     generateTakeoffRating();
     generateFlightRating();
     generateDistance();
@@ -136,9 +158,12 @@ double JumpSimulator::getMultiplierForFlightStyleEffect()
 
 void JumpSimulator::generateDistance()
 {
+    int tempGate = gate;
+    if(hasCoachGate) tempGate = coachGate;
+
     jumpData.distance += simulationData->takeoffRating * hill->getTakeoffEffect();
     jumpData.distance += simulationData->flightRating * hill->getFlightEffect();
-    jumpData.distance += *getGate() * (hill->getPointsForGate() / hill->getPointsForMeter());
+    jumpData.distance += tempGate * (hill->getPointsForGate() / hill->getPointsForMeter());
     jumpData.distance = roundDoubleToHalf(jumpData.getDistance());
 
     jumpData.distance += manipulator->getDistanceBonus();
@@ -153,6 +178,7 @@ void JumpSimulator::generateWindEffects()
 {
     double change = 0;
     int i = 0;
+    qDebug()<<"at 0 "<<getWinds().at(0).getDirection();
     for(const auto & wind : getWinds())
     {
         if(wind.getDirection() == Wind::Back)
@@ -253,6 +279,7 @@ void JumpSimulator::generateWindEffects()
                 double percent = double(jumpData.getDistance() - (getWindSegmentDistance() * i)) / ((i + 1) * getWindSegmentDistance());
                 if(percent > 1) percent = 1;
                 else if(percent < 0) percent = 0;
+                qDebug()<<percent<<" PERCENT";
                 change *= percent;
             }
         }
@@ -269,6 +296,9 @@ void JumpSimulator::generateWindEffects()
         case Wind::Front:
             jumpData.distance += change; break;
         }
+       // qDebug()<<getWindSegmentDistance() * i<<" sgmnt";
+        //if(jumpData.distance < getWindSegmentDistance() * i)
+           // jumpData.distance = getWindSegmentDistance() * i;
 
         i++;
     }
@@ -332,9 +362,9 @@ void JumpSimulator::generateJudges()
     if(jumpData.rules->getHasJudgesPoints() == true){
         double bothLegsLevel = jumperSkills->getLevelOfCharacteristic("both-legs-landing-tendence");
 
-        simulationData->judgesRating = 18.4;
-        simulationData->judgesRating -= jumpData.landing.getImbalance() / 1.5;
-        simulationData->judgesRating += ((jumpData.distance - hill->getKPoint()) / (hill->getKAndRealHSDifference())) / 1.25;
+        simulationData->judgesRating = 18.5;
+        simulationData->judgesRating -= jumpData.landing.getImbalance() / 1.3;
+        simulationData->judgesRating += ((jumpData.distance - hill->getKPoint()) / (hill->getKAndRealHSDifference())) / 1.4;
         switch(jumpData.landing.getType())
         {
         case Landing::TelemarkLanding:
@@ -407,8 +437,13 @@ void JumpSimulator::generateJudges()
         simulationData->setJudgesRating(0);
         jumpData.judges.fill(0, 5);
     }
-    if(manipulator->getExactJudges().size() == 5)
-        jumpData.judges = manipulator->getExactJudges();
+    int i=0;
+    for(auto & jg : jumpData.judges){
+        if(manipulator->getExactJudges().at(i) > (-1)){
+            jg = manipulator->getExactJudges().at(i);
+        }
+        i++;
+    }
 }
 
 void JumpSimulator::calculateCompensations()
@@ -440,25 +475,40 @@ void JumpSimulator::calculateCompensations()
         tempWinds = winds;
 
         Wind avgWind = WindsCalculator::getAveragedWind(tempWinds, competitionRules->getWindAverageCalculatingType());
-        avgWind.setStrength(avgWind.getStrength() + manipulator->getAveragedWindBonus());
-        if(avgWind.getStrength() < manipulator->getAveragedWindRange().first)
-            avgWind.setStrength(manipulator->getAveragedWindRange().first);
-        else if(avgWind.getStrength() > manipulator->getAveragedWindRange().second && manipulator->getAveragedWindRange().second > (-1))
-            avgWind.setStrength(manipulator->getAveragedWindRange().second);
 
-        jumpData.setAveragedWind(avgWind.getStrengthToAveragedWind());
-        /*if(avgWind.getDirection() == Wind::Back)
-            jumpData.setWindCompensation(avgWind.getStrength() * hill->getPointsForBackWind());
-        else if(avgWind.getDirection() == Wind::Front)
-            jumpData.setWindCompensation(-(avgWind.getStrength() * hill->getPointsForFrontWind()));
-        jumpData.setWindCompensation(roundDoubleToOnePlace(jumpData.getWindCompensation()));*/
+        double avgConvertedStrength = avgWind.getStrengthToAveragedWind();
+        qDebug()<<avgConvertedStrength<<" cnv";
+        avgConvertedStrength += manipulator->getAveragedWindBonus();
+        if(manipulator->getAveragedWindRangeEnabled() == true){
+            qDebug()<<"KAAAAAAAAA";
+            if(avgConvertedStrength < manipulator->getAveragedWindRange().first)
+                avgConvertedStrength = (manipulator->getAveragedWindRange().first);
+            else if(avgConvertedStrength > manipulator->getAveragedWindRange().second && manipulator->getAveragedWindRange().second > (-1))
+                avgConvertedStrength = (manipulator->getAveragedWindRange().second);
+        }
+
+        jumpData.setAveragedWind(avgConvertedStrength);
+
+        qDebug()<<avgConvertedStrength<<" AFF";
+        avgWind.setStrength(abs(avgConvertedStrength));
+        if(avgConvertedStrength > 0) avgWind.setDirection(Wind::Front);
+        else if(avgConvertedStrength < 0) avgWind.setDirection(Wind::Back);
         double windCompensation = WindsCalculator::getWindCompensation(avgWind, hill);
         jumpData.setWindCompensation(windCompensation);
     }
 
     jumpData.setGateCompensation(0);
+    jumpData.setBeats95HSPercents(false);
     if(jumpData.rules->getHasGateCompensations() == true){
-        jumpData.setGateCompensation(WindsCalculator::getGateCompensation(competitionStartGate, *gate, hill));
+        jumpData.setGateCompensation(WindsCalculator::getGateCompensation(competitionStartGate, gate, hill));
+        double coachGateCompensation = 0;
+        if(hasCoachGate == true){
+            if(JumpSimulator::isJumperBeat95HSPercents(jumpData.distance, hill->getHSPoint())){
+                jumpData.setBeats95HSPercents(true);
+                coachGateCompensation = WindsCalculator::getGateCompensation(gate, coachGate, hill);
+            }
+        }
+        jumpData.setGateCompensation(jumpData.getGateCompensation() + coachGateCompensation);
         jumpData.setGateCompensation(roundDoubleToOnePlace(jumpData.getGateCompensation()));
     }
 
@@ -499,8 +549,11 @@ void JumpSimulator::setupJumpData()
     jumpData.simulator = this;
     jumpData.winds = winds;
     //sredni wiatr jest zapisywany w jumpDacie w funkcji calculateCompensations().
-    jumpData.setGate(*getGate());
+    jumpData.setGate(this->gate);
     jumpData.rules = getCompetitionRules();
+    jumpData.hasCoachGate = this->hasCoachGate;
+    jumpData.coachGate = this->coachGate;
+    if(hasCoachGate == true) jumpData.setGate(this->coachGate);
 }
 
 double JumpSimulator::getWindSegmentDistance()
@@ -547,12 +600,12 @@ void JumpSimulator::setJumper(Jumper *newJumper)
     updateJumperSkills();
 }
 
-int *JumpSimulator::getGate() const
+int JumpSimulator::getGate() const
 {
     return gate;
 }
 
-void JumpSimulator::setGate(int *newGate)
+void JumpSimulator::setGate(int newGate)
 {
     gate = newGate;
 }
@@ -652,6 +705,14 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
     }
     }
     return 0;
+}
+
+bool JumpSimulator::isJumperBeat95HSPercents(double distance, double HSPoint)
+{
+    if(distance >= 0.95 * HSPoint)
+        return true;
+    else
+        return false;
 }
 
 CompetitionRules *JumpSimulator::getCompetitionRules() const

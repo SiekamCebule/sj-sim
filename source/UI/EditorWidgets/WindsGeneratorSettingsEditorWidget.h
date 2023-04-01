@@ -24,6 +24,9 @@ public:
     void askForSettingsForFillAll();
     void removeSubmitButton();
 
+    void fillSettingsInputsToExactWindsEditor();
+    QVector<Wind> getExactWindsFromInputs();
+
     QVector<WindGenerationSettings> getWindsGenerationSettingsFromInputs();
 
 signals:

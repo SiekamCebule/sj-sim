@@ -2,6 +2,7 @@
 #include "ui_JumpDataDetailedInfoWindow.h"
 
 #include "../../global/CountryFlagsManager.h"
+#include "../../utilities/functions.h"
 
 JumpDataDetailedInfoWindow::JumpDataDetailedInfoWindow(JumpData *jumpData, QWidget *parent) :
     jumpData(jumpData),
@@ -54,6 +55,22 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
         ui->label_flightRating->setText(QString::number(jumpData->getSimulationData().getFlightRating()));
         ui->label_judgesRating->setText(QString::number(jumpData->getSimulationData().getJudgesRating()));
         ui->label_landingInstability->setText(QString::number(jumpData->getLanding().getImbalance()));
+
+        if(jumpData->getHasCoachGate()){
+            ui->label_beats95HSPercents->show();
+            if(jumpData->getBeats95HSPercents()){
+                ui->label_beats95HSPercents->setText("Zawodnik osiągnął 95% punktu HS");
+                ui->label_beats95HSPercents->setStyleSheet("color: rgb(49, 76, 44);");
+            }
+            else{
+                ui->label_beats95HSPercents->setText("Zawodnik nie osiągnął 95% punktu HS");
+                ui->label_beats95HSPercents->setStyleSheet("color: rgb(112, 37, 31);");
+            }
+            ui->label_beats95HSPercents->setText(ui->label_beats95HSPercents->text() + " (" + QString::number(roundDoubleToHalf(jumpData->getHill()->getHSPoint() * 0.95)) + "m)");
+        }
+        else{
+            ui->label_beats95HSPercents->hide();
+        }
 
         windInfoWidget->setWinds(jumpData->getWindsPointer());
         windInfoWidget->setKPoint(jumpData->getHill()->getKPoint());

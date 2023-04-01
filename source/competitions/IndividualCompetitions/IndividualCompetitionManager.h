@@ -16,7 +16,7 @@ class IndividualCompetitionManager : public AbstractCompetitionManager
 public:
     IndividualCompetitionManager(short type = CompetitionRules::Individual, int startingGate = 0);
 
-    void simulateNext(const JumpManipulator &manipulator = JumpManipulator());
+    void simulateNext();
     bool checkRoundEnd();
     bool checkCompetitionEnd();
 
@@ -25,6 +25,7 @@ public:
     void updateToBeatDistance();
     void updateToAdvanceDistance();
     void updateLeaderResult();
+    void updateLastQualifiedResult();
     void updateActualJumperPointsToTheLeader();
 
     int getCompetitiorsCountForActualRound();
@@ -35,6 +36,7 @@ private:
     QVector<Jumper *> actualRoundJumpers;
 
     IndividualCompetitionSingleResult * leaderResult;
+    IndividualCompetitionSingleResult * lastQualifiedResult;
 
 public:
     static QVector<Jumper *> getFilteredJumpersVector(QVector<Jumper *> *previousRoundJumpers, IndividualCompetitionResults * results, CompetitionRules * rules, int round);
@@ -52,6 +54,8 @@ public:
     void setLeaderResult(IndividualCompetitionSingleResult *newLeaderResult);
     QVector<Wind> getNextJumperWinds() const;
     void setNextJumperWinds(const QVector<Wind> &newNextJumperWinds);
+    IndividualCompetitionSingleResult *getLastQualifiedResult() const;
+    void setLastQualifiedResult(IndividualCompetitionSingleResult *newLastQualifiedResult);
 };
 
 #endif // INDIVIDUALCOMPETITIONMANAGER_H

@@ -4,7 +4,19 @@ JumpManipulator::JumpManipulator()
 {
     distanceRange = landingInstabilityRange = takeoffRatingRange = flightRatingRange = judgesRatingRange = averagedWindRange = QPair<double, double>(0, -1);
     distanceBonus = landingInstabilityBonus = takeoffRatingBonus = flightRatingBonus = judgesRatingBonus = averagedWindBonus = 0;
+    averagedWindRangeEnabled = false;
     exactLandingType = exactDSQProbability = -1;
+    exactJudges.fill(-1, 5);
+}
+
+bool JumpManipulator::getAveragedWindRangeEnabled() const
+{
+    return averagedWindRangeEnabled;
+}
+
+void JumpManipulator::setAveragedWindRangeEnabled(bool newAveragedWindRangeEnabled)
+{
+    averagedWindRangeEnabled = newAveragedWindRangeEnabled;
 }
 
 int JumpManipulator::getExactDSQProbability() const

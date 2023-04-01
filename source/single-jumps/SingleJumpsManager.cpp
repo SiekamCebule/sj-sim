@@ -29,7 +29,7 @@ void SingleJumpsManager::simulate()
 {
     jumpSimulator.setJumper(&jumper);
     jumpSimulator.setHill(&hill);
-    jumpSimulator.setGate(&gate);
+    jumpSimulator.setGate(gate);
     jumpSimulator.setDSQBaseProbability(getDSQProbability());
     jumpSimulator.setCompetitionRules(&rules);
     jumpSimulator.setManipulator(new JumpManipulator());

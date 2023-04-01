@@ -27,6 +27,7 @@ public:
     WindGenerationSettings getWindGenerationSettingsFromInputs();
 
     void fillInputs();
+    void fillInputsToExactWindEditor();
 signals:
     void submitted();
 

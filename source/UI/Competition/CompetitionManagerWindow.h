@@ -42,11 +42,16 @@ public:
     JumpManipulator getCurrentInputJumpManipulator() const;
     void setCurrentInputJumpManipulator(const JumpManipulator &newCurrentInputJumpManipulator);
 
+    int getCurrentCoachGate() const;
+    void setCurrentCoachGate(int newCurrentCoachGate);
+
 private slots:
     void on_pushButton_jump_clicked();
     void on_tableView_results_doubleClicked(const QModelIndex &index);
     void on_pushButton_generateNewWinds_clicked();
     void on_pushButton_windsGeneratorSettings_clicked();
+    void on_pushButton_manipulateJump_clicked();
+    void on_pushButton_coachGate_clicked();
 };
 
 #endif // COMPETITIONMANAGERWINDOW_H

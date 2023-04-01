@@ -23,7 +23,7 @@
       <number>25</number>
      </property>
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_baseStrength">
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
@@ -41,7 +41,7 @@ background: transparent;</string>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_strengthChange">
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
@@ -59,7 +59,7 @@ background: transparent;</string>
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label_baseDirection">
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
@@ -77,7 +77,7 @@ background: transparent;</string>
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="label_directionChange">
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
@@ -160,7 +160,7 @@ background-color: rgb(245, 245, 245);</string>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_ms">
+        <widget class="QLabel" name="label_baseStrengthMS">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -251,7 +251,7 @@ background-color: rgb(245, 245, 245);</string>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_6">
+        <widget class="QLabel" name="label_strengthChangeMS">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
            <horstretch>0</horstretch>

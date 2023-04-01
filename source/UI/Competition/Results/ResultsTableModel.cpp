@@ -1,16 +1,17 @@
 #include "ResultsTableModel.h"
 
 #include "../../../competitions/IndividualCompetitions/IndividualCompetitionResults.h"
+#include "../../../competitions/IndividualCompetitions/IndividualCompetitionManager.h"
 #include "../../../global/CountryFlagsManager.h"
 #include <QFont>
 #include <QPixmap>
 #include <algorithm>
 
-ResultsTableModel::ResultsTableModel(int type, AbstractCompetitionResults *results, CompetitionInfo *competitionInfo, QObject *parent)
+ResultsTableModel::ResultsTableModel(int type, AbstractCompetitionResults *results, AbstractCompetitionManager *manager, QObject *parent)
     : QAbstractTableModel(parent),
       type(type),
       results(results),
-      competitionInfo(competitionInfo)
+      manager(manager)
 {
 }
 
@@ -25,7 +26,7 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
             IndividualCompetitionResults * indResults = dynamic_cast<IndividualCompetitionResults *>(results);
             switch(index.column()){
             case 0:
-                return index.row() + 1;
+                return indResults->getEditableJumpersResults().at(index.row()).getPosition();
                 //return indResults->getEditableJumpersResults().at(index.row()).getPosition();
                 break;
             case 1:
@@ -59,7 +60,40 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         }
     }
     else if(role == Qt::BackgroundRole){
-        IndividualCompetitionResults * indResults = dynamic_cast<IndividualCompetitionResults *>(results);
+        switch(type){
+        case CompetitionRules::Individual:{
+            IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager*>(manager);
+            IndividualCompetitionResults * indResults = dynamic_cast<IndividualCompetitionResults *>(results);
+            indResults->sortJumpersResultsInDescendingOrder();
+            IndividualCompetitionSingleResult * lastQualifiedResult = indManager->getLastQualifiedResult();
+
+            if(manager->getActualRound() < manager->getCompetitionRules()->getRounds().count()){
+                //
+                //qDebug()<<indManager->getActualRoundJumpers().count()<<",, "<<indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount();
+                if(indManager->getActualRoundJumpers().count() < indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount())
+                    return QColor(qRgb(240, 255, 240));
+                else if(lastQualifiedResult != nullptr){
+                    if(indResults->getPointerOfExactJumperResults(index.row())->getPosition() < lastQualifiedResult->getPosition())
+                        return QColor(qRgb(240, 255, 240));
+                    else if((indResults->getPointerOfExactJumperResults(index.row())->getPosition() - indManager->getActualJumperIndex() + 1) < indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount()   &&    (indResults->getPointerOfExactJumperResults(index.row())->getPosition() <= indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount())){
+                                        //qDebug()<<"abcdef: "<<bool(indResults->getPointerOfExactJumperResults(index.row())->getPosition() - (indManager->getActualJumperIndex() + 1) > indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount())<<", "<<bool(indResults->getPointerOfExactJumperResults(index.row())->getPosition() <= indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount());
+                        return QColor(qRgb(255, 255, 247));
+                    }
+                    else
+                        return QColor(qRgb(255, 225, 222));
+                }
+                else{
+                    return QColor(qRgb(255, 255, 247));
+                }
+            }
+            else{
+                //qDebug()<<manager->getActualRound()<<" MM";
+                return QColor(qRgb(251, 251, 251));
+            }
+
+            break;
+        }
+        }
     }
     else if(role == Qt::DecorationRole){
         switch(type){
@@ -106,6 +140,16 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
 
     // FIXME: Implement me!
     return QVariant();
+}
+
+AbstractCompetitionManager *ResultsTableModel::getManager() const
+{
+    return manager;
+}
+
+void ResultsTableModel::setManager(AbstractCompetitionManager *newManager)
+{
+    manager = newManager;
 }
 
 QVariant ResultsTableModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -201,16 +245,6 @@ int ResultsTableModel::columnCount(const QModelIndex &parent) const
     }
 
     return 0;
-}
-
-CompetitionInfo *ResultsTableModel::getCompetitionInfo() const
-{
-    return competitionInfo;
-}
-
-void ResultsTableModel::setCompetitionInfo(CompetitionInfo *newCompetitionInfo)
-{
-    competitionInfo = newCompetitionInfo;
 }
 
 AbstractCompetitionResults *ResultsTableModel::getResults() const

@@ -24,10 +24,12 @@ private:
     JumperSkills * jumperSkills; //automatycznie od jumper
     QVector<Wind> winds;
     Hill * hill;
-    int * gate;
+    int gate;
     int competitionStartGate;
     double DSQBaseProbability;
     JumpManipulator * manipulator;
+    bool hasCoachGate;
+    int coachGate;
 
     CompetitionRules * competitionRules;
 
@@ -45,6 +47,7 @@ private:
         LandingInstability
     };
     static double getRandomForJumpSimulation(short parameter, Jumper * jumper);
+    static bool isJumperBeat95HSPercents(double distance, double HSPoint);
 
     bool generateDSQ();
     void generateTakeoffRating();
@@ -87,8 +90,6 @@ public:
     void setJudges(const QVector<double> &newJudges);
     JumpData getJumpData();
     void setJumpData(const JumpData &newJumpData);
-    int *getGate() const;
-    void setGate(int *newGate);
     double getDSQBaseProbability() const;
     void setDSQBaseProbability(double newDSQBaseProbability);
     CompetitionRules *getCompetitionRules() const;
@@ -97,6 +98,12 @@ public:
     void setWinds(const QVector<Wind> &newWinds);
     int getCompetitionStartGate() const;
     void setCompetitionStartGate(int newCompetitionStartGate);
+    int getGate() const;
+    void setGate(int newGate);
+    bool getHasCoachGate() const;
+    void setHasCoachGate(bool newHasCoachGate);
+    int getCoachGate() const;
+    void setCoachGate(int newCoachGate);
 };
 
 #endif // JUMPSIMULATOR_H

@@ -16,6 +16,36 @@ void AbstractCompetitionManager::generateActualWinds()
     actualWinds = windsGenerator.generateWinds();
 }
 
+bool AbstractCompetitionManager::getIsCoachGate() const
+{
+    return isCoachGate;
+}
+
+void AbstractCompetitionManager::setIsCoachGate(bool newIsCoachGate)
+{
+    isCoachGate = newIsCoachGate;
+}
+
+int AbstractCompetitionManager::getActualCoachGate() const
+{
+    return actualCoachGate;
+}
+
+void AbstractCompetitionManager::setActualCoachGate(int newActualCoachGate)
+{
+    actualCoachGate = newActualCoachGate;
+}
+
+JumpManipulator AbstractCompetitionManager::getActualJumpManipulator() const
+{
+    return actualJumpManipulator;
+}
+
+void AbstractCompetitionManager::setActualJumpManipulator(const JumpManipulator &newActualJumpManipulator)
+{
+    actualJumpManipulator = newActualJumpManipulator;
+}
+
 double AbstractCompetitionManager::getActualJumperPointsToTheLeader() const
 {
     return actualJumperPointsToTheLeader;

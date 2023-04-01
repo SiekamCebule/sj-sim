@@ -484,6 +484,22 @@
       </layout>
      </item>
      <item>
+      <widget class="QLabel" name="label_beats95HSPercents">
+       <property name="font">
+        <font>
+         <family>Quicksand Light [PfEd]</family>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(49, 76, 44);</string>
+       </property>
+       <property name="text">
+        <string>Zawodnik osiągnął 95% punktu HS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QVBoxLayout" name="verticalLayout_windsInfo">
        <property name="spacing">
         <number>2</number>

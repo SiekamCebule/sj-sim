@@ -29,6 +29,7 @@ public:
     virtual void updateToBeatDistance() {}
     virtual void updateToAdvanceDistance() {}
     virtual void updateLeaderResult() {}
+    virtual void updateLastQualifiedResult() {}
     virtual void updateActualJumperPointsToTheLeader() {}
 
     void generateActualWinds();
@@ -52,15 +53,19 @@ protected:
 
     int roundStartingGate;
     int actualGate;
-    int actualRound; //liczone od 1.   0 - kwalifikacje (poj. konkurs)
+    int actualRound; //liczone od 1.
     double toBeatDistance;
     double toAdvanceDistance;
+
+    bool isCoachGate;
+    int actualCoachGate;
 
     QVector<Wind> actualWinds;
 
     Jumper * actualJumper;
     int actualJumperIndex;
     double actualJumperPointsToTheLeader;
+    JumpManipulator actualJumpManipulator;
 
     QVector<bool> completedJumps;
     QSet<int> hasDNS;
@@ -118,6 +123,12 @@ public:
     void setToAdvanceDistance(double newToAdvanceDistance);
     double getActualJumperPointsToTheLeader() const;
     void setActualJumperPointsToTheLeader(double newActualJumperPointsToTheLeader);
+    JumpManipulator getActualJumpManipulator() const;
+    void setActualJumpManipulator(const JumpManipulator &newActualJumpManipulator);
+    int getActualCoachGate() const;
+    void setActualCoachGate(int newActualCoachGate);
+    bool getIsCoachGate() const;
+    void setIsCoachGate(bool newIsCoachGate);
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

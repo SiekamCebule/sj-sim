@@ -3,21 +3,25 @@
 
 IndividualCompetitionManager::IndividualCompetitionManager(short type, int startingGate) : AbstractCompetitionManager(type, startingGate)
 {
+    setIsCoachGate(false);
+    setActualCoachGate(0);
     connect(this, &IndividualCompetitionManager::actualJumperIndexChanged, this, [this](){
         actualJumper = actualRoundJumpers.at(actualJumperIndex);
     });
 }
 
-void IndividualCompetitionManager::simulateNext(const JumpManipulator& manipulator)
+void IndividualCompetitionManager::simulateNext()
 {
     if(actualWinds.size() == 0){
         generateActualWinds();
     }
-    simulator.setGate(&actualGate);
+    simulator.setGate(actualGate);
+    simulator.setHasCoachGate(isCoachGate);
+    simulator.setCoachGate(getActualCoachGate());
     simulator.setCompetitionStartGate(getRoundStartingGate());
     simulator.setJumper(actualJumper);
     simulator.setHill(competitionInfo->getHill());
-    simulator.setManipulator(const_cast<JumpManipulator *>(&manipulator));
+    simulator.setManipulator(&this->actualJumpManipulator);
     simulator.setCompetitionRules(competitionRules);
     simulator.setDSQBaseProbability(this->getDSQBaseProbability());
 
@@ -48,15 +52,20 @@ void IndividualCompetitionManager::simulateNext(const JumpManipulator& manipulat
 
     indResults->sortJumpersResultsInDescendingOrder();
 
+    actualJumpManipulator = JumpManipulator();
     if(checkRoundEnd() == true){
-        if(actualRound == competitionInfo->getExceptionalRoundsCount())
-            emit competitionEnd();
+        if(actualRound == competitionInfo->getExceptionalRoundsCount()){
+            roundShouldBeEnded = false;
+            competiitonShouldBeEnded = true;
+            lastJump = true;
+            //emit competitionEnd();
+        }
         else{
             lastJump = true;
             if(checkCompetitionEnd() == false){
                 roundShouldBeEnded = true;
                 competiitonShouldBeEnded = false;
-                emit roundEnd();
+                //emit roundEnd();
             }
             else{
                 competiitonShouldBeEnded = true;
@@ -115,7 +124,9 @@ void IndividualCompetitionManager::updateToBeatDistance()
     double leaderPoints = leaderResult->getPointsSum();
 
     double windCompensation = WindsCalculator::getWindCompensation(WindsCalculator::getAveragedWind(actualWinds, competitionRules->getWindAverageCalculatingType()).getStrengthToAveragedWind(), competitionInfo->getHill());
-    double gateCompensation = WindsCalculator::getGateCompensation(getRoundStartingGate(), getActualGate(), competitionInfo->getHill());
+    int tempGate = actualGate;
+    if(isCoachGate == true) tempGate = getActualCoachGate();
+    double gateCompensation = WindsCalculator::getGateCompensation(getRoundStartingGate(), tempGate, competitionInfo->getHill());
 
     double toBeat = 0;
     if(actualRound == 1){
@@ -152,41 +163,14 @@ void IndividualCompetitionManager::updateToAdvanceDistance()
     if(actualRound < competitionRules->getRounds().count())
         shouldBeQualified = competitionRules->getRounds().at(actualRound).getCount();
     double toAdvance = 0;
-    qDebug()<<"should be: "<<shouldBeQualified;
-    if(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex) > 0 || actualRound == competitionRules->getRounds().count() || actualRoundJumpers.count() <= shouldBeQualified){
+    if(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex) > 0 || actualRound == competitionRules->getRounds().count() || actualRoundJumpers.count() <= shouldBeQualified || lastQualifiedResult == nullptr)
+    {
+        //qDebug()<<bool(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex) > 0)<<","<<bool(actualRound == competitionRules->getRounds().count())<<", "<<bool(actualRoundJumpers.count() <= shouldBeQualified);
         toAdvance = -1;
     }
+
     else{
-        int lastQualifiedPosition = 0;
-
-        bool isExAequoOccured = false;
-        int i=0;
-        int oldPosition = 0;
-        while(!(i == indResults->getJumpersResults().count() - 1)){
-            if(indResults->getJumpersResults().at(i).getPosition() == oldPosition){
-                isExAequoOccured = true;
-                break;
-            }
-            oldPosition = indResults->getJumpersResults().at(i).getPosition();
-            i++;
-        }
-        if(isExAequoOccured == false){
-            lastQualifiedPosition = abs(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex+1));
-        }
-        else{
-            for(int i=shouldBeQualified - 1; i<indResults->getJumpersResults().count(); i++){
-                if(i+1 == indResults->getJumpersResults().at(i).getPosition())
-                {
-                    lastQualifiedPosition = i+1;
-                }
-            }
-        }
-        //qDebug()<<"how many qualified --> "<<lastQualifiedPosition<<" jumpers";
-
-        IndividualCompetitionSingleResult * lastQualifiedJumperResult = indResults->getPointerOfExactJumperResults(lastQualifiedPosition - 1);
-        //qDebug()<<"Ostatni zakwalifikowany to "<<lastQualifiedJumperResult->getJumper()->getNameAndSurname() + " (" + QString::number(lastQualifiedJumperResult->getPointsSum()) + ")";
-
-        double lastQualifiedPoints = lastQualifiedJumperResult->getPointsSum();
+        double lastQualifiedPoints = lastQualifiedResult->getPointsSum();
         if(actualRound == 1){
             toAdvance = lastQualifiedPoints;
         }
@@ -195,7 +179,9 @@ void IndividualCompetitionManager::updateToAdvanceDistance()
             toAdvance = lastQualifiedPoints - actualJumperPoints;
         }
         double windCompensation = WindsCalculator::getWindCompensation(WindsCalculator::getAveragedWind(actualWinds, competitionRules->getWindAverageCalculatingType()).getStrengthToAveragedWind(), competitionInfo->getHill());
-        double gateCompensation = WindsCalculator::getGateCompensation(getRoundStartingGate(), getActualGate(), competitionInfo->getHill());
+        int tempGate = actualGate;
+        if(isCoachGate == true) tempGate = getActualCoachGate();
+        double gateCompensation = WindsCalculator::getGateCompensation(getRoundStartingGate(), tempGate, competitionInfo->getHill());
 
         toAdvance -= hill->getPointsForKPoint();
         if(competitionRules->getHasJudgesPoints())
@@ -221,6 +207,55 @@ void IndividualCompetitionManager::updateLeaderResult()
     leaderResult = dynamic_cast<IndividualCompetitionResults *>(this->results)->getPointerOfExactJumperResults(0);
 }
 
+void IndividualCompetitionManager::updateLastQualifiedResult()
+{
+    IndividualCompetitionResults * indResults = dynamic_cast<IndividualCompetitionResults *>(this->results);
+    indResults->sortJumpersResultsInDescendingOrder();
+
+    int lastQualifiedPosition = 0;
+
+    int shouldBeQualified = 0;
+    if(actualRound < competitionRules->getRounds().count())
+        shouldBeQualified = competitionRules->getRounds().at(actualRound).getCount();
+    if(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex) > 0 || actualRound == competitionRules->getRounds().count() || actualRoundJumpers.count() <= shouldBeQualified){
+        qDebug()<<"updateLastQualifiedResult():    "<<bool(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex) > 0 )<<", "<<bool( actualRound == competitionRules->getRounds().count())<<", "<<bool(actualRoundJumpers.count() <= shouldBeQualified);
+        lastQualifiedPosition = -1;
+    }
+    else{
+        bool isExAequoOccured = false;
+        int i=0;
+        int oldPosition = 0;
+        while(!(i == indResults->getJumpersResults().count() - 1)){
+            if(indResults->getJumpersResults().at(i).getPosition() == oldPosition){
+                isExAequoOccured = true;
+                break;
+            }
+            oldPosition = indResults->getJumpersResults().at(i).getPosition();
+            i++;
+        }
+        if(isExAequoOccured == false){
+            lastQualifiedPosition = abs(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex+1));
+        }
+        else{
+            for(int i=shouldBeQualified - 1; i<indResults->getJumpersResults().count(); i++){
+                if(i+1 == indResults->getJumpersResults().at(i).getPosition())
+                {
+                    lastQualifiedPosition = i+1;
+                }
+            }
+        }
+        qDebug()<<"lq: "<<lastQualifiedPosition;
+    }
+
+    if(lastQualifiedPosition > 0 && lastQualifiedPosition < indResults->getJumpersResults().count() && actualRound < competitionRules->getRounds().count()){
+        lastQualifiedResult = indResults->getPointerOfExactJumperResults(lastQualifiedPosition - 1);
+    }
+    else{
+        //qDebug()<<"hhh: "<<", "<<bool(lastQualifiedPosition > 0)<<","<<bool(lastQualifiedPosition < indResults->getJumpersResults().count())<<","<<bool(actualRound < competitionRules->getRounds().count());
+        lastQualifiedResult = nullptr;
+    }
+}
+
 void IndividualCompetitionManager::updateActualJumperPointsToTheLeader()
 {
     if(actualRound == 1)
@@ -229,7 +264,7 @@ void IndividualCompetitionManager::updateActualJumperPointsToTheLeader()
         IndividualCompetitionResults * indResults = dynamic_cast<IndividualCompetitionResults *>(this->results);
         double actualJumperPoints = indResults->getResultsOfJumper(actualJumper)->getPointsSum();
         double actualLeaderPointsWithoutActualRound = leaderResult->getPointsSum() - leaderResult->getJumps().at(leaderResult->getJumps().count() - 1).getPoints();
-        actualJumperPointsToTheLeader = actualLeaderPointsWithoutActualRound - actualJumperPoints;
+        actualJumperPointsToTheLeader = actualJumperPoints - actualLeaderPointsWithoutActualRound;
     }
 }
 
@@ -241,6 +276,16 @@ int IndividualCompetitionManager::getCompetitiorsCountForActualRound()
 bool IndividualCompetitionManager::getSortStartListForActualRound()
 {
     return competitionRules->getRounds().at(actualRound - 1).getSortStartList();
+}
+
+IndividualCompetitionSingleResult *IndividualCompetitionManager::getLastQualifiedResult() const
+{
+    return lastQualifiedResult;
+}
+
+void IndividualCompetitionManager::setLastQualifiedResult(IndividualCompetitionSingleResult *newLastQualifiedResult)
+{
+    lastQualifiedResult = newLastQualifiedResult;
 }
 
 IndividualCompetitionSingleResult *IndividualCompetitionManager::getLeaderResult() const
@@ -272,44 +317,46 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersVector(QVector
 
     results->sortJumpersResultsInDescendingOrder();
 
-    // Sprawdzanie, czy nie wystąpiło ex aequo (Dokładnie to czy jest zawodnik z pozycją równą round.count()
-    int i=0;
-    bool isLastQualifyPositionOccured = false;
-    int exaequoAt = 0;
-    while(!(results->getJumpersResults().at(i).getPosition() > maxJumpersCount)){
-        if(results->getJumpersResults().at(i).getPosition() == maxJumpersCount){
-            isLastQualifyPositionOccured = true;
-            break;
+    if(previousRoundJumpers->count() > maxJumpersCount){
+        // Sprawdzanie, czy nie wystąpiło ex aequo (Dokładnie to czy jest zawodnik z pozycją równą round.count()
+        int i=0;
+        bool isLastQualifyPositionOccured = false;
+        int exaequoAt = 0;
+        while(!(results->getJumpersResults().at(i).getPosition() > maxJumpersCount)){
+            if(results->getJumpersResults().at(i).getPosition() == maxJumpersCount){
+                isLastQualifyPositionOccured = true;
+                break;
+            }
+            i++;
         }
-        i++;
-    }
-    i = maxJumpersCount;
-    if(isLastQualifyPositionOccured == false) // Jeśli wystąpiło ex aequo
-    {
-        //Trzeba znaleźć następną pozycję od maxCount na której jest zawodnik (to nasze egzekwo)
-        for(int i=maxJumpersCount - 1; i<results->getJumpersResults().count(); i++){
-            if(i+1 == results->getJumpersResults().at(i).getPosition()) //znalezlismy egzekwo
-            {
-                exaequoAt = i+1;
+        i = maxJumpersCount;
+        if(isLastQualifyPositionOccured == false) // Jeśli wystąpiło ex aequo
+        {
+            //Trzeba znaleźć następną pozycję od maxCount na której jest zawodnik (to nasze egzekwo)
+            for(int i=maxJumpersCount - 1; i<results->getJumpersResults().count(); i++){
+                if(i+1 == results->getJumpersResults().at(i).getPosition()) //znalezlismy egzekwo
+                {
+                    exaequoAt = i+1;
+                }
             }
         }
-    }
 
-    for(auto & jum : *previousRoundJumpers){
-        if(results->getResultsOfJumper(jum)->getPosition() <= maxJumpersCount){
-            jumpers.push_back(jum);
-        }
-        if(results->getResultsOfJumper(jum)->getPosition() > maxJumpersCount){
-            if(isLastQualifyPositionOccured == false){
-                if(results->getResultsOfJumper(jum)->getPosition() == exaequoAt)
-                    jumpers.push_back(jum);
+        for(auto & jum : *previousRoundJumpers){
+            if(results->getResultsOfJumper(jum)->getPosition() <= maxJumpersCount){
+                jumpers.push_back(jum);
+            }
+            if(results->getResultsOfJumper(jum)->getPosition() > maxJumpersCount){
+                if(isLastQualifyPositionOccured == false){
+                    if(results->getResultsOfJumper(jum)->getPosition() == exaequoAt)
+                        jumpers.push_back(jum);
+                }
             }
         }
     }
+    else jumpers = *previousRoundJumpers;
     if(sortStartList == true){
         QVector<IndividualCompetitionSingleResult> jumpersResultsAscending = results->getJumpersResults();
         std::sort(jumpersResultsAscending.begin(), jumpersResultsAscending.end());
-        qDebug()<<jumpersResultsAscending.at(0).getJumper()->getNameAndSurname();
         QVector<Jumper *> newJumpers;
         for(auto & res : jumpersResultsAscending){
             for(auto & jum : jumpers){
