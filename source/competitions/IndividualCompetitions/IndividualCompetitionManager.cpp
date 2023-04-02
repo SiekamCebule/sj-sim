@@ -12,9 +12,6 @@ IndividualCompetitionManager::IndividualCompetitionManager(short type, int start
 
 void IndividualCompetitionManager::simulateNext()
 {
-    if(actualWinds.size() == 0){
-        generateActualWinds();
-    }
     simulator.setGate(actualGate);
     simulator.setHasCoachGate(isCoachGate);
     simulator.setCoachGate(getActualCoachGate());

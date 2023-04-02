@@ -65,54 +65,52 @@ void HillEditorWidget::resetHillInputs()
 
     ui->doubleSpinBox_takeoffEffect->setValue(0);
     ui->doubleSpinBox_flightEffect->setValue(0);
-    characteristicsEditor->setCharacteristics(QSet<Characteristic>());
 }
 
 void HillEditorWidget::fillHillInputs()
 {
-    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
+    Hill h = *hill;
+    Hill * hill = &h;
+    qDebug()<<hill->getFlightEffect();
     if(hill == nullptr)
     {
         qDebug()<<"Hill is nullptr!";
         return;
     }
-    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
+    qDebug()<<hill->getFlightEffect();
     ui->lineEdit_name->setText(hill->getName());
+    qDebug()<<hill->getFlightEffect();
 
-    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
     ui->lineEdit_countryCode->setText(hill->getCountryCode());
-    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
-    ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_countryCode->size()));
-    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
-    ui->doubleSpinBox_KPoint->setValue(hill->getKPoint());
-    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
-    ui->doubleSpinBox_HSPoint->setValue(hill->getHSPoint());
-    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
+    ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_countryFlag->size()));
+    qDebug()<<hill->getFlightEffect();
 
-    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
+    ui->doubleSpinBox_KPoint->setValue(hill->getKPoint());
+    ui->doubleSpinBox_HSPoint->setValue(hill->getHSPoint());
 
     ui->doubleSpinBox_pointsForKPoint->setValue(hill->getPointsForKPoint());
     ui->checkBox_autoPointsForKPoint->setChecked(hill->getAutoPointsForKPoint());
+    qDebug()<<hill->getFlightEffect();
 
     ui->doubleSpinBox_pointsForMeter->setValue(hill->getPointsForMeter());
     ui->checkBox_autoPointsForMeter->setChecked(hill->getAutoPointsForMeter());
 
     ui->doubleSpinBox_gatePoints->setValue(hill->getPointsForGate());
     ui->doubleSpinBox_frontWindPoints->setValue(hill->getPointsForFrontWind());
+    qDebug()<<hill->getFlightEffect();
 
     ui->doubleSpinBox_backWindPoints->setValue(hill->getPointsForBackWind());
     ui->checkBox_autoBackWindPoints->setChecked(hill->getAutoPointsForBackWind());
 
-    ui->doubleSpinBox_takeoffEffect->setValue(hill->getTakeoffEffect());
-    ui->doubleSpinBox_flightEffect->setValue(hill->getFlightEffect());
-
-    qDebug()<<"W:"<<getHill()->getCharacteristics().size();
     qDebug()<<hill->getFlightEffect();
 
-    qDebug()<<"hja";
-    qDebug()<<hill->getCharacteristics().count();
+    ui->doubleSpinBox_takeoffEffect->setValue(hill->getTakeoffEffect());
+    qDebug()<<hill->getFlightEffect();
+
+    ui->doubleSpinBox_flightEffect->setValue(hill->getFlightEffect());
+    qDebug()<<hill->getFlightEffect();
+
     characteristicsEditor->setCharacteristics(hill->getCharacteristics());
-    qDebug()<<"czka";
 }
 
 void HillEditorWidget::removeSubmitButton()

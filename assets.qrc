@@ -18,5 +18,6 @@
         <file>img/arrow-down.png</file>
         <file>img/back-side.png</file>
         <file>img/front-side.png</file>
+        <file>img/pipes.webp</file>
     </qresource>
 </RCC>

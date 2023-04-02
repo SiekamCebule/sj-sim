@@ -32,10 +32,11 @@
 #include <QDebug>
 #include <QCloseEvent>
 #include <QVector>
+#include <QDesktopServices>
 #include <random>
 
 extern IDGenerator globalIDGenerator;
-const QString appVersion = "0.3.0 beta";
+const QString appVersion = "0.5.0 beta";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -44,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     parentApplication = nullptr;
     ui->label_version->setText(appVersion);
+    setFixedSize(size());
     //qDebug()<<"random: "<<0;
     //double random = MyRandom::reducingChancesRandom(0, (2) * 1.3, (2) / 45, 1, (1.33 - (5) / 30), MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
     //double random = MyRandom::reducingChancesRandom(0, 2.6, 0.044, 1, 1.1, MyRandom::DrawType::InTurnFromTheHighestChanceNumber, MyRandom::FromSmallerToLarger);
@@ -183,3 +185,9 @@ void MainWindow::setParentApplication(QApplication *newParentApplication)
 {
     parentApplication = newParentApplication;
 }
+
+void MainWindow::on_pushButton_reportIssue_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/SiekamCebule/sj-sim/issues"));
+}
+

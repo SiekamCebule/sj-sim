@@ -13,7 +13,7 @@ void ClassWithCharacteristics::setCharacteristics(const QSet<Characteristic> &ne
 
 ClassWithCharacteristics::ClassWithCharacteristics()
 {
-
+    characteristics.clear();
 }
 
 bool ClassWithCharacteristics::characteristicsContains(const QString &type)

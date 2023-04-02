@@ -477,10 +477,8 @@ void JumpSimulator::calculateCompensations()
         Wind avgWind = WindsCalculator::getAveragedWind(tempWinds, competitionRules->getWindAverageCalculatingType());
 
         double avgConvertedStrength = avgWind.getStrengthToAveragedWind();
-        qDebug()<<avgConvertedStrength<<" cnv";
         avgConvertedStrength += manipulator->getAveragedWindBonus();
         if(manipulator->getAveragedWindRangeEnabled() == true){
-            qDebug()<<"KAAAAAAAAA";
             if(avgConvertedStrength < manipulator->getAveragedWindRange().first)
                 avgConvertedStrength = (manipulator->getAveragedWindRange().first);
             else if(avgConvertedStrength > manipulator->getAveragedWindRange().second && manipulator->getAveragedWindRange().second > (-1))
@@ -489,7 +487,6 @@ void JumpSimulator::calculateCompensations()
 
         jumpData.setAveragedWind(avgConvertedStrength);
 
-        qDebug()<<avgConvertedStrength<<" AFF";
         avgWind.setStrength(abs(avgConvertedStrength));
         if(avgConvertedStrength > 0) avgWind.setDirection(Wind::Front);
         else if(avgConvertedStrength < 0) avgWind.setDirection(Wind::Back);

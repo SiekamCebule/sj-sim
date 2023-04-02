@@ -23,12 +23,18 @@ public:
     void updateToBeatDistanceLabel();
     void updateToAdvanceDistanceLabel();
     void updatePointsToTheLeaderLabel();
+    void updateAvgWindLabel();
+
+    void disableCompetitionManagementButtons();
+    void enableCompetitionManagementButtons();
+
+    void setupGoToNextButtonForQualificationsEnd();
+    void setupGoToNextButtonForCompetitionEnd();
 
 private:
     Ui::CompetitionManagerWindow *ui;
     AbstractCompetitionManager * manager;
     short type;
-
     StartListModel * startListModel;
     ResultsTableModel * resultsTableModel;
     JumpManipulator currentInputJumpManipulator;
@@ -52,6 +58,7 @@ private slots:
     void on_pushButton_windsGeneratorSettings_clicked();
     void on_pushButton_manipulateJump_clicked();
     void on_pushButton_coachGate_clicked();
+    void on_pushButton_goToNext_clicked();
 };
 
 #endif // COMPETITIONMANAGERWINDOW_H

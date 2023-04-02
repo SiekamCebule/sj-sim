@@ -70,7 +70,7 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
             if(manager->getActualRound() < manager->getCompetitionRules()->getRounds().count()){
                 //
                 //qDebug()<<indManager->getActualRoundJumpers().count()<<",, "<<indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount();
-                if(indManager->getActualRoundJumpers().count() < indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount())
+                if(indManager->getActualRoundJumpers().count() <= indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount())
                     return QColor(qRgb(240, 255, 240));
                 else if(lastQualifiedResult != nullptr){
                     if(indResults->getPointerOfExactJumperResults(index.row())->getPosition() < lastQualifiedResult->getPosition())

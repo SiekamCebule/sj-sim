@@ -32,6 +32,8 @@ private slots:
 
     void on_pushButton_singleCompetition_clicked();
 
+    void on_pushButton_reportIssue_clicked();
+
 private:
     Ui::MainWindow *ui;
 

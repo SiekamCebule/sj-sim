@@ -166,13 +166,8 @@ void CompetitionConfigWindow::setupHillToolBoxItem()
     connect(ui->comboBox_existingHill, &QComboBox::currentIndexChanged, this, [this](){
         int selected = ui->comboBox_existingHill->currentIndex();
         if(selected > 0){
-            qDebug()<<GlobalDatabase::get()->getGlobalHills()[selected - 1].getFlightEffect();
-            qDebug()<<GlobalDatabase::get()->getGlobalHills()[selected - 1].getCharacteristics().size();
             hillEditor->setHill(&GlobalDatabase::get()->getGlobalHills()[selected - 1]);
-            qDebug()<<hillEditor->getHill()->getFlightEffect();
-            qDebug()<<hillEditor->getHill()->getCharacteristics().size();
             hillEditor->fillHillInputs();
-            qDebug()<<"a";
             emit hillEditor->KPointInputChanged(hillEditor->getHill()->getKPoint());
         }
         else hillEditor->resetHillInputs();
@@ -339,17 +334,12 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
                     box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
                     box->setIcon(QMessageBox::Information);
                     box->setWindowTitle("Zakończenie kwalifikacji");
-                    box->setText(tr("Aby przejść do konkursu, wciśnij \"OK\"."));
+                    box->setText(tr("Aby przejść do konkursu, wciśnij przycisk na dole okna konkursu"));
                     QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
-                    //box->setAttribute(Qt::WA_DeleteOnClose); // delete pointer after close
-                    connect(box, &QMessageBox::accepted, qualsWindow, [this, box, qualsWindow](){
-                        qDebug()<<"accepted message";
-                        this->show();
-                        qualsWindow->accept();
-                    });
-                    this->hide();
                     box->setModal(true);
                     box->show();
+                    qualsWindow->setupGoToNextButtonForQualificationsEnd();
+                    this->hide();
                 });
                 qualsWindow->exec();
             }

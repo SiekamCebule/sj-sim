@@ -53,7 +53,7 @@
           <string notr="true">color: black;</string>
          </property>
          <property name="text">
-          <string>Kamil Stoch</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -72,7 +72,7 @@
           </size>
          </property>
          <property name="text">
-          <string>IMG</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -107,7 +107,7 @@
         </font>
        </property>
        <property name="text">
-        <string>(13 miejsce)</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -157,7 +157,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Łączna nota: </string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -184,7 +184,7 @@
 </string>
        </property>
        <property name="text">
-        <string>234.7pkt</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

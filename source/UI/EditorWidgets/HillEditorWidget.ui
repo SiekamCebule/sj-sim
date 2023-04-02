@@ -196,7 +196,7 @@ border-radius: 3px;
 }</string>
            </property>
            <property name="text">
-            <string>IMG</string>
+            <string/>
            </property>
           </widget>
          </item>

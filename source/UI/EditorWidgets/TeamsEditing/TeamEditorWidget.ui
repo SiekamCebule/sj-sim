@@ -135,7 +135,7 @@ QListView::item:selected
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../assets.qrc">
+        <iconset resource="../../../../assets.qrc">
          <normaloff>:/img/up-arrow.png</normaloff>:/img/up-arrow.png</iconset>
        </property>
        <property name="iconSize">
@@ -183,7 +183,7 @@ QListView::item:selected
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../assets.qrc">
+        <iconset resource="../../../../assets.qrc">
          <normaloff>:/img/down.png</normaloff>:/img/down.png</iconset>
        </property>
        <property name="iconSize">
@@ -284,7 +284,7 @@ background-color: rgb(153, 253, 174);
   </layout>
  </widget>
  <resources>
-  <include location="../../../assets.qrc"/>
+  <include location="../../../../assets.qrc"/>
  </resources>
  <connections/>
 </ui>

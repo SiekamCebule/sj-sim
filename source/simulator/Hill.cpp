@@ -257,7 +257,7 @@ void Hill::setRealHS(double newRealHS)
 void Hill::setRealHSByCharacteristic()
 {
     realHS = HSPoint;
-    realHS *= 1 + (getLevelOfCharacteristic("real-hs-point") * 0.0145);
+    realHS *= 1 + (getLevelOfCharacteristic("real-hs-point") * 0.015);
 }
 
 double Hill::getFlightEffect() const
