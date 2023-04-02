@@ -330,16 +330,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
 
                 CompetitionManagerWindow * qualsWindow = new CompetitionManagerWindow(qualificationsManager, this);
                 connect(qualsWindow->getManager(), &AbstractCompetitionManager::competitionEnd, qualsWindow, [this, qualsWindow](){
-                    QMessageBox * box = new QMessageBox(this);
-                    box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
-                    box->setIcon(QMessageBox::Information);
-                    box->setWindowTitle("Zakończenie kwalifikacji");
-                    box->setText(tr("Aby przejść do konkursu, wciśnij przycisk na dole okna konkursu"));
-                    QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
-                    box->setModal(true);
-                    box->show();
-                    qualsWindow->setupGoToNextButtonForQualificationsEnd();
-                    this->hide();
+                    qualsWindow->showMessageBoxFoQualificationsEnd();
                 });
                 qualsWindow->exec();
             }
@@ -368,7 +359,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             CompetitionManagerWindow * window = new CompetitionManagerWindow(competitionManager, this);
             if(window->exec() == QDialog::Accepted)
             {
-
+                this->setModal(true);
             }
 
             delete info.getHill();

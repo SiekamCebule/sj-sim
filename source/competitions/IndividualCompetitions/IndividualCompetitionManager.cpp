@@ -107,6 +107,8 @@ void IndividualCompetitionManager::setupNextRound()
     hasDNS.clear();
     hasDSQ.clear();
     roundStartingGate = actualGate;
+    roundShouldBeEnded = false;
+    competiitonShouldBeEnded = false;
 }
 
 void IndividualCompetitionManager::fillCompletedJumpsToStartOfRound()

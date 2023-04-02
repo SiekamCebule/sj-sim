@@ -53,9 +53,22 @@
               <enum>QLayout::SetMaximumSize</enum>
              </property>
              <item>
+              <spacer name="horizontalSpacer_18">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
               <widget class="QLabel" name="label_hillNameAndHSPoint">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -75,7 +88,7 @@
                <property name="font">
                 <font>
                  <family>Quicksand [PfEd]</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>11</pointsize>
                  <bold>true</bold>
                 </font>
                </property>
@@ -120,6 +133,19 @@
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_16">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </item>
@@ -1179,7 +1205,7 @@ color: rgb(26, 95, 180);
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>30</pointsize>
+         <pointsize>26</pointsize>
          <bold>false</bold>
         </font>
        </property>

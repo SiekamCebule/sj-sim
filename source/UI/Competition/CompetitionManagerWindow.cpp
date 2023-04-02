@@ -63,7 +63,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     ui->label_hillNameAndHSPoint->setText(hill->getName() + " HS" + QString::number(hill->getHSPoint()));
     ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size()));
 
-    //jumperResultsWidget->hide();
+    jumperResultsWidget->hide();
 
     connect(ui->spinBox_actualGate, &QSpinBox::valueChanged, this, [this, manager](){
         if(manager->getActualJumperIndex() == 0){
@@ -73,9 +73,26 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
         else{
             manager->setActualGate(ui->spinBox_actualGate->value());
             manager->updateToBeatDistance();
-            ui->label_toBeatDistance->setText(QString::number(manager->getToBeatDistance()) + "m");
+            updateToAdvanceDistanceLabel();
+            updateToBeatDistanceLabel();
         }
     });
+
+    toolBar = new QToolBar("Zarządzaj konkursem", this);
+    toolBar->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    toolBar->setStyleSheet("QToolBar QToolButton{background-color: rgb(245, 245, 245); border: 2px solid rgb(100, 100, 240); border-radius: 4px; color: rgb(10, 10, 10);} QToolBar:hover QToolButton:hover{background-color: rgb(255, 255, 255);}");
+    action_cancelCompetition = new QAction("Odwołaj konkurs", toolBar);
+    action_cancelRound = new QAction("Odwołaj aktualną rundę", toolBar);
+    action_autoSimulateRound = new QAction("Automatycznie przesymuluj serię", toolBar);
+    competitionActions.push_back(action_cancelCompetition);
+    competitionActions.push_back(action_cancelRound);
+    competitionActions.push_back(action_autoSimulateRound);
+    toolBar->addActions(competitionActions);
+    layout()->setMenuBar(toolBar);
+
+    connect(action_autoSimulateRound, &QAction::triggered, this, &CompetitionManagerWindow::autoSimulateRound);
+    connect(action_cancelCompetition, &QAction::triggered, this, &CompetitionManagerWindow::cancelCompetition);
+    connect(action_cancelRound, &QAction::triggered, this, &CompetitionManagerWindow::cancelActualRound);
 }
 
 CompetitionManagerWindow::~CompetitionManagerWindow()
@@ -138,6 +155,18 @@ void CompetitionManagerWindow::enableCompetitionManagementButtons()
     ui->pushButton_windsGeneratorSettings->setEnabled(true);
 }
 
+void CompetitionManagerWindow::showMessageBoxForNextRound()
+{
+    QMessageBox * box = new QMessageBox(this);
+    box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
+    box->setIcon(QMessageBox::Information);
+    box->setWindowTitle("Zakończenie " + QString::number(manager->getActualRound()) + " serii");
+    box->setText(tr("Aby przejść do następnej serii, wciśnij przycisk na dole okna konkursu"));
+    QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
+    box->setModal(true);
+    box->show();
+}
+
 JumpManipulator CompetitionManagerWindow::getCurrentInputJumpManipulator() const
 {
     return currentInputJumpManipulator;
@@ -163,6 +192,35 @@ AbstractCompetitionManager *CompetitionManagerWindow::getManager() const
     return manager;
 }
 
+void CompetitionManagerWindow::setupGoToNextButtonForNextRound()
+{
+    ui->pushButton_goToNext->show();
+    ui->pushButton_goToNext->setText("Przejdź do " + QString::number(manager->getActualRound() + 1) + " serii");
+    disableCompetitionManagementButtons();
+
+    QMetaObject::Connection * const connection = new QMetaObject::Connection;
+    *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, [this, connection](){
+        manager->setupNextRound();
+        enableCompetitionManagementButtons();
+        ui->pushButton_goToNext->hide();
+
+        QObject::disconnect(*connection);
+        delete connection;
+    });
+}
+
+void CompetitionManagerWindow::showMessageBoxFoQualificationsEnd()
+{
+    QMessageBox * box = new QMessageBox(this);
+    box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
+    box->setIcon(QMessageBox::Information);
+    box->setWindowTitle("Zakończenie kwalifikacji");
+    box->setText(tr("Aby przejść do konkursu, wciśnij przycisk na dole okna konkursu"));
+    QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
+    box->setModal(true);
+    box->show();
+}
+
 void CompetitionManagerWindow::setupGoToNextButtonForQualificationsEnd()
 {
     ui->pushButton_goToNext->show();
@@ -172,11 +230,8 @@ void CompetitionManagerWindow::setupGoToNextButtonForQualificationsEnd()
     switch(getType())
     {
     case CompetitionRules::Individual:{
-        IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
-
         QMetaObject::Connection * const connection = new QMetaObject::Connection;
-        *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, [this, m, connection](){
-            qDebug()<<"quals end";
+        *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, [this, connection](){
             accept();
 
             QObject::disconnect(*connection);
@@ -186,20 +241,63 @@ void CompetitionManagerWindow::setupGoToNextButtonForQualificationsEnd()
     }
 }
 
+void CompetitionManagerWindow::showMessageBoxForCompetitionEnd()
+{
+    QMessageBox * box = new QMessageBox(this);
+    box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
+    box->setIcon(QMessageBox::Information);
+    switch(manager->getCompetitionInfo()->getSerieType()){
+    case CompetitionInfo::Competition:{
+        box->setWindowTitle("Zakończenie konkursu");
+        box->setText(tr("Aby zakończyć konkurs, wciśnij przycisk na dole okna konkursu"));
+        break;
+    }
+    case CompetitionInfo::Qualifications:{
+        box->setWindowTitle("Zakończenie kwalifikacji");
+        box->setText(tr("Aby zakończyć kwalifikacje, wciśnij przycisk na dole okna konkursu"));
+        break;
+    }
+    case CompetitionInfo::TrialRound:{
+        box->setWindowTitle("Zakończenie serii próbnej");
+        box->setText(tr("Aby zakończyć serię próbną, wciśnij przycisk na dole okna konkursu"));
+        break;
+    }
+    case CompetitionInfo::Training:{
+        box->setWindowTitle("Zakończenie treningu");
+        box->setText(tr("Aby zakończyć trening, wciśnij przycisk na dole okna konkursu"));
+        break;
+    }
+    }
+    QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
+    box->setModal(true);
+    box->show();
+}
+
 void CompetitionManagerWindow::setupGoToNextButtonForCompetitionEnd()
 {
     ui->pushButton_goToNext->show();
-    ui->pushButton_goToNext->setText("Zakończ konkurs");
+    switch(manager->getCompetitionInfo()->getSerieType()){
+    case CompetitionInfo::Competition:
+        ui->pushButton_goToNext->setText("Zakończ konkurs");
+        break;
+    case CompetitionInfo::Qualifications:
+        ui->pushButton_goToNext->setText("Zakończ kwalifikacje");
+        break;
+    case CompetitionInfo::TrialRound:
+        ui->pushButton_goToNext->setText("Zakończ serię próbną");
+        break;
+    case CompetitionInfo::Training:
+        ui->pushButton_goToNext->setText("Zakończ trening");
+        break;
+    }
+
     disableCompetitionManagementButtons();
 
     switch(getType())
     {
     case CompetitionRules::Individual:{
-        IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
-
         QMetaObject::Connection * const connection = new QMetaObject::Connection;
-        *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, [this, m, connection](){
-            qDebug()<<"competition end";
+        *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, [this, connection](){
             accept();
 
             QObject::disconnect(*connection);
@@ -207,6 +305,85 @@ void CompetitionManagerWindow::setupGoToNextButtonForCompetitionEnd()
         });
     }
     }
+}
+
+void CompetitionManagerWindow::autoSimulateRound()
+{
+    switch(getType())
+    {
+    case CompetitionRules::Individual:{
+        IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+        IndividualCompetitionResults * indRes = dynamic_cast<IndividualCompetitionResults *>(m->getResults());
+        while(m->getRoundShouldBeEnded() != true && m->getCompetiitonShouldBeEnded() != true){
+            m->simulateNext();
+            m->generateActualWinds();
+            m->updateLastQualifiedResult();
+            m->updateLeaderResult();
+        }
+        jumperResultsWidget->show();
+
+        if(m->getRoundShouldBeEnded() == true){
+            setupGoToNextButtonForNextRound();
+            showMessageBoxForNextRound();
+        }
+        if(m->getCompetiitonShouldBeEnded() == true){
+            setupGoToNextButtonForCompetitionEnd();
+            showMessageBoxForCompetitionEnd();
+        }
+
+        emit startListModel->dataChanged(startListModel->index(m->getActualJumperIndex() - 1), startListModel->index(m->getActualJumperIndex() - 1));
+        ui->tableView_results->setModel(nullptr);
+        ui->tableView_results->setModel(resultsTableModel);
+        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    }
+    }
+}
+
+void CompetitionManagerWindow::cancelCompetition()
+{
+    switch(getType()){
+    case CompetitionRules::Individual:{
+        IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+        IndividualCompetitionResults * indRes = dynamic_cast<IndividualCompetitionResults *>(m->getResults());
+        indRes->getEditableJumpersResults().clear();
+
+        emit startListModel->dataChanged(startListModel->index(m->getActualJumperIndex() - 1), startListModel->index(m->getActualJumperIndex() - 1));
+        ui->tableView_results->setModel(nullptr);
+        ui->tableView_results->setModel(resultsTableModel);
+        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    }
+    }
+
+    setupGoToNextButtonForCompetitionEnd();
+    showMessageBoxForCompetitionEnd();
+}
+
+void CompetitionManagerWindow::cancelActualRound()
+{
+    switch(getType()){
+    case CompetitionRules::Individual:{
+        IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+        IndividualCompetitionResults * indRes = dynamic_cast<IndividualCompetitionResults *>(m->getResults());
+        for(auto & res : indRes->getEditableJumpersResults()){
+            if(res.getEditableJumps().count() == m->getActualRound()){
+                res.getEditableJumps().removeLast();
+                res.updatePointsSum();
+            }
+        }
+        indRes->sortJumpersResultsInDescendingOrder();
+
+        emit startListModel->dataChanged(startListModel->index(m->getActualJumperIndex() - 1), startListModel->index(m->getActualJumperIndex() - 1));
+        ui->tableView_results->setModel(nullptr);
+        ui->tableView_results->setModel(resultsTableModel);
+        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    }
+    }
+
+    setupGoToNextButtonForCompetitionEnd();
+    showMessageBoxForCompetitionEnd();
 }
 
 void CompetitionManagerWindow::on_pushButton_jump_clicked()
@@ -246,29 +423,8 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         manager->setActualCoachGate(0);
 
         if(m->getRoundShouldBeEnded()){
-            ui->pushButton_goToNext->show();
-            ui->pushButton_goToNext->setText("Przejdź do " + QString::number(manager->getActualRound() + 1) + " serii");
-            disableCompetitionManagementButtons();
-
-            QMetaObject::Connection * const connection = new QMetaObject::Connection;
-            *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, [this, m, connection](){
-                //qDebug()<<"next round";
-                m->setupNextRound();
-                enableCompetitionManagementButtons();
-                ui->pushButton_goToNext->hide();
-
-                QObject::disconnect(*connection);
-                delete connection;
-            });
-
-            QMessageBox * box = new QMessageBox(this);
-            box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
-            box->setIcon(QMessageBox::Information);
-            box->setWindowTitle("Zakończenie " + QString::number(manager->getActualRound()) + " serii");
-            box->setText(tr("Aby przejść do następnej serii, wciśnij przycisk na dole okna konkursu"));
-            QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
-            box->setModal(true);
-            box->show();
+            setupGoToNextButtonForNextRound();
+            showMessageBoxForNextRound();
         }
 
         manager->setIsCoachGate(false);
@@ -276,16 +432,8 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         updateToBeatDistanceLabel();
 
         if(m->getCompetiitonShouldBeEnded() == true){
-            QMessageBox * box = new QMessageBox(this);
-            box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
-            box->setIcon(QMessageBox::Information);
-            box->setWindowTitle("Zakończenie konkursu");
-            box->setText(tr("Aby zakończyć konkurs, wciśnij przycisk na dole okna konkursu"));
-            QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
-            box->setModal(true);
-            box->show();
-
             setupGoToNextButtonForCompetitionEnd();
+            showMessageBoxForCompetitionEnd();
         }
         break;
     }
@@ -375,10 +523,3 @@ void CompetitionManagerWindow::on_pushButton_coachGate_clicked()
         manager->setActualGate(manager->getActualGate() + howMany);
     }
 }
-
-
-void CompetitionManagerWindow::on_pushButton_goToNext_clicked()
-{
-
-}
-

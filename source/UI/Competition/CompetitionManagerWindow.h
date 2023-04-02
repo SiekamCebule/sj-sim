@@ -2,6 +2,7 @@
 #define COMPETITIONMANAGERWINDOW_H
 
 #include <QDialog>
+#include <QToolBar>
 #include "JumperCompetitionResultsWidget.h"
 #include "StartList/StartListModel.h"
 #include "Results/ResultsTableModel.h"
@@ -28,8 +29,21 @@ public:
     void disableCompetitionManagementButtons();
     void enableCompetitionManagementButtons();
 
+    void showMessageBoxForNextRound();
+    void setupGoToNextButtonForNextRound();
+
+    void showMessageBoxFoQualificationsEnd();
     void setupGoToNextButtonForQualificationsEnd();
+
+    void showMessageBoxForCompetitionEnd();
     void setupGoToNextButtonForCompetitionEnd();
+
+    void autoSimulateRound();
+    void cancelCompetition();
+    void cancelActualRound();
+
+signals:
+    void nextRoundButtonClicked();
 
 private:
     Ui::CompetitionManagerWindow *ui;
@@ -41,13 +55,18 @@ private:
 
     JumperCompetitionResultsWidget * jumperResultsWidget;
 
+    QToolBar * toolBar;
+    QList<QAction *> competitionActions;
+    QAction * action_cancelCompetition;
+    QAction * action_cancelRound;
+    QAction * action_autoSimulateRound;
+
 public:
     AbstractCompetitionManager *getManager() const;
     short getType() const;
     void setType(short newType);
     JumpManipulator getCurrentInputJumpManipulator() const;
     void setCurrentInputJumpManipulator(const JumpManipulator &newCurrentInputJumpManipulator);
-
     int getCurrentCoachGate() const;
     void setCurrentCoachGate(int newCurrentCoachGate);
 
@@ -58,7 +77,6 @@ private slots:
     void on_pushButton_windsGeneratorSettings_clicked();
     void on_pushButton_manipulateJump_clicked();
     void on_pushButton_coachGate_clicked();
-    void on_pushButton_goToNext_clicked();
 };
 
 #endif // COMPETITIONMANAGERWINDOW_H
