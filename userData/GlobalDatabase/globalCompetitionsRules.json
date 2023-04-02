@@ -3,19 +3,85 @@
         {
             "95-hs-rule": true,
             "competition-type": 0,
-            "dsq": false,
+            "dsq": true,
             "gate-compensations": true,
-            "judges-points": true,
-            "jumpers-in-team-count": 4,
-            "name": "World Cup",
+            "judges-points": false,
+            "jumpers-in-team-count": 0,
+            "name": "Oficjalny Trening MP",
             "rounds": [
                 {
-                    "count": 50
-                },
-                {
-                    "count": 30
+                    "count": 0,
+                    "sort-start-list": true
                 }
             ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": true,
+            "competition-type": 0,
+            "dsq": true,
+            "gate-compensations": true,
+            "judges-points": true,
+            "jumpers-in-team-count": 0,
+            "name": "Konkurs Mistrzostw Polski",
+            "rounds": [
+                {
+                    "count": 50,
+                    "sort-start-list": false
+                },
+                {
+                    "count": 30,
+                    "sort-start-list": true
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": true,
+            "competition-type": 0,
+            "dsq": true,
+            "gate-compensations": true,
+            "judges-points": true,
+            "jumpers-in-team-count": 0,
+            "name": "Qualifications Testing",
+            "rounds": [
+                {
+                    "count": 8,
+                    "sort-start-list": false
+                },
+                {
+                    "count": 5,
+                    "sort-start-list": true
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 0,
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": true,
+            "competition-type": 0,
+            "dsq": true,
+            "gate-compensations": true,
+            "judges-points": true,
+            "jumpers-in-team-count": 0,
+            "name": "Alternative Cup",
+            "rounds": [
+                {
+                    "count": 15,
+                    "sort-start-list": true
+                },
+                {
+                    "count": 8,
+                    "sort-start-list": true
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
             "wind-compensations": true
         },
         {
@@ -28,18 +94,24 @@
             "name": "Team Scandinavian Cup",
             "rounds": [
                 {
-                    "count": 12
+                    "count": 1,
+                    "sort-start-list": true
                 },
                 {
-                    "count": 6
+                    "count": 1,
+                    "sort-start-list": true
                 },
                 {
-                    "count": 4
+                    "count": 1,
+                    "sort-start-list": true
                 },
                 {
-                    "count": 3
+                    "count": 1,
+                    "sort-start-list": true
                 }
             ],
+            "wind-average-calculating-type": 1,
+            "wind-compensation-distance-effect": 2,
             "wind-compensations": true
         }
     ]

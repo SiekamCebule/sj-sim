@@ -3,6 +3,33 @@
         {
             "characteristics": [
                 {
+                    "level": -1,
+                    "type": "real-hs-point"
+                }
+            ],
+            "country-code": "POL",
+            "flight-effect": 0.365,
+            "hs-point": 134,
+            "k-point": 120,
+            "name": "Wisła",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 10.8,
+            "points-for-gate": 7.24,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.235
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.15,
+                    "type": "takeoff-randomness-effect"
+                },
+                {
+                    "level": 0.25,
+                    "type": "flight-randomness-effect"
+                },
+                {
                     "level": 0.15,
                     "type": "real-hs-point"
                 },
@@ -13,14 +40,6 @@
                 {
                     "level": -0.15,
                     "type": "takeoff-power-effect"
-                },
-                {
-                    "level": 0.15,
-                    "type": "takeoff-randomness-effect"
-                },
-                {
-                    "level": 0.25,
-                    "type": "flight-randomness-effect"
                 }
             ],
             "country-code": "FIN",
@@ -28,11 +47,11 @@
             "hs-point": 130,
             "k-point": 116,
             "name": "Lahti",
-            "points-for-back-wind": 13.07,
+            "points-for-back-wind": "auto",
             "points-for-front-wind": 10.8,
             "points-for-gate": 7.67,
-            "points-for-k-point": 60,
-            "points-for-meter": 1.8,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
             "takeoff-effect": 0.265
         },
         {
@@ -46,16 +65,16 @@
                     "type": "real-hs-point"
                 }
             ],
-            "country-code": "DEU",
+            "country-code": "ITA",
             "flight-effect": 0.35,
             "hs-point": 142,
             "k-point": 125,
             "name": "Garmisch-Partenkirchen",
-            "points-for-back-wind": 13.068,
+            "points-for-back-wind": "auto",
             "points-for-front-wind": 10.8,
             "points-for-gate": 7.67,
-            "points-for-k-point": 60,
-            "points-for-meter": 1.8,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
             "takeoff-effect": 0.27
         },
         {
@@ -70,54 +89,23 @@
                 }
             ],
             "country-code": "POL",
-            "flight-effect": 0.34,
+            "flight-effect": 0.3485,
             "hs-point": 140,
             "k-point": 125,
             "name": "Zakopane",
-            "points-for-back-wind": 13.068,
+            "points-for-back-wind": "auto",
             "points-for-front-wind": 10.8,
             "points-for-gate": 7.56,
-            "points-for-k-point": 60,
-            "points-for-meter": 1.8,
-            "takeoff-effect": 0.28
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.2745
         },
         {
             "characteristics": [
                 {
                     "level": -1,
-                    "type": "real-hs-point"
-                },
-                {
-                    "level": 1,
-                    "type": "takeoff-power-effect"
-                },
-                {
-                    "level": 0.35,
-                    "type": "takeoff-technique-effect"
-                },
-                {
-                    "level": -0.2,
                     "type": "takeoff-form-effect"
                 },
-                {
-                    "level": -0.15,
-                    "type": "flight-form-effect"
-                }
-            ],
-            "country-code": "SVN",
-            "flight-effect": 0.82,
-            "hs-point": 240,
-            "k-point": 200,
-            "name": "Planica",
-            "points-for-back-wind": 17.424,
-            "points-for-front-wind": 14.4,
-            "points-for-gate": 8.64,
-            "points-for-k-point": 120,
-            "points-for-meter": 1.2,
-            "takeoff-effect": 0.2
-        },
-        {
-            "characteristics": [
                 {
                     "level": -0.25,
                     "type": "flight-randomness-effect"
@@ -129,10 +117,6 @@
                 {
                     "level": 0.65,
                     "type": "takeoff-power-effect"
-                },
-                {
-                    "level": -1,
-                    "type": "takeoff-form-effect"
                 }
             ],
             "country-code": "ROU",
@@ -140,12 +124,86 @@
             "hs-point": 97,
             "k-point": 90,
             "name": "Rasnov",
-            "points-for-back-wind": 12,
+            "points-for-back-wind": "auto",
             "points-for-front-wind": 8,
             "points-for-gate": 7,
-            "points-for-k-point": 60,
-            "points-for-meter": 2,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
             "takeoff-effect": 0.28
+        },
+        {
+            "characteristics": [
+                {
+                    "level": -0.2,
+                    "type": "takeoff-form-effect"
+                },
+                {
+                    "level": -0.15,
+                    "type": "flight-form-effect"
+                },
+                {
+                    "level": -1,
+                    "type": "real-hs-point"
+                },
+                {
+                    "level": 1,
+                    "type": "takeoff-power-effect"
+                },
+                {
+                    "level": 0.35,
+                    "type": "takeoff-technique-effect"
+                }
+            ],
+            "country-code": "SVN",
+            "flight-effect": 0.82,
+            "hs-point": 240,
+            "k-point": 200,
+            "name": "Planica",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 14.4,
+            "points-for-gate": 8.64,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.2
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 3,
+                    "type": "flight-technique-effect"
+                },
+                {
+                    "level": -4,
+                    "type": "takeoff-randomness-effect"
+                },
+                {
+                    "level": -4.5,
+                    "type": "takeoff-power-effect"
+                },
+                {
+                    "level": 2.75,
+                    "type": "flight-form-effect"
+                },
+                {
+                    "level": 5,
+                    "type": "real-hs-point"
+                },
+                {
+                    "level": -1.75,
+                    "type": "flight-randomness-effect"
+                }
+            ],
+            "country-code": "NOR",
+            "flight-effect": 0.88,
+            "hs-point": 225,
+            "k-point": 200,
+            "name": "Vikersund",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 14.4,
+            "points-for-gate": 8.64,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.14
         }
     ]
 }
