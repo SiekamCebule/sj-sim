@@ -1,0 +1,330 @@
+{
+    "jumpers": [
+        {
+            "characteristics": [
+            ],
+            "country-code": "CZE",
+            "flight-style": 2,
+            "flight-technique": 46.4,
+            "form": 42.5,
+            "jumps-equality": 0,
+            "landing-style": 12.7,
+            "name": "Roman",
+            "surname": "Koudelka",
+            "takeoff-technique": 43.75
+        },
+        {
+            "characteristics": [
+                {
+                    "level": -0.3,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": -0.4,
+                    "type": "flight-height"
+                }
+            ],
+            "country-code": "ITA",
+            "flight-style": 1,
+            "flight-technique": 49.5,
+            "form": 48,
+            "jumps-equality": -0.5,
+            "landing-style": 12.35,
+            "name": "Giovanni",
+            "surname": "Bresadola",
+            "takeoff-technique": 46.65
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "USA",
+            "flight-style": 1,
+            "flight-technique": 43.4,
+            "form": 43,
+            "jumps-equality": -0.5,
+            "landing-style": 11.8,
+            "name": "Decker",
+            "surname": "Dean",
+            "takeoff-technique": 43.2
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.9,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": 1.1,
+                    "type": "flight-height"
+                },
+                {
+                    "level": 1.1,
+                    "type": "takeoff-power"
+                }
+            ],
+            "country-code": "POL",
+            "flight-style": 2,
+            "flight-technique": 40,
+            "form": 42.8,
+            "jumps-equality": 0.1,
+            "landing-style": 12.2,
+            "name": "Kacper",
+            "surname": "Juroszek",
+            "takeoff-technique": 42.5
+        },
+        {
+            "characteristics": [
+                {
+                    "level": -0.3,
+                    "type": "takeoff-height"
+                }
+            ],
+            "country-code": "NOR",
+            "flight-style": 1,
+            "flight-technique": 46,
+            "form": 45.5,
+            "jumps-equality": -0.5,
+            "landing-style": 12.25,
+            "name": "Kristoffer Eriksen",
+            "surname": "Sundal",
+            "takeoff-technique": 45
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.5,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": 0.5,
+                    "type": "flight-height"
+                }
+            ],
+            "country-code": "CHE",
+            "flight-style": 1,
+            "flight-technique": 43,
+            "form": 43,
+            "jumps-equality": 0.2,
+            "landing-style": 12.4,
+            "name": "Killian",
+            "surname": "Peier",
+            "takeoff-technique": 46
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "FIN",
+            "flight-style": 1,
+            "flight-technique": 48.5,
+            "form": 46,
+            "jumps-equality": 0,
+            "landing-style": 12.23,
+            "name": "Niko",
+            "surname": "Kytosaho",
+            "takeoff-technique": 46
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "SVN",
+            "flight-style": 1,
+            "flight-technique": 52,
+            "form": 49,
+            "jumps-equality": -0.1,
+            "landing-style": 12.5,
+            "name": "Lovro",
+            "surname": "Kos",
+            "takeoff-technique": 50
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 1,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": 1.1,
+                    "type": "flight-height"
+                },
+                {
+                    "level": 1,
+                    "type": "takeoff-power"
+                }
+            ],
+            "country-code": "DEU",
+            "flight-style": 1,
+            "flight-technique": 48,
+            "form": 45.55,
+            "jumps-equality": 0.72,
+            "landing-style": 12.65,
+            "name": "Constantin",
+            "surname": "Schmid",
+            "takeoff-technique": 52
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.4,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": 0.35,
+                    "type": "flight-height"
+                }
+            ],
+            "country-code": "JPN",
+            "flight-style": 0,
+            "flight-technique": 50,
+            "form": 38,
+            "jumps-equality": -1.2,
+            "landing-style": 12.36,
+            "name": "Yukiya",
+            "surname": "Sato",
+            "takeoff-technique": 50
+        },
+        {
+            "characteristics": [
+                {
+                    "level": -0.5,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": -0.2,
+                    "type": "takeoff-power"
+                }
+            ],
+            "country-code": "AUT",
+            "flight-style": 1,
+            "flight-technique": 56.75,
+            "form": 51.5,
+            "jumps-equality": -0.65,
+            "landing-style": 12.2,
+            "name": "Michael",
+            "surname": "Hayboeck",
+            "takeoff-technique": 48.75
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "SVN",
+            "flight-style": 2,
+            "flight-technique": 53.5,
+            "form": 49.75,
+            "jumps-equality": 0.25,
+            "landing-style": 13,
+            "name": "Ziga",
+            "surname": "Jelar",
+            "takeoff-technique": 53.5
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "NOR",
+            "flight-style": 0,
+            "flight-technique": 54.25,
+            "form": 54,
+            "jumps-equality": -0.15,
+            "landing-style": 12.75,
+            "name": "Johann Andre",
+            "surname": "Forfang",
+            "takeoff-technique": 49.5
+        },
+        {
+            "characteristics": [
+                {
+                    "level": -2.5,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": -2.25,
+                    "type": "flight-height"
+                }
+            ],
+            "country-code": "SVN",
+            "flight-style": 3,
+            "flight-technique": 56.5,
+            "form": 53,
+            "jumps-equality": -1.4,
+            "landing-style": 12.6,
+            "name": "Domen",
+            "surname": "Prevc",
+            "takeoff-technique": 47
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.08,
+                    "type": "takeoff-height"
+                }
+            ],
+            "country-code": "POL",
+            "flight-style": 1,
+            "flight-technique": 53,
+            "form": 50,
+            "jumps-equality": -0.25,
+            "landing-style": 14.2,
+            "name": "Kamil",
+            "surname": "Stoch",
+            "takeoff-technique": 51.25
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.4,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": 0.5,
+                    "type": "flight-height"
+                }
+            ],
+            "country-code": "DEU",
+            "flight-style": 1,
+            "flight-technique": 50.5,
+            "form": 53.5,
+            "jumps-equality": 0.45,
+            "landing-style": 13,
+            "name": "Andreas",
+            "surname": "Wellinger",
+            "takeoff-technique": 54.35
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "JPN",
+            "flight-style": 2,
+            "flight-technique": 52.25,
+            "form": 52.9,
+            "jumps-equality": 0,
+            "landing-style": 12.75,
+            "name": "Naoki",
+            "surname": "Nakamura",
+            "takeoff-technique": 48
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.5,
+                    "type": "takeoff-height"
+                },
+                {
+                    "level": 0.3,
+                    "type": "flight-height"
+                },
+                {
+                    "level": 0.15,
+                    "type": "takeoff-power"
+                }
+            ],
+            "country-code": "AUT",
+            "flight-style": 1,
+            "flight-technique": 51.5,
+            "form": 49.75,
+            "jumps-equality": 0,
+            "landing-style": 12.5,
+            "name": "Manuel",
+            "surname": "Fettner",
+            "takeoff-technique": 53
+        }
+    ]
+}
