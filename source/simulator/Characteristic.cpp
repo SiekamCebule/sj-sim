@@ -42,6 +42,7 @@ QStringList Characteristic::characteristicTypesForSpecificParent(short parentTyp
     case Jumper:
         characteristicTypes.push_back("takeoff-height");
         characteristicTypes.push_back("flight-height");
+        characteristicTypes.push_back("takeoff-power");
         characteristicTypes.push_back("landing-skill");
         characteristicTypes.push_back("both-legs-landing-tendence");
         characteristicTypes.push_back("dsq-probability");
@@ -81,6 +82,8 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
         /// Jumper
         if(characteristic.getType() == "takeoff-height")
             return QObject::tr("Wysoko wychodzi z progu");
+        else if(characteristic.getType() == "takeoff-power")
+            return QObject::tr("Zwiększona siła wybicia");
         else if(characteristic.getType() == "flight-height")
             return QObject::tr("Lata wysoko nad zeskokiem");
         else if(characteristic.getType() == "landing-skill")
@@ -125,6 +128,8 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
         /// Jumper
         if(characteristic.getType() == "takeoff-height")
             return QObject::tr("Nisko wychodzi z progu");
+        else if(characteristic.getType() == "takeoff-power")
+            return QObject::tr("Zmniejszona siła wybicia");
         else if(characteristic.getType() == "flight-height")
             return QObject::tr("Lata nisko nad zeskokiem");
         else if(characteristic.getType() == "landing-skill")
@@ -169,6 +174,8 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
         /// Jumper
         if(characteristic.getType() == "takeoff-height")
             return QObject::tr("Wysokość wyjścia z progu");
+        else if(characteristic.getType() == "takeoff-power")
+            return QObject::tr("Siła wybicia");
         else if(characteristic.getType() == "flight-height")
             return QObject::tr("Wysokość lotu");
         else if(characteristic.getType() == "landing-skill")

@@ -425,7 +425,7 @@ void DatabaseEditorWindow::on_pushButton_remove_clicked()
             fillCompetitionRulesWidget();
             updateIndexes();
 
-            if(GlobalDatabase::get()->getGlobalHills().size() > 0)
+            if(GlobalDatabase::get()->getGlobalCompetitionsRules().size() > 0)
             {
                 if(index == GlobalDatabase::get()->getGlobalCompetitionsRules().size())
                     updateItemsSelection(index);

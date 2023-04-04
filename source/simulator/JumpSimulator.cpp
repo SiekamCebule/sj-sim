@@ -94,13 +94,12 @@ void JumpSimulator::simulateJump()
 
 void JumpSimulator::generateTakeoffRating()
 {
-    double ratingMultiplier = 0.805 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
+    double ratingMultiplier = 1.025 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
     simulationData->takeoffRating = jumperSkills->getTakeoffTechnique() * ratingMultiplier;
 
-    ratingMultiplier = 0.56 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect");
-    simulationData->takeoffRating += jumperSkills->getTakeoffPower() * ratingMultiplier;
+    simulationData->takeoffRating += jumperSkills->getLevelOfCharacteristic("takeoff-power") * 2.75;
 
-    ratingMultiplier = 0.835 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
+    ratingMultiplier = 1.175 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     simulationData->takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 1.1;

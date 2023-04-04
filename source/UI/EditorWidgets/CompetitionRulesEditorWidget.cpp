@@ -19,6 +19,12 @@ CompetitionRulesEditorWidget::CompetitionRulesEditorWidget(QWidget *parent) :
     connect(ui->spinBox_roundsCount, &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::fillRoundsInputs);
     connect(ui->comboBox_competitionType, &QComboBox::currentIndexChanged, this, &CompetitionRulesEditorWidget::competitionTypeChanged);
     connect(ui->spinBox_jumpersInTeamCount, &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::jumpersCountInTeamChanged);
+    connect(this, &CompetitionRulesEditorWidget::competitionTypeChanged, this, [this](){
+        if(ui->comboBox_competitionType->currentIndex() == 0) //ind
+            ui->spinBox_jumpersInTeamCount->setEnabled(true);
+        else //druż
+            ui->spinBox_jumpersInTeamCount->setEnabled(false);
+    });
 }
 
 CompetitionRulesEditorWidget::~CompetitionRulesEditorWidget()
@@ -38,7 +44,7 @@ void CompetitionRulesEditorWidget::resetInputs()
     ui->spinBox_jumpersInTeamCount->setValue(0);
     ui->comboBox_competitionType->setCurrentIndex(CompetitionRules::Individual);
     ui->comboBox_windAverageCalculatingType->setCurrentIndex(0);
-    ui->comboBox_windCompensationDistanceEffect->setCurrentIndex(0);
+    ui->comboBox_windCompensationDistanceEffect->setCurrentIndex(1);
 }
 
 void CompetitionRulesEditorWidget::fillCompetitionRulesInputs()

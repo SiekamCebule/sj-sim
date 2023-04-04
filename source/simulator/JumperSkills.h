@@ -16,7 +16,6 @@ public:
     JumperSkills(double takeoffPower = 0, double takeoffTechnique = 0, double flightTechnique = 0, short flightStyle = 0, double form = 0, double landingStyle = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>(), Jumper * jumper = nullptr);
 
 private:
-    double takeoffPower; // 1-50
     double takeoffTechnique; // 1-50
     short flightStyle; // 0-klasyczny, 1-Styl V, 2-Nowoczesne V, 3-Szerokie V, 4-Styl H
     double flightTechnique; // 1-50
@@ -39,8 +38,6 @@ public:
 
 public:
     void setJumperID(ulong ID);
-    double getTakeoffPower() const;
-    void setTakeoffPower(double newTakeoffPower);
     double getTakeoffTechnique() const;
     void setTakeoffTechnique(double newTakeoffTechnique);
     short getFlightStyle() const;

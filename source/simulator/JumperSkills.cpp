@@ -1,7 +1,7 @@
 #include "JumperSkills.h"
 #include "Jumper.h"
 
-JumperSkills::JumperSkills(double takeoffPower, double takeoffTechnique, double flightTechnique, short flightStyle, double form, double landingStyle, const QSet<Characteristic> &characteristics, Jumper * jumper) : takeoffPower(takeoffPower),
+JumperSkills::JumperSkills(double takeoffPower, double takeoffTechnique, double flightTechnique, short flightStyle, double form, double landingStyle, const QSet<Characteristic> &characteristics, Jumper * jumper) :
     takeoffTechnique(takeoffTechnique),
     flightStyle(flightStyle),
     flightTechnique(flightTechnique),
@@ -56,16 +56,6 @@ void JumperSkills::setForm(double newForm)
 void JumperSkills::setJumperID(ulong ID)
 {
     jumperID = ID;
-}
-
-double JumperSkills::getTakeoffPower() const
-{
-    return takeoffPower;
-}
-
-void JumperSkills::setTakeoffPower(double newTakeoffPower)
-{
-    takeoffPower = newTakeoffPower;
 }
 
 double JumperSkills::getTakeoffTechnique() const

@@ -33,7 +33,6 @@ void JumperEditorWidget::resetJumperInputs()
     ui->lineEdit_surname->setText("");
     ui->lineEdit_countryCode->setText("");
     ui->label_countryFlag->setPixmap(QPixmap());
-    ui->doubleSpinBox_takeoffPower->setValue(0);
     ui->doubleSpinBox_takeoffTechnique->setValue(0);
     ui->doubleSpinBox_flightTechnique->setValue(0);
     ui->comboBox_flightStyle->setCurrentIndex(0);
@@ -53,7 +52,6 @@ void JumperEditorWidget::fillJumperInputs()
     ui->lineEdit_surname->setText(jumper->getSurname());
     ui->lineEdit_countryCode->setText(jumper->getCountryCode());
     ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_countryFlag->size()));
-    ui->doubleSpinBox_takeoffPower->setValue(jumper->getJumperSkills().getTakeoffPower());
     ui->doubleSpinBox_takeoffTechnique->setValue(jumper->getJumperSkills().getTakeoffTechnique());
     ui->doubleSpinBox_flightTechnique->setValue(jumper->getJumperSkills().getFlightTechnique());
     ui->comboBox_flightStyle->setCurrentIndex(jumper->getJumperSkills().getFlightStyle());
@@ -69,7 +67,6 @@ Jumper JumperEditorWidget::getJumperFromWidgetInput() const
     jumper.setSurname(ui->lineEdit_surname->text());
     jumper.setCountryCode(ui->lineEdit_countryCode->text());
     jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
-    jumper.getJumperSkillsPointer()->setTakeoffPower(ui->doubleSpinBox_takeoffPower->value());
     jumper.getJumperSkillsPointer()->setTakeoffTechnique(ui->doubleSpinBox_takeoffTechnique->value());
     jumper.getJumperSkillsPointer()->setFlightTechnique(ui->doubleSpinBox_flightTechnique->value());
     jumper.getJumperSkillsPointer()->setFlightStyle(ui->comboBox_flightStyle->currentIndex());
