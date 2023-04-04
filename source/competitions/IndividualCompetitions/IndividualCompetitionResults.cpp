@@ -7,22 +7,31 @@ IndividualCompetitionResults::IndividualCompetitionResults()
 
 void IndividualCompetitionResults::updatePositions()
 {
-    double oldPoints = 0;
-    int actualPosition = 0;
+    double previousJumperPoints = 0;
+    int actualPosition = 1;
     int add = 1;
+    int i=0;
     for(auto & result : jumpersResults){
-        if(oldPoints == result.getPointsSum()){
-            if(actualPosition > (0)){
-                result.setPosition(actualPosition);
-                add +=1;
-            }
+        if(i==0){
+            result.setPosition(1);
+            previousJumperPoints = result.getPointsSum();
+            i++;
+            continue;
+        }
+
+        if(previousJumperPoints == result.getPointsSum())
+        {
+            result.setPosition(actualPosition);
+            add += 1;
         }
         else{
             actualPosition += add;
-            result.setPosition(actualPosition);
             add = 1;
+            result.setPosition(actualPosition);
         }
-        oldPoints = result.getPointsSum();
+
+        previousJumperPoints = result.getPointsSum();
+        i++;
     }
 }
 

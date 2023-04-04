@@ -15,6 +15,15 @@ void moveItemToVectorBack(QVector<T> & vector, size_t itemIndex)
 class MyFunctions{
 public:
     static QVector<QWidget *> getWidgetsVector(QWidget *parent, QString search);
+
+    template<typename T>
+    static bool pointersVectorContains(const QVector<T *> & vector, T * item){
+        for(auto & it : vector){
+            if(it == item)
+                return true;
+        }
+        return false;
+    }
 };
 
 double roundDoubleToHalf(double number);

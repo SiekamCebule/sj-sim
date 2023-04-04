@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>585</width>
-    <height>484</height>
+    <width>591</width>
+    <height>472</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,6 +65,19 @@ color: rgb(26, 95, 180);
       </spacer>
      </item>
     </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -1606,6 +1619,9 @@ border-radius: 3px;
 	color: rgb(0, 59, 23);
 }</string>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
              <property name="decimals">
               <number>1</number>
              </property>
@@ -1657,6 +1673,9 @@ border-radius: 3px;
 	background-color: rgb(129, 175, 117);
 	color: rgb(0, 59, 23);
 }</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
              <property name="decimals">
               <number>1</number>
@@ -1710,6 +1729,9 @@ border-radius: 3px;
 	color: rgb(0, 59, 23);
 }</string>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
              <property name="decimals">
               <number>1</number>
              </property>
@@ -1762,6 +1784,9 @@ border-radius: 3px;
 	color: rgb(0, 59, 23);
 }</string>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
              <property name="decimals">
               <number>1</number>
              </property>
@@ -1813,6 +1838,9 @@ border-radius: 3px;
 	background-color: rgb(129, 175, 117);
 	color: rgb(0, 59, 23);
 }</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
              <property name="decimals">
               <number>1</number>
@@ -2005,10 +2033,13 @@ background-color: rgb(155, 199, 255);
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Maximum</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>20</height>
       </size>
      </property>
     </spacer>

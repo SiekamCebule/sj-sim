@@ -246,7 +246,7 @@ void IndividualCompetitionManager::updateLastQualifiedResult()
         qDebug()<<"lq: "<<lastQualifiedPosition;
     }
 
-    if(lastQualifiedPosition > 0 && lastQualifiedPosition < indResults->getJumpersResults().count() && actualRound < competitionRules->getRounds().count()){
+    if(lastQualifiedPosition > 0 && lastQualifiedPosition <= indResults->getJumpersResults().count() && actualRound < competitionRules->getRounds().count()){
         lastQualifiedResult = indResults->getPointerOfExactJumperResults(lastQualifiedPosition - 1);
     }
     else{

@@ -34,7 +34,7 @@ void SingleJumpsManager::simulate()
     jumpSimulator.setCompetitionRules(&rules);
     jumpSimulator.setManipulator(new JumpManipulator());
 
-    double min = 0, max = 1000, avg = 0;
+    double min = 0, max = 100000, avg = 0;
 
     QVector<Wind> winds;
     if(changeableWind == false)

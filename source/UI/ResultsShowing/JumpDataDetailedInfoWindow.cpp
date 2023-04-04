@@ -59,11 +59,11 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
         if(jumpData->getHasCoachGate()){
             ui->label_beats95HSPercents->show();
             if(jumpData->getBeats95HSPercents()){
-                ui->label_beats95HSPercents->setText("Zawodnik osiągnął 95% punktu HS");
+                ui->label_beats95HSPercents->setText(tr("Zawodnik osiągnął 95% punktu HS"));
                 ui->label_beats95HSPercents->setStyleSheet("color: rgb(49, 76, 44);");
             }
             else{
-                ui->label_beats95HSPercents->setText("Zawodnik nie osiągnął 95% punktu HS");
+                ui->label_beats95HSPercents->setText(tr("Zawodnik nie osiągnął 95% punktu HS"));
                 ui->label_beats95HSPercents->setStyleSheet("color: rgb(112, 37, 31);");
             }
             ui->label_beats95HSPercents->setText(ui->label_beats95HSPercents->text() + " (" + QString::number(roundDoubleToHalf(jumpData->getHill()->getHSPoint() * 0.95)) + "m)");

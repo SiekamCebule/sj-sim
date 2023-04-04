@@ -121,7 +121,7 @@ color: rgb(17, 117, 94);
 }</string>
             </property>
             <property name="text">
-             <string>Symulator skoków narciarskich</string>
+             <string>Symulator Skoków Narciarskich</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>

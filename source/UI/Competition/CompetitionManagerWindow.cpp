@@ -78,12 +78,12 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
         }
     });
 
-    toolBar = new QToolBar("Zarządzaj konkursem", this);
+    toolBar = new QToolBar(tr("Zarządzaj konkursem"), this);
     toolBar->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     toolBar->setStyleSheet("QToolBar QToolButton{background-color: rgb(245, 245, 245); border: 2px solid rgb(100, 100, 240); border-radius: 4px; color: rgb(10, 10, 10);} QToolBar:hover QToolButton:hover{background-color: rgb(255, 255, 255);}");
-    action_cancelCompetition = new QAction("Odwołaj konkurs", toolBar);
-    action_cancelRound = new QAction("Odwołaj aktualną rundę", toolBar);
-    action_autoSimulateRound = new QAction("Automatycznie przesymuluj serię", toolBar);
+    action_cancelCompetition = new QAction(tr("Odwołaj konkurs"), toolBar);
+    action_cancelRound = new QAction(tr("Odwołaj aktualną rundę"), toolBar);
+    action_autoSimulateRound = new QAction(tr("Automatycznie przesymuluj serię"), toolBar);
     competitionActions.push_back(action_cancelCompetition);
     competitionActions.push_back(action_cancelRound);
     competitionActions.push_back(action_autoSimulateRound);
@@ -160,7 +160,7 @@ void CompetitionManagerWindow::showMessageBoxForNextRound()
     QMessageBox * box = new QMessageBox(this);
     box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
     box->setIcon(QMessageBox::Information);
-    box->setWindowTitle("Zakończenie " + QString::number(manager->getActualRound()) + " serii");
+    box->setWindowTitle(tr("Zakończenie ") + QString::number(manager->getActualRound()) + tr(" serii"));
     box->setText(tr("Aby przejść do następnej serii, wciśnij przycisk na dole okna konkursu"));
     QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
     box->setModal(true);
@@ -195,7 +195,7 @@ AbstractCompetitionManager *CompetitionManagerWindow::getManager() const
 void CompetitionManagerWindow::setupGoToNextButtonForNextRound()
 {
     ui->pushButton_goToNext->show();
-    ui->pushButton_goToNext->setText("Przejdź do " + QString::number(manager->getActualRound() + 1) + " serii");
+    ui->pushButton_goToNext->setText(tr("Przejdź do ") + QString::number(manager->getActualRound() + 1) + tr(" serii"));
     disableCompetitionManagementButtons();
 
     QMetaObject::Connection * const connection = new QMetaObject::Connection;
@@ -214,7 +214,7 @@ void CompetitionManagerWindow::showMessageBoxFoQualificationsEnd()
     QMessageBox * box = new QMessageBox(this);
     box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
     box->setIcon(QMessageBox::Information);
-    box->setWindowTitle("Zakończenie kwalifikacji");
+    box->setWindowTitle(tr("Zakończenie kwalifikacji"));
     box->setText(tr("Aby przejść do konkursu, wciśnij przycisk na dole okna konkursu"));
     QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
     box->setModal(true);
@@ -224,7 +224,7 @@ void CompetitionManagerWindow::showMessageBoxFoQualificationsEnd()
 void CompetitionManagerWindow::setupGoToNextButtonForQualificationsEnd()
 {
     ui->pushButton_goToNext->show();
-    ui->pushButton_goToNext->setText("Przejdź do konkursu");
+    ui->pushButton_goToNext->setText(tr("Przejdź do konkursu"));
     disableCompetitionManagementButtons();
 
     switch(getType())
@@ -248,22 +248,22 @@ void CompetitionManagerWindow::showMessageBoxForCompetitionEnd()
     box->setIcon(QMessageBox::Information);
     switch(manager->getCompetitionInfo()->getSerieType()){
     case CompetitionInfo::Competition:{
-        box->setWindowTitle("Zakończenie konkursu");
+        box->setWindowTitle(tr("Zakończenie konkursu"));
         box->setText(tr("Aby zakończyć konkurs, wciśnij przycisk na dole okna konkursu"));
         break;
     }
     case CompetitionInfo::Qualifications:{
-        box->setWindowTitle("Zakończenie kwalifikacji");
+        box->setWindowTitle(tr("Zakończenie kwalifikacji"));
         box->setText(tr("Aby zakończyć kwalifikacje, wciśnij przycisk na dole okna konkursu"));
         break;
     }
     case CompetitionInfo::TrialRound:{
-        box->setWindowTitle("Zakończenie serii próbnej");
+        box->setWindowTitle(tr("Zakończenie serii próbnej"));
         box->setText(tr("Aby zakończyć serię próbną, wciśnij przycisk na dole okna konkursu"));
         break;
     }
     case CompetitionInfo::Training:{
-        box->setWindowTitle("Zakończenie treningu");
+        box->setWindowTitle(tr("Zakończenie treningu"));
         box->setText(tr("Aby zakończyć trening, wciśnij przycisk na dole okna konkursu"));
         break;
     }
@@ -278,16 +278,16 @@ void CompetitionManagerWindow::setupGoToNextButtonForCompetitionEnd()
     ui->pushButton_goToNext->show();
     switch(manager->getCompetitionInfo()->getSerieType()){
     case CompetitionInfo::Competition:
-        ui->pushButton_goToNext->setText("Zakończ konkurs");
-        break;
+        ui->pushButton_goToNext->setText(tr("Zakończ konkurs"));
+                break;
     case CompetitionInfo::Qualifications:
-        ui->pushButton_goToNext->setText("Zakończ kwalifikacje");
-        break;
+        ui->pushButton_goToNext->setText(tr("Zakończ kwalifikacje"));
+                break;
     case CompetitionInfo::TrialRound:
-        ui->pushButton_goToNext->setText("Zakończ serię próbną");
+        ui->pushButton_goToNext->setText(tr("Zakończ serię próbną"));
         break;
     case CompetitionInfo::Training:
-        ui->pushButton_goToNext->setText("Zakończ trening");
+        ui->pushButton_goToNext->setText(tr("Zakończ trening"));
         break;
     }
 
@@ -401,10 +401,9 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         updateToAdvanceDistanceLabel();
         updatePointsToTheLeaderLabel();
 
-        //if(jumperResultsWidget->isHidden()) jumperResultsWidget->show();
-
         ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(m->getActualWinds(), m->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
 
+        if(jumperResultsWidget->isHidden()) jumperResultsWidget->show();
         if(m->getLastJump() == true){
             jumperResultsWidget->setJumperResult(indRes->getResultsOfJumper(m->getActualRoundJumpersPointer()->at(m->getActualJumperIndex())));
         }

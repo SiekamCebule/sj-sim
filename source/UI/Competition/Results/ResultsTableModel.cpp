@@ -3,6 +3,7 @@
 #include "../../../competitions/IndividualCompetitions/IndividualCompetitionResults.h"
 #include "../../../competitions/IndividualCompetitions/IndividualCompetitionManager.h"
 #include "../../../global/CountryFlagsManager.h"
+#include "../../../utilities/functions.h"
 #include <QFont>
 #include <QPixmap>
 #include <algorithm>
@@ -68,7 +69,10 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
             IndividualCompetitionSingleResult * lastQualifiedResult = indManager->getLastQualifiedResult();
 
             if(manager->getActualRound() < manager->getCompetitionRules()->getRounds().count()){
-                //
+
+                /*if(MyFunctions::pointersVectorContains(indManager->getActualRoundJumpers(), indResults->getEditableJumpersResults().at(index.row()).getJumper()) == false){
+                    return QColor(qRgb(196, 170, 167));
+                }*/
                 //qDebug()<<indManager->getActualRoundJumpers().count()<<",, "<<indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount();
                 if(indManager->getActualRoundJumpers().count() <= indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount())
                     return QColor(qRgb(240, 255, 240));
@@ -76,7 +80,7 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
                     if(indResults->getPointerOfExactJumperResults(index.row())->getPosition() < lastQualifiedResult->getPosition())
                         return QColor(qRgb(240, 255, 240));
                     else if((indResults->getPointerOfExactJumperResults(index.row())->getPosition() - indManager->getActualJumperIndex() + 1) < indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount()   &&    (indResults->getPointerOfExactJumperResults(index.row())->getPosition() <= indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount())){
-                                        //qDebug()<<"abcdef: "<<bool(indResults->getPointerOfExactJumperResults(index.row())->getPosition() - (indManager->getActualJumperIndex() + 1) > indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount())<<", "<<bool(indResults->getPointerOfExactJumperResults(index.row())->getPosition() <= indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount());
+                        //qDebug()<<"abcdef: "<<bool(indResults->getPointerOfExactJumperResults(index.row())->getPosition() - (indManager->getActualJumperIndex() + 1) > indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount())<<", "<<bool(indResults->getPointerOfExactJumperResults(index.row())->getPosition() <= indManager->getCompetitionRules()->getRounds().at(manager->getActualRound()).getCount());
                         return QColor(qRgb(255, 255, 247));
                     }
                     else
