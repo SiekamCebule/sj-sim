@@ -36,7 +36,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
 
         connect(indManager, &IndividualCompetitionManager::actualJumperIndexChanged, this, [this, indManager](){
             ui->label_nameAndSurname->setText(indManager->getActualJumper()->getNameAndSurname());
-            ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(indManager->getActualRoundJumpers().at(0)->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+            ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(indManager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
         });
         break;
     }
@@ -199,7 +199,7 @@ void CompetitionManagerWindow::setupGoToNextButtonForNextRound()
     disableCompetitionManagementButtons();
 
     QMetaObject::Connection * const connection = new QMetaObject::Connection;
-    *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, [this, connection](){
+    *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, this, [this, connection](){
         manager->setupNextRound();
         enableCompetitionManagementButtons();
         ui->pushButton_goToNext->hide();
@@ -312,9 +312,13 @@ void CompetitionManagerWindow::autoSimulateRound()
     switch(getType())
     {
     case CompetitionRules::Individual:{
+        qDebug()<<"start";
         IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
+        qDebug()<<"m";
         IndividualCompetitionResults * indRes = dynamic_cast<IndividualCompetitionResults *>(m->getResults());
+        qDebug()<<"emak";
         while(m->getRoundShouldBeEnded() != true && m->getCompetiitonShouldBeEnded() != true){
+            qDebug()<<"HIHH";
             m->simulateNext();
             m->generateActualWinds();
             m->updateLastQualifiedResult();

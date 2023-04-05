@@ -8,6 +8,8 @@ IndividualCompetitionManager::IndividualCompetitionManager(short type, int start
     connect(this, &IndividualCompetitionManager::actualJumperIndexChanged, this, [this](){
         actualJumper = actualRoundJumpers.at(actualJumperIndex);
     });
+    competiitonShouldBeEnded = false;
+    roundShouldBeEnded = false;
 }
 
 void IndividualCompetitionManager::simulateNext()
@@ -52,6 +54,7 @@ void IndividualCompetitionManager::simulateNext()
     actualJumpManipulator = JumpManipulator();
     if(checkRoundEnd() == true){
         if(actualRound == competitionInfo->getExceptionalRoundsCount()){
+            qDebug()<<"ANKA";
             roundShouldBeEnded = false;
             competiitonShouldBeEnded = true;
             lastJump = true;
@@ -101,14 +104,27 @@ void IndividualCompetitionManager::setupNextRound()
 {
     qDebug()<<"Nowa runda";
     actualRound++; //Przechodzi do następnej rundy
+    qDebug()<<"a";
+    qDebug()<<actualRoundJumpers.count();
+    qDebug()<<dynamic_cast<IndividualCompetitionResults *>(this->results)->getJumpersResults().count();
+    qDebug()<<this->competitionRules->getName();
+    qDebug()<<actualRound;
     actualRoundJumpers = IndividualCompetitionManager::getFilteredJumpersVector(&actualRoundJumpers, dynamic_cast<IndividualCompetitionResults *>(this->results), this->competitionRules, actualRound);
+    qDebug()<<"a";
     setActualJumperIndex(0);
+    qDebug()<<"a";
     completedJumps.fill(false, actualRoundJumpers.count());
+    qDebug()<<"a";
     hasDNS.clear();
+    qDebug()<<"a";
     hasDSQ.clear();
+    qDebug()<<"a";
     roundStartingGate = actualGate;
+    qDebug()<<"a";
     roundShouldBeEnded = false;
+    qDebug()<<"a";
     competiitonShouldBeEnded = false;
+    qDebug()<<"a";
 }
 
 void IndividualCompetitionManager::fillCompletedJumpsToStartOfRound()
@@ -222,21 +238,28 @@ void IndividualCompetitionManager::updateLastQualifiedResult()
     }
     else{
         bool isExAequoOccured = false;
+        int exAequoFirstPositionAfterShouldBeQualified = (-1);
         int i=0;
         int oldPosition = 0;
         while(!(i == indResults->getJumpersResults().count() - 1)){
             if(indResults->getJumpersResults().at(i).getPosition() == oldPosition){
+                if(indResults->getJumpersResults().at(i).getPosition() > shouldBeQualified)
+                    exAequoFirstPositionAfterShouldBeQualified = indResults->getJumpersResults().at(i).getPosition();
                 isExAequoOccured = true;
                 break;
             }
             oldPosition = indResults->getJumpersResults().at(i).getPosition();
             i++;
         }
-        if(isExAequoOccured == false){
+        // Jeżeli egzekwo jest powyzej shouldBeQualified
+        if(isExAequoOccured == false || (shouldBeQualified - actualJumperIndex > 0) || exAequoFirstPositionAfterShouldBeQualified == (-1)){
+            qDebug()<<"abs("<<actualRoundJumpers.count()<<" - "<< shouldBeQualified <<" - "<<(actualJumperIndex+1)<<")";
             lastQualifiedPosition = abs(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex+1));
         }
         else{
-            for(int i=shouldBeQualified - 1; i<indResults->getJumpersResults().count(); i++){
+            qDebug()<<"EQSEKO";
+            qDebug()<<shouldBeQualified<<", "<<indResults->getEditableJumpersResults().count();
+            for(int i=shouldBeQualified - 1; i<indResults->getEditableJumpersResults().count(); i++){
                 if(i+1 == indResults->getJumpersResults().at(i).getPosition())
                 {
                     lastQualifiedPosition = i+1;
