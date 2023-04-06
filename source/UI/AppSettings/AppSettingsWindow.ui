@@ -174,12 +174,13 @@ color: rgb(26, 95, 180);
           <string notr="true">color: rgb(0, 0, 0);</string>
          </property>
          <property name="text">
-          <string>Mnożnik symulacji</string>
+          <string>Mnożnik losowości
+symulacji</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_simulationMultiplier">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_simulationRandomMultiplier">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
            <horstretch>0</horstretch>

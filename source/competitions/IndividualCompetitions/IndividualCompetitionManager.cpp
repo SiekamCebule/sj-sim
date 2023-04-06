@@ -47,7 +47,8 @@ void IndividualCompetitionManager::simulateNext()
         indResults->getEditableJumpersResults().push_back(IndividualCompetitionSingleResult(jump));
         indResults->getResultsOfJumper(jump.getJumper())->updatePointsSum();
     }
-    if(jump.getLanding().getType() == Landing::Fall && jump.getDistance() >= competitionInfo->getHill()->getHSPoint() * 0.95 && competitionRules->getHas95HSRule() == true){
+    if(jump.getLanding().getType() == Landing::Fall && jump.getDistance() >= (competitionInfo->getHill()->getHSPoint() * 0.95) && competitionRules->getHas95HSRule() == true){
+        qDebug()<<"UPADŁ POZA 95 HS%!";
         qualifiedBy95HSRule.insert(indResults->getEditableJumpersResults().last().getID());
     }
 
@@ -111,6 +112,7 @@ void IndividualCompetitionManager::setupNextRound()
     qDebug()<<dynamic_cast<IndividualCompetitionResults *>(this->results)->getJumpersResults().count();
     qDebug()<<this->competitionRules->getName();
     qDebug()<<actualRound;
+    qDebug()<<"HASAA: "<<qualifiedBy95HSRule.count();
     actualRoundJumpers = IndividualCompetitionManager::getFilteredJumpersVector(&actualRoundJumpers, dynamic_cast<IndividualCompetitionResults *>(this->results), this->competitionRules, actualRound, qualifiedBy95HSRule);
     qDebug()<<"a";
     setActualJumperIndex(0);
@@ -127,6 +129,7 @@ void IndividualCompetitionManager::setupNextRound()
     qDebug()<<"a";
     competiitonShouldBeEnded = false;
     qDebug()<<"a";
+    qualifiedBy95HSRule.clear();
 }
 
 void IndividualCompetitionManager::fillCompletedJumpsToStartOfRound()
@@ -234,7 +237,6 @@ void IndividualCompetitionManager::updateLastQualifiedResult()
     if(actualRound < competitionRules->getRounds().count())
         shouldBeQualified = competitionRules->getRounds().at(actualRound).getCount();
     if(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex) > 0 || actualRound == competitionRules->getRounds().count() || actualRoundJumpers.count() <= shouldBeQualified){
-        qDebug()<<"updateLastQualifiedResult():    "<<bool(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex) > 0 )<<", "<<bool( actualRound == competitionRules->getRounds().count())<<", "<<bool(actualRoundJumpers.count() <= shouldBeQualified);
         lastQualifiedPosition = -1;
     }
     else{
@@ -254,11 +256,9 @@ void IndividualCompetitionManager::updateLastQualifiedResult()
         }
         // Jeżeli egzekwo jest powyzej shouldBeQualified
         if(isExAequoOccured == false || (shouldBeQualified - actualJumperIndex > 0) || exAequoFirstPositionAfterShouldBeQualified == (-1)){
-            qDebug()<<"abs("<<actualRoundJumpers.count()<<" - "<< shouldBeQualified <<" - "<<(actualJumperIndex+1)<<")";
             lastQualifiedPosition = abs(actualRoundJumpers.count() - shouldBeQualified - (actualJumperIndex+1));
         }
         else{
-            qDebug()<<"EQSEKO";
             qDebug()<<shouldBeQualified<<", "<<indResults->getEditableJumpersResults().count();
             for(int i=shouldBeQualified - 1; i<indResults->getEditableJumpersResults().count(); i++){
                 if(i+1 == indResults->getJumpersResults().at(i).getPosition())

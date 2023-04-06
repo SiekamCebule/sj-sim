@@ -18,7 +18,7 @@ AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
     setFixedSize(size());
     setWindowFlags(Qt::Window);
 
-    ui->doubleSpinBox_simulationMultiplier->setValue(GlobalSimulationSettings::get()->getSimulationMultiplier());
+    ui->doubleSpinBox_simulationRandomMultiplier->setValue(GlobalSimulationSettings::get()->getSimulationRandomMultiplier());
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
 }
 
@@ -76,7 +76,7 @@ void AppSettingsWindow::myConnect_on_comboBox_language_currentIndexChanged(int i
 
 void AppSettingsWindow::on_doubleSpinBox_simulationMultiplier_valueChanged(double arg1)
 {
-    GlobalSimulationSettings::get()->setSimulationMultiplier(arg1);
+    GlobalSimulationSettings::get()->setSimulationRandomMultiplier(arg1);
 }
 
 

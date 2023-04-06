@@ -10,7 +10,7 @@ private:
     static GlobalSimulationSettings * m_globalSimulationSettings;
 
 private:
-    double simulationMultiplier;
+    double simulationRandomMultiplier;
     int baseDsqProbability;
 
 public:
@@ -20,10 +20,10 @@ public:
     bool writeToFile();
     bool loadFromFile();
 
-    double getSimulationMultiplier() const;
-    void setSimulationMultiplier(double newSimulationMultiplier);
     int getBaseDsqProbability() const;
     void setBaseDsqProbability(int newBaseDsqProbability);
+    double getSimulationRandomMultiplier() const;
+    void setSimulationRandomMultiplier(double newSimulationRandomMultiplier);
 };
 
 #endif // GLOBALSIMULATIONSETTINGS_H

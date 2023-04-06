@@ -4,6 +4,10 @@
 #include <QVector>
 #include <QWidget>
 #include <QRegularExpression>
+#include <QMessageLogContext>
+#include <QString>
+#include <QMessageLogContext>
+#include <QtGlobal>
 
 template<typename T>
 void moveItemToVectorBack(QVector<T> & vector, size_t itemIndex)
@@ -24,6 +28,8 @@ public:
         }
         return false;
     }
+    static void fileMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & msg);
+
 };
 
 double roundDoubleToHalf(double number);

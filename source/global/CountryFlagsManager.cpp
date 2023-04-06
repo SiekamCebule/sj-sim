@@ -243,7 +243,7 @@ QString CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(const QS
     else if(code == "ton") return "to";
     else if(code == "tto") return "tt";
     else if(code == "tun") return "tn";
-    else if(code == "tur") return "tm";
+    else if(code == "tur") return "tr";
     else if(code == "tkm") return "tm";
     else if(code == "tca") return "tc";
     else if(code == "tuv") return "tv";

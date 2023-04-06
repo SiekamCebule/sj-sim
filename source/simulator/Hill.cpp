@@ -347,15 +347,15 @@ double Hill::getLandingImbalanceChangeByHillProfile(double distance)
 {
     /// czym większa wartość zwracana, tym teorytycznie mniejsze zachwianie przy lądowaniu (a raczej mniejsza szansa na wyższe zachwianie)
     if(distance <= getKPoint())
-        return 0.07;
+        return 0.01;
     else if(distance < getKPoint() + getKAndRealHSDifference() * 0.5)
-        return 0.06;
-    else if(distance <= getRealHS())
         return 0.05;
+    else if(distance <= getRealHS())
+        return 0.1;
     else if(distance <= getRealHS() * 1.12)
-        return 0.04;
+        return 0.2;
     else
-        return 0.03;
+        return 0.4;
 }
 
 QString Hill::getName() const

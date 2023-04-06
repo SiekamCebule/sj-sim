@@ -14,6 +14,18 @@ GlobalSimulationSettings* GlobalSimulationSettings::m_globalSimulationSettings =
 
 GlobalSimulationSettings::GlobalSimulationSettings()
 {
+    baseDsqProbability = 0;
+    simulationRandomMultiplier = 0;
+}
+
+double GlobalSimulationSettings::getSimulationRandomMultiplier() const
+{
+    return simulationRandomMultiplier;
+}
+
+void GlobalSimulationSettings::setSimulationRandomMultiplier(double newSimulationRandomMultiplier)
+{
+    simulationRandomMultiplier = newSimulationRandomMultiplier;
 }
 
 int GlobalSimulationSettings::getBaseDsqProbability() const
@@ -26,15 +38,6 @@ void GlobalSimulationSettings::setBaseDsqProbability(int newBaseDsqProbability)
     baseDsqProbability = newBaseDsqProbability;
 }
 
-double GlobalSimulationSettings::getSimulationMultiplier() const
-{
-    return simulationMultiplier;
-}
-
-void GlobalSimulationSettings::setSimulationMultiplier(double newSimulationMultiplier)
-{
-    simulationMultiplier = newSimulationMultiplier;
-}
 
 GlobalSimulationSettings *GlobalSimulationSettings::get()
 {
@@ -73,7 +76,7 @@ bool GlobalSimulationSettings::loadFromFile()
         message.exec();
         return false;
     }
-    this->setSimulationMultiplier(value.toObject().value("simulation-multiplier").toDouble());
+    this->setSimulationRandomMultiplier(value.toObject().value("simulation-random-multiplier").toDouble());
     this->setBaseDsqProbability(value.toObject().value("base-dsq-probability").toDouble());
 
     return true;
@@ -92,7 +95,7 @@ bool GlobalSimulationSettings::writeToFile()
     QJsonDocument document;
     QJsonObject mainObject;
     QJsonObject settingsObject;
-    settingsObject.insert("simulation-multiplier", getSimulationMultiplier());
+    settingsObject.insert("simulation-random-multiplier", getSimulationRandomMultiplier());
     settingsObject.insert("base-dsq-probability", getBaseDsqProbability());
     mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);

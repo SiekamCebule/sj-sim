@@ -2,14 +2,15 @@
 #include "ui_CharacteristicsEditor.h"
 
 #include "Dialogs/CharacteristicInputDialog.h"
+#include "../../utilities/functions.h"
 
 #include <QStringListModel>
 #include <QMessageBox>
 
 CharacteristicsEditor::CharacteristicsEditor(short parentType, QWidget *parent) :
-    parentType(parentType),
     QWidget(parent),
-    ui(new Ui::CharacteristicsEditor)
+    ui(new Ui::CharacteristicsEditor),
+    parentType(parentType)
 {
     ui->setupUi(this);
     model = new QStringListModel(this);
@@ -41,11 +42,15 @@ void CharacteristicsEditor::setCharacteristics(const QSet<Characteristic> &newCh
 
 void CharacteristicsEditor::on_pushButton_add_clicked()
 {
+    qInstallMessageHandler(MyFunctions::fileMessageHandler);
     CharacteristicInputDialog dialog(CharacteristicInputDialog::Add);
     dialog.setParentType(parentType);
     dialog.setModal(true);
+    qDebug()<<"DZIALA1";
     dialog.setExistingCharacteristics(characteristics);
+    qDebug()<<"DZIALA2";
     dialog.fillComboBox();
+    qDebug()<<"DZIALA3";
     if(dialog.exec() == QDialog::Accepted)
     {
         if(dialog.getCharacteristicLevel() != 0){
@@ -53,6 +58,7 @@ void CharacteristicsEditor::on_pushButton_add_clicked()
             emit characteristicsChanged();
         }
     }
+
 }
 
 void CharacteristicsEditor::updateStrings()

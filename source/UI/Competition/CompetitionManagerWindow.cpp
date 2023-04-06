@@ -219,6 +219,7 @@ void CompetitionManagerWindow::showMessageBoxFoQualificationsEnd()
     QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
     box->setModal(true);
     box->show();
+    accept();
 }
 
 void CompetitionManagerWindow::setupGoToNextButtonForQualificationsEnd()
