@@ -1,4 +1,5 @@
 #include "IndividualCompetitionSingleResult.h"
+#include <QString>
 
 IndividualCompetitionSingleResult::IndividualCompetitionSingleResult()
 {
@@ -15,12 +16,54 @@ IndividualCompetitionSingleResult::IndividualCompetitionSingleResult(const JumpD
 
 bool IndividualCompetitionSingleResult::operator >(const IndividualCompetitionSingleResult &r) const
 {
-    return getPointsSum() > r.getPointsSum();
+    if(getPointsSum() != r.getPointsSum())
+        return getPointsSum() > r.getPointsSum();
+    else{
+        double firstDistanceSum = 0;
+        double secondDistanceSum = 0;
+        for(auto & j : jumps){
+            firstDistanceSum += j.getDistance();
+        }
+        for(auto & j : r.getJumps()){
+            secondDistanceSum += j.getDistance();
+        }
+        if(firstDistanceSum != secondDistanceSum)
+            return firstDistanceSum > secondDistanceSum;
+        else{
+            if(QString(jumper->getNameAndSurname() + jumper->getCountryCode()).toStdString() != QString(r.getJumper()->getNameAndSurname() + r.getJumper()->getCountryCode()).toStdString()){
+                return QString(jumper->getNameAndSurname() + jumper->getCountryCode()).toStdString() > QString(r.getJumper()->getNameAndSurname() + r.getJumper()->getCountryCode()).toStdString();
+            }
+            else
+                return jumper->getID() > r.getJumper()->getID();
+        }
+    }
+    return false;
 }
 
 bool IndividualCompetitionSingleResult::operator <(const IndividualCompetitionSingleResult &r) const
 {
-    return getPointsSum() < r.getPointsSum();
+    if(getPointsSum() != r.getPointsSum())
+        return getPointsSum() < r.getPointsSum();
+    else{
+        double firstDistanceSum = 0;
+        double secondDistanceSum = 0;
+        for(auto & j : jumps){
+            firstDistanceSum += j.getDistance();
+        }
+        for(auto & j : r.getJumps()){
+            secondDistanceSum += j.getDistance();
+        }
+        if(firstDistanceSum != secondDistanceSum)
+            return firstDistanceSum < secondDistanceSum;
+        else{
+            if(QString(jumper->getNameAndSurname() + jumper->getCountryCode()).toStdString() != QString(r.getJumper()->getNameAndSurname() + r.getJumper()->getCountryCode()).toStdString()){
+                return QString(jumper->getNameAndSurname() + jumper->getCountryCode()).toStdString() < QString(r.getJumper()->getNameAndSurname() + r.getJumper()->getCountryCode()).toStdString();
+            }
+            else
+                return jumper->getID() < r.getJumper()->getID();
+        }
+    }
+    return false;
 }
 
 void IndividualCompetitionSingleResult::updatePointsSum()

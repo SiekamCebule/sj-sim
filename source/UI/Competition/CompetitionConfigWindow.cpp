@@ -329,7 +329,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
                 qualificationsManager->getEditableCompetitionRules()->setRounds(qualsRounds);
 
                 CompetitionManagerWindow * qualsWindow = new CompetitionManagerWindow(qualificationsManager, this);
-                connect(qualsWindow->getManager(), &AbstractCompetitionManager::competitionEnd, qualsWindow, [this, qualsWindow](){
+                connect(qualsWindow->getManager(), &AbstractCompetitionManager::competitionEnd, qualsWindow, [qualsWindow](){
                     qualsWindow->showMessageBoxFoQualificationsEnd();
                 });
                 qualsWindow->exec();
@@ -341,7 +341,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             info.setResults(new IndividualCompetitionResults());
             info.setSerieType(CompetitionInfo::Competition);
             if(qualificationsResults != nullptr){
-                competitionManager->setStartingJumpers(IndividualCompetitionManager::getFilteredJumpersVector(qualificationsManager->getActualRoundJumpersPointer(), qualificationsResults, qualificationsManager->getCompetitionRules(), 2)); //2 zamiast 1, ponieważ wcześniej ustawiliśmy dla kwalifikacji vector rounds o wielkości 2, gdzie właściwa ilość skoczków jest jako druga a nie pierwsza
+                competitionManager->setStartingJumpers(IndividualCompetitionManager::getFilteredJumpersVector(qualificationsManager->getActualRoundJumpersPointer(), qualificationsResults, qualificationsManager->getCompetitionRules(), 2, competitionManager->getQualifiedBy95HSRule())); //2 zamiast 1, ponieważ wcześniej ustawiliśmy dla kwalifikacji vector rounds o wielkości 2, gdzie właściwa ilość skoczków jest jako druga a nie pierwsza
                 competitionManager->setRoundStartingGate(qualificationsManager->getActualGate());
             }
             else

@@ -1,9 +1,11 @@
 #ifndef ABSTRACTCOMPETITIONSINGLERESULT_H
 #define ABSTRACTCOMPETITIONSINGLERESULT_H
 
+#include "../utilities/ClassWithID.h"
+
 class CompetitionInfo;
 
-class AbstractCompetitionSingleResult
+class AbstractCompetitionSingleResult : public ClassWithID
 {
 public:
     AbstractCompetitionSingleResult();

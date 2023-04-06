@@ -34,12 +34,14 @@ public:
 private:
     QVector<Jumper *> startingJumpers;
     QVector<Jumper *> actualRoundJumpers;
+    QSet<uint> resultsWithFallIds;
+    QSet<uint> qualifiedBy95HSRule;
 
     IndividualCompetitionSingleResult * leaderResult;
     IndividualCompetitionSingleResult * lastQualifiedResult;
 
 public:
-    static QVector<Jumper *> getFilteredJumpersVector(QVector<Jumper *> *previousRoundJumpers, IndividualCompetitionResults * results, CompetitionRules * rules, int round);
+    static QVector<Jumper *> getFilteredJumpersVector(QVector<Jumper *> *previousRoundJumpers, IndividualCompetitionResults * results, CompetitionRules * rules, int round, const QSet<uint> &fallQualified);
 
 public:
     QVector<Jumper *> getStartingJumpers() const;
@@ -56,6 +58,10 @@ public:
     void setNextJumperWinds(const QVector<Wind> &newNextJumperWinds);
     IndividualCompetitionSingleResult *getLastQualifiedResult() const;
     void setLastQualifiedResult(IndividualCompetitionSingleResult *newLastQualifiedResult);
+    QSet<uint> getResultsWithFallIds() const;
+    void setResultsWithFallIds(const QSet<uint> &newResultsWithFallIds);
+    QSet<uint> getQualifiedBy95HSRule() const;
+    void setQualifiedBy95HSRule(const QSet<uint> &newQualifiedBy95HSRule);
 };
 
 #endif // INDIVIDUALCOMPETITIONMANAGER_H
