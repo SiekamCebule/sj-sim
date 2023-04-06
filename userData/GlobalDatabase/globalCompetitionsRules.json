@@ -1,0 +1,26 @@
+{
+    "competitionsRules": [
+        {
+            "95-hs-rule": true,
+            "competition-type": 0,
+            "dsq": true,
+            "gate-compensations": true,
+            "judges-points": true,
+            "jumpers-in-team-count": 0,
+            "name": "Alternative World Cup",
+            "rounds": [
+                {
+                    "count": 15,
+                    "sort-start-list": false
+                },
+                {
+                    "count": 10,
+                    "sort-start-list": true
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
+            "wind-compensations": true
+        }
+    ]
+}

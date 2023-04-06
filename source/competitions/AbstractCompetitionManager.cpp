@@ -8,6 +8,13 @@ AbstractCompetitionManager::AbstractCompetitionManager(short type, int startingG
     results = nullptr;
     competitionRules = nullptr;
     competitionInfo = nullptr;
+    toBeatDistance = toAdvanceDistance = 0;
+    isCoachGate = false;
+    actualCoachGate = 0;
+    actualJumper = nullptr;
+    actualJumperIndex = actualJumperPointsToTheLeader = 0;
+    DSQBaseProbability = 0;
+    roundShouldBeEnded = competiitonShouldBeEnded = lastJump = false;
 }
 
 void AbstractCompetitionManager::generateActualWinds()

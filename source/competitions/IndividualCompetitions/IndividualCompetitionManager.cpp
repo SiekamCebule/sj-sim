@@ -8,8 +8,8 @@ IndividualCompetitionManager::IndividualCompetitionManager(short type, int start
     connect(this, &IndividualCompetitionManager::actualJumperIndexChanged, this, [this](){
         actualJumper = actualRoundJumpers.at(actualJumperIndex);
     });
-    competiitonShouldBeEnded = false;
-    roundShouldBeEnded = false;
+    leaderResult = nullptr;
+    lastQualifiedResult = nullptr;
 }
 
 void IndividualCompetitionManager::simulateNext()
@@ -137,11 +137,16 @@ void IndividualCompetitionManager::updateToBeatDistance()
     IndividualCompetitionResults * indResults = dynamic_cast<IndividualCompetitionResults *>(this->results);
     Hill * hill = competitionInfo->getHill();
     double leaderPoints = leaderResult->getPointsSum();
+    qDebug()<<"leaderPoints: "<<leaderPoints;
 
+    qDebug()<<actualWinds.size()<<", "<<competitionRules->getWindAverageCalculatingType()<<", "<<WindsCalculator::getAveragedWind(actualWinds, competitionRules->getWindAverageCalculatingType()).getStrengthToAveragedWind();
     double windCompensation = WindsCalculator::getWindCompensation(WindsCalculator::getAveragedWind(actualWinds, competitionRules->getWindAverageCalculatingType()).getStrengthToAveragedWind(), competitionInfo->getHill());
     int tempGate = actualGate;
     if(isCoachGate == true) tempGate = getActualCoachGate();
     double gateCompensation = WindsCalculator::getGateCompensation(getRoundStartingGate(), tempGate, competitionInfo->getHill());
+    qDebug()<<"windComp: "<<windCompensation;
+    qDebug()<<"tempGate: "<<tempGate;
+    qDebug()<<"gateComp: "<<gateCompensation;
 
     double toBeat = 0;
     if(actualRound == 1){
@@ -149,23 +154,31 @@ void IndividualCompetitionManager::updateToBeatDistance()
     }
     else{
         double actualJumperPoints = indResults->getResultsOfJumper(actualJumper)->getPointsSum();
+        qDebug()<<"actualJumperPoints: "<<actualJumperPoints;
         toBeat = leaderPoints - actualJumperPoints;
     }
+    qDebug()<<"toBeat: "<<toBeat;
     toBeat -= hill->getPointsForKPoint();
+    qDebug()<<"toBeat: "<<toBeat;
     if(competitionRules->getHasJudgesPoints())
     {
         toBeat -= 54;
+        qDebug()<<"toBeat: "<<toBeat;
     }
     if(competitionRules->getHasGateCompensations())
         toBeat -= gateCompensation;
     if(competitionRules->getHasWindCompensations())
         toBeat -= windCompensation;
+    qDebug()<<"toBeat: "<<toBeat;
 
     toBeat /= hill->getPointsForMeter();
+    qDebug()<<"toBeat: "<<toBeat;
     toBeat += hill->getKPoint();
+    qDebug()<<"toBeat: "<<toBeat;
     toBeat = std::round(toBeat * 2) / 2;
 
     toBeatDistance = toBeat;
+    qDebug()<<"TOBEAT: "<<toBeatDistance;
 }
 
 void IndividualCompetitionManager::updateToAdvanceDistance()
