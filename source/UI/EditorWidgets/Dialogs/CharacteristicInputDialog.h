@@ -28,17 +28,7 @@ public:
     };
 
     void fillComboBox();
-
-    short getAction() const;
-    void setAction(short newAction);
-    Characteristic *getCharacteristicToEdit() const;
-    void setCharacteristicToEdit(Characteristic *newCharacteristicToEdit);
-    short getParentType() const;
-    void setParentType(short newParentType);
-    QStringList getDirtyCharacteristicNames() const;
-    void setDirtyCharacteristicNames(const QStringList &newDirtyCharacteristicNames);
-    QSet<Characteristic> &getExistingCharacteristics();
-    void setExistingCharacteristics(const QSet<Characteristic> &newExistingCharacteristics);
+    void setComboBoxIndex(int index);
 
 private:
     Ui::CharacteristicInputDialog *ui;
@@ -49,6 +39,18 @@ private:
 
     short action;
     short parentType;
+
+public:
+    short getAction() const;
+    void setAction(short newAction);
+    Characteristic *getCharacteristicToEdit() const;
+    void setCharacteristicToEdit(Characteristic *newCharacteristicToEdit);
+    short getParentType() const;
+    void setParentType(short newParentType);
+    QStringList getDirtyCharacteristicNames() const;
+    void setDirtyCharacteristicNames(const QStringList &newDirtyCharacteristicNames);
+    QSet<Characteristic> &getExistingCharacteristics();
+    void setExistingCharacteristics(const QSet<Characteristic> &newExistingCharacteristics);
 };
 
 #endif // CHARACTERISTICINPUTDIALOG_H

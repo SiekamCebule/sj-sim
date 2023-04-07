@@ -42,15 +42,19 @@ void CharacteristicsEditor::setCharacteristics(const QSet<Characteristic> &newCh
 
 void CharacteristicsEditor::on_pushButton_add_clicked()
 {
-    qInstallMessageHandler(MyFunctions::fileMessageHandler);
+    qInfo()<<"void CharacteristicsEditor::on_pushButton_add_clicked():";
+    //qInstallMessageHandler(MyFunctions::fileMessageHandler);
+    qInfo("installMessageHandler");
     CharacteristicInputDialog dialog(CharacteristicInputDialog::Add);
+    qInfo("CharacteristicInputDialog constructor");
     dialog.setParentType(parentType);
+    qInfo("CharacteristicInputDialog setParentType");
     dialog.setModal(true);
-    qDebug()<<"DZIALA1";
+    qInfo("CharacteristicInputDialog setModal");
     dialog.setExistingCharacteristics(characteristics);
-    qDebug()<<"DZIALA2";
+    qInfo("CharacteristicInputDialog setExistingCharacteristics");
     dialog.fillComboBox();
-    qDebug()<<"DZIALA3";
+    qInfo("CharacteristicInputDialog fillComboBox");
     if(dialog.exec() == QDialog::Accepted)
     {
         if(dialog.getCharacteristicLevel() != 0){
@@ -82,7 +86,9 @@ void CharacteristicsEditor::setParentType(short newParentType)
 {
     parentType = newParentType;
 }
-// po kazdej probie edycji, usuwa sie jedno z existing count
+// co chce zrobic?
+// Najpierw robimy roboczego QSeta<Characteristic>. Dajemy tam wszystko z getCharsByParentType i odejmujemy te z existing
+// Ustawić index comboBoxa w CharacteristicInputDialog na taki, jaki będzie dla nowo utworzonego QSeta dla charakterystyki w this.characteristics (funkcja find)
 void CharacteristicsEditor::on_pushButton_edit_clicked()
 {
     if(ui->listView_characteristics->selectionModel()->selectedRows().size() > 0){
@@ -93,6 +99,15 @@ void CharacteristicsEditor::on_pushButton_edit_clicked()
         dialog.setExistingCharacteristics(characteristics);
         dialog.getExistingCharacteristics().remove(Characteristic(dirtyStrings.at(index)));
         dialog.fillComboBox();
+
+        /*QStringList tempCharacteristics = Characteristic::characteristicTypesForSpecificParent(getParentType(), false);
+        for(auto & c : qAsConst(dialog.getExistingCharacteristics())){
+            if(tempCharacteristics.contains(c.getType()))
+                tempCharacteristics.remove(tempCharacteristics.indexOf(c.getType()));
+        }
+        QString ch = this->strings.at(index);
+        dialog.setComboBoxIndex(tempCharacteristics.indexOf(ch));*/
+
         if(dialog.exec() == QDialog::Accepted)
         {
             if(dialog.getCharacteristicLevel() != 0){
@@ -108,15 +123,16 @@ void CharacteristicsEditor::on_pushButton_delete_clicked()
 {
     if(ui->listView_characteristics->selectionModel()->selectedRows().size() > 0){
         int index = ui->listView_characteristics->selectionModel()->selectedRows().at(0).row();
-        QMessageBox message;
-        message.setStyleSheet("background-color: white; color: black;");
-        QMessageBox::StandardButton reply;
-        reply = message.question(this, "Usunięcie cechy", "Na pewno chcesz usunąć tą cechę?\n", QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No, QMessageBox::StandardButton::Yes);
-        if(reply == QMessageBox::Yes)
-        {
+        QMessageBox * message = new QMessageBox(QMessageBox::Question, "Usunięcie cechy", "Czy na pewno chcesz usunąć tą cechę?");
+        message->setAttribute(Qt::WA_DeleteOnClose, true);
+        message->setStyleSheet("background-color: white; color: black;");
+        message->addButton(tr("Nie"), QMessageBox::RejectRole);
+        message->addButton(tr("Tak"), QMessageBox::AcceptRole);
+        message->setModal(true);
+        message->show();
+        connect(message, &QMessageBox::accepted, this, [this, index](){
             characteristics.remove(Characteristic(dirtyStrings.at(index)));
             emit characteristicsChanged();
-        }
+        });
     }
 }
-

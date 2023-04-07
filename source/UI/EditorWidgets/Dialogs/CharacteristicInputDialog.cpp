@@ -7,10 +7,10 @@
 CharacteristicInputDialog::CharacteristicInputDialog(short action, short parentType, const QSet<Characteristic> & existingCharacteristics, Characteristic *characteristicToEdit, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CharacteristicInputDialog),
-    action(action),
-    parentType(parentType),
+    characteristicToEdit(characteristicToEdit),
     existingCharacteristics(existingCharacteristics),
-    characteristicToEdit(characteristicToEdit)
+    action(action),
+    parentType(parentType)
 {
     ui->setupUi(this);
 
@@ -98,29 +98,47 @@ void CharacteristicInputDialog::setExistingCharacteristics(const QSet<Characteri
 
 void CharacteristicInputDialog::fillComboBox()
 {
+    qInfo()<<"\nvoid CharacteristicInputDialog::fillComboBox()";
     ui->comboBox_type->clear();
     QStringListModel * model = new QStringListModel;
 
     QStringList characteristics = Characteristic::characteristicTypesForSpecificParent(parentType, false);
+    QStringList editableCharacteristics = characteristics;
+    qInfo()<<"editableCharacteristics size: "<<editableCharacteristics.size();
+    int i = 0;
     for(auto & characteristic : characteristics)
     {
+        qInfo()<<"\ncharacteristics at "<<i<<" i:";
+        for(auto & ch : editableCharacteristics){
+            qInfo()<<"ch: "<<ch;
+        }
+        qInfo()<<"characteristic: "<<characteristic;
+        qInfo()<<"contains: "<<existingCharacteristics.contains(Characteristic(characteristic));
         if(existingCharacteristics.contains(Characteristic(characteristic)))
         {
             int index = 0;
-            int it;
-            for(it = 0; it < characteristics.size(); it++)
+            int it = 0;
+            for(it = 0; it < editableCharacteristics.size(); it++)
             {
-                if(characteristics.at(it) == characteristic)
+                if(editableCharacteristics.at(it) == characteristic)
                     index = it;
             }
-            characteristics.remove(index);
+            qInfo()<<"characteristics size: "<<characteristics.size()<<", index to remove: "<<index;
+            editableCharacteristics.remove(index);
         }
+        i++;
     }
-    for(auto & characteristic : characteristics){
+    qInfo()<<"After for loop";
+    for(auto & characteristic : editableCharacteristics){
         dirtyCharacteristicNames.push_back(characteristic);
         characteristic = Characteristic::getTypeToDisplay(Characteristic(characteristic));
     }
-    model->setStringList(characteristics);
+    model->setStringList(editableCharacteristics);
 
     ui->comboBox_type->setModel(model);
+}
+
+void CharacteristicInputDialog::setComboBoxIndex(int index)
+{
+    ui->comboBox_type->setCurrentIndex(index);
 }
