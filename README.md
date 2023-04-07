@@ -44,3 +44,9 @@ Wyróżniami 4 style lotu:
 ## Jak dopasować wpływ wybicia i lotu do symulacji?
 Osobiście, ustalam wartość koło 0.6 - 0.65 dla skoczni dużej z punktem K koło 120-125 metra, i proporcjonalnie do zmiany punktu K zmieniam tą wartość (Np. dla skoczni mamuciej K200 koło 1.00 - 1.05).
 Później tą wartość, np. 0.62 rozdzielam tak, aby wybicie i lot miało taki wpływ jak w rzeczywistości, np 40% wybicie i 60% lot czyli coś koło 0.28 dla wybicia i 0.34 dla lotu.) I np. dla bardziej lotnych skoczni jak Sapporo zwiększamy wpływ lotu odejmując jednocześnie wpływ wybicia. (Można się też pobawić cechami charakterystycznymi skoczni, np. dla lotnej skoczni zwiększamy cechę "Wpływ techniki lotu na skok" do poziomu np. 1.5).<br>
+
+
+Podziękowania dla:
+- Autorom ikon ze strony flaticon (dokładni autorzy w pliku flaticon_authors.txt)
+- Autorowi paczki z flagami (link do paczki również w pliku)
+- Dominik Boss (Udział w stworzeniu paczki z zawodnikami)
