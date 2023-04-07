@@ -186,7 +186,7 @@ void JumpSimulator::generateWindEffects()
     {
         if(wind.getDirection() == Wind::Back)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 5.75);
+            change = wind.getStrength() * (getWindSegmentDistance() / 6);
             change *= MyRandom::normalDistributionRandom(1.035, 0.10);
             change *= 1.01 - (jumperSkills->getFlightTechnique() / 2200);
             switch(jumperSkills->getFlightStyle())
@@ -201,7 +201,7 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::BackSide)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 13);
+            change = wind.getStrength() * (getWindSegmentDistance() / 14.5);
             change *= MyRandom::normalDistributionRandom(1.035, 0.13);
             change *= 1.02 - (jumperSkills->getFlightTechnique() / 1200);
             switch(jumperSkills->getFlightStyle())
@@ -250,7 +250,7 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::FrontSide)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 30);
+            change = wind.getStrength() * (getWindSegmentDistance() / 31);
             change *= MyRandom::normalDistributionRandom(1.058, 0.14);
             change *= 0.94 + (jumperSkills->getFlightTechnique() / 400);
             switch(jumperSkills->getFlightStyle())
@@ -265,7 +265,7 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::Front)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 12.5);
+            change = wind.getStrength() * (getWindSegmentDistance() / 13);
             change *= MyRandom::normalDistributionRandom(1.06, 0.11);
             change *= 0.88 + (jumperSkills->getFlightTechnique() / 180);
             switch(jumperSkills->getFlightStyle())
