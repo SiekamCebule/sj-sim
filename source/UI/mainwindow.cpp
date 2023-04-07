@@ -1,19 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "../utilities/functions.h"
-
-#include "../simulator/Jumper.h"
-#include "../simulator/JumperSkills.h"
-#include "../simulator/WindsCalculator.h"
-#include "../simulator/JumpSimulator.h"
-#include "../simulator/Characteristic.h"
 #include "../simulator/Hill.h"
-#include "../simulator/wind-generation/WindsGenerator.h"
 #include "../simulator/wind-generation/WindGenerationSettings.h"
 
 #include "../global/IDGenerator.h"
-#include "../global/MyRandom.h"
 #include "../global/GlobalDatabase.h"
 #include "../global/GlobalAppSettings.h"
 #include "../global/GlobalSimulationSettings.h"
@@ -36,7 +27,7 @@
 #include <random>
 
 extern IDGenerator globalIDGenerator;
-const QString appVersion = "0.5.0 beta";
+const QString appVersion = "0.5.5 beta";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
