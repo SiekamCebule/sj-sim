@@ -16,6 +16,9 @@ SOURCES += \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp \
     source/UI/Competition/StartList/StartListModel.cpp \
+    source/UI/DatabaseEditor/ListModels/GlobalCompetitionRulesListModel.cpp \
+    source/UI/DatabaseEditor/ListModels/GlobalHillsListModel.cpp \
+    source/UI/DatabaseEditor/ListModels/GlobalJumpersListModel.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
     source/UI/EditorWidgets/RoundInfoEditorWidget.cpp \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.cpp \
@@ -30,7 +33,6 @@ SOURCES += \
     source/UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     source/UI/AppSettings/AppSettingsWindow.cpp \
     source/UI/DatabaseEditor/DatabaseEditorWindow.cpp \
-    source/UI/DatabaseEditor/DatabaseListItemWidget.cpp \
     source/UI/EditorWidgets/CharacteristicsEditor.cpp \
     source/UI/EditorWidgets/Dialogs/CharacteristicInputDialog.cpp \
     source/UI/EditorWidgets/HillEditorWidget.cpp \
@@ -81,6 +83,9 @@ HEADERS += \
     source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.h \
     source/UI/Competition/StartList/CompetitionStartListDisplayWidget.h \
     source/UI/Competition/StartList/StartListModel.h \
+    source/UI/DatabaseEditor/ListModels/GlobalCompetitionRulesListModel.h \
+    source/UI/DatabaseEditor/ListModels/GlobalHillsListModel.h \
+    source/UI/DatabaseEditor/ListModels/GlobalJumpersListModel.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
     source/UI/EditorWidgets/RoundInfoEditorWidget.h \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.h \
@@ -95,7 +100,6 @@ HEADERS += \
     source/UI/SingleJumps/SingleJumpsConfigWindow.h \
     source/UI/AppSettings/AppSettingsWindow.h \
     source/UI/DatabaseEditor/DatabaseEditorWindow.h \
-    source/UI/DatabaseEditor/DatabaseListItemWidget.h \
     source/UI/EditorWidgets/CharacteristicsEditor.h \
     source/UI/EditorWidgets/Dialogs/CharacteristicInputDialog.h \
     source/UI/EditorWidgets/HillEditorWidget.h \
@@ -157,7 +161,6 @@ FORMS += \
     source/UI/SingleJumps/SingleJumpsConfigWindow.ui \
     source/UI/AppSettings/AppSettingsWindow.ui \
     source/UI/DatabaseEditor/DatabaseEditorWindow.ui \
-    source/UI/DatabaseEditor/DatabaseListItemWidget.ui \
     source/UI/EditorWidgets/CharacteristicsEditor.ui \
     source/UI/EditorWidgets/Dialogs/CharacteristicInputDialog.ui \
     source/UI/EditorWidgets/HillEditorWidget.ui \

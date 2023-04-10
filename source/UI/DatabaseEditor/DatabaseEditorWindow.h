@@ -14,6 +14,9 @@ class Jumper;
 class Hill;
 class DatabaseListItemWidget;
 class CompetitionRules;
+class GlobalJumpersListModel;
+class GlobalHillsListModel;
+class GlobalCompetitionRulesListModel;
 
 namespace Ui {
 class DatabaseEditorWindow;
@@ -27,8 +30,9 @@ public:
     explicit DatabaseEditorWindow(JumperEditorWidget * jumperEditor = nullptr, HillEditorWidget * hillEditor = nullptr, CompetitionRulesEditorWidget * competitionRulesEditor = nullptr, QWidget *parent = nullptr);
     ~DatabaseEditorWindow();
 
-    void when_ItemWidgetDeleteButtonClicked(int index);
-    void updateItemsSelection(int index);
+    void replaceJumperByJumperEditor();
+    void replaceHillByHillEditor();
+    void replaceCompetitionRuleByCompetitionRulesEditor();
 
     enum ElementType{
         JumperElement,
@@ -46,41 +50,48 @@ public:
     void setTempGlobalHills(const QVector<Hill> &newTempGlobalHills);
     QVector<CompetitionRules> getTempGlobalCompetitionRules() const;
     void setTempGlobalCompetitionRules(const QVector<CompetitionRules> &newTempGlobalCompetitionRules);
+    GlobalJumpersListModel *getJumpersListModel() const;
+    void setJumpersListModel(GlobalJumpersListModel *newJumpersListModel);
+    int getActualElementIndex() const;
+    void setActualElementIndex(int newActualElementIndex);
+    GlobalHillsListModel *getHillsListModel() const;
+    void setHillsListModel(GlobalHillsListModel *newHillsListModel);
+    GlobalCompetitionRulesListModel *getCompetitionRulesEditor() const;
+    void setCompetitionRulesEditor(GlobalCompetitionRulesListModel *newCompetitionRulesEditor);
+
+    GlobalCompetitionRulesListModel *getCompetitionRulesListModel() const;
+    void setCompetitionRulesListModel(GlobalCompetitionRulesListModel *newCompetitionRulesListModel);
 
 protected:
     void closeEvent(QCloseEvent * event);
 
 private slots:
+    void on_listView_jumpers_doubleClicked(const QModelIndex &index);
+    void on_listView_hills_doubleClicked(const QModelIndex &index);
     void on_pushButton_add_clicked();
     void on_pushButton_remove_clicked();
     void on_pushButton_up_clicked();
     void on_pushButton_down_clicked();
 
-    void replaceJumperFromJumperEditor();
-    void replaceHillFromHillEditor();
-    void replaceCompetitionRulesFromEditor();
+    void on_listView_competitionRules_doubleClicked(const QModelIndex &index);
 
 private:
     QVector<Jumper> tempGlobalJumpers;
     QVector<Hill> tempGlobalHills;
     QVector<CompetitionRules> tempGlobalCompetitionRules;
 
+    GlobalJumpersListModel * jumpersListModel;
+    GlobalHillsListModel * hillsListModel;
+    GlobalCompetitionRulesListModel * competitionRulesListModel;
+
     Ui::DatabaseEditorWindow *ui;
-    QVector<DatabaseListItemWidget *> jumpersListItems;
-    QVector<DatabaseListItemWidget *> hillsListItems;
-    QVector<DatabaseListItemWidget *> competitionRulesListItems;
 
     JumperEditorWidget * jumperEditor;
     HillEditorWidget * hillEditor;
     CompetitionRulesEditorWidget * competitionRulesEditor;
 
-    void fillJumpersWidget();
-    void fillHillsWidget();
-    void fillCompetitionRulesWidget();
     short actualElementType;
-    int selectedItemIndex;
-
-    void updateIndexes();
+    int actualElementIndex;
 };
 
 #endif // DATABASEEDITORWINDOW_H

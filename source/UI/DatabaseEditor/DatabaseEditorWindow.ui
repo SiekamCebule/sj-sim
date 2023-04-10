@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>920</width>
-    <height>831</height>
+    <width>767</width>
+    <height>860</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -106,10 +106,16 @@ color: rgb(26, 95, 180);
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget_main">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <family>Ubuntu Light</family>
-       <pointsize>11</pointsize>
+       <pointsize>12</pointsize>
        <italic>false</italic>
        <bold>false</bold>
       </font>
@@ -122,7 +128,7 @@ color: rgb(26, 95, 180);
 border: 2px solid;
 }
 QTabWidget::tab-bar{
-left: 450px;
+	alignment: center;
 }
 QTabBar::tab{
 	min-width: 100px;
@@ -142,6 +148,9 @@ QTabBar::tab:selected{
 	border-color: rgb(142, 142, 142);
 }</string>
      </property>
+     <property name="tabPosition">
+      <enum>QTabWidget::North</enum>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -157,54 +166,20 @@ QTabBar::tab:selected{
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QScrollArea" name="scrollArea_jumpers">
+        <widget class="QListView" name="listView_jumpers">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="minimumSize">
-          <size>
-           <width>470</width>
-           <height>0</height>
-          </size>
-         </property>
          <property name="styleSheet">
-          <string notr="true">QScrollArea{
-background: transparent;
-}
-QScrollBar::handle{
-border: 2px solid rgb(101, 23, 23);
-background-color: rgb(255, 229, 190);
-height: 10px;
-width: 5px;
+          <string notr="true">QListView::item:selected
+{
+    background-color: rgb(240,240,253);
+	color: rgb(30, 30, 30)
 }</string>
          </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidget_jumpers">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>822</width>
-            <height>620</height>
-           </rect>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>470</width>
-            <height>0</height>
-           </size>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_jumpers"/>
-           </item>
-          </layout>
-         </widget>
         </widget>
        </item>
        <item>
@@ -212,13 +187,10 @@ width: 5px;
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Maximum</enum>
-         </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>50</width>
-           <height>78</height>
+           <width>40</width>
+           <height>20</height>
           </size>
          </property>
         </spacer>
@@ -231,42 +203,20 @@ width: 5px;
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QScrollArea" name="scrollArea_hills">
-         <property name="minimumSize">
-          <size>
-           <width>550</width>
-           <height>0</height>
-          </size>
+        <widget class="QListView" name="listView_hills">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true">QScrollArea{
-background: transparent;
-}
-QScrollBar::handle{
-border: 2px solid rgb(101, 23, 23);
-background-color: rgb(255, 229, 190);
-height: 10px;
-width: 5px;
+          <string notr="true">QListView::item:selected
+{
+    background-color: rgb(240,240,253);
+	color: rgb(30, 30, 30)
 }</string>
          </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidget_hills">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>548</width>
-            <height>620</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_hills"/>
-           </item>
-          </layout>
-         </widget>
         </widget>
        </item>
        <item>
@@ -276,7 +226,7 @@ width: 5px;
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>528</width>
+           <width>40</width>
            <height>20</height>
           </size>
          </property>
@@ -290,42 +240,20 @@ width: 5px;
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QScrollArea" name="scrollArea_competitionRules">
-         <property name="minimumSize">
-          <size>
-           <width>420</width>
-           <height>0</height>
-          </size>
+        <widget class="QListView" name="listView_competitionRules">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true">QScrollArea{
-background: transparent;
-}
-QScrollBar::handle{
-border: 2px solid rgb(101, 23, 23);
-background-color: rgb(255, 229, 190);
-height: 10px;
-width: 5px;
+          <string notr="true">QListView::item:selected
+{
+    background-color: rgb(240,240,253);
+	color: rgb(30, 30, 30)
 }</string>
          </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidget_competitionsRules">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>418</width>
-            <height>620</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_competitionsRules"/>
-           </item>
-          </layout>
-         </widget>
         </widget>
        </item>
        <item>
@@ -335,7 +263,7 @@ width: 5px;
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>509</width>
+           <width>40</width>
            <height>20</height>
           </size>
          </property>
