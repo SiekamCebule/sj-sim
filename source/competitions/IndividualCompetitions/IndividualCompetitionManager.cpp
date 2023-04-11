@@ -453,3 +453,12 @@ void IndividualCompetitionManager::setStartingJumpers(const QVector<Jumper *> & 
 {
     startingJumpers = newStartingJumpers;
 }
+
+void IndividualCompetitionManager::setStartingJumpers(const QVector<Jumper> * newStartingJumpers)
+{
+    QVector<Jumper *> vector;
+    for(auto & jumper : *newStartingJumpers){
+        vector.push_back(const_cast<Jumper*>(&jumper));
+    }
+    startingJumpers = vector;
+}

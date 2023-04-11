@@ -435,6 +435,8 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         updateToAdvanceDistanceLabel();
         updateToBeatDistanceLabel();
 
+        ui->tableView_results->scrollTo(startListModel->index(manager->getActualJumperIndex()));
+
         if(m->getCompetiitonShouldBeEnded() == true){
             setupGoToNextButtonForCompetitionEnd();
             showMessageBoxForCompetitionEnd();

@@ -47,6 +47,7 @@ public:
     QVector<Jumper *> getStartingJumpers() const;
     QVector<Jumper *> * getStartingJumpersPointer();
     void setStartingJumpers(const QVector<Jumper *> &newStartingJumpers);
+    void setStartingJumpers(const QVector<Jumper> * newStartingJumpers);
     QVector<Jumper *> *getActualRoundJumpersPointer() const;
     void setActualRoundJumpers(const QVector<Jumper *> &newActualRoundJumpers);
     void incrementActualJumperIndex();

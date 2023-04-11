@@ -295,33 +295,42 @@ void DatabaseEditorWindow::on_pushButton_up_clicked()
     case JumperElement:{
         if(ui->listView_jumpers->selectionModel()->selectedRows().count() > 0){
             int row = ui->listView_jumpers->selectionModel()->selectedRows().first().row();
-            GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(row, row - 1);
-            emit jumpersListModel->dataChanged(jumpersListModel->index(row), jumpersListModel->index(row - 1));
-            ui->listView_jumpers->selectionModel()->clear();
-            ui->listView_jumpers->selectionModel()->select(jumpersListModel->index(row - 1), QItemSelectionModel::Select);
-            ui->listView_jumpers->scrollTo(jumpersListModel->index(row - 1));
+            if(row > 0){
+                GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(row, row - 1);
+                emit jumpersListModel->dataChanged(jumpersListModel->index(row), jumpersListModel->index(row - 1));
+                ui->listView_jumpers->selectionModel()->clear();
+                ui->listView_jumpers->selectionModel()->select(jumpersListModel->index(row - 1), QItemSelectionModel::Select);
+                ui->listView_jumpers->scrollTo(jumpersListModel->index(row - 1));
+                actualElementIndex--;
+            }
         }
         break;
     }
     case HillElement:{
         if(ui->listView_hills->selectionModel()->selectedRows().count() > 0){
             int row = ui->listView_hills->selectionModel()->selectedRows().first().row();
-            GlobalDatabase::get()->getEditableGlobalHills().swapItemsAt(row, row - 1);
-            emit hillsListModel->dataChanged(hillsListModel->index(row), hillsListModel->index(row - 1));
-            ui->listView_hills->selectionModel()->clear();
-            ui->listView_hills->selectionModel()->select(hillsListModel->index(row - 1), QItemSelectionModel::Select);
-            ui->listView_hills->scrollTo(hillsListModel->index(row - 1));
+            if(row > 0){
+                GlobalDatabase::get()->getEditableGlobalHills().swapItemsAt(row, row - 1);
+                emit hillsListModel->dataChanged(hillsListModel->index(row), hillsListModel->index(row - 1));
+                ui->listView_hills->selectionModel()->clear();
+                ui->listView_hills->selectionModel()->select(hillsListModel->index(row - 1), QItemSelectionModel::Select);
+                ui->listView_hills->scrollTo(hillsListModel->index(row - 1));
+                actualElementIndex--;
+            }
         }
         break;
     }
     case CompetitionRulesElement:{
         if(ui->listView_competitionRules->selectionModel()->selectedRows().count() > 0){
             int row = ui->listView_competitionRules->selectionModel()->selectedRows().first().row();
-            GlobalDatabase::get()->getEditableCompetitionRules().swapItemsAt(row, row - 1);
-            emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(row), competitionRulesListModel->index(row - 1));
-            ui->listView_competitionRules->selectionModel()->clear();
-            ui->listView_competitionRules->selectionModel()->select(competitionRulesListModel->index(row - 1), QItemSelectionModel::Select);
-            ui->listView_competitionRules->scrollTo(competitionRulesListModel->index(row - 1));
+            if(row > 0){
+                GlobalDatabase::get()->getEditableCompetitionRules().swapItemsAt(row, row - 1);
+                emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(row), competitionRulesListModel->index(row - 1));
+                ui->listView_competitionRules->selectionModel()->clear();
+                ui->listView_competitionRules->selectionModel()->select(competitionRulesListModel->index(row - 1), QItemSelectionModel::Select);
+                ui->listView_competitionRules->scrollTo(competitionRulesListModel->index(row - 1));
+                actualElementIndex--;
+            }
         }
         break;
     }
@@ -335,33 +344,42 @@ void DatabaseEditorWindow::on_pushButton_down_clicked()
     case JumperElement:{
         if(ui->listView_jumpers->selectionModel()->selectedRows().count() > 0){
             int row = ui->listView_jumpers->selectionModel()->selectedRows().first().row();
-            GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(row, row + 1);
-            emit jumpersListModel->dataChanged(jumpersListModel->index(row), jumpersListModel->index(row + 1));
-            ui->listView_jumpers->selectionModel()->clear();
-            ui->listView_jumpers->selectionModel()->select(jumpersListModel->index(row + 1), QItemSelectionModel::Select);
-            ui->listView_jumpers->scrollTo(jumpersListModel->index(row + 1));
+            if(row < jumpersListModel->rowCount() - 1){
+                GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(row, row + 1);
+                emit jumpersListModel->dataChanged(jumpersListModel->index(row), jumpersListModel->index(row + 1));
+                ui->listView_jumpers->selectionModel()->clear();
+                ui->listView_jumpers->selectionModel()->select(jumpersListModel->index(row + 1), QItemSelectionModel::Select);
+                ui->listView_jumpers->scrollTo(jumpersListModel->index(row + 1));
+                actualElementIndex++;
+            }
         }
         break;
     }
     case HillElement:{
         if(ui->listView_hills->selectionModel()->selectedRows().count() > 0){
             int row = ui->listView_hills->selectionModel()->selectedRows().first().row();
-            GlobalDatabase::get()->getEditableGlobalHills().swapItemsAt(row, row + 1);
-            emit hillsListModel->dataChanged(hillsListModel->index(row), hillsListModel->index(row + 1));
-            ui->listView_hills->selectionModel()->clear();
-            ui->listView_hills->selectionModel()->select(hillsListModel->index(row + 1), QItemSelectionModel::Select);
-            ui->listView_hills->scrollTo(hillsListModel->index(row + 1));
+            if(row < hillsListModel->rowCount() - 1){
+                GlobalDatabase::get()->getEditableGlobalHills().swapItemsAt(row, row + 1);
+                emit hillsListModel->dataChanged(hillsListModel->index(row), hillsListModel->index(row + 1));
+                ui->listView_hills->selectionModel()->clear();
+                ui->listView_hills->selectionModel()->select(hillsListModel->index(row + 1), QItemSelectionModel::Select);
+                ui->listView_hills->scrollTo(hillsListModel->index(row + 1));
+                actualElementIndex++;
+            }
         }
         break;
     }
     case CompetitionRulesElement:{
         if(ui->listView_competitionRules->selectionModel()->selectedRows().count() > 0){
             int row = ui->listView_competitionRules->selectionModel()->selectedRows().first().row();
-            GlobalDatabase::get()->getEditableCompetitionRules().swapItemsAt(row, row + 1);
-            emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(row), competitionRulesListModel->index(row + 1));
-            ui->listView_competitionRules->selectionModel()->clear();
-            ui->listView_competitionRules->selectionModel()->select(competitionRulesListModel->index(row + 1), QItemSelectionModel::Select);
-            ui->listView_competitionRules->scrollTo(competitionRulesListModel->index(row + 1));
+            if(row < competitionRulesListModel->rowCount() - 1){
+                GlobalDatabase::get()->getEditableCompetitionRules().swapItemsAt(row, row + 1);
+                emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(row), competitionRulesListModel->index(row + 1));
+                ui->listView_competitionRules->selectionModel()->clear();
+                ui->listView_competitionRules->selectionModel()->select(competitionRulesListModel->index(row + 1), QItemSelectionModel::Select);
+                ui->listView_competitionRules->scrollTo(competitionRulesListModel->index(row + 1));
+                actualElementIndex++;
+            }
         }
         break;
     }

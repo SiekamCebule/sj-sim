@@ -5,14 +5,15 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QAction>
 #include <QCheckBox>
 #include "../../simulator/Jumper.h"
 #include "../../simulator/Team.h"
+#include "StartList/IndividualStartListEditorModel.h"
 
 class HillEditorWidget;
 class WindsGeneratorSettingsEditorWidget;
 class CompetitionRulesEditorWidget;
-class OtherCompetitionSettingsWidget;
 class CompetitionStartListDisplayWidget;
 
 namespace Ui {
@@ -50,21 +51,20 @@ private:
     QComboBox * existingCompetitionRulesComboBox;
     void setupCompetitionRulesToolBoxItem();
     //
+    IndividualStartListEditorModel * individualStartListEditorModel;
+    QAction * removeFromStartListShortcut;
+    QAction * moveToTopShortcut;
+    QAction * moveToDownShortcut;
 
     QCheckBox * checkBox_singleCompetitionQualifications;
 
-
-    OtherCompetitionSettingsWidget * otherCompetitionSettingsEditor;
-
-    //
-    CompetitionStartListDisplayWidget * startListDisplayWidget;
-    QWidget * startListParentWidget;
-    QVBoxLayout * startListParentLayout;
-    QPushButton * pushButton_loadJumpersList;
-    //
-
     QVector<Team> competitionTeams;
     QVector<Jumper> competitionJumpers;
+
+private slots:
+    void removeFromStartList();
+    void moveToTop();
+    void moveToDown();
 
 public:
     short getType() const;
@@ -75,14 +75,18 @@ public:
     void setCompetitionRulesEditor(CompetitionRulesEditorWidget *newCompetitionRulesEditor);
     HillEditorWidget *getHillEditor() const;
     void setHillEditor(HillEditorWidget *newHillEditor);
-    OtherCompetitionSettingsWidget *getOtherCompetitionSettingsEditor() const;
-    void setOtherCompetitionSettingsEditor(OtherCompetitionSettingsWidget *newOtherCompetitionSettingsEditor);
     CompetitionStartListDisplayWidget *getStartListDisplayWidget() const;
     void setStartListDisplayWidget(CompetitionStartListDisplayWidget *newStartListDisplayWidget);
     QVector<Jumper> getCompetitionJumpers() const;
     QVector<Team> getCompetitionTeams() const;
     void setCompetitionTeams(const QVector<Team> &newCompetitionTeams);
     void setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers);
+    QAction *getMoveToTopShortcut() const;
+    void setMoveToTopShortcut(QAction *newMoveToTopShortcut);
+
+    QAction *getMoveToDownShortcut() const;
+    void setMoveToDownShortcut(QAction *newMoveToDownShortcut);
+
 private slots:
     void on_pushButton_submit_clicked();
 };

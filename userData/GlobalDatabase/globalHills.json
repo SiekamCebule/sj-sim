@@ -106,21 +106,6 @@
         },
         {
             "characteristics": [
-            ],
-            "country-code": "XXX",
-            "flight-effect": 0,
-            "hs-point": 0,
-            "k-point": 0,
-            "name": "Hill",
-            "points-for-back-wind": 0,
-            "points-for-front-wind": 0,
-            "points-for-gate": 0,
-            "points-for-k-point": 0,
-            "points-for-meter": 0,
-            "takeoff-effect": 0
-        },
-        {
-            "characteristics": [
                 {
                     "level": 0.86,
                     "type": "takeoff-form-effect"
@@ -131,10 +116,29 @@
                 }
             ],
             "country-code": "DEU",
-            "flight-effect": 0.35,
+            "flight-effect": 0.3485,
             "hs-point": 142,
             "k-point": 125,
             "name": "Garmisch-Partenkirchen",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 10.8,
+            "points-for-gate": 7.67,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.2715
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.4,
+                    "type": "real-hs-point"
+                }
+            ],
+            "country-code": "DEU",
+            "flight-effect": 0.35,
+            "hs-point": 140,
+            "k-point": 125,
+            "name": "Klingenthal",
             "points-for-back-wind": "auto",
             "points-for-front-wind": 10.8,
             "points-for-gate": 7.67,
@@ -150,7 +154,7 @@
                 }
             ],
             "country-code": "POL",
-            "flight-effect": 0.3485,
+            "flight-effect": 0.346,
             "hs-point": 140,
             "k-point": 125,
             "name": "Zakopane",
@@ -159,7 +163,7 @@
             "points-for-gate": 7.56,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.2745
+            "takeoff-effect": 0.274
         },
         {
             "characteristics": [

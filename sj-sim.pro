@@ -13,8 +13,7 @@ SOURCES += \
     source/UI/Competition/CompetitionManagerWindow.cpp \
     source/UI/Competition/JumperCompetitionResultsWidget.cpp \
     source/UI/Competition/Results/ResultsTableModel.cpp \
-    source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp \
-    source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp \
+    source/UI/Competition/StartList/IndividualStartListEditorModel.cpp \
     source/UI/Competition/StartList/StartListModel.cpp \
     source/UI/DatabaseEditor/ListModels/GlobalCompetitionRulesListModel.cpp \
     source/UI/DatabaseEditor/ListModels/GlobalHillsListModel.cpp \
@@ -80,8 +79,7 @@ HEADERS += \
     source/UI/Competition/CompetitionManagerWindow.h \
     source/UI/Competition/JumperCompetitionResultsWidget.h \
     source/UI/Competition/Results/ResultsTableModel.h \
-    source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.h \
-    source/UI/Competition/StartList/CompetitionStartListDisplayWidget.h \
+    source/UI/Competition/StartList/IndividualStartListEditorModel.h \
     source/UI/Competition/StartList/StartListModel.h \
     source/UI/DatabaseEditor/ListModels/GlobalCompetitionRulesListModel.h \
     source/UI/DatabaseEditor/ListModels/GlobalHillsListModel.h \
@@ -145,8 +143,6 @@ HEADERS += \
 FORMS += \
     source/UI/Competition/CompetitionManagerWindow.ui \
     source/UI/Competition/JumperCompetitionResultsWidget.ui \
-    source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui \
-    source/UI/Competition/StartList/CompetitionStartListDisplayWidget.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
     source/UI/EditorWidgets/RoundInfoEditorWidget.ui \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.ui \

@@ -4,7 +4,6 @@
 #include "../EditorWidgets/HillEditorWidget.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/CompetitionRulesEditorWidget.h"
-#include "StartList/CompetitionStartListDisplayWidget.h"
 #include "../../global/GlobalDatabase.h"
 #include "../../global/GlobalSimulationSettings.h"
 #include "../../global/CountryFlagsManager.h"
@@ -18,6 +17,8 @@
 #include <QCompleter>
 #include <QFileDialog>
 #include <QFile>
+#include <QKeyCombination>
+#include <QKeySequence>
 #include <QMessageBox>
 
 CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
@@ -26,14 +27,12 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     type(type)
 {
     ui->setupUi(this);
-
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
-
     delete ui->page_2;
     ui->toolBox->removeItem(1);
-
     setWindowFlags(Qt::Window);
     setupHillToolBoxItem();
+    ui->listView_startList->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     windsGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget(this);
     windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);
@@ -43,31 +42,9 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     competitionRulesEditor->setCompetitionRules(new CompetitionRules(tr("Zasady")));
     competitionRulesEditor->setParent(this);
 
-    startListDisplayWidget = new CompetitionStartListDisplayWidget(this);
-    startListDisplayWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
     if(getType() == SingleCompetition){
-        startListParentWidget = new QWidget();
-        startListParentLayout = new QVBoxLayout();
-
-        QHBoxLayout * buttonLayout = new QHBoxLayout();
-        pushButton_loadJumpersList = new QPushButton("Wczytaj zawodników z innego pliku");
-        pushButton_loadJumpersList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        pushButton_loadJumpersList->setStyleSheet("QPushButton{color: black; background-color: rgb(245, 172, 166); border: 1px solid rgb(75, 75, 75); border-radius: 9px; margin: 2px; padding: 4px;} QPushButton:hover{background-color: rgb(255, 200, 195)}");
-        //pushButton_loadJumpersList->setFixedSize(QSize(270, 40));
-        pushButton_loadJumpersList->setFont(QFont("Quicksand [Pfed", 11, 1, false));
-
-        buttonLayout->addSpacerItem(new QSpacerItem(50, 50, QSizePolicy::Expanding, QSizePolicy::Expanding));
-        buttonLayout->addWidget(pushButton_loadJumpersList);
-        buttonLayout->addSpacerItem(new QSpacerItem(50, 50, QSizePolicy::Expanding, QSizePolicy::Expanding));
-
-        startListParentLayout->addLayout(buttonLayout);
-        startListParentLayout->addSpacerItem(new QSpacerItem(50, 50, QSizePolicy::Expanding, QSizePolicy::Expanding));
-        startListParentLayout->addWidget(startListDisplayWidget);
-
-        startListParentWidget->setLayout(startListParentLayout);
-        ui->verticalLayout_startList->addWidget(startListParentWidget);
-
-        connect(pushButton_loadJumpersList, &QPushButton::clicked, this, [this](){
+        //Wypełnić
+        /*connect(pushButton_loadJumpersList, &QPushButton::clicked, this, [this](){
             QUrl fileUrl = QFileDialog::getOpenFileUrl(this, tr("Wybierz plik z zawodnikami"), QUrl(), "JSON (*.json)");
 
             QFile file(fileUrl.path());
@@ -81,26 +58,15 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
             file.close();
             if(jumpers.isEmpty() == false){
 
-                competitionJumpers = jumpers;
-                startListDisplayWidget->setJumpers(&competitionJumpers);
-                startListDisplayWidget->setTeams(&competitionTeams);
-                startListDisplayWidget->fillCompetitiorsActivity();
-                startListDisplayWidget->setupTeamsJumpersVectors();
-                startListDisplayWidget->fillItemsLayout();
+                //Wypełnić kodem
             }
-        });
+        });*/
     }
-    else{
-        ui->verticalLayout_startList->addWidget(startListDisplayWidget);
-    }
-    ui->verticalLayout_startList->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
-
 
     ui->toolBox->raise();
     ui->label_title->raise();
     ui->toolBox->addItem(windsGeneratorSettingsEditor, "Ustawienia generatora wiatru");
     setupCompetitionRulesToolBoxItem();
-
 
     if(getType() == SeasonCompetition)
     {
@@ -120,12 +86,6 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
         setWindowTitle("Konfiguracja pojedynczego konkursu");
         competitionJumpers = GlobalDatabase::get()->getGlobalJumpers();
         competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers);
-        startListDisplayWidget->setCompetitiorsType(competitionRulesEditor->getCompetitionTypeFromInput());
-        startListDisplayWidget->setJumpers(&competitionJumpers);
-        startListDisplayWidget->setTeams(&competitionTeams);
-        startListDisplayWidget->fillCompetitiorsActivity();
-        startListDisplayWidget->setupTeamsJumpersVectors();
-        startListDisplayWidget->fillItemsLayout();
     }
 
     connect(hillEditor, &HillEditorWidget::KPointInputChanged, this, [this](){
@@ -135,9 +95,31 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
         windsGeneratorSettingsEditor->fillSettingsInputs();
     });
     connect(competitionRulesEditor, &CompetitionRulesEditorWidget::competitionTypeChanged, this, [this](){
-        startListDisplayWidget->setCompetitiorsType(competitionRulesEditor->getCompetitionTypeFromInput());
-        startListDisplayWidget->fillItemsLayout();
+        if(competitionRulesEditor->getCompetitionTypeFromInput() == CompetitionRules::Individual){
+            ui->listView_startList->setModel(individualStartListEditorModel);
+        }
+        //Wypełnić
     });
+
+    individualStartListEditorModel = new IndividualStartListEditorModel(this);
+    individualStartListEditorModel->setJumpers(&competitionJumpers);
+    emit competitionRulesEditor->competitionTypeChanged();
+
+    removeFromStartListShortcut = new QAction(this);
+    removeFromStartListShortcut->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_D));
+    this->addAction(removeFromStartListShortcut);
+
+    moveToTopShortcut = new QAction(this);
+    moveToTopShortcut->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Up));
+    this->addAction(moveToTopShortcut);
+
+    moveToDownShortcut = new QAction(this);
+    moveToDownShortcut->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Down));
+    this->addAction(moveToDownShortcut);
+
+    connect(removeFromStartListShortcut, &QAction::triggered, this, &CompetitionConfigWindow::removeFromStartList);
+    connect(moveToTopShortcut, &QAction::triggered, this, &CompetitionConfigWindow::moveToTop);
+    connect(moveToDownShortcut, &QAction::triggered, this, &CompetitionConfigWindow::moveToDown);
 }
 
 CompetitionConfigWindow::~CompetitionConfigWindow()
@@ -218,6 +200,127 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
     });
 }
 
+void CompetitionConfigWindow::removeFromStartList()
+{
+    QVector<QModelIndex> rows = ui->listView_startList->selectionModel()->selectedRows();
+    if(rows.size() > 0){
+        switch(competitionRulesEditor->getCompetitionTypeFromInput()){
+        case CompetitionRules::Individual:{
+            //Usunąć zawodników z vectora wewnatrz modelu
+            int firstRow = ui->listView_startList->selectionModel()->selectedRows().first().row();
+            while(ui->listView_startList->selectionModel()->selectedRows().size() > 0)
+            {
+                int rowToRemove = ui->listView_startList->selectionModel()->selectedRows().first().row();
+                individualStartListEditorModel->removeRows(rowToRemove, 1);
+                individualStartListEditorModel->getJumpers()->remove(rowToRemove, 1);
+            }
+            emit individualStartListEditorModel->dataChanged(individualStartListEditorModel->index(firstRow), individualStartListEditorModel->index(individualStartListEditorModel->rowCount() - 1));
+        }
+        }
+    }
+}
+
+void CompetitionConfigWindow::moveToTop()
+{
+    QVector<QModelIndex> rows = ui->listView_startList->selectionModel()->selectedRows();
+    if(rows.size() > 0){
+        int firstRow = rows.first().row();
+        if(firstRow == 0){
+            QItemSelectionModel * selectionModel = ui->listView_startList->selectionModel();
+            QVector<QModelIndex> rows = selectionModel->selectedRows();
+            rows.remove(0);
+            selectionModel->clearSelection();
+            for(auto & index : rows){
+                selectionModel->select(index, QItemSelectionModel::Select);
+            }
+            ui->listView_startList->setSelectionModel(selectionModel);
+            if(ui->listView_startList->selectionModel()->selectedRows().size() > 0)
+                firstRow = ui->listView_startList->selectionModel()->selectedRows().first().row();
+            else return;
+        }
+        rows = ui->listView_startList->selectionModel()->selectedRows();
+        switch(competitionRulesEditor->getCompetitionTypeFromInput()){
+        case CompetitionRules::Individual:{
+            //Usunąć zawodników z vectora wewnatrz model
+            ui->listView_startList->clearSelection();
+            for(auto & index : rows){
+                ui->listView_startList->setCurrentIndex(individualStartListEditorModel->index(index.row() - 1));
+            }
+            std::sort(rows.begin(), rows.end());
+            for(auto & index : rows){
+                individualStartListEditorModel->getJumpers()->swapItemsAt(index.row(), index.row() - 1);
+            }
+            emit individualStartListEditorModel->dataChanged(individualStartListEditorModel->index(firstRow), individualStartListEditorModel->index(individualStartListEditorModel->rowCount() - 1));
+        }
+        }
+    }
+}
+
+void CompetitionConfigWindow::moveToDown()
+{
+    int rowCount = 0;
+    switch(competitionRulesEditor->getCompetitionTypeFromInput()){
+    case CompetitionRules::Individual:
+        rowCount = individualStartListEditorModel->rowCount();
+    case CompetitionRules::Team:
+        break;
+    }
+
+    QVector<QModelIndex> rows = ui->listView_startList->selectionModel()->selectedRows();
+    if(rows.size() > 0){
+        int lastRow = rows.last().row();
+        if(lastRow == rowCount - 1){
+            QItemSelectionModel * selectionModel = ui->listView_startList->selectionModel();
+            QVector<QModelIndex> rows = selectionModel->selectedRows();
+            rows.removeLast();
+            selectionModel->clearSelection();
+            for(auto & index : rows){
+                selectionModel->select(index, QItemSelectionModel::Select);
+            }
+            ui->listView_startList->setSelectionModel(selectionModel);
+            if(ui->listView_startList->selectionModel()->selectedRows().size() > 0)
+                lastRow = ui->listView_startList->selectionModel()->selectedRows().last().row();
+            else
+                return;
+        }
+        rows = ui->listView_startList->selectionModel()->selectedRows();
+        switch(competitionRulesEditor->getCompetitionTypeFromInput()){
+        case CompetitionRules::Individual:{
+            //Usunąć zawodników z vectora wewnatrz model
+            ui->listView_startList->clearSelection();
+            for(auto & index : rows){
+                ui->listView_startList->setCurrentIndex(individualStartListEditorModel->index(index.row() + 1));
+            }
+            std::sort(rows.begin(), rows.end());
+            for(auto & index : rows){
+                individualStartListEditorModel->getJumpers()->swapItemsAt(index.row(), index.row() + 1);
+            }
+            emit individualStartListEditorModel->dataChanged(individualStartListEditorModel->index(lastRow), individualStartListEditorModel->index(0));
+        }
+        }
+    }
+}
+
+QAction *CompetitionConfigWindow::getMoveToDownShortcut() const
+{
+    return moveToDownShortcut;
+}
+
+void CompetitionConfigWindow::setMoveToDownShortcut(QAction *newMoveToDownShortcut)
+{
+    moveToDownShortcut = newMoveToDownShortcut;
+}
+
+QAction *CompetitionConfigWindow::getMoveToTopShortcut() const
+{
+    return moveToTopShortcut;
+}
+
+void CompetitionConfigWindow::setMoveToTopShortcut(QAction *newMoveToTopShortcut)
+{
+    moveToTopShortcut = newMoveToTopShortcut;
+}
+
 void CompetitionConfigWindow::setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers)
 {
     competitionJumpers = newCompetitionJumpers;
@@ -236,16 +339,6 @@ void CompetitionConfigWindow::setCompetitionTeams(const QVector<Team> &newCompet
 QVector<Jumper> CompetitionConfigWindow::getCompetitionJumpers() const
 {
     return competitionJumpers;
-}
-
-CompetitionStartListDisplayWidget *CompetitionConfigWindow::getStartListDisplayWidget() const
-{
-    return startListDisplayWidget;
-}
-
-void CompetitionConfigWindow::setStartListDisplayWidget(CompetitionStartListDisplayWidget *newStartListDisplayWidget)
-{
-    startListDisplayWidget = newStartListDisplayWidget;
 }
 
 HillEditorWidget *CompetitionConfigWindow::getHillEditor() const
@@ -310,7 +403,8 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             if(checkBox_singleCompetitionQualifications->isChecked() == true){
                 qualificationsResults = new IndividualCompetitionResults();
                 qualificationsManager = new IndividualCompetitionManager(CompetitionRules::Individual, ui->spinBox_startGate->value());
-                qualificationsManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
+                //qualificationsManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
+                qualificationsManager->setStartingJumpers(&this->competitionJumpers);
                 qualificationsManager->setCompetitionInfo(&qualsInfo);
                 qualificationsManager->getEditableCompetitionInfo()->setSerieType(CompetitionInfo::Qualifications);
                 qualificationsManager->setCompetitionRules(qualsInfo.getRulesPointer());
@@ -344,11 +438,16 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             info.setResults(new IndividualCompetitionResults());
             info.setSerieType(CompetitionInfo::Competition);
             if(qualificationsResults != nullptr){
-                competitionManager->setStartingJumpers(IndividualCompetitionManager::getFilteredJumpersVector(qualificationsManager->getActualRoundJumpersPointer(), qualificationsResults, qualificationsManager->getCompetitionRules(), 2, qualificationsManager->getQualifiedBy95HSRule())); //2 zamiast 1, ponieważ wcześniej ustawiliśmy dla kwalifikacji vector rounds o wielkości 2, gdzie właściwa ilość skoczków jest jako druga a nie pierwsza
-                competitionManager->setRoundStartingGate(qualificationsManager->getActualGate());
+                if(qualificationsResults->getEditableJumpersResults().count() > 0){
+                    competitionManager->setStartingJumpers(IndividualCompetitionManager::getFilteredJumpersVector(qualificationsManager->getActualRoundJumpersPointer(), qualificationsResults, qualificationsManager->getCompetitionRules(), 2, qualificationsManager->getQualifiedBy95HSRule())); //2 zamiast 1, ponieważ wcześniej ustawiliśmy dla kwalifikacji vector rounds o wielkości 2, gdzie właściwa ilość skoczków jest jako druga a nie pierwsza
+                    competitionManager->setRoundStartingGate(qualificationsManager->getActualGate());
+                }
             }
             else
-                competitionManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
+                competitionManager->setStartingJumpers(&this->competitionJumpers);
+            //competitionManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
+            //Wypełnić
+
             competitionManager->setCompetitionInfo(&info);
             competitionManager->setCompetitionRules(info.getRulesPointer());
             competitionManager->setResults(info.getResults());
