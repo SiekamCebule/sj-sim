@@ -5,6 +5,16 @@ Season::Season()
 
 }
 
+int Season::getSeasonNumber() const
+{
+    return seasonNumber;
+}
+
+void Season::setSeasonNumber(int newSeasonNumber)
+{
+    seasonNumber = newSeasonNumber;
+}
+
 QVector<AbstractClassification *> Season::getClassifications() const
 {
     return classifications;

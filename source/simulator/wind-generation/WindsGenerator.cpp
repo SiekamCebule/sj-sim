@@ -64,72 +64,56 @@ QVector<Wind> WindsGenerator::generateWinds()
 
         const double baseDirectionChanceMultiplier = 95 - ((settings->getWindDirectionInstability()) * 18.5);
 
-        if(settings->getWindDirectionInstability() == 0)
+        switch(settings->getBaseDirection())
         {
-            QVector<double *> probs;
-            probs.push_back(&backProb);
-            probs.push_back(&backSideProb);
-            probs.push_back(&sideProb);
-            probs.push_back(&frontSideProb);
-            probs.push_back(&frontProb);
+        case Wind::Null:
+            break;
+        case Wind::Back:
+            backSideProb *= 2.55;
+            sideProb *= 0.55;
+            frontSideProb *= 0.07;
+            frontProb *= 0.01;
 
-            int i=0;
-            for(auto & prob : probs)
-            {
-                if(i != settings->getBaseDirection())
-                    *prob = 0;
-                else *prob = 1;
-                i++;
-            }
-        }
-        else{
-            switch(settings->getBaseDirection())
-            {
-            case Wind::Null:
-                break;
-            case Wind::Back:
-                backSideProb *= 2.55;
-                sideProb *= 0.55;
-                frontSideProb *= 0.07;
-                frontProb *= 0.01;
+            backProb *= baseDirectionChanceMultiplier;
+            break;
+        case Wind::BackSide:
+            backProb *= 2.4;
+            sideProb *= 2.0;
+            frontSideProb *= 0.172;
+            frontProb *= 0.028;
 
-                backProb *= baseDirectionChanceMultiplier;
-                break;
-            case Wind::BackSide:
-                backProb *= 2.4;
-                sideProb *= 2.0;
-                frontSideProb *= 0.172;
-                frontProb *= 0.028;
+            backSideProb *= baseDirectionChanceMultiplier;
+            break;
+        case Wind::Side:
+            backProb *= 0.13;
+            backSideProb *= 2.5;
+            frontSideProb *= 2.5;
+            frontProb *= 0.13;
 
-                backSideProb *= baseDirectionChanceMultiplier;
-                break;
-            case Wind::Side:
-                backProb *= 0.13;
-                backSideProb *= 2.5;
-                frontSideProb *= 2.5;
-                frontProb *= 0.13;
+            sideProb *= baseDirectionChanceMultiplier;
+            break;
+        case Wind::FrontSide:
+            backProb *= 0.028;
+            backSideProb *= 0.172;
+            sideProb *= 2.0;
+            frontProb *= 2.4;
 
-                sideProb *= baseDirectionChanceMultiplier;
-                break;
-            case Wind::FrontSide:
-                backProb *= 0.028;
-                backSideProb *= 0.172;
-                sideProb *= 2.0;
-                frontProb *= 2.4;
+            frontSideProb *= baseDirectionChanceMultiplier;
+            break;
+        case Wind::Front:
+            backProb *= 0.01;
+            backSideProb *= 0.07;
+            sideProb *= 0.55;
+            frontSideProb *= 2.55;
 
-                frontSideProb *= baseDirectionChanceMultiplier;
-                break;
-            case Wind::Front:
-                backProb *= 0.01;
-                backSideProb *= 0.07;
-                sideProb *= 0.55;
-                frontSideProb *= 2.55;
-
-                frontProb *= baseDirectionChanceMultiplier;
-                break;
-            }
+            frontProb *= baseDirectionChanceMultiplier;
+            break;
         }
 
+    if(settings->getWindDirectionInstability() == 0){
+        wind.setDirection(settings->getBaseDirection());
+    }
+    else{
         QVector<double> probabilities;
         double drawSum = backProb + backSideProb + sideProb + frontSideProb + frontProb;
         probabilities.push_back(backProb);
@@ -149,42 +133,46 @@ QVector<Wind> WindsGenerator::generateWinds()
             }
         }
 
-        if(windStrength < 0)
-            windStrength = (-windStrength);
 
-        wind.setStrength(windStrength);
         wind.setDirection(windDirection);
-
-        winds.push_back(wind);
     }
 
-    /*for(const auto & wind : winds)
+    if(windStrength < 0)
+        windStrength = (-windStrength);
+    wind.setStrength(windStrength);
+
+    winds.push_back(wind);
+}
+
+/*for(const auto & wind : winds)
     {
         qDebug()<<"Wiatru "<<wind.getStringDirection(false)<<", o prędkości "<<wind.getValue()<<"m/s";
     }*/
-    return winds;
+return winds;
 }
 
 int WindsGenerator::calculateWindsCountByKPoint(double KPoint)
 {
-    if(KPoint < 25)
+    if(KPoint <= 15)
         return 1;
-    else if(KPoint < 50)
+    else if(KPoint <= 36)
         return 2;
-    else if(KPoint < 75)
+    else if(KPoint <= 60.5)
         return 3;
-    else if(KPoint < 100)
+    else if(KPoint <= 85)
         return 4;
-    else if(KPoint < 135)
+    else if(KPoint <= 110)
         return 5;
-    else if(KPoint < 160)
+    else if(KPoint <= 132)
         return 6;
-    else if(KPoint < 205)
+    else if(KPoint <= 170)
         return 7;
+    else if(KPoint <= 210)
+        return 8;
     else
     {
-        int i = 8;
-        i += (KPoint - 205) / 54;
+        int i = 9;
+        i += (KPoint - 210) / (55 * ((double(i) - 8) / 10));
         return i;
     }
 }
@@ -192,7 +180,7 @@ int WindsGenerator::calculateWindsCountByKPoint(double KPoint)
 QPair<double, double> WindsGenerator::getRangeOfWindSector(int sector, double KPoint)
 {
     int windsCount = WindsGenerator::calculateWindsCountByKPoint(KPoint);
-    double segmentDistance = (KPoint + (KPoint / windsCount)) / windsCount;
+    double segmentDistance = (KPoint + (KPoint / (windsCount ))) / (windsCount - 1);
     if(sector == WindsGenerator::calculateWindsCountByKPoint(KPoint))
         return QPair<double, double>(roundDoubleToHalf(((double)windsCount - 1) * segmentDistance), (-1));
 

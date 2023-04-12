@@ -23,6 +23,21 @@ GlobalDatabase::~GlobalDatabase()
     delete m_globalDatabase;
 }
 
+QVector<SimulationSave> GlobalDatabase::getGlobalSimulationSaves() const
+{
+    return globalSimulationSaves;
+}
+
+QVector<SimulationSave> &GlobalDatabase::getEditableGlobalSimulationSaves()
+{
+    return globalSimulationSaves;
+}
+
+void GlobalDatabase::setGlobalSimulationSaves(const QVector<SimulationSave> &newGlobalSimulationSaves)
+{
+    globalSimulationSaves = newGlobalSimulationSaves;
+}
+
 QVector<CompetitionRules> GlobalDatabase::getGlobalCompetitionsRules() const
 {
     return globalCompetitionsRules;

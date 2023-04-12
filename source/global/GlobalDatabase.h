@@ -4,6 +4,7 @@
 #include "../simulator/Jumper.h"
 #include "../simulator/Hill.h"
 #include "../competitions/CompetitionRules.h"
+#include "../seasons/SimulationSave.h"
 
 #include <QVector>
 #include <QStringList>
@@ -18,13 +19,16 @@ private:
     QVector<Jumper> globalJumpers;
     QVector<Hill> globalHills;
     QVector<CompetitionRules> globalCompetitionsRules;
+    QVector<SimulationSave> globalSimulationSaves;
 
     bool loadJumpers();
     bool loadHills();
     bool loadCompetitionsRules();
+    bool loadGlobalSimulationSaves();
     bool writeJumpers();
     bool writeHills();
     bool writeCompetitionsRules();
+    bool writeGlobalSimulationSaves();
     void setupJumpersFlags();
     void setupHillsFlags();
 
@@ -46,6 +50,9 @@ public:
     QVector<CompetitionRules> getGlobalCompetitionsRules() const;
     void setGlobalCompetitionsRules(const QVector<CompetitionRules> &newGlobalCompetitionsRules);
     QVector<CompetitionRules> & getEditableCompetitionRules();
+    QVector<SimulationSave> getGlobalSimulationSaves() const;
+    QVector<SimulationSave> & getEditableGlobalSimulationSaves();
+    void setGlobalSimulationSaves(const QVector<SimulationSave> &newGlobalSimulationSaves);
 };
 
 #endif // GLOBALDATABASE_H

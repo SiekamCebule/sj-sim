@@ -19,6 +19,7 @@
 #include "EditorWidgets/JumperEditorWidget.h"
 #include "EditorWidgets/HillEditorWidget.h"
 #include "EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
+#include "Seasons/SimulationSavesWindow.h"
 
 #include <QDebug>
 #include <QCloseEvent>
@@ -180,5 +181,15 @@ void MainWindow::setParentApplication(QApplication *newParentApplication)
 void MainWindow::on_pushButton_reportIssue_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/SiekamCebule/sj-sim/issues"));
+}
+
+
+void MainWindow::on_pushButton_season_clicked()
+{
+    SimulationSavesWindow savesWindow;
+    savesWindow.setModal(true);
+    if(savesWindow.exec() == QDialog::Accepted){
+
+    }
 }
 

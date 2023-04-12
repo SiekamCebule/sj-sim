@@ -28,6 +28,8 @@ SOURCES += \
     source/UI/Competition/CompetitionConfigWindow.cpp \
     source/UI/ResultsShowing/JumpWindInfoWidget.cpp \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.cpp \
+    source/UI/Seasons/ItemModels/SimulationSavesListModel.cpp \
+    source/UI/Seasons/SimulationSavesWindow.cpp \
     source/UI/SingleJumps/SingleJumpMiniResultWidget.cpp \
     source/UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     source/UI/AppSettings/AppSettingsWindow.cpp \
@@ -105,6 +107,8 @@ HEADERS += \
     source/UI/Competition/CompetitionConfigWindow.h \
     source/UI/ResultsShowing/JumpWindInfoWidget.h \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.h \
+    source/UI/Seasons/ItemModels/SimulationSavesListModel.h \
+    source/UI/Seasons/SimulationSavesWindow.h \
     source/UI/SingleJumps/SingleJumpMiniResultWidget.h \
     source/UI/SingleJumps/SingleJumpsConfigWindow.h \
     source/UI/AppSettings/AppSettingsWindow.h \
@@ -175,6 +179,7 @@ FORMS += \
     source/UI/Competition/CompetitionConfigWindow.ui \
     source/UI/ResultsShowing/JumpWindInfoWidget.ui \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.ui \
+    source/UI/Seasons/SimulationSavesWindow.ui \
     source/UI/SingleJumps/SingleJumpMiniResultWidget.ui \
     source/UI/SingleJumps/SingleJumpsConfigWindow.ui \
     source/UI/AppSettings/AppSettingsWindow.ui \

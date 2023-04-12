@@ -1171,6 +1171,11 @@ color: rgb(26, 95, 180);
          <property name="styleSheet">
           <string notr="true">QTableView{
 	background-color: white;
+}
+QTableView::item:selected
+{
+    background-color: rgb(240,240,253);
+	color: rgb(30, 30, 30);
 }</string>
          </property>
         </widget>

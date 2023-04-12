@@ -12,7 +12,7 @@ QVector<IndividualClassificationSingleResult *> IndividualClassification::getJum
 
 QVector<IndividualClassificationSingleResult *> &IndividualClassification::getEditableJumpersResults()
 {
-
+    return jumpersResults;
 }
 
 void IndividualClassification::setJumpersResults(const QVector<IndividualClassificationSingleResult *> &newJumpersResults)

@@ -299,24 +299,24 @@ double Hill::getLandingChanceChangeByHillProfile(double distance, short landingT
     if(landingType == Landing::TelemarkLanding)
     {
         if(distance < getKPoint() + getKAndRealHSDifference() * 0.5)
-            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 12);
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 11.5);
         else if(distance <= getRealHS())
-            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 14);
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 13.5);
         else if (distance < getRealHS() * 1.12)
-            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 260);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 270);
         else
-            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 300);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 330);
     }
     else if(landingType == Landing::BothLegsLanding)
     {
         if(distance < getKPoint() + getKAndRealHSDifference() * 0.5)
-            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 4);
-        else if(distance <= getRealHS())
             return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 5);
+        else if(distance <= getRealHS())
+            return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 6);
         else if (distance < getRealHS() * 1.12)
             return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 255);
         else
-            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 1);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 300);
     }
     else if(landingType == Landing::SupportLanding)
     {
@@ -325,9 +325,9 @@ double Hill::getLandingChanceChangeByHillProfile(double distance, short landingT
         else if(distance <= getRealHS())
             return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 0.02);
         else if (distance < getRealHS() * 1.12)
-            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 40);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 61);
         else
-            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 515);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 700);
     }
     else if(landingType == Landing::Fall)
     {
@@ -336,9 +336,9 @@ double Hill::getLandingChanceChangeByHillProfile(double distance, short landingT
         else if(distance <= getRealHS())
             return (distance - getKPoint()) / ((getKAndRealHSDifference() / 1.1) / 0.018);
         else if(distance < getRealHS() * 1.12)
-            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 40);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 70);
         else
-            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 515);
+            return (distance - getRealHS()) / ((getKAndRealHSDifference() / 1.1) / 700);
     }
     return 0;
 }

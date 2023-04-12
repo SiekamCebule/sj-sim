@@ -15,6 +15,7 @@ private:
     SeasonCalendar calendar;
     SeasonSettings settings;
     QVector<AbstractClassification *> classifications;
+    int seasonNumber;
 
 public:
     SeasonCalendar getCalendar() const;
@@ -23,6 +24,8 @@ public:
     void setSettings(const SeasonSettings &newSettings);
     QVector<AbstractClassification *> getClassifications() const;
     void setClassifications(const QVector<AbstractClassification *> &newClassifications);
+    int getSeasonNumber() const;
+    void setSeasonNumber(int newSeasonNumber);
 };
 
 #endif // SEASON_H
