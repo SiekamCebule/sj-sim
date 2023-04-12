@@ -8,7 +8,7 @@
                 }
             ],
             "country-code": "POL",
-            "flight-effect": 0.365,
+            "flight-effect": 0.37,
             "hs-point": 134,
             "k-point": 120,
             "name": "Wisła",
@@ -17,7 +17,7 @@
             "points-for-gate": 7.24,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.235
+            "takeoff-effect": 0.25
         },
         {
             "characteristics": [
@@ -39,7 +39,7 @@
                 }
             ],
             "country-code": "ITA",
-            "flight-effect": 0.35,
+            "flight-effect": 0.365,
             "hs-point": 135,
             "k-point": 120,
             "name": "Predazzo",
@@ -48,7 +48,7 @@
             "points-for-gate": 5.58,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.25
+            "takeoff-effect": 0.255
         },
         {
             "characteristics": [
@@ -93,7 +93,7 @@
                 }
             ],
             "country-code": "FIN",
-            "flight-effect": 0.315,
+            "flight-effect": 0.3525,
             "hs-point": 130,
             "k-point": 116,
             "name": "Lahti",
@@ -102,7 +102,7 @@
             "points-for-gate": 7.67,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.265
+            "takeoff-effect": 0.2475
         },
         {
             "characteristics": [
@@ -116,7 +116,7 @@
                 }
             ],
             "country-code": "DEU",
-            "flight-effect": 0.3485,
+            "flight-effect": 0.3975,
             "hs-point": 142,
             "k-point": 125,
             "name": "Garmisch-Partenkirchen",
@@ -125,7 +125,7 @@
             "points-for-gate": 7.67,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.2715
+            "takeoff-effect": 0.2525
         },
         {
             "characteristics": [
@@ -135,7 +135,7 @@
                 }
             ],
             "country-code": "DEU",
-            "flight-effect": 0.35,
+            "flight-effect": 0.395,
             "hs-point": 140,
             "k-point": 125,
             "name": "Klingenthal",
@@ -144,7 +144,7 @@
             "points-for-gate": 7.67,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.27
+            "takeoff-effect": 0.255
         },
         {
             "characteristics": [
@@ -154,7 +154,7 @@
                 }
             ],
             "country-code": "POL",
-            "flight-effect": 0.346,
+            "flight-effect": 0.394,
             "hs-point": 140,
             "k-point": 125,
             "name": "Zakopane",
@@ -163,7 +163,7 @@
             "points-for-gate": 7.56,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.274
+            "takeoff-effect": 0.256
         },
         {
             "characteristics": [
@@ -177,7 +177,7 @@
                 }
             ],
             "country-code": "ROU",
-            "flight-effect": 0.15,
+            "flight-effect": 0.225,
             "hs-point": 97,
             "k-point": 90,
             "name": "Rasnov",
@@ -186,7 +186,7 @@
             "points-for-gate": 7,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.28
+            "takeoff-effect": 0.245
         },
         {
             "characteristics": [
@@ -200,7 +200,7 @@
                 }
             ],
             "country-code": "SVN",
-            "flight-effect": 0.82,
+            "flight-effect": 0.83,
             "hs-point": 240,
             "k-point": 200,
             "name": "Planica",
@@ -247,7 +247,7 @@
                 }
             ],
             "country-code": "NOR",
-            "flight-effect": 0.88,
+            "flight-effect": 0.89,
             "hs-point": 225,
             "k-point": 200,
             "name": "Vikersund",

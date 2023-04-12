@@ -54,6 +54,17 @@ SOURCES += \
     source/global/GlobalTranslators.cpp \
     source/main.cpp \
     source/UI/mainwindow.cpp \
+    source/seasons/Season.cpp \
+    source/seasons/SeasonCalendar.cpp \
+    source/seasons/SeasonSettings.cpp \
+    source/seasons/SeasonsManager.cpp \
+    source/seasons/SimulationSave.cpp \
+    source/seasons/classifications/AbstractClassification.cpp \
+    source/seasons/classifications/IndividualClassification.cpp \
+    source/seasons/classifications/TeamClassification.cpp \
+    source/seasons/classifications/single-results/AbstractClassificationSingleResult.cpp \
+    source/seasons/classifications/single-results/IndividualClassificationSingleResult.cpp \
+    source/seasons/classifications/single-results/TeamClassificationSingleResult.cpp \
     source/simulator/Characteristic.cpp \
     source/simulator/Hill.cpp \
     source/simulator/JumpData.cpp \
@@ -119,6 +130,17 @@ HEADERS += \
     source/global/GlobalDatabase.h \
     source/global/GlobalSimulationSettings.h \
     source/global/GlobalTranslators.h \
+    source/seasons/Season.h \
+    source/seasons/SeasonCalendar.h \
+    source/seasons/SeasonSettings.h \
+    source/seasons/SeasonsManager.h \
+    source/seasons/SimulationSave.h \
+    source/seasons/classifications/AbstractClassification.h \
+    source/seasons/classifications/IndividualClassification.h \
+    source/seasons/classifications/TeamClassification.h \
+    source/seasons/classifications/single-results/AbstractClassificationSingleResult.h \
+    source/seasons/classifications/single-results/IndividualClassificationSingleResult.h \
+    source/seasons/classifications/single-results/TeamClassificationSingleResult.h \
     source/simulator/Characteristic.h \
     source/simulator/Hill.h \
     source/simulator/JumpData.h \
