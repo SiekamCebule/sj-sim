@@ -1,4 +1,4 @@
-#include "GlobalJumpersListModel.h"
+#include "JumpersListModel.h"
 
 #include "../../../simulator/Jumper.h"
 #include "../../../global/CountryFlagsManager.h"
@@ -6,19 +6,19 @@
 #include <QFont>
 #include <QColor>
 
-GlobalJumpersListModel::GlobalJumpersListModel(QVector<Jumper> *globalJumpersVectorPointer, QObject *parent)
+JumpersListModel::JumpersListModel(QVector<Jumper> *jumpersVectorPointer, QObject *parent)
     : QAbstractListModel(parent),
-      globalJumpersVectorPointer(globalJumpersVectorPointer)
+      jumpersVectorPointer(jumpersVectorPointer)
 {
 
 }
 
-QVariant GlobalJumpersListModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant JumpersListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     // FIXME: Implement me!
 }
 
-bool GlobalJumpersListModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+bool JumpersListModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
 {
     if (value != headerData(section, orientation, role)) {
         // FIXME: Implement me!
@@ -28,24 +28,24 @@ bool GlobalJumpersListModel::setHeaderData(int section, Qt::Orientation orientat
     return false;
 }
 
-int GlobalJumpersListModel::rowCount(const QModelIndex &parent) const
+int JumpersListModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
 
-    return globalJumpersVectorPointer->count();
+    return jumpersVectorPointer->count();
 }
 
-QVariant GlobalJumpersListModel::data(const QModelIndex &index, int role) const
+QVariant JumpersListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
 
     if(role == Qt::DisplayRole){
-        return globalJumpersVectorPointer->at(index.row()).getNameAndSurname();
+        return jumpersVectorPointer->at(index.row()).getNameAndSurname();
     }
     else if(role == Qt::DecorationRole){
-        return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(globalJumpersVectorPointer->at(index.row()).getCountryCode().toLower())));
+        return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumpersVectorPointer->at(index.row()).getCountryCode().toLower())));
     }
     else if(role == Qt::FontRole){
         return QFont("Quicksand Medium", 11, 600);
@@ -61,7 +61,7 @@ QVariant GlobalJumpersListModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool GlobalJumpersListModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool JumpersListModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if(role == Qt::EditRole){
         if (data(index, role) != value) {
@@ -73,7 +73,7 @@ bool GlobalJumpersListModel::setData(const QModelIndex &index, const QVariant &v
     return false;
 }
 
-Qt::ItemFlags GlobalJumpersListModel::flags(const QModelIndex &index) const
+Qt::ItemFlags JumpersListModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return Qt::NoItemFlags;
@@ -81,7 +81,7 @@ Qt::ItemFlags GlobalJumpersListModel::flags(const QModelIndex &index) const
     return QAbstractItemModel::flags(index); // FIXME: Implement me!
 }
 
-bool GlobalJumpersListModel::insertRows(int row, int count, const QModelIndex &parent)
+bool JumpersListModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row + count - 1);
     // FIXME: Implement me!
@@ -89,7 +89,7 @@ bool GlobalJumpersListModel::insertRows(int row, int count, const QModelIndex &p
     return true;
 }
 
-bool GlobalJumpersListModel::removeRows(int row, int count, const QModelIndex &parent)
+bool JumpersListModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
     // FIXME: Implement me!
@@ -97,12 +97,12 @@ bool GlobalJumpersListModel::removeRows(int row, int count, const QModelIndex &p
     return true;
 }
 
-QVector<Jumper> *GlobalJumpersListModel::getGlobalJumpersVectorPointer() const
+QVector<Jumper> *JumpersListModel::getJumpersVectorPointer()
 {
-    return globalJumpersVectorPointer;
+    return jumpersVectorPointer;
 }
 
-void GlobalJumpersListModel::setGlobalJumpersVectorPointer(QVector<Jumper> *newGlobalJumpersVectorPointer)
+void JumpersListModel::setJumpersVectorPointer(QVector<Jumper> *newJumpersVectorPointer)
 {
-    globalJumpersVectorPointer = newGlobalJumpersVectorPointer;
+    jumpersVectorPointer = newJumpersVectorPointer;
 }

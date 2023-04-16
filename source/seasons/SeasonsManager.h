@@ -25,6 +25,7 @@ public:
     void setInactiveJumpers(const QVector<Jumper *> &newInactiveJumpers);
     QVector<Hill> getHills() const;
     void setHills(const QVector<Hill> &newHills);
+    void updateJumpersActivityVectors();
 };
 
 #endif // SEASONSMANAGER_H

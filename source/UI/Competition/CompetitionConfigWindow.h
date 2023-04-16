@@ -9,7 +9,7 @@
 #include <QCheckBox>
 #include "../../simulator/Jumper.h"
 #include "../../simulator/Team.h"
-#include "StartList/IndividualStartListEditorModel.h"
+#include "../DatabaseEditor/DatabaseItemsListView.h"
 
 class HillEditorWidget;
 class WindsGeneratorSettingsEditorWidget;
@@ -51,10 +51,8 @@ private:
     QComboBox * existingCompetitionRulesComboBox;
     void setupCompetitionRulesToolBoxItem();
     //
-    IndividualStartListEditorModel * individualStartListEditorModel;
-    QAction * removeFromStartListShortcut;
-    QAction * moveToTopShortcut;
-    QAction * moveToDownShortcut;
+
+    DatabaseItemsListView * jumpersListView;
 
     QCheckBox * checkBox_singleCompetitionQualifications;
 
@@ -62,9 +60,9 @@ private:
     QVector<Jumper> competitionJumpers;
 
 private slots:
-    void removeFromStartList();
-    void moveToTop();
-    void moveToDown();
+    //void removeFromStartList();
+    //void moveToTop();
+    //void moveToDown();
 
 public:
     short getType() const;

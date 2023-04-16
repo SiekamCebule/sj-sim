@@ -14,9 +14,10 @@ class Jumper;
 class Hill;
 class DatabaseListItemWidget;
 class CompetitionRules;
-class GlobalJumpersListModel;
-class GlobalHillsListModel;
-class GlobalCompetitionRulesListModel;
+class JumpersListModel;
+class HillsListModel;
+class CompetitionRulesListModel;
+class DatabaseItemsListView;
 
 namespace Ui {
 class DatabaseEditorWindow;
@@ -40,6 +41,43 @@ public:
         CompetitionRulesElement
     };
 
+protected:
+    void closeEvent(QCloseEvent * event);
+
+private slots:
+    void onJumpersListViewDoubleClicked(const QModelIndex &index);
+    void onHillsListViewDoubleClicked(const QModelIndex &index);
+    void onCompetitionRulesListViewDoubleClicked(const QModelIndex &index);
+    //void on_listView_jumpers_doubleClicked(const QModelIndex &index);
+    //void on_listView_hills_doubleClicked(const QModelIndex &index);
+    //void on_listView_competitionRules_doubleClicked(const QModelIndex &index);
+    //void on_pushButton_add_clicked();
+    //void on_pushButton_remove_clicked();
+    //void on_pushButton_up_clicked();
+    //void on_pushButton_down_clicked();
+
+private:
+    QVector<Jumper> tempGlobalJumpers;
+    QVector<Hill> tempGlobalHills;
+    QVector<CompetitionRules> tempGlobalCompetitionRules;
+
+    JumpersListModel * jumpersListModel;
+    HillsListModel * hillsListModel;
+    CompetitionRulesListModel * competiitonRulesListModel;
+
+    DatabaseItemsListView * jumpersListView;
+    DatabaseItemsListView * hillsListView;
+    DatabaseItemsListView * competitionRulesListView;
+
+    Ui::DatabaseEditorWindow *ui;
+
+    JumperEditorWidget * jumperEditor;
+    HillEditorWidget * hillEditor;
+    CompetitionRulesEditorWidget * competitionRulesEditor;
+
+    short actualElementType;
+    int actualElementIndex;
+public:
     short getActualElementType() const;
     void setActualElementType(short newActualElementType);
     int getSelectedItemIndex() const;
@@ -50,48 +88,16 @@ public:
     void setTempGlobalHills(const QVector<Hill> &newTempGlobalHills);
     QVector<CompetitionRules> getTempGlobalCompetitionRules() const;
     void setTempGlobalCompetitionRules(const QVector<CompetitionRules> &newTempGlobalCompetitionRules);
-    GlobalJumpersListModel *getJumpersListModel() const;
-    void setJumpersListModel(GlobalJumpersListModel *newJumpersListModel);
+    JumpersListModel *getJumpersListModel() const;
+    void setJumpersListModel(JumpersListModel *newJumpersListModel);
     int getActualElementIndex() const;
     void setActualElementIndex(int newActualElementIndex);
-    GlobalHillsListModel *getHillsListModel() const;
-    void setHillsListModel(GlobalHillsListModel *newHillsListModel);
-    GlobalCompetitionRulesListModel *getCompetitionRulesEditor() const;
-    void setCompetitionRulesEditor(GlobalCompetitionRulesListModel *newCompetitionRulesEditor);
-
-    GlobalCompetitionRulesListModel *getCompetitionRulesListModel() const;
-    void setCompetitionRulesListModel(GlobalCompetitionRulesListModel *newCompetitionRulesListModel);
-
-protected:
-    void closeEvent(QCloseEvent * event);
-
-private slots:
-    void on_listView_jumpers_doubleClicked(const QModelIndex &index);
-    void on_listView_hills_doubleClicked(const QModelIndex &index);
-    void on_pushButton_add_clicked();
-    void on_pushButton_remove_clicked();
-    void on_pushButton_up_clicked();
-    void on_pushButton_down_clicked();
-
-    void on_listView_competitionRules_doubleClicked(const QModelIndex &index);
-
-private:
-    QVector<Jumper> tempGlobalJumpers;
-    QVector<Hill> tempGlobalHills;
-    QVector<CompetitionRules> tempGlobalCompetitionRules;
-
-    GlobalJumpersListModel * jumpersListModel;
-    GlobalHillsListModel * hillsListModel;
-    GlobalCompetitionRulesListModel * competitionRulesListModel;
-
-    Ui::DatabaseEditorWindow *ui;
-
-    JumperEditorWidget * jumperEditor;
-    HillEditorWidget * hillEditor;
-    CompetitionRulesEditorWidget * competitionRulesEditor;
-
-    short actualElementType;
-    int actualElementIndex;
+    HillsListModel *getHillsListModel() const;
+    void setHillsListModel(HillsListModel *newHillsListModel);
+    CompetitionRulesListModel *getCompetitionRulesEditor() const;
+    void setCompetitionRulesEditor(CompetitionRulesListModel *newCompetitionRulesEditor);
+    CompetitionRulesListModel *getCompetitionRulesListModel() const;
+    void setCompetitionRulesListModel(CompetitionRulesListModel *newCompetitionRulesListModel);
 };
 
 #endif // DATABASEEDITORWINDOW_H

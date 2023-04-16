@@ -130,16 +130,6 @@ color: rgb(26, 95, 180);
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QListView" name="listView_startList">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item>

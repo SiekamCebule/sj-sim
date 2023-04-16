@@ -74,14 +74,14 @@ void AppSettingsWindow::myConnect_on_comboBox_language_currentIndexChanged(int i
     }
 }
 
-void AppSettingsWindow::on_doubleSpinBox_simulationMultiplier_valueChanged(double arg1)
-{
-    GlobalSimulationSettings::get()->setSimulationRandomMultiplier(arg1);
-}
-
-
 void AppSettingsWindow::on_spinBox_dsqProbability_valueChanged(int arg1)
 {
     GlobalSimulationSettings::get()->setBaseDsqProbability(arg1);
+}
+
+
+void AppSettingsWindow::on_doubleSpinBox_simulationRandomMultiplier_valueChanged(double arg1)
+{
+    GlobalSimulationSettings::get()->setSimulationRandomMultiplier(arg1);
 }
 

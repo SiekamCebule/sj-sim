@@ -1,6 +1,6 @@
 {
     "settings": {
         "base-dsq-probability": 152,
-        "simulation-multiplier": 1
+        "simulation-random-multiplier": 1
     }
 }

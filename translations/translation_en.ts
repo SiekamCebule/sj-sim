@@ -20,16 +20,21 @@
     </message>
     <message>
         <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="177"/>
-        <source>Mnożnik symulacji</source>
-        <translation>Simulation multiplier</translation>
+        <source>Mnożnik losowości
+symulacji</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="259"/>
+        <source>Mnożnik symulacji</source>
+        <translation type="vanished">Simulation multiplier</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="260"/>
         <source>Bazowe prawdopodobieństwo dyskwalifikacji</source>
         <translation>Base Disqualification Probability</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="384"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="385"/>
         <source>Przywróć domyślne</source>
         <translation>Restore default</translation>
     </message>
@@ -80,18 +85,27 @@
         <source>Cechy charakterystyczne</source>
         <translation>Characteristics</translation>
     </message>
+    <message>
+        <location filename="../source/UI/EditorWidgets/CharacteristicsEditor.cpp" line="129"/>
+        <source>Nie</source>
+        <translation type="unfinished">No</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/EditorWidgets/CharacteristicsEditor.cpp" line="130"/>
+        <source>Tak</source>
+        <translation type="unfinished">Yes</translation>
+    </message>
 </context>
 <context>
     <name>CompetitionConfigWindow</name>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="43"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="42"/>
         <source>Zasady</source>
         <translation>Rules</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="71"/>
         <source>Wybierz plik z zawodnikami</source>
-        <translation>Select file with jumpers</translation>
+        <translation type="vanished">Select file with jumpers</translation>
     </message>
 </context>
 <context>
@@ -203,7 +217,7 @@ by coach</translation>
         <translation>Startlist</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1225"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1230"/>
         <source>Przejdź do 2 serii</source>
         <translation></translation>
     </message>
@@ -250,7 +264,7 @@ by coach</translation>
     </message>
     <message>
         <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="217"/>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="256"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="257"/>
         <source>Zakończenie kwalifikacji</source>
         <translation>Qualifications end</translation>
     </message>
@@ -260,62 +274,62 @@ by coach</translation>
         <translation>To go to the competition, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="227"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="228"/>
         <source>Przejdź do konkursu</source>
         <translation>Go to competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="251"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="252"/>
         <source>Zakończenie konkursu</source>
         <translation>Competition end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="252"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="253"/>
         <source>Aby zakończyć konkurs, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the competition, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="257"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="258"/>
         <source>Aby zakończyć kwalifikacje, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the qualifications, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="261"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="262"/>
         <source>Zakończenie serii próbnej</source>
         <translation>Trial round end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="262"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="263"/>
         <source>Aby zakończyć serię próbną, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the trial round, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="266"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="267"/>
         <source>Zakończenie treningu</source>
         <translation>Training end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="267"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="268"/>
         <source>Aby zakończyć trening, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the training, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="281"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="282"/>
         <source>Zakończ konkurs</source>
         <translation>Finish competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="284"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="285"/>
         <source>Zakończ kwalifikacje</source>
         <translation>Finish qualifications</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="287"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="288"/>
         <source>Zakończ serię próbną</source>
         <translation>Finish trial round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="290"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="291"/>
         <source>Zakończ trening</source>
         <translation>Finish training</translation>
     </message>
@@ -461,87 +475,49 @@ calculating</translation>
 <context>
     <name>CompetitionStartListDisplayItemWidget</name>
     <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="20"/>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="41"/>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="79"/>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="120"/>
-        <source>color: black;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="44"/>
-        <source>1.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="82"/>
-        <source>Marius Lindvik</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.ui" line="179"/>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp" line="84"/>
         <source>Nieaktywny</source>
-        <translation>Inactive</translation>
+        <translation type="vanished">Inactive</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayItemWidget.cpp" line="79"/>
         <source>Aktywny</source>
-        <translation>Active</translation>
+        <translation type="vanished">Active</translation>
     </message>
 </context>
 <context>
     <name>CompetitionStartListDisplayWidget</name>
     <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayWidget.ui" line="20"/>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayWidget.ui" line="56"/>
         <source>Lista startowa konkursu</source>
-        <translation>Competition start list</translation>
+        <translation type="vanished">Competition start list</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp" line="151"/>
         <source>Zmiana miejsca na liście startowej</source>
-        <translation>Change of place on the starting list</translation>
+        <translation type="vanished">Change of place on the starting list</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp" line="152"/>
         <source>Podaj nowy numer startowy uczestnika na liście startowej</source>
-        <translation>Enter the participant&apos;s new starting number in the starting list</translation>
+        <translation type="vanished">Enter the participant&apos;s new starting number in the starting list</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp" line="302"/>
         <source>Edycja zawodnika</source>
-        <translation>Jumper editing</translation>
+        <translation type="vanished">Jumper editing</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp" line="302"/>
         <source>Jeśli dokonasz zmiany kraju zawodnika, wszystkie drużyny zostaną wygenerowane od nowa!
 Czy jesteś tego pewien?</source>
-        <translation>If you change the jumper&apos;s country, all team will be regenerated!
+        <translation type="vanished">If you change the jumper&apos;s country, all team will be regenerated!
 Are you sure?</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp" line="302"/>
         <source>Nie</source>
-        <translation>No</translation>
+        <translation type="vanished">No</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp" line="302"/>
         <source>Tak</source>
-        <translation>Yes</translation>
+        <translation type="vanished">Yes</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/StartList/CompetitionStartListDisplayWidget.cpp" line="302"/>
         <source>Tak (nie pokazuj ponownie)</source>
-        <translation>Yes (Dont&apos;t show again)</translation>
+        <translation type="vanished">Yes (Dont&apos;t show again)</translation>
     </message>
 </context>
 <context>
@@ -553,31 +529,23 @@ Are you sure?</translation>
         <translation>Database editor</translation>
     </message>
     <message>
-        <location filename="../source/UI/DatabaseEditor/DatabaseEditorWindow.ui" line="156"/>
+        <location filename="../source/UI/DatabaseEditor/DatabaseEditorWindow.ui" line="165"/>
         <source>Zawodnicy</source>
         <translation>Jumpers</translation>
     </message>
     <message>
-        <location filename="../source/UI/DatabaseEditor/DatabaseEditorWindow.ui" line="230"/>
+        <location filename="../source/UI/DatabaseEditor/DatabaseEditorWindow.ui" line="202"/>
         <source>Skocznie</source>
         <translation>Hills</translation>
     </message>
     <message>
-        <location filename="../source/UI/DatabaseEditor/DatabaseEditorWindow.ui" line="289"/>
+        <location filename="../source/UI/DatabaseEditor/DatabaseEditorWindow.ui" line="239"/>
         <source>Zasady konkursów</source>
         <translation>Competitions rules</translation>
     </message>
     <message>
         <source>Skocznie </source>
         <translation type="vanished">Hills</translation>
-    </message>
-</context>
-<context>
-    <name>DatabaseListItemWidget</name>
-    <message>
-        <location filename="../source/UI/DatabaseEditor/DatabaseListItemWidget.ui" line="20"/>
-        <source>Form</source>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -598,59 +566,59 @@ Are you sure?</translation>
         <translation>Country code</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="221"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="224"/>
         <source>Punkt K</source>
         <translation>K point</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="295"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="298"/>
         <source>Punkt HS</source>
         <translation>HS point</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="369"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="372"/>
         <source>Punkty za punkt K</source>
         <translation>Points for K point</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="491"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="494"/>
         <source>Punkty za metr</source>
         <translation>Points for meter</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="616"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="619"/>
         <source>Punkty za belkę</source>
         <translation>Points for gate</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="693"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="696"/>
         <source>Punkty za wiatr przedni</source>
         <translation>Points for front wind</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="770"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="773"/>
         <source>Punkty za wiatr tylni</source>
         <translation>Points for back wind</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="895"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="898"/>
         <source>Wpływ wybicia</source>
         <translation>Takeoff effect</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="975"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="978"/>
         <source>Wpływ lotu</source>
         <translation>Flight effect</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="466"/>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="591"/>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="870"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="469"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="594"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="873"/>
         <source>Automatycznie</source>
         <translation>Automatic</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="1103"/>
+        <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="1139"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -931,27 +899,27 @@ Are you sure?</translation>
         <translation>Judges</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1861"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1876"/>
         <source>Prawdopodobieństwo dyskwalifikacji</source>
         <translation>Disqualification probability</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1880"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1895"/>
         <source>Jeden skok na</source>
         <translation>One jump in a</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1951"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1966"/>
         <source>Wiatr przy skoku:</source>
         <translation>Wind in jump</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1993"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2008"/>
         <source>Edytuj</source>
         <translation>Modify</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2078"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2093"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1058,37 +1026,36 @@ Are you sure?</translation>
         <translation>Country code</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="336"/>
         <source>Siła wybicia</source>
-        <translation>Takeoff power</translation>
+        <translation type="vanished">Takeoff power</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="416"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="336"/>
         <source>Technika wybicia</source>
         <translation>Takeoff technique</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="496"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="416"/>
         <source>Technika lotu</source>
         <translation>Flight technique</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="576"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="496"/>
         <source>Styl lotu</source>
         <translation>Flight style</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="676"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="596"/>
         <source>Styl lądowania</source>
         <translation>Landing style</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="765"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="685"/>
         <source>/ 15</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="787"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="707"/>
         <source>Forma</source>
         <translation>Form</translation>
     </message>
@@ -1098,37 +1065,37 @@ Are you sure?</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="640"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="560"/>
         <source>Styl V (0)</source>
         <translation>V Style</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="645"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="565"/>
         <source>Nowoczesne V (1)</source>
         <translation>Modern V</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="650"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="570"/>
         <source>Szerokie V (2)</source>
         <translation>Wide V</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="655"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="575"/>
         <source>Styl H (3)</source>
         <translation>H Style</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="867"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="787"/>
         <source>Równość skoków</source>
         <translation>Jumps Equality</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="953"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="873"/>
         <source>-5 / 5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="1058"/>
+        <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="981"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1191,6 +1158,54 @@ Are you sure?</translation>
     </message>
 </context>
 <context>
+    <name>NewSeasonConfiguratorDialog</name>
+    <message>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorDialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorDialog.ui" line="54"/>
+        <source>Konfiguracja nowego sezonu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorDialog.ui" line="95"/>
+        <source>Zawodnicy</source>
+        <translation type="unfinished">Jumpers</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorDialog.ui" line="108"/>
+        <source>Page 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorDialog.ui" line="128"/>
+        <source>Archiwizacja wyników</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorDialog.ui" line="147"/>
+        <source>Konkursy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorDialog.ui" line="157"/>
+        <source>Kwalifikacje</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorDialog.ui" line="167"/>
+        <source>Serie próbne</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorDialog.ui" line="177"/>
+        <source>Treningi</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OtherCompetitionSettingsWidget</name>
     <message>
         <source>Zaśnieżenie torów najazdowych</source>
@@ -1204,272 +1219,287 @@ Are you sure?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="83"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="84"/>
         <source>Wysoko wychodzi z progu</source>
         <translation>Takes off high</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="85"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="86"/>
+        <source>Zwiększona siła wybicia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/Characteristic.cpp" line="88"/>
         <source>Lata wysoko nad zeskokiem</source>
         <translation>Flies high</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="87"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="90"/>
         <source>Dobrze ląduje</source>
         <translation>Lands well</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="89"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="92"/>
         <source>Zwiększona tendencja do lądowania na dwie nogi</source>
         <translation>Increased both legs landing tendence</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="91"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="94"/>
         <source>Zwiększone prawdopodobieństwo dyskwalifikacji</source>
         <translation>Increased disqualification probability</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="95"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="98"/>
         <source>Bezpieczne skoki za punktem HS</source>
         <translation>Safe jumps after HS point</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="97"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="100"/>
         <source>Zwiększony wpływ techniki wybicia</source>
         <translation>Increased takeoff technique effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="99"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="102"/>
         <source>Zwiększony wpływ siły wybicia</source>
         <translation>Increased power effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="101"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="104"/>
         <source>Zwiększony wpływ formy przy wybiciu</source>
         <translation>Increased form effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="103"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="106"/>
         <source>Zwiększony wpływ losowości przy wybiciu</source>
         <translation>Increased randomness effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="105"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="108"/>
         <source>Zwiększony wpływ techniki lotu</source>
         <translation>Increased flight technique effect in flight</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="107"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="110"/>
         <source>Zwiększony wpływ formy w locie</source>
         <translation>Increased form effect in flight</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="109"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="112"/>
         <source>Zwiększony wpływ losowości w locie</source>
         <translation>Increased randomness effect in flight</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="113"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="116"/>
         <source>Zwiększona szansa na tylni wiatr</source>
         <translation>Increased back wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="115"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="118"/>
         <source>Zwiększona szansa na tylnio-boczny wiatr</source>
         <translation>Increased back-side wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="117"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="120"/>
         <source>Zwiększona szansa na boczny wiatr</source>
         <translation>Increased side wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="119"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="122"/>
         <source>Zwiększona szansa na przednio-boczny wiatr</source>
         <translation>Increased front-side wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="121"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="124"/>
         <source>Zwiększona szansa na przedni wiatr</source>
         <translation>Increased front wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="127"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="130"/>
         <source>Nisko wychodzi z progu</source>
         <translation>Takes off low</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="129"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="132"/>
+        <source>Zmniejszona siła wybicia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/Characteristic.cpp" line="134"/>
         <source>Lata nisko nad zeskokiem</source>
         <translation>Flies low</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="131"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="136"/>
         <source>Słabo ląduje</source>
         <translation>Lands poorly</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="133"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="138"/>
         <source>Zmniejszona tendencja do lądowania na dwie nogi</source>
         <translation>Decreased both legs landing tendence</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="135"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="140"/>
         <source>Zmniejszone prawdopodobieństwo dyskwalifikacji</source>
         <translation>Decreased disqualification probability</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="139"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="144"/>
         <source>Niebezpieczne skoki za punktem HS</source>
         <translation>Unsafe jumps after HS point</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="141"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="146"/>
         <source>Zmniejszony wpływ techniki wybicia</source>
         <translation>Reduced takeoff technique effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="143"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="148"/>
         <source>Zmniejszony wpływ siły wybicia</source>
         <translation>Reduced power effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="145"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="150"/>
         <source>Zmniejszony wpływ formy przy wybiciu</source>
         <translation>Reduced form effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="147"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="152"/>
         <source>Zmniejszony wpływ losowości przy wybiciu</source>
         <translation>Reduced randomness effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="149"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="154"/>
         <source>Zmniejszony wpływ techniki lotu</source>
         <translation>Reduced flight technique effect in flight</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="151"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="156"/>
         <source>Zmniejszony wpływ formy w locie</source>
         <translation>Reduced form effect in flight</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="153"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="158"/>
         <source>Zmniejszony wpływ losowości w locie</source>
         <translation>Reduced randomness effect in flight</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="157"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="162"/>
         <source>Zmniejszona szansa na tylni wiatr</source>
         <translation>Reduced back wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="159"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="164"/>
         <source>Zmniejszona szansa na tylnio-boczny wiatr</source>
         <translation>Reduced back-side wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="161"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="166"/>
         <source>Zmniejszona szansa na boczny wiatr</source>
         <translation>Reduced side wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="163"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="168"/>
         <source>Zmniejszona szansa na przednio-boczny wiatr</source>
         <translation>Reduced front-side wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="165"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="170"/>
         <source>Zmniejszona szansa na przedni wiatr</source>
         <translation>Reduced front wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="171"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="176"/>
         <source>Wysokość wyjścia z progu</source>
         <translation>Takeoff height</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="173"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="178"/>
+        <source>Siła wybicia</source>
+        <translation type="unfinished">Takeoff power</translation>
+    </message>
+    <message>
+        <location filename="../source/simulator/Characteristic.cpp" line="180"/>
         <source>Wysokość lotu</source>
         <translation>Flight height</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="175"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="182"/>
         <source>Umiejętność lądowania</source>
         <translation>Landing skill</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="177"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="184"/>
         <source>Tendencja do lądowania na dwie nogi</source>
         <translation>Both legs landing tendence</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="179"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="186"/>
         <source>Prawdopodobieństwo dyskwalifikacji</source>
         <translation>Disqualification probability</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="183"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="190"/>
         <source>Bezpieczeństwo skoków za punktem HS</source>
         <translation>Jumps after HS point-safety</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="185"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="192"/>
         <source>Wpływ techniki wybicia</source>
         <translation>Takeoff technique effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="187"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="194"/>
         <source>Wpływ siły wybicia</source>
         <translation>Takeoff power effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="189"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="196"/>
         <source>Wpływ formy przy wybiciu</source>
         <translation>Form effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="191"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="198"/>
         <source>Wpływ losowości przy wybiciu</source>
         <translation>Randomness effect in takeoff</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="193"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="200"/>
         <source>Wpływ techniki lotu</source>
         <translation>Flight technique effect in flight</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="195"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="202"/>
         <source>Wpływ formy w locie</source>
         <translation>Form effect in flight</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="197"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="204"/>
         <source>Wpływ losowości w locie</source>
         <translation>Randomness effect in flight</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="201"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="208"/>
         <source>Szansa na tylni wiatr</source>
         <translation>Back wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="203"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="210"/>
         <source>Szansa na tylnio-boczny wiatr</source>
         <translation>Back-side wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="205"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="212"/>
         <source>Szansa na boczny wiatr</source>
         <translation>Side wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="207"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="214"/>
         <source>Szansa na przednio-boczny wiatr</source>
         <translation>Front-side wind chance</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Characteristic.cpp" line="209"/>
+        <location filename="../source/simulator/Characteristic.cpp" line="216"/>
         <source>Szansa na przedni wiatr</source>
         <translation>Front wind chance</translation>
     </message>
@@ -1577,27 +1607,27 @@ Make sure the file exists or has the correct permissions</translation>
 <context>
     <name>ResultsTableModel</name>
     <message>
-        <location filename="../source/UI/Competition/Results/ResultsTableModel.cpp" line="164"/>
+        <location filename="../source/UI/Competition/Results/ResultsTableModel.cpp" line="180"/>
         <source>Poz.</source>
         <translation>Pos.</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/Results/ResultsTableModel.cpp" line="166"/>
+        <location filename="../source/UI/Competition/Results/ResultsTableModel.cpp" line="182"/>
         <source>Imię i nazwisko</source>
         <translation>Name and surname</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/Results/ResultsTableModel.cpp" line="168"/>
+        <location filename="../source/UI/Competition/Results/ResultsTableModel.cpp" line="184"/>
         <source>Suma punktów</source>
         <translation>Points sum</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/Results/ResultsTableModel.cpp" line="183"/>
+        <location filename="../source/UI/Competition/Results/ResultsTableModel.cpp" line="199"/>
         <source>Odległość (seria </source>
         <translation>Distance (round </translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/Results/ResultsTableModel.cpp" line="184"/>
+        <location filename="../source/UI/Competition/Results/ResultsTableModel.cpp" line="200"/>
         <source>Punkty (seria </source>
         <translation>Points (round </translation>
     </message>
@@ -1623,6 +1653,25 @@ sorting</translation>
     </message>
 </context>
 <context>
+    <name>SimulationSavesWindow</name>
+    <message>
+        <location filename="../source/UI/Seasons/SimulationSavesWindow.ui" line="14"/>
+        <location filename="../source/UI/Seasons/SimulationSavesWindow.ui" line="50"/>
+        <source>Zapisy symulacji</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/SimulationSavesWindow.ui" line="180"/>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/SimulationSavesWindow.ui" line="213"/>
+        <source>Usuń</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SingleCompetitionConfigWindow</name>
     <message>
         <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="14"/>
@@ -1635,34 +1684,44 @@ sorting</translation>
         <translation>Competition configuration</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="103"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="97"/>
+        <source>Wczytaj zawodników z innego pliku</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="126"/>
+        <source>Lista startowa</source>
+        <translation type="unfinished">Startlist</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="174"/>
         <source>Skocznia</source>
         <translation>Hill</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="123"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="194"/>
         <source>Istniejąca skocznia:</source>
         <translation>Existing hill:</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="180"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="251"/>
         <source>Ustawienia generatora wiatru</source>
         <translation>Winds generator settings</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="218"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="289"/>
         <source>Belka
 startowa</source>
         <translation>Starting
 gate</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="280"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="351"/>
         <source>Prawdopodobieństwo dyskwalifikacji</source>
         <translation>Disqualification probability</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="302"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="373"/>
         <source>Jeden skok na</source>
         <translation>One jump in a</translation>
     </message>
@@ -1673,7 +1732,7 @@ w drużynie</source>
 in team</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="388"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.ui" line="459"/>
         <source>Symuluj</source>
         <translation>Simulate</translation>
     </message>

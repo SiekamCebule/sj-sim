@@ -18,6 +18,11 @@ void SeasonsManager::setHills(const QVector<Hill> &newHills)
     hills = newHills;
 }
 
+void SeasonsManager::updateJumpersActivityVectors()
+{
+
+}
+
 QVector<Jumper *> SeasonsManager::getInactiveJumpers() const
 {
     return inactiveJumpers;

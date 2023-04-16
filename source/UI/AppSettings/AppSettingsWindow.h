@@ -31,9 +31,9 @@ private slots:
     void on_pushButton_defaultSettings_clicked();
     void myConnect_on_comboBox_language_currentIndexChanged(int index);
 
-    void on_doubleSpinBox_simulationMultiplier_valueChanged(double arg1);
-
     void on_spinBox_dsqProbability_valueChanged(int arg1);
+
+    void on_doubleSpinBox_simulationRandomMultiplier_valueChanged(double arg1);
 
 private:
     Ui::AppSettingsWindow *ui;

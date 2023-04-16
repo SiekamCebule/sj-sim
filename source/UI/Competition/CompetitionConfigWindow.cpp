@@ -32,7 +32,6 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     ui->toolBox->removeItem(1);
     setWindowFlags(Qt::Window);
     setupHillToolBoxItem();
-    ui->listView_startList->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     windsGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget(this);
     windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);
@@ -96,30 +95,21 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     });
     connect(competitionRulesEditor, &CompetitionRulesEditorWidget::competitionTypeChanged, this, [this](){
         if(competitionRulesEditor->getCompetitionTypeFromInput() == CompetitionRules::Individual){
-            ui->listView_startList->setModel(individualStartListEditorModel);
+            jumpersListView->setHidden(false);
         }
-        //Wypełnić
+        else if(competitionRulesEditor->getCompetitionTypeFromInput() == CompetitionRules::Team){
+            jumpersListView->setHidden(true);
+        }
     });
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, false, this);
+    jumpersListView->getListView()->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    jumpersListView->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+    jumpersListView->setJumpers(&competitionJumpers);
+    jumpersListView->setupListModel();
+    ui->verticalLayout_startList->addWidget(jumpersListView);
+    ui->verticalLayout_startList->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Maximum, QSizePolicy::Maximum));
 
-    individualStartListEditorModel = new IndividualStartListEditorModel(this);
-    individualStartListEditorModel->setJumpers(&competitionJumpers);
     emit competitionRulesEditor->competitionTypeChanged();
-
-    removeFromStartListShortcut = new QAction(this);
-    removeFromStartListShortcut->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_D));
-    this->addAction(removeFromStartListShortcut);
-
-    moveToTopShortcut = new QAction(this);
-    moveToTopShortcut->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Up));
-    this->addAction(moveToTopShortcut);
-
-    moveToDownShortcut = new QAction(this);
-    moveToDownShortcut->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Down));
-    this->addAction(moveToDownShortcut);
-
-    connect(removeFromStartListShortcut, &QAction::triggered, this, &CompetitionConfigWindow::removeFromStartList);
-    connect(moveToTopShortcut, &QAction::triggered, this, &CompetitionConfigWindow::moveToTop);
-    connect(moveToDownShortcut, &QAction::triggered, this, &CompetitionConfigWindow::moveToDown);
 }
 
 CompetitionConfigWindow::~CompetitionConfigWindow()
@@ -200,7 +190,7 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
     });
 }
 
-void CompetitionConfigWindow::removeFromStartList()
+/*void CompetitionConfigWindow::removeFromStartList()
 {
     QVector<QModelIndex> rows = ui->listView_startList->selectionModel()->selectedRows();
     if(rows.size() > 0){
@@ -262,6 +252,7 @@ void CompetitionConfigWindow::moveToDown()
     switch(competitionRulesEditor->getCompetitionTypeFromInput()){
     case CompetitionRules::Individual:
         rowCount = individualStartListEditorModel->rowCount();
+        break;
     case CompetitionRules::Team:
         break;
     }
@@ -299,27 +290,7 @@ void CompetitionConfigWindow::moveToDown()
         }
         }
     }
-}
-
-QAction *CompetitionConfigWindow::getMoveToDownShortcut() const
-{
-    return moveToDownShortcut;
-}
-
-void CompetitionConfigWindow::setMoveToDownShortcut(QAction *newMoveToDownShortcut)
-{
-    moveToDownShortcut = newMoveToDownShortcut;
-}
-
-QAction *CompetitionConfigWindow::getMoveToTopShortcut() const
-{
-    return moveToTopShortcut;
-}
-
-void CompetitionConfigWindow::setMoveToTopShortcut(QAction *newMoveToTopShortcut)
-{
-    moveToTopShortcut = newMoveToTopShortcut;
-}
+}*/
 
 void CompetitionConfigWindow::setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers)
 {

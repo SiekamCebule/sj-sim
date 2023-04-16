@@ -26,7 +26,7 @@ QVector<Season> SimulationSave::getSeasons() const
     return seasons;
 }
 
-QVector<Season> &SimulationSave::getSeasonsReferences()
+QVector<Season> &SimulationSave::getSeasonsReference()
 {
     return seasons;
 }

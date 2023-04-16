@@ -21,7 +21,7 @@ public:
     QString getName() const;
     void setName(const QString &newName);
     QVector<Season> getSeasons() const;
-    QVector<Season>& getSeasonsReferences();
+    QVector<Season>& getSeasonsReference();
     void setSeasons(const QVector<Season> &newSeasons);
     SeasonsManager *getSeasonsManager() const;
     void setSeasonsManager(SeasonsManager *newSeasonsManager);

@@ -10,8 +10,6 @@ public:
 private:
     short resultsSaveLevel; //  0-żadne,   1-treningi,   2-dodatkowo serie próbne   3-wszystko
 
-    bool seasonArchiving; //   archiwizacja sezonów po ich zakończeniu
-
 public:
     enum ResultsSaveLevel{
         Anything,
@@ -22,8 +20,6 @@ public:
 
     short getResultsSaveLevel() const;
     void setResultsSaveLevel(short newResultsSaveLevel);
-    bool getSeasonArchiving() const;
-    void setSeasonArchiving(bool newSeasonArchiving);
 };
 
 #endif // SEASONSETTINGS_H

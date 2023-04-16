@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>663</width>
-    <height>447</height>
+    <width>630</width>
+    <height>452</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -73,10 +73,12 @@ color: rgb(26, 95, 180);
        <property name="styleSheet">
         <string notr="true">QListView{
 	background-color: rgb(255, 255, 255);
+color: black;
 }
 QListView::item:selected
 {
     background-color: rgb(240,240,253);
+	color: black;
 }</string>
        </property>
       </widget>
@@ -103,6 +105,12 @@ QListView::item:selected
         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,20,11">
          <item>
           <widget class="QPushButton" name="pushButton_add">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>45</width>
@@ -127,8 +135,8 @@ QListView::item:selected
            </property>
            <property name="iconSize">
             <size>
-             <width>45</width>
-             <height>45</height>
+             <width>40</width>
+             <height>40</height>
             </size>
            </property>
            <property name="autoDefault">

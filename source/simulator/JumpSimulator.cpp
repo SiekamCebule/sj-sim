@@ -100,12 +100,12 @@ void JumpSimulator::simulateJump()
 
 void JumpSimulator::generateTakeoffRating()
 {
-    double ratingMultiplier = 1.059 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
+    double ratingMultiplier = 0.945 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
     simulationData->takeoffRating = jumperSkills->getTakeoffTechnique() * ratingMultiplier;
 
     simulationData->takeoffRating += ((jumperSkills->getLevelOfCharacteristic("takeoff-power") * 2.75) * (1 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect")));
 
-    ratingMultiplier = 1.141 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
+    ratingMultiplier = 1.255 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     simulationData->takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 1.1;
@@ -123,10 +123,10 @@ void JumpSimulator::generateTakeoffRating()
 
 void JumpSimulator::generateFlightRating()
 {
-    double ratingMultiplier = 0.915 + 0.12 * hill->getLevelOfCharacteristic("flight-technique-effect");
+    double ratingMultiplier = 0.85 + 0.12 * hill->getLevelOfCharacteristic("flight-technique-effect");
     simulationData->flightRating = jumperSkills->getFlightTechnique() * ratingMultiplier;
 
-    ratingMultiplier = 1.285 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
+    ratingMultiplier = 1.35 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
     simulationData->flightRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->flightRating -= std::abs(Hill::calculateBestFlightHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 2.09);
@@ -165,16 +165,12 @@ double JumpSimulator::getMultiplierForFlightStyleEffect()
 
 void JumpSimulator::generateDistance()
 {
-    //qDebug()<<jumpData.distance<<"s";
     int tempGate = gate;
     if(hasCoachGate) tempGate = coachGate;
 
     jumpData.distance += simulationData->takeoffRating * hill->getTakeoffEffect();
-    //qDebug()<<jumpData.distance<<"s";
     jumpData.distance += simulationData->flightRating * hill->getFlightEffect();
-    //qDebug()<<jumpData.distance<<"b";
     jumpData.distance += tempGate * (hill->getPointsForGate() / hill->getPointsForMeter());
-    //qDebug()<<jumpData.distance<<"t";
     jumpData.distance = roundDoubleToHalf(jumpData.getDistance());
 }
 
@@ -640,33 +636,33 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
     case JumpSimulator::TakeoffRating:
     {
         double base = 1.80;
-        double deviation = 0.64;
+        double deviation = 0.72;
         deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 50);
-        deviation -= (jumper->getJumperSkills().getJumpsEquality() / 32);
+        deviation -= (jumper->getJumperSkills().getJumpsEquality() / 25);
         double random = MyRandom::lognormalDistributionRandom(base, deviation);
 
-        if(jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") < 0) //niski lot
-            random += MyRandom::lognormalDistributionRandom(0.48, 0.31 - (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 20.75));
+        if(jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") < 0) //niske wybicie
+            random += MyRandom::lognormalDistributionRandom(0.48, 0.31 - (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 9.35));
 
         random *= multi;
-        if(random < 0) random = 0;
         random = (-random);
+        qDebug()<<"TAKEOFF RANDOM: "<<random;
         return random;
     }
     case JumpSimulator::FlightRating:
     {
         double base = 1.65;
-        double deviation = 0.685;
-        deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") / 40);
-        deviation -= (jumper->getJumperSkills().getJumpsEquality() / 25);
+        double deviation = 0.76;
+        deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") / 44);
+        deviation -= (jumper->getJumperSkills().getJumpsEquality() / 22);
         double random = MyRandom::lognormalDistributionRandom(base, deviation);
 
         if(jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") < 0) //niski lot
-            random += MyRandom::lognormalDistributionRandom(0.445, 0.33 - (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") / 20.75));
+            random += MyRandom::lognormalDistributionRandom(0.445, 0.34 - (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") / 8.95));
 
         random *= multi;
-        if(random < 0) random = 0;
         random = (-random);
+        qDebug()<<"FLIGHT RANDOM: "<<random;
         return random;
     }
     }
