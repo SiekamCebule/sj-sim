@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QAction>
 #include "../DatabaseEditor/ListModels/JumpersListModel.h"
+class DatabaseItemsListView;
 
 namespace Ui {
 class NewSeasonConfiguratorDialog;
@@ -24,7 +25,7 @@ private:
     Ui::NewSeasonConfiguratorDialog *ui;
 
     QVector<Jumper> jumpers;
-    JumpersListModel * jumpersListModel;
+    DatabaseItemsListView * jumpersListView;
 
 public:
     QVector<Jumper> getJumpers() const;

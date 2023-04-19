@@ -2,6 +2,7 @@
 #include "ui_NewSeasonConfiguratorWindow.h"
 
 #include "../../global/GlobalDatabase.h"
+#include "../DatabaseEditor/DatabaseItemsListView.h"
 
 NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     QDialog(parent),
@@ -9,8 +10,10 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     jumpers = GlobalDatabase::get()->getEditableGlobalJumpers();
-    jumpersListModel = new JumpersListModel(&this->jumpers, this);
-    ui->listView_jumpers->setModel(jumpersListModel);
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, false, this);
+    jumpersListView->setJumpers(&jumpers);
+    jumpersListView->setupListModel();
+    ui->verticalLayout_jumpersList->addWidget(jumpersListView);
 }
 
 NewSeasonConfiguratorWindow::~NewSeasonConfiguratorWindow()

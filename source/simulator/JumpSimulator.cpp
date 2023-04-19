@@ -100,12 +100,12 @@ void JumpSimulator::simulateJump()
 
 void JumpSimulator::generateTakeoffRating()
 {
-    double ratingMultiplier = 0.945 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
+    double ratingMultiplier = 0.95 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
     simulationData->takeoffRating = jumperSkills->getTakeoffTechnique() * ratingMultiplier;
 
     simulationData->takeoffRating += ((jumperSkills->getLevelOfCharacteristic("takeoff-power") * 2.75) * (1 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect")));
 
-    ratingMultiplier = 1.255 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
+    ratingMultiplier = 1.25 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     simulationData->takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 1.1;
@@ -123,10 +123,10 @@ void JumpSimulator::generateTakeoffRating()
 
 void JumpSimulator::generateFlightRating()
 {
-    double ratingMultiplier = 0.85 + 0.12 * hill->getLevelOfCharacteristic("flight-technique-effect");
+    double ratingMultiplier = 0.8 + 0.12 * hill->getLevelOfCharacteristic("flight-technique-effect");
     simulationData->flightRating = jumperSkills->getFlightTechnique() * ratingMultiplier;
 
-    ratingMultiplier = 1.35 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
+    ratingMultiplier = 1.4 + 0.12 * hill->getLevelOfCharacteristic("flight-form-effect");
     simulationData->flightRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->flightRating -= std::abs(Hill::calculateBestFlightHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 2.09);
@@ -182,8 +182,8 @@ void JumpSimulator::generateWindEffects()
     {
         if(wind.getDirection() == Wind::Back)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 9);
-            change *= MyRandom::normalDistributionRandom(1.035, 0.10);
+            change = wind.getStrength() * (getWindSegmentDistance() / 10);
+            change *= MyRandom::normalDistributionRandom(1.035, 0.085);
             change *= 1.01 - (jumperSkills->getFlightTechnique() / 2200);
             switch(jumperSkills->getFlightStyle())
             {
@@ -197,8 +197,8 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::BackSide)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 18);
-            change *= MyRandom::normalDistributionRandom(1.035, 0.13);
+            change = wind.getStrength() * (getWindSegmentDistance() / 18.8);
+            change *= MyRandom::normalDistributionRandom(1.035, 0.0975);
             change *= 1.02 - (jumperSkills->getFlightTechnique() / 1200);
             switch(jumperSkills->getFlightStyle())
             {
@@ -216,7 +216,7 @@ void JumpSimulator::generateWindEffects()
             if(change <= 2)
             {
                 change = wind.getStrength() * (getWindSegmentDistance() / 50);
-                change *= MyRandom::normalDistributionRandom(1.035, 0.15);
+                change *= MyRandom::normalDistributionRandom(1.035, 0.115);
                 change *= 1.03 - (jumperSkills->getFlightTechnique() / 109);
                 switch(jumperSkills->getFlightStyle())
                 {
@@ -231,7 +231,7 @@ void JumpSimulator::generateWindEffects()
             else if(change > 0)
             {
                 change = wind.getStrength() * (getWindSegmentDistance() / 90);
-                change *= MyRandom::normalDistributionRandom(1.035, 0.16);
+                change *= MyRandom::normalDistributionRandom(1.035, 0.12);
                 change *= 0.985 + (jumperSkills->getFlightTechnique() / 550);
                 switch(jumperSkills->getFlightStyle())
                 {
@@ -246,8 +246,8 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::FrontSide)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 32);
-            change *= MyRandom::normalDistributionRandom(1.058, 0.14);
+            change = wind.getStrength() * (getWindSegmentDistance() / 42);
+            change *= MyRandom::normalDistributionRandom(1.058, 0.105);
             change *= 0.94 + (jumperSkills->getFlightTechnique() / 400);
             switch(jumperSkills->getFlightStyle())
             {
@@ -261,8 +261,8 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::Front)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 16);
-            change *= MyRandom::normalDistributionRandom(1.06, 0.11);
+            change = wind.getStrength() * (getWindSegmentDistance() / 19);
+            change *= MyRandom::normalDistributionRandom(1.06, 0.08);
             change *= 0.88 + (jumperSkills->getFlightTechnique() / 180);
             switch(jumperSkills->getFlightStyle())
             {
@@ -636,7 +636,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
     case JumpSimulator::TakeoffRating:
     {
         double base = 1.80;
-        double deviation = 0.72;
+        double deviation = 0.6575;
         deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 50);
         deviation -= (jumper->getJumperSkills().getJumpsEquality() / 25);
         double random = MyRandom::lognormalDistributionRandom(base, deviation);
@@ -652,7 +652,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
     case JumpSimulator::FlightRating:
     {
         double base = 1.65;
-        double deviation = 0.76;
+        double deviation = 0.724;
         deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") / 44);
         deviation -= (jumper->getJumperSkills().getJumpsEquality() / 22);
         double random = MyRandom::lognormalDistributionRandom(base, deviation);

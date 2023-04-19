@@ -200,6 +200,7 @@ void DatabaseItemsListView::onUpActionTriggered()
         }
         default: break;
         }
+        emit up();
     }
 }
 
@@ -230,7 +231,9 @@ void DatabaseItemsListView::onDownActionTriggered()
             JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
             for(auto & index : rows)
                 ui->listView->setCurrentIndex(jumpersListModel->index(index.row() + 1));
-            std::sort(rows.begin(), rows.end());
+            std::sort(rows.begin(), rows.end(), [](const QModelIndex & index1, const QModelIndex & index2){
+                return index1.row() > index2.row();
+            });
             for(auto & index : rows)
                 jumpersListModel->getJumpersVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
             emit jumpersListModel->dataChanged(jumpersListModel->index(lastRow), jumpersListModel->index(0));
@@ -258,6 +261,7 @@ void DatabaseItemsListView::onDownActionTriggered()
         }
         default: break;
         }
+        emit down();
     }
 }
 

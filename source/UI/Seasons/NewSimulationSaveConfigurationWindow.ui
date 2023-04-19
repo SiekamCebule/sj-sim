@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Nowy zapis symulacji</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(250, 250, 250); color: rgb(10, 10, 10);</string>

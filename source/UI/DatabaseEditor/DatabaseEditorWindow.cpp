@@ -78,6 +78,25 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
     connect(this->jumpersListView, &DatabaseItemsListView::listViewDoubleClicked, this, &DatabaseEditorWindow::onJumpersListViewDoubleClicked);
     connect(this->hillsListView, &DatabaseItemsListView::listViewDoubleClicked, this, &DatabaseEditorWindow::onHillsListViewDoubleClicked);
     connect(this->competitionRulesListView, &DatabaseItemsListView::listViewDoubleClicked, this, &DatabaseEditorWindow::onCompetitionRulesListViewDoubleClicked);
+
+    connect(this->jumpersListView, &DatabaseItemsListView::up, this, [this](){
+        actualElementIndex--;
+    });
+    connect(this->hillsListView, &DatabaseItemsListView::up, this, [this](){
+        actualElementIndex--;
+    });
+    connect(this->competitionRulesListView, &DatabaseItemsListView::up, this, [this](){
+        actualElementIndex--;
+    });
+    connect(this->jumpersListView, &DatabaseItemsListView::down, this, [this](){
+        actualElementIndex++;
+    });
+    connect(this->hillsListView, &DatabaseItemsListView::down, this, [this](){
+        actualElementIndex++;
+    });
+    connect(this->competitionRulesListView, &DatabaseItemsListView::down, this, [this](){
+        actualElementIndex++;
+    });
 }
 
 DatabaseEditorWindow::~DatabaseEditorWindow()

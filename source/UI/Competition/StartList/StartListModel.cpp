@@ -94,7 +94,7 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
             if(jumpers->count() > index.row())
             {
                 //Trzeba dodać numer startowy do "stringa"
-                QString string = jumpers->at(index.row())->getNameAndSurname();
+                QString string = QString::number(index.row()) + ". " + jumpers->at(index.row())->getNameAndSurname();
                 if(role == Qt::DisplayRole){
                     if(hasDNS->contains(index.row()))
                         return string + "   (Nie wystartował)";

@@ -8,6 +8,7 @@ NewSimulationSaveConfigurationWindow::NewSimulationSaveConfigurationWindow(QWidg
 {
     ui->setupUi(this);
     ui->spinBox_seasonNumber->setValue(QDate::currentDate().year());
+    setWindowFlags(Qt::Window);
 }
 
 NewSimulationSaveConfigurationWindow::~NewSimulationSaveConfigurationWindow()
