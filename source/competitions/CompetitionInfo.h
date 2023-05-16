@@ -3,7 +3,7 @@
 
 class Hill;
 #include "CompetitionRules.h"
-#include "AbstractCompetitionResults.h"
+#include "CompetitionResults.h"
 #include "CompetitionInfo.h"
 
 #include <QDate>
@@ -24,7 +24,7 @@ public:
 private:
     Hill * hill;
     CompetitionRules rules;
-    AbstractCompetitionResults * results;
+    CompetitionResults * results;
     short serieType;
     int exceptionalRoundsCount;
 
@@ -34,8 +34,8 @@ public:
     CompetitionRules getRules() const;
     CompetitionRules * getRulesPointer() {return &rules;}
     void setRules(const CompetitionRules &newRules);
-    AbstractCompetitionResults *getResults() const;
-    void setResults(AbstractCompetitionResults *newResults);
+    CompetitionResults *getResults() const;
+    void setResults(CompetitionResults *newResults);
     short getSerieType() const;
     void setSerieType(short newSerieType);
     int getExceptionalRoundsCount() const;

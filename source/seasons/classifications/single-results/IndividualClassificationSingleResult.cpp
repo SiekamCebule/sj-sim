@@ -5,12 +5,12 @@ IndividualClassificationSingleResult::IndividualClassificationSingleResult()
 
 }
 
-QVector<IndividualCompetitionSingleResult *> IndividualClassificationSingleResult::getCompetitionsResults() const
+QVector<IndividualCompetitionResult *> IndividualClassificationSingleResult::getCompetitionsResults() const
 {
     return competitionsResults;
 }
 
-void IndividualClassificationSingleResult::setCompetitionsResults(const QVector<IndividualCompetitionSingleResult *> &newCompetitionsResults)
+void IndividualClassificationSingleResult::setCompetitionsResults(const QVector<IndividualCompetitionResult *> &newCompetitionsResults)
 {
     competitionsResults = newCompetitionsResults;
 }

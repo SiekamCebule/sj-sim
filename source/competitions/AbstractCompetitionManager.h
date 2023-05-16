@@ -6,9 +6,10 @@
 #include "../simulator/JumpManipulator.h"
 #include "CompetitionRules.h"
 #include "CompetitionInfo.h"
-#include "AbstractCompetitionResults.h"
+#include "CompetitionResults.h"
 #include "../simulator/wind-generation/WindGenerationSettings.h"
 #include "../simulator/wind-generation/WindsGenerator.h"
+#include "StartListCompetitorStatus.h"
 
 class AbstractCompetitionManager : public QObject
 {
@@ -26,13 +27,11 @@ public:
     virtual int getCompetitiorsCountForActualRound() {return 0;}
     virtual bool getSortStartListForActualRound() {return false;}
 
-    virtual void updateToBeatDistance() {}
-    virtual void updateToAdvanceDistance() {}
-    virtual void updateLeaderResult() {}
-    virtual void updateLastQualifiedResult() {}
-    virtual void updateActualJumperPointsToTheLeader() {}
-
-    void generateActualWinds();
+    void updateToBeatDistance();
+    void updateToAdvanceDistance();
+    void updateLeaderResult();
+    void updateLastQualifiedResult();
+    virtual void updateActualCompetitorPointsToTheLeader() {}
 
 signals:
     void roundEnd();
@@ -43,92 +42,73 @@ signals:
 protected:
     short type;
 
-    JumpSimulator simulator;
-    WindsGenerator windsGenerator;
-    QVector<WindGenerationSettings> actualWindGenerationSettings;
-
-    CompetitionRules * competitionRules;
-    AbstractCompetitionResults * results;
     CompetitionInfo * competitionInfo;
+    CompetitionRules * competitionRules;
+    CompetitionResults * results;
 
-    int roundStartingGate;
+    QVector<int> roundsStartingGates;
     int actualGate;
     int actualRound; //liczone od 1.
-    double toBeatDistance;
-    double toAdvanceDistance;
+    double toBeatLineDistance;
+    double toAdvanceLineDistance;
 
-    bool isCoachGate;
+    bool coachGateForNextJumper;
     int actualCoachGate;
 
-    QVector<Wind> actualWinds;
-
-    Jumper * actualJumper;
-    int actualJumperIndex;
-    double actualJumperPointsToTheLeader;
+    int actualStartListIndex;
+    double actualCompetitorPointsToTheLeader;
     JumpManipulator actualJumpManipulator;
 
-    QVector<bool> completedJumps;
-    QSet<int> hasDNS;
-    QSet<int> hasDSQ;
-
-    int DSQBaseProbability;
+    QVector<StartListCompetitorStatus> startListStatus;
 
     bool roundShouldBeEnded;
     bool competiitonShouldBeEnded;
     bool lastJump;
 
+    CompetitionSingleResult * leaderResult;
+    CompetitionSingleResult * lastQualifiedResult;
+
 public:
-    CompetitionInfo *getCompetitionInfo() const;
-    CompetitionInfo *getEditableCompetitionInfo();
-    void setCompetitionInfo(CompetitionInfo *newCompetitionInfo);
-    QVector<WindGenerationSettings> getActualWindGenerationSettings() const;
-    QVector<WindGenerationSettings> * getActualWindGenerationSettingsPointer();
-    void setActualWindGenerationSettings(const QVector<WindGenerationSettings> &newActualWindGenerationSettings);
     short getType() const;
     void setType(short newType);
+    CompetitionInfo *getCompetitionInfo() const;
+    void setCompetitionInfo(CompetitionInfo *newCompetitionInfo);
+    CompetitionRules *getCompetitionRules() const;
+    void setCompetitionRules(CompetitionRules *newCompetitionRules);
+    CompetitionResults *getResults() const;
+    void setResults(CompetitionResults *newResults);
+    QVector<int> getRoundsStartingGates() const;
+    void setRoundsStartingGates(const QVector<int> &newRoundsStartingGates);
     int getActualGate() const;
     void setActualGate(int newActualGate);
     int getActualRound() const;
     void setActualRound(int newActualRound);
-    AbstractCompetitionResults getQualificationsResults() const;
-    QVector<bool> * getCompletedJumpsPointer();
-    QSet<int> *getHasDSQPointer();
-    QSet<int> * getHasDNSPointer();
-    CompetitionRules *getCompetitionRules() const;
-    CompetitionRules *getEditableCompetitionRules();
-    void setCompetitionRules(CompetitionRules *newCompetitionRules);
-    AbstractCompetitionResults *getResults() const;
-    void setResults(AbstractCompetitionResults *newResults);
-    int getDSQBaseProbability() const;
-    void setDSQBaseProbability(int newDSQBaseProbability);
+    double getToBeatLineDistance() const;
+    void setToBeatLineDistance(double newToBeatLineDistance);
+    double getToAdvanceLineDistance() const;
+    void setToAdvanceLineDistance(double newToAdvanceLineDistance);
+    bool getCoachGateForNextJumper() const;
+    void setCoachGateForNextJumper(bool newCoachGateForNextJumper);
+    int getActualCoachGate() const;
+    void setActualCoachGate(int newActualCoachGate);
+    int getActualStartListIndex() const;
+    void setActualStartListIndex(int newActualStartListIndex);
+    double getActualCompetitorPointsToTheLeader() const;
+    void setActualCompetitorPointsToTheLeader(double newActualCompetitorPointsToTheLeader);
+    JumpManipulator getActualJumpManipulator() const;
+    void setActualJumpManipulator(const JumpManipulator &newActualJumpManipulator);
+    QVector<StartListCompetitorStatus> getStartListStatus() const;
+    void setStartListStatus(const QVector<StartListCompetitorStatus> &newStartListStatus);
     bool getRoundShouldBeEnded() const;
     void setRoundShouldBeEnded(bool newRoundShouldBeEnded);
     bool getCompetiitonShouldBeEnded() const;
     void setCompetiitonShouldBeEnded(bool newCompetiitonShouldBeEnded);
     bool getLastJump() const;
     void setLastJump(bool newLastJump);
-    double getToBeatDistance() const;
-    void setToBeatDistance(double newToBeatDistance);
-    int getRoundStartingGate() const;
-    void setRoundStartingGate(int newRoundStartingGate);
-    QVector<Wind> getNextJumperWinds() const;
-    void setNextJumperWinds(const QVector<Wind> &newNextJumperWinds);
-    QVector<Wind> getActualWinds() const;
-    void setActualWinds(const QVector<Wind> &newActualWinds);
-    Jumper *getActualJumper() const;
-    void setActualJumper(Jumper *newActualJumper);
-    int getActualJumperIndex() const;
-    void setActualJumperIndex(int newActualJumperIndex);
-    double getToAdvanceDistance() const;
-    void setToAdvanceDistance(double newToAdvanceDistance);
-    double getActualJumperPointsToTheLeader() const;
-    void setActualJumperPointsToTheLeader(double newActualJumperPointsToTheLeader);
-    JumpManipulator getActualJumpManipulator() const;
-    void setActualJumpManipulator(const JumpManipulator &newActualJumpManipulator);
-    int getActualCoachGate() const;
-    void setActualCoachGate(int newActualCoachGate);
-    bool getIsCoachGate() const;
-    void setIsCoachGate(bool newIsCoachGate);
+    CompetitionSingleResult *getLeaderResult() const;
+    void setLeaderResult(CompetitionSingleResult *newLeaderResult);
+    CompetitionSingleResult *getLastQualifiedResult() const;
+    void setLastQualifiedResult(CompetitionSingleResult *newLastQualifiedResult);
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

@@ -166,13 +166,13 @@ void DatabaseItemsListView::onUpActionTriggered()
             else return;
         }
         rows = ui->listView->selectionModel()->selectedRows();
+        std::sort(rows.begin(), rows.end());
         ui->listView->clearSelection();
         switch(type){
         case JumperItems:{
             JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
             for(auto & index : rows)
                 ui->listView->setCurrentIndex(jumpersListModel->index(index.row() - 1));
-            std::sort(rows.begin(), rows.end());
             for(auto & index : rows)
                 jumpersListModel->getJumpersVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
             emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
@@ -182,7 +182,6 @@ void DatabaseItemsListView::onUpActionTriggered()
             HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
             for(auto & index : rows)
                 ui->listView->setCurrentIndex(hillsListModel->index(index.row() - 1));
-            std::sort(rows.begin(), rows.end());
             for(auto & index : rows)
                 hillsListModel->getHillsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
             emit hillsListModel->dataChanged(hillsListModel->index(firstRow), hillsListModel->index(hillsListModel->rowCount() - 1));
@@ -192,7 +191,6 @@ void DatabaseItemsListView::onUpActionTriggered()
             CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
             for(auto & index : rows)
                 ui->listView->setCurrentIndex(competitionRulesListModel->index(index.row() - 1));
-            std::sort(rows.begin(), rows.end());
             for(auto & index : rows)
                 competitionRulesListModel->getCompetitonRulesVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
             emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(firstRow), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
@@ -225,15 +223,15 @@ void DatabaseItemsListView::onDownActionTriggered()
             else return;
         }
         rows = ui->listView->selectionModel()->selectedRows();
+        std::sort(rows.begin(), rows.end(), [](const QModelIndex & index1, const QModelIndex & index2){
+            return index1.row() > index2.row();
+        });
         ui->listView->clearSelection();
         switch(type){
         case JumperItems:{
             JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
             for(auto & index : rows)
                 ui->listView->setCurrentIndex(jumpersListModel->index(index.row() + 1));
-            std::sort(rows.begin(), rows.end(), [](const QModelIndex & index1, const QModelIndex & index2){
-                return index1.row() > index2.row();
-            });
             for(auto & index : rows)
                 jumpersListModel->getJumpersVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
             emit jumpersListModel->dataChanged(jumpersListModel->index(lastRow), jumpersListModel->index(0));
@@ -243,7 +241,6 @@ void DatabaseItemsListView::onDownActionTriggered()
             HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
             for(auto & index : rows)
                 ui->listView->setCurrentIndex(hillsListModel->index(index.row() + 1));
-            std::sort(rows.begin(), rows.end());
             for(auto & index : rows)
                 hillsListModel->getHillsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
             emit hillsListModel->dataChanged(hillsListModel->index(lastRow), hillsListModel->index(0));
@@ -253,7 +250,6 @@ void DatabaseItemsListView::onDownActionTriggered()
             CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
             for(auto & index : rows)
                 ui->listView->setCurrentIndex(competitionRulesListModel->index(index.row() + 1));
-            std::sort(rows.begin(), rows.end());
             for(auto & index : rows)
                 competitionRulesListModel->getCompetitonRulesVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
             emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(lastRow), competitionRulesListModel->index(0));

@@ -14,6 +14,7 @@ private:
 
 public:
     QVector<CompetitionInfo> getCompetitions() const;
+    QVector<CompetitionInfo> & getCompetitionsReference();
     void setCompetitions(const QVector<CompetitionInfo> &newCompetitions);
 };
 

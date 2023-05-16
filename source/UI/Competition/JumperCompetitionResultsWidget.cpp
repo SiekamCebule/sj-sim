@@ -33,7 +33,7 @@ void JumperCompetitionResultsWidget::fillWidget()
         ui->tabWidget_jumps->removeTab(0);
     }
     int i = 0;
-    for(auto & jump : jumperResult->getEditableJumps()){
+    for(auto & jump : jumperResult->getJumpsReference()){
         JumpDataDetailedInfoWindow * jumpInfo = new JumpDataDetailedInfoWindow(&jump, this);
         jumpInfo->fillJumpInformations();
         jumpInfo->removeSimulationInformationsLayouts();
@@ -46,12 +46,12 @@ void JumperCompetitionResultsWidget::fillWidget()
     ui->tabWidget_jumps->setCurrentIndex(ui->tabWidget_jumps->count() - 1);
 }
 
-IndividualCompetitionSingleResult *JumperCompetitionResultsWidget::getJumperResult() const
+CompetitionSingleResult *JumperCompetitionResultsWidget::getJumperResult() const
 {
     return jumperResult;
 }
 
-void JumperCompetitionResultsWidget::setJumperResult(IndividualCompetitionSingleResult *newJumperResult)
+void JumperCompetitionResultsWidget::setJumperResult(CompetitionSingleResult *newJumperResult)
 {
     jumperResult = newJumperResult;
 }

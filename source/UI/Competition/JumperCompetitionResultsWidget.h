@@ -2,7 +2,7 @@
 #define JUMPERCOMPETITIONRESULTSWIDGET_H
 
 #include <QWidget>
-#include "../../competitions/IndividualCompetitions/IndividualCompetitionResults.h"
+#include "../../competitions/CompetitionResults.h"
 
 namespace Ui {
 class JumperCompetitionResultsWidget;
@@ -20,11 +20,11 @@ public:
 
 private:
     Ui::JumperCompetitionResultsWidget *ui;
-    IndividualCompetitionSingleResult * jumperResult;
+    CompetitionSingleResult * jumperResult;
 
 public:
-    IndividualCompetitionSingleResult *getJumperResult() const;
-    void setJumperResult(IndividualCompetitionSingleResult *newJumperResult);
+    CompetitionSingleResult *getJumperResult() const;
+    void setJumperResult(CompetitionSingleResult *newJumperResult);
 };
 
 #endif // JUMPERCOMPETITIONRESULTSWIDGET_H

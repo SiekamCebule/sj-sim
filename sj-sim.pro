@@ -29,8 +29,10 @@ SOURCES += \
     source/UI/ResultsShowing/JumpWindInfoWidget.cpp \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.cpp \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.cpp \
+    source/UI/Seasons/Models/Calendar/CalendarTreeViewModel.cpp \
     source/UI/Seasons/NewSeasonConfiguratorWindow.cpp \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.cpp \
+    source/UI/Seasons/SeasonCalendarEditor.cpp \
     source/UI/Seasons/SimulationSaveInfoWidget.cpp \
     source/UI/Seasons/SimulationSavesWindow.cpp \
     source/UI/SingleJumps/SingleJumpMiniResultWidget.cpp \
@@ -43,15 +45,13 @@ SOURCES += \
     source/UI/EditorWidgets/JumperEditorWidget.cpp \
     source/UI/SingleJumps/SingleJumpsResultsWindow.cpp \
     source/competitions/AbstractCompetitionManager.cpp \
-    source/competitions/AbstractCompetitionResults.cpp \
-    source/competitions/AbstractCompetitionSingleResult.cpp \
     source/competitions/CompetitionInfo.cpp \
     source/competitions/CompetitionResults.cpp \
     source/competitions/CompetitionRules.cpp \
-    source/competitions/IndividualCompetitions/IndividualCompetitionManager.cpp \
-    source/competitions/IndividualCompetitions/IndividualCompetitionResults.cpp \
-    source/competitions/IndividualCompetitions/IndividualCompetitionSingleResult.cpp \
+    source/competitions/CompetitionSingleResult.cpp \
+    source/competitions/CompetitionManagers/IndividualCompetitionManager.cpp \
     source/competitions/RoundInfo.cpp \
+    source/competitions/StartListCompetitorStatus.cpp \
     source/global/CountryFlagsManager.cpp \
     source/global/GlobalAppSettings.cpp \
     source/global/GlobalDatabase.cpp \
@@ -111,8 +111,10 @@ HEADERS += \
     source/UI/ResultsShowing/JumpWindInfoWidget.h \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.h \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.h \
+    source/UI/Seasons/Models/Calendar/CalendarTreeViewModel.h \
     source/UI/Seasons/NewSeasonConfiguratorWindow.h \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.h \
+    source/UI/Seasons/SeasonCalendarEditor.h \
     source/UI/Seasons/SimulationSaveInfoWidget.h \
     source/UI/Seasons/SimulationSavesWindow.h \
     source/UI/SingleJumps/SingleJumpMiniResultWidget.h \
@@ -126,15 +128,13 @@ HEADERS += \
     source/UI/SingleJumps/SingleJumpsResultsWindow.h \
     source/UI/mainwindow.h \
     source/competitions/AbstractCompetitionManager.h \
-    source/competitions/AbstractCompetitionResults.h \
-    source/competitions/AbstractCompetitionSingleResult.h \
     source/competitions/CompetitionInfo.h \
     source/competitions/CompetitionResults.h \
     source/competitions/CompetitionRules.h \
-    source/competitions/IndividualCompetitions/IndividualCompetitionManager.h \
-    source/competitions/IndividualCompetitions/IndividualCompetitionResults.h \
-    source/competitions/IndividualCompetitions/IndividualCompetitionSingleResult.h \
+    source/competitions/CompetitionSingleResult.h \
+    source/competitions/CompetitionManagers/IndividualCompetitionManager.h \
     source/competitions/RoundInfo.h \
+    source/competitions/StartListCompetitorStatus.h \
     source/global/CountryFlagsManager.h \
     source/global/GlobalAppSettings.h \
     source/global/GlobalDatabase.h \
@@ -188,6 +188,7 @@ FORMS += \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.ui \
     source/UI/Seasons/NewSeasonConfiguratorWindow.ui \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.ui \
+    source/UI/Seasons/SeasonCalendarEditor.ui \
     source/UI/Seasons/SimulationSaveInfoWidget.ui \
     source/UI/Seasons/SimulationSavesWindow.ui \
     source/UI/SingleJumps/SingleJumpMiniResultWidget.ui \

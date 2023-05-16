@@ -2,7 +2,7 @@
 
 #include "../simulator/Hill.h"
 #include "CompetitionRules.h"
-#include "AbstractCompetitionResults.h"
+#include "CompetitionResults.h"
 
 #include <QDate>
 
@@ -38,12 +38,12 @@ void CompetitionInfo::setSerieType(short newSerieType)
     serieType = newSerieType;
 }
 
-AbstractCompetitionResults *CompetitionInfo::getResults() const
+CompetitionResults *CompetitionInfo::getResults() const
 {
     return results;
 }
 
-void CompetitionInfo::setResults(AbstractCompetitionResults *newResults)
+void CompetitionInfo::setResults(CompetitionResults *newResults)
 {
     results = newResults;
 }

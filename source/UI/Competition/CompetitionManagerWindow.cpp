@@ -1,6 +1,6 @@
 #include "CompetitionManagerWindow.h"
 #include "ui_CompetitionManagerWindow.h"
-#include "../../competitions/IndividualCompetitions/IndividualCompetitionManager.h"
+#include "../../competitions/CompetitionManagers/IndividualCompetitionManager.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../JumpManipulation/JumpManipulatorConfigWindow.h"

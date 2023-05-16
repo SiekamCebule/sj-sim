@@ -7,8 +7,8 @@
 #include "../../global/GlobalDatabase.h"
 #include "../../global/GlobalSimulationSettings.h"
 #include "../../global/CountryFlagsManager.h"
-#include "../../competitions/IndividualCompetitions/IndividualCompetitionManager.h"
-#include "../../competitions/IndividualCompetitions/IndividualCompetitionResults.h"
+#include "../../competitions/CompetitionManagers/IndividualCompetitionManager.h"
+#include "../../competitions/CompetitionResults.h"
 #include "CompetitionManagerWindow.h"
 
 #include <QSizePolicy>

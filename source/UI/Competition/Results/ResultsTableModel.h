@@ -2,7 +2,7 @@
 #define RESULTSTABLEMODEL_H
 
 #include <QAbstractTableModel>
-#include "../../../competitions/AbstractCompetitionResults.h"
+#include "../../../competitions/CompetitionResults.h"
 #include "../../../competitions/AbstractCompetitionManager.h"
 #include "../../../competitions/CompetitionInfo.h"
 
@@ -11,7 +11,7 @@ class ResultsTableModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    explicit ResultsTableModel(int type = 0, AbstractCompetitionResults * results = nullptr, AbstractCompetitionManager * manager = nullptr, QObject *parent = nullptr);
+    explicit ResultsTableModel(int type = 0, CompetitionResults * results = nullptr, AbstractCompetitionManager * manager = nullptr, QObject *parent = nullptr);
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -24,12 +24,12 @@ public:
 
 private:
     int type; // 0 - Individual,  1 - Team
-    AbstractCompetitionResults * results;
+    CompetitionResults * results;
     AbstractCompetitionManager * manager;
 
 public:
-    AbstractCompetitionResults *getResults() const;
-    void setResults(AbstractCompetitionResults *newResults);
+    CompetitionResults *getResults() const;
+    void setResults(CompetitionResults *newResults);
     int getType() const;
     void setType(int newType);
     AbstractCompetitionManager *getManager() const;
