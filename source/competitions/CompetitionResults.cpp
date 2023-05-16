@@ -32,7 +32,7 @@ CompetitionSingleResult *CompetitionResults::getResultOfIndividualJumper(Jumper 
     for(auto & result : results)
     {
         if(result.getJumper() == jumper)
-            return result;
+            return &result;
     }
     return nullptr;
 }
@@ -42,7 +42,7 @@ CompetitionSingleResult *CompetitionResults::getResultOfTeam(Team *team)
     for(auto & result : results)
     {
         if(result.getTeam() == team)
-            return result;
+            return &result;
     }
     return nullptr;
 }
@@ -62,7 +62,7 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
         }
     }
     if(result == nullptr){
-        results.push_back(CompetitionSingleResult(CompetitionSingleResult::TeamResult, jumper));
+        results.push_back(CompetitionSingleResult(jumper, CompetitionSingleResult::IndividualResult));
         result = &results[results.count() - 1];
     }
     int index = jumpNumber;
@@ -76,7 +76,6 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
             result->getJumpsReference().insert(index, jump);
             result->updatePointsSum();
         }
-        i++;
     }
 }
 
@@ -90,7 +89,7 @@ void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
         }
     }
     if(result == nullptr){
-        results.push_back(CompetitionSingleResult(CompetitionSingleResult::TeamResult, team));
+        results.push_back(CompetitionSingleResult(team, CompetitionSingleResult::TeamResult));
         result = &results[results.count() - 1];
     }
     int index = jumpNumber;
@@ -104,7 +103,6 @@ void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
             result->getJumpsReference().insert(index, jump);
             result->updatePointsSum();
         }
-        i++;
     }
 }
 
@@ -121,7 +119,6 @@ void CompetitionResults::addJump(CompetitionSingleResult *result, JumpData &jump
             result->getJumpsReference().insert(index, jump);
             result->updatePointsSum();
         }
-        i++;
     }
 }
 

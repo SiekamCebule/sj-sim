@@ -193,7 +193,7 @@ int ResultsTableModel::rowCount(const QModelIndex &parent) const
 
     switch(type){
     case CompetitionRules::Individual:
-        return dynamic_cast<IndividualCompetitionResults *>(results)->getEditableJumpersResults().count();
+        return results->getResultsReference().count();
     case CompetitionRules::Team:
         return 0;
     }
@@ -209,9 +209,9 @@ int ResultsTableModel::columnCount(const QModelIndex &parent) const
     switch(type){
     case CompetitionRules::Individual:{
         int max = 0;
-        for(auto & res : dynamic_cast<IndividualCompetitionResults *>(results)->getJumpersResults()){
-            if(res.getJumps().count() > max)
-                max = res.getJumps().count();
+        for(auto & res : results->getResultsReference()){
+            if(res.getJumpsReference().count() > max)
+                max = res.getJumpsReference().count();
         }
         if(max == 0)
             return 0;

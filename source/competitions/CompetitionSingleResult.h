@@ -13,16 +13,17 @@ public:
     CompetitionSingleResult(Jumper * jumper = nullptr, int type = 0);
     CompetitionSingleResult(Team * team, int type = 0);
 
+    enum Type{
+        IndividualResult,
+        TeamResult
+    };
+
 protected:
     CompetitionInfo * competitionInfo;
     QVector<JumpData> jumps;
     double pointsSum;
     int position;
 
-    enum Type{
-        IndividualResult,
-        TeamResult
-    };
     int type;
     Jumper * jumper;
     Team * team;

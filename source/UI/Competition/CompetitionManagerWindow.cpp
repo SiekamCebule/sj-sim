@@ -72,7 +72,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
         }
         else{
             manager->setActualGate(ui->spinBox_actualGate->value());
-            manager->updateToBeatDistance();
+            manager->updateToBeatLineDistance();
             updateToAdvanceDistanceLabel();
             updateToBeatDistanceLabel();
         }
@@ -103,14 +103,14 @@ CompetitionManagerWindow::~CompetitionManagerWindow()
 void CompetitionManagerWindow::updateToBeatDistanceLabel()
 {
     IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
-    m->updateToBeatDistance();
+    m->updateToBeatLineDistance();
     ui->label_toBeatDistance->setText(QString::number(m->getToBeatDistance()) + "m");
 }
 
 void CompetitionManagerWindow::updateToAdvanceDistanceLabel()
 {
     IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
-    m->updateToAdvanceDistance();
+    m->updateToAdvanceLineDistance();
     if(m->getToAdvanceDistance() == (-1))
         ui->label_toAdvancementDistance->setText("-");
     else ui->label_toAdvancementDistance->setText(QString::number(m->getToAdvanceDistance()) + "m");
@@ -119,7 +119,7 @@ void CompetitionManagerWindow::updateToAdvanceDistanceLabel()
 void CompetitionManagerWindow::updatePointsToTheLeaderLabel()
 {
     IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
-    m->updateActualJumperPointsToTheLeader();
+    m->updateActualCompetitorPointsToTheLeader();
     if(m->getActualJumperPointsToTheLeader() == (-1))
         ui->label_pointsBehindLeader->setText("");
     else ui->label_pointsBehindLeader->setText(" + " + QString::number(m->getActualJumperPointsToTheLeader()) + "pkt");

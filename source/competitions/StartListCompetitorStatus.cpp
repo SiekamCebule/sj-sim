@@ -5,6 +5,26 @@ StartListCompetitorStatus::StartListCompetitorStatus()
 
 }
 
+bool StartListCompetitorStatus::getQualifiedBy95HSRule() const
+{
+    return qualifiedBy95HSRule;
+}
+
+void StartListCompetitorStatus::setQualifiedBy95HSRule(bool newQualifiedBy95HSRule)
+{
+    qualifiedBy95HSRule = newQualifiedBy95HSRule;
+}
+
+Jumper *StartListCompetitorStatus::getJumper() const
+{
+    return jumper;
+}
+
+void StartListCompetitorStatus::setJumper(Jumper *newJumper)
+{
+    jumper = newJumper;
+}
+
 int StartListCompetitorStatus::getAdvanceStatus() const
 {
     return advanceStatus;

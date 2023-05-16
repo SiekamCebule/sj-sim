@@ -17,26 +17,13 @@ class AbstractCompetitionManager : public QObject
 public:
     AbstractCompetitionManager(short type = CompetitionRules::Individual, int startingGate = 0);
 
-    virtual void simulateNext() {}
-    virtual bool checkRoundEnd() {return false;}
-    virtual bool checkCompetitionEnd() {return false;}
-
-    virtual void setupNextRound() {}
-    virtual void fillCompletedJumpsToStartOfRound() {}
-
-    virtual int getCompetitiorsCountForActualRound() {return 0;}
-    virtual bool getSortStartListForActualRound() {return false;}
-
-    void updateToBeatDistance();
-    void updateToAdvanceDistance();
+    virtual void updateToBeatLineDistance() {}
+    virtual void updateToAdvanceLineDistance() {}
     void updateLeaderResult();
-    void updateLastQualifiedResult();
+    virtual void updateLastQualifiedResult() {}
     virtual void updateActualCompetitorPointsToTheLeader() {}
 
 signals:
-    void roundEnd();
-    void competitionEnd();
-
     void actualJumperIndexChanged();
 
 protected:
@@ -49,21 +36,20 @@ protected:
     QVector<int> roundsStartingGates;
     int actualGate;
     int actualRound; //liczone od 1.
+    QVector<Wind> * actualWinds;
+
     double toBeatLineDistance;
     double toAdvanceLineDistance;
+    double actualCompetitorPointsToTheLeader;
 
     bool coachGateForNextJumper;
     int actualCoachGate;
 
+    Jumper * actualJumper;
     int actualStartListIndex;
-    double actualCompetitorPointsToTheLeader;
-    JumpManipulator actualJumpManipulator;
+    JumpManipulator * actualJumpManipulator;
 
-    QVector<StartListCompetitorStatus> startListStatus;
-
-    bool roundShouldBeEnded;
-    bool competiitonShouldBeEnded;
-    bool lastJump;
+    QVector<StartListCompetitorStatus> startListStatuses;
 
     CompetitionSingleResult * leaderResult;
     CompetitionSingleResult * lastQualifiedResult;
@@ -95,20 +81,18 @@ public:
     void setActualStartListIndex(int newActualStartListIndex);
     double getActualCompetitorPointsToTheLeader() const;
     void setActualCompetitorPointsToTheLeader(double newActualCompetitorPointsToTheLeader);
-    JumpManipulator getActualJumpManipulator() const;
-    void setActualJumpManipulator(const JumpManipulator &newActualJumpManipulator);
     QVector<StartListCompetitorStatus> getStartListStatus() const;
     void setStartListStatus(const QVector<StartListCompetitorStatus> &newStartListStatus);
-    bool getRoundShouldBeEnded() const;
-    void setRoundShouldBeEnded(bool newRoundShouldBeEnded);
-    bool getCompetiitonShouldBeEnded() const;
-    void setCompetiitonShouldBeEnded(bool newCompetiitonShouldBeEnded);
-    bool getLastJump() const;
-    void setLastJump(bool newLastJump);
     CompetitionSingleResult *getLeaderResult() const;
     void setLeaderResult(CompetitionSingleResult *newLeaderResult);
     CompetitionSingleResult *getLastQualifiedResult() const;
     void setLastQualifiedResult(CompetitionSingleResult *newLastQualifiedResult);
+    Jumper *getActualJumper() const;
+    void setActualJumper(Jumper *newActualJumper);
+    QVector<Wind> *getActualWinds() const;
+    void setActualWinds(QVector<Wind> *newActualWinds);
+    JumpManipulator *getActualJumpManipulator() const;
+    void setActualJumpManipulator(JumpManipulator *newActualJumpManipulator);
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

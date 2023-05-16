@@ -5,6 +5,7 @@
 #include <QVector>
 #include "../../../simulator/Jumper.h"
 #include "../../../simulator/Team.h"
+#include "../../../competitions/StartListCompetitorStatus.h"
 #include "../../../competitions/AbstractCompetitionManager.h"
 
 class StartListModel : public QAbstractListModel
@@ -18,14 +19,14 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+    QVector<StartListCompetitorStatus> *getStartListStatus() const;
+    void setStartListStatus(QVector<StartListCompetitorStatus> *newStartListStatus);
+
 private:
     QVector<Jumper *> * jumpers;
     QVector<Team *> * teams;
 
-    QVector<bool> * completedJumps;
-    // Pisze, które indexy nie startowały/są zdyskwalifikowane
-    QSet<int> * hasDNS;
-    QSet<int> * hasDSQ;
+    QVector<StartListCompetitorStatus> * startListStatus;
 
     short type;
     enum Type{
@@ -33,19 +34,12 @@ private:
         TeamCompetition
     };
 
-public:
-    QVector<bool> getCompletedJumps() const;
-    void setCompletedJumps(const QVector<bool> &newCompletedJumps);
     QVector<Jumper *> *getJumpers() const;
     void setJumpers(QVector<Jumper *> *newJumpers);
     QVector<Team *> *getTeams() const;
     void setTeams(QVector<Team *> *newTeams);
     short getType() const;
     void setType(short newType);
-    QSet<int> *getHasDNS() const;
-    void setHasDNS(QSet<int> *newHasDNS);
-    QSet<int> *getHasDSQ() const;
-    void setHasDSQ(QSet<int> *newHasDSQ);
 };
 
 #endif // STARTLISTMODEL_H
