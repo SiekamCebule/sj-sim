@@ -15,10 +15,49 @@ AbstractCompetitionManager::AbstractCompetitionManager(short type, int startingG
     roundsStartingGates = {startingGate};
 }
 
+bool AbstractCompetitionManager::checkRoundEnd()
+{
+    return (isAllJumpsAreFinished() == true);
+}
+
+bool AbstractCompetitionManager::checkCompetitionEnd()
+{
+    return (isAllJumpsAreFinished() && actualRound == competitionRules->getEditableRounds().count());
+}
+
 void AbstractCompetitionManager::updateLeaderResult()
 {
     results->sortInDescendingOrder();
     leaderResult = results->getResultByIndex(0);
+}
+
+int AbstractCompetitionManager::getFirstUnfinishedStartListStatus()
+{
+    int index = 0;
+    for(auto & status : startListStatuses){
+        if(status.getJumpStatus() == StartListCompetitorStatus::Unfinished)
+            return index;
+        else
+            index++;
+    }
+}
+
+bool AbstractCompetitionManager::isAllJumpsAreFinished()
+{
+    for(auto & status : startListStatuses){
+        if(status.getJumpStatus() == StartListCompetitorStatus::Unfinished)
+            return false;
+    }
+    return true;
+}
+
+bool AbstractCompetitionManager::getHasUnfisihedJumps()
+{
+    for(auto & status : startListStatuses){
+        if(status.getJumpStatus() == StartListCompetitorStatus::Unfinished)
+            return true;
+    }
+    return false;
 }
 
 JumpManipulator *AbstractCompetitionManager::getActualJumpManipulator() const

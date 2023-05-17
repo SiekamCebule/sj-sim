@@ -12,6 +12,16 @@ IndividualCompetitionManager::IndividualCompetitionManager(short type, int start
     lastQualifiedResult = nullptr;
 }
 
+void IndividualCompetitionManager::checkRoundEnd()
+{
+
+}
+
+void IndividualCompetitionManager::checkCompetitionEnd()
+{
+
+}
+
 void IndividualCompetitionManager::updateToBeatLineDistance()
 {
     results->sortInDescendingOrder();

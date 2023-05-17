@@ -17,7 +17,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
 
     if(manager != nullptr){
         type = manager->getType();
-        ui->spinBox_actualGate->setValue(manager->getRoundStartingGate());
+        ui->spinBox_actualGate->setValue(manager->getActualGate());
     }
 
     ui->pushButton_competitionDetails->hide();
@@ -29,9 +29,9 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     {
     case CompetitionRules::Individual:
         IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(this->manager);
-        startListModel->setJumpers(indManager->getActualRoundJumpersPointer());
+        startListModel->setJumpers(&indManager->getActualRoundJumpersReference());
 
-        ui->label_nameAndSurname->setText(indManager->getActualRoundJumpers().at(0)->getNameAndSurname());
+        ui->label_nameAndSurname->setText(indManager->getActualRoundJumpersReference().at(0)->getNameAndSurname());
         ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(indManager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
 
         connect(indManager, &IndividualCompetitionManager::actualJumperIndexChanged, this, [this, indManager](){

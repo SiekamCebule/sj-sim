@@ -29,6 +29,7 @@ private:
     QVector<StartListCompetitorStatus> * startListStatus;
 
     short type;
+public:
     enum Type{
         IndividualCompetiton,
         TeamCompetition
