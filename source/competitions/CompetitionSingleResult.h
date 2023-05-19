@@ -12,7 +12,8 @@ class CompetitionSingleResult : public ClassWithID
 public:
     CompetitionSingleResult(Jumper * jumper = nullptr, int type = 0);
     CompetitionSingleResult(Team * team, int type = 0);
-
+    inline bool operator<(const CompetitionSingleResult & second) {return pointsSum < second.getPointsSum();}
+    //inline bool operator>(const CompetitionSingleResult & second) {return pointsSum > second.getPointsSum();}
     enum Type{
         IndividualResult,
         TeamResult
@@ -47,5 +48,7 @@ public:
     int getPosition() const;
     void setPosition(int newPosition);
 };
+
+inline bool operator>(const CompetitionSingleResult & l, const CompetitionSingleResult & r) {return l.getPointsSum() < r.getPointsSum();}
 
 #endif // COMPETITIONSINGLERESULT_H

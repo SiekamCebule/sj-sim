@@ -28,6 +28,7 @@ public:
 
     int getFirstUnfinishedStartListStatus();
     bool isAllJumpsAreFinished();
+    virtual void setupNextRound() {}
 
 signals:
     void actualJumperIndexChanged();
@@ -60,7 +61,9 @@ protected:
     QVector<StartListCompetitorStatus> startListStatuses;
 
     CompetitionSingleResult * leaderResult;
-    CompetitionSingleResult * lastQualifiedResult;
+    CompetitionSingleResult * lastQualifiedResult;\
+
+    int baseDSQProbability;
 
 public:
     short getType() const;
@@ -80,6 +83,7 @@ public:
     double getToBeatLineDistance() const;
     void setToBeatLineDistance(double newToBeatLineDistance);
     double getToAdvanceLineDistance() const;
+    QVector<int> & getRoundsStartingGatesReference();
     void setToAdvanceLineDistance(double newToAdvanceLineDistance);
     bool getCoachGateForNextJumper() const;
     void setCoachGateForNextJumper(bool newCoachGateForNextJumper);
@@ -89,7 +93,7 @@ public:
     void setActualStartListIndex(int newActualStartListIndex);
     double getActualCompetitorPointsToTheLeader() const;
     void setActualCompetitorPointsToTheLeader(double newActualCompetitorPointsToTheLeader);
-    QVector<StartListCompetitorStatus> getStartListStatus() const;
+    QVector<StartListCompetitorStatus> getStartListStatuses() const;
     void setStartListStatus(const QVector<StartListCompetitorStatus> &newStartListStatus);
     CompetitionSingleResult *getLeaderResult() const;
     void setLeaderResult(CompetitionSingleResult *newLeaderResult);
@@ -101,6 +105,8 @@ public:
     void setActualWinds(QVector<Wind> *newActualWinds);
     JumpManipulator *getActualJumpManipulator() const;
     void setActualJumpManipulator(JumpManipulator *newActualJumpManipulator);
+    int getBaseDSQProbability() const;
+    void setBaseDSQProbability(int newBaseDSQProbability);
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

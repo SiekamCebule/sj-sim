@@ -12,16 +12,6 @@ IndividualCompetitionManager::IndividualCompetitionManager(short type, int start
     lastQualifiedResult = nullptr;
 }
 
-void IndividualCompetitionManager::checkRoundEnd()
-{
-
-}
-
-void IndividualCompetitionManager::checkCompetitionEnd()
-{
-
-}
-
 void IndividualCompetitionManager::updateToBeatLineDistance()
 {
     results->sortInDescendingOrder();
@@ -98,78 +88,6 @@ void IndividualCompetitionManager::updateToAdvanceLineDistance()
     }
 }
 
-void IndividualCompetitionManager::simulateNext()
-{
-    simulator.setGate(actualGate);
-    simulator.setHasCoachGate(isCoachGate);
-    simulator.setCoachGate(getActualCoachGate());
-    simulator.setCompetitionStartGate(getRoundStartingGate());
-    simulator.setJumper(actualJumper);
-    simulator.setHill(competitionInfo->getHill());
-    simulator.setManipulator(&this->actualJumpManipulator);
-    simulator.setCompetitionRules(competitionRules);
-    simulator.setDSQBaseProbability(this->getDSQBaseProbability());
-
-    simulator.setWinds(actualWinds);
-    simulator.simulateJump();
-    JumpData jump = simulator.getJumpData();
-    if(jump.getIsDSQOccured() == true)
-        hasDSQ.insert(actualStartListIndex);
-
-    qDebug()<<"SKOK: "<<jump;
-
-    completedJumps[actualStartListIndex] = true;
-
-    //Uzupełnianie vectora z wynikami
-    bool jumperExists = false;
-    IndividualCompetitionResults * indResults = dynamic_cast<IndividualCompetitionResults *>(this->results);
-    IndividualCompetitionResult * res = indResults->getResultsOfJumper(actualJumper);
-    if(res != nullptr){
-        res->getEditableJumps().push_back(jump);
-        res->updatePointsSum();
-        jumperExists = true;
-    }
-    if(jumperExists == false){
-        indResults->getEditableJumpersResults().push_back(IndividualCompetitionResult(jump));
-        indResults->getResultsOfJumper(jump.getJumper())->updatePointsSum();
-    }
-    if(jump.getLanding().getType() == Landing::Fall && jump.getDistance() >= (competitionInfo->getHill()->getHSPoint() * 0.95) && competitionRules->getHas95HSRule() == true){
-        qDebug()<<"UPADŁ POZA 95 HS%!";
-        qualifiedBy95HSRule.insert(indResults->getEditableJumpersResults().last().getID());
-    }
-
-    indResults->sortJumpersResultsInDescendingOrder();
-
-    actualJumpManipulator = JumpManipulator();
-    if(checkRoundEnd() == true){
-        if(actualRound == competitionInfo->getExceptionalRoundsCount()){
-            qDebug()<<"ANKA";
-            roundShouldBeEnded = false;
-            competiitonShouldBeEnded = true;
-            lastJump = true;
-            //emit competitionEnd();
-        }
-        else{
-            lastJump = true;
-            if(checkCompetitionEnd() == false){
-                roundShouldBeEnded = true;
-                competiitonShouldBeEnded = false;
-                //emit roundEnd();
-            }
-            else{
-                competiitonShouldBeEnded = true;
-                roundShouldBeEnded = false;
-            }
-        }
-    }
-    else{
-        roundShouldBeEnded = false;
-        competiitonShouldBeEnded = false;
-        lastJump = false;
-        setActualJumperIndex(getActualJumperIndex() + 1);// zmień skoczka na następnego
-    }
-}
-
 void IndividualCompetitionManager::updateActualCompetitorPointsToTheLeader()
 {
     if(actualRound == 1)
@@ -232,6 +150,17 @@ void IndividualCompetitionManager::updateLastQualifiedResult()
     }
 }
 
+void IndividualCompetitionManager::setActualJumperToNextUnfinished()
+{
+    setActualStartListIndex(getFirstUnfinishedStartListStatus());
+    setActualJumper(startListStatuses[getFirstUnfinishedStartListStatus()].getJumper());
+}
+
+void IndividualCompetitionManager::setupNextRound()
+{
+
+}
+
 QVector<QVector<Jumper *> > IndividualCompetitionManager::getRoundsJumpers() const
 {
     return roundsJumpers;
@@ -255,8 +184,13 @@ void IndividualCompetitionManager::setFirstRoundJumpers(QVector<Jumper *> jumper
         roundsJumpers[0] = jumpers;
 }
 
-QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersVector(QVector<Jumper*> * previousRoundJumpers, CompetitionResults *results, CompetitionRules *rules, int round, const QSet<uint> & fallQualified)
+QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersVector(QVector<Jumper*> * previousRoundJumpers, CompetitionResults *results, CompetitionRules *rules, int round, const QVector<StartListCompetitorStatus> & startListStatuses)
 {
+    QSet<ulong> fallQualified;
+    for(auto & status : startListStatuses){
+        if(status.getQualifiedBy95HSRule())
+            fallQualified.insert(status.getJumper()->getID());
+    }
     QVector<Jumper *> jumpers;
 
     if(rules->getRounds().count() < round)
@@ -267,15 +201,15 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersVector(QVector
     int maxJumpersCount = rules->getRounds().at(round - 1).getCount();
     bool sortStartList = rules->getRounds().at(round - 1).getSortStartList();
 
-    results->sortJumpersResultsInDescendingOrder();
+    results->sortInDescendingOrder();
 
     if(previousRoundJumpers->count() > maxJumpersCount){
         // Sprawdzanie, czy nie wystąpiło ex aequo (Dokładnie to czy jest zawodnik z pozycją równą round.count()
         int i=0;
         bool isLastQualifyPositionOccured = false;
         int exaequoAt = 0;
-        while(!(results->getJumpersResults().at(i).getPosition() > maxJumpersCount)){
-            if(results->getJumpersResults().at(i).getPosition() == maxJumpersCount){
+        while(!(results->getResultsReference().at(i).getPosition() > maxJumpersCount)){
+            if(results->getResultsReference().at(i).getPosition() == maxJumpersCount){
                 isLastQualifyPositionOccured = true;
                 break;
             }
@@ -285,8 +219,8 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersVector(QVector
         if(isLastQualifyPositionOccured == false) // Jeśli wystąpiło ex aequo
         {
             //Trzeba znaleźć następną pozycję od maxCount na której jest zawodnik (to nasze egzekwo)
-            for(int i=maxJumpersCount - 1; i<results->getJumpersResults().count(); i++){
-                if(i+1 == results->getJumpersResults().at(i).getPosition()) //znalezlismy egzekwo
+            for(int i=maxJumpersCount - 1; i<results->getResultsReference().count(); i++){
+                if(i+1 == results->getResultsReference().at(i).getPosition()) //znalezlismy egzekwo
                 {
                     exaequoAt = i+1;
                 }
@@ -295,13 +229,13 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersVector(QVector
 
         for(auto & jum : *previousRoundJumpers){
             qDebug()<<fallQualified.size()<<"grg";
-            qDebug()<<jum->geIndividualCompetitionResultstNameAndSurname()<<": "<<fallQualified.contains(results->getResultsOfJumper(jum)->getID());
-            if(results->getResultsOfJumper(jum)->getPosition() <= maxJumpersCount || fallQualified.contains(results->getResultsOfJumper(jum)->getID())){
+            qDebug()<<jum->getNameAndSurname()<<": "<<fallQualified.contains(results->getResultOfIndividualJumper(jum)->getID());
+            if(results->getResultOfIndividualJumper(jum)->getPosition() <= maxJumpersCount || fallQualified.contains(results->getResultOfIndividualJumper(jum)->getID())){
                 jumpers.push_back(jum);
             }
-            if(results->getResultsOfJumper(jum)->getPosition() > maxJumpersCount){
+            if(results->getResultOfIndividualJumper(jum)->getPosition() > maxJumpersCount){
                 if(isLastQualifyPositionOccured == false){
-                    if(results->getResultsOfJumper(jum)->getPosition() == exaequoAt)
+                    if(results->getResultOfIndividualJumper(jum)->getPosition() == exaequoAt)
                         jumpers.push_back(jum);
                 }
             }
@@ -309,7 +243,7 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersVector(QVector
     }
     else jumpers = *previousRoundJumpers;
     if(sortStartList == true){
-        QVector<IndividualCompetitionResult> jumpersResultsAscending = results->getJumpersResults();
+        QVector<CompetitionSingleResult> jumpersResultsAscending = results->getResultsReference();
         std::sort(jumpersResultsAscending.begin(), jumpersResultsAscending.end());
         QVector<Jumper *> newJumpers;
         for(auto & res : jumpersResultsAscending){

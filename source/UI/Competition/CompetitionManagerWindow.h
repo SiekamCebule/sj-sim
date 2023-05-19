@@ -32,7 +32,7 @@ public:
     void showMessageBoxForNextRound();
     void setupGoToNextButtonForNextRound();
 
-    void showMessageBoxFoQualificationsEnd();
+    void showMessageBoxForQualificationsEnd();
     void setupGoToNextButtonForQualificationsEnd();
 
     void showMessageBoxForCompetitionEnd();
@@ -51,7 +51,13 @@ private:
     short type;
     StartListModel * startListModel;
     ResultsTableModel * resultsTableModel;
+
     JumpManipulator currentInputJumpManipulator;
+    QVector<Wind> actualWinds;
+    WindsGenerator windsGenerator;
+    QVector<WindGenerationSettings> windGenerationSettings;
+    JumpSimulator simulator;
+    void setupSimulator();
 
     JumperCompetitionResultsWidget * jumperResultsWidget;
 
@@ -69,6 +75,12 @@ public:
     void setCurrentInputJumpManipulator(const JumpManipulator &newCurrentInputJumpManipulator);
     int getCurrentCoachGate() const;
     void setCurrentCoachGate(int newCurrentCoachGate);
+    QVector<Wind> & getActualWindsReference();
+    QVector<Wind> getActualWinds() const;
+    void setActualWinds(const QVector<Wind> &newActualWinds);
+
+    QVector<WindGenerationSettings> getWindGenerationSettings() const;
+    void setWindGenerationSettings(const QVector<WindGenerationSettings> &newWindGenerationSettings);
 
 private slots:
     void on_pushButton_jump_clicked();

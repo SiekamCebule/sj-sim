@@ -51,13 +51,14 @@ bool AbstractCompetitionManager::isAllJumpsAreFinished()
     return true;
 }
 
-bool AbstractCompetitionManager::getHasUnfisihedJumps()
+int AbstractCompetitionManager::getBaseDSQProbability() const
 {
-    for(auto & status : startListStatuses){
-        if(status.getJumpStatus() == StartListCompetitorStatus::Unfinished)
-            return true;
-    }
-    return false;
+    return baseDSQProbability;
+}
+
+void AbstractCompetitionManager::setBaseDSQProbability(int newBaseDSQProbability)
+{
+    baseDSQProbability = newBaseDSQProbability;
 }
 
 JumpManipulator *AbstractCompetitionManager::getActualJumpManipulator() const
@@ -131,6 +132,11 @@ void AbstractCompetitionManager::setResults(CompetitionResults *newResults)
 }
 
 QVector<int> AbstractCompetitionManager::getRoundsStartingGates() const
+{
+    return roundsStartingGates;
+}
+
+QVector<int> & AbstractCompetitionManager::getRoundsStartingGatesReference()
 {
     return roundsStartingGates;
 }
@@ -220,17 +226,7 @@ void AbstractCompetitionManager::setActualCompetitorPointsToTheLeader(double new
     actualCompetitorPointsToTheLeader = newActualCompetitorPointsToTheLeader;
 }
 
-JumpManipulator AbstractCompetitionManager::getActualJumpManipulator() const
-{
-    return actualJumpManipulator;
-}
-
-void AbstractCompetitionManager::setActualJumpManipulator(const JumpManipulator &newActualJumpManipulator)
-{
-    actualJumpManipulator = newActualJumpManipulator;
-}
-
-QVector<StartListCompetitorStatus> AbstractCompetitionManager::getStartListStatus() const
+QVector<StartListCompetitorStatus> AbstractCompetitionManager::getStartListStatuses() const
 {
     return startListStatuses;
 }
@@ -238,36 +234,6 @@ QVector<StartListCompetitorStatus> AbstractCompetitionManager::getStartListStatu
 void AbstractCompetitionManager::setStartListStatus(const QVector<StartListCompetitorStatus> &newStartListStatus)
 {
     startListStatuses = newStartListStatus;
-}
-
-bool AbstractCompetitionManager::getRoundShouldBeEnded() const
-{
-    return roundShouldBeEnded;
-}
-
-void AbstractCompetitionManager::setRoundShouldBeEnded(bool newRoundShouldBeEnded)
-{
-    roundShouldBeEnded = newRoundShouldBeEnded;
-}
-
-bool AbstractCompetitionManager::getCompetiitonShouldBeEnded() const
-{
-    return competiitonShouldBeEnded;
-}
-
-void AbstractCompetitionManager::setCompetiitonShouldBeEnded(bool newCompetiitonShouldBeEnded)
-{
-    competiitonShouldBeEnded = newCompetiitonShouldBeEnded;
-}
-
-bool AbstractCompetitionManager::getLastJump() const
-{
-    return lastJump;
-}
-
-void AbstractCompetitionManager::setLastJump(bool newLastJump)
-{
-    lastJump = newLastJump;
 }
 
 CompetitionSingleResult *AbstractCompetitionManager::getLeaderResult() const
