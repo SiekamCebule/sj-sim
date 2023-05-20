@@ -55,7 +55,6 @@ private:
     JumpManipulator currentInputJumpManipulator;
     QVector<Wind> actualWinds;
     WindsGenerator windsGenerator;
-    QVector<WindGenerationSettings> windGenerationSettings;
     JumpSimulator simulator;
     void setupSimulator();
 
@@ -78,9 +77,6 @@ public:
     QVector<Wind> & getActualWindsReference();
     QVector<Wind> getActualWinds() const;
     void setActualWinds(const QVector<Wind> &newActualWinds);
-
-    QVector<WindGenerationSettings> getWindGenerationSettings() const;
-    void setWindGenerationSettings(const QVector<WindGenerationSettings> &newWindGenerationSettings);
 
 private slots:
     void on_pushButton_jump_clicked();

@@ -23,6 +23,7 @@ public:
     void setActualJumperToNextUnfinished();
 
     void setupNextRound();
+    void setupStartListStatusesForActualRound();
 
 private:
     QVector<QVector<Jumper *>> roundsJumpers;
@@ -30,7 +31,7 @@ private:
 public:
     static QVector<Jumper *> getFilteredJumpersVector(QVector<Jumper*> * previousRoundJumpers, CompetitionResults *results, CompetitionRules *rules, int round, const QVector<StartListCompetitorStatus> &startListStatuses);
     QVector<Jumper *> & getFirstRoundJumpersReference() {return roundsJumpers[0];}
-    QVector<Jumper *> & getActualRoundJumpersReference() {return roundsJumpers[actualRound];}
+    QVector<Jumper *> & getActualRoundJumpersReference() {return roundsJumpers[actualRound - 1];}
     void setFirstRoundJumpers(QVector<Jumper *> jumpers);
 
     QVector<QVector<Jumper *> > getRoundsJumpers() const;

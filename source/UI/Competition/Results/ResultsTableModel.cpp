@@ -18,6 +18,7 @@ ResultsTableModel::ResultsTableModel(int type, CompetitionResults *results, Abst
 
 QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
 {
+    qDebug()<<"ResultsTableModel";
     if (!index.isValid())
         return QVariant();
 

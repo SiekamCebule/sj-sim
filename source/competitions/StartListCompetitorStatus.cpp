@@ -1,6 +1,6 @@
 #include "StartListCompetitorStatus.h"
 
-StartListCompetitorStatus::StartListCompetitorStatus()
+StartListCompetitorStatus::StartListCompetitorStatus(Jumper *jumper) : jumper(jumper)
 {
 
 }

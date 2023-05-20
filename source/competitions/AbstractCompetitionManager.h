@@ -29,9 +29,10 @@ public:
     int getFirstUnfinishedStartListStatus();
     bool isAllJumpsAreFinished();
     virtual void setupNextRound() {}
+    virtual void setupStartListStatusesForActualRound() {}
 
 signals:
-    void actualJumperIndexChanged();
+    void actualStartListIndexChanged();
     void roundEnd();
     void competitionEnd();
 
@@ -57,6 +58,7 @@ protected:
     Jumper * actualJumper;
     int actualStartListIndex;
     JumpManipulator * actualJumpManipulator;
+    QVector<WindGenerationSettings> windGenerationSettings;
 
     QVector<StartListCompetitorStatus> startListStatuses;
 
@@ -94,6 +96,7 @@ public:
     double getActualCompetitorPointsToTheLeader() const;
     void setActualCompetitorPointsToTheLeader(double newActualCompetitorPointsToTheLeader);
     QVector<StartListCompetitorStatus> getStartListStatuses() const;
+    QVector<StartListCompetitorStatus>& getStartListStatusesReference();
     void setStartListStatus(const QVector<StartListCompetitorStatus> &newStartListStatus);
     CompetitionSingleResult *getLeaderResult() const;
     void setLeaderResult(CompetitionSingleResult *newLeaderResult);
@@ -107,6 +110,9 @@ public:
     void setActualJumpManipulator(JumpManipulator *newActualJumpManipulator);
     int getBaseDSQProbability() const;
     void setBaseDSQProbability(int newBaseDSQProbability);
+    QVector<WindGenerationSettings> getWindGenerationSettings() const;
+    void setWindGenerationSettings(const QVector<WindGenerationSettings> &newWindGenerationSettings);
+    QVector<WindGenerationSettings> & getWindGenerationSettingsReference();
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

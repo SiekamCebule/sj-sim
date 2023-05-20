@@ -361,47 +361,75 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         case CompetitionRules::Individual:
         {
             CompetitionInfo qualsInfo;
+            qDebug()<<"qualsInfo - constructor";
             qualsInfo.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
+            qDebug()<<"qualsInfo - setHill";
             qualsInfo.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
+            qDebug()<<"qualsInfo - setRules";
             qualsInfo.setResults(new CompetitionResults());
+            qDebug()<<"qualsInfo - setResults";
             qualsInfo.setSerieType(CompetitionInfo::Qualifications);
+            qDebug()<<"qualsInfo - setSerieType";
             qualsInfo.setExceptionalRoundsCount(1);
+            qDebug()<<"qualsInfo - setExceptionalRoundsCount";
 
             IndividualCompetitionManager * competitionManager = new IndividualCompetitionManager(CompetitionRules::Individual, ui->spinBox_startGate->value());
+            qDebug()<<"competitionManager - constructor";
 
             CompetitionResults * qualificationsResults = nullptr;
+            qDebug()<<"qualificationsResults";
             IndividualCompetitionManager * qualificationsManager = nullptr;
+            qDebug()<<"qualificationsManager";
             if(checkBox_singleCompetitionQualifications->isChecked() == true){
                 qualificationsResults = new CompetitionResults();
+                qDebug()<<"qualificationsResults";
                 qualificationsManager = new IndividualCompetitionManager(CompetitionRules::Individual, ui->spinBox_startGate->value());
+                qDebug()<<"qualificationsManager";
                 //qualificationsManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
                 QVector<Jumper *> jumpers;
                 for(auto & j : competitionJumpers)
                     jumpers.push_back(&j);
+                qDebug()<<"for(auto & j : competitionJumpers)";
                 qualificationsManager->getRoundsJumpersReference().append(jumpers);
+                qDebug()<<"qualificationsManager->getRoundsJumpersReference().append(jumpers);";
                 qualificationsManager->setCompetitionInfo(&qualsInfo);
+                qDebug()<<"qualificationsManager->setCompetitionInfo(&qualsInfo);";
                 qualificationsManager->getCompetitionInfo()->setSerieType(CompetitionInfo::Qualifications);
+                qDebug()<<"qualificationsManager->getCompetitionInfo()->setSerieType(CompetitionInfo::Qualifications);";
                 qualificationsManager->setCompetitionRules(qualsInfo.getRulesPointer());
+                qDebug()<<"qualificationsManager->setCompetitionRules(qualsInfo.getRulesPointer());";
                 qualificationsManager->setResults(qualificationsResults);
+                qDebug()<<"qualificationsManager->setResults(qualificationsResults);";
                 qualificationsManager->setActualGate(ui->spinBox_startGate->value());
+                qDebug()<<"qualificationsManager->setActualGate(ui->spinBox_startGate->value());";
                 qualificationsManager->setActualRound(1);
+                qDebug()<<"qualificationsManager->setActualRound(1);";
                 qualificationsManager->setActualStartListIndex(0);
+                qDebug()<<"qualificationsManager->setActualStartListIndex(0);";
                 qualificationsManager->setBaseDSQProbability(ui->spinBox_dsqProbability->value());
+                qualificationsManager->setupStartListStatusesForActualRound();
+                qualificationsManager->setWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
+                qDebug()<<"qualificationsManager->setBaseDSQProbability(ui->spinBox_dsqProbability->value());";
                 QVector<RoundInfo> qualsRounds = {
                     RoundInfo(0, false),
                     RoundInfo(qualificationsManager->getCompetitionRules()->getRounds().at(0).getCount(), qualificationsManager->getCompetitionRules()->getRounds().at(0).getSortStartList())
                 };
+                qDebug()<<"QVector<RoundInfo> qualsRounds = {";
                 qualificationsManager->getCompetitionRules()->setRounds(qualsRounds);
+                qDebug()<<"qualificationsManager->getCompetitionRules()->setRounds(qualsRounds);";
 
                 CompetitionManagerWindow * qualsWindow = new CompetitionManagerWindow(qualificationsManager, this);
-                qualsWindow->setWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
+                qDebug()<<"CompetitionManagerWindow * qualsWindow = new CompetitionManagerWindow(qualificationsManager, this);";
+                qDebug()<<"qualsWindow->setWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());";
                 connect(qualsWindow->getManager(), &AbstractCompetitionManager::competitionEnd, qualsWindow, [qualsWindow](){
                     qualsWindow->showMessageBoxForQualificationsEnd();
                 });
+                qDebug()<<"d";
                 if(qualsWindow->exec() == QDialog::Accepted)
                 {
-
+                    qDebug()<<"e";
                 }
+                qDebug()<<"f";
             }
 
             CompetitionInfo info;
@@ -430,8 +458,9 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             competitionManager->setActualRound(1);
             competitionManager->setActualStartListIndex(0);
             competitionManager->setBaseDSQProbability(ui->spinBox_dsqProbability->value());
+            competitionManager->setupStartListStatusesForActualRound();
+            competitionManager->setWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
             CompetitionManagerWindow * window = new CompetitionManagerWindow(competitionManager, this);
-            window->setWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
             if(window->exec() == QDialog::Accepted)
             {
                 this->setModal(true);

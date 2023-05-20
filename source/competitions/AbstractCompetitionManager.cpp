@@ -11,7 +11,8 @@ AbstractCompetitionManager::AbstractCompetitionManager(short type, int startingG
     toBeatLineDistance = toAdvanceLineDistance = 0;
     coachGateForNextJumper = false;
     actualCoachGate = 0;
-    actualStartListIndex = actualCompetitorPointsToTheLeader = 0;
+    setActualStartListIndex(0);
+    actualCompetitorPointsToTheLeader = 0;
     roundsStartingGates = {startingGate};
 }
 
@@ -49,6 +50,21 @@ bool AbstractCompetitionManager::isAllJumpsAreFinished()
             return false;
     }
     return true;
+}
+
+QVector<WindGenerationSettings> AbstractCompetitionManager::getWindGenerationSettings() const
+{
+    return windGenerationSettings;
+}
+
+QVector<WindGenerationSettings> & AbstractCompetitionManager::getWindGenerationSettingsReference()
+{
+    return windGenerationSettings;
+}
+
+void AbstractCompetitionManager::setWindGenerationSettings(const QVector<WindGenerationSettings> &newWindGenerationSettings)
+{
+    windGenerationSettings = newWindGenerationSettings;
 }
 
 int AbstractCompetitionManager::getBaseDSQProbability() const
@@ -214,6 +230,7 @@ int AbstractCompetitionManager::getActualStartListIndex() const
 void AbstractCompetitionManager::setActualStartListIndex(int newActualStartListIndex)
 {
     actualStartListIndex = newActualStartListIndex;
+    emit actualStartListIndexChanged();
 }
 
 double AbstractCompetitionManager::getActualCompetitorPointsToTheLeader() const
@@ -227,6 +244,11 @@ void AbstractCompetitionManager::setActualCompetitorPointsToTheLeader(double new
 }
 
 QVector<StartListCompetitorStatus> AbstractCompetitionManager::getStartListStatuses() const
+{
+    return startListStatuses;
+}
+
+QVector<StartListCompetitorStatus> &AbstractCompetitionManager::getStartListStatusesReference()
 {
     return startListStatuses;
 }

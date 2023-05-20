@@ -6,7 +6,7 @@
 class StartListCompetitorStatus
 {
 public:
-    StartListCompetitorStatus();
+    StartListCompetitorStatus(Jumper * jumper);
 
     enum JumpStatus{
         Finished,

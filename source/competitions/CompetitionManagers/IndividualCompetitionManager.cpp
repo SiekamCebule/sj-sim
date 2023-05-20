@@ -5,8 +5,9 @@ IndividualCompetitionManager::IndividualCompetitionManager(short type, int start
 {
     setCoachGateForNextJumper(false);
     setActualCoachGate(0);
-    connect(this, &IndividualCompetitionManager::actualJumperIndexChanged, this, [this](){
-        actualJumper = roundsJumpers[0].at(actualStartListIndex);
+    connect(this, &IndividualCompetitionManager::actualStartListIndexChanged, this, [this](){
+        if(roundsJumpers.count() > 0)
+            actualJumper = roundsJumpers[actualRound - 1].at(actualStartListIndex);
     });
     leaderResult = nullptr;
     lastQualifiedResult = nullptr;
@@ -158,7 +159,24 @@ void IndividualCompetitionManager::setActualJumperToNextUnfinished()
 
 void IndividualCompetitionManager::setupNextRound()
 {
+    qDebug()<<"Nowa runda";
+    actualRound++; //Przechodzi do następnej rundy
+    qDebug()<<results->getResultsReference().count();
+    qDebug()<<this->competitionRules->getName();
+    roundsJumpers.push_back(IndividualCompetitionManager::getFilteredJumpersVector(&getActualRoundJumpersReference(), results, this->competitionRules, actualRound, startListStatuses));
+    qDebug()<<"a";
+    setActualStartListIndex(0);
+    qDebug()<<"a";
+    roundsStartingGates.push_back(actualGate);
+    qDebug()<<"a";
+    setupStartListStatusesForActualRound();
+}
 
+void IndividualCompetitionManager::setupStartListStatusesForActualRound()
+{
+    startListStatuses.clear();
+    for(auto & jumper : getActualRoundJumpersReference())
+        startListStatuses.push_back(StartListCompetitorStatus(jumper));
 }
 
 QVector<QVector<Jumper *> > IndividualCompetitionManager::getRoundsJumpers() const

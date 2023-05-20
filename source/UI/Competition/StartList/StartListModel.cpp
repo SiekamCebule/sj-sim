@@ -45,15 +45,15 @@ int StartListModel::rowCount(const QModelIndex &parent) const
 
 QVariant StartListModel::data(const QModelIndex &index, int role) const
 {
+    qDebug()<<"StartListModel";
     if (!index.isValid())
         return QVariant();
-
 
     else if(role == Qt::TextAlignmentRole){
         return Qt::AlignHCenter;
     }
     else if(role == Qt::ForegroundRole){
-        if(startListStatus->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished){
+        if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished){
             return QBrush(QColor(qRgb(77, 77, 77)));
         }
         else{
@@ -61,7 +61,7 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
         }
     }
     else if(role == Qt::BackgroundRole){
-        if(startListStatus->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished){
+        if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished){
             return QBrush(QColor(qRgb(242, 242, 242)));
         }
         else{
@@ -70,7 +70,7 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
     }
     else if(role == Qt::FontRole){
         QFont font("Ubuntu", 10);
-        if(startListStatus->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished){
+        if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished){
             font.setItalic(true);
         }
         else{
@@ -82,11 +82,11 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
         if(jumpers->count() > index.row())
         {
             //Trzeba dodać numer startowy do "stringa"
-            QString string = QString::number(index.row()) + ". " + jumpers->at(index.row())->getNameAndSurname();
+            QString string = QString::number(index.row() + 1) + ". " + jumpers->at(index.row())->getNameAndSurname();
             if(role == Qt::DisplayRole){
-                if(startListStatus->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
+                if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
                     return string + "   (Nie wystartował)";
-                else if(startListStatus->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
+                else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
                     return string + "   (Dyskwalifikacja)";
                 else
                     return string;
@@ -99,9 +99,9 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
     else if(type == TeamCompetition){
         if(role == Qt::DisplayRole){
             QString string = teams->at(index.row())->getCountryCode() + " (" + jumpers->at(index.row())->getNameAndSurname() +")";
-            if(startListStatus->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
+            if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
                 return  string + "  (Nie wystartował)";
-            else if(startListStatus->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
+            else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
                 return string + "  (Dyskwalifikacja)";
             else
                 return string;
@@ -112,17 +112,17 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
     }
 
     // FIXME: Implement me!
-    return QVariant();
+              return QVariant();
 }
 
-QVector<StartListCompetitorStatus> *StartListModel::getStartListStatus() const
+QVector<StartListCompetitorStatus> *StartListModel::getStartListStatuses() const
 {
-    return startListStatus;
+    return startListStatuses;
 }
 
-void StartListModel::setStartListStatus(QVector<StartListCompetitorStatus> *newStartListStatus)
+void StartListModel::setStartListStatuses(QVector<StartListCompetitorStatus> *newStartListStatuses)
 {
-    startListStatus = newStartListStatus;
+    startListStatuses = newStartListStatuses;
 }
 
 short StartListModel::getType() const

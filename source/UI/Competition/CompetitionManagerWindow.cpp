@@ -12,52 +12,78 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     ui(new Ui::CompetitionManagerWindow),
     manager(manager)
 {
+    qDebug()<<"CompetitionManagerWindow:\n";
     ui->setupUi(this);
+    qDebug()<<"ui->setupUi(this);";
     setWindowFlags(Qt::Window);
 
     if(manager != nullptr){
         type = manager->getType();
         ui->spinBox_actualGate->setValue(manager->getActualGate());
     }
+    qDebug()<<"if(manager != nullptr){";
 
     ui->pushButton_competitionDetails->hide();
     ui->pushButton_goToNext->hide();
 
+    qDebug()<<"buttons hide";
+
     startListModel = new StartListModel(manager, this);
     startListModel->setType(getType());
+    startListModel->setStartListStatuses(&manager->getStartListStatusesReference());
+    qDebug()<<"startlistmodel";
+
     switch(type)
     {
     case CompetitionRules::Individual:
         IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(this->manager);
+        qDebug()<<"IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(this->manager);";
         startListModel->setJumpers(&indManager->getActualRoundJumpersReference());
+        qDebug()<<"startListModel->setJumpers(&indManager->getActualRoundJumpersReference());";
 
         ui->label_nameAndSurname->setText(indManager->getActualRoundJumpersReference().at(0)->getNameAndSurname());
+        qDebug()<<"prr: "<<indManager->getActualRoundJumpersReference().at(0)->getNameAndSurname();
+        qDebug()<<"a"<<indManager->getActualJumper()->getNameAndSurname();
         ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(indManager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+        qDebug()<<"ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(indManager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));";
 
-        connect(indManager, &IndividualCompetitionManager::actualJumperIndexChanged, this, [this, indManager](){
+        connect(indManager, &IndividualCompetitionManager::actualStartListIndexChanged, this, [this, indManager](){
             ui->label_nameAndSurname->setText(indManager->getActualJumper()->getNameAndSurname());
             ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(indManager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
         });
         break;
     }
     ui->listView_startList->setModel(startListModel);
+    qDebug()<<"ui->listView_startList->setModel(startListModel);";
 
     resultsTableModel = new ResultsTableModel(getType(), manager->getResults(), manager, this);
+    qDebug()<<"resultsTableModel = new ResultsTableModel(getType(), manager->getResults(), manager, this);";
     ui->tableView_results->setModel(resultsTableModel);
+    qDebug()<<"ui->tableView_results->setModel(resultsTableModel);";
     ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    qDebug()<<"ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);";
 
     jumperResultsWidget = new JumperCompetitionResultsWidget(this);
+    qDebug()<<"jumperResultsWidget = new JumperCompetitionResultsWidget(this);";
     jumperResultsWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    qDebug()<<"jumperResultsWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);";
     ui->verticalLayout_jumperResult->addWidget(jumperResultsWidget);
+    qDebug()<<"ui->verticalLayout_jumperResult->addWidget(jumperResultsWidget);";
 
     ui->label_toBeatDistance->setText("0m");
     ui->label_toAdvancementDistance->setText("-");
-
+    qDebug()<<"dkkd";
+qDebug()<<"ST: "<<manager->getWindGenerationSettingsReference().count();
+    windsGenerator.setGenerationSettings(manager->getWindGenerationSettingsReference());
+    actualWinds = windsGenerator.generateWinds();
+    qDebug()<<"h";
     updateAvgWindLabel();
+    qDebug()<<"updateAvgWindLabel";
 
     ui->label_pointsBehindLeader->setText("");
 
     Hill * hill = manager->getCompetitionInfo()->getHill();
+    qDebug()<<"Hill * hill = manager->getCompetitionInfo()->getHill();";
 
     ui->label_hillNameAndHSPoint->setText(hill->getName() + " HS" + QString::number(hill->getHSPoint()));
     ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size()));
@@ -88,6 +114,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     competitionActions.push_back(action_autoSimulateRound);
     toolBar->addActions(competitionActions);
     layout()->setMenuBar(toolBar);
+    qDebug()<<"toolBar";
 
     connect(action_autoSimulateRound, &QAction::triggered, this, &CompetitionManagerWindow::autoSimulateRound);
     connect(action_cancelCompetition, &QAction::triggered, this, &CompetitionManagerWindow::cancelCompetition);
@@ -129,6 +156,7 @@ void CompetitionManagerWindow::updateAvgWindLabel()
     IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
     switch(type){
     case CompetitionRules::Individual:{
+        qDebug()<<actualWinds.count();
         ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, m->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
     }
     }
@@ -492,7 +520,7 @@ void CompetitionManagerWindow::on_pushButton_windsGeneratorSettings_clicked()
 
     IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
     WindsGeneratorSettingsEditorWidget * editor = new WindsGeneratorSettingsEditorWidget;
-    editor->setWindGenerationSettings(&windGenerationSettings);
+    editor->setWindGenerationSettings(&manager->getWindGenerationSettingsReference());
     editor->setRemovingSubmitButtons(true);
     editor->setKPoint(m->getCompetitionInfo()->getHill()->getKPoint());
     editor->setSettingsCount(WindsGenerator::calculateWindsCountByKPoint(editor->getKPoint()));
@@ -502,7 +530,7 @@ void CompetitionManagerWindow::on_pushButton_windsGeneratorSettings_clicked()
     connect(editor, &WindsGeneratorSettingsEditorWidget::submitted, dialog, &QDialog::accept);
 
     if(dialog->exec() == QDialog::Accepted){
-        windGenerationSettings = editor->getWindsGenerationSettingsFromInputs();
+        manager->setWindGenerationSettings(editor->getWindsGenerationSettingsFromInputs());
         delete editor;
         delete dialog;
     }
@@ -513,7 +541,7 @@ void CompetitionManagerWindow::on_pushButton_windsGeneratorSettings_clicked()
 void CompetitionManagerWindow::on_pushButton_manipulateJump_clicked()
 {
     JumpManipulatorConfigWindow * window = new JumpManipulatorConfigWindow;
-    window->setWindGenerationSettings(&windGenerationSettings);
+    window->setWindGenerationSettings(&manager->getWindGenerationSettingsReference());
     window->setKPoint(manager->getCompetitionInfo()->getHill()->getKPoint());
     connect(window, &JumpManipulatorConfigWindow::submitted, window, &JumpManipulatorConfigWindow::accept);
     if(window->exec() == QDialog::Accepted){
@@ -553,14 +581,4 @@ QVector<Wind> & CompetitionManagerWindow::getActualWindsReference()
 void CompetitionManagerWindow::setActualWinds(const QVector<Wind> &newActualWinds)
 {
     actualWinds = newActualWinds;
-}
-
-QVector<WindGenerationSettings> CompetitionManagerWindow::getWindGenerationSettings() const
-{
-    return windGenerationSettings;
-}
-
-void CompetitionManagerWindow::setWindGenerationSettings(const QVector<WindGenerationSettings> &newWindGenerationSettings)
-{
-    windGenerationSettings = newWindGenerationSettings;
 }

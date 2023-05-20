@@ -19,14 +19,11 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    QVector<StartListCompetitorStatus> *getStartListStatus() const;
-    void setStartListStatus(QVector<StartListCompetitorStatus> *newStartListStatus);
-
 private:
     QVector<Jumper *> * jumpers;
     QVector<Team *> * teams;
 
-    QVector<StartListCompetitorStatus> * startListStatus;
+    QVector<StartListCompetitorStatus> * startListStatuses;
 
     short type;
 public:
@@ -41,6 +38,8 @@ public:
     void setTeams(QVector<Team *> *newTeams);
     short getType() const;
     void setType(short newType);
+    QVector<StartListCompetitorStatus> *getStartListStatuses() const;
+    void setStartListStatuses(QVector<StartListCompetitorStatus> *newStartListStatuses);
 };
 
 #endif // STARTLISTMODEL_H
