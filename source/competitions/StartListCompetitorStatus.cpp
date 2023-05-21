@@ -1,6 +1,6 @@
 #include "StartListCompetitorStatus.h"
 
-StartListCompetitorStatus::StartListCompetitorStatus(Jumper *jumper) : jumper(jumper)
+StartListCompetitorStatus::StartListCompetitorStatus(Jumper *jumper, int jumpStatus, int advanceStatus) : jumper(jumper), jumpStatus(jumpStatus), advanceStatus(advanceStatus)
 {
 
 }
@@ -13,6 +13,15 @@ bool StartListCompetitorStatus::getQualifiedBy95HSRule() const
 void StartListCompetitorStatus::setQualifiedBy95HSRule(bool newQualifiedBy95HSRule)
 {
     qualifiedBy95HSRule = newQualifiedBy95HSRule;
+}
+
+StartListCompetitorStatus *StartListCompetitorStatus::getStatusOfJumper(Jumper *jumper, QVector<StartListCompetitorStatus> &statuses)
+{
+    for(auto & status : statuses){
+        if(jumper == status.getJumper())
+            return &status;
+    }
+    return nullptr;
 }
 
 Jumper *StartListCompetitorStatus::getJumper() const

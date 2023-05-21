@@ -27,14 +27,17 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         case CompetitionRules::Individual:{
             switch(index.column()){
             case 0:
+                qDebug()<<"pos: "<<results->getResultsReference().at(index.row()).getPosition();
                 return results->getResultsReference().at(index.row()).getPosition();
                 //return indResults->getEditableJumpersResults().at(index.row()).getPosition();
                 break;
             case 1:
                 //qDebug()<<index.column()<<", "<<indResults->getEditableJumpersResults().at(index.row()).getJumper()->getNameAndSurname().toUpper();
+                qDebug()<<"NS: "<<results->getResultsReference().at(index.row()).getJumper()->getNameAndSurname();
                 return results->getResultsReference().at(index.row()).getJumper()->getNameAndSurname();
                 break;
             case 2:
+                qDebug()<<"points: "<<results->getResultsReference().at(index.row()).getPointsSum();
                 return results->getResultsReference().at(index.row()).getPointsSum();
                 break;
             }
@@ -65,22 +68,31 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         switch(type){
         case CompetitionRules::Individual:{
             results->sortInDescendingOrder();
+            switch(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses)->getAdvanceStatus())
+            {
+            case StartListCompetitorStatus::Waiting:
+                return QColor(qRgb(253, 253, 249));
+            case StartListCompetitorStatus::SureAdvanced:
+                return QColor(qRgb(237, 247, 240));
+            case StartListCompetitorStatus::SureDroppedOut:
+                return QColor(qRgb(252, 237, 237));
+            }
 
             break;
         }
         }
     }
     else if(role == Qt::DecorationRole){
-
+        qDebug()<<"decorqation";
         switch(index.column()){
         case 1:
             switch(type){
             case CompetitionRules::Individual:{
-                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultByIndex(index.column())->getJumper()->getCountryCode().toLower()));
+                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultByIndex(index.row())->getJumper()->getCountryCode().toLower())).scaled(40, 28.5);
                 break;
             }
             case CompetitionRules::Team:{
-                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultByIndex(index.column())->getTeam()->getCountryCode().toLower()));
+                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultByIndex(index.row())->getTeam()->getCountryCode().toLower())).scaled(40, 28.5);
                 break;
             }
             }
@@ -119,6 +131,16 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
 
     // FIXME: Implement me!
     return QVariant();
+}
+
+QVector<StartListCompetitorStatus> *ResultsTableModel::getStartListStatuses() const
+{
+    return startListStatuses;
+}
+
+void ResultsTableModel::setStartListStatuses(QVector<StartListCompetitorStatus> *newStartListStatuses)
+{
+    startListStatuses = newStartListStatuses;
 }
 
 AbstractCompetitionManager *ResultsTableModel::getManager() const

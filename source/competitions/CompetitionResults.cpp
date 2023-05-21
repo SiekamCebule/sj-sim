@@ -54,6 +54,7 @@ CompetitionSingleResult *CompetitionResults::getResultByIndex(int index)
 
 void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
 {
+    qDebug()<<"void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)";
     CompetitionSingleResult *result = nullptr;
     for(auto & res : results){
         if(res.getJumper() == jumper){
@@ -61,22 +62,29 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
             break;
         }
     }
+
     if(result == nullptr){
         results.push_back(CompetitionSingleResult(jumper, CompetitionSingleResult::IndividualResult));
         result = &results[results.count() - 1];
     }
+    qDebug()<<"piko skraaaaa";
     int index = jumpNumber;
     if(jumpNumber == -1 || jumpNumber >= result->getJumpsReference().count())
         index = result->getJumpsReference().count() - 1;
-    else if(jumpNumber < 0)
+    if(index < 0)
         index = 0;
+
+    qDebug()<<"piko";
+    qDebug()<<index;
 
     for(auto & res : results){
         if(&res == result){
             result->getJumpsReference().insert(index, jump);
             result->updatePointsSum();
+            qDebug()<<"ptssum: "<<result->getPointsSum();
         }
     }
+    qDebug()<<"hi pepole";
 }
 
 void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
@@ -125,31 +133,31 @@ void CompetitionResults::addJump(CompetitionSingleResult *result, JumpData &jump
 void CompetitionResults::updatePositions()
 {
     double previousResultPoints = 0;
-        int actualPosition = 1;
-        int add = 1;
-        int i=0;
-        for(auto & result : results){
-            if(i==0){
-                result.setPosition(1);
-                previousResultPoints = result.getPointsSum();
-                i++;
-                continue;
-            }
-
-            if(previousResultPoints == result.getPointsSum())
-            {
-                result.setPosition(actualPosition);
-                add += 1;
-            }
-            else{
-                actualPosition += add;
-                add = 1;
-                result.setPosition(actualPosition);
-            }
-
+    int actualPosition = 1;
+    int add = 1;
+    int i=0;
+    for(auto & result : results){
+        if(i==0){
+            result.setPosition(1);
             previousResultPoints = result.getPointsSum();
             i++;
+            continue;
         }
+
+        if(previousResultPoints == result.getPointsSum())
+        {
+            result.setPosition(actualPosition);
+            add += 1;
+        }
+        else{
+            actualPosition += add;
+            add = 1;
+            result.setPosition(actualPosition);
+        }
+
+        previousResultPoints = result.getPointsSum();
+        i++;
+    }
 }
 
 void CompetitionResults::sortInDescendingOrder()

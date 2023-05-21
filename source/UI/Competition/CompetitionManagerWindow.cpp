@@ -57,6 +57,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     qDebug()<<"ui->listView_startList->setModel(startListModel);";
 
     resultsTableModel = new ResultsTableModel(getType(), manager->getResults(), manager, this);
+    resultsTableModel->setStartListStatuses(&manager->getStartListStatusesReference());
     qDebug()<<"resultsTableModel = new ResultsTableModel(getType(), manager->getResults(), manager, this);";
     ui->tableView_results->setModel(resultsTableModel);
     qDebug()<<"ui->tableView_results->setModel(resultsTableModel);";
@@ -73,9 +74,11 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     ui->label_toBeatDistance->setText("0m");
     ui->label_toAdvancementDistance->setText("-");
     qDebug()<<"dkkd";
-qDebug()<<"ST: "<<manager->getWindGenerationSettingsReference().count();
+    qDebug()<<"ST: "<<manager->getWindGenerationSettingsReference().count();
     windsGenerator.setGenerationSettings(manager->getWindGenerationSettingsReference());
-    actualWinds = windsGenerator.generateWinds();
+    qDebug()<<manager->getWindGenerationSettingsReference().count()<<"cc";
+    setActualWinds(windsGenerator.generateWinds());
+    qDebug()<<actualWinds.count();
     qDebug()<<"h";
     updateAvgWindLabel();
     qDebug()<<"updateAvgWindLabel";
@@ -348,6 +351,7 @@ void CompetitionManagerWindow::autoSimulateRound()
             m->getResults()->addJump(m->getActualJumper(), jump);
             m->updateLastQualifiedResult();
             m->updateLeaderResult();
+            setActualWinds(windsGenerator.generateWinds());
             m->setActualJumperToNextUnfinished();
         }
         jumperResultsWidget->show();
@@ -437,22 +441,32 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         setupSimulator();
         simulator.simulateJump();
         JumpData jump = simulator.getJumpData();
+        qDebug()<<"jump = simulator.getJumpData";
         m->getResults()->addJump(m->getActualJumper(), jump);
+        qDebug()<<"a";
         m->updateLastQualifiedResult();
+        qDebug()<<"b";
         m->updateLeaderResult();
+        qDebug()<<"c";
         m->updateToAdvanceLineDistance();
+        qDebug()<<"d";
         m->updateToBeatLineDistance();
+        qDebug()<<"e";
         m->updateActualCompetitorPointsToTheLeader();
+        qDebug()<<"f";
 
         updateToBeatDistanceLabel();
         updateToAdvanceDistanceLabel();
         updatePointsToTheLeaderLabel();
+        qDebug()<<"gog";
 
         ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, m->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
 
         if(jumperResultsWidget->isHidden()) jumperResultsWidget->show();
-        jumperResultsWidget->setJumperResult(m->getResults()->getResultOfIndividualJumper(m->getActualRoundJumpersReference().at(m->getActualStartListIndex() - 1)));
+        jumperResultsWidget->setJumperResult(m->getResults()->getResultOfIndividualJumper(m->getActualJumper()));
         jumperResultsWidget->fillWidget();
+
+        qDebug()<<"hau hua";
 
         emit startListModel->dataChanged(startListModel->index(m->getActualStartListIndex() - 1), startListModel->index(m->getActualStartListIndex() - 1));
         ui->tableView_results->setModel(nullptr);
@@ -460,18 +474,28 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
+        qDebug()<<"bbb bbb";
+        qDebug()<<"Cczcz";
+
 
         if(m->checkRoundEnd()){
+            qDebug()<<"ok";
             setupGoToNextButtonForNextRound();
             showMessageBoxForNextRound();
         }
+        qDebug()<<"toto";
 
         manager->setCoachGateForNextJumper(false);
         manager->setActualCoachGate(0);
+        qDebug()<<"aka";
         updateToAdvanceDistanceLabel();
         updateToBeatDistanceLabel();
 
+        qDebug()<<"abba";
+
         ui->tableView_results->scrollTo(startListModel->index(manager->getActualStartListIndex()));
+
+        qDebug()<<"cacca";
 
         if(m->checkCompetitionEnd() == true){
             setupGoToNextButtonForCompetitionEnd();
@@ -479,7 +503,8 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         }
 
         m->setActualJumperToNextUnfinished();
-        actualWinds = windsGenerator.generateWinds();
+        setActualWinds(windsGenerator.generateWinds());
+        qDebug()<<"nom";
         break;
     }
     }
@@ -498,7 +523,7 @@ void CompetitionManagerWindow::on_tableView_results_doubleClicked(const QModelIn
 void CompetitionManagerWindow::on_pushButton_generateNewWinds_clicked()
 {
     IndividualCompetitionManager * m = dynamic_cast<IndividualCompetitionManager *>(manager);
-    actualWinds = windsGenerator.generateWinds();
+    setActualWinds(windsGenerator.generateWinds());
     if(m->getActualStartListIndex() > 1){
         m->updateLeaderResult();
         updateToBeatDistanceLabel();
@@ -548,7 +573,7 @@ void CompetitionManagerWindow::on_pushButton_manipulateJump_clicked()
         JumpManipulator manipulator = window->getJumpManipulatorFromInputs();
         currentInputJumpManipulator = (manipulator);
         if(manipulator.getExactWinds().size() > 0)
-            actualWinds = (manipulator.getExactWinds());
+            setActualWinds(manipulator.getExactWinds());
         updateAvgWindLabel();
     }
 }
@@ -581,4 +606,5 @@ QVector<Wind> & CompetitionManagerWindow::getActualWindsReference()
 void CompetitionManagerWindow::setActualWinds(const QVector<Wind> &newActualWinds)
 {
     actualWinds = newActualWinds;
+    manager->setActualWinds(&actualWinds);
 }

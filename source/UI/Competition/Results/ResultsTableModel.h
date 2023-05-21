@@ -27,6 +27,8 @@ private:
     CompetitionResults * results;
     AbstractCompetitionManager * manager;
 
+    QVector<StartListCompetitorStatus> * startListStatuses;
+
 public:
     CompetitionResults *getResults() const;
     void setResults(CompetitionResults *newResults);
@@ -34,6 +36,8 @@ public:
     void setType(int newType);
     AbstractCompetitionManager *getManager() const;
     void setManager(AbstractCompetitionManager *newManager);
+    QVector<StartListCompetitorStatus> *getStartListStatuses() const;
+    void setStartListStatuses(QVector<StartListCompetitorStatus> *newStartListStatuses);
 };
 
 #endif // RESULTSTABLEMODEL_H

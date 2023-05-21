@@ -6,7 +6,7 @@
 class StartListCompetitorStatus
 {
 public:
-    StartListCompetitorStatus(Jumper * jumper);
+    StartListCompetitorStatus(Jumper * jumper, int jumpStatus = Unfinished, int advanceStatus = Waiting);
 
     enum JumpStatus{
         Finished,
@@ -35,6 +35,8 @@ public:
     void setJumper(Jumper *newJumper);
     bool getQualifiedBy95HSRule() const;
     void setQualifiedBy95HSRule(bool newQualifiedBy95HSRule);
+
+    static StartListCompetitorStatus *getStatusOfJumper(Jumper * jumper, QVector<StartListCompetitorStatus> &statuses);
 };
 
 #endif // STARTLISTCOMPETITORSTATUS_H

@@ -18,8 +18,12 @@ void IndividualCompetitionManager::updateToBeatLineDistance()
     results->sortInDescendingOrder();
     Hill * hill = competitionInfo->getHill();
     double leaderPoints = leaderResult->getPointsSum();
+    qDebug()<<leaderPoints;
+    qDebug()<<actualWinds->count();
 
     double windCompensation = WindsCalculator::getWindCompensation(WindsCalculator::getAveragedWind(*actualWinds, competitionRules->getWindAverageCalculatingType()).getStrengthToAveragedWind(), competitionInfo->getHill());
+    qDebug()<<"bro";
+    qDebug()<<windCompensation<<" comp";
     int tempGate = actualGate;
     if(coachGateForNextJumper == true) tempGate = actualCoachGate;
     double gateCompensation = WindsCalculator::getGateCompensation(roundsStartingGates.at(actualRound - 1), tempGate, competitionInfo->getHill());
