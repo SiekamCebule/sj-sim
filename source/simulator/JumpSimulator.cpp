@@ -74,10 +74,10 @@ void JumpSimulator::simulateJump()
     setupJumpData();
     if(generateDSQ() == true)
     {
-        jumpData.setIsDSQOccured(true);
+        jumpData.setDSQ(true);
         return;
     }
-    jumpData.setIsDSQOccured(false);
+    jumpData.setDSQ(false);
 
     generateTakeoffRating();
     generateFlightRating();

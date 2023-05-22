@@ -49,6 +49,6 @@ public:
     void setPosition(int newPosition);
 };
 
-inline bool operator>(const CompetitionSingleResult & l, const CompetitionSingleResult & r) {return l.getPointsSum() < r.getPointsSum();}
+inline bool operator>(const CompetitionSingleResult & l, const CompetitionSingleResult & r) {return l.getPointsSum() > r.getPointsSum();}
 
 #endif // COMPETITIONSINGLERESULT_H

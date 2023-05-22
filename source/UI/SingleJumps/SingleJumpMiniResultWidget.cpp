@@ -21,7 +21,7 @@ SingleJumpMiniResultWidget::~SingleJumpMiniResultWidget()
 void SingleJumpMiniResultWidget::fillUi()
 {
     ui->label_index->setText(QString::number(getIndexInList()) + ". ");
-    if(jumpData->getIsDSQOccured() == false){
+    if(jumpData->getDSQ() == false){
         ui->label_distance->setText(QString::number(jumpData->getDistance()) + "m");
         ui->label_points->setText(QString::number(jumpData->getPoints()) + "pts");
     }

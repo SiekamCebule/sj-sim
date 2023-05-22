@@ -454,6 +454,13 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         qDebug()<<"e";
         m->updateActualCompetitorPointsToTheLeader();
         qDebug()<<"f";
+        int status = StartListCompetitorStatus::Finished;
+        if(jump.getDSQ())
+            status = StartListCompetitorStatus::Dsq;
+        else if(jump.getDNS())
+            status = StartListCompetitorStatus::Dns;
+
+        StartListCompetitorStatus::getStatusOfJumper(m->getActualJumper(), m->getStartListStatusesReference())->setJumpStatus(status);
 
         updateToBeatDistanceLabel();
         updateToAdvanceDistanceLabel();
