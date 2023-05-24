@@ -115,7 +115,7 @@ void DatabaseItemsListView::onRemoveActionTriggered()
                 int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
                 jumpersListModel->removeRows(rowToRemove, 1);
                 jumpersListModel->getJumpersVectorPointer()->remove(rowToRemove, 1);
-                selectionModel->select(jumpersListModel->index(rowToRemove), QItemSelectionModel::Deselect);
+                //selectionModel->select(jumpersListModel->index(rowToRemove), QItemSelectionModel::Deselect);
             }
             emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
             break;
@@ -126,7 +126,7 @@ void DatabaseItemsListView::onRemoveActionTriggered()
                 int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
                 hillsListModel->removeRows(rowToRemove, 1);
                 hillsListModel->getHillsVectorPointer()->remove(rowToRemove, 1);
-                selectionModel->select(hillsListModel->index(rowToRemove), QItemSelectionModel::Deselect);
+                //selectionModel->select(hillsListModel->index(rowToRemove), QItemSelectionModel::Deselect);
             }
             emit hillsListModel->dataChanged(hillsListModel->index(firstRow), hillsListModel->index(hillsListModel->rowCount() - 1));
             break;
@@ -137,7 +137,7 @@ void DatabaseItemsListView::onRemoveActionTriggered()
                 int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
                 competitionRulesListModel->removeRows(rowToRemove, 1);
                 competitionRulesListModel->getCompetitonRulesVectorPointer()->remove(rowToRemove, 1);
-                selectionModel->select(competitionRulesListModel->index(rowToRemove), QItemSelectionModel::Deselect);
+                //selectionModel->select(competitionRulesListModel->index(rowToRemove), QItemSelectionModel::Deselect);
             }
             emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(firstRow), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
             break;

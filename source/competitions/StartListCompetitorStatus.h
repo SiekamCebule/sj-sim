@@ -6,7 +6,7 @@
 class StartListCompetitorStatus
 {
 public:
-    StartListCompetitorStatus(Jumper * jumper, int jumpStatus = Unfinished, int advanceStatus = Waiting);
+    StartListCompetitorStatus(Jumper * jumper = nullptr, int jumpStatus = Unfinished, int advanceStatus = Waiting);
 
     enum JumpStatus{
         Finished,

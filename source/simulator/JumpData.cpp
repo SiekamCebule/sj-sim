@@ -12,7 +12,10 @@
 
 JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill)
-{}
+{
+    DSQ = false;
+    DNS = false;
+}
 
 bool JumpData::getDSQ() const
 {

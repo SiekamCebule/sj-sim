@@ -30,6 +30,7 @@ public:
     bool isAllJumpsAreFinished();
     virtual void setupNextRound() {}
     virtual void setupStartListStatusesForActualRound() {}
+    virtual void updateCompetitorsAdvanceStatuses() {}
 
 signals:
     void actualStartListIndexChanged();

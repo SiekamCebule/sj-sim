@@ -24,12 +24,14 @@ public:
 
     void setupNextRound();
     void setupStartListStatusesForActualRound();
+    void updateCompetitorsAdvanceStatuses();
+
+    QVector<Jumper *> getFilteredJumpersForNextRound();
 
 private:
     QVector<QVector<Jumper *>> roundsJumpers;
 
 public:
-    static QVector<Jumper *> getFilteredJumpersVector(QVector<Jumper*> * previousRoundJumpers, CompetitionResults *results, CompetitionRules *rules, int round, const QVector<StartListCompetitorStatus> &startListStatuses);
     QVector<Jumper *> & getFirstRoundJumpersReference() {return roundsJumpers[0];}
     QVector<Jumper *> & getActualRoundJumpersReference() {return roundsJumpers[actualRound - 1];}
     void setFirstRoundJumpers(QVector<Jumper *> jumpers);

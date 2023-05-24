@@ -38,19 +38,28 @@ int StartListModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return jumpers->count();
+    return startListStatuses->count();
 
     // FIXME: Implement me!
 }
 
 QVariant StartListModel::data(const QModelIndex &index, int role) const
 {
-    qDebug()<<"StartListModel";
     if (!index.isValid())
         return QVariant();
 
     else if(role == Qt::TextAlignmentRole){
         return Qt::AlignHCenter;
+    }
+
+    if(StartListCompetitorStatus::getStatusOfJumper(jumpers->at(index.row()), *startListStatuses) == nullptr)
+    {
+        if(role == Qt::ForegroundRole)
+            return QBrush(QColor("black"));
+        else if(role == Qt::BackgroundRole)
+            return QBrush(QColor("white"));
+        else if(role == Qt::FontRole)
+            return QFont("Ubuntu", 11);
     }
     else if(role == Qt::ForegroundRole){
         if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished){
@@ -69,50 +78,49 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
         }
     }
     else if(role == Qt::FontRole){
-        QFont font("Ubuntu", 10);
+        QFont font("Ubuntu", 11);
         if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished){
             font.setItalic(true);
         }
-        else{
-            font.setPointSize(11);
-        }
+        return font;
     }
-
-    if(type == IndividualCompetiton){
-        if(jumpers->count() > index.row())
-        {
-            //Trzeba dodać numer startowy do "stringa"
-            QString string = QString::number(index.row() + 1) + ". " + jumpers->at(index.row())->getNameAndSurname();
+    //if(StartListCompetitorStatus::getStatusOfJumper(jumpers->at(index.row()), *startListStatuses) != nullptr){
+        if(type == IndividualCompetiton){
+            if(jumpers->count() > index.row())
+            {
+                //Trzeba dodać numer startowy do "stringa"
+                QString string = QString::number(index.row() + 1) + ". " + jumpers->at(index.row())->getNameAndSurname();
+                if(role == Qt::DisplayRole){
+                    if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
+                        return string + "   (Nie wystartował)";
+                    else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
+                        return string + "   (Dyskwalifikacja)";
+                    else
+                        return string;
+                }
+                else if(role == Qt::DecorationRole){
+                    return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumpers->at(index.row())->getCountryCode().toLower())));
+                }
+            }
+        }
+        else if(type == TeamCompetition){
             if(role == Qt::DisplayRole){
+                QString string = teams->at(index.row())->getCountryCode() + " (" + jumpers->at(index.row())->getNameAndSurname() +")";
                 if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
-                    return string + "   (Nie wystartował)";
+                    return  string + "  (Nie wystartował)";
                 else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
-                    return string + "   (Dyskwalifikacja)";
+                    return string + "  (Dyskwalifikacja)";
                 else
                     return string;
             }
             else if(role == Qt::DecorationRole){
-                return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumpers->at(index.row())->getCountryCode().toLower())));
+                return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(teams->at(index.row())->getCountryCode().toLower())));
             }
         }
-    }
-    else if(type == TeamCompetition){
-        if(role == Qt::DisplayRole){
-            QString string = teams->at(index.row())->getCountryCode() + " (" + jumpers->at(index.row())->getNameAndSurname() +")";
-            if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
-                return  string + "  (Nie wystartował)";
-            else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
-                return string + "  (Dyskwalifikacja)";
-            else
-                return string;
-        }
-        else if(role == Qt::DecorationRole){
-            return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(teams->at(index.row())->getCountryCode().toLower())));
-        }
-    }
+    //}
 
     // FIXME: Implement me!
-              return QVariant();
+    return QVariant();
 }
 
 QVector<StartListCompetitorStatus> *StartListModel::getStartListStatuses() const

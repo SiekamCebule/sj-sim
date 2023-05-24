@@ -23,7 +23,7 @@ bool AbstractCompetitionManager::checkRoundEnd()
 
 bool AbstractCompetitionManager::checkCompetitionEnd()
 {
-    return (isAllJumpsAreFinished() && actualRound == competitionRules->getEditableRounds().count());
+    return (isAllJumpsAreFinished() && (actualRound == competitionRules->getEditableRounds().count() || actualRound == competitionInfo->getExceptionalRoundsCount()));
 }
 
 void AbstractCompetitionManager::updateLeaderResult()
@@ -41,6 +41,7 @@ int AbstractCompetitionManager::getFirstUnfinishedStartListStatus()
         else
             index++;
     }
+    return index; // 0
 }
 
 bool AbstractCompetitionManager::isAllJumpsAreFinished()

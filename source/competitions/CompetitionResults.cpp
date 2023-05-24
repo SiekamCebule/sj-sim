@@ -59,11 +59,12 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
     for(auto & res : results){
         if(res.getJumper() == jumper){
             result = &res;
+
             break;
         }
     }
-
     if(result == nullptr){
+        qDebug()<<"nno";
         results.push_back(CompetitionSingleResult(jumper, CompetitionSingleResult::IndividualResult));
         result = &results[results.count() - 1];
     }
@@ -75,12 +76,13 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
         index = 0;
 
     qDebug()<<"piko";
-    qDebug()<<index;
+    qDebug()<<"INDEX: "<<index;
 
     for(auto & res : results){
         if(&res == result){
             result->getJumpsReference().insert(index, jump);
             result->updatePointsSum();
+            break;
             qDebug()<<"ptssum: "<<result->getPointsSum();
         }
     }
@@ -163,6 +165,12 @@ void CompetitionResults::updatePositions()
 void CompetitionResults::sortInDescendingOrder()
 {
     std::sort(results.begin(), results.end(), std::greater<CompetitionSingleResult>());
+    updatePositions();
+}
+
+void CompetitionResults::sortInAscendingOrder()
+{
+    std::sort(results.begin(), results.end(), std::less<CompetitionSingleResult>());
     updatePositions();
 }
 

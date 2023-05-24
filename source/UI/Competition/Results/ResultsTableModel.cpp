@@ -18,7 +18,6 @@ ResultsTableModel::ResultsTableModel(int type, CompetitionResults *results, Abst
 
 QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
 {
-    qDebug()<<"ResultsTableModel";
     if (!index.isValid())
         return QVariant();
 
@@ -27,17 +26,14 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         case CompetitionRules::Individual:{
             switch(index.column()){
             case 0:
-                qDebug()<<"pos: "<<results->getResultsReference().at(index.row()).getPosition();
                 return results->getResultsReference().at(index.row()).getPosition();
                 //return indResults->getEditableJumpersResults().at(index.row()).getPosition();
                 break;
             case 1:
                 //qDebug()<<index.column()<<", "<<indResults->getEditableJumpersResults().at(index.row()).getJumper()->getNameAndSurname().toUpper();
-                qDebug()<<"NS: "<<results->getResultsReference().at(index.row()).getJumper()->getNameAndSurname();
                 return results->getResultsReference().at(index.row()).getJumper()->getNameAndSurname();
                 break;
             case 2:
-                qDebug()<<"points: "<<results->getResultsReference().at(index.row()).getPointsSum();
                 return results->getResultsReference().at(index.row()).getPointsSum();
                 break;
             }
@@ -68,22 +64,27 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         switch(type){
         case CompetitionRules::Individual:{
             results->sortInDescendingOrder();
+            if(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses) == nullptr){
+                return QColor(qRgb(255, 255, 255));
+            }
             switch(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses)->getAdvanceStatus())
             {
             case StartListCompetitorStatus::Waiting:
                 return QColor(qRgb(253, 253, 249));
             case StartListCompetitorStatus::SureAdvanced:
-                return QColor(qRgb(237, 247, 240));
+                if(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses)->getQualifiedBy95HSRule())
+                    return QColor(qRgb(233, 245, 236));
+                else{
+                    return QColor(qRgb(242, 255, 246));
+                }
             case StartListCompetitorStatus::SureDroppedOut:
                 return QColor(qRgb(252, 237, 237));
             }
-
             break;
         }
         }
     }
     else if(role == Qt::DecorationRole){
-        qDebug()<<"decorqation";
         switch(index.column()){
         case 1:
             switch(type){
