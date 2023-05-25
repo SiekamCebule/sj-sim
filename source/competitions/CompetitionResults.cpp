@@ -54,39 +54,28 @@ CompetitionSingleResult *CompetitionResults::getResultByIndex(int index)
 
 void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
 {
-    qDebug()<<"void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)";
     CompetitionSingleResult *result = nullptr;
     for(auto & res : results){
         if(res.getJumper() == jumper){
             result = &res;
-
             break;
         }
     }
     if(result == nullptr){
-        qDebug()<<"nno";
         results.push_back(CompetitionSingleResult(jumper, CompetitionSingleResult::IndividualResult));
         result = &results[results.count() - 1];
     }
-    qDebug()<<"piko skraaaaa";
+    qDebug()<<result->getJumper()->getNameAndSurname();
     int index = jumpNumber;
     if(jumpNumber == -1 || jumpNumber >= result->getJumpsReference().count())
-        index = result->getJumpsReference().count() - 1;
-    if(index < 0)
-        index = 0;
+        result->getJumpsReference().push_back(jump);
+    else{
+        if(jumpNumber < 0)
+            index = 0;
 
-    qDebug()<<"piko";
-    qDebug()<<"INDEX: "<<index;
-
-    for(auto & res : results){
-        if(&res == result){
-            result->getJumpsReference().insert(index, jump);
-            result->updatePointsSum();
-            break;
-            qDebug()<<"ptssum: "<<result->getPointsSum();
-        }
+        result->getJumpsReference().insert(index, jump);
     }
-    qDebug()<<"hi pepole";
+    result->updatePointsSum();
 }
 
 void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
@@ -104,32 +93,28 @@ void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
     }
     int index = jumpNumber;
     if(jumpNumber == -1 || jumpNumber >= result->getJumpsReference().count())
-        index = result->getJumpsReference().count() - 1;
-    else if(jumpNumber < 0)
-        index = 0;
+        result->getJumpsReference().push_back(jump);
+    else{
+        if(jumpNumber < 0)
+            index = 0;
 
-    for(auto & res : results){
-        if(&res == result){
-            result->getJumpsReference().insert(index, jump);
-            result->updatePointsSum();
-        }
+        result->getJumpsReference().insert(index, jump);
     }
+    result->updatePointsSum();
 }
 
 void CompetitionResults::addJump(CompetitionSingleResult *result, JumpData &jump, int jumpNumber)
 {
     int index = jumpNumber;
     if(jumpNumber == -1 || jumpNumber >= result->getJumpsReference().count())
-        index = result->getJumpsReference().count() - 1;
-    else if(jumpNumber < 0)
-        index = 0;
-    int i=0;
-    for(auto & res : results){
-        if(&res == result){
-            result->getJumpsReference().insert(index, jump);
-            result->updatePointsSum();
-        }
+        result->getJumpsReference().push_back(jump);
+    else{
+        if(jumpNumber < 0)
+            index = 0;
+
+        result->getJumpsReference().insert(index, jump);
     }
+    result->updatePointsSum();
 }
 
 void CompetitionResults::updatePositions()

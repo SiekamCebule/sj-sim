@@ -26,6 +26,7 @@ void JumperCompetitionResultsWidget::fillWidget()
     ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumperResult->getJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
     ui->label_pointsSum->setText(QString::number(jumperResult->getPointsSum()) + tr(" punktów"));
     //qDebug()<<jumperResult->getPosition()<<" pos";
+    qDebug()<<jumperResult->getJumper()->getNameAndSurname()<<", "<<jumperResult->getPointsSum()<<", "<<jumperResult->getPosition();
     ui->label_actualPosition->setText("(" + QString::number(jumperResult->getPosition()) + tr(" miejsce)"));
 
     for(int i=0; i<ui->tabWidget_jumps->count(); i++){

@@ -409,17 +409,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             info.setResults(new CompetitionResults());
             info.setSerieType(CompetitionInfo::Competition);
             qDebug()<<"Anoo";
-            if(qualificationsResults != nullptr){
-                if(qualificationsResults->getResultsReference().count() > 0){
-                    competitionManager->getRoundsJumpersReference().append(qualificationsManager->getFilteredJumpersForNextRound());// właściwa ilość skoczków jest jako druga a nie pierwsza
-                    competitionManager->getRoundsStartingGatesReference().append(qualificationsManager->getActualGate());
-                }
-            }
-            else{
-                QVector<Jumper *> jumpers;
-                for(auto & j : competitionJumpers) jumpers.push_back(&j);
-                competitionManager->getRoundsJumpersReference().append(jumpers);
-            }
+
             //competitionManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
             //Wypełnić
 
@@ -428,10 +418,30 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             competitionManager->setResults(info.getResults());
             competitionManager->setActualGate(ui->spinBox_startGate->value());
             competitionManager->setActualRound(1);
-            competitionManager->setActualStartListIndex(0);
             competitionManager->setBaseDSQProbability(ui->spinBox_dsqProbability->value());
-            competitionManager->setupStartListStatusesForActualRound();
             competitionManager->setWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
+
+            if(qualificationsResults != nullptr){
+                if(qualsInfo.getCancelled() == true)
+                    return;
+                if(qualificationsResults->getResultsReference().count() > 0){
+                    competitionManager->getRoundsJumpersReference().push_back(qualificationsManager->getFilteredJumpersForNextRound());// właściwa ilość skoczków jest jako druga a nie pierwsza
+                    qDebug()<<"fryty: "<<competitionManager->getRoundsJumpersReference().first().count();
+                    competitionManager->getRoundsStartingGatesReference().append(qualificationsManager->getActualGate());
+                    competitionManager->setActualGate(qualificationsManager->getActualGate());
+                    competitionManager->setWindGenerationSettings(qualificationsManager->getWindGenerationSettingsReference());
+                }
+            }
+            else{
+                QVector<Jumper *> jumpers;
+                for(auto & j : competitionJumpers) jumpers.push_back(&j);
+                competitionManager->getRoundsJumpersReference().append(jumpers);
+            }
+            competitionManager->setupStartListStatusesForActualRound();
+            qDebug()<<":DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD";
+            qDebug()<<competitionManager->getRoundsJumpersReference().first().count();
+            competitionManager->setActualStartListIndex(0);
+
             CompetitionManagerWindow * window = new CompetitionManagerWindow(competitionManager, this);
             if(window->exec() == QDialog::Accepted)
             {

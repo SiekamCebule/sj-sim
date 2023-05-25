@@ -18,6 +18,16 @@ CompetitionInfo::~CompetitionInfo()
     }
 }
 
+bool CompetitionInfo::getCancelled() const
+{
+    return cancelled;
+}
+
+void CompetitionInfo::setCancelled(bool newCancelled)
+{
+    cancelled = newCancelled;
+}
+
 int CompetitionInfo::getExceptionalRoundsCount() const
 {
     return exceptionalRoundsCount;

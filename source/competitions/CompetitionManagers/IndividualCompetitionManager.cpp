@@ -105,6 +105,7 @@ void IndividualCompetitionManager::updateActualCompetitorPointsToTheLeader()
 
 void IndividualCompetitionManager::updateCompetitorsAdvanceStatuses()
 {
+    results->updatePositions();
     for(auto & status : startListStatuses)
     {
         if(actualRound == competitionRules->getRounds().count() || getActualRoundJumpersReference().count() <= competitionRules->getRounds().at(actualRound).getCount() || status.getQualifiedBy95HSRule())
@@ -119,15 +120,10 @@ void IndividualCompetitionManager::updateCompetitorsAdvanceStatuses()
                 results->sortInDescendingOrder();
                 QVector<CompetitionSingleResult> * res = &results->getResultsReference();
                 int lastPosition = 0;
-                qDebug()<<"ptr";
-                qDebug()<<res->count();
                 for(int i = res->count() - 1; i>=0; i--){
-                    qDebug()<<res->at(i).getPosition()<<", "<<competitionRules->getRounds().at(actualRound).getCount();
                     if(res->at(i).getPosition() < competitionRules->getRounds().at(actualRound).getCount()){
-                        qDebug()<<"ZMNK";
                         if(res->at(i).getPosition() == lastPosition) //mamy egzekwo
                         {
-                            qDebug()<<"egzekwo";
                             int exaequos = 0;
                             for(int i = res->count() - 1; i>=0; i--){
                                 if(res->at(i).getPosition() == lastPosition){
@@ -155,6 +151,12 @@ void IndividualCompetitionManager::updateCompetitorsAdvanceStatuses()
 QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound()
 {
     QVector<Jumper *> jumpers;
+    int i = 1;
+    for(auto & status : startListStatuses){
+        qDebug()<<i<<"> "<<status.getJumper()->getNameAndSurname()<<" --> "<<status.getAdvanceStatus();
+        i++;
+    }
+
     if(competitionRules->getRounds().at(actualRound - 1).getSortStartList() == true){
         results->sortInAscendingOrder();
         for(auto & res : results->getResultsReference()){
@@ -233,16 +235,12 @@ void IndividualCompetitionManager::setActualJumperToNextUnfinished()
 
 void IndividualCompetitionManager::setupNextRound()
 {
-    qDebug()<<"Nowa runda";
     actualRound++; //Przechodzi do następnej rundy
     qDebug()<<results->getResultsReference().count();
     qDebug()<<this->competitionRules->getName();
     roundsJumpers.push_back(getFilteredJumpersForNextRound());
-    qDebug()<<"a";
     setActualStartListIndex(0);
-    qDebug()<<"a";
     roundsStartingGates.push_back(actualGate);
-    qDebug()<<"a";
     setupStartListStatusesForActualRound();
 }
 
@@ -250,11 +248,8 @@ void IndividualCompetitionManager::setupStartListStatusesForActualRound()
 {
     startListStatuses.clear();
     for(auto & jumper : getActualRoundJumpersReference()){
-        qDebug()<<"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB: "<<jumper->getNameAndSurname();
         startListStatuses.push_back(StartListCompetitorStatus(jumper));
     }
-
-    qDebug()<<"startListStatuses :"<<startListStatuses.count();
 }
 
 QVector<QVector<Jumper *> > IndividualCompetitionManager::getRoundsJumpers() const

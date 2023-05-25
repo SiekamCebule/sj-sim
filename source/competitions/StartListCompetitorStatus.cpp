@@ -2,7 +2,7 @@
 
 StartListCompetitorStatus::StartListCompetitorStatus(Jumper *jumper, int jumpStatus, int advanceStatus) : jumper(jumper), jumpStatus(jumpStatus), advanceStatus(advanceStatus)
 {
-
+    qualifiedBy95HSRule = false;
 }
 
 bool StartListCompetitorStatus::getQualifiedBy95HSRule() const
