@@ -2,10 +2,10 @@
 
 #include "CompetitionInfo.h"
 
-CompetitionSingleResult::CompetitionSingleResult(int type, Jumper *jumper) : type(type), jumper(jumper), team(nullptr), competitionInfo(nullptr)
+CompetitionSingleResult::CompetitionSingleResult(Jumper *jumper, int type) : type(type), jumper(jumper), team(nullptr), competitionInfo(nullptr)
 {}
 
-CompetitionSingleResult::CompetitionSingleResult(int type, Team *team) : type(type), jumper(nullptr), team(team), competitionInfo(nullptr)
+CompetitionSingleResult::CompetitionSingleResult(Team *team, int type) : type(type), jumper(nullptr), team(team), competitionInfo(nullptr)
 {}
 
 int CompetitionSingleResult::getPosition() const
@@ -87,26 +87,7 @@ void CompetitionSingleResult::updatePointsSum()
 {
     pointsSum = 0;
     for(auto & res : jumps){
+        qDebug()<<"AAAAAAAAAAAAAAAAAAAAAA: "<<res.getPoints();
         pointsSum += res.getPoints();
     }
-}
-
-double CompetitionSingleResult::getPointsSum() const
-{
-    return pointsSum;
-}
-
-void CompetitionSingleResult::setPointsSum(double newPointsSum)
-{
-    pointsSum = newPointsSum;
-}
-
-CompetitionInfo *CompetitionSingleResult::getCompetitionInfo() const
-{
-    return competitionInfo;
-}
-
-void CompetitionSingleResult::setCompetitionInfo(CompetitionInfo *newCompetitionInfo)
-{
-    competitionInfo = newCompetitionInfo;
 }

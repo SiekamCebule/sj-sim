@@ -27,6 +27,7 @@ private:
     CompetitionResults * results;
     short serieType;
     int exceptionalRoundsCount;
+    bool cancelled;
 
 public:
     Hill *getHill() const;
@@ -40,6 +41,8 @@ public:
     void setSerieType(short newSerieType);
     int getExceptionalRoundsCount() const;
     void setExceptionalRoundsCount(int newExceptionalRoundsCount);
+    bool getCancelled() const;
+    void setCancelled(bool newCancelled);
 };
 
 #endif // COMPETITIONINFO_H

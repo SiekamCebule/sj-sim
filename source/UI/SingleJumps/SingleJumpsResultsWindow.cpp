@@ -186,7 +186,7 @@ QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForDistancesChart()
     QMap<int, int> distances;
     for(const auto & jump : manager->getJumps())
     {
-        if(jump.getIsDSQOccured() == false){
+        if(jump.getDSQ() == false){
             double distance = std::round(jump.getDistance());
             if(distances.contains(distance))
             {
@@ -213,7 +213,7 @@ QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForPointsChart()
     QMap<int, int> pointsMap;
     for(const auto & jump : manager->getJumps())
     {
-        if(jump.getIsDSQOccured() == false){
+        if(jump.getDSQ() == false){
             double points = std::round(jump.getPoints());
             if(pointsMap.contains(points))
             {
@@ -245,7 +245,7 @@ QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForJudgesChart()
     QMap<double, int> judges;
     for(const auto & jump : manager->getJumps())
     {
-        if(jump.getIsDSQOccured() == false){
+        if(jump.getDSQ() == false){
             for(int i=0; i<5; i++){
                 double judge = jump.getJudges().at(i);//std::round(jump.getJudges().at(i));
                 if(judges.contains(judge))
@@ -277,7 +277,7 @@ QBarSeries *SingleJumpsResultsWindow::getBarSeriesForLandingsChar()
     QMap<short, int> landings;
     for(const auto & jump : manager->getJumps())
     {
-        if(jump.getIsDSQOccured() == false){
+        if(jump.getDSQ() == false){
             short type = jump.getLanding().getType();
             if(landings.contains(type))
             {
@@ -312,7 +312,7 @@ QSplineSeries *SingleJumpsResultsWindow::getSplineSeriesForWindsChart()
     QMap<double, int> winds;
     for(const auto & jump : manager->getJumps())
     {
-        if(jump.getIsDSQOccured() == false){
+        if(jump.getDSQ() == false){
             double wind = jump.getAveragedWind();
             wind *= 20;
             wind = round(wind);

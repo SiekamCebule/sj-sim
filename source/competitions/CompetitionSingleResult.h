@@ -12,6 +12,12 @@ class CompetitionSingleResult : public ClassWithID
 public:
     CompetitionSingleResult(Jumper * jumper = nullptr, int type = 0);
     CompetitionSingleResult(Team * team, int type = 0);
+    inline bool operator<(const CompetitionSingleResult & second) {return pointsSum < second.getPointsSum();}
+    //inline bool operator>(const CompetitionSingleResult & second) {return pointsSum > second.getPointsSum();}
+    enum Type{
+        IndividualResult,
+        TeamResult
+    };
 
 protected:
     CompetitionInfo * competitionInfo;
@@ -19,10 +25,6 @@ protected:
     double pointsSum;
     int position;
 
-    enum Type{
-        IndividualResult,
-        TeamResult
-    };
     int type;
     Jumper * jumper;
     Team * team;
@@ -46,5 +48,24 @@ public:
     int getPosition() const;
     void setPosition(int newPosition);
 };
+
+inline bool operator>(const CompetitionSingleResult & l, const CompetitionSingleResult & r)
+{
+    if(l.getPointsSum() == r.getPointsSum())
+    {
+        return l.getID() > r.getID();
+    }
+    else return l.getPointsSum() > r.getPointsSum();
+}
+
+inline bool operator<(const CompetitionSingleResult & l, const CompetitionSingleResult & r)
+{
+    if(l.getPointsSum() == r.getPointsSum())
+    {
+        return l.getID() < r.getID();
+    }
+    else return l.getPointsSum() < r.getPointsSum();
+}
+
 
 #endif // COMPETITIONSINGLERESULT_H

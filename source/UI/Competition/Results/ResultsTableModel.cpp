@@ -64,22 +64,36 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         switch(type){
         case CompetitionRules::Individual:{
             results->sortInDescendingOrder();
-
+            if(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses) == nullptr){
+                return QColor(qRgb(255, 255, 255));
+            }
+            switch(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses)->getAdvanceStatus())
+            {
+            case StartListCompetitorStatus::Waiting:
+                return QColor(qRgb(253, 253, 249));
+            case StartListCompetitorStatus::SureAdvanced:
+                if(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses)->getQualifiedBy95HSRule())
+                    return QColor(qRgb(233, 245, 236));
+                else{
+                    return QColor(qRgb(242, 255, 246));
+                }
+            case StartListCompetitorStatus::SureDroppedOut:
+                return QColor(qRgb(252, 237, 237));
+            }
             break;
         }
         }
     }
     else if(role == Qt::DecorationRole){
-
         switch(index.column()){
         case 1:
             switch(type){
             case CompetitionRules::Individual:{
-                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultByIndex(index.column())->getJumper()->getCountryCode().toLower()));
+                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultByIndex(index.row())->getJumper()->getCountryCode().toLower())).scaled(40, 28.5);
                 break;
             }
             case CompetitionRules::Team:{
-                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultByIndex(index.column())->getTeam()->getCountryCode().toLower()));
+                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultByIndex(index.row())->getTeam()->getCountryCode().toLower())).scaled(40, 28.5);
                 break;
             }
             }
@@ -118,6 +132,16 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
 
     // FIXME: Implement me!
     return QVariant();
+}
+
+QVector<StartListCompetitorStatus> *ResultsTableModel::getStartListStatuses() const
+{
+    return startListStatuses;
+}
+
+void ResultsTableModel::setStartListStatuses(QVector<StartListCompetitorStatus> *newStartListStatuses)
+{
+    startListStatuses = newStartListStatuses;
 }
 
 AbstractCompetitionManager *ResultsTableModel::getManager() const
@@ -193,7 +217,7 @@ int ResultsTableModel::rowCount(const QModelIndex &parent) const
 
     switch(type){
     case CompetitionRules::Individual:
-        return dynamic_cast<IndividualCompetitionResults *>(results)->getEditableJumpersResults().count();
+        return results->getResultsReference().count();
     case CompetitionRules::Team:
         return 0;
     }
@@ -209,9 +233,9 @@ int ResultsTableModel::columnCount(const QModelIndex &parent) const
     switch(type){
     case CompetitionRules::Individual:{
         int max = 0;
-        for(auto & res : dynamic_cast<IndividualCompetitionResults *>(results)->getJumpersResults()){
-            if(res.getJumps().count() > max)
-                max = res.getJumps().count();
+        for(auto & res : results->getResultsReference()){
+            if(res.getJumpsReference().count() > max)
+                max = res.getJumpsReference().count();
         }
         if(max == 0)
             return 0;

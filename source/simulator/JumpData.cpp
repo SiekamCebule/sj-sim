@@ -12,7 +12,20 @@
 
 JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill)
-{}
+{
+    DSQ = false;
+    DNS = false;
+}
+
+bool JumpData::getDSQ() const
+{
+    return DSQ;
+}
+
+void JumpData::setDSQ(bool newDSQ)
+{
+    DSQ = newDSQ;
+}
 
 bool JumpData::getBeats95HSPercents() const
 {
@@ -79,16 +92,6 @@ void JumpData::setRules(CompetitionRules *newRules)
     rules = newRules;
 }
 
-bool JumpData::getIsDSQOccured() const
-{
-    return isDSQOccured;
-}
-
-void JumpData::setIsDSQOccured(bool newIsDSQOccured)
-{
-    isDSQOccured = newIsDSQOccured;
-}
-
 JumpSimulationData JumpData::getSimulationData() const
 {
     return simulationData;
@@ -141,7 +144,7 @@ void JumpData::reset()
     hill = nullptr;
     simulator = nullptr;
     rules = nullptr;
-    isDSQOccured = false;
+    DSQ = false;
     simulationData.reset();
 }
 

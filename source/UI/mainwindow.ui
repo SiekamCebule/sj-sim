@@ -84,7 +84,7 @@ color: rgb(0, 75, 111);
 }</string>
             </property>
             <property name="text">
-             <string>sj.sim</string>
+             <string>Sj.Sim</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>

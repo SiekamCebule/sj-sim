@@ -39,7 +39,7 @@ private:
     QVector<Wind> winds;
     double averagedWind;
 
-    bool isDSQOccured;
+    bool DSQ;
     bool DNS;
 
     bool hasCoachGate;
@@ -83,8 +83,6 @@ public:
     void setAveragedWind(double newAveragedWind);
     JumpSimulationData getSimulationData() const;
     void setSimulationData(const JumpSimulationData &newSimulationData);
-    bool getIsDSQOccured() const;
-    void setIsDSQOccured(bool newIsDSQOccured);
     CompetitionRules *getRules() const;
     void setRules(CompetitionRules *newRules);
     QVector<Wind> getWinds() const;
@@ -98,6 +96,8 @@ public:
     void setCoachGate(int newCoachGate);
     bool getBeats95HSPercents() const;
     void setBeats95HSPercents(bool newBeats95HSPercents);
+    bool getDSQ() const;
+    void setDSQ(bool newDSQ);
 };
 
 QDebug operator<<(QDebug d, const JumpData & jumpData);

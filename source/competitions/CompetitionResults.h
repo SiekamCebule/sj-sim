@@ -32,6 +32,7 @@ public:
 
     void updatePositions();
     void sortInDescendingOrder();
+    void sortInAscendingOrder();
 };
 
 #endif // COMPETITIONRESULTS_H

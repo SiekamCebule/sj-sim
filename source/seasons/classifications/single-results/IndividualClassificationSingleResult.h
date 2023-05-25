@@ -2,7 +2,7 @@
 #define INDIVIDUALCLASSIFICATIONSINGLERESULT_H
 
 #include <QVector>
-#include "../../../competitions/IndividualCompetitions/IndividualCompetitionResult.h"
+#include "../../../competitions/CompetitionResults.h"
 #include "AbstractClassificationSingleResult.h"
 
 
@@ -12,11 +12,11 @@ public:
     IndividualClassificationSingleResult();
 
 private:
-    QVector<IndividualCompetitionResult *> competitionsResults;
+    QVector<CompetitionSingleResult *> competitionsResults;
 
 public:
-    QVector<IndividualCompetitionResult *> getCompetitionsResults() const;
-    void setCompetitionsResults(const QVector<IndividualCompetitionResult *> &newCompetitionsResults);
+    QVector<CompetitionSingleResult *> getCompetitionsResults() const;
+    void setCompetitionsResults(const QVector<CompetitionSingleResult *> &newCompetitionsResults);
 };
 
 #endif // INDIVIDUALCLASSIFICATIONSINGLERESULT_H
