@@ -9,6 +9,7 @@
 CompetitionInfo::CompetitionInfo()
 {
     exceptionalRoundsCount = (-1);
+    cancelled = false;
 }
 
 CompetitionInfo::~CompetitionInfo()

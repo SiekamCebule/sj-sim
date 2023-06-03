@@ -23,7 +23,7 @@ private:
 public:
     void setJumper(Jumper * jumper, int index);
     QVector<Jumper *> getJumpers() const;
-    QVector<Jumper*> & getEditableJumpers();
+    QVector<Jumper*> & getJumpersReference();
     void setJumpers(const QVector<Jumper *> &newJumpers);
     int getJumpersCount() const;
     void setJumpersCount(int newJumpersCount);

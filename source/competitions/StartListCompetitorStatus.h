@@ -2,6 +2,7 @@
 #define STARTLISTCOMPETITORSTATUS_H
 
 #include "../simulator/Jumper.h"
+#include "../simulator/Team.h"
 
 class StartListCompetitorStatus
 {

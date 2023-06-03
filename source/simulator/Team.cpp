@@ -35,12 +35,12 @@ QVector<Team> Team::constructTeamsVectorByJumpersList(QVector<Jumper> * const ju
     for(const auto & jumper : *jumpers)
     {
         if(codes.contains(jumper.getCountryCode().toUpper()) == true){
-            teams[i].getEditableJumpers().push_back(const_cast<Jumper *>(&jumper));
+            teams[i].getJumpersReference().push_back(const_cast<Jumper *>(&jumper));
         }
         else{
             codes.append(jumper.getCountryCode().toUpper());
             Team team;
-            team.getEditableJumpers().push_back(const_cast<Jumper *>(&jumper));
+            team.getJumpersReference().push_back(const_cast<Jumper *>(&jumper));
             team.setCountryCode(jumper.getCountryCode());
             teams.append(team);
 
@@ -85,7 +85,7 @@ QVector<Jumper *> Team::getJumpers() const
     return jumpers;
 }
 
-QVector<Jumper *> &Team::getEditableJumpers()
+QVector<Jumper *> &Team::getJumpersReference()
 {
     return jumpers;
 }

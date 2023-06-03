@@ -15,16 +15,16 @@ class AbstractCompetitionManager : public QObject
 {
     Q_OBJECT
 public:
-    AbstractCompetitionManager(short type = CompetitionRules::Individual, int startingGate = 0);
+    AbstractCompetitionManager(short type = CompetitionRules::Individual);
 
     bool checkRoundEnd();
     bool checkCompetitionEnd();
 
-    virtual void updateToBeatLineDistance() {}
-    virtual void updateToAdvanceLineDistance() {}
+    void updateToBeatLineDistance();
+    void updateToAdvanceLineDistance();
     void updateLeaderResult();
-    virtual void updateLastQualifiedResult() {}
-    virtual void updateActualCompetitorPointsToTheLeader() {}
+    void updateLastQualifiedResult();
+    void updateActualCompetitorPointsToTheLeader();
 
     int getFirstUnfinishedStartListStatus();
     bool isAllJumpsAreFinished();

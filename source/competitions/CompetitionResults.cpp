@@ -31,8 +31,9 @@ CompetitionSingleResult *CompetitionResults::getResultOfIndividualJumper(Jumper 
 {
     for(auto & result : results)
     {
-        if(result.getJumper() == jumper)
+        if(result.getJumper() == jumper){
             return &result;
+        }
     }
     return nullptr;
 }
@@ -145,6 +146,9 @@ void CompetitionResults::updatePositions()
         previousResultPoints = result.getPointsSum();
         i++;
     }
+   // for(auto & result : results){
+     //   qDebug()<<result.getJumper()->getNameAndSurname()<<": "<<result.getPosition();
+    //}
 }
 
 void CompetitionResults::sortInDescendingOrder()

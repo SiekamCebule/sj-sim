@@ -46,6 +46,7 @@ SOURCES += \
     source/UI/SingleJumps/SingleJumpsResultsWindow.cpp \
     source/competitions/AbstractCompetitionManager.cpp \
     source/competitions/CompetitionInfo.cpp \
+    source/competitions/CompetitionManagers/TeamCompetitionManager.cpp \
     source/competitions/CompetitionResults.cpp \
     source/competitions/CompetitionRules.cpp \
     source/competitions/CompetitionSingleResult.cpp \
@@ -129,6 +130,7 @@ HEADERS += \
     source/UI/mainwindow.h \
     source/competitions/AbstractCompetitionManager.h \
     source/competitions/CompetitionInfo.h \
+    source/competitions/CompetitionManagers/TeamCompetitionManager.h \
     source/competitions/CompetitionResults.h \
     source/competitions/CompetitionRules.h \
     source/competitions/CompetitionSingleResult.h \
