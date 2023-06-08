@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1248</width>
+    <width>1316</width>
     <height>889</height>
    </rect>
   </property>
@@ -67,7 +67,7 @@ color: rgb(26, 95, 180);
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,5,0,0">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_startList">
        <property name="sizeConstraint">
@@ -135,7 +135,7 @@ color: rgb(26, 95, 180);
      <item>
       <widget class="QToolBox" name="toolBox">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -156,7 +156,7 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>626</width>
+          <width>603</width>
           <height>754</height>
          </rect>
         </property>
@@ -233,7 +233,7 @@ color: black;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>626</width>
+          <width>603</width>
           <height>754</height>
          </rect>
         </property>
@@ -253,7 +253,7 @@ color: black;
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>60</width>
+         <width>47</width>
          <height>20</height>
         </size>
        </property>

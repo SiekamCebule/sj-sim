@@ -1,8 +1,10 @@
 #include "AbstractCompetitionManager.h"
-
+#include "CompetitionManagers/TeamCompetitionManager.h"
+#include "CompetitionManagers/IndividualCompetitionManager.h"
+#include "../utilities/functions.h"
 #include <QDebug>
 
-AbstractCompetitionManager::AbstractCompetitionManager(short type, int startingGate) : type(type)
+AbstractCompetitionManager::AbstractCompetitionManager(short type) : type(type)
 {
     actualGate = actualRound = 0;
     results = nullptr;
@@ -13,7 +15,6 @@ AbstractCompetitionManager::AbstractCompetitionManager(short type, int startingG
     actualCoachGate = 0;
     setActualStartListIndex(0);
     actualCompetitorPointsToTheLeader = 0;
-    roundsStartingGates = {startingGate};
 }
 
 bool AbstractCompetitionManager::checkRoundEnd()
@@ -26,10 +27,172 @@ bool AbstractCompetitionManager::checkCompetitionEnd()
     return (checkRoundEnd() && (actualRound == competitionRules->getEditableRounds().count() || actualRound == competitionInfo->getExceptionalRoundsCount()));
 }
 
+void AbstractCompetitionManager::updateToBeatLineDistance()
+{
+    results->sortInDescendingOrder();
+    Hill * hill = competitionInfo->getHill();
+    double leaderPoints = leaderResult->getPointsSum();
+
+    double windCompensation = WindsCalculator::getWindCompensation(WindsCalculator::getAveragedWind(*actualWinds, competitionRules->getWindAverageCalculatingType()).getStrengthToAveragedWind(), competitionInfo->getHill());
+    int tempGate = actualGate;
+    if(coachGateForNextJumper == true) tempGate = actualCoachGate;
+    double gateCompensation = WindsCalculator::getGateCompensation(roundsStartingGates.at(actualRound - 1), tempGate, competitionInfo->getHill());
+    toBeatLineDistance = 0;
+    if(actualRound == 1){
+        toBeatLineDistance = leaderPoints;
+    }
+    else{
+        double actualJumperPoints = 0;
+        if(type == CompetitionRules::Individual){
+            actualJumperPoints = results->getResultOfIndividualJumper(actualJumper)->getPointsSum();
+        }
+        else if(type == CompetitionRules::Team){
+            actualJumperPoints = results->getResultOfTeam(dynamic_cast<TeamCompetitionManager*>(this)->getActualTeam())->getPointsSum();
+        }
+        toBeatLineDistance = leaderPoints - actualJumperPoints;
+    }
+    toBeatLineDistance -= hill->getPointsForKPoint();
+    if(competitionRules->getHasJudgesPoints())
+    {
+        toBeatLineDistance -= 54;
+    }
+    if(competitionRules->getHasGateCompensations())
+        toBeatLineDistance -= gateCompensation;
+    if(competitionRules->getHasWindCompensations())
+        toBeatLineDistance -= windCompensation;
+
+    toBeatLineDistance /= hill->getPointsForMeter();
+    toBeatLineDistance += hill->getKPoint();
+    toBeatLineDistance = std::round(toBeatLineDistance * 2) / 2;
+}
+
+void AbstractCompetitionManager::updateToAdvanceLineDistance()
+{
+    results->sortInDescendingOrder();
+    Hill * hill = competitionInfo->getHill();
+
+    int shouldBeQualified = 0;
+    if(actualRound < competitionRules->getRounds().count())
+        shouldBeQualified = competitionRules->getRounds().at(actualRound).getCount();
+    toAdvanceLineDistance = 0;
+
+    int competitorsCount = 0;
+    if(type == CompetitionRules::Individual){
+        competitorsCount = dynamic_cast<IndividualCompetitionManager*>(this)->getActualRoundJumpersReference().count();
+    }
+    else if(type == CompetitionRules::Team){
+        competitorsCount = dynamic_cast<TeamCompetitionManager*>(this)->getActualRoundTeamsReference().count();
+    }
+
+    if(competitorsCount - shouldBeQualified - (actualStartListIndex) > 0 || actualRound == competitionRules->getRounds().count() || competitorsCount <= shouldBeQualified || lastQualifiedResult == nullptr)
+    {
+        toAdvanceLineDistance = -1;
+    }
+    else{
+        double lastQualifiedPoints = lastQualifiedResult->getPointsSum();
+        if(actualRound == 1){
+            toAdvanceLineDistance = lastQualifiedPoints;
+        }
+        else{
+            double actualJumperPoints = 0;
+            if(type == CompetitionRules::Individual){
+                actualJumperPoints = results->getResultOfIndividualJumper(actualJumper)->getPointsSum();
+            }
+            else if(type == CompetitionRules::Team){
+                actualJumperPoints = results->getResultOfTeam(dynamic_cast<TeamCompetitionManager*>(this)->getActualTeam())->getPointsSum();
+            }
+            toAdvanceLineDistance = lastQualifiedPoints - actualJumperPoints;
+        }
+        double windCompensation = WindsCalculator::getWindCompensation(WindsCalculator::getAveragedWind(*actualWinds, competitionRules->getWindAverageCalculatingType()).getStrengthToAveragedWind(), competitionInfo->getHill());
+        int tempGate = actualGate;
+        if(coachGateForNextJumper == true) tempGate = getActualCoachGate();
+        double gateCompensation = WindsCalculator::getGateCompensation(roundsStartingGates[actualRound - 1], tempGate, competitionInfo->getHill());
+
+        toAdvanceLineDistance -= hill->getPointsForKPoint();
+        if(competitionRules->getHasJudgesPoints())
+        {
+            toAdvanceLineDistance -= 54;
+        }
+        if(competitionRules->getHasGateCompensations())
+            toAdvanceLineDistance -= gateCompensation;
+        if(competitionRules->getHasWindCompensations())
+            toAdvanceLineDistance -= windCompensation;
+
+        toAdvanceLineDistance /= hill->getPointsForMeter();
+        toAdvanceLineDistance += hill->getKPoint();
+        toAdvanceLineDistance = std::round(toAdvanceLineDistance * 2) / 2;
+    }
+}
+
+
 void AbstractCompetitionManager::updateLeaderResult()
 {
     results->sortInDescendingOrder();
     leaderResult = results->getResultByIndex(0);
+}
+
+void AbstractCompetitionManager::updateLastQualifiedResult()
+{
+    results->sortInDescendingOrder();
+
+    int competitorsCount = 0;
+    if(type == CompetitionRules::Individual){
+        competitorsCount = dynamic_cast<IndividualCompetitionManager*>(this)->getActualRoundJumpersReference().count();
+    }
+    else if(type == CompetitionRules::Team){
+        competitorsCount = dynamic_cast<TeamCompetitionManager*>(this)->getActualRoundTeamsReference().count();
+    }
+
+    int lastQualifiedPosition = 0;
+
+    int shouldBeQualified = 0;
+    if(actualRound < competitionRules->getRounds().count())
+        shouldBeQualified = competitionRules->getRounds().at(actualRound).getCount();
+    if(competitorsCount - shouldBeQualified - (actualStartListIndex) > 0 || actualRound == competitionRules->getRounds().count() || competitorsCount <= shouldBeQualified){
+        lastQualifiedPosition = -1;
+    }
+    else{
+        bool exaequo = true;
+        lastQualifiedPosition = abs(competitorsCount - shouldBeQualified - (actualStartListIndex + 1));
+
+        for(auto & res : results->getResultsReference()){ // Sprawdzamy, czy wystąpiło ex aequo.
+            if(res.getPosition() == lastQualifiedPosition){
+                exaequo = false;
+                break;
+            }
+        }
+        if(exaequo == true) // Jeżeli wystąpiło ex aequo
+        {
+            for(auto & res : results->getResultsReference()){
+                if(res.getPosition() > lastQualifiedPosition){
+                    lastQualifiedPosition = res.getPosition();
+                    break;
+                }
+            }
+        }
+    }
+
+    if(lastQualifiedPosition > 0 && lastQualifiedPosition <= results->getResultsReference().count() && actualRound < competitionRules->getRounds().count())
+        lastQualifiedResult = results->getResultByIndex(lastQualifiedPosition - 1);
+    else
+        lastQualifiedResult = nullptr;
+}
+
+void AbstractCompetitionManager::updateActualCompetitorPointsToTheLeader()
+{
+    if(actualRound == 1)
+        actualCompetitorPointsToTheLeader = (-1);
+    else{
+        double actualJumperPoints = 0;
+        if(type == CompetitionRules::Individual){
+            actualJumperPoints = results->getResultOfIndividualJumper(actualJumper)->getPointsSum();
+        }
+        else if(type == CompetitionRules::Team){
+            actualJumperPoints = results->getResultOfTeam(dynamic_cast<TeamCompetitionManager*>(this)->getActualTeam())->getPointsSum();
+        }
+        double actualLeaderPointsWithoutActualRound = leaderResult->getPointsSum() - leaderResult->getJumps().at(leaderResult->getJumps().count() - 1).getPoints();
+        actualCompetitorPointsToTheLeader = roundDoubleToOnePlace(actualJumperPoints - actualLeaderPointsWithoutActualRound);
+    }
 }
 
 int AbstractCompetitionManager::getFirstUnfinishedStartListStatus()

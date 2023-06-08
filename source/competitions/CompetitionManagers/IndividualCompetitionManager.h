@@ -13,13 +13,7 @@ class IndividualCompetitionManager : public AbstractCompetitionManager
 {
     Q_OBJECT
 public:
-    IndividualCompetitionManager(short type = CompetitionRules::Individual, int startingGate = 0);
-
-    void updateToBeatLineDistance();
-    void updateToAdvanceLineDistance();
-    void updateActualCompetitorPointsToTheLeader();
-    void updateLastQualifiedResult();
-
+    IndividualCompetitionManager(short type = CompetitionRules::Individual);
     void setActualJumperToNextUnfinished();
 
     void setupNextRound();

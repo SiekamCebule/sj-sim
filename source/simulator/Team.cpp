@@ -11,41 +11,40 @@ Team::Team(const QString &countryCode) : countryCode(countryCode)
     jumpersCount = 0;
 }
 
-QVector<Team> Team::constructTeamsVectorByJumpersList(const QVector<Jumper> &jumpers)
+QVector<Team> Team::constructTeamsVectorByJumpersList(const QVector<Jumper> &jumpers, int minCount)
 {
+    qDebug()<<"minCount: "<<minCount;
     QVector<Team> teams;
     QStringList codes;
     for(const auto & jumper : jumpers)
     {
-        if(codes.contains(jumper.getCountryCode().toUpper()) == true)
-            continue;
-        else{
-            codes.append(jumper.getCountryCode().toUpper());
-            teams.append(Team(jumper.getCountryCode().toUpper()));
-        }
-    }
-
-    return teams;
-}
-QVector<Team> Team::constructTeamsVectorByJumpersList(QVector<Jumper> * const jumpers)
-{
-    QVector<Team> teams;
-    QStringList codes;
-    int i= -1;
-    for(const auto & jumper : *jumpers)
-    {
         if(codes.contains(jumper.getCountryCode().toUpper()) == true){
-            teams[i].getEditableJumpers().push_back(const_cast<Jumper *>(&jumper));
+            for(auto & team : teams){
+                if(team.getCountryCode() == jumper.getCountryCode())
+                    team.getJumpersReference().push_back(const_cast<Jumper *>(&jumper));
+            }
         }
         else{
             codes.append(jumper.getCountryCode().toUpper());
             Team team;
-            team.getEditableJumpers().push_back(const_cast<Jumper *>(&jumper));
+            team.getJumpersReference().push_back(const_cast<Jumper *>(&jumper));
             team.setCountryCode(jumper.getCountryCode());
             teams.append(team);
-
+        }
+    }
+    while(true){
+        bool next = false;
+        int i=0;
+        for(auto & team : teams){
+            if(team.getJumpersReference().count() < minCount){
+                teams.remove(i);
+                next = true;
+                break;
+            }
             i++;
         }
+        if(next == false)
+            break;
     }
 
     return teams;
@@ -85,7 +84,7 @@ QVector<Jumper *> Team::getJumpers() const
     return jumpers;
 }
 
-QVector<Jumper *> &Team::getEditableJumpers()
+QVector<Jumper *> &Team::getJumpersReference()
 {
     return jumpers;
 }

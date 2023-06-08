@@ -4,18 +4,18 @@
 
 #include "../../../global/CountryFlagsManager.h"
 
-TeamEditorWidget::TeamEditorWidget(const QString &teamCode, const QVector<Jumper *> & jumpers, QWidget * parent) : teamCode(teamCode),
-    jumpers(jumpers),
+TeamEditorWidget::TeamEditorWidget(Team *team, int jumpersCount, QWidget * parent) : team(team),
     ui(new Ui::TeamEditorWidget),
-    QWidget(parent)
+    QWidget(parent), jumpersCount(jumpersCount)
 {
     ui->setupUi(this);
 
-    model = new QStandardItemModel(this);
-    ui->listView_jumpers->setModel(model);
-
-    connect(this, &TeamEditorWidget::needToUpdateModel, this, &TeamEditorWidget::updateModelByItemsListVector);
     connect(ui->pushButton_submit, &QPushButton::clicked, this, &TeamEditorWidget::when_submitButtonClicked);
+
+    jumpers = team->getJumpers();
+    model = new TeamJumpersListModel(&jumpers, jumpersCount, this);
+
+    ui->listView_jumpers->setModel(model);
 }
 
 TeamEditorWidget::~TeamEditorWidget()
@@ -25,32 +25,8 @@ TeamEditorWidget::~TeamEditorWidget()
 
 void TeamEditorWidget::fillWidgetInputs()
 {
-    ui->label_teamCountryCode->setText(getTeamCode());
-    ui->label_flagPixmap->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(getTeamCode().toLower())).scaled(ui->label_flagPixmap->size()));
-    setupItemsList();
-}
-
-void TeamEditorWidget::setupItemsList()
-{
-    QPixmap flagPixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(getTeamCode().toLower())).scaled(ui->label_flagPixmap->size());
-    for(auto & item : itemsList)
-        delete item;
-    itemsList.clear();
-
-    int index = 0;
-    for(const auto & jumper : jumpers)
-    {
-        QString addition1 = "";
-        if((index) < getJumpersCount())
-            addition1 = QString::number(index + 1) + ".  ";
-        QString addition2 = "";
-        if((index) < getJumpersCount())
-            addition2 = tr("     ------>     Wybrany do składu");
-
-        itemsList.push_back(new QStandardItem(QPixmap(flagPixmap), addition1 + jumper->getNameAndSurname() + addition2));
-        index++;
-    }
-    emit needToUpdateModel();
+    ui->label_teamCountryCode->setText(team->getCountryCode());
+    ui->label_flagPixmap->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(team->getCountryCode().toLower())).scaled(ui->label_flagPixmap->size()));
 }
 
 void TeamEditorWidget::removeSubmitButton()
@@ -63,10 +39,15 @@ void TeamEditorWidget::removeSubmitButton()
 Team TeamEditorWidget::constructTeamFromWidgetInput()
 {
     Team team;
-    team.setCountryCode(getTeamCode());
+    team.setCountryCode(this->team->getCountryCode());
     team.setJumpersCount(jumpers.count());
     team.setJumpers(jumpers);
     return team;
+}
+
+TeamJumpersListModel *TeamEditorWidget::getModel()
+{
+    return model;
 }
 
 int TeamEditorWidget::getJumpersCount() const
@@ -79,28 +60,29 @@ void TeamEditorWidget::setJumpersCount(int newJumpersCount)
     jumpersCount = newJumpersCount;
 }
 
+QVector<Jumper *> TeamEditorWidget::getJumpers() const
+{
+    return jumpers;
+}
+
+void TeamEditorWidget::setJumpers(const QVector<Jumper *> &newJumpers)
+{
+    jumpers = newJumpers;
+}
+
+Team *TeamEditorWidget::getTeam() const
+{
+    return team;
+}
+
+void TeamEditorWidget::setTeam(Team *newTeam)
+{
+    team = newTeam;
+}
+
 void TeamEditorWidget::when_submitButtonClicked()
 {
     emit submitted();
-}
-
-void TeamEditorWidget::updateModelByItemsListVector()
-{
-    int i = 0;
-    for(auto & item : itemsList){
-        model->setItem(i, 0, item);
-        i++;
-    }
-}
-
-QString TeamEditorWidget::getTeamCode() const
-{
-    return teamCode;
-}
-
-void TeamEditorWidget::setTeamCode(const QString &newTeamCode)
-{
-    teamCode = newTeamCode;
 }
 
 void TeamEditorWidget::on_pushButton_up_clicked()
@@ -109,12 +91,12 @@ void TeamEditorWidget::on_pushButton_up_clicked()
     if(ui->listView_jumpers->selectionModel()->selectedRows().size() > 0)
         index = ui->listView_jumpers->selectionModel()->selectedRows().first().row();
 
-    if(index > (0) && index < itemsList.count())
+    if(index > (0) && index < jumpers.count())
     {
         jumpers.swapItemsAt(index, index - 1);
-        setupItemsList();
         ui->listView_jumpers->clearSelection();
         ui->listView_jumpers->setCurrentIndex(model->index(index - 1, 0));
+        emit model->dataChanged(model->index(index), model->index(index - 1));
     }
 }
 
@@ -125,12 +107,12 @@ void TeamEditorWidget::on_pushButton_down_clicked()
     if(ui->listView_jumpers->selectionModel()->selectedRows().size() > 0)
         index = ui->listView_jumpers->selectionModel()->selectedRows().first().row();
 
-    if(index > (-1) && (index + 1) < itemsList.count())
+    if(index > (-1) && (index + 1) < jumpers.count())
     {
         jumpers.swapItemsAt(index, index + 1);
-        setupItemsList();
         ui->listView_jumpers->clearSelection();
         ui->listView_jumpers->setCurrentIndex(model->index(index + 1, 0));
+        emit model->dataChanged(model->index(index), model->index(index + 1));
     }
 }
 

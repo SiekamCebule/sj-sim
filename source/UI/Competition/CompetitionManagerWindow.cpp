@@ -70,7 +70,8 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
 
     connect(ui->spinBox_actualGate, &QSpinBox::valueChanged, this, [this, manager](){
         if(manager->getActualStartListIndex() == 0){
-            manager->getRoundsStartingGatesReference().append(ui->spinBox_actualGate->value());
+            manager->getRoundsStartingGatesReference().pop_back();
+            manager->getRoundsStartingGatesReference().push_back(ui->spinBox_actualGate->value());
             manager->setActualGate(ui->spinBox_actualGate->value());
         }
         else{
@@ -467,6 +468,10 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
             ok = true;
         }
         StartListCompetitorStatus::getStatusOfJumper(m->getActualJumper(), m->getStartListStatusesReference())->setQualifiedBy95HSRule(ok);
+        m->updateLastQualifiedResult();
+        m->updateLeaderResult();
+        m->updateToAdvanceLineDistance();
+        m->updateToBeatLineDistance();
         m->updateCompetitorsAdvanceStatuses();
 
         if(jumperResultsWidget->isHidden()) jumperResultsWidget->show();
@@ -508,8 +513,6 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
             setupGoToNextButtonForNextRound();
             showMessageBoxForNextRound();
         }
-
-        qDebug()<<"end";
         break;
     }
     }

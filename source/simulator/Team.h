@@ -11,8 +11,7 @@ public:
     Team(int jumpersCount = 0);
     Team(const QString & countryCode);
 
-    static QVector<Team> constructTeamsVectorByJumpersList(const QVector<Jumper> & jumpers);
-    static QVector<Team> constructTeamsVectorByJumpersList(QVector<Jumper> * const jumpers);
+    static QVector<Team> constructTeamsVectorByJumpersList(const QVector<Jumper> & jumpers, int minCount);
     static QVector<Jumper *> getJumpersFilteredByCountryCode(QVector<Jumper> &jumpers, const QString & countryCode);
 
 private:
@@ -23,7 +22,7 @@ private:
 public:
     void setJumper(Jumper * jumper, int index);
     QVector<Jumper *> getJumpers() const;
-    QVector<Jumper*> & getEditableJumpers();
+    QVector<Jumper*> & getJumpersReference();
     void setJumpers(const QVector<Jumper *> &newJumpers);
     int getJumpersCount() const;
     void setJumpersCount(int newJumpersCount);

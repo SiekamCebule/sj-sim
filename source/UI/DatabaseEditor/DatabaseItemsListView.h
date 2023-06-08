@@ -7,10 +7,12 @@
 #include <QListView>
 #include "../../simulator/Jumper.h"
 #include "../../simulator/Hill.h"
+#include "../../simulator/Team.h"
 #include "../../competitions/CompetitionRules.h"
 #include "ListModels/CompetitionRulesListModel.h"
 #include "ListModels/HillsListModel.h"
 #include "ListModels/JumpersListModel.h"
+#include "ListModels/TeamsListModel.h"
 
 namespace Ui {
 class DatabaseItemsListView;
@@ -27,7 +29,8 @@ public:
     enum Type{
         JumperItems,
         HillItems,
-        CompetitionRulesItems
+        CompetitionRulesItems,
+        TeamItems
     };
 
     void setupListModel();
@@ -44,6 +47,7 @@ private:
     QVector<Jumper> * jumpers;
     QVector<Hill> * hills;
     QVector<CompetitionRules> * competitionRules;
+    QVector<Team> * teams;
 
     QAbstractListModel * listModel;
 
@@ -53,6 +57,7 @@ private:
     QAction * downAction;
 
     bool allowInserting;
+    bool teamsEditing;
 
 private slots:
     void onInsertActionTriggered();
@@ -67,9 +72,10 @@ public:
     void setHills(QVector<Hill> *newHills);
     QVector<CompetitionRules> *getCompetitionRules() const;
     void setCompetitionRules(QVector<CompetitionRules> *newCompetitionRules);
+    QVector<Team> *getTeams() const;
+    void setTeams(QVector<Team> *newTeams);
     bool getAllowInserting() const;
     void setAllowInserting(bool newAllowInserting);
-
     QListView * getListView();
     QAbstractListModel *getListModel();
 };

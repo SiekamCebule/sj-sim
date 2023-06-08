@@ -55,8 +55,21 @@ void DatabaseItemsListView::setupListModel()
     case CompetitionRulesItems:
         listModel = new CompetitionRulesListModel(this->competitionRules);
         break;
+    case TeamItems:
+        listModel = new TeamsListModel(this->teams);
+        break;
     }
     ui->listView->setModel(listModel);
+}
+
+QVector<Team> *DatabaseItemsListView::getTeams() const
+{
+    return teams;
+}
+
+void DatabaseItemsListView::setTeams(QVector<Team> *newTeams)
+{
+    teams = newTeams;
 }
 
 QAbstractListModel *DatabaseItemsListView::getListModel()
@@ -95,6 +108,14 @@ void DatabaseItemsListView::onInsertActionTriggered()
                 emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(rowToInsert), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
                 break;
             }
+            case TeamItems:{
+                TeamsListModel * teamsListModel = dynamic_cast<TeamsListModel *>(listModel);
+                int rowToInsert = ui->listView->selectionModel()->selectedRows().first().row();
+                teamsListModel->insertRows(rowToInsert, 1);
+                teamsListModel->getTeamsVectorPointer()->insert(rowToInsert + 1, 1, Team("XXX"));
+                emit teamsListModel->dataChanged(teamsListModel->index(rowToInsert), teamsListModel->index(teamsListModel->rowCount() - 1));
+                break;
+            }
             default: break;
             }
         }
@@ -115,7 +136,6 @@ void DatabaseItemsListView::onRemoveActionTriggered()
                 int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
                 jumpersListModel->removeRows(rowToRemove, 1);
                 jumpersListModel->getJumpersVectorPointer()->remove(rowToRemove, 1);
-                //selectionModel->select(jumpersListModel->index(rowToRemove), QItemSelectionModel::Deselect);
             }
             emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
             break;
@@ -126,7 +146,6 @@ void DatabaseItemsListView::onRemoveActionTriggered()
                 int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
                 hillsListModel->removeRows(rowToRemove, 1);
                 hillsListModel->getHillsVectorPointer()->remove(rowToRemove, 1);
-                //selectionModel->select(hillsListModel->index(rowToRemove), QItemSelectionModel::Deselect);
             }
             emit hillsListModel->dataChanged(hillsListModel->index(firstRow), hillsListModel->index(hillsListModel->rowCount() - 1));
             break;
@@ -137,9 +156,18 @@ void DatabaseItemsListView::onRemoveActionTriggered()
                 int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
                 competitionRulesListModel->removeRows(rowToRemove, 1);
                 competitionRulesListModel->getCompetitonRulesVectorPointer()->remove(rowToRemove, 1);
-                //selectionModel->select(competitionRulesListModel->index(rowToRemove), QItemSelectionModel::Deselect);
             }
             emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(firstRow), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
+            break;
+        }
+        case TeamItems:{
+            TeamsListModel * teamsListModel = dynamic_cast<TeamsListModel *>(listModel);
+            while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                teamsListModel->removeRows(rowToRemove, 1);
+                teamsListModel->getTeamsVectorPointer()->remove(rowToRemove, 1);
+            }
+            emit teamsListModel->dataChanged(teamsListModel->index(firstRow), teamsListModel->index(teamsListModel->rowCount() - 1));
             break;
         }
         default: break;
@@ -194,6 +222,15 @@ void DatabaseItemsListView::onUpActionTriggered()
             for(auto & index : rows)
                 competitionRulesListModel->getCompetitonRulesVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
             emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(firstRow), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
+            break;
+        }
+        case TeamItems:{
+            TeamsListModel * teamsListModel = dynamic_cast<TeamsListModel *>(listModel);
+            for(auto & index : rows)
+                ui->listView->setCurrentIndex(teamsListModel->index(index.row() - 1));
+            for(auto & index : rows)
+                teamsListModel->getTeamsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
+            emit teamsListModel->dataChanged(teamsListModel->index(firstRow), teamsListModel->index(teamsListModel->rowCount() - 1));
             break;
         }
         default: break;
@@ -253,6 +290,15 @@ void DatabaseItemsListView::onDownActionTriggered()
             for(auto & index : rows)
                 competitionRulesListModel->getCompetitonRulesVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
             emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(lastRow), competitionRulesListModel->index(0));
+            break;
+        }
+        case TeamItems:{
+            TeamsListModel * teamsListModel = dynamic_cast<TeamsListModel *>(listModel);
+            for(auto & index : rows)
+                ui->listView->setCurrentIndex(teamsListModel->index(index.row() + 1));
+            for(auto & index : rows)
+                teamsListModel->getTeamsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
+            emit teamsListModel->dataChanged(teamsListModel->index(lastRow), teamsListModel->index(0));
             break;
         }
         default: break;
