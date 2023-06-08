@@ -14,12 +14,15 @@ SOURCES += \
     source/UI/Competition/JumperCompetitionResultsWidget.cpp \
     source/UI/Competition/Results/ResultsTableModel.cpp \
     source/UI/Competition/StartList/StartListModel.cpp \
+    source/UI/Competition/TeamsSquadsTreeModel.cpp \
     source/UI/DatabaseEditor/DatabaseItemsListView.cpp \
     source/UI/DatabaseEditor/ListModels/CompetitionRulesListModel.cpp \
     source/UI/DatabaseEditor/ListModels/HillsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/JumpersListModel.cpp \
+    source/UI/DatabaseEditor/ListModels/TeamsListModel.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
     source/UI/EditorWidgets/RoundInfoEditorWidget.cpp \
+    source/UI/EditorWidgets/TeamsEditing/Models/TeamJumpersListModel.cpp \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.cpp \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
@@ -58,6 +61,7 @@ SOURCES += \
     source/global/GlobalDatabase.cpp \
     source/global/GlobalSimulationSettings.cpp \
     source/global/GlobalTranslators.cpp \
+    source/global/TreeItem.cpp \
     source/main.cpp \
     source/UI/mainwindow.cpp \
     source/seasons/Season.cpp \
@@ -97,12 +101,15 @@ HEADERS += \
     source/UI/Competition/JumperCompetitionResultsWidget.h \
     source/UI/Competition/Results/ResultsTableModel.h \
     source/UI/Competition/StartList/StartListModel.h \
+    source/UI/Competition/TeamsSquadsTreeModel.h \
     source/UI/DatabaseEditor/DatabaseItemsListView.h \
     source/UI/DatabaseEditor/ListModels/CompetitionRulesListModel.h \
     source/UI/DatabaseEditor/ListModels/HillsListModel.h \
     source/UI/DatabaseEditor/ListModels/JumpersListModel.h \
+    source/UI/DatabaseEditor/ListModels/TeamsListModel.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
     source/UI/EditorWidgets/RoundInfoEditorWidget.h \
+    source/UI/EditorWidgets/TeamsEditing/Models/TeamJumpersListModel.h \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.h \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
@@ -142,6 +149,7 @@ HEADERS += \
     source/global/GlobalDatabase.h \
     source/global/GlobalSimulationSettings.h \
     source/global/GlobalTranslators.h \
+    source/global/TreeItem.h \
     source/seasons/Season.h \
     source/seasons/SeasonCalendar.h \
     source/seasons/SeasonSettings.h \

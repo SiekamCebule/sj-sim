@@ -23,9 +23,11 @@ CompetitionRulesEditorWidget::CompetitionRulesEditorWidget(QWidget *parent) :
     connect(ui->spinBox_jumpersInTeamCount, &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::jumpersCountInTeamChanged);
     connect(this, &CompetitionRulesEditorWidget::competitionTypeChanged, this, [this](){
         if(ui->comboBox_competitionType->currentIndex() == 0) //ind
-            ui->spinBox_jumpersInTeamCount->setEnabled(true);
-        else //druż
             ui->spinBox_jumpersInTeamCount->setEnabled(false);
+        else //druż
+            ui->spinBox_jumpersInTeamCount->setEnabled(true);
+
+        qDebug()<<"Enb: "<<ui->spinBox_jumpersInTeamCount->isEnabled();
     });
 }
 

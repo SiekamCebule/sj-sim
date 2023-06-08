@@ -4,6 +4,7 @@
 #include "../EditorWidgets/HillEditorWidget.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/CompetitionRulesEditorWidget.h"
+#include "../EditorWidgets/TeamsEditing/TeamEditorWidget.h"
 #include "../../global/GlobalDatabase.h"
 #include "../../global/GlobalSimulationSettings.h"
 #include "../../global/CountryFlagsManager.h"
@@ -84,8 +85,17 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
 
         setWindowTitle("Konfiguracja pojedynczego konkursu");
         competitionJumpers = GlobalDatabase::get()->getGlobalJumpers();
-        competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers);
+        competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers, competitionRulesEditor->getJumpersCountInTeam());
     }
+    connect(competitionRulesEditor, &CompetitionRulesEditorWidget::jumpersCountInTeamChanged, this, [this](){
+        competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers, competitionRulesEditor->getJumpersCountInTeam());
+        delete teamsSquadsModel;
+        teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
+        teamsSquadsModel->updateItemsByTeamsVector();
+        teamsTreeView->setModel(teamsSquadsModel);
+        teamsTreeView->expandToDepth(0);
+        //emit teamsSquadsModel->dataChanged(teamsSquadsModel->index(0, 0, QModelIndex()), teamsSquadsModel->createIndex());
+    });
 
     connect(hillEditor, &HillEditorWidget::KPointInputChanged, this, [this](){
         windsGeneratorSettingsEditor->setKPoint(hillEditor->getKPointFromInput());
@@ -96,9 +106,11 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     connect(competitionRulesEditor, &CompetitionRulesEditorWidget::competitionTypeChanged, this, [this](){
         if(competitionRulesEditor->getCompetitionTypeFromInput() == CompetitionRules::Individual){
             jumpersListView->setHidden(false);
+            teamsTreeView->setHidden(true);
         }
         else if(competitionRulesEditor->getCompetitionTypeFromInput() == CompetitionRules::Team){
             jumpersListView->setHidden(true);
+            teamsTreeView->setHidden(false);
         }
     });
     jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, false, this);
@@ -107,7 +119,48 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     jumpersListView->setJumpers(&competitionJumpers);
     jumpersListView->setupListModel();
     ui->verticalLayout_startList->addWidget(jumpersListView);
+
+    teamsTreeView = new QTreeView(this);
+    teamsTreeView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    teamsTreeView->setSelectionMode(QAbstractItemView::SingleSelection);
+    teamsTreeView->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+    teamsTreeView->setHidden(true);
+    teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
+    teamsSquadsModel->updateItemsByTeamsVector();
+    teamsTreeView->setModel(teamsSquadsModel);
+    ui->verticalLayout_startList->addWidget(teamsTreeView);
+
+    connect(teamsTreeView, &QTreeView::doubleClicked, this, [this](const QModelIndex & index){
+        TreeItem * item = static_cast<TreeItem *>(index.internalPointer());
+        int teamIndex = 0;
+        if(item->getParentItem() == teamsSquadsModel->getRootItem()){
+            teamIndex = item->row();
+        }
+        else{
+            teamIndex = item->getParentItem()->row();
+        }
+
+        TeamEditorWidget * editor = new TeamEditorWidget(&competitionTeams[teamIndex], competitionRulesEditor->getJumpersCountInTeam());
+        editor->setAttribute(Qt::WA_DeleteOnClose);
+        editor->fillWidgetInputs();
+        editor->show();
+        QDialog dialog(this);
+        dialog.setLayout(new QHBoxLayout());
+        dialog.layout()->addWidget(editor);
+        dialog.setModal(true);
+        connect(editor, &TeamEditorWidget::submitted, &dialog, &QDialog::accept);
+        if(dialog.exec() == QDialog::Accepted){
+            competitionTeams[teamIndex] = editor->constructTeamFromWidgetInput();
+            delete teamsSquadsModel;
+            teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
+            teamsSquadsModel->updateItemsByTeamsVector();
+            teamsTreeView->setModel(teamsSquadsModel);
+            teamsTreeView->expandToDepth(0);
+        }
+    });
+
     ui->verticalLayout_startList->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Maximum, QSizePolicy::Maximum));
+
 
     emit competitionRulesEditor->competitionTypeChanged();
 }
@@ -190,107 +243,25 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
     });
 }
 
-/*void CompetitionConfigWindow::removeFromStartList()
+QTreeView *CompetitionConfigWindow::getTeamsTreeView() const
 {
-    QVector<QModelIndex> rows = ui->listView_startList->selectionModel()->selectedRows();
-    if(rows.size() > 0){
-        switch(competitionRulesEditor->getCompetitionTypeFromInput()){
-        case CompetitionRules::Individual:{
-            //Usunąć zawodników z vectora wewnatrz modelu
-            int firstRow = ui->listView_startList->selectionModel()->selectedRows().first().row();
-            while(ui->listView_startList->selectionModel()->selectedRows().size() > 0)
-            {
-                int rowToRemove = ui->listView_startList->selectionModel()->selectedRows().first().row();
-                individualStartListEditorModel->removeRows(rowToRemove, 1);
-                individualStartListEditorModel->getJumpers()->remove(rowToRemove, 1);
-            }
-            emit individualStartListEditorModel->dataChanged(individualStartListEditorModel->index(firstRow), individualStartListEditorModel->index(individualStartListEditorModel->rowCount() - 1));
-        }
-        }
-    }
+    return teamsTreeView;
 }
 
-void CompetitionConfigWindow::moveToTop()
+void CompetitionConfigWindow::setTeamsTreeView(QTreeView *newTeamsTreeView)
 {
-    QVector<QModelIndex> rows = ui->listView_startList->selectionModel()->selectedRows();
-    if(rows.size() > 0){
-        int firstRow = rows.first().row();
-        if(firstRow == 0){
-            QItemSelectionModel * selectionModel = ui->listView_startList->selectionModel();
-            QVector<QModelIndex> rows = selectionModel->selectedRows();
-            rows.remove(0);
-            selectionModel->clearSelection();
-            for(auto & index : rows){
-                selectionModel->select(index, QItemSelectionModel::Select);
-            }
-            ui->listView_startList->setSelectionModel(selectionModel);
-            if(ui->listView_startList->selectionModel()->selectedRows().size() > 0)
-                firstRow = ui->listView_startList->selectionModel()->selectedRows().first().row();
-            else return;
-        }
-        rows = ui->listView_startList->selectionModel()->selectedRows();
-        switch(competitionRulesEditor->getCompetitionTypeFromInput()){
-        case CompetitionRules::Individual:{
-            //Usunąć zawodników z vectora wewnatrz model
-            ui->listView_startList->clearSelection();
-            for(auto & index : rows){
-                ui->listView_startList->setCurrentIndex(individualStartListEditorModel->index(index.row() - 1));
-            }
-            std::sort(rows.begin(), rows.end());
-            for(auto & index : rows){
-                individualStartListEditorModel->getJumpers()->swapItemsAt(index.row(), index.row() - 1);
-            }
-            emit individualStartListEditorModel->dataChanged(individualStartListEditorModel->index(firstRow), individualStartListEditorModel->index(individualStartListEditorModel->rowCount() - 1));
-        }
-        }
-    }
+    teamsTreeView = newTeamsTreeView;
 }
 
-void CompetitionConfigWindow::moveToDown()
+TeamsSquadsTreeModel *CompetitionConfigWindow::getTeamsSquadsModel() const
 {
-    int rowCount = 0;
-    switch(competitionRulesEditor->getCompetitionTypeFromInput()){
-    case CompetitionRules::Individual:
-        rowCount = individualStartListEditorModel->rowCount();
-        break;
-    case CompetitionRules::Team:
-        break;
-    }
+    return teamsSquadsModel;
+}
 
-    QVector<QModelIndex> rows = ui->listView_startList->selectionModel()->selectedRows();
-    if(rows.size() > 0){
-        int lastRow = rows.last().row();
-        if(lastRow == rowCount - 1){
-            QItemSelectionModel * selectionModel = ui->listView_startList->selectionModel();
-            QVector<QModelIndex> rows = selectionModel->selectedRows();
-            rows.removeLast();
-            selectionModel->clearSelection();
-            for(auto & index : rows){
-                selectionModel->select(index, QItemSelectionModel::Select);
-            }
-            ui->listView_startList->setSelectionModel(selectionModel);
-            if(ui->listView_startList->selectionModel()->selectedRows().size() > 0)
-                lastRow = ui->listView_startList->selectionModel()->selectedRows().last().row();
-            else
-                return;
-        }
-        rows = ui->listView_startList->selectionModel()->selectedRows();
-        switch(competitionRulesEditor->getCompetitionTypeFromInput()){
-        case CompetitionRules::Individual:{
-            //Usunąć zawodników z vectora wewnatrz model
-            ui->listView_startList->clearSelection();
-            for(auto & index : rows){
-                ui->listView_startList->setCurrentIndex(individualStartListEditorModel->index(index.row() + 1));
-            }
-            std::sort(rows.begin(), rows.end());
-            for(auto & index : rows){
-                individualStartListEditorModel->getJumpers()->swapItemsAt(index.row(), index.row() + 1);
-            }
-            emit individualStartListEditorModel->dataChanged(individualStartListEditorModel->index(lastRow), individualStartListEditorModel->index(0));
-        }
-        }
-    }
-}*/
+void CompetitionConfigWindow::setTeamsSquadsModel(TeamsSquadsTreeModel *newTeamsSquadsModel)
+{
+    teamsSquadsModel = newTeamsSquadsModel;
+}
 
 void CompetitionConfigWindow::setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers)
 {

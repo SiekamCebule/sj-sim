@@ -11,10 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Edytor drużyny</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background: transparent; color: black;</string>
+   <string notr="true">background: rgb(255, 255, 255); color: black;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

@@ -7,9 +7,11 @@
 #include <QComboBox>
 #include <QAction>
 #include <QCheckBox>
+#include <QTreeView>
 #include "../../simulator/Jumper.h"
 #include "../../simulator/Team.h"
 #include "../DatabaseEditor/DatabaseItemsListView.h"
+#include "TeamsSquadsTreeModel.h"
 
 class HillEditorWidget;
 class WindsGeneratorSettingsEditorWidget;
@@ -53,6 +55,8 @@ private:
     //
 
     DatabaseItemsListView * jumpersListView;
+    QTreeView * teamsTreeView;
+    TeamsSquadsTreeModel * teamsSquadsModel;
 
     QCheckBox * checkBox_singleCompetitionQualifications;
 
@@ -81,9 +85,13 @@ public:
     void setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers);
     QAction *getMoveToTopShortcut() const;
     void setMoveToTopShortcut(QAction *newMoveToTopShortcut);
-
     QAction *getMoveToDownShortcut() const;
     void setMoveToDownShortcut(QAction *newMoveToDownShortcut);
+    TeamsSquadsTreeModel *getTeamsSquadsModel() const;
+    void setTeamsSquadsModel(TeamsSquadsTreeModel *newTeamsSquadsModel);
+
+    QTreeView *getTeamsTreeView() const;
+    void setTeamsTreeView(QTreeView *newTeamsTreeView);
 
 private slots:
     void on_pushButton_submit_clicked();
