@@ -185,6 +185,7 @@ CompetitionRules CompetitionRulesEditorWidget::getCompetitionRulesFromWidgetInpu
     rules.setRounds(getRoundsFromInput());
     rules.setWindAverageCalculatingType(getWindAverageCalculatingTypeFromInput());
     rules.setWindCompensationDistanceEffect(getWindCompensationDistanceEffectFromInput());
+    rules.setJumpersInTeamCount(getJumpersCountInTeam());
     return rules;
 }
 

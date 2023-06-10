@@ -51,3 +51,23 @@ QVector<TreeItem *> TreeItem::getChildItemsReference()
 {
     return childItems;
 }
+
+void TreeItem::deleteAllTreeItemsRecursively(TreeItem *rootItem)
+{
+    for(auto & item : rootItem->getChildItemsReference())
+        deleteTreeItemRecursively(item);
+    delete rootItem;
+}
+
+void TreeItem::deleteTreeItemRecursively(TreeItem *item)
+{
+    if(item->childCount() > 0)
+    {
+        for(auto & itm : item->getChildItemsReference())
+        {
+            deleteTreeItemRecursively(itm);
+        }
+    }
+    item->getParentItem()->getChildItemsReference().remove(item->row());
+    delete item;
+}

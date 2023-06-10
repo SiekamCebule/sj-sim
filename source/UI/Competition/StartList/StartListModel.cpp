@@ -9,8 +9,6 @@
 StartListModel::StartListModel(AbstractCompetitionManager * manager, QObject *parent)
     : QAbstractListModel(parent)
 {
-    jumpers = nullptr;
-    teams = nullptr;
 }
 
 QVariant StartListModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -52,7 +50,7 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
         return Qt::AlignHCenter;
     }
 
-    if(StartListCompetitorStatus::getStatusOfJumper(jumpers->at(index.row()), *startListStatuses) == nullptr)
+    if(StartListCompetitorStatus::getStatusOfJumper(startListStatuses->at(index.row()).getJumper(), *startListStatuses) == nullptr)
     {
         if(role == Qt::ForegroundRole)
             return QBrush(QColor("black"));
@@ -84,42 +82,22 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
         }
         return font;
     }
-    //if(StartListCompetitorStatus::getStatusOfJumper(jumpers->at(index.row()), *startListStatuses) != nullptr){
-        if(type == IndividualCompetiton){
-            if(jumpers->count() > index.row())
-            {
-                //Trzeba dodać numer startowy do "stringa"
-                QString string = QString::number(index.row() + 1) + ". " + jumpers->at(index.row())->getNameAndSurname();
-                if(role == Qt::DisplayRole){
-                    if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
-                        return string + "   (Nie wystartował)";
-                    else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
-                        return string + "   (Dyskwalifikacja)";
-                    else
-                        return string;
-                }
-                else if(role == Qt::DecorationRole){
-                    return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumpers->at(index.row())->getCountryCode().toLower())));
-                }
-            }
+    //if(jumpers->count() > index.row())
+    //{
+        //Trzeba dodać numer startowy do "stringa"
+        QString string = QString::number(index.row() + 1) + ". " + startListStatuses->at(index.row()).getJumper()->getNameAndSurname();
+        if(role == Qt::DisplayRole){
+            if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
+                return string + "   (Nie wystartował)";
+            else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
+                return string + "   (Dyskwalifikacja)";
+            else
+                return string;
         }
-        else if(type == TeamCompetition){
-            if(role == Qt::DisplayRole){
-                QString string = teams->at(index.row())->getCountryCode() + " (" + jumpers->at(index.row())->getNameAndSurname() +")";
-                if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
-                    return  string + "  (Nie wystartował)";
-                else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
-                    return string + "  (Dyskwalifikacja)";
-                else
-                    return string;
-            }
-            else if(role == Qt::DecorationRole){
-                return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(teams->at(index.row())->getCountryCode().toLower())));
-            }
+        else if(role == Qt::DecorationRole){
+            return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(startListStatuses->at(index.row()).getJumper()->getCountryCode().toLower())));
         }
     //}
-
-    // FIXME: Implement me!
     return QVariant();
 }
 
@@ -141,24 +119,4 @@ short StartListModel::getType() const
 void StartListModel::setType(short newType)
 {
     type = newType;
-}
-
-QVector<Team *> *StartListModel::getTeams() const
-{
-    return teams;
-}
-
-void StartListModel::setTeams(QVector<Team *> *newTeams)
-{
-    teams = newTeams;
-}
-
-QVector<Jumper *> *StartListModel::getJumpers() const
-{
-    return jumpers;
-}
-
-void StartListModel::setJumpers(QVector<Jumper *> *newJumpers)
-{
-    jumpers = newJumpers;
 }

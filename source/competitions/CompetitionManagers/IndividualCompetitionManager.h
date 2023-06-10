@@ -13,8 +13,7 @@ class IndividualCompetitionManager : public AbstractCompetitionManager
 {
     Q_OBJECT
 public:
-    IndividualCompetitionManager(short type = CompetitionRules::Individual);
-    void setActualJumperToNextUnfinished();
+    IndividualCompetitionManager();
 
     void setupNextRound();
     void setupStartListStatusesForActualRound();
@@ -33,6 +32,7 @@ public:
     QVector<QVector<Jumper *> > getRoundsJumpers() const;
     QVector<QVector<Jumper *> > & getRoundsJumpersReference();
     void setRoundsJumpers(const QVector<QVector<Jumper *> > &newRoundsJumpers);
+    QVector<StartListCompetitorStatus> getStartListStatuses() const;
 };
 
 #endif // INDIVIDUALCOMPETITIONMANAGER_H

@@ -13,6 +13,7 @@ SOURCES += \
     source/UI/Competition/CompetitionManagerWindow.cpp \
     source/UI/Competition/JumperCompetitionResultsWidget.cpp \
     source/UI/Competition/Results/ResultsTableModel.cpp \
+    source/UI/Competition/Results/TeamResultsTreeModel.cpp \
     source/UI/Competition/StartList/StartListModel.cpp \
     source/UI/Competition/TeamsSquadsTreeModel.cpp \
     source/UI/DatabaseEditor/DatabaseItemsListView.cpp \
@@ -100,6 +101,7 @@ HEADERS += \
     source/UI/Competition/CompetitionManagerWindow.h \
     source/UI/Competition/JumperCompetitionResultsWidget.h \
     source/UI/Competition/Results/ResultsTableModel.h \
+    source/UI/Competition/Results/TeamResultsTreeModel.h \
     source/UI/Competition/StartList/StartListModel.h \
     source/UI/Competition/TeamsSquadsTreeModel.h \
     source/UI/DatabaseEditor/DatabaseItemsListView.h \

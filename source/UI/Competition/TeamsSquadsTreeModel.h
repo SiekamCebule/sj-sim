@@ -34,10 +34,7 @@ private:
 
     TreeItem * rootItem;
 public:
-    void deleteAllItems();
-    void deleteItem(TreeItem * item);
-    void updateItemsByTeamsVector();
-    void debugAllItems();
+    void setupTreeItems();
 public:
     int getJumpersInTeam() const;
     void setJumpersInTeam(int newJumpersInTeam);

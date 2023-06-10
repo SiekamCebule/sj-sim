@@ -28,6 +28,7 @@ public:
 
     int getFirstUnfinishedStartListStatus();
     bool isAllJumpsAreFinished();
+    void setActualJumperToNextUnfinished();
     virtual void setupNextRound() {}
     virtual void setupStartListStatusesForActualRound() {}
     virtual void updateCompetitorsAdvanceStatuses() {}
@@ -43,6 +44,8 @@ protected:
     CompetitionInfo * competitionInfo;
     CompetitionRules * competitionRules;
     CompetitionResults * results;
+
+    QVector<StartListCompetitorStatus> startListStatuses;
 
     QVector<int> roundsStartingGates;
     int actualGate;
@@ -60,8 +63,6 @@ protected:
     int actualStartListIndex;
     JumpManipulator * actualJumpManipulator;
     QVector<WindGenerationSettings> windGenerationSettings;
-
-    QVector<StartListCompetitorStatus> startListStatuses;
 
     CompetitionSingleResult * leaderResult;
     CompetitionSingleResult * lastQualifiedResult;\
@@ -96,9 +97,6 @@ public:
     void setActualStartListIndex(int newActualStartListIndex);
     double getActualCompetitorPointsToTheLeader() const;
     void setActualCompetitorPointsToTheLeader(double newActualCompetitorPointsToTheLeader);
-    QVector<StartListCompetitorStatus> getStartListStatuses() const;
-    QVector<StartListCompetitorStatus>& getStartListStatusesReference();
-    void setStartListStatus(const QVector<StartListCompetitorStatus> &newStartListStatus);
     CompetitionSingleResult *getLeaderResult() const;
     void setLeaderResult(CompetitionSingleResult *newLeaderResult);
     CompetitionSingleResult *getLastQualifiedResult() const;
@@ -114,6 +112,9 @@ public:
     QVector<WindGenerationSettings> getWindGenerationSettings() const;
     void setWindGenerationSettings(const QVector<WindGenerationSettings> &newWindGenerationSettings);
     QVector<WindGenerationSettings> & getWindGenerationSettingsReference();
+    QVector<StartListCompetitorStatus> getStartListStatuses() const;
+    QVector<StartListCompetitorStatus> & getStartListStatusesReference();
+    void setStartListStatuses(const QVector<StartListCompetitorStatus> &newStartListStatuses);
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

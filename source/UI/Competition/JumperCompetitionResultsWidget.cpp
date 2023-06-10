@@ -13,6 +13,7 @@ JumperCompetitionResultsWidget::JumperCompetitionResultsWidget(QWidget *parent) 
         delete ui->tabWidget_jumps->widget(0);
         ui->tabWidget_jumps->removeTab(0);
     }
+    positionShowing = true;
 }
 
 JumperCompetitionResultsWidget::~JumperCompetitionResultsWidget()
@@ -25,7 +26,9 @@ void JumperCompetitionResultsWidget::fillWidget()
     ui->label_nameAndSurname->setText(jumperResult->getJumper()->getNameAndSurname());
     ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumperResult->getJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
     ui->label_pointsSum->setText(QString::number(jumperResult->getPointsSum()) + tr(" punktów"));
-    ui->label_actualPosition->setText("(" + QString::number(jumperResult->getPosition()) + tr(" miejsce)"));
+    if(positionShowing == true)
+        ui->label_actualPosition->setText("(" + QString::number(jumperResult->getPosition()) + tr(" miejsce)"));
+    else ui->label_actualPosition->hide();
 
     ui->tabWidget_jumps->clear();
     int i = 0;
@@ -40,6 +43,16 @@ void JumperCompetitionResultsWidget::fillWidget()
         i++;
     }
     ui->tabWidget_jumps->setCurrentIndex(ui->tabWidget_jumps->count() - 1);
+}
+
+bool JumperCompetitionResultsWidget::getPositionShowing() const
+{
+    return positionShowing;
+}
+
+void JumperCompetitionResultsWidget::setPositionShowing(bool newPositionShowing)
+{
+    positionShowing = newPositionShowing;
 }
 
 CompetitionSingleResult *JumperCompetitionResultsWidget::getJumperResult() const
