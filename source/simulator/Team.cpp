@@ -1,14 +1,7 @@
 #include "Team.h"
 
-Team::Team(int jumpersCount) : jumpersCount(jumpersCount)
-{
-    if(getJumpersCount() > 0)
-        jumpers.fill(nullptr, getJumpersCount());
-}
-
 Team::Team(const QString &countryCode) : countryCode(countryCode)
 {
-    jumpersCount = 0;
 }
 
 QVector<Team> Team::constructTeamsVectorByJumpersList(const QVector<Jumper> &jumpers, int minCount)
@@ -62,6 +55,16 @@ QVector<Jumper *> Team::getJumpersFilteredByCountryCode(QVector<Jumper> &jumpers
     return vector;
 }
 
+void Team::cutTeamJumpers(Team *team, int jumpersCount)
+{
+    qDebug()<<team->getJumpersCount()<<", "<<jumpersCount;
+    if(team->getJumpersCount() > jumpersCount){
+        qDebug()<<team->getJumpersReference().count();
+        team->getJumpersReference().erase(team->getJumpersReference().begin() + (jumpersCount), team->getJumpersReference().end());
+        qDebug()<<team->getJumpersReference().count();
+    }
+}
+
 QString Team::getCountryCode() const
 {
     return countryCode;
@@ -96,10 +99,5 @@ void Team::setJumpers(const QVector<Jumper *> &newJumpers)
 
 int Team::getJumpersCount() const
 {
-    return jumpersCount;
-}
-
-void Team::setJumpersCount(int newJumpersCount)
-{
-    jumpersCount = newJumpersCount;
+    return jumpers.count();
 }

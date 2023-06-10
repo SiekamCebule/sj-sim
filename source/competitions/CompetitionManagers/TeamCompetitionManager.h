@@ -15,6 +15,11 @@ public:
     void setupStartListStatusesForActualRound(); // zrobienie grup list startowych
     void updateCompetitorsAdvanceStatuses();
 
+    bool checkCompetitionEnd() override;
+    bool checkRoundEnd() override;
+    bool checkGroupEnd();
+    void setupNextGroup();
+
     int getAdvanceStatusOfTeam(Team * team);
     QVector<Team *> getFilteredTeamsForNextRound();
 

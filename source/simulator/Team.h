@@ -8,16 +8,15 @@
 class Team
 {
 public:
-    Team(int jumpersCount = 0);
-    Team(const QString & countryCode);
+    Team(const QString & countryCode = "");
 
     static QVector<Team> constructTeamsVectorByJumpersList(const QVector<Jumper> & jumpers, int minCount);
     static QVector<Jumper *> getJumpersFilteredByCountryCode(QVector<Jumper> &jumpers, const QString & countryCode);
+    static void cutTeamJumpers(Team * team, int jumpersCount);
 
 private:
     QString countryCode;
     QVector<Jumper *> jumpers;
-    int jumpersCount;
 
 public:
     void setJumper(Jumper * jumper, int index);
@@ -25,7 +24,6 @@ public:
     QVector<Jumper*> & getJumpersReference();
     void setJumpers(const QVector<Jumper *> &newJumpers);
     int getJumpersCount() const;
-    void setJumpersCount(int newJumpersCount);
     QString getCountryCode() const;
     void setCountryCode(const QString &newCountryCode);
 };

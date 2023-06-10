@@ -175,6 +175,41 @@ void CompetitionManagerWindow::enableCompetitionManagementButtons()
     ui->pushButton_windsGeneratorSettings->setEnabled(true);
 }
 
+void CompetitionManagerWindow::showMessageBoxForNextGroup()
+{
+    if(getType() == CompetitionRules::Team){
+        QMessageBox * box = new QMessageBox(this);
+        box->setStyleSheet("QMessageBox{color: black; background-color: white;}");
+        box->setIcon(QMessageBox::Information);
+        box->setWindowTitle(tr("Zakończenie ") + QString::number(dynamic_cast<TeamCompetitionManager *>(manager)->getActualGroup()) + tr(" grupy zawodników"));
+        box->setText(tr("Aby przejść do następnej grupy zawodników, wciśnij przycisk na dole okna konkursu"));
+        QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
+        box->setModal(true);
+        box->show();
+    }
+}
+
+void CompetitionManagerWindow::setupGoToNextButtonForNextGroup()
+{
+    if(getType() == CompetitionRules::Team){
+        TeamCompetitionManager * tmManager = dynamic_cast<TeamCompetitionManager *>(manager);
+        ui->pushButton_goToNext->show();
+        ui->pushButton_goToNext->setText(tr("Przejdź do ") + QString::number(tmManager->getActualGroup() + 1) + tr(" grupy"));
+        disableCompetitionManagementButtons();
+
+        QMetaObject::Connection * const connection = new QMetaObject::Connection;
+        *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, this, [this, connection, tmManager](){
+            tmManager->setupNextGroup();
+            currentInputJumpManipulator = JumpManipulator();
+            enableCompetitionManagementButtons();
+            ui->pushButton_goToNext->hide();
+
+            QObject::disconnect(*connection);
+            delete connection;
+        });
+    }
+}
+
 void CompetitionManagerWindow::showMessageBoxForNextRound()
 {
     QMessageBox * box = new QMessageBox(this);
@@ -185,7 +220,6 @@ void CompetitionManagerWindow::showMessageBoxForNextRound()
     QPushButton *btnOk = box->addButton("OK", QMessageBox::AcceptRole);
     box->setModal(true);
     box->show();
-    qDebug()<<"hhh";
 }
 
 JumpManipulator CompetitionManagerWindow::getCurrentInputJumpManipulator() const
@@ -215,7 +249,6 @@ AbstractCompetitionManager *CompetitionManagerWindow::getManager() const
 
 void CompetitionManagerWindow::setupGoToNextButtonForNextRound()
 {
-    qDebug()<<"hoho";
     ui->pushButton_goToNext->show();
     ui->pushButton_goToNext->setText(tr("Przejdź do ") + QString::number(manager->getActualRound() + 1) + tr(" serii"));
     disableCompetitionManagementButtons();
@@ -566,6 +599,13 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     else if(manager->checkRoundEnd()){
         setupGoToNextButtonForNextRound();
         showMessageBoxForNextRound();
+    }
+    else if(getType() == CompetitionRules::Team)
+    {
+        if(tmManager->checkGroupEnd()){
+            setupGoToNextButtonForNextGroup();
+            showMessageBoxForNextGroup();
+        }
     }
 }
 

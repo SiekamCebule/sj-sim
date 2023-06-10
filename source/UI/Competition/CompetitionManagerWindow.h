@@ -31,6 +31,9 @@ public:
     void disableCompetitionManagementButtons();
     void enableCompetitionManagementButtons();
 
+    void showMessageBoxForNextGroup();
+    void setupGoToNextButtonForNextGroup();
+
     void showMessageBoxForNextRound();
     void setupGoToNextButtonForNextRound();
 

@@ -26,9 +26,9 @@ void TeamCompetitionManager::setupNextRound()
 {
     actualRound++; //Przechodzi do następnej rundy
     roundsTeams.push_back(getFilteredTeamsForNextRound());
-    setActualStartListIndex(0);
+    setActualGroup(0);
+    setupNextGroup();
     roundsStartingGates.push_back(actualGate);
-    setupStartListStatusesForActualRound();
 }
 
 void TeamCompetitionManager::setupStartListStatusesForActualRound()
@@ -52,7 +52,7 @@ void TeamCompetitionManager::updateCompetitorsAdvanceStatuses()
             status = StartListCompetitorStatus::SureAdvanced;
         }
 
-        else if(lastQualifiedResult == nullptr)
+        else if(lastQualifiedResult == nullptr || results->getResultOfTeam(team) == nullptr)
             status = StartListCompetitorStatus::Waiting;
         else{
             if(results->getResultOfTeam(team)->getPosition() <= lastQualifiedResult->getPosition()){
@@ -124,6 +124,29 @@ QVector<Team *> TeamCompetitionManager::getFilteredTeamsForNextRound()
         }
     }
     return teams;
+}
+
+bool TeamCompetitionManager::checkCompetitionEnd()
+{
+    return (checkGroupEnd() && checkRoundEnd() && (actualRound == competitionRules->getEditableRounds().count() || actualRound == competitionInfo->getExceptionalRoundsCount()));
+}
+
+bool TeamCompetitionManager::checkRoundEnd()
+{
+    return (isAllJumpsAreFinished() == true && (actualGroup == competitionRules->getJumpersInTeamCount()));
+}
+
+bool TeamCompetitionManager::checkGroupEnd()
+{
+    return (isAllJumpsAreFinished() == true);
+}
+
+void TeamCompetitionManager::setupNextGroup()
+{
+    setActualGroup(actualGroup + 1);
+    setupStartListStatusesForActualRound();
+    updateCompetitorsAdvanceStatuses();
+    setActualStartListIndex(0);
 }
 
 int TeamCompetitionManager::getActualGroup() const

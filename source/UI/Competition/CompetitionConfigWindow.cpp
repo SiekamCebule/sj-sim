@@ -337,6 +337,9 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         qualsInfo.setExceptionalRoundsCount(1);
         int type = competitionRulesEditor->getCompetitionTypeFromInput();
 
+        for(auto & team : competitionTeams)
+            Team::cutTeamJumpers(&team, competitionRulesEditor->getJumpersCountInTeam());
+
         AbstractCompetitionManager * competitionManager = nullptr;
         if(type == CompetitionRules::Individual)
             competitionManager = new IndividualCompetitionManager();
@@ -402,7 +405,6 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         info.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
         info.setResults(new CompetitionResults());
         info.setSerieType(CompetitionInfo::Competition);
-        qDebug()<<"Anoo";
 
         //competitionManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
         //Wypełnić
@@ -453,6 +455,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         {
             this->setModal(true);
         }
+        competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers, competitionRulesEditor->getJumpersCountInTeam());
 
         delete info.getHill();
         delete competitionManager;

@@ -17,8 +17,8 @@ class AbstractCompetitionManager : public QObject
 public:
     AbstractCompetitionManager(short type = CompetitionRules::Individual);
 
-    bool checkRoundEnd();
-    bool checkCompetitionEnd();
+    virtual bool checkRoundEnd();
+    virtual bool checkCompetitionEnd();
 
     void updateToBeatLineDistance();
     void updateToAdvanceLineDistance();

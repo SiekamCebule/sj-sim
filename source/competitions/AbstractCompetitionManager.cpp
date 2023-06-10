@@ -40,7 +40,7 @@ void AbstractCompetitionManager::updateToBeatLineDistance()
     if(coachGateForNextJumper == true) tempGate = actualCoachGate;
     double gateCompensation = WindsCalculator::getGateCompensation(roundsStartingGates.at(actualRound - 1), tempGate, competitionInfo->getHill());
     toBeatLineDistance = 0;
-    if(actualRound == 1){
+    if((getType() == CompetitionRules::Individual && actualRound == 1) || (getType() == CompetitionRules::Team && dynamic_cast<TeamCompetitionManager *>(this)->getActualGroup() == 1 && actualRound == 1)){
         toBeatLineDistance = leaderPoints;
     }
     else{
@@ -51,6 +51,7 @@ void AbstractCompetitionManager::updateToBeatLineDistance()
         else if(type == CompetitionRules::Team){
             actualJumperPoints = results->getResultOfTeam(dynamic_cast<TeamCompetitionManager*>(this)->getActualTeam())->getPointsSum();
         }
+
         toBeatLineDistance = leaderPoints - actualJumperPoints;
     }
     toBeatLineDistance -= hill->getPointsForKPoint();
@@ -92,7 +93,7 @@ void AbstractCompetitionManager::updateToAdvanceLineDistance()
     }
     else{
         double lastQualifiedPoints = lastQualifiedResult->getPointsSum();
-        if(actualRound == 1){
+        if((getType() == CompetitionRules::Individual && actualRound == 1) || (getType() == CompetitionRules::Team && dynamic_cast<TeamCompetitionManager *>(this)->getActualGroup() == 1  && actualRound == 1)){
             toAdvanceLineDistance = lastQualifiedPoints;
         }
         else{

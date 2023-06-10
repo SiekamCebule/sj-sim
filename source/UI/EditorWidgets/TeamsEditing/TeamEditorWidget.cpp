@@ -40,7 +40,6 @@ Team TeamEditorWidget::constructTeamFromWidgetInput()
 {
     Team team;
     team.setCountryCode(this->team->getCountryCode());
-    team.setJumpersCount(jumpers.count());
     team.setJumpers(jumpers);
     return team;
 }
