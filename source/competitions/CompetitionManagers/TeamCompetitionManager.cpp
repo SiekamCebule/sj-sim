@@ -1,9 +1,15 @@
 #include "TeamCompetitionManager.h"
 
 
-TeamCompetitionManager::TeamCompetitionManager(short type) : AbstractCompetitionManager(type)
+TeamCompetitionManager::TeamCompetitionManager() : AbstractCompetitionManager(CompetitionRules::Team)
 {
-
+    actualGroup = 0;
+    connect(this, &TeamCompetitionManager::actualStartListIndexChanged, this, [this](){
+        if(roundsTeams.count() > 0){
+            actualJumper = startListStatuses[actualStartListIndex].getJumper();
+            actualTeam = roundsTeams[actualRound - 1][actualStartListIndex];
+        }
+    });
 }
 
 
@@ -19,7 +25,7 @@ void TeamCompetitionManager::setActualTeamToActualJumperTeam()
 void TeamCompetitionManager::setupNextRound()
 {
     actualRound++; //Przechodzi do następnej rundy
-    roundTeams.push_back(getFilteredTeamsForNextRound());
+    roundsTeams.push_back(getFilteredTeamsForNextRound());
     setActualStartListIndex(0);
     roundsStartingGates.push_back(actualGate);
     setupStartListStatusesForActualRound();
@@ -27,15 +33,10 @@ void TeamCompetitionManager::setupNextRound()
 
 void TeamCompetitionManager::setupStartListStatusesForActualRound()
 {
-    QVector<QVector<StartListCompetitorStatus>> groups;
-    for(int i=0; i<competitionRules->getJumpersInTeamCount(); i++){
-        QVector<StartListCompetitorStatus> groupStartList;
-        for(auto & team : getActualRoundTeamsReference()){
-            groupStartList.push_back(StartListCompetitorStatus(team->getJumpersReference()[i]));
-        }
-        groups.push_back(groupStartList);
+    startListStatuses.clear();
+    for(auto & team : getActualRoundTeamsReference()){
+        startListStatuses.push_back(StartListCompetitorStatus(team->getJumpersReference()[actualGroup - 1]));
     }
-    roundsJumpersGroups.push_back(groups);
 }
 
 void TeamCompetitionManager::updateCompetitorsAdvanceStatuses()
@@ -125,32 +126,23 @@ QVector<Team *> TeamCompetitionManager::getFilteredTeamsForNextRound()
     return teams;
 }
 
-QVector<QVector<QVector<StartListCompetitorStatus> > > TeamCompetitionManager::getRoundsJumpersGroups() const
+int TeamCompetitionManager::getActualGroup() const
 {
-    return roundsJumpersGroups;
+    return actualGroup;
 }
 
-QVector<QVector<QVector<StartListCompetitorStatus> > > &TeamCompetitionManager::getRoundsJumpersGroupsReference()
+void TeamCompetitionManager::setActualGroup(int newActualGroup)
 {
-    return roundsJumpersGroups;
-}
-
-QVector<QVector<StartListCompetitorStatus> > &TeamCompetitionManager::getActualRoundJumpersGroupsReference()
-{
-    return roundsJumpersGroups[actualRound - 1];
-}
-
-QVector<StartListCompetitorStatus> &TeamCompetitionManager::getActualGroupStartListReference()
-{
-    return roundsJumpersGroups[actualRound - 1][actualGroup - 1];
-}
-
-void TeamCompetitionManager::setRoundsJumpersGroups(const QVector<QVector<QVector<StartListCompetitorStatus> > > &newRoundsJumpersGroups)
-{
-    roundsJumpersGroups = newRoundsJumpersGroups;
+    actualGroup = newActualGroup;
+    emit actualGroupChanged();
 }
 
 QVector<QPair<Team *, int> > TeamCompetitionManager::getTeamsAdvanceStatuses() const
+{
+    return teamsAdvanceStatuses;
+}
+
+QVector<QPair<Team *, int> > & TeamCompetitionManager::getTeamsAdvanceStatusesReference()
 {
     return teamsAdvanceStatuses;
 }
@@ -162,22 +154,22 @@ void TeamCompetitionManager::setTeamsAdvanceStatuses(const QVector<QPair<Team *,
 
 QVector<QVector<Team *> > TeamCompetitionManager::getRoundsTeams() const
 {
-    return roundTeams;
+    return roundsTeams;
 }
 
 QVector<QVector<Team *> > &TeamCompetitionManager::getRoundsTeamsReference()
 {
-    return roundTeams;
+    return roundsTeams;
 }
 
 void TeamCompetitionManager::setRoundsTeams(const QVector<QVector<Team *> > &newRoundTeams)
 {
-    roundTeams = newRoundTeams;
+    roundsTeams = newRoundTeams;
 }
 
 QVector<Team *> & TeamCompetitionManager::getActualRoundTeamsReference()
 {
-    return roundTeams[actualRound - 1];
+    return roundsTeams[actualRound - 1];
 }
 
 Team *TeamCompetitionManager::getActualTeam() const

@@ -6,14 +6,12 @@
 TeamsSquadsTreeModel::TeamsSquadsTreeModel(QVector<Team> *teams, int jumpersInTeam, QObject *parent)
     : QAbstractItemModel(parent), teams(teams), jumpersInTeam(jumpersInTeam)
 {
-    rootItem = new TreeItem({"Drużyna", "Zawodnik"});
+    rootItem = new TreeItem({tr("Drużyna"), tr("Zawodnik")});
 }
 
 TeamsSquadsTreeModel::~TeamsSquadsTreeModel()
 {
-    for(int i=0; i<rootItem->childCount(); i++)
-        delete rootItem->getChildItem(i);
-    delete rootItem;
+    TreeItem::deleteAllTreeItemsRecursively(rootItem);
 }
 
 QVariant TeamsSquadsTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -128,7 +126,6 @@ QVariant TeamsSquadsTreeModel::data(const QModelIndex &index, int role) const
     }
     else if(role == Qt::ForegroundRole){
         TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
-        int teamIndex = 0;
         if(item->getParentItem() == rootItem)
             return QColor(qRgb(0, 0, 0));
         else
@@ -158,50 +155,20 @@ void TeamsSquadsTreeModel::setTeams(QVector<Team> *newTeams)
     teams = newTeams;
 }
 
-void TeamsSquadsTreeModel::deleteAllItems()
+void TeamsSquadsTreeModel::setupTreeItems()
 {
-    for(auto & item : rootItem->getChildItemsReference())
-        deleteItem(item);
-    delete rootItem;
-}
-
-void TeamsSquadsTreeModel::deleteItem(TreeItem *item)
-{
-    if(item->childCount() > 0)
-    {
-        for(auto & itm : item->getChildItemsReference())
-        {
-            deleteItem(itm);
-        }
-    }
-    item->getParentItem()->getChildItemsReference().remove(item->row());
-    delete item;
-}
-
-void TeamsSquadsTreeModel::updateItemsByTeamsVector()
-{
-    deleteAllItems();
+    TreeItem::deleteAllTreeItemsRecursively(rootItem);
     rootItem = new TreeItem({"Drużyna", "Zawodnik"});
     for(auto & team : *teams){
-        qDebug()<<"team: "<<team.getCountryCode();
         TreeItem * teamItem = new TreeItem({team.getCountryCode(), ""}, rootItem);
         int i=0;
         for(auto & jumper : team.getJumpersReference()){
             if(i == jumpersInTeam) break;
-            qDebug()<<"jumper: "<<jumper->getNameAndSurname();
             TreeItem * jumperItem = new TreeItem({"", jumper->getNameAndSurname()}, teamItem);
             i++;
         }
     }
 }
-
-/*void TeamsSquadsTreeModel::debugAllItems()
-{
-    for(auto & item : rootItem->getChildItemsReference())
-    {
-        qDebug()<<"item"
-    }
-}*/
 
 int TeamsSquadsTreeModel::getJumpersInTeam() const
 {

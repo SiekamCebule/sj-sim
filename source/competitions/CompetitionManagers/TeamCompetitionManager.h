@@ -6,8 +6,9 @@
 
 class TeamCompetitionManager : public AbstractCompetitionManager
 {
+    Q_OBJECT
 public:
-    TeamCompetitionManager(short type = CompetitionRules::Individual);
+    TeamCompetitionManager();
     void setActualTeamToActualJumperTeam();
 
     void setupNextRound();
@@ -20,8 +21,7 @@ public:
 private:
     int actualGroup;
     Team * actualTeam;
-    QVector<QVector<Team *>> roundTeams;
-    QVector<QVector<QVector<StartListCompetitorStatus>>> roundsJumpersGroups; //Dla każdej rundy vector z vectorami dla każdej grupy. QVector<StartListCompetitorStatus> to lista startowa dla danej grupy (np 8-osobowa)
+    QVector<QVector<Team *>> roundsTeams;
     QVector<QPair<Team *, int>> teamsAdvanceStatuses;
 
 public:
@@ -32,13 +32,13 @@ public:
     void setRoundsTeams(const QVector<QVector<Team *> > &newRoundTeams);
     QVector<Team *>  & getActualRoundTeamsReference();
     QVector<QPair<Team *, int> > getTeamsAdvanceStatuses() const;
+     QVector<QPair<Team *, int> > & getTeamsAdvanceStatusesReference();
     void setTeamsAdvanceStatuses(const QVector<QPair<Team *, int> > &newTeamsAdvanceStatuses);
+    int getActualGroup() const;
+    void setActualGroup(int newActualGroup);
 
-    QVector<QVector<QVector<StartListCompetitorStatus> > > getRoundsJumpersGroups() const;
-    QVector<QVector<QVector<StartListCompetitorStatus> > > &getRoundsJumpersGroupsReference();
-    void setRoundsJumpersGroups(const QVector<QVector<QVector<StartListCompetitorStatus> > > &newRoundsJumpersGroups);
-    QVector<QVector<StartListCompetitorStatus> > &getActualRoundJumpersGroupsReference();
-    QVector<StartListCompetitorStatus> &getActualGroupStartListReference();
+signals:
+    void actualGroupChanged();
 };
 
 #endif // TEAMCOMPETITIONMANAGER_H

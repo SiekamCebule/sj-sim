@@ -20,9 +20,6 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 private:
-    QVector<Jumper *> * jumpers;
-    QVector<Team *> * teams;
-
     QVector<StartListCompetitorStatus> * startListStatuses;
 
     short type;
@@ -32,10 +29,6 @@ public:
         TeamCompetition
     };
 
-    QVector<Jumper *> *getJumpers() const;
-    void setJumpers(QVector<Jumper *> *newJumpers);
-    QVector<Team *> *getTeams() const;
-    void setTeams(QVector<Team *> *newTeams);
     short getType() const;
     void setType(short newType);
     QVector<StartListCompetitorStatus> *getStartListStatuses() const;

@@ -15,6 +15,8 @@ AbstractCompetitionManager::AbstractCompetitionManager(short type) : type(type)
     actualCoachGate = 0;
     setActualStartListIndex(0);
     actualCompetitorPointsToTheLeader = 0;
+    leaderResult = nullptr;
+    lastQualifiedResult = nullptr;
 }
 
 bool AbstractCompetitionManager::checkRoundEnd()
@@ -216,6 +218,27 @@ bool AbstractCompetitionManager::isAllJumpsAreFinished()
     return true;
 }
 
+void AbstractCompetitionManager::setActualJumperToNextUnfinished()
+{
+    setActualStartListIndex(getFirstUnfinishedStartListStatus());
+    setActualJumper(startListStatuses[getFirstUnfinishedStartListStatus()].getJumper());
+}
+
+QVector<StartListCompetitorStatus> AbstractCompetitionManager::getStartListStatuses() const
+{
+    return startListStatuses;
+}
+
+QVector<StartListCompetitorStatus> &AbstractCompetitionManager::getStartListStatusesReference()
+{
+    return startListStatuses;
+}
+
+void AbstractCompetitionManager::setStartListStatuses(const QVector<StartListCompetitorStatus> &newStartListStatuses)
+{
+    startListStatuses = newStartListStatuses;
+}
+
 QVector<WindGenerationSettings> AbstractCompetitionManager::getWindGenerationSettings() const
 {
     return windGenerationSettings;
@@ -405,21 +428,6 @@ double AbstractCompetitionManager::getActualCompetitorPointsToTheLeader() const
 void AbstractCompetitionManager::setActualCompetitorPointsToTheLeader(double newActualCompetitorPointsToTheLeader)
 {
     actualCompetitorPointsToTheLeader = newActualCompetitorPointsToTheLeader;
-}
-
-QVector<StartListCompetitorStatus> AbstractCompetitionManager::getStartListStatuses() const
-{
-    return startListStatuses;
-}
-
-QVector<StartListCompetitorStatus> &AbstractCompetitionManager::getStartListStatusesReference()
-{
-    return startListStatuses;
-}
-
-void AbstractCompetitionManager::setStartListStatus(const QVector<StartListCompetitorStatus> &newStartListStatus)
-{
-    startListStatuses = newStartListStatus;
 }
 
 CompetitionSingleResult *AbstractCompetitionManager::getLeaderResult() const

@@ -3,9 +3,11 @@
 
 #include <QDialog>
 #include <QToolBar>
+#include <QTreeView>
 #include "JumperCompetitionResultsWidget.h"
 #include "StartList/StartListModel.h"
 #include "Results/ResultsTableModel.h"
+#include "Results/TeamResultsTreeModel.h"
 #include "../../competitions/AbstractCompetitionManager.h"
 #include "../../simulator/JumpManipulator.h"
 
@@ -52,6 +54,9 @@ private:
     StartListModel * startListModel;
     ResultsTableModel * resultsTableModel;
 
+    TeamResultsTreeModel * teamResultsTreeModel;
+    QTreeView * teamResultsTreeView;
+
     JumpManipulator currentInputJumpManipulator;
     QVector<Wind> actualWinds;
     WindsGenerator windsGenerator;
@@ -76,7 +81,7 @@ public:
     void setCurrentCoachGate(int newCurrentCoachGate);
     QVector<Wind> & getActualWindsReference();
     QVector<Wind> getActualWinds() const;
-    void setActualWinds(const QVector<Wind> &newActualWinds);
+    void setActualWinds(const QVector<Wind> &newActualWinds);   
 
 private slots:
     void on_pushButton_jump_clicked();

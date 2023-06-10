@@ -28,9 +28,12 @@ protected:
     int type;
     Jumper * jumper;
     Team * team;
+    QVector<CompetitionSingleResult> teamJumpersResults;
 
 public:
     void updatePointsSum();
+    void updateTeamJumpersResults();
+    CompetitionSingleResult * getTeamJumperResult(Jumper * jumper);
 
     CompetitionInfo *getCompetitionInfo() const;
     void setCompetitionInfo(CompetitionInfo *newCompetitionInfo);
@@ -47,6 +50,9 @@ public:
     void setTeam(Team *newTeam);
     int getPosition() const;
     void setPosition(int newPosition);
+    QVector<CompetitionSingleResult> getTeamJumpersResults() const;
+    QVector<CompetitionSingleResult> & getTeamJumpersResultsReference();
+    void setTeamJumpersResults(const QVector<CompetitionSingleResult> &newTeamJumpersResults);
 };
 
 inline bool operator>(const CompetitionSingleResult & l, const CompetitionSingleResult & r)

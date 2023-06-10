@@ -1,16 +1,12 @@
 #include "IndividualCompetitionManager.h"
 #include "../../utilities/functions.h"
 
-IndividualCompetitionManager::IndividualCompetitionManager(short type) : AbstractCompetitionManager(type)
+IndividualCompetitionManager::IndividualCompetitionManager() : AbstractCompetitionManager(CompetitionRules::Individual)
 {
-    setCoachGateForNextJumper(false);
-    setActualCoachGate(0);
     connect(this, &IndividualCompetitionManager::actualStartListIndexChanged, this, [this](){
         if(roundsJumpers.count() > 0)
             actualJumper = roundsJumpers[actualRound - 1].at(actualStartListIndex);
     });
-    leaderResult = nullptr;
-    lastQualifiedResult = nullptr;
 }
 
 void IndividualCompetitionManager::updateCompetitorsAdvanceStatuses()
@@ -99,10 +95,9 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound()
     return jumpers;
 }
 
-void IndividualCompetitionManager::setActualJumperToNextUnfinished()
+QVector<StartListCompetitorStatus> IndividualCompetitionManager::getStartListStatuses() const
 {
-    setActualStartListIndex(getFirstUnfinishedStartListStatus());
-    setActualJumper(startListStatuses[getFirstUnfinishedStartListStatus()].getJumper());
+    return startListStatuses;
 }
 
 void IndividualCompetitionManager::setupNextRound()

@@ -8,6 +8,21 @@ CompetitionSingleResult::CompetitionSingleResult(Jumper *jumper, int type) : typ
 CompetitionSingleResult::CompetitionSingleResult(Team *team, int type) : type(type), jumper(nullptr), team(team), competitionInfo(nullptr)
 {}
 
+QVector<CompetitionSingleResult> CompetitionSingleResult::getTeamJumpersResults() const
+{
+    return teamJumpersResults;
+}
+
+QVector<CompetitionSingleResult> &CompetitionSingleResult::getTeamJumpersResultsReference()
+{
+    return teamJumpersResults;
+}
+
+void CompetitionSingleResult::setTeamJumpersResults(const QVector<CompetitionSingleResult> &newTeamJumpersResults)
+{
+    teamJumpersResults = newTeamJumpersResults;
+}
+
 int CompetitionSingleResult::getPosition() const
 {
     return position;
@@ -89,5 +104,37 @@ void CompetitionSingleResult::updatePointsSum()
     for(auto & res : jumps){
         qDebug()<<"AAAAAAAAAAAAAAAAAAAAAA: "<<res.getPoints();
         pointsSum += res.getPoints();
+    }
+}
+
+void CompetitionSingleResult::updateTeamJumpersResults()
+{
+    teamJumpersResults.clear();
+    QSet<Jumper *> jumpers;
+    for(auto & jump : getJumpsReference()){
+        if(jumpers.contains(jump.getJumper()) == false){
+            CompetitionSingleResult result(jump.getJumper());
+            result.getJumpsReference().push_back(jump);
+            result.updatePointsSum();
+
+            teamJumpersResults.push_back(result);
+        }
+        else{
+            for(auto & result : teamJumpersResults){
+                if(jump.getJumper() == result.getJumper()){
+                    result.getJumpsReference().push_back(jump);
+                    result.updatePointsSum();
+                }
+            }
+        }
+    }
+}
+
+CompetitionSingleResult *CompetitionSingleResult::getTeamJumperResult(Jumper *jumper)
+{
+    for(auto & res : teamJumpersResults)
+    {
+        if(res.getJumper() == jumper)
+            return &res;
     }
 }

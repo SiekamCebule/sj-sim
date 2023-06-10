@@ -21,6 +21,9 @@ public:
     int columnCount() const;
     int childCount() const;
     QVector<TreeItem *> getChildItemsReference();
+
+    static void deleteAllTreeItemsRecursively(TreeItem * rootItem);
+    static void deleteTreeItemRecursively(TreeItem * item);
 };
 
 #endif // TREEITEM_H

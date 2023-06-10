@@ -118,6 +118,22 @@ void CompetitionResults::addJump(CompetitionSingleResult *result, JumpData &jump
     result->updatePointsSum();
 }
 
+int CompetitionResults::howManyJumpersJumpedInTeam(Team *team)
+{
+    CompetitionSingleResult * res = getResultOfTeam(team);
+    int i = 0;
+    QSet<Jumper *> jumpers;
+    for(auto & jump : res->getJumpsReference())
+    {
+        if(jumpers.contains(jump.getJumper()) == false)
+        {
+            jumpers.insert(jump.getJumper());
+            i++;
+        }
+    }
+    return i;
+}
+
 void CompetitionResults::updatePositions()
 {
     double previousResultPoints = 0;
@@ -146,8 +162,8 @@ void CompetitionResults::updatePositions()
         previousResultPoints = result.getPointsSum();
         i++;
     }
-   // for(auto & result : results){
-     //   qDebug()<<result.getJumper()->getNameAndSurname()<<": "<<result.getPosition();
+    // for(auto & result : results){
+    //   qDebug()<<result.getJumper()->getNameAndSurname()<<": "<<result.getPosition();
     //}
 }
 
