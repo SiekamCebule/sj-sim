@@ -1,4 +1,5 @@
 #include "TeamCompetitionManager.h"
+#include "../../utilities/functions.h"
 
 
 TeamCompetitionManager::TeamCompetitionManager() : AbstractCompetitionManager(CompetitionRules::Team)
@@ -6,8 +7,11 @@ TeamCompetitionManager::TeamCompetitionManager() : AbstractCompetitionManager(Co
     actualGroup = 0;
     connect(this, &TeamCompetitionManager::actualStartListIndexChanged, this, [this](){
         if(roundsTeams.count() > 0){
+            qDebug()<<"JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
             actualJumper = startListStatuses[actualStartListIndex].getJumper();
+            emit actualJumperChanged();
             actualTeam = roundsTeams[actualRound - 1][actualStartListIndex];
+            emit actualTeamChanged();
         }
     });
 }
@@ -31,11 +35,30 @@ void TeamCompetitionManager::setupNextRound()
     roundsStartingGates.push_back(actualGate);
 }
 
-void TeamCompetitionManager::setupStartListStatusesForActualRound()
+void TeamCompetitionManager::setupStartListStatusesForActualRound(bool setupBeforeCompetition)
 {
+    if(setupBeforeCompetition != true)
+        sortActualRoundJumpersForActualGroup();
+
     startListStatuses.clear();
     for(auto & team : getActualRoundTeamsReference()){
         startListStatuses.push_back(StartListCompetitorStatus(team->getJumpersReference()[actualGroup - 1]));
+    }
+}
+
+void TeamCompetitionManager::sortActualRoundJumpersForActualGroup()
+{
+    QVector<Team *> teams;
+    int sortAfterGroups = competitionRules->getRounds().at(actualRound - 1).getSortAfterGroups();
+    if(sortAfterGroups == RoundInfo::EachGroup  || (sortAfterGroups == RoundInfo::BeforeLastGroup && actualGroup == competitionRules->getJumpersInTeamCount()) || (sortAfterGroups == RoundInfo::AfterFirstGroup && actualGroup == 2))
+    {
+        results->sortInDescendingOrder();
+        for(auto & res : results->getResultsReference()){
+            if(MyFunctions::pointersVectorContains(getActualRoundTeamsReference(), res.getTeam())){
+                teams.push_front(res.getTeam());
+            }
+        }
+        roundsTeams[actualRound - 1] = teams;
     }
 }
 
@@ -90,6 +113,9 @@ void TeamCompetitionManager::updateCompetitorsAdvanceStatuses()
         teamsAdvanceStatuses.push_back(QPair<Team *, int>(team, status));
     }
 }
+//po pierwszej (1)
+//po ostatniej (2)
+//każda (3)
 
 int TeamCompetitionManager::getAdvanceStatusOfTeam(Team *team)
 {
@@ -104,7 +130,7 @@ QVector<Team *> TeamCompetitionManager::getFilteredTeamsForNextRound()
 {
     QVector<Team *> teams;
     if(competitionRules->getRounds().at(actualRound - 1).getSortStartList() == true){
-        results->sortInAscendingOrder();
+        results->sortInDescendingOrder();
         QVector<CompetitionSingleResult *> roundResults;
         for(auto & res : results->getResultsReference()){
             if(getAdvanceStatusOfTeam(res.getTeam()) != (-1))
@@ -113,9 +139,8 @@ QVector<Team *> TeamCompetitionManager::getFilteredTeamsForNextRound()
 
         for(auto & res : roundResults){
             if(getAdvanceStatusOfTeam(res->getTeam()) == StartListCompetitorStatus::SureAdvanced)
-                teams.push_back(res->getTeam());
+                teams.push_front(res->getTeam());
         }
-        results->sortInDescendingOrder();
     }
     else{
         for(auto & status : teamsAdvanceStatuses){

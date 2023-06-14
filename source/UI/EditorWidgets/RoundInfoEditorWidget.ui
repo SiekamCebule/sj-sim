@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>237</width>
-    <height>90</height>
+    <width>381</width>
+    <height>164</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -61,6 +61,45 @@ listy startowej</string>
        </property>
        <property name="checked">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="comboBox_sortingAfterGroups">
+       <property name="styleSheet">
+        <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 7px;
+}</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Przed ostatnią grupą</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Po każdej grupie</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Po pierwszej grupie</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Nigdy</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Sortowanie zawodników po grupach</string>
        </property>
       </widget>
      </item>

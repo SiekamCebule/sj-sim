@@ -69,10 +69,14 @@ int TeamResultsTreeModel::rowCount(const QModelIndex &parent) const
     else
         parentItem = static_cast<TreeItem*>(parent.internalPointer());
 
-    if(parentItem != rootItem)
-        return results->howManyJumpersJumpedInTeam(teams->at(parent.row())); //ilość zawodników którzy NA RAZIE skoczyli w danej drużynie.
-    return parentItem->childCount(); //naglowki druzyn (parent == rootItem)
+    if(parentItem == rootItem)
+        return parentItem->childCount(); // tyle naglowkow druzyn
+    else if(parentItem != rootItem && parentItem->getParentItem() == rootItem)
+        return results->howManyJumpersJumpedInTeam(teams->at(parentItem->row())); //ilość zawodników którzy NA RAZIE skoczyli w danej drużynie.
+    return 0;
 }
+//Być może roundTeams[0] zmieniło nagle adres przez jakieś nie wiem, detach()?
+// i co za tym idzie, teams z modelu wskazuje na jakiś nieistniejący vector czy coś w tym stylu.
 
 int TeamResultsTreeModel::columnCount(const QModelIndex &parent) const
 {
@@ -127,17 +131,17 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
     }
     else if(role == Qt::BackgroundRole){
         TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
-        Team * team = results->getResultsReference()[index.row()].getTeam();
         if(item->getParentItem() == rootItem){
+            Team * team = results->getResultsReference()[index.row()].getTeam();
             if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::SureDroppedOut){
                 return QColor(qRgb(252, 237, 237));
             }
             else if(results->getResultByIndex(index.row())->getJumpsReference().count() < manager->getActualRound() * manager->getActualGroup()) //Ilość skoków jest mniejsza niż round * group
             {
-                return QColor(qRgb(250, 250, 250));
+                return QColor(qRgb(254, 254, 254));
             }
             else if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::Waiting){
-                return QColor(qRgb(253, 253, 249));
+                return QColor(qRgb(248, 248, 244));
             }
             else if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::SureAdvanced){
                 return QColor(qRgb(242, 255, 246));
@@ -146,6 +150,26 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
     }
 
     return QVariant();
+}
+
+QVector<Team *> *TeamResultsTreeModel::getTeams() const
+{
+    return teams;
+}
+
+void TeamResultsTreeModel::setTeams(QVector<Team *> *newTeams)
+{
+    teams = newTeams;
+}
+
+TeamCompetitionManager *TeamResultsTreeModel::getManager() const
+{
+    return manager;
+}
+
+void TeamResultsTreeModel::setManager(TeamCompetitionManager *newManager)
+{
+    manager = newManager;
 }
 
 TreeItem *TeamResultsTreeModel::getRootItem() const
@@ -157,6 +181,7 @@ void TeamResultsTreeModel::setupTreeItems()
 {
     TreeItem::deleteAllTreeItemsRecursively(rootItem);
     rootItem = new TreeItem({tr("Miejsce"), tr("Drużyna"), tr("Zawodnik"), tr("Punkty")});
+    results->sortInDescendingOrder();
     for(auto & res : results->getResultsReference()){
         TreeItem * teamHeaderItem = new TreeItem({QString::number(res.getPosition()), res.getTeam()->getCountryCode(), "", QString::number(res.getPointsSum())}, rootItem);
         for(auto & jumper : res.getTeam()->getJumpersReference()){
@@ -177,16 +202,6 @@ void TeamResultsTreeModel::setupTreeItems()
             }
         }
     }
-}
-
-TeamCompetitionManager *TeamResultsTreeModel::getManager() const
-{
-    return manager;
-}
-
-void TeamResultsTreeModel::setManager(TeamCompetitionManager *newManager)
-{
-    manager = newManager;
 }
 
 QVector<QPair<Team *, int> > *TeamResultsTreeModel::getTeamsAdvanceStatuses() const

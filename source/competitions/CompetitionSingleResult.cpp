@@ -118,6 +118,7 @@ void CompetitionSingleResult::updateTeamJumpersResults()
             result.updatePointsSum();
 
             teamJumpersResults.push_back(result);
+            jumpers.insert(jump.getJumper());
         }
         else{
             for(auto & result : teamJumpersResults){

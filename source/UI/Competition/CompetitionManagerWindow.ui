@@ -24,6 +24,59 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_8">
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_actionsButtons">
+     <item>
+      <widget class="QToolButton" name="toolButton_cancelActions">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(70, 78,95)</string>
+       </property>
+       <property name="text">
+        <string>Odwołaj..</string>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::InstantPopup</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="toolButton_autoSimulationActions">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(70, 78,95)</string>
+       </property>
+       <property name="text">
+        <string>Automatycznie przesymuluj...</string>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::InstantPopup</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_20">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,1">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_6">

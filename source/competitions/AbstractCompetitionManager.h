@@ -35,6 +35,7 @@ public:
 
 signals:
     void actualStartListIndexChanged();
+    void actualJumperChanged();
     void roundEnd();
     void competitionEnd();
 

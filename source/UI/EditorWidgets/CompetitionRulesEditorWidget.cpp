@@ -122,6 +122,7 @@ QVector<RoundInfo> CompetitionRulesEditorWidget::getRoundsFromInput()
         RoundInfo round;
         round.setCount(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getCountFromInput());
         round.setSortStartList(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getSortStartListFromInput());
+        round.setSortAfterGroups(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getSortAfterGroupsFromInput());
         rounds.push_back(round);
     }
     return rounds;

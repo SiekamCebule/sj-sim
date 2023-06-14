@@ -4,8 +4,10 @@
 IndividualCompetitionManager::IndividualCompetitionManager() : AbstractCompetitionManager(CompetitionRules::Individual)
 {
     connect(this, &IndividualCompetitionManager::actualStartListIndexChanged, this, [this](){
-        if(roundsJumpers.count() > 0)
+        if(roundsJumpers.count() > 0){
             actualJumper = roundsJumpers[actualRound - 1].at(actualStartListIndex);
+            emit actualJumperChanged();
+        }
     });
 }
 

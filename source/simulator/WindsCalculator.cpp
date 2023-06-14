@@ -8,10 +8,10 @@
 
 Wind WindsCalculator::getAveragedWind(const QVector<Wind> & winds, short type)
 {
-    qDebug()<<winds.count();
     double percent = 100 / winds.count();
     double windAvg = 0;
     int i=0;
+
     for(const auto & wind : winds)
     {
         if(type == Original){

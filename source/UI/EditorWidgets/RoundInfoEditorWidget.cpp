@@ -21,6 +21,7 @@ void RoundInfoEditorWidget::fillRoundInfoInput()
     else{
         ui->spinBox_count->setValue(roundInfo->getCount());
         ui->checkBox_sortStartList->setChecked(roundInfo->getSortStartList());
+        ui->comboBox_sortingAfterGroups->setCurrentIndex(roundInfo->getSortAfterGroups());
     }
 }
 
@@ -32,6 +33,11 @@ int RoundInfoEditorWidget::getCountFromInput()
 bool RoundInfoEditorWidget::getSortStartListFromInput()
 {
     return ui->checkBox_sortStartList->isChecked();
+}
+
+int RoundInfoEditorWidget::getSortAfterGroupsFromInput()
+{
+    return ui->comboBox_sortingAfterGroups->currentIndex();
 }
 
 RoundInfo *RoundInfoEditorWidget::getRoundInfo() const

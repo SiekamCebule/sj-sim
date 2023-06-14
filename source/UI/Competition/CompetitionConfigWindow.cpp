@@ -446,7 +446,10 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
                 static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(teams);
             }
         }
-        competitionManager->setupStartListStatusesForActualRound();
+        if(type == CompetitionRules::Team)
+            dynamic_cast<TeamCompetitionManager *>(competitionManager)->setupStartListStatusesForActualRound(true);
+        else
+            competitionManager->setupStartListStatusesForActualRound();
         competitionManager->setActualStartListIndex(0);
         competitionManager->getRoundsStartingGatesReference().push_back(competitionManager->getActualGate());
 

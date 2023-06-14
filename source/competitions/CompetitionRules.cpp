@@ -12,7 +12,8 @@
 CompetitionRules::CompetitionRules(const QString & name) : name(name)
 {
     has95HSRule = hasWindCompensations = hasGateCompensations = hasJudgesPoints = hasDsq = false;
-    competitionType = jumpersInTeamCount = windAverageCalculatingType = windCompensationDistanceEffect = 0;
+    competitionType = jumpersInTeamCount = windAverageCalculatingType = 0;
+    windCompensationDistanceEffect = 1;
 }
 
 short CompetitionRules::getWindCompensationDistanceEffect() const
@@ -87,6 +88,7 @@ QJsonObject CompetitionRules::getCompetitionRulesJsonObject(const CompetitionRul
         QJsonObject roundObject;
         roundObject.insert("count", it->getCount());
         roundObject.insert("sort-start-list", it->getSortStartList());
+        roundObject.insert("sort-after-groups", it->getSortAfterGroups());
         roundsArray.push_back(roundObject);
     }
     object.insert("rounds", roundsArray);
@@ -138,6 +140,7 @@ QVector<CompetitionRules> CompetitionRules::getCompetitionRulesVectorFromJson(co
             RoundInfo roundInfo;
             roundInfo.setCount(round.toObject().value("count").toInt());
             roundInfo.setSortStartList(round.toObject().value("sort-start-list").toBool(true));
+            roundInfo.setSortAfterGroups(round.toObject().value("sort-after-groups").toInt());
             rules.getEditableRounds().push_back(roundInfo);
         }
         rulesVector.push_back(rules);
@@ -145,6 +148,7 @@ QVector<CompetitionRules> CompetitionRules::getCompetitionRulesVectorFromJson(co
     return rulesVector;
 }
 
+//Błąd występuje po wykonaniu skoku świeżo po posortowaniu
 QVector<RoundInfo> CompetitionRules::getRounds() const
 {
     return rounds;

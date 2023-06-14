@@ -29,7 +29,6 @@ public:
         return false;
     }
     static void fileMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & msg);
-
 };
 
 double roundDoubleToHalf(double number);

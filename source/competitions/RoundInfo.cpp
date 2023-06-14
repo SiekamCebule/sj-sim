@@ -4,6 +4,16 @@ RoundInfo::RoundInfo(int count, bool sortStartList) : count(count),
     sortStartList(sortStartList)
 {}
 
+int RoundInfo::getSortAfterGroups() const
+{
+    return sortAfterGroups;
+}
+
+void RoundInfo::setSortAfterGroups(int newSortAfterGroups)
+{
+    sortAfterGroups = newSortAfterGroups;
+}
+
 int RoundInfo::getCount() const
 {
     return count;

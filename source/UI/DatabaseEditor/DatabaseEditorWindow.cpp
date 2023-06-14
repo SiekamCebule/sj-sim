@@ -38,19 +38,19 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
     if(this->jumperEditor == nullptr)
         this->jumperEditor = new JumperEditorWidget;
     ui->tab_jumpers->layout()->addWidget(this->jumperEditor);
-    this->jumperEditor->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    this->jumperEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     this->jumperEditor->hide();
 
     if(this->hillEditor == nullptr)
         this->hillEditor = new HillEditorWidget();
     ui->tab_hills->layout()->addWidget(this->hillEditor);
-    this->hillEditor->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    this->hillEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     this->hillEditor->hide();
 
     if(this->competitionRulesEditor == nullptr)
         this->competitionRulesEditor = new CompetitionRulesEditorWidget();
     ui->tab_competitionRules->layout()->addWidget(this->competitionRulesEditor);
-    this->competitionRulesEditor->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    this->competitionRulesEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     this->competitionRulesEditor->hide();
 
     jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, this);

@@ -12,13 +12,14 @@ public:
     void setActualTeamToActualJumperTeam();
 
     void setupNextRound();
-    void setupStartListStatusesForActualRound(); // zrobienie grup list startowych
+    void setupStartListStatusesForActualRound(bool setupBeforeCompetition  = false); // zrobienie grup list startowych
     void updateCompetitorsAdvanceStatuses();
 
     bool checkCompetitionEnd() override;
     bool checkRoundEnd() override;
     bool checkGroupEnd();
     void setupNextGroup();
+    void sortActualRoundJumpersForActualGroup();
 
     int getAdvanceStatusOfTeam(Team * team);
     QVector<Team *> getFilteredTeamsForNextRound();
@@ -43,6 +44,7 @@ public:
     void setActualGroup(int newActualGroup);
 
 signals:
+    void actualTeamChanged();
     void actualGroupChanged();
 };
 

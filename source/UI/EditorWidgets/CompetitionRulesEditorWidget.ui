@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>403</width>
-    <height>576</height>
+    <height>733</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -166,6 +166,23 @@ color: black;</string>
        </property>
       </widget>
      </item>
+     <item row="6" column="1">
+      <widget class="QCheckBox" name="checkBox_dsq">
+       <property name="font">
+        <font>
+         <family>Quicksand Medium</family>
+         <pointsize>11</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Dyskwalifikacje</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item row="7" column="0">
       <widget class="QLabel" name="label_8">
        <property name="font">
@@ -234,20 +251,33 @@ margin-top: 6px;
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
-      <widget class="QCheckBox" name="checkBox_dsq">
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
-         <family>Quicksand Medium</family>
+         <family>Ubuntu</family>
          <pointsize>11</pointsize>
          <bold>true</bold>
         </font>
        </property>
-       <property name="text">
-        <string>Dyskwalifikacje</string>
+       <property name="styleSheet">
+        <string notr="true">color: black;</string>
        </property>
-       <property name="checked">
-        <bool>true</bool>
+       <property name="text">
+        <string>Wpływ odległości
+ na rekompensatę</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -304,8 +334,8 @@ margin-top: 6px;
        </item>
       </widget>
      </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="label_3">
+     <item row="10" column="0">
+      <widget class="QLabel" name="label_2">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
          <horstretch>0</horstretch>
@@ -323,8 +353,8 @@ margin-top: 6px;
         <string notr="true">color: black;</string>
        </property>
        <property name="text">
-        <string>Wpływ odległości
- na rekompensatę</string>
+        <string>Liczenie średniej
+ wiatru</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -379,36 +409,6 @@ margin-top: 6px;
        </item>
       </widget>
      </item>
-     <item row="10" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>11</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: black;</string>
-       </property>
-       <property name="text">
-        <string>Liczenie średniej
- wiatru</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="wordWrap">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item>
@@ -418,6 +418,12 @@ margin-top: 6px;
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>300</height>
+      </size>
      </property>
      <property name="styleSheet">
       <string notr="true">QScrollArea{
@@ -439,7 +445,7 @@ width: 5px;
         <x>0</x>
         <y>0</y>
         <width>383</width>
-        <height>141</height>
+        <height>298</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -466,7 +472,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>365</width>
-            <height>51</height>
+            <height>208</height>
            </rect>
           </property>
           <attribute name="label">
@@ -479,7 +485,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>365</width>
-            <height>51</height>
+            <height>208</height>
            </rect>
           </property>
           <attribute name="label">

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QToolBar>
+#include <QMenu>
 #include <QTreeView>
 #include "JumperCompetitionResultsWidget.h"
 #include "StartList/StartListModel.h"
@@ -43,9 +44,12 @@ public:
     void showMessageBoxForCompetitionEnd();
     void setupGoToNextButtonForCompetitionEnd();
 
-    void autoSimulateRound();
     void cancelCompetition();
     void cancelActualRound();
+    void autoSimulateCompetition();
+    void autoSimulateRound();
+    void autoSimulateGroup(); // tylko druzynowe
+    void autoSimulateJumps();
 
 signals:
     void nextRoundButtonClicked();
@@ -69,10 +73,19 @@ private:
     JumperCompetitionResultsWidget * jumperResultsWidget;
 
     QToolBar * toolBar;
-    QList<QAction *> competitionActions;
+
+    QList<QAction *> cancelActionsList;
+    QMenu * cancelActionsMenu;
     QAction * action_cancelCompetition;
     QAction * action_cancelRound;
+
+    QList<QAction *> autoSimulationActionsList;
+    QMenu * autoSimulationActionsMenu;
+    QAction * action_autoSimulateCompetition;
     QAction * action_autoSimulateRound;
+    QAction * action_autoSimulateGroup;
+    QAction * action_autoSimulateJumps;
+
 
 public:
     AbstractCompetitionManager *getManager() const;
@@ -84,7 +97,7 @@ public:
     void setCurrentCoachGate(int newCurrentCoachGate);
     QVector<Wind> & getActualWindsReference();
     QVector<Wind> getActualWinds() const;
-    void setActualWinds(const QVector<Wind> &newActualWinds);   
+    void setActualWinds(const QVector<Wind> &newActualWinds);
 
 private slots:
     void on_pushButton_jump_clicked();
