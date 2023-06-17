@@ -28,7 +28,7 @@
 #include <random>
 
 extern IDGenerator globalIDGenerator;
-const QString appVersion = "0.6.0 beta";
+const QString appVersion = "0.7.0";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -180,7 +180,7 @@ void MainWindow::setParentApplication(QApplication *newParentApplication)
 
 void MainWindow::on_pushButton_reportIssue_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/SiekamCebule/sj-sim/issues"));
+    QDesktopServices::openUrl(QUrl("https://github.com/SiekamCebule/sj-sim/issues/new"));
 }
 
 

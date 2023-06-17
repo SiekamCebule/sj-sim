@@ -39,19 +39,12 @@ QVector<Wind> WindsGenerator::generateWinds()
         if(settings->getWindStrengthInstability() > 0){
 
             double base = MyRandom::randomDouble(-settings->getBaseWindStrength() / 20, settings->getBaseWindStrength() / 20);
-            double deviation = settings->getWindStrengthInstability() / 2.6;
+            double deviation = settings->getWindStrengthInstability() / 5.2;
 
             double random = 0;
             if(deviation > 0)
                 random = MyRandom::normalDistributionRandom(base, deviation);
-
-            short randomType = MyRandom::randomInt(0, 1);
-            switch(randomType)
-            {
-            case 0: windStrength += random; break;
-            case 1: windStrength -= random; break;
-            default: break;
-            }
+            windStrength += random;
         }
 
         short windDirection = Wind::Null;
@@ -110,45 +103,45 @@ QVector<Wind> WindsGenerator::generateWinds()
             break;
         }
 
-    if(settings->getWindDirectionInstability() == 0){
-        wind.setDirection(settings->getBaseDirection());
-    }
-    else{
-        QVector<double> probabilities;
-        double drawSum = backProb + backSideProb + sideProb + frontSideProb + frontProb;
-        probabilities.push_back(backProb);
-        probabilities.push_back(backSideProb);
-        probabilities.push_back(sideProb);
-        probabilities.push_back(frontSideProb);
-        probabilities.push_back(frontProb);
-        double drawRandom = MyRandom::randomDouble(0, drawSum);
+        if(settings->getWindDirectionInstability() == 0){
+            wind.setDirection(settings->getBaseDirection());
+        }
+        else{
+            QVector<double> probabilities;
+            double drawSum = backProb + backSideProb + sideProb + frontSideProb + frontProb;
+            probabilities.push_back(backProb);
+            probabilities.push_back(backSideProb);
+            probabilities.push_back(sideProb);
+            probabilities.push_back(frontSideProb);
+            probabilities.push_back(frontProb);
+            double drawRandom = MyRandom::randomDouble(0, drawSum);
 
-        double actualSum = 0;
-        for(int i=0; i < 5; i++)
-        {
-            actualSum += probabilities[i];
-            if(drawRandom < actualSum){
-                windDirection = i+1;
-                break;
+            double actualSum = 0;
+            for(int i=0; i < 5; i++)
+            {
+                actualSum += probabilities[i];
+                if(drawRandom < actualSum){
+                    windDirection = i+1;
+                    break;
+                }
             }
+
+
+            wind.setDirection(windDirection);
         }
 
+        if(windStrength < 0)
+            windStrength = (-windStrength);
+        wind.setStrength(windStrength);
 
-        wind.setDirection(windDirection);
-    }
+        winds.push_back(wind);
 
-    if(windStrength < 0)
-        windStrength = (-windStrength);
-    wind.setStrength(windStrength);
-
-    winds.push_back(wind);
-}
-
-/*for(const auto & wind : winds)
+        /*for(const auto & wind : winds)
     {
         qDebug()<<"Wiatru "<<wind.getStringDirection(false)<<", o prędkości "<<wind.getValue()<<"m/s";
     }*/
-return winds;
+    }
+    return winds;
 }
 
 int WindsGenerator::calculateWindsCountByKPoint(double KPoint)

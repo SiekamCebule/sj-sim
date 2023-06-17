@@ -18,8 +18,19 @@ JumpSimulator::JumpSimulator(Jumper *jumper, const QVector<Wind> &winds, Hill *h
     manipulator = nullptr;
     setHasCoachGate(false);
     setCoachGate(0);
+    inrunSnow = 0;
 
     resetTemporaryParameters();
+}
+
+double JumpSimulator::getInrunSnow() const
+{
+    return inrunSnow;
+}
+
+void JumpSimulator::setInrunSnow(double newInrunSnow)
+{
+    inrunSnow = newInrunSnow;
 }
 
 int JumpSimulator::getCoachGate() const
@@ -80,6 +91,7 @@ void JumpSimulator::simulateJump()
     jumpData.setDSQ(false);
 
     generateTakeoffRating();
+    generateInrunSnowEffect();
     generateFlightRating();
     generateDistance();
     generateWindEffects();
@@ -290,6 +302,15 @@ void JumpSimulator::generateWindEffects()
 
         i++;
     }
+}
+
+void JumpSimulator::generateInrunSnowEffect()
+{
+    double inrunSnow = simulationData->getInrunSnow();
+    qDebug()<<"inrunSnow -------> "<<inrunSnow;
+    qDebug()<<" simulationData->takeoffRating: "<< simulationData->takeoffRating;
+    simulationData->takeoffRating /= (1 + (inrunSnow / 16.44));
+    qDebug()<<" simulationData->takeoffRating: "<< simulationData->takeoffRating;
 }
 
 void JumpSimulator::preventVeryLongJumps()
@@ -537,6 +558,23 @@ void JumpSimulator::setupJumpData()
     jumpData.hasCoachGate = this->hasCoachGate;
     jumpData.coachGate = this->coachGate;
     if(hasCoachGate == true) jumpData.setGate(this->coachGate);
+
+    inrunSnow += manipulator->getInrunSnowBonus();
+    if(inrunSnow < manipulator->getInrunSnowRange().first)
+        inrunSnow = manipulator->getInrunSnowRange().first;
+    else if(inrunSnow > manipulator->getInrunSnowRange().second)
+        inrunSnow = manipulator->getInrunSnowRange().second;
+    simulationData->setInrunSnow(inrunSnow);
+}
+
+JumpSimulationData *JumpSimulator::getSimulationData()
+{
+    return simulationData;
+}
+
+void JumpSimulator::setSimulationData(JumpSimulationData *newSimulationData)
+{
+    simulationData = newSimulationData;
 }
 
 double JumpSimulator::getWindSegmentDistance()

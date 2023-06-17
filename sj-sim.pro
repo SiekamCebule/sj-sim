@@ -22,6 +22,7 @@ SOURCES += \
     source/UI/DatabaseEditor/ListModels/JumpersListModel.cpp \
     source/UI/DatabaseEditor/ListModels/TeamsListModel.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
+    source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.cpp \
     source/UI/EditorWidgets/RoundInfoEditorWidget.cpp \
     source/UI/EditorWidgets/TeamsEditing/Models/TeamJumpersListModel.cpp \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.cpp \
@@ -78,6 +79,7 @@ SOURCES += \
     source/seasons/classifications/single-results/TeamClassificationSingleResult.cpp \
     source/simulator/Characteristic.cpp \
     source/simulator/Hill.cpp \
+    source/simulator/InrunSnowGenerator.cpp \
     source/simulator/JumpData.cpp \
     source/simulator/JumpManipulator.cpp \
     source/simulator/JumpSimulationData.cpp \
@@ -110,6 +112,7 @@ HEADERS += \
     source/UI/DatabaseEditor/ListModels/JumpersListModel.h \
     source/UI/DatabaseEditor/ListModels/TeamsListModel.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
+    source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h \
     source/UI/EditorWidgets/RoundInfoEditorWidget.h \
     source/UI/EditorWidgets/TeamsEditing/Models/TeamJumpersListModel.h \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.h \
@@ -165,6 +168,7 @@ HEADERS += \
     source/seasons/classifications/single-results/TeamClassificationSingleResult.h \
     source/simulator/Characteristic.h \
     source/simulator/Hill.h \
+    source/simulator/InrunSnowGenerator.h \
     source/simulator/JumpData.h \
     source/simulator/JumpManipulator.h \
     source/simulator/JumpSimulationData.h \
@@ -189,6 +193,7 @@ FORMS += \
     source/UI/Competition/JumperCompetitionResultsWidget.ui \
     source/UI/DatabaseEditor/DatabaseItemsListView.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
+    source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.ui \
     source/UI/EditorWidgets/RoundInfoEditorWidget.ui \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.ui \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \

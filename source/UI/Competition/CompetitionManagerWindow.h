@@ -11,6 +11,7 @@
 #include "Results/TeamResultsTreeModel.h"
 #include "../../competitions/AbstractCompetitionManager.h"
 #include "../../simulator/JumpManipulator.h"
+#include "../../simulator/InrunSnowGenerator.h"
 
 namespace Ui {
 class CompetitionManagerWindow;
@@ -65,8 +66,12 @@ private:
     QTreeView * teamResultsTreeView;
 
     JumpManipulator currentInputJumpManipulator;
+
     QVector<Wind> actualWinds;
     WindsGenerator windsGenerator;
+
+    InrunSnowGenerator inrunSnowGenerator;
+
     JumpSimulator simulator;
     void setupSimulator();
 
@@ -98,6 +103,8 @@ public:
     QVector<Wind> & getActualWindsReference();
     QVector<Wind> getActualWinds() const;
     void setActualWinds(const QVector<Wind> &newActualWinds);
+    InrunSnowGenerator getInrunSnowGenerator() const;
+    void setInrunSnowGenerator(const InrunSnowGenerator &newInrunSnowGenerator);
 
 private slots:
     void on_pushButton_jump_clicked();
@@ -106,6 +113,7 @@ private slots:
     void on_pushButton_windsGeneratorSettings_clicked();
     void on_pushButton_manipulateJump_clicked();
     void on_pushButton_coachGate_clicked();
+    void on_pushButton_inrunSnowGeneratorSettings_clicked();
 };
 
 #endif // COMPETITIONMANAGERWINDOW_H

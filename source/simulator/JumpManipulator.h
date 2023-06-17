@@ -14,6 +14,7 @@ public:
 private:
     QPair<double, double> distanceRange; //min, max
     QPair<double, double> landingInstabilityRange;
+    QPair<double, double> inrunSnowRange;
     QPair<double, double> takeoffRatingRange;
     QPair<double, double> flightRatingRange;
     QPair<double, double> judgesRatingRange;
@@ -22,6 +23,7 @@ private:
 
     double distanceBonus;
     double landingInstabilityBonus;
+    double inrunSnowBonus;
     double takeoffRatingBonus;
     double flightRatingBonus;
     double judgesRatingBonus;
@@ -68,6 +70,10 @@ public:
     void setExactDSQProbability(int newExactDSQProbability);
     bool getAveragedWindRangeEnabled() const;
     void setAveragedWindRangeEnabled(bool newAveragedWindRangeEnabled);
+    QPair<double, double> getInrunSnowRange() const;
+    void setInrunSnowRange(const QPair<double, double> &newInrunSnowRange);
+    double getInrunSnowBonus() const;
+    void setInrunSnowBonus(double newInrunSnowBonus);
 };
 
 #endif // JUMPMANIPULATOR_H

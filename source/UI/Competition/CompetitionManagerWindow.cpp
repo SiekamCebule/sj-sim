@@ -4,6 +4,7 @@
 #include "../../competitions/CompetitionManagers/TeamCompetitionManager.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
+#include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
 #include "../JumpManipulation/JumpManipulatorConfigWindow.h"
 #include <QInputDialog>
 #include <QMessageBox>
@@ -693,6 +694,16 @@ void CompetitionManagerWindow::autoSimulateJumps()
     }
 }
 
+InrunSnowGenerator CompetitionManagerWindow::getInrunSnowGenerator() const
+{
+    return inrunSnowGenerator;
+}
+
+void CompetitionManagerWindow::setInrunSnowGenerator(const InrunSnowGenerator &newInrunSnowGenerator)
+{
+    inrunSnowGenerator = newInrunSnowGenerator;
+}
+
 void CompetitionManagerWindow::cancelCompetition()
 {
     manager->getResults()->getResultsReference().clear();
@@ -720,29 +731,27 @@ void CompetitionManagerWindow::cancelCompetition()
 
 void CompetitionManagerWindow::cancelActualRound()
 {
-    switch(getType()){
     for(auto & res : manager->getResults()->getResultsReference()){
         if(res.getJumpsReference().count() == manager->getActualRound()){
             res.getJumpsReference().removeLast();
             res.updatePointsSum();
         }
-    }
-    manager->getResults()->sortInDescendingOrder();
+        manager->getResults()->sortInDescendingOrder();
 
-    emit startListModel->dataChanged(startListModel->index(manager->getActualStartListIndex() - 1), startListModel->index(manager->getActualStartListIndex() - 1));
-    if(getType() == CompetitionRules::Individual){
-        ui->tableView_results->setModel(nullptr);
-        ui->tableView_results->setModel(resultsTableModel);
-        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    }
-    else if(getType() == CompetitionRules::Team){
-        teamResultsTreeView->setModel(nullptr);
-        teamResultsTreeView->setModel(teamResultsTreeModel);
-        teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::Stretch);
-        teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        teamResultsTreeView->expandToDepth(0);
-    }
+        emit startListModel->dataChanged(startListModel->index(manager->getActualStartListIndex() - 1), startListModel->index(manager->getActualStartListIndex() - 1));
+        if(getType() == CompetitionRules::Individual){
+            ui->tableView_results->setModel(nullptr);
+            ui->tableView_results->setModel(resultsTableModel);
+            ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        }
+        else if(getType() == CompetitionRules::Team){
+            teamResultsTreeView->setModel(nullptr);
+            teamResultsTreeView->setModel(teamResultsTreeModel);
+            teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::Stretch);
+            teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+            teamResultsTreeView->expandToDepth(0);
+        }
     }
 
     setupGoToNextButtonForCompetitionEnd();
@@ -764,6 +773,8 @@ void CompetitionManagerWindow::setupSimulator()
     simulator.setCompetitionRules(manager->getCompetitionRules());
     simulator.setDSQBaseProbability(manager->getBaseDSQProbability());
     simulator.setWinds(actualWinds);
+    simulator.setInrunSnow(inrunSnowGenerator.generateInrunSnow());
+    qDebug()<<"Mandark: "<<simulator.getInrunSnow();
 }
 
 void CompetitionManagerWindow::on_pushButton_jump_clicked()
@@ -914,6 +925,31 @@ void CompetitionManagerWindow::on_pushButton_windsGeneratorSettings_clicked()
 
 }
 
+void CompetitionManagerWindow::on_pushButton_inrunSnowGeneratorSettings_clicked()
+{
+    QDialog * dialog = new QDialog;
+    dialog->setWindowFlags(Qt::Window);
+    dialog->setWindowTitle("Edytuj ustawienia generatora wiatru");
+    dialog->setStyleSheet("background-color: rgb(225, 225, 225);");
+    dialog->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    dialog->setFixedSize(dialog->size());
+    dialog->setLayout(new QVBoxLayout(dialog));
+
+    InrunSnowGeneratorSettingsEditorWidget * editor = new InrunSnowGeneratorSettingsEditorWidget;
+    editor->setGenerator(&inrunSnowGenerator);
+    editor->fillInputs();
+
+    dialog->layout()->addWidget(editor);
+    connect(editor, &InrunSnowGeneratorSettingsEditorWidget::submitted, dialog, &QDialog::accept);
+
+    if(dialog->exec() == QDialog::Accepted){
+        inrunSnowGenerator.setBaseInrunSnow(editor->getBase());
+        inrunSnowGenerator.setInrunSnowDeviation(editor->getDeviation());
+
+        delete editor;
+        delete dialog;
+    }
+}
 
 void CompetitionManagerWindow::on_pushButton_manipulateJump_clicked()
 {

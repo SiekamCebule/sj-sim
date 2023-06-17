@@ -22,6 +22,7 @@ JumpManipulator JumpManipulatorConfigWindow::getJumpManipulatorFromInputs() cons
     JumpManipulator m;
     m.setDistanceRange(QPair<double, double>(ui->doubleSpinBox_minDistance->value(), ui->doubleSpinBox_maxDistance->value()));
     m.setLandingInstabilityRange(QPair<double, double>(ui->doubleSpinBox_minLandingInstability->value(), ui->doubleSpinBox_maxLandingInstability->value()));
+    m.setInrunSnowRange(QPair<double, double>(ui->doubleSpinBox_minInrunSnow->value(), ui->doubleSpinBox_maxInrunSnow->value()));
     m.setTakeoffRatingRange(QPair<double, double>(ui->doubleSpinBox_minTakeoffRating->value(), ui->doubleSpinBox_maxTakeoffRating->value()));
     m.setFlightRatingRange(QPair<double, double>(ui->doubleSpinBox_minFlightRating->value(), ui->doubleSpinBox_maxFlightRating->value()));
     m.setJudgesRatingRange(QPair<double, double>(ui->doubleSpinBox_minJudgesRating->value(), ui->doubleSpinBox_maxJudgesRating->value()));
@@ -33,6 +34,7 @@ JumpManipulator JumpManipulatorConfigWindow::getJumpManipulatorFromInputs() cons
 
     m.setDistanceBonus(ui->doubleSpinBox_distanceBonus->value());
     m.setLandingInstabilityBonus(ui->doubleSpinBox_landingInstabilityBonus->value());
+    m.setInrunSnowBonus(ui->doubleSpinBox_inrunSnowBonus->value());
     m.setTakeoffRatingBonus(ui->doubleSpinBox_takeoffRatingBonus->value());
     m.setFlightRatingBonus(ui->doubleSpinBox_flightRatingBonus->value());
     m.setJudgesRatingBonus(ui->doubleSpinBox_judgesRatingBonus->value());

@@ -744,7 +744,7 @@ background-color: rgb(255, 255, 251);
         <property name="font">
          <font>
           <family>Quicksand [PfEd]</family>
-          <pointsize>15</pointsize>
+          <pointsize>17</pointsize>
           <bold>true</bold>
          </font>
         </property>

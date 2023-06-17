@@ -12,6 +12,7 @@
 #include "../../simulator/Team.h"
 #include "../DatabaseEditor/DatabaseItemsListView.h"
 #include "TeamsSquadsTreeModel.h"
+#include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
 
 class HillEditorWidget;
 class WindsGeneratorSettingsEditorWidget;
@@ -42,6 +43,7 @@ private:
     int type;
     HillEditorWidget * hillEditor;
     WindsGeneratorSettingsEditorWidget * windsGeneratorSettingsEditor;
+    InrunSnowGeneratorSettingsEditorWidget * inrunSnowGeneratorSettingsEditor;
 
     void setupHillToolBoxItem();
     //

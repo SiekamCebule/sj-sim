@@ -30,6 +30,7 @@ private:
     JumpManipulator * manipulator;
     bool hasCoachGate;
     int coachGate;
+    double inrunSnow;
 
     CompetitionRules * competitionRules;
 
@@ -57,6 +58,7 @@ private:
 
     void generateDistance();
     void generateWindEffects();
+    void generateInrunSnowEffect();
     void preventVeryLongJumps();
     void generateLanding();
     void generateJudges();
@@ -106,6 +108,10 @@ public:
     void setHasCoachGate(bool newHasCoachGate);
     int getCoachGate() const;
     void setCoachGate(int newCoachGate);
+    JumpSimulationData *getSimulationData();
+    void setSimulationData(JumpSimulationData *newSimulationData);
+    double getInrunSnow() const;
+    void setInrunSnow(double newInrunSnow);
 };
 
 #endif // JUMPSIMULATOR_H

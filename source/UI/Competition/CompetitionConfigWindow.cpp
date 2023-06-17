@@ -38,6 +38,8 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     windsGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget(this);
     windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);
     windsGeneratorSettingsEditor->removeSubmitButton();
+    inrunSnowGeneratorSettingsEditor = new InrunSnowGeneratorSettingsEditorWidget(this);
+    inrunSnowGeneratorSettingsEditor->removeSubmitButton();
     competitionRulesEditor = new CompetitionRulesEditorWidget(this);
     competitionRulesEditor->removeSubmitButton();
     competitionRulesEditor->setCompetitionRules(new CompetitionRules(tr("Zasady")));
@@ -67,6 +69,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     ui->toolBox->raise();
     ui->label_title->raise();
     ui->toolBox->addItem(windsGeneratorSettingsEditor, "Ustawienia generatora wiatru");
+    ui->toolBox->addItem(inrunSnowGeneratorSettingsEditor, "Ustawienia generatora śniegu na najeździe");
     setupCompetitionRulesToolBoxItem();
 
     if(getType() == SeasonCompetition)
@@ -74,8 +77,8 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
         setWindowTitle("Konfiguracja konkursu");
         delete ui->toolBox->widget(0); //index 0
         ui->toolBox->removeItem(0);
-        delete ui->toolBox->widget(1); //index 2
-        ui->toolBox->removeItem(1);
+        delete ui->toolBox->widget(2); //index 2
+        ui->toolBox->removeItem(2);
     }
     else if(getType() == SingleCompetition)
     {
@@ -392,6 +395,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             qualificationsManager->getCompetitionRules()->setRounds(qualsRounds);
 
             CompetitionManagerWindow * qualsWindow = new CompetitionManagerWindow(qualificationsManager, this);
+            qualsWindow->setInrunSnowGenerator(InrunSnowGenerator(inrunSnowGeneratorSettingsEditor->getBase(), inrunSnowGeneratorSettingsEditor->getDeviation()));
             connect(qualsWindow->getManager(), &AbstractCompetitionManager::competitionEnd, qualsWindow, [qualsWindow](){
                 qualsWindow->showMessageBoxForQualificationsEnd();
             });
@@ -454,6 +458,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         competitionManager->getRoundsStartingGatesReference().push_back(competitionManager->getActualGate());
 
         CompetitionManagerWindow * window = new CompetitionManagerWindow(competitionManager, this);
+        window->setInrunSnowGenerator(InrunSnowGenerator(inrunSnowGeneratorSettingsEditor->getBase(), inrunSnowGeneratorSettingsEditor->getDeviation()));
         if(window->exec() == QDialog::Accepted)
         {
             this->setModal(true);

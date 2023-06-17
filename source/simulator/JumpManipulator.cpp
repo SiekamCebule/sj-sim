@@ -2,11 +2,31 @@
 
 JumpManipulator::JumpManipulator()
 {
-    distanceRange = landingInstabilityRange = takeoffRatingRange = flightRatingRange = judgesRatingRange = averagedWindRange = QPair<double, double>(0, -1);
-    distanceBonus = landingInstabilityBonus = takeoffRatingBonus = flightRatingBonus = judgesRatingBonus = averagedWindBonus = 0;
+    distanceRange = landingInstabilityRange = inrunSnowRange = takeoffRatingRange = flightRatingRange = judgesRatingRange = averagedWindRange = QPair<double, double>(0, -1);
+    distanceBonus = landingInstabilityBonus = inrunSnowBonus = takeoffRatingBonus = flightRatingBonus = judgesRatingBonus = averagedWindBonus = 0;
     averagedWindRangeEnabled = false;
     exactLandingType = exactDSQProbability = -1;
     exactJudges.fill(-1, 5);
+}
+
+double JumpManipulator::getInrunSnowBonus() const
+{
+    return inrunSnowBonus;
+}
+
+void JumpManipulator::setInrunSnowBonus(double newInrunSnowBonus)
+{
+    inrunSnowBonus = newInrunSnowBonus;
+}
+
+QPair<double, double> JumpManipulator::getInrunSnowRange() const
+{
+    return inrunSnowRange;
+}
+
+void JumpManipulator::setInrunSnowRange(const QPair<double, double> &newInrunSnowRange)
+{
+    inrunSnowRange = newInrunSnowRange;
 }
 
 bool JumpManipulator::getAveragedWindRangeEnabled() const

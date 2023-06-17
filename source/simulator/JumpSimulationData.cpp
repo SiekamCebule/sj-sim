@@ -2,12 +2,12 @@
 
 JumpSimulationData::JumpSimulationData()
 {
-
+reset();
 }
 
 void JumpSimulationData::reset()
 {
-    takeoffRating = flightRating = judgesRating = DSQProbability = 0;
+    takeoffRating = flightRating = judgesRating = DSQProbability = inrunSnow = landingDifficulty = 0;
 }
 
 double JumpSimulationData::getTakeoffRating() const
@@ -48,4 +48,24 @@ int JumpSimulationData::getDSQProbability() const
 void JumpSimulationData::setDSQProbability(int newDSQProbability)
 {
     DSQProbability = newDSQProbability;
+}
+
+double JumpSimulationData::getInrunSnow() const
+{
+    return inrunSnow;
+}
+
+void JumpSimulationData::setInrunSnow(double newInrunSnow)
+{
+    inrunSnow = newInrunSnow;
+}
+
+double JumpSimulationData::getLandingDifficulty() const
+{
+    return landingDifficulty;
+}
+
+void JumpSimulationData::setLandingDifficulty(double newLandingDifficulty)
+{
+    landingDifficulty = newLandingDifficulty;
 }
