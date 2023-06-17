@@ -47,6 +47,7 @@ private:
         LandingInstability
     };
     static double getRandomForJumpSimulation(short parameter, Jumper * jumper);
+    static double getLandingChance(short landingType, double distance, Hill * hill, Jumper *jumper);
     static bool isJumperBeat95HSPercents(double distance, double HSPoint);
 
     bool generateDSQ();
