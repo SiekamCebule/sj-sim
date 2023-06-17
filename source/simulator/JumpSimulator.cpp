@@ -90,6 +90,7 @@ void JumpSimulator::simulateJump()
     else if(jumpData.distance > manipulator->getDistanceRange().second && manipulator->getDistanceRange().second > (-1))
         jumpData.distance = manipulator->getDistanceRange().second;
     if(jumpData.getDistance() < 0) jumpData.distance = 0;
+    preventVeryLongJumps();
     generateLanding();
     generateJudges();
 
@@ -288,6 +289,17 @@ void JumpSimulator::generateWindEffects()
         //qDebug()<<jumpData.getDistance()<<", "<<(i + 1) * getWindSegmentDistance();
 
         i++;
+    }
+}
+
+void JumpSimulator::preventVeryLongJumps()
+{
+    if(jumpData.getDistance() > hill->getRealHS()){
+        double distanceAfterRealHS = jumpData.getDistance() - hill->getRealHS();
+        double substraction = MyRandom::lognormalDistributionRandom(distanceAfterRealHS / 19, distanceAfterRealHS / 41);
+        jumpData.distance -= substraction;
+        if(jumpData.distance < hill->getRealHS() * 0.992)
+            jumpData.distance = hill->getRealHS() * 0.992;
     }
 }
 
@@ -692,17 +704,17 @@ double JumpSimulator::getLandingChance(short landingType, double distance, Hill 
         else if(distance < realHS * 0.99) //132.5 dla HS134
             chance = 3.8;
         else if(distance < realHS * 1.00) //134 dla HS134
-            chance = 9;
+            chance = 8;
         else if(distance < realHS * 1.01) //135.5 dla HS134
-            chance = 18;
+            chance = 16;
         else if(distance < realHS * 1.02) //136.5 dla HS134
-            chance = 38.25;
+            chance = 30;
         else if(distance < realHS * 1.03) //138 dla HS134
-            chance = 70;
+            chance = 65;
         else if(distance < realHS * 1.04) //139.5 dla HS134
-            chance = 97;
+            chance = 90;
         else if(distance < realHS * 1.05) //141 dla HS134
-            chance = 140;
+            chance = 130;
         else if(distance < realHS * 1.06) //142 dla HS134
             chance = 200;
         else if(distance < realHS * 1.07) //143.5 dla HS134

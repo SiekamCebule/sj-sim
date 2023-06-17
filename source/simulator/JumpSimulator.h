@@ -57,6 +57,7 @@ private:
 
     void generateDistance();
     void generateWindEffects();
+    void preventVeryLongJumps();
     void generateLanding();
     void generateJudges();
     void calculateCompensations();
