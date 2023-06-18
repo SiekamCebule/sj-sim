@@ -9,6 +9,7 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QMessageBox>
+#include <QProgressDialog>
 #include <QObject>
 #include <QObject>
 #include <QDir>
@@ -47,6 +48,14 @@ void SingleJumpsManager::simulate()
             winds.push_back(wind);
         }
     }
+    QProgressDialog dialog;
+    dialog.setStyleSheet("QProgressDialog{background-color: white; color: black;}");
+    dialog.setMinimum(0);
+    dialog.setMaximum(jumpsCount);
+    dialog.setWindowTitle("Symulacja pojedynczych skoków");
+    dialog.setLabelText(QString("Przesymulowano %1 z %2 skoków").arg(QString::number(dialog.value()).arg(QString::number(dialog.maximum()))));
+    dialog.setModal(true);
+    dialog.setWindowModality(Qt::WindowModal);
 
     for(int i=0; i<jumpsCount; i++){
         if(getChangeableWind() == true){
@@ -58,21 +67,11 @@ void SingleJumpsManager::simulate()
         }
         jumpSimulator.simulateJump();
         jumps.push_back(jumpSimulator.getJumpData());
-        qDebug()<<i+1<<". "<<jumpSimulator.getJumpData();
-        double distance = jumpSimulator.getJumpData().getDistance();
-        if(min < distance)
-            min = distance;
-        if(max > distance)
-            max = distance;
 
-        avg += distance;
+        dialog.setValue(i+1);
+        dialog.setLabelText(QString("Przesymulowano %1 z %2 skoków").arg(QString::number(dialog.value()), QString::number(dialog.maximum())));
     }
-    avg /= jumpsCount;
 
-    qDebug()<<"\n\nRÓŻNICA: "<<max - min<<"m";
-    qDebug()<<"NAJKRÓTSZY: "<<max<<"m";
-    qDebug()<<"NAJDALSZY: "<<min<<"m";
-    qDebug()<<"ŚREDNIA DŁUGOŚĆ SKOKU: "<<avg<<"m";
     delete jumpSimulator.getManipulator();
 }
 
@@ -100,7 +99,7 @@ bool SingleJumpsManager::saveResultsToFile(short fileFormat)
         for(auto & jump : getEditableJumps())
         {
             array.push_back(JumpData::getJumpDataJsonObject(jump, true, true, true));
-           array.push_back(QJsonObject());
+            array.push_back(QJsonObject());
         }
         mainObject.insert("jumps", array);
         document.setObject(mainObject);

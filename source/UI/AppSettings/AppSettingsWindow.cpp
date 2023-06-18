@@ -18,7 +18,7 @@ AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
     setFixedSize(size());
     setWindowFlags(Qt::Window);
 
-    ui->doubleSpinBox_simulationRandomMultiplier->setValue(GlobalSimulationSettings::get()->getSimulationRandomMultiplier());
+    ui->spinBox_skillsRange->setValue(GlobalSimulationSettings::get()->getMaxSkills());
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
 }
 
@@ -53,6 +53,7 @@ void AppSettingsWindow::setMainWindowParent(MainWindow *newMainWindowParent)
 
 void AppSettingsWindow::closeEvent(QCloseEvent *event)
 {
+    GlobalSimulationSettings::get()->updateSimulationRandomMultiplier();
     GlobalSimulationSettings::get()->writeToFile();
     event->accept();
 }
@@ -79,9 +80,8 @@ void AppSettingsWindow::on_spinBox_dsqProbability_valueChanged(int arg1)
     GlobalSimulationSettings::get()->setBaseDsqProbability(arg1);
 }
 
-
-void AppSettingsWindow::on_doubleSpinBox_simulationRandomMultiplier_valueChanged(double arg1)
+void AppSettingsWindow::on_spinBox_skillsRange_valueChanged(int arg1)
 {
-    GlobalSimulationSettings::get()->setSimulationRandomMultiplier(arg1);
+    GlobalSimulationSettings::get()->setMaxSkills(arg1);
 }
 

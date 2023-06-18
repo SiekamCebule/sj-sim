@@ -375,6 +375,9 @@ height: 30px;
          <property name="text">
           <string>Zmienny wiatr</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>

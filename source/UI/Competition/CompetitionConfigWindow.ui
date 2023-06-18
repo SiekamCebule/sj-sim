@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1316</width>
-    <height>889</height>
+    <height>960</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -163,7 +163,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>603</width>
-          <height>754</height>
+          <height>825</height>
          </rect>
         </property>
         <attribute name="label">
@@ -240,7 +240,7 @@ color: black;
           <x>0</x>
           <y>0</y>
           <width>603</width>
-          <height>754</height>
+          <height>825</height>
          </rect>
         </property>
         <attribute name="label">

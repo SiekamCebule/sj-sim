@@ -12,6 +12,7 @@
 #include "../../simulator/Team.h"
 #include "../DatabaseEditor/DatabaseItemsListView.h"
 #include "TeamsSquadsTreeModel.h"
+#include "TeamsSquadsTreeView.h"
 #include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
 
 class HillEditorWidget;
@@ -57,7 +58,7 @@ private:
     //
 
     DatabaseItemsListView * jumpersListView;
-    QTreeView * teamsTreeView;
+    TeamsSquadsTreeView * teamsTreeView;
     TeamsSquadsTreeModel * teamsSquadsModel;
 
     QCheckBox * checkBox_singleCompetitionQualifications;

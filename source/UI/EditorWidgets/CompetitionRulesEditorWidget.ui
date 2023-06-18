@@ -184,7 +184,7 @@ color: black;</string>
       </widget>
      </item>
      <item row="7" column="0">
-      <widget class="QLabel" name="label_8">
+      <widget class="QLabel" name="label_jumpersInTeam">
        <property name="font">
         <font>
          <pointsize>11</pointsize>

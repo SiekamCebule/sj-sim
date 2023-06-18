@@ -47,7 +47,6 @@ private:
     QVector<Jumper> * jumpers;
     QVector<Hill> * hills;
     QVector<CompetitionRules> * competitionRules;
-    QVector<Team> * teams;
 
     QAbstractListModel * listModel;
 
@@ -57,7 +56,6 @@ private:
     QAction * downAction;
 
     bool allowInserting;
-    bool teamsEditing;
 
 private slots:
     void onInsertActionTriggered();

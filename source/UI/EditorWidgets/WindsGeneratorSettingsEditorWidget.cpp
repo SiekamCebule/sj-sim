@@ -164,6 +164,7 @@ QVector<WindGenerationSettings> WindsGeneratorSettingsEditorWidget::getWindsGene
         settings.setWindStrengthInstability(item->getWindStrengthChangeFromInput());
         settings.setBaseDirection(item->getBaseWindDirectionFromInput());
         settings.setWindDirectionInstability(item->getWindDirectionChangeFromInput());
+        settings.setCharacteristics(item->getCharacteristicsEditor()->getCharacteristics());
         vector.push_back(settings);
     }
     return vector;

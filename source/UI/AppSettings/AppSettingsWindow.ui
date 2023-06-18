@@ -174,38 +174,35 @@ color: rgb(26, 95, 180);
           <string notr="true">color: rgb(0, 0, 0);</string>
          </property>
          <property name="text">
-          <string>Mnożnik losowości
-symulacji</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_simulationRandomMultiplier">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <family>Quicksand Medium</family>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(246, 245, 244);
-color: rgb(13, 13, 13);</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="decimals">
-          <number>3</number>
+          <string>Zakres umiejętności: Od 0 do</string>
          </property>
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBox_skillsRange">
+       <property name="font">
+        <font>
+         <family>Quicksand Medium</family>
+         <pointsize>17</pointsize>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);
+color: rgb(13, 13, 13);</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="maximum">
+        <number>100000</number>
+       </property>
+       <property name="value">
+        <number>60</number>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer_6">

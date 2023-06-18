@@ -117,9 +117,9 @@ QVariant TeamsSquadsTreeModel::data(const QModelIndex &index, int role) const
     else if(role == Qt::FontRole){
         TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
         QFont font("Quicksand Medium");
-        font.setPointSizeF(9.5);
+        font.setPointSizeF(8);
         if(item->getParentItem() == rootItem){ //jeśli jest to nagłówek drużyny
-            font.setPointSize(10);
+            font.setPointSize(9);
             font.setBold(true);
         }
         return font;

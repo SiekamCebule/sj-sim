@@ -16,6 +16,7 @@ SOURCES += \
     source/UI/Competition/Results/TeamResultsTreeModel.cpp \
     source/UI/Competition/StartList/StartListModel.cpp \
     source/UI/Competition/TeamsSquadsTreeModel.cpp \
+    source/UI/Competition/TeamsSquadsTreeView.cpp \
     source/UI/DatabaseEditor/DatabaseItemsListView.cpp \
     source/UI/DatabaseEditor/ListModels/CompetitionRulesListModel.cpp \
     source/UI/DatabaseEditor/ListModels/HillsListModel.cpp \
@@ -106,6 +107,7 @@ HEADERS += \
     source/UI/Competition/Results/TeamResultsTreeModel.h \
     source/UI/Competition/StartList/StartListModel.h \
     source/UI/Competition/TeamsSquadsTreeModel.h \
+    source/UI/Competition/TeamsSquadsTreeView.h \
     source/UI/DatabaseEditor/DatabaseItemsListView.h \
     source/UI/DatabaseEditor/ListModels/CompetitionRulesListModel.h \
     source/UI/DatabaseEditor/ListModels/HillsListModel.h \
@@ -191,6 +193,7 @@ HEADERS += \
 FORMS += \
     source/UI/Competition/CompetitionManagerWindow.ui \
     source/UI/Competition/JumperCompetitionResultsWidget.ui \
+    source/UI/Competition/TeamsSquadsTreeView.ui \
     source/UI/DatabaseEditor/DatabaseItemsListView.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.ui \

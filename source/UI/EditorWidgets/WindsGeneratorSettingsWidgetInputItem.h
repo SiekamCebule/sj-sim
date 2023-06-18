@@ -44,6 +44,7 @@ private:
 public:
     WindGenerationSettings *getSettings() const;
     void setSettings(WindGenerationSettings *newSettings);
+    CharacteristicsEditor *getCharacteristicsEditor() const;
 };
 
 #endif // WINDSGENERATORSETTINGSWIDGETINPUTITEM_H

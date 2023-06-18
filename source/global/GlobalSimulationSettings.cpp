@@ -18,14 +18,24 @@ GlobalSimulationSettings::GlobalSimulationSettings()
     simulationRandomMultiplier = 0;
 }
 
+void GlobalSimulationSettings::setSimulationRandomMultiplier(double newSimulationRandomMultiplier)
+{
+    simulationRandomMultiplier = newSimulationRandomMultiplier;
+}
+
 double GlobalSimulationSettings::getSimulationRandomMultiplier() const
 {
     return simulationRandomMultiplier;
 }
 
-void GlobalSimulationSettings::setSimulationRandomMultiplier(double newSimulationRandomMultiplier)
+int GlobalSimulationSettings::getMaxSkills() const
 {
-    simulationRandomMultiplier = newSimulationRandomMultiplier;
+    return maxSkills;
+}
+
+void GlobalSimulationSettings::setMaxSkills(int newMaxSkills)
+{
+    maxSkills = newMaxSkills;
 }
 
 int GlobalSimulationSettings::getBaseDsqProbability() const
@@ -38,6 +48,10 @@ void GlobalSimulationSettings::setBaseDsqProbability(int newBaseDsqProbability)
     baseDsqProbability = newBaseDsqProbability;
 }
 
+void GlobalSimulationSettings::updateSimulationRandomMultiplier()
+{
+    simulationRandomMultiplier = double((double(maxSkills) * 1) / double(60));
+}
 
 GlobalSimulationSettings *GlobalSimulationSettings::get()
 {
@@ -76,8 +90,9 @@ bool GlobalSimulationSettings::loadFromFile()
         message.exec();
         return false;
     }
-    this->setSimulationRandomMultiplier(value.toObject().value("simulation-random-multiplier").toDouble());
+    this->setMaxSkills(value.toObject().value("max-skills").toInt());
     this->setBaseDsqProbability(value.toObject().value("base-dsq-probability").toDouble());
+    updateSimulationRandomMultiplier();
 
     return true;
 }
@@ -95,7 +110,7 @@ bool GlobalSimulationSettings::writeToFile()
     QJsonDocument document;
     QJsonObject mainObject;
     QJsonObject settingsObject;
-    settingsObject.insert("simulation-random-multiplier", getSimulationRandomMultiplier());
+    settingsObject.insert("max-skills", getMaxSkills());
     settingsObject.insert("base-dsq-probability", getBaseDsqProbability());
     mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);

@@ -10,6 +10,7 @@ private:
     static GlobalSimulationSettings * m_globalSimulationSettings;
 
 private:
+    int maxSkills;
     double simulationRandomMultiplier;
     int baseDsqProbability;
 
@@ -22,6 +23,9 @@ public:
 
     int getBaseDsqProbability() const;
     void setBaseDsqProbability(int newBaseDsqProbability);
+    void updateSimulationRandomMultiplier();
+    int getMaxSkills() const;
+    void setMaxSkills(int newMaxSkills);
     double getSimulationRandomMultiplier() const;
     void setSimulationRandomMultiplier(double newSimulationRandomMultiplier);
 };

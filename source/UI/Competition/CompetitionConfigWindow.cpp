@@ -97,7 +97,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
         teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
         teamsSquadsModel->setupTreeItems();
         teamsTreeView->setModel(teamsSquadsModel);
-        teamsTreeView->expandToDepth(0);
+        teamsTreeView->getTreeView()->expandToDepth(0);
         //emit teamsSquadsModel->dataChanged(teamsSquadsModel->index(0, 0, QModelIndex()), teamsSquadsModel->createIndex());
     });
 
@@ -124,17 +124,18 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     jumpersListView->setupListModel();
     ui->verticalLayout_startList->addWidget(jumpersListView);
 
-    teamsTreeView = new QTreeView(this);
-    teamsTreeView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    teamsTreeView->setSelectionMode(QAbstractItemView::SingleSelection);
-    teamsTreeView->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
-    teamsTreeView->setHidden(true);
     teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
     teamsSquadsModel->setupTreeItems();
-    teamsTreeView->setModel(teamsSquadsModel);
+    teamsTreeView = new TeamsSquadsTreeView(teamsSquadsModel, this);
     ui->verticalLayout_startList->addWidget(teamsTreeView);
 
-    connect(teamsTreeView, &QTreeView::doubleClicked, this, [this](const QModelIndex & index){
+    connect(teamsTreeView, &TeamsSquadsTreeView::needToUpdateModel, this, [this]{
+        teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
+        teamsSquadsModel->setupTreeItems();
+        teamsTreeView->setModel(teamsSquadsModel);
+    });
+
+    connect(teamsTreeView, &TeamsSquadsTreeView::treeViewDoubleClicked, this, [this](const QModelIndex & index){
         TreeItem * item = static_cast<TreeItem *>(index.internalPointer());
         int teamIndex = 0;
         if(item->getParentItem() == teamsSquadsModel->getRootItem()){
@@ -159,7 +160,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
             teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
             teamsSquadsModel->setupTreeItems();
             teamsTreeView->setModel(teamsSquadsModel);
-            teamsTreeView->expandToDepth(0);
+            teamsTreeView->getTreeView()->expandToDepth(0);
         }
     });
 
@@ -245,16 +246,6 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
         }
         else competitionRulesEditor->resetInputs();
     });
-}
-
-QTreeView *CompetitionConfigWindow::getTeamsTreeView() const
-{
-    return teamsTreeView;
-}
-
-void CompetitionConfigWindow::setTeamsTreeView(QTreeView *newTeamsTreeView)
-{
-    teamsTreeView = newTeamsTreeView;
 }
 
 TeamsSquadsTreeModel *CompetitionConfigWindow::getTeamsSquadsModel() const
@@ -384,7 +375,11 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             qualificationsManager->setActualRound(1);
             if(type == CompetitionRules::Team)
                 static_cast<TeamCompetitionManager *>(qualificationsManager)->setActualGroup(1);
-            qualificationsManager->setupStartListStatusesForActualRound();
+
+            if(type == CompetitionRules::Team)
+                dynamic_cast<TeamCompetitionManager *>(qualificationsManager)->setupStartListStatusesForActualRound(true);
+            else
+                qualificationsManager->setupStartListStatusesForActualRound();
             qualificationsManager->setActualStartListIndex(0);
             qualificationsManager->setBaseDSQProbability(ui->spinBox_dsqProbability->value());
             qualificationsManager->setWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());

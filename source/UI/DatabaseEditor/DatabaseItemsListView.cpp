@@ -55,21 +55,8 @@ void DatabaseItemsListView::setupListModel()
     case CompetitionRulesItems:
         listModel = new CompetitionRulesListModel(this->competitionRules);
         break;
-    case TeamItems:
-        listModel = new TeamsListModel(this->teams);
-        break;
     }
     ui->listView->setModel(listModel);
-}
-
-QVector<Team> *DatabaseItemsListView::getTeams() const
-{
-    return teams;
-}
-
-void DatabaseItemsListView::setTeams(QVector<Team> *newTeams)
-{
-    teams = newTeams;
 }
 
 QAbstractListModel *DatabaseItemsListView::getListModel()

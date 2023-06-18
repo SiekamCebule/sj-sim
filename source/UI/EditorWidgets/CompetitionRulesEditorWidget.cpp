@@ -22,12 +22,18 @@ CompetitionRulesEditorWidget::CompetitionRulesEditorWidget(QWidget *parent) :
     connect(ui->comboBox_competitionType, &QComboBox::currentIndexChanged, this, &CompetitionRulesEditorWidget::competitionTypeChanged);
     connect(ui->spinBox_jumpersInTeamCount, &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::jumpersCountInTeamChanged);
     connect(this, &CompetitionRulesEditorWidget::competitionTypeChanged, this, [this](){
-        if(ui->comboBox_competitionType->currentIndex() == 0) //ind
-            ui->spinBox_jumpersInTeamCount->setEnabled(false);
-        else //druż
-            ui->spinBox_jumpersInTeamCount->setEnabled(true);
-
-        qDebug()<<"Enb: "<<ui->spinBox_jumpersInTeamCount->isEnabled();
+        if(ui->comboBox_competitionType->currentIndex() == 0){ //ind
+            ui->spinBox_jumpersInTeamCount->setHidden(true);
+            ui->label_jumpersInTeam->setHidden(true);
+            for(int i=0; i<ui->toolBox_rounds->count(); i++)
+                dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->hideGroupsInfo();
+        }
+        else{ //druż
+            ui->spinBox_jumpersInTeamCount->setHidden(false);
+            ui->label_jumpersInTeam->setHidden(false);
+            for(int i=0; i<ui->toolBox_rounds->count(); i++)
+                dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->showGroupsInfo();
+        }
     });
 }
 

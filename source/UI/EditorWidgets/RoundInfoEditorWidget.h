@@ -13,7 +13,7 @@ class RoundInfoEditorWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit RoundInfoEditorWidget(QWidget *parent = nullptr);
+    explicit RoundInfoEditorWidget(bool hideGroupsInfo = true, QWidget *parent = nullptr);
     ~RoundInfoEditorWidget();
 
     void fillRoundInfoInput();
@@ -21,13 +21,16 @@ public:
     bool getSortStartListFromInput();
     int getSortAfterGroupsFromInput();
 
-    RoundInfo *getRoundInfo() const;
-    void setRoundInfo(RoundInfo *newRoundInfo);
+    void hideGroupsInfo();
+    void showGroupsInfo();
 
 private:
     Ui::RoundInfoEditorWidget *ui;
 
     RoundInfo * roundInfo;
+public:
+    RoundInfo *getRoundInfo() const;
+    void setRoundInfo(RoundInfo *newRoundInfo);
 };
 
 #endif // ROUNDINFOEDITORWIDGET_H

@@ -3,6 +3,7 @@
 #include "../../competitions/CompetitionManagers/IndividualCompetitionManager.h"
 #include "../../competitions/CompetitionManagers/TeamCompetitionManager.h"
 #include "../../global/CountryFlagsManager.h"
+#include "../../utilities/functions.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
 #include "../JumpManipulation/JumpManipulatorConfigWindow.h"
@@ -969,8 +970,9 @@ void CompetitionManagerWindow::on_pushButton_manipulateJump_clicked()
 
 void CompetitionManagerWindow::on_pushButton_coachGate_clicked()
 {
-    int howMany = QInputDialog::getInt(this, "Obniżenie belki na życzenie trenera", "O ile stopni obniżyć belkę?\nAby uzyskać dodatkową rekompensatę, zawodnik musi osiągnąć 95% punktu HS", 1, 0);
-    if(howMany > 0){
+    bool ok{};
+    int howMany = QInputDialog::getInt(this, "Obniżenie belki na życzenie trenera", "O ile stopni obniżyć belkę?\nAby uzyskać dodatkową rekompensatę, zawodnik musi osiągnąć 95% punktu HS (" + QString::number(roundDoubleToHalf(manager->getCompetitionInfo()->getHill()->getHSPoint() * 0.95)) + " m)", 1, 0, 1000000, 1, &ok);
+    if(howMany > 0 && ok){
         manager->setCoachGateForNextJumper(true);
         manager->setActualCoachGate(manager->getActualGate() - howMany);
         updateToAdvanceDistanceLabel();

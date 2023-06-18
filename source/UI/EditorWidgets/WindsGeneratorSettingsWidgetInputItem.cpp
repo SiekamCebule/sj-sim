@@ -103,6 +103,11 @@ void WindsGeneratorSettingsWidgetInputItem::on_pushButton_submit_clicked()
     emit submitted();
 }
 
+CharacteristicsEditor *WindsGeneratorSettingsWidgetInputItem::getCharacteristicsEditor() const
+{
+    return characteristicsEditor;
+}
+
 WindGenerationSettings *WindsGeneratorSettingsWidgetInputItem::getSettings() const
 {
     return settings;
