@@ -98,6 +98,7 @@ public:
 
 private slots:
     void on_pushButton_submit_clicked();
+    void on_pushButton_loadJumpers_clicked();
 };
 
 #endif // COMPETITIONCONFIGWINDOW_H

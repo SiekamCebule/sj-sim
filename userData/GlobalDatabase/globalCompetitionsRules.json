@@ -11,10 +11,12 @@
             "rounds": [
                 {
                     "count": 50,
+                    "sort-after-groups": 0,
                     "sort-start-list": false
                 },
                 {
                     "count": 30,
+                    "sort-after-groups": 0,
                     "sort-start-list": true
                 }
             ],
@@ -33,10 +35,12 @@
             "rounds": [
                 {
                     "count": 40,
+                    "sort-after-groups": 0,
                     "sort-start-list": false
                 },
                 {
                     "count": 30,
+                    "sort-after-groups": 0,
                     "sort-start-list": true
                 }
             ],
@@ -50,16 +54,18 @@
             "dsq": true,
             "gate-compensations": true,
             "judges-points": true,
-            "jumpers-in-team-count": 0,
+            "jumpers-in-team-count": 4,
             "name": "Team World Cup",
             "rounds": [
                 {
-                    "count": 8,
-                    "sort-start-list": true
+                    "count": 15,
+                    "sort-after-groups": 3,
+                    "sort-start-list": false
                 },
                 {
                     "count": 8,
-                    "sort-start-list": true
+                    "sort-after-groups": 1,
+                    "sort-start-list": false
                 }
             ],
             "wind-average-calculating-type": 0,
@@ -72,11 +78,12 @@
             "dsq": true,
             "gate-compensations": true,
             "judges-points": false,
-            "jumpers-in-team-count": 0,
+            "jumpers-in-team-count": 4,
             "name": "Trial Round",
             "rounds": [
                 {
                     "count": 50,
+                    "sort-after-groups": 0,
                     "sort-start-list": false
                 }
             ],
@@ -90,42 +97,22 @@
             "dsq": false,
             "gate-compensations": true,
             "judges-points": true,
-            "jumpers-in-team-count": 0,
+            "jumpers-in-team-count": 4,
             "name": "Future Cup",
             "rounds": [
                 {
                     "count": 35,
+                    "sort-after-groups": 0,
                     "sort-start-list": true
                 },
                 {
                     "count": 20,
+                    "sort-after-groups": 0,
                     "sort-start-list": true
                 }
             ],
             "wind-average-calculating-type": 1,
             "wind-compensation-distance-effect": 2,
-            "wind-compensations": true
-        },
-        {
-            "95-hs-rule": true,
-            "competition-type": 0,
-            "dsq": true,
-            "gate-compensations": true,
-            "judges-points": true,
-            "jumpers-in-team-count": 0,
-            "name": "Alternative World Cup",
-            "rounds": [
-                {
-                    "count": 15,
-                    "sort-start-list": false
-                },
-                {
-                    "count": 10,
-                    "sort-start-list": true
-                }
-            ],
-            "wind-average-calculating-type": 0,
-            "wind-compensation-distance-effect": 1,
             "wind-compensations": true
         }
     ]

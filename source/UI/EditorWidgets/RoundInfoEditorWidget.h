@@ -17,6 +17,7 @@ public:
     ~RoundInfoEditorWidget();
 
     void fillRoundInfoInput();
+    void resetRoundInfoInput();
     int getCountFromInput();
     bool getSortStartListFromInput();
     int getSortAfterGroupsFromInput();

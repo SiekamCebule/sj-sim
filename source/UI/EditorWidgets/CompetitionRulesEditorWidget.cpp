@@ -35,6 +35,7 @@ CompetitionRulesEditorWidget::CompetitionRulesEditorWidget(QWidget *parent) :
                 dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->showGroupsInfo();
         }
     });
+    emit competitionTypeChanged();
 }
 
 CompetitionRulesEditorWidget::~CompetitionRulesEditorWidget()
@@ -70,10 +71,6 @@ void CompetitionRulesEditorWidget::fillCompetitionRulesInputs()
         ui->spinBox_jumpersInTeamCount->setEnabled(true);
         ui->spinBox_jumpersInTeamCount->setValue(competitionRules->getJumpersInTeamCount());
     }
-    else{
-        ui->spinBox_jumpersInTeamCount->setValue(0);
-        ui->spinBox_jumpersInTeamCount->setEnabled(false);
-    }
     ui->comboBox_competitionType->setCurrentIndex(competitionRules->getCompetitionType());
     ui->comboBox_windAverageCalculatingType->setCurrentIndex(competitionRules->getWindAverageCalculatingType());
     ui->comboBox_windCompensationDistanceEffect->setCurrentIndex(competitionRules->getWindCompensationDistanceEffect());
@@ -90,7 +87,7 @@ void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)
 
     while(ui->toolBox_rounds->count() < roundsCount)
     {
-        ui->toolBox_rounds->addItem(new RoundInfoEditorWidget, "");
+        ui->toolBox_rounds->addItem(new RoundInfoEditorWidget(getCompetitionTypeFromInput() == CompetitionRules::Individual), "");
     }
     for(int i=0; i<ui->toolBox_rounds->count(); i++)
     {
@@ -98,13 +95,17 @@ void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)
     }
     if(setup == true){
         disconnect(ui->spinBox_roundsCount, &QSpinBox::valueChanged, this, &CompetitionRulesEditorWidget::fillRoundsInputs);
-        for(int i=0; i<competitionRules->getRounds().count(); i++){
-            dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->setRoundInfo(const_cast<RoundInfo *>(&competitionRules->getRounds().at(i)));
-            dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->fillRoundInfoInput();
+        for(int i=0; i<ui->toolBox_rounds->count(); i++){
+            if(competitionRules->getRounds().count() > i){
+                dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->setRoundInfo(const_cast<RoundInfo *>(&competitionRules->getRounds().at(i)));
+                dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->fillRoundInfoInput();
+            }
+            else
+                dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->resetRoundInfoInput();
+            connect(ui->spinBox_roundsCount, &QSpinBox::valueChanged, this, [this](){
+                fillRoundsInputs(false);
+            });
         }
-        connect(ui->spinBox_roundsCount, &QSpinBox::valueChanged, this, [this](){
-            fillRoundsInputs(false);
-        });
     }
 }
 

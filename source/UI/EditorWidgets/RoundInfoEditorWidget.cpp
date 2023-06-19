@@ -8,8 +8,10 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, QWidget *paren
     roundInfo = nullptr;
     ui->setupUi(this);
 
-    if(hideGroupsInfo == true)
+    if(hideGroupsInfo == true){
         ui->comboBox_sortingAfterGroups->hide();
+        ui->label_sortingGroups->hide();
+    }
 }
 
 RoundInfoEditorWidget::~RoundInfoEditorWidget()
@@ -26,6 +28,13 @@ void RoundInfoEditorWidget::fillRoundInfoInput()
         ui->checkBox_sortStartList->setChecked(roundInfo->getSortStartList());
         ui->comboBox_sortingAfterGroups->setCurrentIndex(roundInfo->getSortAfterGroups());
     }
+}
+
+void RoundInfoEditorWidget::resetRoundInfoInput()
+{
+    ui->spinBox_count->setValue(0);
+    ui->checkBox_sortStartList->setChecked(false);
+    ui->comboBox_sortingAfterGroups->setCurrentIndex(3);
 }
 
 int RoundInfoEditorWidget::getCountFromInput()

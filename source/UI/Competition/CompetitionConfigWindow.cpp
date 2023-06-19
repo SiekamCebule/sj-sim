@@ -45,27 +45,6 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     competitionRulesEditor->setCompetitionRules(new CompetitionRules(tr("Zasady")));
     competitionRulesEditor->setParent(this);
 
-    if(getType() == SingleCompetition){
-        //Wypełnić
-        /*connect(pushButton_loadJumpersList, &QPushButton::clicked, this, [this](){
-            QUrl fileUrl = QFileDialog::getOpenFileUrl(this, tr("Wybierz plik z zawodnikami"), QUrl(), "JSON (*.json)");
-
-            QFile file(fileUrl.path());
-            if(!(file.open(QIODevice::ReadOnly | QIODevice::Text)))
-            {
-                QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zawodnikami", "Nie udało się otworzyć wybranego pliku\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
-                message.setModal(true);
-                message.exec();
-            }
-            QVector<Jumper> jumpers = Jumper::getJumpersVectorFromJson(file.readAll());
-            file.close();
-            if(jumpers.isEmpty() == false){
-
-                //Wypełnić kodem
-            }
-        });*/
-    }
-
     ui->toolBox->raise();
     ui->label_title->raise();
     ui->toolBox->addItem(windsGeneratorSettingsEditor, "Ustawienia generatora wiatru");
@@ -74,6 +53,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
 
     if(getType() == SeasonCompetition)
     {
+        ui->pushButton_loadJumpers->hide();
         setWindowTitle("Konfiguracja konkursu");
         delete ui->toolBox->widget(0); //index 0
         ui->toolBox->removeItem(0);
@@ -468,5 +448,35 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             delete qualificationsResults;
     }
         break;
+    }
+}
+
+void CompetitionConfigWindow::on_pushButton_loadJumpers_clicked()
+{
+    if(getType() == SingleCompetition){
+        QUrl fileUrl = QFileDialog::getOpenFileUrl(this, tr("Wybierz plik z zawodnikami"), QUrl(), "JSON (*.json)");
+
+        QFile file(fileUrl.path());
+        if(!(file.open(QIODevice::ReadOnly | QIODevice::Text)))
+        {
+            QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zawodnikami", "Nie udało się otworzyć wybranego pliku\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+            message.setModal(true);
+            message.exec();
+        }
+        QVector<Jumper> jumpers = Jumper::getJumpersVectorFromJson(file.readAll());
+        file.close();
+        if(jumpers.isEmpty() == false){
+            competitionJumpers = jumpers;
+            jumpersListView->setJumpers(&competitionJumpers);
+            delete jumpersListView->getListModel();
+            jumpersListView->setupListModel();
+
+            competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers, competitionRulesEditor->getJumpersCountInTeam());
+            delete teamsSquadsModel;
+            teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
+            teamsSquadsModel->setupTreeItems();
+            teamsTreeView->setModel(teamsSquadsModel);
+            teamsTreeView->getTreeView()->expandToDepth(0);
+        }
     }
 }
