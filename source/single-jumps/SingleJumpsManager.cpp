@@ -96,7 +96,7 @@ bool SingleJumpsManager::saveResultsToFile(short fileFormat)
         QJsonObject mainObject;
         mainObject.insert("jumper", Jumper::getJumperJsonObject(jumper, true, true));
         QJsonArray array;
-        for(auto & jump : getEditableJumps())
+        for(auto & jump : getJumpsReference())
         {
             array.push_back(JumpData::getJumpDataJsonObject(jump, true, true, true));
             array.push_back(QJsonObject());
@@ -182,7 +182,7 @@ QVector<JumpData> SingleJumpsManager::getJumps() const
     return jumps;
 }
 
-QVector<JumpData> &SingleJumpsManager::getEditableJumps()
+QVector<JumpData> &SingleJumpsManager::getJumpsReference()
 {
     return jumps;
 }

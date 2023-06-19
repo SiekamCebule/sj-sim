@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1325</width>
-    <height>727</height>
+    <height>822</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -221,48 +221,13 @@ color: rgb(26, 95, 180);
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QScrollArea" name="scrollArea">
+      <widget class="QTableView" name="tableView">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QScrollArea{
-background: transparent;
-}
-QScrollBar::handle{
-border: 2px solid rgb(101, 23, 23);
-background-color: rgb(255, 229, 190);
-height: 10px;
-width: 5px;
-}</string>
-       </property>
-       <property name="widgetResizable">
-        <bool>true</bool>
-       </property>
-       <widget class="QWidget" name="scrollAreaWidgetContents">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>41</width>
-          <height>598</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>Wciśnij Ctrl+I aby przejść do wybranej informacji o skoku</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_singleJumpResultWidgets"/>
-         </item>
-        </layout>
-       </widget>
       </widget>
      </item>
      <item>
@@ -302,8 +267,8 @@ width: 5px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1210</width>
-          <height>426</height>
+          <width>626</width>
+          <height>521</height>
          </rect>
         </property>
         <attribute name="label">
@@ -311,7 +276,11 @@ width: 5px;
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_jumpInfos"/>
+          <layout class="QVBoxLayout" name="verticalLayout_jumpInfos">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -320,8 +289,8 @@ width: 5px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1210</width>
-          <height>426</height>
+          <width>626</width>
+          <height>535</height>
          </rect>
         </property>
         <attribute name="label">
@@ -338,8 +307,8 @@ width: 5px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1210</width>
-          <height>426</height>
+          <width>626</width>
+          <height>535</height>
          </rect>
         </property>
         <attribute name="label">
@@ -356,8 +325,8 @@ width: 5px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1210</width>
-          <height>426</height>
+          <width>626</width>
+          <height>535</height>
          </rect>
         </property>
         <attribute name="label">
@@ -374,8 +343,8 @@ width: 5px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1210</width>
-          <height>426</height>
+          <width>626</width>
+          <height>535</height>
          </rect>
         </property>
         <attribute name="label">
@@ -392,8 +361,8 @@ width: 5px;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1210</width>
-          <height>426</height>
+          <width>626</width>
+          <height>535</height>
          </rect>
         </property>
         <attribute name="label">

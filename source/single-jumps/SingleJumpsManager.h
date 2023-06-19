@@ -51,7 +51,7 @@ public:
     int getJumpsCount() const;
     void setJumpsCount(int newJumpsCount);
     QVector<JumpData> getJumps() const;
-    QVector<JumpData> & getEditableJumps();
+    QVector<JumpData> & getJumpsReference();
     void setJumps(const QVector<JumpData> &newJumps);
     QVector<WindGenerationSettings> getWindsGeneratorSettings() const;
     void setWindsGeneratorSettings(const QVector<WindGenerationSettings> &newWindsGeneratorSettings);

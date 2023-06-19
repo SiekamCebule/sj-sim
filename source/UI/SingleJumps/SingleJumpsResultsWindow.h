@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include "../../single-jumps/SingleJumpsManager.h"
+#include "../ResultsShowing/JumpDataDetailedInfoWindow.h"
+#include "SingleJumpsResultsTableModel.h"
 
 class QSplineSeries;
 class QBarSeries;
@@ -17,7 +19,7 @@ class SingleJumpsResultsWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit SingleJumpsResultsWindow(QWidget *parent = nullptr);
+    explicit SingleJumpsResultsWindow(SingleJumpsManager * manager, QWidget *parent = nullptr);
     ~SingleJumpsResultsWindow();
 
     void fillJumperInfo();
@@ -45,13 +47,16 @@ public:
 
     int getMaxNumberOfPointsForChart() const;
 
+private slots:
+    void on_tableView_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::SingleJumpsResultsWindow *ui;
 
-    SingleJumpsManager * manager;
+    JumpDataDetailedInfoWindow * jumpInfoWidget;
+    SingleJumpsResultsTableModel * model;
 
-    int selectedItemIndex;
-    QVector<SingleJumpMiniResultWidget *> miniResultItems;
+    SingleJumpsManager * manager;
 
     QSplineSeries * getSplineSeriesForDistancesChart();
     int maxNumberOfDistancesForChart;

@@ -102,11 +102,32 @@ QVector<Wind> WindsGenerator::generateWinds()
             frontProb *= baseDirectionChanceMultiplier;
             break;
         }
-        backProb += settings->getLevelOfCharacteristic("back-wind-probability") * 500;
-        backSideProb += settings->getLevelOfCharacteristic("back-side-wind-probability") * 500;
-        sideProb += settings->getLevelOfCharacteristic("side-wind-probability") * 500;
-        frontSideProb += settings->getLevelOfCharacteristic("front-side-wind-probability") * 500;
-        frontProb += settings->getLevelOfCharacteristic("front-wind-probability") * 500;
+        int level = settings->getLevelOfCharacteristic("back-wind-probability");
+        if(level > 0)
+            backProb *= level;
+        else if(level < 0)
+            backProb /= level;
+        level = settings->getLevelOfCharacteristic("back-side-wind-probability");
+        if(level > 0)
+            backSideProb *= level;
+        else if(level < 0)
+            backSideProb /= level;
+        level = settings->getLevelOfCharacteristic("side-wind-probability");
+        if(level > 0)
+            sideProb *= level;
+        else if(level < 0)
+            sideProb /= level;
+        level = settings->getLevelOfCharacteristic("front-side-wind-probability");
+        if(level > 0)
+            frontSideProb *= level;
+        else if(level < 0)
+            frontSideProb /= level;
+        level = settings->getLevelOfCharacteristic("front-wind-probability");
+        if(level > 0)
+            frontProb *= level;
+        else if(level < 0)
+            frontProb /= level;
+
 
         if(settings->getWindDirectionInstability() == 0){
             wind.setDirection(settings->getBaseDirection());

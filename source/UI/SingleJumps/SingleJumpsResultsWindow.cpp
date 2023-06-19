@@ -1,7 +1,6 @@
 #include "SingleJumpsResultsWindow.h"
 #include "ui_SingleJumpsResultsWindow.h"
 
-#include "SingleJumpMiniResultWidget.h"
 #include "../ResultsShowing/JumpDataDetailedInfoWindow.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../../global/IDGenerator.h"
@@ -20,20 +19,26 @@
 
 extern IDGenerator globalIDGenerator;
 
-SingleJumpsResultsWindow::SingleJumpsResultsWindow(QWidget *parent) :
+SingleJumpsResultsWindow::SingleJumpsResultsWindow(SingleJumpsManager *manager, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SingleJumpsResultsWindow),
     maxNumberOfDistancesForChart(0),
     maxNumberOfJudgesForChart(0),
     maxNumberOfLandingsForChart(0),
-    selectedItemIndex(0),
     maxNumberOfWindsForChart(0),
     maxNumberOfPointsForChart(0),
-    manager(nullptr)
+    manager(manager)
 {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
+    jumpInfoWidget = new JumpDataDetailedInfoWindow(nullptr, this);
+    jumpInfoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->verticalLayout_jumpInfos->addWidget(jumpInfoWidget);
+    jumpInfoWidget->hide();
+
+    model = new SingleJumpsResultsTableModel(this->manager, this);
+    ui->tableView->setModel(model);
 }
 
 SingleJumpsResultsWindow::~SingleJumpsResultsWindow()
@@ -51,44 +56,6 @@ void SingleJumpsResultsWindow::fillHillInfo()
 {
     ui->label_hillName->setText(manager->getHill().getName() + " HS" + QString::number(manager->getHill().getHSPoint()));
     ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(manager->getHill().getCountryCode().toLower())).scaled(ui->label_hillFlag->size()));
-}
-
-void SingleJumpsResultsWindow::fillMiniJumpsResultsLayout()
-{
-    //PROBLEM: W wywołaniu slotu JumpData pozostaje prawidłowa, lecz składowe tej JumpDaty psują się (wszystkie)
-    int i=1;
-    for(auto & jump : manager->getEditableJumps())
-    {
-        SingleJumpMiniResultWidget * widget = new SingleJumpMiniResultWidget(this);
-        widget->setJumpData(const_cast<JumpData*>(&jump));
-        widget->setIndexInList(i);
-        widget->fillUi();
-
-        ui->verticalLayout_singleJumpResultWidgets->addWidget(widget);
-        miniResultItems.push_back(widget);
-
-        connect(widget, &SingleJumpMiniResultWidget::pressed, this, [this, widget, jump](){
-            if(ui->verticalLayout_jumpInfos != nullptr){
-                QLayoutItem * item;
-                while((item = ui->verticalLayout_jumpInfos->takeAt(0)) != NULL)
-                {
-                    delete item->widget();
-                    delete item;
-                }
-            }
-            JumpDataDetailedInfoWindow * jumpInfo = new JumpDataDetailedInfoWindow(widget->getJumpData());
-            jumpInfo->fillJumpInformations();
-            jumpInfo->removeJumperInfoTitle();
-            ui->verticalLayout_jumpInfos->addWidget(jumpInfo);
-            ui->toolBox->setCurrentIndex(0);
-
-            setSelectedItemIndex(widget->getIndexInList());
-            widget->setIsSelected(true);
-        });
-
-        i++;
-    }
-    ui->verticalLayout_singleJumpResultWidgets->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
 }
 
 void SingleJumpsResultsWindow::fillDistancesChart()
@@ -357,22 +324,11 @@ void SingleJumpsResultsWindow::askForIndexForJumpInformationShow()
         if(dialog.exec() == QDialog::Accepted)
         {
             int index = dialog.intValue() - 1;
-            if(ui->verticalLayout_jumpInfos != nullptr){
-                QLayoutItem * item;
-                while((item = ui->verticalLayout_jumpInfos->takeAt(0)) != NULL)
-                {
-                    delete item->widget();
-                    delete item;
-                }
-            }
-            JumpDataDetailedInfoWindow * jumpInfo = new JumpDataDetailedInfoWindow(const_cast<JumpData *>(&manager->getJumps().at(index)));
-            jumpInfo->setParent(this);
-            jumpInfo->fillJumpInformations();
-            ui->verticalLayout_jumpInfos->addWidget(jumpInfo);
+            jumpInfoWidget->setJumpData(const_cast<JumpData *>(&manager->getJumps().at(index)));
+            jumpInfoWidget->fillJumpInformations();
+            ui->tableView->selectRow(index);
+            ui->tableView->scrollTo(model->index(index, 1));
             ui->toolBox->setCurrentIndex(0);
-
-            setSelectedItemIndex(miniResultItems.at(index)->getIndexInList());
-            miniResultItems.at(index)->setIsSelected(true);
         }
     }
 }
@@ -391,29 +347,6 @@ int SingleJumpsResultsWindow::getMaxNumberOfLandingsForChart() const
 {
     return maxNumberOfLandingsForChart;
 }
-
-int SingleJumpsResultsWindow::getSelectedItemIndex() const
-{
-    return selectedItemIndex;
-}
-
-void SingleJumpsResultsWindow::setSelectedItemIndex(int newSelectedItemIndex)
-{
-    for(auto & item : miniResultItems)
-        item->setIsSelected(false);
-    selectedItemIndex = newSelectedItemIndex;
-}
-
-QVector<SingleJumpMiniResultWidget *> SingleJumpsResultsWindow::getMiniResultItems() const
-{
-    return miniResultItems;
-}
-
-void SingleJumpsResultsWindow::setMiniResultItems(const QVector<SingleJumpMiniResultWidget *> &newMiniResultItems)
-{
-    miniResultItems = newMiniResultItems;
-}
-
 int SingleJumpsResultsWindow::getMaxNumberOfJudgesForChart() const
 {
     return maxNumberOfJudgesForChart;
@@ -423,3 +356,14 @@ int SingleJumpsResultsWindow::getMaxNumberOfDistancesForChart() const
 {
     return maxNumberOfDistancesForChart;
 }
+
+void SingleJumpsResultsWindow::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    int row = index.row();
+     ui->toolBox->setCurrentIndex(0);
+     jumpInfoWidget->setJumpData(const_cast<JumpData *>(&manager->getJumps().at(row)));
+     if(jumpInfoWidget->isHidden())
+         jumpInfoWidget->show();
+     jumpInfoWidget->fillJumpInformations();
+}
+

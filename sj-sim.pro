@@ -41,7 +41,6 @@ SOURCES += \
     source/UI/Seasons/SeasonCalendarEditor.cpp \
     source/UI/Seasons/SimulationSaveInfoWidget.cpp \
     source/UI/Seasons/SimulationSavesWindow.cpp \
-    source/UI/SingleJumps/SingleJumpMiniResultWidget.cpp \
     source/UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     source/UI/AppSettings/AppSettingsWindow.cpp \
     source/UI/DatabaseEditor/DatabaseEditorWindow.cpp \
@@ -49,6 +48,7 @@ SOURCES += \
     source/UI/EditorWidgets/Dialogs/CharacteristicInputDialog.cpp \
     source/UI/EditorWidgets/HillEditorWidget.cpp \
     source/UI/EditorWidgets/JumperEditorWidget.cpp \
+    source/UI/SingleJumps/SingleJumpsResultsTableModel.cpp \
     source/UI/SingleJumps/SingleJumpsResultsWindow.cpp \
     source/competitions/AbstractCompetitionManager.cpp \
     source/competitions/CompetitionInfo.cpp \
@@ -132,7 +132,6 @@ HEADERS += \
     source/UI/Seasons/SeasonCalendarEditor.h \
     source/UI/Seasons/SimulationSaveInfoWidget.h \
     source/UI/Seasons/SimulationSavesWindow.h \
-    source/UI/SingleJumps/SingleJumpMiniResultWidget.h \
     source/UI/SingleJumps/SingleJumpsConfigWindow.h \
     source/UI/AppSettings/AppSettingsWindow.h \
     source/UI/DatabaseEditor/DatabaseEditorWindow.h \
@@ -140,6 +139,7 @@ HEADERS += \
     source/UI/EditorWidgets/Dialogs/CharacteristicInputDialog.h \
     source/UI/EditorWidgets/HillEditorWidget.h \
     source/UI/EditorWidgets/JumperEditorWidget.h \
+    source/UI/SingleJumps/SingleJumpsResultsTableModel.h \
     source/UI/SingleJumps/SingleJumpsResultsWindow.h \
     source/UI/mainwindow.h \
     source/competitions/AbstractCompetitionManager.h \
@@ -211,7 +211,6 @@ FORMS += \
     source/UI/Seasons/SeasonCalendarEditor.ui \
     source/UI/Seasons/SimulationSaveInfoWidget.ui \
     source/UI/Seasons/SimulationSavesWindow.ui \
-    source/UI/SingleJumps/SingleJumpMiniResultWidget.ui \
     source/UI/SingleJumps/SingleJumpsConfigWindow.ui \
     source/UI/AppSettings/AppSettingsWindow.ui \
     source/UI/DatabaseEditor/DatabaseEditorWindow.ui \

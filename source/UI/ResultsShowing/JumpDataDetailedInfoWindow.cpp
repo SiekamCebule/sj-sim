@@ -13,7 +13,7 @@ JumpDataDetailedInfoWindow::JumpDataDetailedInfoWindow(JumpData *jumpData, QWidg
 
     setWindowFlags(Qt::Window);
     windInfoWidget = new JumpWindInfoWidget;
-    windInfoWidget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    windInfoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->verticalLayout_windsInfo->addWidget(windInfoWidget);
 }
 

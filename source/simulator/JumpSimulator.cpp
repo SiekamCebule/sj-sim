@@ -809,41 +809,41 @@ double JumpSimulator::getLandingChance(short landingType, double distance, Hill 
         if(distance < realHS * 0.96) //128.5 dla HS134
             chance = 0.005;
         else if(distance < realHS * 0.97) //130 dla HS134
-            chance = 0.02;
+            chance = 0.018;
         else if(distance < realHS * 0.98) //131.5 dla HS134
-            chance = 0.075;
+            chance = 0.036;
         else if(distance < realHS * 0.99) //132.5 dla HS134
-            chance = 0.2;
+            chance = 0.09;
         else if(distance < realHS * 1.00) //134 dla HS134
-            chance = 0.5;
+            chance = 0.3;
         else if(distance < realHS * 1.01) //135.5 dla HS134
-            chance = 1.8;
+            chance = 0.8;
         else if(distance < realHS * 1.02) //136.5 dla HS134
-            chance = 3.5;
+            chance = 2;
         else if(distance < realHS * 1.03) //138 dla HS134
-            chance = 7;
+            chance = 4;
         else if(distance < realHS * 1.04) //139.5 dla HS134
-            chance = 13;
+            chance = 7;
         else if(distance < realHS * 1.05) //141 dla HS134
-            chance = 20;
+            chance = 15;
         else if(distance < realHS * 1.06) //142 dla HS134
-            chance = 38;
+            chance = 32;
         else if(distance < realHS * 1.07) //143.5 dla HS134
-            chance = 62;
+            chance = 60;
         else if(distance < realHS * 1.08) //145 dla HS134
-            chance = 80;
+            chance = 70;
         else if(distance < realHS * 1.09) //146 dla HS134
-            chance = 95;
+            chance = 82.5;
         else if(distance < realHS * 1.10) //147.5 dla HS134
-            chance = 115;
+            chance = 100;
         else if(distance < realHS * 1.11) //148.5 dla HS134
-            chance = 130;
+            chance = 110;
         else if(distance < realHS * 1.12) //150 dla HS134
-            chance = 160;
+            chance = 125;
         else if(distance < realHS * 1.13) //151.5 dla HS134
-            chance = 205;
+            chance = 148;
         else  //152.5 i więcej dla HS134
-            chance = 370;
+            chance = 175;
         break;
     }
 

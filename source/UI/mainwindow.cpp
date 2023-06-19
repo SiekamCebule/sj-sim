@@ -111,11 +111,9 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         manager.getRules().setWindCompensationDistanceEffect(singleJumpsConfig.getWindCompensationDistanceEffect());
         manager.simulate();
 
-        SingleJumpsResultsWindow resultsWindow;
-        resultsWindow.setManager(&manager);
+        SingleJumpsResultsWindow resultsWindow(&manager);
         resultsWindow.fillJumperInfo();
         resultsWindow.fillHillInfo();
-        resultsWindow.fillMiniJumpsResultsLayout();
         resultsWindow.fillDistancesChart();
         resultsWindow.fillPointsChart();
         resultsWindow.fillJudgesChart();
