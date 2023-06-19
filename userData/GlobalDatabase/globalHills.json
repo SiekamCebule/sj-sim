@@ -103,6 +103,10 @@
         {
             "characteristics": [
                 {
+                    "level": 0.15,
+                    "type": "real-hs-point"
+                },
+                {
                     "level": 0.2,
                     "type": "takeoff-technique-effect"
                 },
@@ -117,10 +121,6 @@
                 {
                     "level": 0.75,
                     "type": "takeoff-randomness-effect"
-                },
-                {
-                    "level": 0.15,
-                    "type": "real-hs-point"
                 }
             ],
             "country-code": "FIN",
@@ -138,6 +138,14 @@
         {
             "characteristics": [
                 {
+                    "level": -2,
+                    "type": "takeoff-power-effect"
+                },
+                {
+                    "level": -0.8,
+                    "type": "takeoff-randomness-effect"
+                },
+                {
                     "level": 1.5,
                     "type": "flight-technique-effect"
                 },
@@ -152,14 +160,6 @@
                 {
                     "level": 0.75,
                     "type": "real-hs-point"
-                },
-                {
-                    "level": -2,
-                    "type": "takeoff-power-effect"
-                },
-                {
-                    "level": -0.8,
-                    "type": "takeoff-randomness-effect"
                 }
             ],
             "country-code": "FIN",
@@ -269,6 +269,18 @@
         {
             "characteristics": [
                 {
+                    "level": -3,
+                    "type": "takeoff-randomness-effect"
+                },
+                {
+                    "level": 0.85,
+                    "type": "flight-form-effect"
+                },
+                {
+                    "level": 3.5,
+                    "type": "flight-technique-effect"
+                },
+                {
                     "level": -0.8,
                     "type": "flight-randomness-effect"
                 },
@@ -283,18 +295,6 @@
                 {
                     "level": -4.5,
                     "type": "takeoff-power-effect"
-                },
-                {
-                    "level": -3,
-                    "type": "takeoff-randomness-effect"
-                },
-                {
-                    "level": 0.85,
-                    "type": "flight-form-effect"
-                },
-                {
-                    "level": 3.5,
-                    "type": "flight-technique-effect"
                 }
             ],
             "country-code": "NOR",
@@ -411,6 +411,14 @@
         {
             "characteristics": [
                 {
+                    "level": 0.4,
+                    "type": "flight-form-effect"
+                },
+                {
+                    "level": 0.3,
+                    "type": "flight-technique-effect"
+                },
+                {
                     "level": 0.6,
                     "type": "takeoff-technique-effect"
                 },
@@ -425,14 +433,6 @@
                 {
                     "level": 0.5,
                     "type": "flight-randomness-effect"
-                },
-                {
-                    "level": 0.4,
-                    "type": "flight-form-effect"
-                },
-                {
-                    "level": 0.3,
-                    "type": "flight-technique-effect"
                 }
             ],
             "country-code": "JPN",
@@ -469,6 +469,10 @@
         {
             "characteristics": [
                 {
+                    "level": -2.4,
+                    "type": "real-hs-point"
+                },
+                {
                     "level": 0.4,
                     "type": "takeoff-power-effect"
                 },
@@ -483,10 +487,6 @@
                 {
                     "level": 0.3,
                     "type": "flight-randomness-effect"
-                },
-                {
-                    "level": -2.4,
-                    "type": "real-hs-point"
                 }
             ],
             "country-code": "DEU",
