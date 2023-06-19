@@ -461,7 +461,7 @@
             "name": "Innsbruck",
             "points-for-back-wind": "auto",
             "points-for-front-wind": 9.9,
-            "points-for-gate": 3.9,
+            "points-for-gate": 7.02,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
             "takeoff-effect": 0.238
