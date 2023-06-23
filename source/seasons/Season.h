@@ -3,7 +3,7 @@
 
 #include <QVector>
 #include "SeasonCalendar.h"
-#include "classifications/AbstractClassification.h"
+#include "Classification.h"
 #include "SeasonSettings.h"
 
 class Season
@@ -14,7 +14,7 @@ public:
 private:
     SeasonCalendar calendar;
     SeasonSettings settings;
-    QVector<AbstractClassification *> classifications;
+    QVector<Classification *> classifications;
     int seasonNumber;
 
 public:
@@ -22,8 +22,8 @@ public:
     void setCalendar(const SeasonCalendar &newCalendar);
     SeasonSettings getSettings() const;
     void setSettings(const SeasonSettings &newSettings);
-    QVector<AbstractClassification *> getClassifications() const;
-    void setClassifications(const QVector<AbstractClassification *> &newClassifications);
+    QVector<Classification *> getClassifications() const;
+    void setClassifications(const QVector<Classification *> &newClassifications);
     int getSeasonNumber() const;
     void setSeasonNumber(int newSeasonNumber);
 };

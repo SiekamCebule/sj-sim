@@ -150,6 +150,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <attribute name="label">
          <string>Kalendarz</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_8">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_calendarEditor"/>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="page_classifications">
         <property name="geometry">

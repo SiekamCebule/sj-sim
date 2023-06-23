@@ -34,11 +34,12 @@ SOURCES += \
     source/UI/Competition/CompetitionConfigWindow.cpp \
     source/UI/ResultsShowing/JumpWindInfoWidget.cpp \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.cpp \
+    source/UI/Seasons/CalendarEditor/CalendarEditorTreeModel.cpp \
+    source/UI/Seasons/CalendarEditor/CalendarEditorWidget.cpp \
+    source/UI/Seasons/CompetitionInfoEditorWidget.cpp \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.cpp \
-    source/UI/Seasons/Models/Calendar/CalendarTreeViewModel.cpp \
     source/UI/Seasons/NewSeasonConfiguratorWindow.cpp \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.cpp \
-    source/UI/Seasons/SeasonCalendarEditor.cpp \
     source/UI/Seasons/SimulationSaveInfoWidget.cpp \
     source/UI/Seasons/SimulationSavesWindow.cpp \
     source/UI/SingleJumps/SingleJumpsConfigWindow.cpp \
@@ -72,12 +73,7 @@ SOURCES += \
     source/seasons/SeasonSettings.cpp \
     source/seasons/SeasonsManager.cpp \
     source/seasons/SimulationSave.cpp \
-    source/seasons/classifications/AbstractClassification.cpp \
-    source/seasons/classifications/IndividualClassification.cpp \
-    source/seasons/classifications/TeamClassification.cpp \
-    source/seasons/classifications/single-results/AbstractClassificationSingleResult.cpp \
-    source/seasons/classifications/single-results/IndividualClassificationSingleResult.cpp \
-    source/seasons/classifications/single-results/TeamClassificationSingleResult.cpp \
+    source/seasons/Classification.cpp \
     source/simulator/Characteristic.cpp \
     source/simulator/Hill.cpp \
     source/simulator/InrunSnowGenerator.cpp \
@@ -125,11 +121,12 @@ HEADERS += \
     source/UI/Competition/CompetitionConfigWindow.h \
     source/UI/ResultsShowing/JumpWindInfoWidget.h \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.h \
+    source/UI/Seasons/CalendarEditor/CalendarEditorTreeModel.h \
+    source/UI/Seasons/CalendarEditor/CalendarEditorWidget.h \
+    source/UI/Seasons/CompetitionInfoEditorWidget.h \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.h \
-    source/UI/Seasons/Models/Calendar/CalendarTreeViewModel.h \
     source/UI/Seasons/NewSeasonConfiguratorWindow.h \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.h \
-    source/UI/Seasons/SeasonCalendarEditor.h \
     source/UI/Seasons/SimulationSaveInfoWidget.h \
     source/UI/Seasons/SimulationSavesWindow.h \
     source/UI/SingleJumps/SingleJumpsConfigWindow.h \
@@ -162,12 +159,7 @@ HEADERS += \
     source/seasons/SeasonSettings.h \
     source/seasons/SeasonsManager.h \
     source/seasons/SimulationSave.h \
-    source/seasons/classifications/AbstractClassification.h \
-    source/seasons/classifications/IndividualClassification.h \
-    source/seasons/classifications/TeamClassification.h \
-    source/seasons/classifications/single-results/AbstractClassificationSingleResult.h \
-    source/seasons/classifications/single-results/IndividualClassificationSingleResult.h \
-    source/seasons/classifications/single-results/TeamClassificationSingleResult.h \
+    source/seasons/Classification.h \
     source/simulator/Characteristic.h \
     source/simulator/Hill.h \
     source/simulator/InrunSnowGenerator.h \
@@ -206,9 +198,10 @@ FORMS += \
     source/UI/Competition/CompetitionConfigWindow.ui \
     source/UI/ResultsShowing/JumpWindInfoWidget.ui \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.ui \
+    source/UI/Seasons/CalendarEditor/CalendarEditorWidget.ui \
+    source/UI/Seasons/CompetitionInfoEditorWidget.ui \
     source/UI/Seasons/NewSeasonConfiguratorWindow.ui \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.ui \
-    source/UI/Seasons/SeasonCalendarEditor.ui \
     source/UI/Seasons/SimulationSaveInfoWidget.ui \
     source/UI/Seasons/SimulationSavesWindow.ui \
     source/UI/SingleJumps/SingleJumpsConfigWindow.ui \

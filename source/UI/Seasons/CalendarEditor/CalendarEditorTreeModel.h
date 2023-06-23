@@ -1,19 +1,18 @@
-#ifndef TEAMSSQUADSTREEMODEL_H
-#define TEAMSSQUADSTREEMODEL_H
+#ifndef CALENDAREDITORTREEMODEL_H
+#define CALENDAREDITORTREEMODEL_H
 
 #include <QAbstractItemModel>
 #include <QVector>
-#include "../../simulator/Jumper.h"
-#include "../../simulator/Team.h"
-#include "../../global/TreeItem.h"
+#include "../../../seasons/SeasonCalendar.h"
+#include "../../../global/TreeItem.h"
 
-class TeamsSquadsTreeModel : public QAbstractItemModel
+class CalendarEditorTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
-    explicit TeamsSquadsTreeModel(QVector<Team> * teams, int jumpersInTeam, QObject *parent = nullptr);
-    ~TeamsSquadsTreeModel();
+    explicit CalendarEditorTreeModel(SeasonCalendar * calendar = nullptr, QObject *parent = nullptr);
+    ~CalendarEditorTreeModel();
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -29,19 +28,15 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 private:
-    int jumpersInTeam;
-    QVector<Team> * teams;
+    SeasonCalendar * calendar;
 
     TreeItem * rootItem;
 public:
     void setupTreeItems();
 public:
-    int getJumpersInTeam() const;
-    void setJumpersInTeam(int newJumpersInTeam);
-    QVector<Team> *getTeams() const;
-    void setTeams(QVector<Team> *newTeams);
+    SeasonCalendar *getCalendar() const;
+    void setCalendar(SeasonCalendar *newCalendar);
     TreeItem *getRootItem() const;
-    void setRootItem(TreeItem *newRootItem);
 };
 
-#endif // TEAMSSQUADSTREEMODEL_H
+#endif // CALENDAREDITORTREEMODEL_H

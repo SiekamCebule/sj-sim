@@ -2,10 +2,10 @@
 #define ABSTRACTCLASSIFICATION_H
 
 
-class AbstractClassification
+class Classification
 {
 public:
-    AbstractClassification();
+    Classification();
 
 protected:
     short classificationType;

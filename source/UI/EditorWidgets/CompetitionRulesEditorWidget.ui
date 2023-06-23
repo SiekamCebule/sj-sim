@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>403</width>
-    <height>733</height>
+    <width>386</width>
+    <height>642</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,7 +31,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -44,7 +44,7 @@ color: black;</string>
       <widget class="QLineEdit" name="lineEdit_name">
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -62,7 +62,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -75,7 +75,7 @@ color: black;</string>
       <widget class="QComboBox" name="comboBox_competitionType">
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -103,7 +103,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -120,7 +120,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -137,7 +137,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -154,7 +154,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -171,7 +171,7 @@ color: black;</string>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -187,7 +187,7 @@ color: black;</string>
       <widget class="QLabel" name="label_jumpersInTeam">
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -201,7 +201,7 @@ w drużynie</string>
       <widget class="QSpinBox" name="spinBox_jumpersInTeamCount">
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -222,7 +222,7 @@ margin-top: 6px;
       <widget class="QLabel" name="label_7">
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -235,7 +235,7 @@ margin-top: 6px;
       <widget class="QSpinBox" name="spinBox_roundsCount">
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -262,7 +262,7 @@ margin-top: 6px;
        <property name="font">
         <font>
          <family>Ubuntu</family>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -297,7 +297,7 @@ margin-top: 6px;
        </property>
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="toolTip">
@@ -345,7 +345,7 @@ margin-top: 6px;
        <property name="font">
         <font>
          <family>Ubuntu</family>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -380,7 +380,7 @@ margin-top: 6px;
        </property>
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="toolTip">
@@ -422,7 +422,7 @@ margin-top: 6px;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>300</height>
+       <height>240</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -444,8 +444,8 @@ width: 5px;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>383</width>
-        <height>298</height>
+        <width>366</width>
+        <height>238</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -460,19 +460,19 @@ width: 5px;
          <property name="font">
           <font>
            <family>Quicksand Medium</family>
-           <pointsize>13</pointsize>
+           <pointsize>11</pointsize>
           </font>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="page">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>365</width>
-            <height>208</height>
+            <width>348</width>
+            <height>154</height>
            </rect>
           </property>
           <attribute name="label">
@@ -484,8 +484,8 @@ width: 5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>365</width>
-            <height>208</height>
+            <width>348</width>
+            <height>154</height>
            </rect>
           </property>
           <attribute name="label">

@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QAction>
 #include "../DatabaseEditor/ListModels/JumpersListModel.h"
+#include "CalendarEditor/CalendarEditorWidget.h"
+
 class DatabaseItemsListView;
 
 namespace Ui {
@@ -27,10 +29,20 @@ private:
     QVector<Jumper> jumpers;
     DatabaseItemsListView * jumpersListView;
 
+    SeasonCalendar calendar;
+    CalendarEditorWidget * calendarEditor;
+    CalendarEditorTreeModel * calendarTreeModel;
+
 public:
     QVector<Jumper> getJumpers() const;
     QVector<Jumper>& getJumpersReference();
     void setJumpers(const QVector<Jumper> &newJumpers);
+    CalendarEditorWidget *getCalendarEditor() const;
+    void setCalendarEditor(CalendarEditorWidget *newCalendarEditor);
+    CalendarEditorTreeModel *getCalendarTreeModel() const;
+    void setCalendarTreeModel(CalendarEditorTreeModel *newCalendarTreeModel);
+    SeasonCalendar getCalendar() const;
+    void setCalendar(const SeasonCalendar &newCalendar);
 };
 
 #endif // NEWSEASONCONFIGURATORWINDOW_H

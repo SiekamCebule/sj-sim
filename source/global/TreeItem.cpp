@@ -52,6 +52,11 @@ QVector<TreeItem *> TreeItem::getChildItemsReference()
     return childItems;
 }
 
+QVector<QVariant> &TreeItem::getDataVectorReference()
+{
+    return dataVector;
+}
+
 void TreeItem::deleteAllTreeItemsRecursively(TreeItem *rootItem)
 {
     for(auto & item : rootItem->getChildItemsReference())

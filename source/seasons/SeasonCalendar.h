@@ -13,6 +13,8 @@ private:
     QVector<CompetitionInfo> competitions;
 
 public:
+    QVector<QPair<Hill *, QVector<CompetitionInfo *>>> getCompetitionWeekendsVector();
+public:
     QVector<CompetitionInfo> getCompetitions() const;
     QVector<CompetitionInfo> & getCompetitionsReference();
     void setCompetitions(const QVector<CompetitionInfo> &newCompetitions);
