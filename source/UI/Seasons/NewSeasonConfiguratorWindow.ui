@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>570</width>
+    <width>1247</width>
     <height>995</height>
    </rect>
   </property>
@@ -98,7 +98,7 @@ background-color: rgb(253, 253, 253);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>550</width>
+          <width>1227</width>
           <height>709</height>
          </rect>
         </property>
@@ -143,7 +143,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>550</width>
+          <width>1124</width>
           <height>709</height>
          </rect>
         </property>
@@ -161,7 +161,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>550</width>
+          <width>1124</width>
           <height>709</height>
          </rect>
         </property>
@@ -174,7 +174,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>550</width>
+          <width>1124</width>
           <height>709</height>
          </rect>
         </property>

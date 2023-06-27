@@ -34,15 +34,11 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
     if(simulationSaveWindow->exec() == QDialog::Accepted){
         NewSeasonConfiguratorWindow * seasonWindow = new NewSeasonConfiguratorWindow(this);
         if(seasonWindow->exec() == QDialog::Accepted){
-
-            qDebug()<<"no";
             SimulationSave simulationSave;
             simulationSave.setName(simulationSaveWindow->getNameFromInput());
-            qDebug()<<"no";
 
             Season season;
             season.setSeasonNumber(simulationSaveWindow->getSeasonNumberFromInput());
-            qDebug()<<"no";
 
             SeasonsManager * manager = new SeasonsManager;
             //manager->setJumpers(seasonWindow->getJumpersFromEditor());
@@ -50,20 +46,14 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
             //season.setClassifications(seasonWindow->getClassificationsFromEditor());
             //season.setSettings(seasonWindow->getSettingsFromInputs());
             simulationSave.getSeasonsReference().push_back(season);
-            qDebug()<<"no";
-
-
 
             int index = 0;
             if(ui->listView_simulationSaves->selectionModel()->selectedRows().size() > 0)
                 index = ui->listView_simulationSaves->selectionModel()->selectedRows().first().row();
-            qDebug()<<"no";
 
             GlobalDatabase::get()->getEditableGlobalSimulationSaves().insert(index, simulationSave);
-            qDebug()<<"no";
 
             emit listModel->dataChanged(listModel->index(index), listModel->index(listModel->rowCount() - 1));
-            qDebug()<<"no";
 
         }
     }

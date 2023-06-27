@@ -9,6 +9,8 @@ public:
     ClassWithID();
     ~ClassWithID();
 
+    bool operator==(const ClassWithID & r) const;
+
     ulong regenerateID();
     void resetID();
     ulong getID() const;

@@ -34,13 +34,13 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);
     windsGeneratorSettingsEditor->removeSubmitButton();
 
-    ui->comboBox_existingJumper->addItem("BRAK");
+    ui->comboBox_existingJumper->addItem(tr("BRAK"));
     for(const auto & jumper : GlobalDatabase::get()->getGlobalJumpers())
     {
         ui->comboBox_existingJumper->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())))) ,jumper.getNameAndSurname());
     }
 
-    ui->comboBox_existingHill->addItem("BRAK");
+    ui->comboBox_existingHill->addItem(tr("BRAK"));
     for(const auto & hill : GlobalDatabase::get()->getGlobalHills())
     {
         ui->comboBox_existingHill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())))) ,hill.getName() + " HS" + QString::number(hill.getHSPoint()));

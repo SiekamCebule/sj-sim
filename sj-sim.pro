@@ -34,7 +34,7 @@ SOURCES += \
     source/UI/Competition/CompetitionConfigWindow.cpp \
     source/UI/ResultsShowing/JumpWindInfoWidget.cpp \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.cpp \
-    source/UI/Seasons/CalendarEditor/CalendarEditorTreeModel.cpp \
+    source/UI/Seasons/CalendarEditor/CalendarEditorTableModel.cpp \
     source/UI/Seasons/CalendarEditor/CalendarEditorWidget.cpp \
     source/UI/Seasons/CompetitionInfoEditorWidget.cpp \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.cpp \
@@ -121,7 +121,7 @@ HEADERS += \
     source/UI/Competition/CompetitionConfigWindow.h \
     source/UI/ResultsShowing/JumpWindInfoWidget.h \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.h \
-    source/UI/Seasons/CalendarEditor/CalendarEditorTreeModel.h \
+    source/UI/Seasons/CalendarEditor/CalendarEditorTableModel.h \
     source/UI/Seasons/CalendarEditor/CalendarEditorWidget.h \
     source/UI/Seasons/CompetitionInfoEditorWidget.h \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.h \

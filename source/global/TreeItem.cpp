@@ -1,4 +1,5 @@
 #include "TreeItem.h"
+#include <QModelIndex>
 
 TreeItem::TreeItem(const QVector<QVariant> &dataVector, TreeItem *parentItem) :
     parentItem(parentItem), dataVector(dataVector)
@@ -76,3 +77,54 @@ void TreeItem::deleteTreeItemRecursively(TreeItem *item)
     item->getParentItem()->getChildItemsReference().remove(item->row());
     delete item;
 }
+
+int TreeItem::getIndexOfItemInVectorByTreeModelIndex(const QModelIndex &index, TreeItem *rootItem, bool includeParentRows)
+{
+    TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+    int howMany = 0;
+    void * ptr = nullptr;
+    int parentRow = 0;
+    int row = 0;
+    while(ptr != index.internalPointer()){
+        if(item->getParentItem() == rootItem)
+            ptr = rootItem->getChildItem(parentRow);
+        else
+            ptr = rootItem->getChildItem(parentRow)->getChildItem(row);
+
+        if(includeParentRows == true)
+            howMany++;
+        else if(row > 0)
+            howMany++;
+
+        row++;
+        if(row == rootItem->getChildItem(parentRow)->childCount()){
+            parentRow++;
+            row = 0;
+        }
+    }
+    return howMany - 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

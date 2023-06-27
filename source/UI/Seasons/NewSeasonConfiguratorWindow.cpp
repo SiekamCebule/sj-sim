@@ -15,8 +15,8 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     jumpersListView->setupListModel();
     ui->verticalLayout_jumpersList->addWidget(jumpersListView);
 
-    calendarTreeModel = new CalendarEditorTreeModel(&calendar, this);
-    calendarEditor = new CalendarEditorWidget(calendarTreeModel, this);
+    calendarTableModel = new CalendarEditorTableModel(&calendar, &GlobalDatabase::get()->getEditableGlobalHills(), &GlobalDatabase::get()->getEditableCompetitionRules(), this);
+    calendarEditor = new CalendarEditorWidget(calendarTableModel, this);
     ui->verticalLayout_calendarEditor->addWidget(calendarEditor);
 }
 
@@ -30,6 +30,16 @@ void NewSeasonConfiguratorWindow::on_pushButton_submit_clicked()
     accept();
 }
 
+CalendarEditorTableModel *NewSeasonConfiguratorWindow::getCalendarTableModel() const
+{
+    return calendarTableModel;
+}
+
+void NewSeasonConfiguratorWindow::setCalendarTableModel(CalendarEditorTableModel *newCalendarTableModel)
+{
+    calendarTableModel = newCalendarTableModel;
+}
+
 SeasonCalendar NewSeasonConfiguratorWindow::getCalendar() const
 {
     return calendar;
@@ -38,16 +48,6 @@ SeasonCalendar NewSeasonConfiguratorWindow::getCalendar() const
 void NewSeasonConfiguratorWindow::setCalendar(const SeasonCalendar &newCalendar)
 {
     calendar = newCalendar;
-}
-
-CalendarEditorTreeModel *NewSeasonConfiguratorWindow::getCalendarTreeModel() const
-{
-    return calendarTreeModel;
-}
-
-void NewSeasonConfiguratorWindow::setCalendarTreeModel(CalendarEditorTreeModel *newCalendarTreeModel)
-{
-    calendarTreeModel = newCalendarTreeModel;
 }
 
 CalendarEditorWidget *NewSeasonConfiguratorWindow::getCalendarEditor() const

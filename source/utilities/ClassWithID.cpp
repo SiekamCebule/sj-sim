@@ -14,6 +14,11 @@ ClassWithID::~ClassWithID()
     //globalIDGenerator.removeID(this->getID());
 }
 
+bool ClassWithID::operator==(const ClassWithID &r) const
+{
+    return this->getID() == r.getID();
+}
+
 ulong ClassWithID::regenerateID()
 {
     if(globalIDGenerator.hasValue(ID)){
@@ -40,5 +45,5 @@ void ClassWithID::setID(ulong id)
         globalIDGenerator.removeID(id);
 
     globalIDGenerator.addExistingID(id);
-    setID(id);
+    this->ID = id;
 }

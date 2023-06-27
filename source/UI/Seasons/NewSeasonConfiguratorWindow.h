@@ -31,7 +31,7 @@ private:
 
     SeasonCalendar calendar;
     CalendarEditorWidget * calendarEditor;
-    CalendarEditorTreeModel * calendarTreeModel;
+    CalendarEditorTableModel * calendarTableModel;
 
 public:
     QVector<Jumper> getJumpers() const;
@@ -39,10 +39,10 @@ public:
     void setJumpers(const QVector<Jumper> &newJumpers);
     CalendarEditorWidget *getCalendarEditor() const;
     void setCalendarEditor(CalendarEditorWidget *newCalendarEditor);
-    CalendarEditorTreeModel *getCalendarTreeModel() const;
-    void setCalendarTreeModel(CalendarEditorTreeModel *newCalendarTreeModel);
     SeasonCalendar getCalendar() const;
     void setCalendar(const SeasonCalendar &newCalendar);
+    CalendarEditorTableModel *getCalendarTableModel() const;
+    void setCalendarTableModel(CalendarEditorTableModel *newCalendarTableModel);
 };
 
 #endif // NEWSEASONCONFIGURATORWINDOW_H

@@ -19,5 +19,7 @@
         <file>img/back-side.png</file>
         <file>img/front-side.png</file>
         <file>img/pipes.webp</file>
+        <file>img/check-mark.png</file>
+        <file>img/close.png</file>
     </qresource>
 </RCC>

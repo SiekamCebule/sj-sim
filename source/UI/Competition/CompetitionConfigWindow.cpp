@@ -163,7 +163,7 @@ int CompetitionConfigWindow::getJumpersCountInTeam() const
 void CompetitionConfigWindow::setupHillToolBoxItem()
 {
     ui->comboBox_existingHill->clear();
-    ui->comboBox_existingHill->addItem("BRAK");
+    ui->comboBox_existingHill->addItem(tr("BRAK"));
     for(const auto & hill : GlobalDatabase::get()->getGlobalHills())
     {
         ui->comboBox_existingHill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())))) ,hill.getName() + " HS" + QString::number(hill.getHSPoint()));
@@ -186,7 +186,7 @@ void CompetitionConfigWindow::setupHillToolBoxItem()
 
 void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
 {
-    existingCompetitionRulesComboBox = new QComboBox;
+    existingCompetitionRulesComboBox = new QComboBox();
     QStringList rulesStringList;
     rulesStringList.push_back("BRAK");
     for(const auto & rule : GlobalDatabase::get()->getGlobalCompetitionsRules())

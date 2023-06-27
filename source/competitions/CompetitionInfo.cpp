@@ -6,10 +6,13 @@
 
 #include <QDate>
 
-CompetitionInfo::CompetitionInfo()
+CompetitionInfo::CompetitionInfo(Hill *hill) : hill(hill)
 {
     exceptionalRoundsCount = (-1);
     cancelled = false;
+    results = nullptr;
+    serieType = Competition;
+    trialRound = nullptr;
 }
 
 CompetitionInfo::~CompetitionInfo()
@@ -17,6 +20,36 @@ CompetitionInfo::~CompetitionInfo()
     if(results != nullptr){
         delete results;
     }
+    /*for(auto & t : trainings)
+        if(t != nullptr)
+            delete t;
+    if(trialRound != nullptr)
+        delete trialRound;*/
+}
+
+QVector<CompetitionInfo *> CompetitionInfo::getTrainings() const
+{
+    return trainings;
+}
+
+QVector<CompetitionInfo *> &CompetitionInfo::getTrainingsReference()
+{
+    return trainings;
+}
+
+void CompetitionInfo::setTrainings(const QVector<CompetitionInfo *> &newTrainings)
+{
+    trainings = newTrainings;
+}
+
+CompetitionInfo *CompetitionInfo::getTrialRound() const
+{
+    return trialRound;
+}
+
+void CompetitionInfo::setTrialRound(CompetitionInfo *newTrialRound)
+{
+    trialRound = newTrialRound;
 }
 
 bool CompetitionInfo::getCancelled() const
