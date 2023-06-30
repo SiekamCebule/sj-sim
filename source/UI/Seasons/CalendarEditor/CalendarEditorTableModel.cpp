@@ -98,7 +98,7 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
                 int index = calendar->getCompetitionsReference().indexOf(competition);
                 if(index > 0)
                     if(calendar->getCompetitionsReference()[index - 1]->getSerieType() == CompetitionInfo::TrialRound) //Jeżeli jest seria próbna przed konkursem
-                        return tr("TAK");
+                        return tr("TAK") + " - " + calendar->getCompetitionsReference()[index - 1]->getRulesPointer()->getName();
                 return tr("NIE");
             }
             case 4:{
@@ -122,7 +122,12 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
                         }
                     }
                 }
-                return count;
+                if(count == 0)
+                    return 0;
+                else if(calendar->getCompetitionsReference()[indexOfCompetition]->getTrialRound() != nullptr)
+                    return QString::number(count) + " - " + calendar->getCompetitionsReference()[indexOfCompetition - 2]->getRulesPointer()->getName();
+                else
+                    return QString::number(count) + " - " + calendar->getCompetitionsReference()[indexOfCompetition - 1]->getRulesPointer()->getName();
             }
             case 5:
                 return competition->getRules().getName();

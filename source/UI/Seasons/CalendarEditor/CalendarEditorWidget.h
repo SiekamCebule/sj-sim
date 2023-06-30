@@ -30,6 +30,7 @@ private:
     QAction * action_remove;
     QAction * action_up;
     QAction * action_down;
+    QAction * action_edit;
     Hill defaultHill;
 
     CompetitionInfoEditorWidget * competitionInfoEditor;
@@ -45,7 +46,16 @@ private slots:
     void removeActionTriggered();
     void upActionTriggered();
     void downActionTriggered();
+    void editActionTriggered();
     void on_tableView_doubleClicked(const QModelIndex &index);
+
+private:
+    void execMultipleHillEditDialog(QSet<int> * rows, int column);
+    void execMultipleTrainingsEditDialog(QSet<int> * rows, int column);
+    void execMultipleCompetitionRulesEditDialog(QSet<int> * rows, int column);
+    void execMultipleTrialRoundsEditDialog(QSet<int> * rows, int column);
+    void multipleEditCompetitionTypes(QSet<int> * rows, int column);
+    void multipleEditSerieTypes(QSet<int> * rows, int column);
 
 public:
     CalendarEditorTableModel *getModel() const;

@@ -217,6 +217,7 @@ void CompetitionInfoEditorWidget::on_pushButton_trialRoundRules_clicked()
         dialog->setWindowTitle(tr("Zasady serii próbenj"));
         dialog->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         dialog->setLayout(new QVBoxLayout(this));
+        dialog->setStyleSheet("background-color: white; color: black;");
 
         CompetitionRulesEditorWidget * editor = new CompetitionRulesEditorWidget(this);
         editor->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
@@ -239,6 +240,7 @@ void CompetitionInfoEditorWidget::on_pushButton_trainingsRules_clicked()
         dialog->setWindowTitle(tr("Zasady treningów"));
         dialog->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         dialog->setLayout(new QVBoxLayout(this));
+        dialog->setStyleSheet("background-color: white; color: black;");
 
         CompetitionRulesEditorWidget * editor = new CompetitionRulesEditorWidget(this);
         editor->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);

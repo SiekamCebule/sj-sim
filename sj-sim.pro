@@ -36,6 +36,8 @@ SOURCES += \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.cpp \
     source/UI/Seasons/CalendarEditor/CalendarEditorTableModel.cpp \
     source/UI/Seasons/CalendarEditor/CalendarEditorWidget.cpp \
+    source/UI/Seasons/CalendarEditor/MultipleTrainingsEditDialog.cpp \
+    source/UI/Seasons/CalendarEditor/MultipleTrialRoundsEditDialog.cpp \
     source/UI/Seasons/CompetitionInfoEditorWidget.cpp \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.cpp \
     source/UI/Seasons/NewSeasonConfiguratorWindow.cpp \
@@ -123,6 +125,8 @@ HEADERS += \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.h \
     source/UI/Seasons/CalendarEditor/CalendarEditorTableModel.h \
     source/UI/Seasons/CalendarEditor/CalendarEditorWidget.h \
+    source/UI/Seasons/CalendarEditor/MultipleTrainingsEditDialog.h \
+    source/UI/Seasons/CalendarEditor/MultipleTrialRoundsEditDialog.h \
     source/UI/Seasons/CompetitionInfoEditorWidget.h \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.h \
     source/UI/Seasons/NewSeasonConfiguratorWindow.h \
@@ -199,6 +203,8 @@ FORMS += \
     source/UI/ResultsShowing/JumpWindInfoWidget.ui \
     source/UI/ResultsShowing/JumpWindInfoWidgetItem.ui \
     source/UI/Seasons/CalendarEditor/CalendarEditorWidget.ui \
+    source/UI/Seasons/CalendarEditor/MultipleTrainingsEditDialog.ui \
+    source/UI/Seasons/CalendarEditor/MultipleTrialRoundsEditDialog.ui \
     source/UI/Seasons/CompetitionInfoEditorWidget.ui \
     source/UI/Seasons/NewSeasonConfiguratorWindow.ui \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.ui \
