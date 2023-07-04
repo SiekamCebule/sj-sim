@@ -15,17 +15,7 @@ JumpersListModel::JumpersListModel(QVector<Jumper> *jumpersVectorPointer, QObjec
 
 QVariant JumpersListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    // FIXME: Implement me!
-}
-
-bool JumpersListModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
-{
-    if (value != headerData(section, orientation, role)) {
-        // FIXME: Implement me!
-        emit headerDataChanged(orientation, section, section);
-        return true;
-    }
-    return false;
+    return QVariant();
 }
 
 int JumpersListModel::rowCount(const QModelIndex &parent) const
@@ -59,26 +49,6 @@ QVariant JumpersListModel::data(const QModelIndex &index, int role) const
 
     // FIXME: Implement me!
     return QVariant();
-}
-
-bool JumpersListModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if(role == Qt::EditRole){
-        if (data(index, role) != value) {
-            // FIXME: Implement me!
-            emit dataChanged(index, index, {role});
-            return true;
-        }
-    }
-    return false;
-}
-
-Qt::ItemFlags JumpersListModel::flags(const QModelIndex &index) const
-{
-    if (!index.isValid())
-        return Qt::NoItemFlags;
-
-    return QAbstractItemModel::flags(index); // FIXME: Implement me!
 }
 
 bool JumpersListModel::insertRows(int row, int count, const QModelIndex &parent)

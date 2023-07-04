@@ -7,17 +7,18 @@
 #include "../EditorWidgets/JumperEditorWidget.h"
 #include "../EditorWidgets/HillEditorWidget.h"
 #include "../EditorWidgets/CompetitionRulesEditorWidget.h"
+#include "../EditorWidgets/PointsForPlacesPresetEditorWidget.h"
 #include "ListModels/JumpersListModel.h"
 #include "ListModels/HillsListModel.h"
 #include "ListModels/CompetitionRulesListModel.h"
+#include "ListModels/PointsForPlacesPresetsListModel.h"
 #include "DatabaseItemsListView.h"
-
 #include <QFont>
 #include <QScrollArea>
 #include <QCloseEvent>
 #include <QMessageBox>
 
-DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, HillEditorWidget *hillEditor, CompetitionRulesEditorWidget * competitionRulesEditor, QWidget *parent) :
+DatabaseEditorWindow::DatabaseEditorWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DatabaseEditorWindow),
     jumperEditor(jumperEditor),
@@ -34,24 +35,28 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
     tempGlobalJumpers = GlobalDatabase::get()->getGlobalJumpers();
     tempGlobalHills = GlobalDatabase::get()->getGlobalHills();
     tempGlobalCompetitionRules = GlobalDatabase::get()->getGlobalCompetitionsRules();
+    tempGlobalPointsForPlacesPresets = GlobalDatabase::get()->getGlobalPointsForPlacesPresets();
 
-    if(this->jumperEditor == nullptr)
-        this->jumperEditor = new JumperEditorWidget;
-    ui->tab_jumpers->layout()->addWidget(this->jumperEditor);
-    this->jumperEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    this->jumperEditor->hide();
+    jumperEditor = new JumperEditorWidget;
+    ui->tab_jumpers->layout()->addWidget(jumperEditor);
+    jumperEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    jumperEditor->hide();
 
-    if(this->hillEditor == nullptr)
-        this->hillEditor = new HillEditorWidget();
-    ui->tab_hills->layout()->addWidget(this->hillEditor);
-    this->hillEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    this->hillEditor->hide();
+    hillEditor = new HillEditorWidget();
+    ui->tab_hills->layout()->addWidget(hillEditor);
+    hillEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    hillEditor->hide();
 
-    if(this->competitionRulesEditor == nullptr)
-        this->competitionRulesEditor = new CompetitionRulesEditorWidget();
-    ui->tab_competitionRules->layout()->addWidget(this->competitionRulesEditor);
-    this->competitionRulesEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    this->competitionRulesEditor->hide();
+    competitionRulesEditor = new CompetitionRulesEditorWidget();
+    ui->tab_competitionRules->layout()->addWidget(competitionRulesEditor);
+    competitionRulesEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    competitionRulesEditor->hide();
+
+    pointsForPlacesPresetEditor = new PointsForPlacesPresetEditorWidget();
+    ui->tab_pointsForPlacesPresets->layout()->addWidget(pointsForPlacesPresetEditor);
+    pointsForPlacesPresetEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    pointsForPlacesPresetEditor->hide();
+
 
     jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, this);
     jumpersListView->setJumpers(&GlobalDatabase::get()->getEditableGlobalJumpers());
@@ -68,16 +73,23 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
     competitionRulesListView->setupListModel();
     ui->verticalLayout_competitionRulesList->addWidget(competitionRulesListView);
 
+    pointsForPlacesPresetsListView = new DatabaseItemsListView(DatabaseItemsListView::PointsForPlacesPresetsItems, true, this);
+    pointsForPlacesPresetsListView->setPointsForPlacesPresets(&GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets());
+    pointsForPlacesPresetsListView->setupListModel();
+    ui->verticalLayout_pointsForPlacesPresetsList->addWidget(pointsForPlacesPresetsListView);
+
     connect(ui->tabWidget_main, &QTabWidget::currentChanged, this, [this](){
         setActualElementType(ui->tabWidget_main->currentIndex());
     });
     connect(this->jumperEditor, &JumperEditorWidget::submitted, this, &DatabaseEditorWindow::replaceJumperByJumperEditor);
     connect(this->hillEditor, &HillEditorWidget::submitted, this, &DatabaseEditorWindow::replaceHillByHillEditor);
     connect(this->competitionRulesEditor, &CompetitionRulesEditorWidget::submitted, this, &DatabaseEditorWindow::replaceCompetitionRuleByCompetitionRulesEditor);
+    connect(this->pointsForPlacesPresetEditor, &PointsForPlacesPresetEditorWidget::submitted, this, &DatabaseEditorWindow::replacePointsForPlacesPresetByEditorObject);
 
     connect(this->jumpersListView, &DatabaseItemsListView::listViewDoubleClicked, this, &DatabaseEditorWindow::onJumpersListViewDoubleClicked);
     connect(this->hillsListView, &DatabaseItemsListView::listViewDoubleClicked, this, &DatabaseEditorWindow::onHillsListViewDoubleClicked);
     connect(this->competitionRulesListView, &DatabaseItemsListView::listViewDoubleClicked, this, &DatabaseEditorWindow::onCompetitionRulesListViewDoubleClicked);
+    connect(this->pointsForPlacesPresetsListView, &DatabaseItemsListView::listViewDoubleClicked, this, &DatabaseEditorWindow::onPointsForPlacesPresetsListViewDoubleClicked);
 
     connect(this->jumpersListView, &DatabaseItemsListView::up, this, [this](){
         actualElementIndex--;
@@ -88,6 +100,9 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
     connect(this->competitionRulesListView, &DatabaseItemsListView::up, this, [this](){
         actualElementIndex--;
     });
+    connect(this->pointsForPlacesPresetsListView, &DatabaseItemsListView::up, this, [this](){
+        actualElementIndex--;
+    });
     connect(this->jumpersListView, &DatabaseItemsListView::down, this, [this](){
         actualElementIndex++;
     });
@@ -95,6 +110,9 @@ DatabaseEditorWindow::DatabaseEditorWindow(JumperEditorWidget * jumperEditor, Hi
         actualElementIndex++;
     });
     connect(this->competitionRulesListView, &DatabaseItemsListView::down, this, [this](){
+        actualElementIndex++;
+    });
+    connect(this->pointsForPlacesPresetsListView, &DatabaseItemsListView::down, this, [this](){
         actualElementIndex++;
     });
 }
@@ -125,6 +143,13 @@ void DatabaseEditorWindow::replaceCompetitionRuleByCompetitionRulesEditor()
     emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(actualElementIndex), competitionRulesListModel->index(actualElementIndex));
 }
 
+void DatabaseEditorWindow::replacePointsForPlacesPresetByEditorObject()
+{
+    GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets().replace(actualElementIndex, pointsForPlacesPresetEditor->constructPresetFromInputs());
+    PointsForPlacesPresetsListModel * pointsForPlacesPresetsListModel = dynamic_cast<PointsForPlacesPresetsListModel *>(pointsForPlacesPresetsListView->getListModel());
+    emit pointsForPlacesPresetsListModel->dataChanged(pointsForPlacesPresetsListModel->index(actualElementIndex), pointsForPlacesPresetsListModel->index(actualElementIndex));
+}
+
 void DatabaseEditorWindow::closeEvent(QCloseEvent *event)
 {
     QMessageBox message;
@@ -145,6 +170,7 @@ void DatabaseEditorWindow::closeEvent(QCloseEvent *event)
         GlobalDatabase::get()->setGlobalJumpers(tempGlobalJumpers);
         GlobalDatabase::get()->setGlobalHills(tempGlobalHills);
         GlobalDatabase::get()->setGlobalCompetitionsRules(tempGlobalCompetitionRules);
+        GlobalDatabase::get()->setGlobalPointsForPlacesPresets(tempGlobalPointsForPlacesPresets);
         event->accept();
     }
     else
@@ -185,6 +211,18 @@ void DatabaseEditorWindow::onCompetitionRulesListViewDoubleClicked(const QModelI
     }
     competitionRulesEditor->setCompetitionRules(const_cast<CompetitionRules *>(&GlobalDatabase::get()->getEditableCompetitionRules().at(row)));
     competitionRulesEditor->fillCompetitionRulesInputs();
+}
+
+void DatabaseEditorWindow::onPointsForPlacesPresetsListViewDoubleClicked(const QModelIndex &index)
+{
+    int row = index.row();
+    actualElementIndex = row;
+    if(pointsForPlacesPresetEditor->isHidden()){
+        ui->tabWidget_main->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+        pointsForPlacesPresetEditor->show();
+    }
+    pointsForPlacesPresetEditor->setPreset(const_cast<PointsForPlacesPreset *>(&GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets().at(row)));
+    pointsForPlacesPresetEditor->fill();
 }
 
 short DatabaseEditorWindow::getActualElementType() const
@@ -256,168 +294,3 @@ void DatabaseEditorWindow::setJumpersListModel(JumpersListModel *newJumpersListM
 {
     jumpersListModel = newJumpersListModel;
 }
-
-/*void DatabaseEditorWindow::on_pushButton_add_clicked()
-{
-    switch(actualElementType){
-    case JumperElement:{
-        if(ui->listView_jumpers->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_jumpers->selectionModel()->selectedRows().first().row() + 1;
-            GlobalDatabase::get()->getEditableGlobalJumpers().insert(row, Jumper("Name", "Surname", "XXX"));
-            jumpersListModel->insertRows(row, 1);
-            emit jumpersListModel->dataChanged(jumpersListModel->index(row), jumpersListModel->index(row));
-        }
-        break;
-    }
-    case HillElement:{
-        if(ui->listView_hills->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_hills->selectionModel()->selectedRows().first().row() + 1;
-            GlobalDatabase::get()->getEditableGlobalHills().insert(row, Hill("Hill", "XXX"));
-            hillsListModel->insertRows(row, 1);
-            emit hillsListModel->dataChanged(hillsListModel->index(row), hillsListModel->index(row));
-        }
-        break;
-    }
-    case CompetitionRulesElement:{
-        if(ui->listView_competitionRules->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_competitionRules->selectionModel()->selectedRows().first().row() + 1;
-            GlobalDatabase::get()->getEditableCompetitionRules().insert(row, CompetitionRules("Rules"));
-            competitionRulesListModel->insertRows(row, 1);
-            emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(row), competitionRulesListModel->index(row));
-        }
-        break;
-    }
-    }
-}
-
-
-void DatabaseEditorWindow::on_pushButton_remove_clicked()
-{
-    switch(actualElementType){
-    case JumperElement:{
-        if(ui->listView_jumpers->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_jumpers->selectionModel()->selectedRows().first().row();
-            GlobalDatabase::get()->getEditableGlobalJumpers().remove(row);
-            jumpersListModel->removeRows(row, 1);
-            emit jumpersListModel->dataChanged(jumpersListModel->index(row), jumpersListModel->index(jumpersListModel->rowCount()));
-        }
-        break;
-    }
-    case HillElement:{
-        if(ui->listView_hills->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_hills->selectionModel()->selectedRows().first().row();
-            GlobalDatabase::get()->getEditableGlobalHills().remove(row);
-            hillsListModel->removeRows(row, 1);
-            emit hillsListModel->dataChanged(hillsListModel->index(row), hillsListModel->index(hillsListModel->rowCount()));
-        }
-        break;
-    }
-    case CompetitionRulesElement:{
-        if(ui->listView_competitionRules->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_competitionRules->selectionModel()->selectedRows().first().row() + 1;
-            GlobalDatabase::get()->getEditableCompetitionRules().remove(row);
-            competitionRulesListModel->removeRows(row, 1);
-            emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(row), competitionRulesListModel->index(competitionRulesListModel->rowCount()));
-        }
-        break;
-    }
-    }
-}
-
-
-void DatabaseEditorWindow::on_pushButton_up_clicked()
-{
-    switch(actualElementType){
-    case JumperElement:{
-        if(ui->listView_jumpers->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_jumpers->selectionModel()->selectedRows().first().row();
-            if(row > 0){
-                GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(row, row - 1);
-                emit jumpersListModel->dataChanged(jumpersListModel->index(row), jumpersListModel->index(row - 1));
-                ui->listView_jumpers->selectionModel()->clear();
-                ui->listView_jumpers->selectionModel()->select(jumpersListModel->index(row - 1), QItemSelectionModel::Select);
-                ui->listView_jumpers->scrollTo(jumpersListModel->index(row - 1));
-                actualElementIndex--;
-            }
-        }
-        break;
-    }
-    case HillElement:{
-        if(ui->listView_hills->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_hills->selectionModel()->selectedRows().first().row();
-            if(row > 0){
-                GlobalDatabase::get()->getEditableGlobalHills().swapItemsAt(row, row - 1);
-                emit hillsListModel->dataChanged(hillsListModel->index(row), hillsListModel->index(row - 1));
-                ui->listView_hills->selectionModel()->clear();
-                ui->listView_hills->selectionModel()->select(hillsListModel->index(row - 1), QItemSelectionModel::Select);
-                ui->listView_hills->scrollTo(hillsListModel->index(row - 1));
-                actualElementIndex--;
-            }
-        }
-        break;
-    }
-    case CompetitionRulesElement:{
-        if(ui->listView_competitionRules->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_competitionRules->selectionModel()->selectedRows().first().row();
-            if(row > 0){
-                GlobalDatabase::get()->getEditableCompetitionRules().swapItemsAt(row, row - 1);
-                emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(row), competitionRulesListModel->index(row - 1));
-                ui->listView_competitionRules->selectionModel()->clear();
-                ui->listView_competitionRules->selectionModel()->select(competitionRulesListModel->index(row - 1), QItemSelectionModel::Select);
-                ui->listView_competitionRules->scrollTo(competitionRulesListModel->index(row - 1));
-                actualElementIndex--;
-            }
-        }
-        break;
-    }
-    }
-}
-
-
-void DatabaseEditorWindow::on_pushButton_down_clicked()
-{
-    switch(actualElementType){
-    case JumperElement:{
-        if(ui->listView_jumpers->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_jumpers->selectionModel()->selectedRows().first().row();
-            if(row < jumpersListModel->rowCount() - 1){
-                GlobalDatabase::get()->getEditableGlobalJumpers().swapItemsAt(row, row + 1);
-                emit jumpersListModel->dataChanged(jumpersListModel->index(row), jumpersListModel->index(row + 1));
-                ui->listView_jumpers->selectionModel()->clear();
-                ui->listView_jumpers->selectionModel()->select(jumpersListModel->index(row + 1), QItemSelectionModel::Select);
-                ui->listView_jumpers->scrollTo(jumpersListModel->index(row + 1));
-                actualElementIndex++;
-            }
-        }
-        break;
-    }
-    case HillElement:{
-        if(ui->listView_hills->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_hills->selectionModel()->selectedRows().first().row();
-            if(row < hillsListModel->rowCount() - 1){
-                GlobalDatabase::get()->getEditableGlobalHills().swapItemsAt(row, row + 1);
-                emit hillsListModel->dataChanged(hillsListModel->index(row), hillsListModel->index(row + 1));
-                ui->listView_hills->selectionModel()->clear();
-                ui->listView_hills->selectionModel()->select(hillsListModel->index(row + 1), QItemSelectionModel::Select);
-                ui->listView_hills->scrollTo(hillsListModel->index(row + 1));
-                actualElementIndex++;
-            }
-        }
-        break;
-    }
-    case CompetitionRulesElement:{
-        if(ui->listView_competitionRules->selectionModel()->selectedRows().count() > 0){
-            int row = ui->listView_competitionRules->selectionModel()->selectedRows().first().row();
-            if(row < competitionRulesListModel->rowCount() - 1){
-                GlobalDatabase::get()->getEditableCompetitionRules().swapItemsAt(row, row + 1);
-                emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(row), competitionRulesListModel->index(row + 1));
-                ui->listView_competitionRules->selectionModel()->clear();
-                ui->listView_competitionRules->selectionModel()->select(competitionRulesListModel->index(row + 1), QItemSelectionModel::Select);
-                ui->listView_competitionRules->scrollTo(competitionRulesListModel->index(row + 1));
-                actualElementIndex++;
-            }
-        }
-        break;
-    }
-    }
-}*/

@@ -5,6 +5,7 @@
 #include "../simulator/Hill.h"
 #include "../competitions/CompetitionRules.h"
 #include "../seasons/SimulationSave.h"
+#include "PointsForPlacesPreset.h"
 
 #include <QVector>
 #include <QStringList>
@@ -20,15 +21,20 @@ private:
     QVector<Hill> globalHills;
     QVector<CompetitionRules> globalCompetitionsRules;
     QVector<SimulationSave> globalSimulationSaves;
+    QVector<PointsForPlacesPreset> globalPointsForPlacesPresets;
 
     bool loadJumpers();
     bool loadHills();
     bool loadCompetitionsRules();
-    bool loadGlobalSimulationSaves();
+    bool loadSimulationSaves();
+    bool loadPointsForPlacesPresets();
+
     bool writeJumpers();
     bool writeHills();
     bool writeCompetitionsRules();
-    bool writeGlobalSimulationSaves();
+    bool writeSimulationSaves();
+    bool writePointsForPlacesPresets();
+
     void setupJumpersFlags();
     void setupHillsFlags();
 
@@ -53,6 +59,9 @@ public:
     QVector<SimulationSave> getGlobalSimulationSaves() const;
     QVector<SimulationSave> & getEditableGlobalSimulationSaves();
     void setGlobalSimulationSaves(const QVector<SimulationSave> &newGlobalSimulationSaves);
+    QVector<PointsForPlacesPreset> getGlobalPointsForPlacesPresets() const;
+    QVector<PointsForPlacesPreset> & getEditableGlobalPointsForPlacesPresets();
+    void setGlobalPointsForPlacesPresets(const QVector<PointsForPlacesPreset> &newGlobalPointsForPlacesPresets);
 };
 
 #endif // GLOBALDATABASE_H

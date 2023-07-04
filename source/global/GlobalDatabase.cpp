@@ -23,6 +23,21 @@ GlobalDatabase::~GlobalDatabase()
     delete m_globalDatabase;
 }
 
+QVector<PointsForPlacesPreset> GlobalDatabase::getGlobalPointsForPlacesPresets() const
+{
+    return globalPointsForPlacesPresets;
+}
+
+QVector<PointsForPlacesPreset> &GlobalDatabase::getEditableGlobalPointsForPlacesPresets()
+{
+    return globalPointsForPlacesPresets;
+}
+
+void GlobalDatabase::setGlobalPointsForPlacesPresets(const QVector<PointsForPlacesPreset> &newGlobalPointsForPlacesPresets)
+{
+    globalPointsForPlacesPresets = newGlobalPointsForPlacesPresets;
+}
+
 QVector<SimulationSave> GlobalDatabase::getGlobalSimulationSaves() const
 {
     return globalSimulationSaves;
@@ -97,12 +112,12 @@ void GlobalDatabase::removeJumper(int index)
 
 bool GlobalDatabase::loadFromJson()
 {
-    return (loadJumpers() && loadHills() && loadCompetitionsRules());
+    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadSimulationSaves() && loadPointsForPlacesPresets());
 }
 
 bool GlobalDatabase::writeToJson()
 {
-    return (writeJumpers() && writeHills() && writeCompetitionsRules());
+    return (writeJumpers() && writeHills() && writeCompetitionsRules() && writeSimulationSaves() && writePointsForPlacesPresets());
 }
 
 bool GlobalDatabase::loadJumpers()
@@ -146,6 +161,26 @@ bool GlobalDatabase::loadCompetitionsRules()
         return false;
     }
     globalCompetitionsRules = CompetitionRules::getCompetitionRulesVectorFromJson(file.readAll());
+    file.close();
+    return true;
+}
+
+bool GlobalDatabase::loadSimulationSaves()
+{
+
+}
+
+bool GlobalDatabase::loadPointsForPlacesPresets()
+{
+    QFile file("userData/GlobalDatabase/globalPointsForPlacesPresets.json");
+    if(!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z presetami punktów za miejsca", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalPointsForPlacesPresets.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    globalPointsForPlacesPresets = PointsForPlacesPreset::getPointsForPlacesPresetsVectorFromJson(file.readAll());
     file.close();
     return true;
 }
@@ -229,6 +264,52 @@ bool GlobalDatabase::writeCompetitionsRules()
     file.close();
     return true;
 }
+
+bool GlobalDatabase::writeSimulationSaves()
+{
+
+}
+
+bool GlobalDatabase::writePointsForPlacesPresets()
+{
+    QJsonDocument document;
+    QJsonObject mainObject;
+    QJsonArray array;
+
+    for(auto & preset : globalPointsForPlacesPresets)
+    {
+        array.push_back(QJsonValue(PointsForPlacesPreset::getPointsForPlacesPresetJsonObject(preset)));
+    }
+    mainObject.insert("pointsForPlacesPresets", array);
+    document.setObject(mainObject);
+
+    QFile file("userData/GlobalDatabase/globalPointsForPlacesPresets.json");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z presetami punktów za miejsca", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalPointsForPlacesPresets.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    file.resize(0);
+    file.write(document.toJson(QJsonDocument::Indented));
+    file.close();
+    return true;
+}
+/*{
+    "pointsForPlacesPresets": [
+        {
+            "name": "Presecik",
+            "pointsForPlaces": [
+            100,
+            80,
+            70,
+            60,
+            50
+            ]
+        }
+    ]
+    }*/
 
 void GlobalDatabase::setupJumpersFlags()
 {

@@ -1,28 +1,35 @@
 #ifndef ABSTRACTCLASSIFICATION_H
 #define ABSTRACTCLASSIFICATION_H
 
+#include <QMap>
+#include <QString>
 
 class Classification
 {
 public:
-    Classification();
+    Classification(QString name = "");
 
-protected:
-    short classificationType;
-    short pointsType;
-    bool saveStageResults;
-
-    enum PointsType{
-        PlacesPoints,
+    enum PunctationType{
+        PointsForPlaces,
         CompetitionPoints
     };
+
+private:
+    QString name;
+    short classificationType;
+    short punctationType;
+    QMap<int, int> pointsForPlaces;
+
 public:
     short getClassificationType() const;
     void setClassificationType(short newClassificationType);
-    short getPointsType() const;
-    void setPointsType(short newPointsType);
-    bool getSaveStageResults() const;
-    void setSaveStageResults(bool newSaveStageResults);
+    QMap<int, int> getPointsForPlaces() const;
+    QMap<int, int> &getPointsForPlacesReference();
+    void setPointsForPlaces(const QMap<int, int> &newPointsForPlaces);
+    QString getName() const;
+    void setName(const QString &newName);
+    short getPunctationType() const;
+    void setPunctationType(short newPunctationType);
 };
 
 #endif // ABSTRACTCLASSIFICATION_H

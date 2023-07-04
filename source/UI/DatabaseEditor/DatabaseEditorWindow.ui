@@ -118,6 +118,7 @@ color: black;
 	border: 2px solid rgb(110, 110, 110);
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+padding: 3px;
 }
 QTabBar::tab:hover{
 	background-color: rgb(215, 215, 215);
@@ -211,6 +212,16 @@ QTabBar::tab:selected{
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_competitionRulesList"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_pointsForPlacesPresets">
+      <attribute name="title">
+       <string>Presety punktów za miejsca</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_pointsForPlacesPresetsList"/>
        </item>
       </layout>
      </widget>

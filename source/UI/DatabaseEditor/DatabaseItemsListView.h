@@ -9,10 +9,13 @@
 #include "../../simulator/Hill.h"
 #include "../../simulator/Team.h"
 #include "../../competitions/CompetitionRules.h"
+#include "../../seasons/Classification.h"
+#include "../../global/PointsForPlacesPreset.h"
 #include "ListModels/CompetitionRulesListModel.h"
 #include "ListModels/HillsListModel.h"
 #include "ListModels/JumpersListModel.h"
-#include "ListModels/TeamsListModel.h"
+#include "ListModels/ClassificationsListModel.h"
+#include "ListModels/PointsForPlacesPresetsListModel.h"
 
 namespace Ui {
 class DatabaseItemsListView;
@@ -30,7 +33,8 @@ public:
         JumperItems,
         HillItems,
         CompetitionRulesItems,
-        TeamItems
+        ClassificationItems,
+        PointsForPlacesPresetsItems
     };
 
     void setupListModel();
@@ -47,6 +51,8 @@ private:
     QVector<Jumper> * jumpers;
     QVector<Hill> * hills;
     QVector<CompetitionRules> * competitionRules;
+    QVector<Classification> * classifications;
+    QVector<PointsForPlacesPreset> * pointsForPlacesPresets;
 
     QAbstractListModel * listModel;
 
@@ -76,6 +82,10 @@ public:
     void setAllowInserting(bool newAllowInserting);
     QListView * getListView();
     QAbstractListModel *getListModel();
+    QVector<Classification> *getClassifications() const;
+    void setClassifications(QVector<Classification> *newClassifications);
+    QVector<PointsForPlacesPreset> *getPointsForPlacesPresets() const;
+    void setPointsForPlacesPresets(QVector<PointsForPlacesPreset> *newPointsForPlacesPresets);
 };
 
 #endif // DATABASEITEMSLISTVIEW_H

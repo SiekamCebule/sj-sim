@@ -18,6 +18,9 @@ class JumpersListModel;
 class HillsListModel;
 class CompetitionRulesListModel;
 class DatabaseItemsListView;
+class PointsForPlacesPreset;
+class PointsForPlacesPresetsListModel;
+class PointsForPlacesPresetEditorWidget;
 
 namespace Ui {
 class DatabaseEditorWindow;
@@ -28,17 +31,19 @@ class DatabaseEditorWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit DatabaseEditorWindow(JumperEditorWidget * jumperEditor = nullptr, HillEditorWidget * hillEditor = nullptr, CompetitionRulesEditorWidget * competitionRulesEditor = nullptr, QWidget *parent = nullptr);
+    explicit DatabaseEditorWindow(QWidget *parent = nullptr);
     ~DatabaseEditorWindow();
 
     void replaceJumperByJumperEditor();
     void replaceHillByHillEditor();
     void replaceCompetitionRuleByCompetitionRulesEditor();
+    void replacePointsForPlacesPresetByEditorObject();
 
     enum ElementType{
         JumperElement,
         HillElement,
-        CompetitionRulesElement
+        CompetitionRulesElement,
+        PointsForPlacesPresetElement
     };
 
 protected:
@@ -48,32 +53,30 @@ private slots:
     void onJumpersListViewDoubleClicked(const QModelIndex &index);
     void onHillsListViewDoubleClicked(const QModelIndex &index);
     void onCompetitionRulesListViewDoubleClicked(const QModelIndex &index);
-    //void on_listView_jumpers_doubleClicked(const QModelIndex &index);
-    //void on_listView_hills_doubleClicked(const QModelIndex &index);
-    //void on_listView_competitionRules_doubleClicked(const QModelIndex &index);
-    //void on_pushButton_add_clicked();
-    //void on_pushButton_remove_clicked();
-    //void on_pushButton_up_clicked();
-    //void on_pushButton_down_clicked();
+    void onPointsForPlacesPresetsListViewDoubleClicked(const QModelIndex &index);
 
 private:
     QVector<Jumper> tempGlobalJumpers;
     QVector<Hill> tempGlobalHills;
     QVector<CompetitionRules> tempGlobalCompetitionRules;
+    QVector<PointsForPlacesPreset> tempGlobalPointsForPlacesPresets;
 
     JumpersListModel * jumpersListModel;
     HillsListModel * hillsListModel;
-    CompetitionRulesListModel * competiitonRulesListModel;
+    CompetitionRulesListModel * competitionRulesListModel;
+    PointsForPlacesPresetsListModel * pointsForPlacesPresetsListModel;
 
     DatabaseItemsListView * jumpersListView;
     DatabaseItemsListView * hillsListView;
     DatabaseItemsListView * competitionRulesListView;
+    DatabaseItemsListView * pointsForPlacesPresetsListView;
 
     Ui::DatabaseEditorWindow *ui;
 
     JumperEditorWidget * jumperEditor;
     HillEditorWidget * hillEditor;
     CompetitionRulesEditorWidget * competitionRulesEditor;
+    PointsForPlacesPresetEditorWidget * pointsForPlacesPresetEditor;
 
     short actualElementType;
     int actualElementIndex;

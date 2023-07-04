@@ -1,28 +1,44 @@
 #include "Classification.h"
 
-Classification::Classification()
+Classification::Classification(QString name) : name(name)
 {
-
+    classificationType = 0;
+    punctationType = 0;
 }
 
-bool Classification::getSaveStageResults() const
+short Classification::getPunctationType() const
 {
-    return saveStageResults;
+    return punctationType;
 }
 
-void Classification::setSaveStageResults(bool newSaveStageResults)
+void Classification::setPunctationType(short newPunctationType)
 {
-    saveStageResults = newSaveStageResults;
+    punctationType = newPunctationType;
 }
 
-short Classification::getPointsType() const
+QString Classification::getName() const
 {
-    return pointsType;
+    return name;
 }
 
-void Classification::setPointsType(short newPointsType)
+void Classification::setName(const QString &newName)
 {
-    pointsType = newPointsType;
+    name = newName;
+}
+
+QMap<int, int> Classification::getPointsForPlaces() const
+{
+    return pointsForPlaces;
+}
+
+QMap<int, int> &Classification::getPointsForPlacesReference()
+{
+    return pointsForPlaces;
+}
+
+void Classification::setPointsForPlaces(const QMap<int, int> &newPointsForPlaces)
+{
+    pointsForPlaces = newPointsForPlaces;
 }
 
 short Classification::getClassificationType() const

@@ -13,6 +13,8 @@ DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, QWid
     jumpers = nullptr;
     hills = nullptr;
     competitionRules = nullptr;
+    classifications = nullptr;
+    pointsForPlacesPresets = nullptr;
     listModel = nullptr;
 
     insertAction = new QAction(this);
@@ -55,8 +57,34 @@ void DatabaseItemsListView::setupListModel()
     case CompetitionRulesItems:
         listModel = new CompetitionRulesListModel(this->competitionRules);
         break;
+    case ClassificationItems:
+        listModel = new ClassificationsListModel(this->classifications);
+        break;
+    case PointsForPlacesPresetsItems:
+        listModel = new PointsForPlacesPresetsListModel(this->pointsForPlacesPresets);
+        break;
     }
     ui->listView->setModel(listModel);
+}
+
+QVector<PointsForPlacesPreset> *DatabaseItemsListView::getPointsForPlacesPresets() const
+{
+    return pointsForPlacesPresets;
+}
+
+void DatabaseItemsListView::setPointsForPlacesPresets(QVector<PointsForPlacesPreset> *newPointsForPlacesPresets)
+{
+    pointsForPlacesPresets = newPointsForPlacesPresets;
+}
+
+QVector<Classification> *DatabaseItemsListView::getClassifications() const
+{
+    return classifications;
+}
+
+void DatabaseItemsListView::setClassifications(QVector<Classification> *newClassifications)
+{
+    classifications = newClassifications;
 }
 
 QAbstractListModel *DatabaseItemsListView::getListModel()
@@ -67,48 +95,86 @@ QAbstractListModel *DatabaseItemsListView::getListModel()
 void DatabaseItemsListView::onInsertActionTriggered()
 {
     if(allowInserting == true){
-
+        int count = 0;
+        switch(type){
+        case JumperItems:{
+            count = jumpers->count();
+            break;
+        }
+        case HillItems:{
+            count = hills->count();
+            break;
+        }
+        case CompetitionRulesItems:{
+            count = competitionRules->count();
+            break;
+        }
+        case ClassificationItems:{
+            count = classifications->count();
+            break;
+        }
+        case PointsForPlacesPresetsItems:{
+            count = pointsForPlacesPresets->count();
+        }
+        default: break;
+        }
         QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
-        if(rows.size() == 1){
-            switch(type){
-            case JumperItems:{
-                JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
-                int rowToInsert = ui->listView->selectionModel()->selectedRows().first().row();
-                jumpersListModel->insertRows(rowToInsert, 1);
-                jumpersListModel->getJumpersVectorPointer()->insert(rowToInsert + 1, 1, Jumper("Name", "Surname", "XXX"));
-                emit jumpersListModel->dataChanged(jumpersListModel->index(rowToInsert), jumpersListModel->index(jumpersListModel->rowCount() - 1));
-                break;
-            }
-            case HillItems:{
-                HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
-                int rowToInsert = ui->listView->selectionModel()->selectedRows().first().row();
-                hillsListModel->insertRows(rowToInsert, 1);
-                hillsListModel->getHillsVectorPointer()->insert(rowToInsert + 1, 1, Hill("Hill", "XXX"));
-                emit hillsListModel->dataChanged(hillsListModel->index(rowToInsert), hillsListModel->index(hillsListModel->rowCount() - 1));
-                break;
-            }
-            case CompetitionRulesItems:{
-                CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
-                int rowToInsert = ui->listView->selectionModel()->selectedRows().first().row();
-                competitionRulesListModel->insertRows(rowToInsert, 1);
-                competitionRulesListModel->getCompetitonRulesVectorPointer()->insert(rowToInsert + 1, 1, CompetitionRules("Rules"));
-                emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(rowToInsert), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
-                break;
-            }
-            case TeamItems:{
-                TeamsListModel * teamsListModel = dynamic_cast<TeamsListModel *>(listModel);
-                int rowToInsert = ui->listView->selectionModel()->selectedRows().first().row();
-                teamsListModel->insertRows(rowToInsert, 1);
-                teamsListModel->getTeamsVectorPointer()->insert(rowToInsert + 1, 1, Team("XXX"));
-                emit teamsListModel->dataChanged(teamsListModel->index(rowToInsert), teamsListModel->index(teamsListModel->rowCount() - 1));
-                break;
-            }
-            default: break;
+        int rowToInsert = 0;
+        if(count == 0)
+            rowToInsert = 0;
+        else if(rows.size() == 1)
+            rowToInsert = rows[0].row();
+
+        int addition = 0;
+        if(count > 0)
+            addition = 1;
+
+        if(allowInserting == true){
+            if(rows.size() == 1 || count == 0){
+                switch(type){
+                case JumperItems:{
+                    JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
+                    jumpersListModel->insertRows(rowToInsert, 1);
+                    jumpersListModel->getJumpersVectorPointer()->insert(rowToInsert + addition, 1, Jumper("Name", "Surname", "XXX"));
+                    emit jumpersListModel->dataChanged(jumpersListModel->index(rowToInsert), jumpersListModel->index(jumpersListModel->rowCount() - 1));
+                    break;
+                }
+                case HillItems:{
+                    HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
+                    hillsListModel->insertRows(rowToInsert, 1);
+                    hillsListModel->getHillsVectorPointer()->insert(rowToInsert + addition, 1, Hill("Hill", "XXX"));
+                    emit hillsListModel->dataChanged(hillsListModel->index(rowToInsert), hillsListModel->index(hillsListModel->rowCount() - 1));
+                    break;
+                }
+                case CompetitionRulesItems:{
+                    CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
+                    competitionRulesListModel->insertRows(rowToInsert, 1);
+                    competitionRulesListModel->getCompetitonRulesVectorPointer()->insert(rowToInsert + addition, 1, CompetitionRules("Rules"));
+                    emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(rowToInsert), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
+                    break;
+                }
+                case ClassificationItems:{
+                    ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
+                    classificationsListModel->insertRows(rowToInsert, 1);
+                    classificationsListModel->getClassificationsVectorPointer()->insert(rowToInsert + addition, 1, Classification("Classification"));
+                    emit classificationsListModel->dataChanged(classificationsListModel->index(rowToInsert), classificationsListModel->index(classificationsListModel->rowCount() - 1));
+                    break;
+                }
+                case PointsForPlacesPresetsItems:{
+                    PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
+                    qDebug()<<"ROWSSSSSSSSSSSSSSS: "<<model->rowCount();
+                    model->insertRows(rowToInsert, 1);
+                    model->getPresetsVectorPointer()->insert(rowToInsert + addition, 1, PointsForPlacesPreset("Preset"));
+                    emit model->dataChanged(model->index(rowToInsert), model->index(model->rowCount() - 1));
+                    break;
+                }
+                default: break;
+                }
             }
         }
-
     }
 }
+//0x5555572b0450 listModel najpierw
 
 void DatabaseItemsListView::onRemoveActionTriggered()
 {
@@ -147,14 +213,25 @@ void DatabaseItemsListView::onRemoveActionTriggered()
             emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(firstRow), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
             break;
         }
-        case TeamItems:{
-            TeamsListModel * teamsListModel = dynamic_cast<TeamsListModel *>(listModel);
+        case ClassificationItems:{
+            ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
             while(ui->listView->selectionModel()->selectedRows().size() > 0){
                 int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
-                teamsListModel->removeRows(rowToRemove, 1);
-                teamsListModel->getTeamsVectorPointer()->remove(rowToRemove, 1);
+                classificationsListModel->removeRows(rowToRemove, 1);
+                classificationsListModel->getClassificationsVectorPointer()->remove(rowToRemove, 1);
             }
-            emit teamsListModel->dataChanged(teamsListModel->index(firstRow), teamsListModel->index(teamsListModel->rowCount() - 1));
+            emit classificationsListModel->dataChanged(classificationsListModel->index(firstRow), classificationsListModel->index(classificationsListModel->rowCount() - 1));
+            break;
+        }
+        case PointsForPlacesPresetsItems:
+        {
+            PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
+            while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                model->removeRows(rowToRemove, 1);
+                model->getPresetsVectorPointer()->remove(rowToRemove, 1);
+            }
+            emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
             break;
         }
         default: break;
@@ -211,13 +288,22 @@ void DatabaseItemsListView::onUpActionTriggered()
             emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(firstRow), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
             break;
         }
-        case TeamItems:{
-            TeamsListModel * teamsListModel = dynamic_cast<TeamsListModel *>(listModel);
+        case ClassificationItems:{
+            ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
             for(auto & index : rows)
-                ui->listView->setCurrentIndex(teamsListModel->index(index.row() - 1));
+                ui->listView->setCurrentIndex(classificationsListModel->index(index.row() - 1));
             for(auto & index : rows)
-                teamsListModel->getTeamsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
-            emit teamsListModel->dataChanged(teamsListModel->index(firstRow), teamsListModel->index(teamsListModel->rowCount() - 1));
+                classificationsListModel->getClassificationsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
+            emit classificationsListModel->dataChanged(classificationsListModel->index(firstRow), classificationsListModel->index(classificationsListModel->rowCount() - 1));
+            break;
+        }
+        case PointsForPlacesPresetsItems:{
+            PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
+            for(auto & index : rows)
+                ui->listView->setCurrentIndex(model->index(index.row() - 1));
+            for(auto & index : rows)
+                model->getPresetsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
+            emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
             break;
         }
         default: break;
@@ -279,13 +365,22 @@ void DatabaseItemsListView::onDownActionTriggered()
             emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(lastRow), competitionRulesListModel->index(0));
             break;
         }
-        case TeamItems:{
-            TeamsListModel * teamsListModel = dynamic_cast<TeamsListModel *>(listModel);
+        case ClassificationItems:{
+            ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
             for(auto & index : rows)
-                ui->listView->setCurrentIndex(teamsListModel->index(index.row() + 1));
+                ui->listView->setCurrentIndex(classificationsListModel->index(index.row() + 1));
             for(auto & index : rows)
-                teamsListModel->getTeamsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
-            emit teamsListModel->dataChanged(teamsListModel->index(lastRow), teamsListModel->index(0));
+                classificationsListModel->getClassificationsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
+            emit classificationsListModel->dataChanged(classificationsListModel->index(lastRow), classificationsListModel->index(0));
+            break;
+        }
+        case PointsForPlacesPresetsItems:{
+            PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
+            for(auto & index : rows)
+                ui->listView->setCurrentIndex(model->index(index.row() + 1));
+            for(auto & index : rows)
+                model->getPresetsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
+            emit model->dataChanged(model->index(lastRow), model->index(0));
             break;
         }
         default: break;

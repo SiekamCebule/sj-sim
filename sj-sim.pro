@@ -18,13 +18,17 @@ SOURCES += \
     source/UI/Competition/TeamsSquadsTreeModel.cpp \
     source/UI/Competition/TeamsSquadsTreeView.cpp \
     source/UI/DatabaseEditor/DatabaseItemsListView.cpp \
+    source/UI/DatabaseEditor/ListModels/ClassificationsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/CompetitionRulesListModel.cpp \
     source/UI/DatabaseEditor/ListModels/HillsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/JumpersListModel.cpp \
-    source/UI/DatabaseEditor/ListModels/TeamsListModel.cpp \
+    source/UI/DatabaseEditor/ListModels/PointsForPlacesPresetsListModel.cpp \
+    source/UI/EditorWidgets/ClassificationEditorWidget.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.cpp \
+    source/UI/EditorWidgets/PointsForPlacesPresetEditorWidget.cpp \
     source/UI/EditorWidgets/RoundInfoEditorWidget.cpp \
+    source/UI/EditorWidgets/TeamsEditing/Models/PointsForPlacesTableModel.cpp \
     source/UI/EditorWidgets/TeamsEditing/Models/TeamJumpersListModel.cpp \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.cpp \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
@@ -67,6 +71,7 @@ SOURCES += \
     source/global/GlobalDatabase.cpp \
     source/global/GlobalSimulationSettings.cpp \
     source/global/GlobalTranslators.cpp \
+    source/global/PointsForPlacesPreset.cpp \
     source/global/TreeItem.cpp \
     source/main.cpp \
     source/UI/mainwindow.cpp \
@@ -107,13 +112,17 @@ HEADERS += \
     source/UI/Competition/TeamsSquadsTreeModel.h \
     source/UI/Competition/TeamsSquadsTreeView.h \
     source/UI/DatabaseEditor/DatabaseItemsListView.h \
+    source/UI/DatabaseEditor/ListModels/ClassificationsListModel.h \
     source/UI/DatabaseEditor/ListModels/CompetitionRulesListModel.h \
     source/UI/DatabaseEditor/ListModels/HillsListModel.h \
     source/UI/DatabaseEditor/ListModels/JumpersListModel.h \
-    source/UI/DatabaseEditor/ListModels/TeamsListModel.h \
+    source/UI/DatabaseEditor/ListModels/PointsForPlacesPresetsListModel.h \
+    source/UI/EditorWidgets/ClassificationEditorWidget.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h \
+    source/UI/EditorWidgets/PointsForPlacesPresetEditorWidget.h \
     source/UI/EditorWidgets/RoundInfoEditorWidget.h \
+    source/UI/EditorWidgets/TeamsEditing/Models/PointsForPlacesTableModel.h \
     source/UI/EditorWidgets/TeamsEditing/Models/TeamJumpersListModel.h \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.h \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
@@ -157,6 +166,7 @@ HEADERS += \
     source/global/GlobalDatabase.h \
     source/global/GlobalSimulationSettings.h \
     source/global/GlobalTranslators.h \
+    source/global/PointsForPlacesPreset.h \
     source/global/TreeItem.h \
     source/seasons/Season.h \
     source/seasons/SeasonCalendar.h \
@@ -191,8 +201,10 @@ FORMS += \
     source/UI/Competition/JumperCompetitionResultsWidget.ui \
     source/UI/Competition/TeamsSquadsTreeView.ui \
     source/UI/DatabaseEditor/DatabaseItemsListView.ui \
+    source/UI/EditorWidgets/ClassificationEditorWidget.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.ui \
+    source/UI/EditorWidgets/PointsForPlacesPresetEditorWidget.ui \
     source/UI/EditorWidgets/RoundInfoEditorWidget.ui \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.ui \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \

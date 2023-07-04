@@ -5,6 +5,7 @@
 #include <QAction>
 #include "../DatabaseEditor/ListModels/JumpersListModel.h"
 #include "CalendarEditor/CalendarEditorWidget.h"
+#include "../EditorWidgets/ClassificationEditorWidget.h"
 
 class DatabaseItemsListView;
 
@@ -29,6 +30,10 @@ private:
     QVector<Jumper> jumpers;
     DatabaseItemsListView * jumpersListView;
 
+    QVector<Classification> classifications;
+    DatabaseItemsListView * classificationsListView;
+    ClassificationEditorWidget * classificationEditor;
+
     SeasonCalendar calendar;
     CalendarEditorWidget * calendarEditor;
     CalendarEditorTableModel * calendarTableModel;
@@ -43,6 +48,8 @@ public:
     void setCalendar(const SeasonCalendar &newCalendar);
     CalendarEditorTableModel *getCalendarTableModel() const;
     void setCalendarTableModel(CalendarEditorTableModel *newCalendarTableModel);
+    ClassificationEditorWidget *getClassificationEditor() const;
+    void setClassificationEditor(ClassificationEditorWidget *newClassificationEditor);
 };
 
 #endif // NEWSEASONCONFIGURATORWINDOW_H

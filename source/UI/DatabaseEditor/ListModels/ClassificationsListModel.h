@@ -1,15 +1,15 @@
-#ifndef TEAMSLISTMODEL_H
-#define TEAMSLISTMODEL_H
+#ifndef CLASSIFICATIONSLISTMODEL_H
+#define CLASSIFICATIONSLISTMODEL_H
 
 #include <QAbstractListModel>
-#include "../../../simulator/Team.h"
+#include "../../../seasons/Classification.h"
 
-class TeamsListModel : public QAbstractListModel
+class ClassificationsListModel : public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    explicit TeamsListModel(QVector<Team> * teamsVectorPointer, QObject *parent = nullptr);
+    explicit ClassificationsListModel(QVector<Classification> *classificationsVectorPointer, QObject *parent = nullptr);
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -26,10 +26,10 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
 private:
-    QVector<Team> * teamsVectorPointer;
+    QVector<Classification> * classificationsVectorPointer;
 public:
-    QVector<Team> *getTeamsVectorPointer() const;
-    void setTeamsVectorPointer(QVector<Team> *newTeamsVectorPointer);
+    QVector<Classification> *getClassificationsVectorPointer() const;
+    void setClassificationsVectorPointer(QVector<Classification> *newClassificationsVectorPointer);
 };
 
-#endif // TEAMSLISTMODEL_H
+#endif // CLASSIFICATIONSLISTMODEL_H
