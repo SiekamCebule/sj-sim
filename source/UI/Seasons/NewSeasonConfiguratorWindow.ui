@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1247</width>
-    <height>995</height>
+    <height>1038</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -88,7 +88,7 @@ color: rgb(26, 95, 180);
 background-color: rgb(253, 253, 253);</string>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>5</number>
@@ -99,7 +99,7 @@ background-color: rgb(253, 253, 253);</string>
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>709</height>
+          <height>752</height>
          </rect>
         </property>
         <attribute name="label">
@@ -144,7 +144,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>709</height>
+          <height>752</height>
          </rect>
         </property>
         <attribute name="label">
@@ -162,7 +162,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>709</height>
+          <height>752</height>
          </rect>
         </property>
         <attribute name="label">
@@ -196,133 +196,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>709</height>
+          <height>752</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Ustawienia</string>
         </attribute>
-        <widget class="QWidget" name="layoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>20</x>
-           <y>10</y>
-           <width>158</width>
-           <height>139</height>
-          </rect>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="font">
-             <font>
-              <family>Quicksand Medium</family>
-              <pointsize>11</pointsize>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(15, 15, 15);</string>
-            </property>
-            <property name="text">
-             <string>Archiwizacja wyników</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-             <widget class="QCheckBox" name="checkBox_savingCompetitionsResults">
-              <property name="font">
-               <font>
-                <family>Quicksand Medium</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(37, 37, 37);</string>
-              </property>
-              <property name="text">
-               <string>Konkursy</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="checkBox_savingQualificationsResults">
-              <property name="font">
-               <font>
-                <family>Quicksand Medium</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(37, 37, 37);</string>
-              </property>
-              <property name="text">
-               <string>Kwalifikacje</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="checkBox_savingTrialRoundsResults">
-              <property name="font">
-               <font>
-                <family>Quicksand Medium</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(37, 37, 37);</string>
-              </property>
-              <property name="text">
-               <string>Serie próbne</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="checkBox_savingTrainingsResults">
-              <property name="font">
-               <font>
-                <family>Quicksand Medium</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(37, 37, 37);</string>
-              </property>
-              <property name="text">
-               <string>Treningi</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
        </widget>
       </widget>
      </item>

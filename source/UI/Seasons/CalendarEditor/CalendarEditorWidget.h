@@ -15,7 +15,7 @@ class CalendarEditorWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit CalendarEditorWidget(CalendarEditorTableModel *model, QWidget *parent = nullptr);
+    explicit CalendarEditorWidget(CalendarEditorTableModel *model, QVector<Classification> * classificationsList, QWidget *parent = nullptr);
     ~CalendarEditorWidget();
 
 signals:
@@ -32,6 +32,8 @@ private:
     QAction * action_down;
     QAction * action_edit;
     Hill defaultHill;
+
+    QVector<Classification> * classificationsList;
 
     CompetitionInfoEditorWidget * competitionInfoEditor;
     CompetitionInfo * actualCompetition;
@@ -54,6 +56,7 @@ private:
     void execMultipleTrainingsEditDialog(QSet<int> * rows, int column);
     void execMultipleCompetitionRulesEditDialog(QSet<int> * rows, int column);
     void execMultipleTrialRoundsEditDialog(QSet<int> * rows, int column);
+    void execMultipleClassificationsEditDialog(QSet<int> * rows, int column);
     void multipleEditCompetitionTypes(QSet<int> * rows, int column);
     void multipleEditSerieTypes(QSet<int> * rows, int column);
 
@@ -61,6 +64,9 @@ public:
     CalendarEditorTableModel *getModel() const;
     void setModel(CalendarEditorTableModel *newModel);
     QTableView * getTableView();
+    QVector<Classification> *getClassificationsList() const;
+    void setClassificationsList(QVector<Classification> *newClassificationsList);
+    CompetitionInfoEditorWidget *getCompetitionInfoEditor() const;
 };
 
 #endif // CALENDAREDITORWIDGET_H

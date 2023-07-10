@@ -52,8 +52,8 @@ ClassificationEditorWidget::ClassificationEditorWidget(Classification * classifi
             resetInputs();
         else
         {
-            pointsForPlaces = GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets()[ui->comboBox_presets->currentIndex() - 1].getPointsForPlacesReference();
             tableModel->removeRows(0, tableModel->rowCount());
+            pointsForPlaces = GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets()[ui->comboBox_presets->currentIndex() - 1].getPointsForPlacesReference();
             tableModel->insertRows(0, pointsForPlaces.count());
             emit tableModel->dataChanged(tableModel->index(0, 0), tableModel->index(tableModel->rowCount() - 1, tableModel->columnCount() - 1));
         }

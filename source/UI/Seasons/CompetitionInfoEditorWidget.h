@@ -2,7 +2,9 @@
 #define COMPETITIONINFOEDITORWIDGET_H
 
 #include <QWidget>
+#include <QMetaObject>
 #include <QComboBox>
+#include <QStringListModel>
 #include "../EditorWidgets/CompetitionRulesEditorWidget.h"
 #include "../../competitions/CompetitionInfo.h"
 #include "../../global/CountryFlagsManager.h"
@@ -26,7 +28,11 @@ public:
 
     void setupHillsComboBox();
     void setupRulesComboBox();
+    void setupClassificationsComboBox();
+    void setupComboBoxClassifications();
     void setReadOnly(bool ok);
+
+    void fixClassificationsVectors();
 
 signals:
     void submitted();

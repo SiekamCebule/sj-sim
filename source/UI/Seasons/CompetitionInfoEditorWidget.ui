@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>365</width>
-    <height>554</height>
+    <height>454</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,1,0">
+  <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -376,9 +376,6 @@ margin-top: 6px;
         </layout>
        </item>
       </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_classifications"/>
      </item>
     </layout>
    </item>

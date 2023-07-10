@@ -27,6 +27,21 @@ CompetitionInfo::~CompetitionInfo()
         delete trialRound;*/
 }
 
+QVector<Classification *> CompetitionInfo::getClassifications() const
+{
+    return classifications;
+}
+
+QVector<Classification *> &CompetitionInfo::getClassificationsReference()
+{
+    return classifications;
+}
+
+void CompetitionInfo::setClassifications(const QVector<Classification *> &newClassifications)
+{
+    classifications = newClassifications;
+}
+
 QVector<CompetitionInfo *> CompetitionInfo::getTrainings() const
 {
     return trainings;

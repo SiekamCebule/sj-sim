@@ -8,15 +8,17 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QComboBox>
+#include <QCheckBox>
 #include <QPushButton>
 #include <QLabel>
 
-CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QWidget *parent) :
+CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVector<Classification> *classificationsList, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CalendarEditorWidget),
     calendarModel(model),
     calendar(model->getCalendar()),
-    actualCompetitionIndex(-1)
+    actualCompetitionIndex(-1),
+    classificationsList(classificationsList)
 {
     ui->setupUi(this);
     ui->tableView->setModel(this->calendarModel);
@@ -116,6 +118,21 @@ CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QWid
 CalendarEditorWidget::~CalendarEditorWidget()
 {
     delete ui;
+}
+
+CompetitionInfoEditorWidget *CalendarEditorWidget::getCompetitionInfoEditor() const
+{
+    return competitionInfoEditor;
+}
+
+QVector<Classification> *CalendarEditorWidget::getClassificationsList() const
+{
+    return classificationsList;
+}
+
+void CalendarEditorWidget::setClassificationsList(QVector<Classification> *newClassificationsList)
+{
+    classificationsList = newClassificationsList;
 }
 
 void CalendarEditorWidget::updateActualCompetitionByID()
@@ -461,6 +478,10 @@ void CalendarEditorWidget::editActionTriggered()
             execMultipleCompetitionRulesEditDialog(&rows, column);
             break;
         }
+        case 6:
+        {
+            execMultipleClassificationsEditDialog(&rows, column);
+        }
         }
         ui->tableView->resizeColumnsToContents();
     }
@@ -664,6 +685,72 @@ void CalendarEditorWidget::execMultipleCompetitionRulesEditDialog(QSet<int> * ro
     }
 }
 
+void CalendarEditorWidget::execMultipleClassificationsEditDialog(QSet<int> *rows, int column)
+{
+    QDialog * dialog = new QDialog(this);
+    dialog->setModal(true);
+    dialog->setWindowFlags(Qt::Window);
+    dialog->setWindowTitle(tr("Klasyfikacje"));
+    dialog->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dialog->setLayout(new QVBoxLayout(this));
+    dialog->setStyleSheet("background-color: white; color: black;");
+
+    QVBoxLayout * checkBoxesLayout = new QVBoxLayout(dialog);
+    for(int i=0; i<classificationsList->count(); i++){
+        Classification * c = const_cast<Classification *>(&classificationsList->at(i));
+        QCheckBox * checkBox = new QCheckBox(dialog);
+        checkBox->setChecked(false);
+        QString text = c->getName();
+        if(c->getClassificationType() == Classification::Individual)
+            text += tr(" (Indywidualne)");
+        else if(c->getClassificationType() == Classification::Team)
+            text += tr(" (Drużynowe)");
+        checkBox->setText(text);
+        checkBoxesLayout->addWidget(checkBox);
+    }
+
+    QWidget * widget = new QWidget(dialog);
+    widget->setLayout(checkBoxesLayout);
+
+    QPushButton * button = new QPushButton("OK", this);
+    button->setStyleSheet("QPushButton{\nborder: 1px solid rgb(0, 59, 23);\nborder-radius: 6px;\ncolor: rgb(0, 0, 0);\nbackground-color: rgb(123, 220, 144);\n}\nQPushButton:hover{\nbackground-color: rgb(153, 253, 174);\n}");
+    button->setFont(QFont("Ubuntu", 12));
+    connect(button, &QPushButton::clicked, dialog, &QDialog::accept);
+
+    dialog->layout()->addWidget(widget);
+    dialog->layout()->addWidget(button);
+
+    //iterujemy przez wszystkie comboBoxy. Jeżeli zaznaczony to iterujemy przez wszystkie zaznaczone konkursy
+    //Musimy wyczyścić listę klasyfikacji dla konkursu przed rozpoczęciem dodawania
+
+    if(dialog->exec() == QDialog::Accepted){
+        for(int i=0; i<checkBoxesLayout->count(); i++){
+            for(auto & row : *rows){
+                CompetitionInfo * competition = nullptr;
+                int competitionIndex = 0;
+                int ii=0;
+                for(auto & comp : calendar->getCompetitionsReference()){
+                    if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+                        if(ii == row){
+                            competition = comp;
+                            break;
+                        }
+                        ii++;
+                    }
+                    competitionIndex ++;
+                }
+                if(i==0)
+                    competition->getClassificationsReference().clear();
+
+                if(static_cast<QCheckBox *>(checkBoxesLayout->itemAt(i)->widget())->isChecked() == true){
+                    competition->getClassificationsReference().push_back(const_cast<Classification *>(&classificationsList->at(i)));
+                    emit calendarModel->dataChanged(calendarModel->index(competitionIndex, 0), calendarModel->index(0, calendarModel->columnCount() - 1));
+                }
+            }
+        }
+    }
+}
+
 void CalendarEditorWidget::execMultipleHillEditDialog(QSet<int> *rows, int column)
 {
     QDialog * dialog = new QDialog(this);
@@ -681,7 +768,6 @@ void CalendarEditorWidget::execMultipleHillEditDialog(QSet<int> *rows, int colum
     font.setBold(true);
     label->setFont(font);
     QComboBox * comboBox = new QComboBox(dialog);
-    comboBox->addItem(tr("BRAK"));
     for(auto & hill : *calendarModel->getHillsList()){
         comboBox->addItem(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())), hill.getName() + " HS" + QString::number(hill.getHSPoint()));
     }
@@ -703,7 +789,7 @@ void CalendarEditorWidget::execMultipleHillEditDialog(QSet<int> *rows, int colum
     dialog->layout()->addWidget(w);
 
     if(dialog->exec() == QDialog::Accepted){
-        Hill * hill = const_cast<Hill*>(&calendarModel->getHillsList()->at(comboBox->currentIndex() + 1));
+        Hill * hill = const_cast<Hill*>(&calendarModel->getHillsList()->at(comboBox->currentIndex()));
         for(auto & row : *rows){
             CompetitionInfo * competition = nullptr;
             int competitionIndex = 0;
@@ -719,7 +805,7 @@ void CalendarEditorWidget::execMultipleHillEditDialog(QSet<int> *rows, int colum
                 competitionIndex ++;
             }
             competition->setHill(hill);
-            emit calendarModel->dataChanged(calendarModel->index(competitionIndex, 4), calendarModel->index(4, calendarModel->columnCount() - 1));
+            emit calendarModel->dataChanged(calendarModel->index(competitionIndex, 0), calendarModel->index(0, calendarModel->columnCount() - 1));
         }
     }
 }

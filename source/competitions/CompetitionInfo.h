@@ -6,6 +6,7 @@ class Hill;
 #include "CompetitionResults.h"
 #include "CompetitionInfo.h"
 #include "../utilities/ClassWithID.h"
+#include "../seasons/Classification.h"
 
 #include <QDate>
 
@@ -32,6 +33,7 @@ private:
 
     CompetitionInfo * trialRound;
     QVector<CompetitionInfo *> trainings;
+    QVector<Classification *> classifications;
 
 public:
     Hill *getHill() const;
@@ -52,6 +54,9 @@ public:
     QVector<CompetitionInfo *> getTrainings() const;
     QVector<CompetitionInfo *> & getTrainingsReference();
     void setTrainings(const QVector<CompetitionInfo *> &newTrainings);
+    QVector<Classification *> getClassifications() const;
+    QVector<Classification *> & getClassificationsReference();
+    void setClassifications(const QVector<Classification *> &newClassifications);
 };
 
 #endif // COMPETITIONINFO_H

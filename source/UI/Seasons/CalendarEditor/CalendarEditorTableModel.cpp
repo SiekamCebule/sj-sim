@@ -30,6 +30,8 @@ QVariant CalendarEditorTableModel::headerData(int section, Qt::Orientation orien
                 return tr("Treningi");
             case 5:
                 return tr("Zasady konkursu");
+            case 6:
+                return tr("Klasyfikacje");
             }
         }
         else if(orientation == Qt::Vertical){
@@ -57,7 +59,7 @@ int CalendarEditorTableModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return 6;
+    return 7;
 }
 
 QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) const
@@ -131,6 +133,18 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
             }
             case 5:
                 return competition->getRules().getName();
+            case 6:{
+                QString string;
+                int i=0;
+                int count = competition->getClassificationsReference().count();
+                for(auto & c : competition->getClassificationsReference()){
+                    string += c->getName();
+                    if(i+1 != count)
+                        string += ", ";
+                    i++;
+                }
+                return string;
+            }
             default:
                 break;
             }
@@ -165,6 +179,9 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
         case 5:
             font.setPixelSize(12);
             font.setItalic(true);
+            break;
+        case 6:
+            font.setPixelSize(10);
             break;
         }
         return font;

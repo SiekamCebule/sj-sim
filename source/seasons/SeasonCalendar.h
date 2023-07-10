@@ -11,6 +11,8 @@ public:
     SeasonCalendar();
     ~SeasonCalendar();
 
+    void fixCompetiitonsClassifications(QVector<Classification> *classificationsList);
+
 private:
     QVector<CompetitionInfo *> competitions;
 

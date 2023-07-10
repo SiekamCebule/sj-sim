@@ -54,7 +54,7 @@ void TeamCompetitionManager::sortActualRoundJumpersForActualGroup()
     {
         results->sortInDescendingOrder();
         for(auto & res : results->getResultsReference()){
-            if(MyFunctions::pointersVectorContains(getActualRoundTeamsReference(), res.getTeam())){
+            if(MyFunctions::vectorContains(getActualRoundTeamsReference(), res.getTeam())){
                 teams.push_front(res.getTeam());
             }
         }

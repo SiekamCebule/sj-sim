@@ -14,6 +14,11 @@ public:
         CompetitionPoints
     };
 
+    enum ClassificationType{
+        Individual,
+        Team
+    };
+
 private:
     QString name;
     short classificationType;

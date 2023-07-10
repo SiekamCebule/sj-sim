@@ -38,6 +38,7 @@ DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, QWid
     connect(downAction, &QAction::triggered, this, &DatabaseItemsListView::onDownActionTriggered);
 
     connect(ui->listView, &QListView::doubleClicked, this, &DatabaseItemsListView::listViewDoubleClicked);
+    connect(ui->listView, &QListView::clicked, this, &DatabaseItemsListView::listViewClicked);
 }
 
 DatabaseItemsListView::~DatabaseItemsListView()
@@ -170,6 +171,7 @@ void DatabaseItemsListView::onInsertActionTriggered()
                 }
                 default: break;
                 }
+                emit insert();
             }
         }
     }
@@ -236,6 +238,7 @@ void DatabaseItemsListView::onRemoveActionTriggered()
         }
         default: break;
         }
+        emit remove();
     }
 }
 

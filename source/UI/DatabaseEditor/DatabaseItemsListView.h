@@ -41,8 +41,11 @@ public:
 
 signals:
     void listViewDoubleClicked(const QModelIndex &index);
+    void listViewClicked(const QModelIndex &index);
     void up();
     void down();
+    void insert();
+    void remove();
 
 private:
     Ui::DatabaseItemsListView *ui;

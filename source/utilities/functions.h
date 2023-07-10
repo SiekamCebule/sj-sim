@@ -24,10 +24,19 @@ public:
     static QVector<QWidget *> getWidgetsVector(QWidget *parent, QString search);
 
     template<typename T>
-    static bool pointersVectorContains(const QVector<T *> & vector, T * item)
+    static bool vectorContains(const QVector<T *> & vector, T * item)
     {
         for(auto & it : vector){
             if(it == item)
+                return true;
+        }
+        return false;
+    }
+    template<typename T>
+    static bool vectorContains(const QVector<T> & vector, T * item)
+    {
+        for(auto & it : vector){
+            if(&it == item)
                 return true;
         }
         return false;

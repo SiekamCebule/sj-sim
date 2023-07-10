@@ -6,7 +6,8 @@
 
 NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::NewSeasonConfiguratorDialog)
+    ui(new Ui::NewSeasonConfiguratorDialog),
+    classificationsListViewActualElement(-1)
 {
     ui->setupUi(this);
     jumpers = GlobalDatabase::get()->getEditableGlobalJumpers();
@@ -16,7 +17,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     ui->verticalLayout_jumpersList->addWidget(jumpersListView);
 
     calendarTableModel = new CalendarEditorTableModel(&calendar, &GlobalDatabase::get()->getEditableGlobalHills(), &GlobalDatabase::get()->getEditableCompetitionRules(), this);
-    calendarEditor = new CalendarEditorWidget(calendarTableModel, this);
+    calendarEditor = new CalendarEditorWidget(calendarTableModel, &classifications, this);
     ui->verticalLayout_calendarEditor->addWidget(calendarEditor);
 
     classificationEditor = new ClassificationEditorWidget();
@@ -41,6 +42,11 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
             int row = classificationsListView->getListView()->selectionModel()->selectedRows().at(0).row();
             classifications[row] = classificationEditor->getClassificationFromInputs();
         }
+    });
+
+    connect(classificationsListView, &DatabaseItemsListView::remove, calendarEditor->getCompetitionInfoEditor(), [this](){
+        calendar.fixCompetiitonsClassifications(&classifications);
+        calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
     });
 }
 

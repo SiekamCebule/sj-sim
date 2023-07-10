@@ -32,6 +32,7 @@ private:
 
     QVector<Classification> classifications;
     DatabaseItemsListView * classificationsListView;
+    int classificationsListViewActualElement;
     ClassificationEditorWidget * classificationEditor;
 
     SeasonCalendar calendar;

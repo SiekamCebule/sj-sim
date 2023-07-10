@@ -1,6 +1,7 @@
 #include "CompetitionInfoEditorWidget.h"
 #include "ui_CompetitionInfoEditorWidget.h"
 #include <QDialog>
+#include "../../utilities/functions.h"
 
 CompetitionInfoEditorWidget::CompetitionInfoEditorWidget(CompetitionInfo * competitionInfo, QVector<Hill> *hillsList, QVector<CompetitionRules> *rulesList, QWidget *parent) :
     QWidget(parent),
