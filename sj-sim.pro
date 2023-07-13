@@ -72,13 +72,13 @@ SOURCES += \
     source/global/GlobalSimulationSettings.cpp \
     source/global/GlobalTranslators.cpp \
     source/global/PointsForPlacesPreset.cpp \
+    source/global/SeasonDatabaseObjectsManager.cpp \
     source/global/TreeItem.cpp \
     source/main.cpp \
     source/UI/mainwindow.cpp \
     source/seasons/Season.cpp \
     source/seasons/SeasonCalendar.cpp \
     source/seasons/SeasonSettings.cpp \
-    source/seasons/SeasonsManager.cpp \
     source/seasons/SimulationSave.cpp \
     source/seasons/Classification.cpp \
     source/simulator/Characteristic.cpp \
@@ -167,11 +167,11 @@ HEADERS += \
     source/global/GlobalSimulationSettings.h \
     source/global/GlobalTranslators.h \
     source/global/PointsForPlacesPreset.h \
+    source/global/SeasonDatabaseObjectsManager.h \
     source/global/TreeItem.h \
     source/seasons/Season.h \
     source/seasons/SeasonCalendar.h \
     source/seasons/SeasonSettings.h \
-    source/seasons/SeasonsManager.h \
     source/seasons/SimulationSave.h \
     source/seasons/Classification.h \
     source/simulator/Characteristic.h \

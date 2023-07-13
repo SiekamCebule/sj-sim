@@ -36,6 +36,10 @@ private:
     QVector<Classification *> classifications;
 
 public:
+    static QJsonObject getJsonObject(CompetitionInfo &competition);
+    static CompetitionInfo getFromJson(const QJsonObject & json);
+
+public:
     Hill *getHill() const;
     void setHill(Hill *newHill);
     CompetitionRules getRules() const;

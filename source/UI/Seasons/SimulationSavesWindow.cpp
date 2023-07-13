@@ -4,7 +4,6 @@
 #include "../../global/GlobalDatabase.h"
 #include "../../seasons/SimulationSave.h"
 #include "../../seasons/Season.h"
-#include "../../seasons/SeasonsManager.h"
 #include "NewSeasonConfiguratorWindow.h"
 #include "NewSimulationSaveConfigurationWindow.h"
 
@@ -40,7 +39,6 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
             Season season;
             season.setSeasonNumber(simulationSaveWindow->getSeasonNumberFromInput());
 
-            SeasonsManager * manager = new SeasonsManager;
             //manager->setJumpers(seasonWindow->getJumpersFromEditor());
             //season.setCalendar(seasonWindow->getCalendarFromEditor());
             //season.setClassifications(seasonWindow->getClassificationsFromEditor());

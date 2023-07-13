@@ -33,6 +33,7 @@ private:
 public:
     static QJsonObject getCompetitionRulesJsonObject(const CompetitionRules &competitionRule);
     static QVector<CompetitionRules> getCompetitionRulesVectorFromJson(const QByteArray & bytes);
+    static CompetitionRules getFromJson(const QJsonObject & obj);
 
     bool getHas95HSRule() const;
     void setHas95HSRule(bool newHas95HSRule);

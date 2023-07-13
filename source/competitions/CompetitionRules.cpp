@@ -121,31 +121,35 @@ QVector<CompetitionRules> CompetitionRules::getCompetitionRulesVectorFromJson(co
     QJsonArray array = value.toArray();
     for(const auto & val : array)
     {
-        QJsonObject obj = val.toObject();
-        CompetitionRules rules;
-        rules.setName(obj.value("name").toString());
-        rules.setHas95HSRule(obj.value("95-hs-rule").toBool());
-        rules.setHasWindCompensations(obj.value("wind-compensations").toBool());
-        rules.setHasGateCompensations(obj.value("gate-compensations").toBool());
-        rules.setHasJudgesPoints(obj.value("judges-points").toBool());
-        rules.setHasDsq(obj.value("dsq").toBool());
-        rules.setJumpersInTeamCount(obj.value("jumpers-in-team-count").toInt());
-        rules.setCompetitionType(obj.value("competition-type").toInt());
-        rules.setWindCompensationDistanceEffect(obj.value("wind-compensation-distance-effect").toInt());
-        rules.setWindAverageCalculatingType(obj.value("wind-average-calculating-type").toInt());
-
-        QJsonArray roundsArray = obj.value("rounds").toArray();
-        for(const auto & round : roundsArray)
-        {
-            RoundInfo roundInfo;
-            roundInfo.setCount(round.toObject().value("count").toInt());
-            roundInfo.setSortStartList(round.toObject().value("sort-start-list").toBool(true));
-            roundInfo.setSortAfterGroups(round.toObject().value("sort-after-groups").toInt());
-            rules.getEditableRounds().push_back(roundInfo);
-        }
-        rulesVector.push_back(rules);
+        rulesVector.push_back(CompetitionRules::getFromJson(val.toObject()));
     }
     return rulesVector;
+}
+
+CompetitionRules CompetitionRules::getFromJson(const QJsonObject &obj)
+{
+    CompetitionRules rules;
+    rules.setName(obj.value("name").toString());
+    rules.setHas95HSRule(obj.value("95-hs-rule").toBool());
+    rules.setHasWindCompensations(obj.value("wind-compensations").toBool());
+    rules.setHasGateCompensations(obj.value("gate-compensations").toBool());
+    rules.setHasJudgesPoints(obj.value("judges-points").toBool());
+    rules.setHasDsq(obj.value("dsq").toBool());
+    rules.setJumpersInTeamCount(obj.value("jumpers-in-team-count").toInt());
+    rules.setCompetitionType(obj.value("competition-type").toInt());
+    rules.setWindCompensationDistanceEffect(obj.value("wind-compensation-distance-effect").toInt());
+    rules.setWindAverageCalculatingType(obj.value("wind-average-calculating-type").toInt());
+
+    QJsonArray roundsArray = obj.value("rounds").toArray();
+    for(const auto & round : roundsArray)
+    {
+        RoundInfo roundInfo;
+        roundInfo.setCount(round.toObject().value("count").toInt());
+        roundInfo.setSortStartList(round.toObject().value("sort-start-list").toBool(true));
+        roundInfo.setSortAfterGroups(round.toObject().value("sort-after-groups").toInt());
+        rules.getEditableRounds().push_back(roundInfo);
+    }
+    return rules;
 }
 
 //Błąd występuje po wykonaniu skoku świeżo po posortowaniu

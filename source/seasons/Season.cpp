@@ -15,16 +15,6 @@ void Season::setSeasonNumber(int newSeasonNumber)
     seasonNumber = newSeasonNumber;
 }
 
-QVector<Classification *> Season::getClassifications() const
-{
-    return classifications;
-}
-
-void Season::setClassifications(const QVector<Classification *> &newClassifications)
-{
-    classifications = newClassifications;
-}
-
 SeasonSettings Season::getSettings() const
 {
     return settings;

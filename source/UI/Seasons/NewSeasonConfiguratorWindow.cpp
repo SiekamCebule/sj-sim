@@ -26,7 +26,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     ui->verticalLayout_classificationEditor->addWidget(classificationEditor);
 
     classificationsListView = new DatabaseItemsListView(DatabaseItemsListView::ClassificationItems, true, this);
-    classificationsListView->setClassifications(&classifications);
+    classificationsListView->setClassifications(&calendar.getClassificationsReference());
     classificationsListView->setupListModel();
     ui->verticalLayout_classificationsList->addWidget(classificationsListView);
     connect(classificationsListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex &index){
@@ -45,7 +45,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     });
 
     connect(classificationsListView, &DatabaseItemsListView::remove, calendarEditor->getCompetitionInfoEditor(), [this](){
-        calendar.fixCompetiitonsClassifications(&classifications);
+        calendar.fixCompetiitonsClassifications();
         calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
     });
 }

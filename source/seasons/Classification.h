@@ -3,8 +3,10 @@
 
 #include <QMap>
 #include <QString>
+#include <QJsonObject>
+#include "../utilities/ClassWithID.h"
 
-class Classification
+class Classification : public ClassWithID
 {
 public:
     Classification(QString name = "");
@@ -18,6 +20,9 @@ public:
         Individual,
         Team
     };
+
+    static Classification getFromJson(QJsonObject obj);
+    static QJsonObject getJsonObject(Classification & classification);
 
 private:
     QString name;
