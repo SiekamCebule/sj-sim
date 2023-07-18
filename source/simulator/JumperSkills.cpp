@@ -6,7 +6,8 @@ JumperSkills::JumperSkills(double takeoffPower, double takeoffTechnique, double 
     flightStyle(flightStyle),
     flightTechnique(flightTechnique),
     form(form),
-    landingStyle(landingStyle)
+    landingStyle(landingStyle),
+    ClassWithID()
 {
     if(jumper != nullptr)
         jumperID = jumper->getID();

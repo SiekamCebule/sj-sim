@@ -6,6 +6,9 @@
 #include "../DatabaseEditor/ListModels/JumpersListModel.h"
 #include "CalendarEditor/CalendarEditorWidget.h"
 #include "../EditorWidgets/ClassificationEditorWidget.h"
+#include "../EditorWidgets/JumperEditorWidget.h"
+#include "../EditorWidgets/HillEditorWidget.h"
+#include "../EditorWidgets/CompetitionRulesEditorWidget.h"
 
 class DatabaseItemsListView;
 
@@ -28,9 +31,21 @@ private:
     Ui::NewSeasonConfiguratorDialog *ui;
 
     QVector<Jumper> jumpers;
-    DatabaseItemsListView * jumpersListView;
+    QVector<Hill> hills;
+    QVector<CompetitionRules> competitionsRules;
 
-    QVector<Classification> classifications;
+    DatabaseItemsListView * jumpersListView;
+    DatabaseItemsListView * hillsListView;
+    DatabaseItemsListView * rulesListView;
+
+    JumperEditorWidget * jumperEditor;
+    HillEditorWidget * hillEditor;
+    CompetitionRulesEditorWidget * rulesEditor;
+
+    int actualJumperIndex;
+    int actualHillIndex;
+    int actualRulesIndex;
+
     DatabaseItemsListView * classificationsListView;
     int classificationsListViewActualElement;
     ClassificationEditorWidget * classificationEditor;
@@ -51,6 +66,11 @@ public:
     void setCalendarTableModel(CalendarEditorTableModel *newCalendarTableModel);
     ClassificationEditorWidget *getClassificationEditor() const;
     void setClassificationEditor(ClassificationEditorWidget *newClassificationEditor);
+    QVector<Hill> getHills() const;
+    QVector<Hill> getHillsReference();
+    void setHills(const QVector<Hill> &newHills);
+    QVector<CompetitionRules> & getCompetitionsRulesReference();
+    void setCompetitionsRules(const QVector<CompetitionRules> &newCompetitionsRules);
 };
 
 #endif // NEWSEASONCONFIGURATORWINDOW_H

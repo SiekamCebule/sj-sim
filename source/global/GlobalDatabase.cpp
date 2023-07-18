@@ -4,6 +4,8 @@
 #include <QByteArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QDir>
+#include <QCoreApplication>
 #include <QJsonValue>
 #include <QJsonParseError>
 #include <QJsonArray>
@@ -130,7 +132,7 @@ bool GlobalDatabase::loadJumpers()
         message.exec();
         return false;
     }
-    globalJumpers = Jumper::getJumpersVectorFromJson(file.readAll());
+    globalJumpers = Jumper::getVectorFromJson(file.readAll());
     file.close();
     return true;
 }
@@ -145,7 +147,7 @@ bool GlobalDatabase::loadHills()
         message.exec();
         return false;
     }
-    globalHills = Hill::getHillsVectorFromJson(file.readAll());
+    globalHills = Hill::getVectorFromJson(file.readAll());
     file.close();
     return true;
 }
@@ -167,7 +169,30 @@ bool GlobalDatabase::loadCompetitionsRules()
 
 bool GlobalDatabase::loadSimulationSaves()
 {
+    globalSimulationSaves.clear();
+    QDir dir(QCoreApplication::applicationDirPath() + "/simulationSaves");
+    dir.setNameFilters(QStringList() << "*.json");
 
+    QStringList fileNames = dir.entryList();
+
+    bool ok = true;
+    for(auto & fileName : fileNames){
+        SeasonDatabaseObjectsManager * sdom = &seasonObjectsManager;
+        seasonObjectsManager.clear();
+        QFile file("simulationSaves/" + fileName);
+        if(!file.open(QFile::ReadOnly | QFile::Text))
+        {
+            QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zapisem symulacji", "Nie udało się otworzyć pliku simulationSaves/" + fileName +"\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+            message.setModal(true);
+            message.exec();
+            ok = false;
+        }
+        SimulationSave s;
+        s.loadFromFile(fileName, "simulationSaves/");
+        globalSimulationSaves.push_back(s);
+        file.close();
+    }
+    return ok;
 }
 
 bool GlobalDatabase::loadPointsForPlacesPresets()
@@ -192,7 +217,7 @@ bool GlobalDatabase::writeJumpers()
     QJsonArray array;
     for(auto & jumper : getGlobalJumpers())
     {
-        array.push_back(QJsonValue(Jumper::getJumperJsonObject(jumper, true, true)));
+        array.push_back(QJsonValue(Jumper::getJsonObject(jumper)));
     }
     mainObject.insert("jumpers", QJsonValue(array));
     document.setObject(mainObject);
@@ -219,7 +244,7 @@ bool GlobalDatabase::writeHills()
     QJsonArray array;
     for(auto & hill : getGlobalHills())
     {
-        array.push_back(QJsonValue(Hill::getHillJsonObject(hill, true, true, true)));
+        array.push_back(QJsonValue(Hill::getJsonObject(hill)));
     }
     mainObject.insert("hills", array);
     document.setObject(mainObject);
@@ -246,7 +271,7 @@ bool GlobalDatabase::writeCompetitionsRules()
 
     for(auto & rules : getGlobalCompetitionsRules())
     {
-        array.push_back(QJsonValue(CompetitionRules::getCompetitionRulesJsonObject(rules)));
+        array.push_back(QJsonValue(CompetitionRules::getJsonObject(rules)));
     }
     mainObject.insert("competitionsRules", array);
     document.setObject(mainObject);
@@ -267,7 +292,13 @@ bool GlobalDatabase::writeCompetitionsRules()
 
 bool GlobalDatabase::writeSimulationSaves()
 {
-
+    bool ok = true;
+    for(auto & save : globalSimulationSaves)
+    {
+        if(save.saveToFile("simulationSaves/") == false)
+            ok = false;
+    }
+    return ok;
 }
 
 bool GlobalDatabase::writePointsForPlacesPresets()

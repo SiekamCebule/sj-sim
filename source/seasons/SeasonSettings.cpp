@@ -2,15 +2,18 @@
 
 SeasonSettings::SeasonSettings()
 {
-    resultsSaveLevel = 0;
 }
 
-short SeasonSettings::getResultsSaveLevel() const
+SeasonSettings SeasonSettings::getFromJson(QJsonObject json)
 {
-    return resultsSaveLevel;
+    SeasonSettings settings;
+
+    return settings;
 }
 
-void SeasonSettings::setResultsSaveLevel(short newResultsSaveLevel)
+QJsonObject SeasonSettings::getJsonObject(SeasonSettings &settings)
 {
-    resultsSaveLevel = newResultsSaveLevel;
+    QJsonObject obj;
+
+    return obj;
 }

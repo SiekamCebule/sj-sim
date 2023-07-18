@@ -1,6 +1,7 @@
 #include "Team.h"
 
-Team::Team(const QString &countryCode) : countryCode(countryCode)
+Team::Team(const QString &countryCode) : countryCode(countryCode),
+    ClassWithID()
 {
 }
 

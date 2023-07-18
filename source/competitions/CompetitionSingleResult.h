@@ -5,6 +5,11 @@
 #include "../simulator/JumpData.h"
 #include "../simulator/Team.h"
 #include <QVector>
+#include <QDebug>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
+
 class CompetitionInfo;
 
 class CompetitionSingleResult : public ClassWithID
@@ -18,6 +23,9 @@ public:
         IndividualResult,
         TeamResult
     };
+
+    static CompetitionSingleResult getFromJson(QJsonObject obj);
+    static QJsonObject getJsonObject(CompetitionSingleResult result);
 
 protected:
     CompetitionInfo * competitionInfo;

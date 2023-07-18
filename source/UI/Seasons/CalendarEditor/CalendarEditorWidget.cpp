@@ -440,11 +440,11 @@ void CalendarEditorWidget::editActionTriggered()
         int column = ui->tableView->selectionModel()->selectedIndexes().at(0).column();
         for(auto & idx : ui->tableView->selectionModel()->selectedIndexes())
             if(idx.column() != column) return;
-        QSet<int> rows;
+        QVector<int> rows;
         for(auto & idx : ui->tableView->selectionModel()->selectedIndexes()){
             if(idx.column() != column)
                 return;
-            rows.insert(idx.row());
+            rows.push_back(idx.row());
         }
 
         switch(column){
@@ -481,19 +481,30 @@ void CalendarEditorWidget::editActionTriggered()
         case 6:
         {
             execMultipleClassificationsEditDialog(&rows, column);
+            break;
+        }
+        case 7:
+        {
+            execMultipleAdvancementCompetitionEditDialog(&rows, column);
+            break;
+        }
+        case 8:
+        {
+            execMultipleAdvancementClassificationEditDialog(&rows, column);
+            break;
         }
         }
         ui->tableView->resizeColumnsToContents();
     }
 }
 
-void CalendarEditorWidget::execMultipleTrainingsEditDialog(QSet<int> *rows, int column)
+void CalendarEditorWidget::execMultipleTrainingsEditDialog(QVector<int> *rows, int column)
 {
     MultipleTrainingsEditDialog * dialog = new MultipleTrainingsEditDialog();
     dialog->setRulesList(calendarModel->getRulesList());
     connect(dialog, &MultipleTrainingsEditDialog::submitted, dialog, &MultipleTrainingsEditDialog::accept);
     if(dialog->exec() == QDialog::Accepted){
-        for(auto & row : *rows){
+        for(auto & row : qAsConst(*rows)){
             CompetitionInfo * competition = nullptr;
             int competitionIndex = 0;
             int i=0;
@@ -531,13 +542,13 @@ void CalendarEditorWidget::execMultipleTrainingsEditDialog(QSet<int> *rows, int 
     }
 }
 
-void CalendarEditorWidget::execMultipleTrialRoundsEditDialog(QSet<int> *rows, int column)
+void CalendarEditorWidget::execMultipleTrialRoundsEditDialog(QVector<int> *rows, int column)
 {
     MultipleTrialRoundsEditDialog * dialog = new MultipleTrialRoundsEditDialog();
     dialog->setRulesList(calendarModel->getRulesList());
     connect(dialog, &MultipleTrialRoundsEditDialog::submitted, dialog, &MultipleTrialRoundsEditDialog::accept);
     if(dialog->exec() == QDialog::Accepted){
-        for(auto & row : *rows){
+        for(auto & row : qAsConst(*rows)){
             CompetitionInfo * competition = nullptr;
             int competitionIndex = 0;
             int i=0;
@@ -572,9 +583,9 @@ void CalendarEditorWidget::execMultipleTrialRoundsEditDialog(QSet<int> *rows, in
     }
 }
 
-void CalendarEditorWidget::multipleEditCompetitionTypes(QSet<int> *rows, int column)
+void CalendarEditorWidget::multipleEditCompetitionTypes(QVector<int> *rows, int column)
 {
-    for(auto & row : *rows){
+    for(auto & row : qAsConst(*rows)){
         CompetitionInfo * competition = nullptr;
         int competitionIndex = 0;
         int i=0;
@@ -596,9 +607,9 @@ void CalendarEditorWidget::multipleEditCompetitionTypes(QSet<int> *rows, int col
     }
 }
 
-void CalendarEditorWidget::multipleEditSerieTypes(QSet<int> *rows, int column)
+void CalendarEditorWidget::multipleEditSerieTypes(QVector<int> *rows, int column)
 {
-    for(auto & row : *rows){
+    for(auto & row : qAsConst(*rows)){
         CompetitionInfo * competition = nullptr;
         int competitionIndex = 0;
         int i=0;
@@ -620,7 +631,144 @@ void CalendarEditorWidget::multipleEditSerieTypes(QSet<int> *rows, int column)
     }
 }
 
-void CalendarEditorWidget::execMultipleCompetitionRulesEditDialog(QSet<int> * rows, int column)
+void CalendarEditorWidget::execMultipleAdvancementCompetitionEditDialog(QVector<int> *rows, int column)
+{
+    int row = rows->at(0);
+
+    QDialog * dialog = new QDialog(this);
+    dialog->setWindowFlags(Qt::Window);
+    dialog->setWindowTitle(tr("Konkurs"));
+    dialog->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dialog->setLayout(new QVBoxLayout(this));
+    dialog->setStyleSheet("background-color: white; color: black;");
+
+    QWidget * widget = new QWidget(dialog);
+    QHBoxLayout * layout = new QHBoxLayout(dialog);
+    QLabel * label = new QLabel(dialog);
+    label->setText("Konkurs: ");
+    QFont font("Ubuntu", 10);
+    font.setBold(true);
+    label->setFont(font);
+    QComboBox * comboBox = new QComboBox(dialog);
+    int pos = 1;
+    comboBox->addItem("BRAK");;
+    for(auto & comp : calendar->getCompetitionsReference()){
+        if(comp->getSerieType() == CompetitionInfo::Competition || comp->getSerieType() == CompetitionInfo::Qualifications){
+            comboBox->addItem(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(comp->getHill()->getCountryCode().toLower())), QString::number(pos) + ". " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()));
+            pos++;
+        }
+        if(pos - 1 == row) break;
+    }
+    layout->addWidget(label);
+    layout->addWidget(comboBox);
+    widget->setLayout(layout);
+    dialog->layout()->addWidget(widget);
+
+    QHBoxLayout * l = new QHBoxLayout(dialog);
+    l->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    QPushButton * button = new QPushButton("OK", this);
+    button->setStyleSheet("QPushButton{\nborder: 1px solid rgb(0, 59, 23);\nborder-radius: 6px;\ncolor: rgb(0, 0, 0);\nbackground-color: rgb(123, 220, 144);\n}\nQPushButton:hover{\nbackground-color: rgb(153, 253, 174);\n}");
+    connect(button, &QPushButton::clicked, dialog, &QDialog::accept);
+    button->setFont(QFont("Ubuntu", 12));
+    l->addWidget(button);
+    l->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    QWidget * w = new QWidget(dialog);
+    w->setLayout(l);
+    dialog->layout()->addWidget(w);
+
+    if(dialog->exec() == QDialog::Accepted){
+        CompetitionInfo * advancementCompetition = nullptr;
+        int advancementRow = comboBox->currentIndex() - 1;
+        int i=0;
+        for(auto & comp : calendar->getCompetitionsReference()){
+            if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+                if(i == advancementRow){
+                    advancementCompetition = comp;
+                    break;
+                }
+                i++;
+            }
+        }
+        CompetitionInfo * competition = nullptr;
+        int ii=0;
+        for(auto & comp : calendar->getCompetitionsReference()){
+            if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+                if(ii == row){
+                    competition = comp;
+                    break;
+                }
+                ii++;
+            }
+        }
+        competition->setAdvancementCompetition(advancementCompetition);
+        emit calendarModel->dataChanged(calendarModel->index(row, column), calendarModel->index(row, column));
+    }
+}
+
+void CalendarEditorWidget::execMultipleAdvancementClassificationEditDialog(QVector<int> *rows, int column)
+{
+    QDialog * dialog = new QDialog(this);
+    dialog->setWindowFlags(Qt::Window);
+    dialog->setWindowTitle(tr("Klasyfikacja"));
+    dialog->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dialog->setLayout(new QVBoxLayout(this));
+    dialog->setStyleSheet("background-color: white; color: black;");
+
+    QWidget * widget = new QWidget(dialog);
+    QHBoxLayout * layout = new QHBoxLayout(dialog);
+    QLabel * label = new QLabel(dialog);
+    label->setText("Klasyfikacja: ");
+    QFont font("Ubuntu", 10);
+    font.setBold(true);
+    label->setFont(font);
+    QComboBox * comboBox = new QComboBox(dialog);
+    int pos = 1;
+    comboBox->addItem("BRAK");
+    for(auto & cls : calendar->getClassificationsReference()){
+        comboBox->addItem(QString::number(pos) + ". " + cls.getName());
+        pos++;
+    }
+    layout->addWidget(label);
+    layout->addWidget(comboBox);
+    widget->setLayout(layout);
+    dialog->layout()->addWidget(widget);
+
+    QHBoxLayout * l = new QHBoxLayout(dialog);
+    l->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    QPushButton * button = new QPushButton("OK", this);
+    button->setStyleSheet("QPushButton{\nborder: 1px solid rgb(0, 59, 23);\nborder-radius: 6px;\ncolor: rgb(0, 0, 0);\nbackground-color: rgb(123, 220, 144);\n}\nQPushButton:hover{\nbackground-color: rgb(153, 253, 174);\n}");
+    connect(button, &QPushButton::clicked, dialog, &QDialog::accept);
+    button->setFont(QFont("Ubuntu", 12));
+    l->addWidget(button);
+    l->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    QWidget * w = new QWidget(dialog);
+    w->setLayout(l);
+    dialog->layout()->addWidget(w);
+
+    if(dialog->exec() == QDialog::Accepted){
+        Classification * advancementClassification = nullptr;
+        if(comboBox->currentIndex() > 0)
+            advancementClassification = &calendar->getClassificationsReference()[comboBox->currentIndex() - 1];
+
+        for(auto & row : qAsConst(*rows)){
+            CompetitionInfo * competition = nullptr;
+            int ii=0;
+            for(auto & comp : calendar->getCompetitionsReference()){
+                if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+                    if(ii == row){
+                        competition = comp;
+                        break;
+                    }
+                    ii++;
+                }
+            }
+            competition->setAdvancementClassification(advancementClassification);
+            emit calendarModel->dataChanged(calendarModel->index(row, column), calendarModel->index(row, column));
+        }
+    }
+}
+
+void CalendarEditorWidget::execMultipleCompetitionRulesEditDialog(QVector<int> * rows, int column)
 {
     QDialog * dialog = new QDialog(this);
     dialog->setModal(true);
@@ -665,7 +813,7 @@ void CalendarEditorWidget::execMultipleCompetitionRulesEditDialog(QSet<int> * ro
     connect(editor, &CompetitionRulesEditorWidget::submitted, dialog, &QDialog::accept);
     if(dialog->exec() == QDialog::Accepted){
         //Dla każdego zaznaczonego konkursu ustaw zasady konkursu z edytora
-        for(auto & row : *rows){
+        for(auto & row : qAsConst(*rows)){
             CompetitionInfo * competition = nullptr;
             int i=0;
             for(auto & comp : calendar->getCompetitionsReference()){
@@ -685,7 +833,7 @@ void CalendarEditorWidget::execMultipleCompetitionRulesEditDialog(QSet<int> * ro
     }
 }
 
-void CalendarEditorWidget::execMultipleClassificationsEditDialog(QSet<int> *rows, int column)
+void CalendarEditorWidget::execMultipleClassificationsEditDialog(QVector<int> *rows, int column)
 {
     QDialog * dialog = new QDialog(this);
     dialog->setModal(true);
@@ -725,7 +873,7 @@ void CalendarEditorWidget::execMultipleClassificationsEditDialog(QSet<int> *rows
 
     if(dialog->exec() == QDialog::Accepted){
         for(int i=0; i<checkBoxesLayout->count(); i++){
-            for(auto & row : *rows){
+            for(auto & row : qAsConst(*rows)){
                 CompetitionInfo * competition = nullptr;
                 int competitionIndex = 0;
                 int ii=0;
@@ -751,7 +899,7 @@ void CalendarEditorWidget::execMultipleClassificationsEditDialog(QSet<int> *rows
     }
 }
 
-void CalendarEditorWidget::execMultipleHillEditDialog(QSet<int> *rows, int column)
+void CalendarEditorWidget::execMultipleHillEditDialog(QVector<int> *rows, int column)
 {
     QDialog * dialog = new QDialog(this);
     dialog->setWindowFlags(Qt::Window);
@@ -790,7 +938,7 @@ void CalendarEditorWidget::execMultipleHillEditDialog(QSet<int> *rows, int colum
 
     if(dialog->exec() == QDialog::Accepted){
         Hill * hill = const_cast<Hill*>(&calendarModel->getHillsList()->at(comboBox->currentIndex()));
-        for(auto & row : *rows){
+        for(auto & row : qAsConst(*rows)){
             CompetitionInfo * competition = nullptr;
             int competitionIndex = 0;
             int i=0;
@@ -833,8 +981,8 @@ void CalendarEditorWidget::on_tableView_doubleClicked(const QModelIndex &index)
         if(competition->getTrialRound() != nullptr)
             competitionInfoEditor->setTrialRoundRules(competition->getTrialRound()->getRules());
         competitionInfoEditor->fillInputs();
-        if(competitionInfoEditor->isHidden())
-            competitionInfoEditor->show();
+        // if(competitionInfoEditor->isHidden())
+        //   competitionInfoEditor->show();
     }
     else{
         actualCompetitionID = (-1);

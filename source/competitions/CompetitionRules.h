@@ -8,7 +8,7 @@
 #include <QJsonObject>
 #include <QByteArray>
 
-class CompetitionRules : ClassWithID
+class CompetitionRules : public ClassWithID
 {
 public:
     CompetitionRules(const QString & name = "");
@@ -31,7 +31,7 @@ private:
     short windCompensationDistanceEffect;
 
 public:
-    static QJsonObject getCompetitionRulesJsonObject(const CompetitionRules &competitionRule);
+    static QJsonObject getJsonObject(const CompetitionRules &competitionRule);
     static QVector<CompetitionRules> getCompetitionRulesVectorFromJson(const QByteArray & bytes);
     static CompetitionRules getFromJson(const QJsonObject & obj);
 

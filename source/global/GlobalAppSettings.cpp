@@ -22,6 +22,16 @@ GlobalAppSettings *GlobalAppSettings::get()
     return m_globalAppSettings;
 }
 
+bool GlobalAppSettings::getShowCalendarEditorHelp() const
+{
+    return showCalendarEditorHelp;
+}
+
+void GlobalAppSettings::setShowCalendarEditorHelp(bool newShowCalendarEditorHelp)
+{
+    showCalendarEditorHelp = newShowCalendarEditorHelp;
+}
+
 short GlobalAppSettings::getLanguageID() const
 {
     return languageID;

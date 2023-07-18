@@ -57,25 +57,28 @@ DatabaseEditorWindow::DatabaseEditorWindow(QWidget *parent) :
     pointsForPlacesPresetEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     pointsForPlacesPresetEditor->hide();
 
-
     jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, this);
     jumpersListView->setJumpers(&GlobalDatabase::get()->getEditableGlobalJumpers());
     jumpersListView->setupListModel();
+    jumpersListView->selectOnlyFirstRow();
     ui->verticalLayout_jumpersList->addWidget(jumpersListView);
 
     hillsListView = new DatabaseItemsListView(DatabaseItemsListView::HillItems, true, this);
     hillsListView->setHills(&GlobalDatabase::get()->getEditableGlobalHills());
     hillsListView->setupListModel();
+    hillsListView->selectOnlyFirstRow();
     ui->verticalLayout_hillsList->addWidget(hillsListView);
 
     competitionRulesListView = new DatabaseItemsListView(DatabaseItemsListView::CompetitionRulesItems, true, this);
     competitionRulesListView->setCompetitionRules(&GlobalDatabase::get()->getEditableCompetitionRules());
     competitionRulesListView->setupListModel();
+    competitionRulesListView->selectOnlyFirstRow();
     ui->verticalLayout_competitionRulesList->addWidget(competitionRulesListView);
 
     pointsForPlacesPresetsListView = new DatabaseItemsListView(DatabaseItemsListView::PointsForPlacesPresetsItems, true, this);
     pointsForPlacesPresetsListView->setPointsForPlacesPresets(&GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets());
     pointsForPlacesPresetsListView->setupListModel();
+    pointsForPlacesPresetsListView->selectOnlyFirstRow();
     ui->verticalLayout_pointsForPlacesPresetsList->addWidget(pointsForPlacesPresetsListView);
 
     connect(ui->tabWidget_main, &QTabWidget::currentChanged, this, [this](){
@@ -124,30 +127,38 @@ DatabaseEditorWindow::~DatabaseEditorWindow()
 
 void DatabaseEditorWindow::replaceJumperByJumperEditor()
 {
-    GlobalDatabase::get()->getEditableGlobalJumpers().replace(actualElementIndex, jumperEditor->getJumperFromWidgetInput());
-    JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(jumpersListView->getListModel());
-    emit jumpersListModel->dataChanged(jumpersListModel->index(actualElementIndex), jumpersListModel->index(actualElementIndex));
+    if(actualElementIndex < GlobalDatabase::get()->getEditableGlobalJumpers().count()){
+        GlobalDatabase::get()->getEditableGlobalJumpers().replace(actualElementIndex, jumperEditor->getJumperFromWidgetInput());
+        JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(jumpersListView->getListModel());
+        emit jumpersListModel->dataChanged(jumpersListModel->index(actualElementIndex), jumpersListModel->index(actualElementIndex));
+    }
 }
 
 void DatabaseEditorWindow::replaceHillByHillEditor()
 {
-    GlobalDatabase::get()->getEditableGlobalHills().replace(actualElementIndex, hillEditor->getHillFromWidgetInput());
-    HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(hillsListView->getListModel());
-    emit hillsListModel->dataChanged(hillsListModel->index(actualElementIndex), hillsListModel->index(actualElementIndex));
+    if(actualElementIndex < GlobalDatabase::get()->getEditableGlobalHills().count()){
+        GlobalDatabase::get()->getEditableGlobalHills().replace(actualElementIndex, hillEditor->getHillFromWidgetInput());
+        HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(hillsListView->getListModel());
+        emit hillsListModel->dataChanged(hillsListModel->index(actualElementIndex), hillsListModel->index(actualElementIndex));
+    }
 }
 
 void DatabaseEditorWindow::replaceCompetitionRuleByCompetitionRulesEditor()
 {
-    GlobalDatabase::get()->getEditableCompetitionRules().replace(actualElementIndex, competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
-    CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(competitionRulesListView->getListModel());
-    emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(actualElementIndex), competitionRulesListModel->index(actualElementIndex));
+    if(actualElementIndex < GlobalDatabase::get()->getEditableCompetitionRules().count()){
+        GlobalDatabase::get()->getEditableCompetitionRules().replace(actualElementIndex, competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
+        CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(competitionRulesListView->getListModel());
+        emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(actualElementIndex), competitionRulesListModel->index(actualElementIndex));
+    }
 }
 
 void DatabaseEditorWindow::replacePointsForPlacesPresetByEditorObject()
 {
-    GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets().replace(actualElementIndex, pointsForPlacesPresetEditor->constructPresetFromInputs());
-    PointsForPlacesPresetsListModel * pointsForPlacesPresetsListModel = dynamic_cast<PointsForPlacesPresetsListModel *>(pointsForPlacesPresetsListView->getListModel());
-    emit pointsForPlacesPresetsListModel->dataChanged(pointsForPlacesPresetsListModel->index(actualElementIndex), pointsForPlacesPresetsListModel->index(actualElementIndex));
+    if(actualElementIndex < GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets().count()){
+        GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets().replace(actualElementIndex, pointsForPlacesPresetEditor->constructPresetFromInputs());
+        PointsForPlacesPresetsListModel * pointsForPlacesPresetsListModel = dynamic_cast<PointsForPlacesPresetsListModel *>(pointsForPlacesPresetsListView->getListModel());
+        emit pointsForPlacesPresetsListModel->dataChanged(pointsForPlacesPresetsListModel->index(actualElementIndex), pointsForPlacesPresetsListModel->index(actualElementIndex));
+    }
 }
 
 void DatabaseEditorWindow::closeEvent(QCloseEvent *event)
@@ -158,7 +169,10 @@ void DatabaseEditorWindow::closeEvent(QCloseEvent *event)
     button = message.question(this, "Wyjście z edytora bazy danych", "Czy zapisać zmiany w bazie danych?", QMessageBox::StandardButton::No | QMessageBox::StandardButton::Cancel | QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::Yes);
     if(button == QMessageBox::Yes)
     {
-        GlobalDatabase::get()->writeToJson();
+        GlobalDatabase::get()->writeJumpers();
+        GlobalDatabase::get()->writeHills();
+        GlobalDatabase::get()->writeCompetitionsRules();
+        GlobalDatabase::get()->writePointsForPlacesPresets();
         event->accept();
     }
     else if(button == QMessageBox::Cancel)

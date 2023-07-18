@@ -94,11 +94,11 @@ bool SingleJumpsManager::saveResultsToFile(short fileFormat)
         }
         QJsonDocument document;
         QJsonObject mainObject;
-        mainObject.insert("jumper", Jumper::getJumperJsonObject(jumper, true, true));
+        mainObject.insert("jumper", Jumper::getJsonObject(jumper));
         QJsonArray array;
         for(auto & jump : getJumpsReference())
         {
-            array.push_back(JumpData::getJumpDataJsonObject(jump, true, true, true));
+            array.push_back(JumpData::getJsonObject(jump));
             array.push_back(QJsonObject());
         }
         mainObject.insert("jumps", array);

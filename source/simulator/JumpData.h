@@ -53,7 +53,8 @@ private:
 public:
     void reset();
 
-    static QJsonObject getJumpDataJsonObject(const JumpData &jumpData, bool saveJudges, bool saveSimulationData, bool saveWinds);
+    static QJsonObject getJsonObject(const JumpData &jumpData);
+    static JumpData getFromJson(QJsonObject obj);
 
     double getDistance() const;
     void setDistance(double newDistance);

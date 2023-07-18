@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QString>
+#include <QStringList>
 
 namespace Ui {
 class NewSimulationSaveConfigurationWindow;
@@ -13,7 +14,7 @@ class NewSimulationSaveConfigurationWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit NewSimulationSaveConfigurationWindow(QWidget *parent = nullptr);
+    explicit NewSimulationSaveConfigurationWindow(QStringList otherNames, QWidget *parent = nullptr);
     ~NewSimulationSaveConfigurationWindow();
 
     QString getNameFromInput() const;
@@ -24,6 +25,8 @@ private slots:
 
 private:
     Ui::NewSimulationSaveConfigurationWindow *ui;
+
+    QStringList otherNames;
 };
 
 #endif // NEWSIMULATIONSAVECONFIGURATIONWINDOW_H

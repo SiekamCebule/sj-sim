@@ -306,7 +306,6 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         CompetitionInfo qualsInfo;
         qualsInfo.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
         qualsInfo.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
-        qualsInfo.setResults(new CompetitionResults());
         qualsInfo.setSerieType(CompetitionInfo::Qualifications);
         qualsInfo.setExceptionalRoundsCount(1);
         int type = competitionRulesEditor->getCompetitionTypeFromInput();
@@ -320,10 +319,8 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         else if(type == CompetitionRules::Team)
             competitionManager = new TeamCompetitionManager();
 
-        CompetitionResults * qualificationsResults = nullptr;
         AbstractCompetitionManager * qualificationsManager = nullptr;
         if(checkBox_singleCompetitionQualifications->isChecked() == true){
-            qualificationsResults = new CompetitionResults();
             if(type == CompetitionRules::Individual)
                 qualificationsManager = new IndividualCompetitionManager();
             else if(type == CompetitionRules::Team)
@@ -349,7 +346,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             qualificationsManager->setCompetitionInfo(&qualsInfo);
             qualificationsManager->getCompetitionInfo()->setSerieType(CompetitionInfo::Qualifications);
             qualificationsManager->setCompetitionRules(qualsInfo.getRulesPointer());
-            qualificationsManager->setResults(qualificationsResults);
+            qualificationsManager->setResults(&qualsInfo.getResultsReference());
             qualificationsManager->setActualGate(ui->spinBox_startGate->value());
             qualificationsManager->getRoundsStartingGatesReference().push_back(qualificationsManager->getActualGate());
             qualificationsManager->setActualRound(1);
@@ -382,7 +379,6 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         CompetitionInfo info;
         info.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
         info.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
-        info.setResults(new CompetitionResults());
         info.setSerieType(CompetitionInfo::Competition);
 
         //competitionManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
@@ -390,7 +386,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
 
         competitionManager->setCompetitionInfo(&info);
         competitionManager->setCompetitionRules(info.getRulesPointer());
-        competitionManager->setResults(info.getResults());
+        competitionManager->setResults(&info.getResultsReference());
         competitionManager->setActualGate(ui->spinBox_startGate->value());
         competitionManager->setActualRound(1);
         if(type == CompetitionRules::Team)
@@ -398,20 +394,18 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         competitionManager->setBaseDSQProbability(ui->spinBox_dsqProbability->value());
         competitionManager->setWindGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
 
-        if(qualificationsResults != nullptr){
-            if(qualsInfo.getCancelled() == true || qualificationsResults->getResultsReference().count() == 0)
-                return;
-            if(qualificationsResults->getResultsReference().count() > 0){
-                if(type == CompetitionRules::Individual){
+        if(qualsInfo.getCancelled() == true)
+            return;
+        if(qualsInfo.getResultsReference().getResultsReference().count() > 0){
+            if(type == CompetitionRules::Individual){
 
-                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(static_cast<IndividualCompetitionManager *>(qualificationsManager)->getFilteredJumpersForNextRound());
-                }
-                else if(type == CompetitionRules::Team){
-                    static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(static_cast<TeamCompetitionManager *>(qualificationsManager)->getFilteredTeamsForNextRound());
-                }
-                competitionManager->setActualGate(qualificationsManager->getActualGate());
-                competitionManager->setWindGenerationSettings(qualificationsManager->getWindGenerationSettingsReference());
+                static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(static_cast<IndividualCompetitionManager *>(qualificationsManager)->getFilteredJumpersForNextRound());
             }
+            else if(type == CompetitionRules::Team){
+                static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(static_cast<TeamCompetitionManager *>(qualificationsManager)->getFilteredTeamsForNextRound());
+            }
+            competitionManager->setActualGate(qualificationsManager->getActualGate());
+            competitionManager->setWindGenerationSettings(qualificationsManager->getWindGenerationSettingsReference());
         }
         else{
             if(type == CompetitionRules::Individual){
@@ -444,8 +438,6 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         delete competitionManager;
         if(qualificationsManager != nullptr)
             delete qualificationsManager;
-        if(qualificationsResults != nullptr)
-            delete qualificationsResults;
     }
         break;
     }
@@ -463,7 +455,7 @@ void CompetitionConfigWindow::on_pushButton_loadJumpers_clicked()
             message.setModal(true);
             message.exec();
         }
-        QVector<Jumper> jumpers = Jumper::getJumpersVectorFromJson(file.readAll());
+        QVector<Jumper> jumpers = Jumper::getVectorFromJson(file.readAll());
         file.close();
         if(jumpers.isEmpty() == false){
             competitionJumpers = jumpers;

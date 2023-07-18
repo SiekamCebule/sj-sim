@@ -26,7 +26,7 @@ public:
 private:
     Hill * hill;
     CompetitionRules rules;
-    CompetitionResults * results;
+    CompetitionResults results;
     short serieType;
     int exceptionalRoundsCount;
     bool cancelled;
@@ -34,6 +34,9 @@ private:
     CompetitionInfo * trialRound;
     QVector<CompetitionInfo *> trainings;
     QVector<Classification *> classifications;
+
+    Classification * advancementClassification;
+    CompetitionInfo * advancementCompetition; //Tylko jedno z tych 2 może być "aktywne"
 
 public:
     static QJsonObject getJsonObject(CompetitionInfo &competition);
@@ -45,8 +48,6 @@ public:
     CompetitionRules getRules() const;
     CompetitionRules * getRulesPointer() {return &rules;}
     void setRules(const CompetitionRules &newRules);
-    CompetitionResults *getResults() const;
-    void setResults(CompetitionResults *newResults);
     short getSerieType() const;
     void setSerieType(short newSerieType);
     int getExceptionalRoundsCount() const;
@@ -61,6 +62,13 @@ public:
     QVector<Classification *> getClassifications() const;
     QVector<Classification *> & getClassificationsReference();
     void setClassifications(const QVector<Classification *> &newClassifications);
+    CompetitionResults getResults() const;
+    void setResults(const CompetitionResults &newResults);
+    CompetitionResults & getResultsReference();
+    Classification *getAdvancementClassification() const;
+    void setAdvancementClassification(Classification *newAdvancementClassification);
+    CompetitionInfo *getAdvancementCompetition() const;
+    void setAdvancementCompetition(CompetitionInfo *newAdvancementCompetition);
 };
 
 #endif // COMPETITIONINFO_H

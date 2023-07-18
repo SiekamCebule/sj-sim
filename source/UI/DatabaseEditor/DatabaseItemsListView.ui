@@ -43,6 +43,16 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QListView::item
+{
+    background-color: rgb(255,255,255); 
+}
+QListView::item:selected
+{
+    background-color: rgb(155,155,255);
+}</string>
+     </property>
     </widget>
    </item>
    <item>

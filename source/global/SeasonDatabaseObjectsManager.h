@@ -17,6 +17,19 @@ public:
     void removeObject(ulong ID);
     ClassWithID * getObjectByID(ulong ID);
     void clear();
+
+    template<typename T>
+    void fill(QVector<T> * vector)
+    {
+        for(auto & o : *vector)
+            addObject(dynamic_cast<ClassWithID *>(&o));
+    }
+    template<typename T>
+    void fill(QVector<T *> * vector)
+    {
+        for(auto & o : *vector)
+            addObject(dynamic_cast<ClassWithID *>(o));
+    }
 };
 
 #endif // SEASONDATABASEOBJECTSMANAGER_H

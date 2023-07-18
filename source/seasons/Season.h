@@ -2,14 +2,24 @@
 #define SEASON_H
 
 #include <QVector>
+#include <QString>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
 #include "SeasonCalendar.h"
 #include "Classification.h"
 #include "SeasonSettings.h"
+#include "../global/SeasonDatabaseObjectsManager.h"
 
-class Season
+extern SeasonDatabaseObjectsManager seasonObjectsManager;
+
+class Season : public ClassWithID
 {
 public:
     Season();
+
+    static QJsonObject getJsonObject(Season & season);
+    static Season getFromJson(QJsonObject obj);
 
 private:
     SeasonCalendar calendar;
@@ -18,8 +28,10 @@ private:
 
 public:
     SeasonCalendar getCalendar() const;
+    SeasonCalendar & getCalendarReference();
     void setCalendar(const SeasonCalendar &newCalendar);
     SeasonSettings getSettings() const;
+    SeasonSettings & getSettingsReference();
     void setSettings(const SeasonSettings &newSettings);
     int getSeasonNumber() const;
     void setSeasonNumber(int newSeasonNumber);

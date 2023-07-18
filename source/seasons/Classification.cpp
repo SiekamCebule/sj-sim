@@ -5,7 +5,8 @@
 #include <QMap>
 #include <QJsonValue>
 
-Classification::Classification(QString name) : name(name)
+Classification::Classification(QString name) : name(name),
+    ClassWithID()
 {
     classificationType = 0;
     punctationType = 0;
@@ -27,7 +28,7 @@ Classification Classification::getFromJson(QJsonObject obj)
     return classification;
 }
 
-QJsonObject Classification::getJsonObject(Classification &classification)
+QJsonObject Classification::getJsonObject(Classification classification)
 {
     QJsonObject obj;
     obj.insert("id", QString::number(classification.getID()));

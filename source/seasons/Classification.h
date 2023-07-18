@@ -22,7 +22,7 @@ public:
     };
 
     static Classification getFromJson(QJsonObject obj);
-    static QJsonObject getJsonObject(Classification & classification);
+    static QJsonObject getJsonObject(Classification classification);
 
 private:
     QString name;

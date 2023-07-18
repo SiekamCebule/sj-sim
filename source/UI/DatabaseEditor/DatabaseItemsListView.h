@@ -38,6 +38,7 @@ public:
     };
 
     void setupListModel();
+    void selectOnlyFirstRow();
 
 signals:
     void listViewDoubleClicked(const QModelIndex &index);

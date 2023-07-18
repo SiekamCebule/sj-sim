@@ -1,8 +1,9 @@
 #include "JumpSimulationData.h"
 
-JumpSimulationData::JumpSimulationData()
+JumpSimulationData::JumpSimulationData() :
+ClassWithID()
 {
-reset();
+    reset();
 }
 
 void JumpSimulationData::reset()

@@ -3,18 +3,30 @@
 
 #include <QVector>
 #include <QString>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
 #include "Season.h"
+#include "../utilities/ClassWithID.h"
 
-class SimulationSave
+class SimulationSave : public ClassWithID
 {
 public:
     SimulationSave();
+    ~SimulationSave();
+
+    static SimulationSave getFromJson(QJsonObject obj);
+    static QJsonObject getJsonObject(SimulationSave & save);
+
+    bool saveToFile(QString dir = "");
+    bool loadFromFile(QString fileName, QString dir = "");
 
 private:
     QString name;
     QVector<Season> seasons;
     QVector<Jumper> jumpers;
     QVector<Hill> hills;
+    QVector<CompetitionRules> competitionRules;
 
     QVector<Jumper *> activeJumpers;
     QVector<Jumper *> inactiveJumpers;
@@ -37,6 +49,8 @@ public:
     QVector<Jumper *> & getInactiveJumpersReference();
     void setInactiveJumpers(const QVector<Jumper *> &newInactiveJumpers);
     QVector<Hill> getHills() const;
+    QVector<CompetitionRules> & getCompetitionRulesReference();
+    void setCompetitionRules(const QVector<CompetitionRules> &newCompetitionRules);
 };
 
 #endif // SIMULATIONSAVE_H

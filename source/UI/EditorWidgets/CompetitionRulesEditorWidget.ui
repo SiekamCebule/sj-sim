@@ -42,6 +42,18 @@ color: black;</string>
      </item>
      <item row="0" column="1">
       <widget class="QLineEdit" name="lineEdit_name">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -73,6 +85,18 @@ color: black;</string>
      </item>
      <item row="1" column="1">
       <widget class="QComboBox" name="comboBox_competitionType">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -199,6 +223,18 @@ w drużynie</string>
      </item>
      <item row="7" column="1">
       <widget class="QSpinBox" name="spinBox_jumpersInTeamCount">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -210,7 +246,6 @@ w drużynie</string>
 	color: rgb(60, 60, 60);
 	border: 2px solid rgb(65, 0, 0);
 	border-radius: 7px;
-margin-top: 6px;
 }</string>
        </property>
        <property name="maximum">
@@ -233,6 +268,18 @@ margin-top: 6px;
      </item>
      <item row="8" column="1">
       <widget class="QSpinBox" name="spinBox_roundsCount">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -289,10 +336,16 @@ margin-top: 6px;
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>250</width>
-         <height>16777215</height>
+         <height>21</height>
         </size>
        </property>
        <property name="font">
@@ -372,10 +425,16 @@ margin-top: 6px;
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>21</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>250</width>
-         <height>16777215</height>
+         <height>21</height>
         </size>
        </property>
        <property name="font">

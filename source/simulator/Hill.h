@@ -39,8 +39,9 @@ private:
     bool autoPointsForBackWind;
 
 public:
-    static QJsonObject getHillJsonObject(const Hill &hill, bool saveKAndHSPoint, bool savePointsInfo, bool saveSimulationParameters);
-    static QVector<Hill> getHillsVectorFromJson(const QByteArray & bytes);
+    static QJsonObject getJsonObject(const Hill &hill);
+    static Hill getFromJson(QJsonObject obj);
+    static QVector<Hill> getVectorFromJson(const QByteArray & bytes);
     static void setupHillsFlagPixmaps(QVector<Hill> & hills);
 
     static double calculatePointsForMeter(double KPoint);

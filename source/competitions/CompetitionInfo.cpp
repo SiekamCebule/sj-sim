@@ -18,20 +18,20 @@
 #include <QByteArray>
 extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
-CompetitionInfo::CompetitionInfo(Hill *hill) : hill(hill)
+CompetitionInfo::CompetitionInfo(Hill *hill) : hill(hill),
+    ClassWithID()
 {
     exceptionalRoundsCount = (-1);
     cancelled = false;
-    results = nullptr;
     serieType = Competition;
     trialRound = nullptr;
+    results.setCompetitionInfo(this);
+    advancementClassification = nullptr;
+    advancementCompetition = nullptr;
 }
 
 CompetitionInfo::~CompetitionInfo()
 {
-    if(results != nullptr){
-        delete results;
-    }
     /*for(auto & t : trainings)
         if(t != nullptr)
             delete t;
@@ -39,17 +39,54 @@ CompetitionInfo::~CompetitionInfo()
         delete trialRound;*/
 }
 
+CompetitionInfo *CompetitionInfo::getAdvancementCompetition() const
+{
+    return advancementCompetition;
+}
+
+void CompetitionInfo::setAdvancementCompetition(CompetitionInfo *newAdvancementCompetition)
+{
+    advancementCompetition = newAdvancementCompetition;
+}
+
+Classification *CompetitionInfo::getAdvancementClassification() const
+{
+    return advancementClassification;
+}
+
+void CompetitionInfo::setAdvancementClassification(Classification *newAdvancementClassification)
+{
+    advancementClassification = newAdvancementClassification;
+}
+
+CompetitionResults CompetitionInfo::getResults() const
+{
+    return results;
+}
+
+void CompetitionInfo::setResults(const CompetitionResults &newResults)
+{
+    results = newResults;
+}
+
+CompetitionResults &CompetitionInfo::getResultsReference()
+{
+    return results;
+}
+
 QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
 {
     QJsonObject object;
     object.insert("id", QString::number(competition.getID()));
     object.insert("hill-id", QString::number(competition.getHill()->getID()));
-    object.insert("rules", CompetitionRules::getCompetitionRulesJsonObject(competition.getRules()));
+    object.insert("results", CompetitionResults::getJsonObject(competition.getResultsReference()));
+    object.insert("rules", CompetitionRules::getJsonObject(competition.getRules()));
     object.insert("serie-type", competition.getSerieType());
     object.insert("exceptional-rounds-count", competition.getExceptionalRoundsCount());
     object.insert("cancelled", competition.getCancelled());
 
-    object.insert("trial-round-id", QString::number(competition.getTrialRound()->getID()));
+    if(competition.getTrialRound() != nullptr)
+        object.insert("trial-round-id", QString::number(competition.getTrialRound()->getID()));
     QJsonArray trainingsArray;
     for(auto & t : qAsConst(competition.getTrainingsReference())){
         trainingsArray.push_back(QString::number(t->getID()));
@@ -62,6 +99,11 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     }
     object.insert("classifications-ids", classificationsArray);
 
+    if(competition.getAdvancementClassification() != nullptr)
+        object.insert("advancement-classification-id", QString::number(competition.getAdvancementClassification()->getID()));
+    if(competition.getAdvancementCompetition() != nullptr)
+        object.insert("advancement-competition-id", QString::number(competition.getAdvancementCompetition()->getID()));
+
     return object;
 }
 
@@ -70,6 +112,7 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json)
     CompetitionInfo comp;
     comp.setID(json.value("id").toString().toULong());
     comp.setHill(static_cast<Hill *>(seasonObjectsManager.getObjectByID(json.value("hill-id").toString().toULong())));
+    comp.setResults(CompetitionResults::getFromJson(json.value("results").toObject()));
     comp.setRules(CompetitionRules::getFromJson(json.value("rules").toObject()));
     comp.setSerieType(json.value("serie-type").toInt());
     comp.setExceptionalRoundsCount(json.value("exceptional-rounds-count").toInt());
@@ -85,6 +128,9 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json)
     for(auto val : classificationsArray){
         comp.getClassificationsReference().push_back(static_cast<Classification *>(seasonObjectsManager.getObjectByID(val.toString().toULong())));
     }
+
+    comp.setAdvancementClassification(static_cast<Classification *>(seasonObjectsManager.getObjectByID(json.value("advancement-classification-id").toString().toULong())));
+    comp.setAdvancementCompetition(static_cast<CompetitionInfo *>(seasonObjectsManager.getObjectByID(json.value("advancement-competition-id").toString().toULong())));
 
     return comp;
 }
@@ -157,16 +203,6 @@ short CompetitionInfo::getSerieType() const
 void CompetitionInfo::setSerieType(short newSerieType)
 {
     serieType = newSerieType;
-}
-
-CompetitionResults *CompetitionInfo::getResults() const
-{
-    return results;
-}
-
-void CompetitionInfo::setResults(CompetitionResults *newResults)
-{
-    results = newResults;
 }
 
 Hill *CompetitionInfo::getHill() const

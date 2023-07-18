@@ -4,8 +4,9 @@
 #include <QVector>
 #include <QString>
 #include "Jumper.h"
+#include "../utilities/ClassWithID.h"
 
-class Team
+class Team : public ClassWithID
 {
 public:
     Team(const QString & countryCode = "");

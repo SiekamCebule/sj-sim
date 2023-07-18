@@ -32,6 +32,10 @@ QVariant CalendarEditorTableModel::headerData(int section, Qt::Orientation orien
                 return tr("Zasady konkursu");
             case 6:
                 return tr("Klasyfikacje");
+            case 7:
+                return tr("Awans (konkurs)");
+            case 8:
+                return tr("Awans (klasyfikacja)");
             }
         }
         else if(orientation == Qt::Vertical){
@@ -59,7 +63,7 @@ int CalendarEditorTableModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return 7;
+    return 9;
 }
 
 QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) const
@@ -145,6 +149,29 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
                 }
                 return string;
             }
+            case 7:{
+                //Awans (konkurs)
+                if(competition->getAdvancementCompetition() != nullptr){
+                    Hill * hill = competition->getAdvancementCompetition()->getHill();
+                    int pos = 1;
+                    //Musimy znaleźć pozycję tego konkursu w tabeli
+                    for(auto & comp : calendar->getCompetitionsReference()) //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
+                        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+                            if(comp == competition->getAdvancementCompetition())
+                                break;
+                            pos++;
+                        }
+                    return QString::number(pos) + ". " + hill->getName() + " HS" + QString::number(hill->getHSPoint());
+                }
+                break;
+            }
+            case 8:{
+                //Awans (klasyfikacja)
+                if(competition->getAdvancementClassification() != nullptr && competition->getAdvancementCompetition() == nullptr)
+                {
+                    return competition->getAdvancementClassification()->getName();
+                }
+            }
             default:
                 break;
             }
@@ -183,6 +210,12 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
         case 6:
             font.setPixelSize(10);
             break;
+        case 7:
+            font.setPixelSize(11);
+            font.setItalic(true);
+        case 8:
+            font.setPixelSize(11);
+            font.setItalic(true);
         }
         return font;
     }

@@ -1,19 +1,37 @@
 #ifndef COMPETITIONRESULTS_H
 #define COMPETITIONRESULTS_H
 #include "CompetitionSingleResult.h"
+#include "../utilities/ClassWithID.h"
 #include <QVector>
+#include <QObject>
+#include <QDebug>
+#include <QDebug>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonParseError>
+#include <QJsonArray>
+#include <QMessageBox>
+#include <QByteArray>
 
 class CompetitionInfo;
 
-class CompetitionResults
+class CompetitionResults : public ClassWithID
 {
 public:
     CompetitionResults(CompetitionInfo * competitionInfo = nullptr);
-    ~CompetitionResults();
 
 private:
     CompetitionInfo * competitionInfo;
     QVector<CompetitionSingleResult> results;
+    QVector<QVector<JumpData *>> constructRoundsJumps();
+
+public:
+    CompetitionResults constructRoundsResults(QVector<int> rounds);
+    void updateRoundsJumps();
+
+    static CompetitionResults getFromJson(QJsonObject obj);
+    static QJsonObject getJsonObject(CompetitionResults & results);
 
 public:
     CompetitionInfo *getCompetitionInfo() const;

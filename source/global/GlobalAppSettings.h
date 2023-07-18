@@ -15,6 +15,7 @@ public:
 
 private:
     short languageID;
+    bool showCalendarEditorHelp;
 
 public:
     short getLanguageID() const;
@@ -27,6 +28,8 @@ public:
 
     bool loadFromJson();
     bool writeToJson();
+    bool getShowCalendarEditorHelp() const;
+    void setShowCalendarEditorHelp(bool newShowCalendarEditorHelp);
 };
 
 #endif // GLOBALAPPSETTINGS_H

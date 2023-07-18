@@ -23,6 +23,15 @@ private:
     QVector<SimulationSave> globalSimulationSaves;
     QVector<PointsForPlacesPreset> globalPointsForPlacesPresets;
 
+public:
+    GlobalDatabase(GlobalDatabase &) = delete;
+    static GlobalDatabase * get();
+
+    void removeJumper(int index);
+
+    bool loadFromJson();
+    bool writeToJson();
+
     bool loadJumpers();
     bool loadHills();
     bool loadCompetitionsRules();
@@ -37,15 +46,6 @@ private:
 
     void setupJumpersFlags();
     void setupHillsFlags();
-
-public:
-    GlobalDatabase(GlobalDatabase &) = delete;
-    static GlobalDatabase * get();
-
-    void removeJumper(int index);
-
-    bool loadFromJson();
-    bool writeToJson();
 
     QVector<Jumper> getGlobalJumpers() const;
     void setGlobalJumpers(const QVector<Jumper> &newGlobalJumpers);

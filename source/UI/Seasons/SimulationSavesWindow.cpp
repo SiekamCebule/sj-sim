@@ -29,20 +29,24 @@ void SimulationSavesWindow::on_listView_simulationSaves_doubleClicked(const QMod
 
 void SimulationSavesWindow::on_pushButton_add_clicked()
 {
-    NewSimulationSaveConfigurationWindow * simulationSaveWindow = new NewSimulationSaveConfigurationWindow(this);
+    QStringList otherNames;
+    for(auto & save : GlobalDatabase::get()->getEditableGlobalSimulationSaves()){
+        otherNames.push_back(save.getName());
+    }
+    NewSimulationSaveConfigurationWindow * simulationSaveWindow = new NewSimulationSaveConfigurationWindow(otherNames, this);
     if(simulationSaveWindow->exec() == QDialog::Accepted){
         NewSeasonConfiguratorWindow * seasonWindow = new NewSeasonConfiguratorWindow(this);
         if(seasonWindow->exec() == QDialog::Accepted){
             SimulationSave simulationSave;
             simulationSave.setName(simulationSaveWindow->getNameFromInput());
+            simulationSave.setJumpers(seasonWindow->getJumpersReference());
+            simulationSave.setHills(seasonWindow->getHillsReference());
+            simulationSave.setCompetitionRules(seasonWindow->getCompetitionsRulesReference());
 
             Season season;
             season.setSeasonNumber(simulationSaveWindow->getSeasonNumberFromInput());
+            season.setCalendar(seasonWindow->getCalendar());
 
-            //manager->setJumpers(seasonWindow->getJumpersFromEditor());
-            //season.setCalendar(seasonWindow->getCalendarFromEditor());
-            //season.setClassifications(seasonWindow->getClassificationsFromEditor());
-            //season.setSettings(seasonWindow->getSettingsFromInputs());
             simulationSave.getSeasonsReference().push_back(season);
 
             int index = 0;
@@ -53,6 +57,7 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
 
             emit listModel->dataChanged(listModel->index(index), listModel->index(listModel->rowCount() - 1));
 
+            simulationSave.saveToFile("simulationSaves/");
         }
     }
 }

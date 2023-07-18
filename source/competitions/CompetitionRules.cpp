@@ -9,7 +9,8 @@
 #include <QJsonArray>
 #include <QMessageBox>
 
-CompetitionRules::CompetitionRules(const QString & name) : name(name)
+CompetitionRules::CompetitionRules(const QString & name) : name(name),
+    ClassWithID()
 {
     has95HSRule = hasWindCompensations = hasGateCompensations = hasJudgesPoints = hasDsq = false;
     competitionType = jumpersInTeamCount = windAverageCalculatingType = 0;
@@ -66,9 +67,10 @@ void CompetitionRules::setName(const QString &newName)
     name = newName;
 }
 
-QJsonObject CompetitionRules::getCompetitionRulesJsonObject(const CompetitionRules &competitionRules)
+QJsonObject CompetitionRules::getJsonObject(const CompetitionRules &competitionRules)
 {
     QJsonObject object;
+    object.insert("id", QString::number(competitionRules.getID()));
     object.insert("name", competitionRules.getName());
     object.insert("wind-compensations", competitionRules.getHasWindCompensations());
     object.insert("gate-compensations", competitionRules.getHasGateCompensations());
@@ -81,14 +83,11 @@ QJsonObject CompetitionRules::getCompetitionRulesJsonObject(const CompetitionRul
     object.insert("wind-average-calculating-type", competitionRules.getWindAverageCalculatingType());
 
     QJsonArray roundsArray;
-    QVector<RoundInfo> rds = competitionRules.getRounds();
-    rds.detach();
-    for(QVector<RoundInfo>::iterator it = rds.begin(); it != rds.end(); ++it)
-    {
+    for(auto & round : competitionRules.getRounds()){
         QJsonObject roundObject;
-        roundObject.insert("count", it->getCount());
-        roundObject.insert("sort-start-list", it->getSortStartList());
-        roundObject.insert("sort-after-groups", it->getSortAfterGroups());
+        roundObject.insert("count", round.getCount());
+        roundObject.insert("sort-start-list", round.getSortStartList());
+        roundObject.insert("sort-after-groups", round.getSortAfterGroups());
         roundsArray.push_back(roundObject);
     }
     object.insert("rounds", roundsArray);
@@ -129,6 +128,7 @@ QVector<CompetitionRules> CompetitionRules::getCompetitionRulesVectorFromJson(co
 CompetitionRules CompetitionRules::getFromJson(const QJsonObject &obj)
 {
     CompetitionRules rules;
+    rules.setID(obj.value("id").toString().toULong());
     rules.setName(obj.value("name").toString());
     rules.setHas95HSRule(obj.value("95-hs-rule").toBool());
     rules.setHasWindCompensations(obj.value("wind-compensations").toBool());

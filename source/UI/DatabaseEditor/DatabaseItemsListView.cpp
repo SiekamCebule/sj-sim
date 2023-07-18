@@ -38,7 +38,12 @@ DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, QWid
     connect(downAction, &QAction::triggered, this, &DatabaseItemsListView::onDownActionTriggered);
 
     connect(ui->listView, &QListView::doubleClicked, this, &DatabaseItemsListView::listViewDoubleClicked);
-    connect(ui->listView, &QListView::clicked, this, &DatabaseItemsListView::listViewClicked);
+    connect(ui->listView, &QListView::clicked, this, &DatabaseItemsListView::listViewClicked);\
+
+    connect(this, &DatabaseItemsListView::insert, this, [this](){
+        if(listModel->rowCount() == 1 || listModel->rowCount() == 2)
+            selectOnlyFirstRow();
+    });
 }
 
 DatabaseItemsListView::~DatabaseItemsListView()
@@ -66,6 +71,19 @@ void DatabaseItemsListView::setupListModel()
         break;
     }
     ui->listView->setModel(listModel);
+}
+
+void DatabaseItemsListView::selectOnlyFirstRow()
+{
+    qDebug()<<"list model: "<<listModel;
+    if(listModel->rowCount() > 0)
+    {
+        ui->listView->clearSelection();
+        if(listModel->rowCount() == 1)
+            ui->listView->selectionModel()->select(listModel->index(0), QItemSelectionModel::Select);
+        else if(listModel->rowCount() == 2)
+            ui->listView->selectionModel()->select(listModel->index(1), QItemSelectionModel::Select);
+    }
 }
 
 QVector<PointsForPlacesPreset> *DatabaseItemsListView::getPointsForPlacesPresets() const
@@ -129,7 +147,7 @@ void DatabaseItemsListView::onInsertActionTriggered()
         int addition = 0;
         if(count > 0)
             addition = 1;
-
+        //0x5555572b0450 listModel najpierw
         if(allowInserting == true){
             if(rows.size() == 1 || count == 0){
                 switch(type){
@@ -163,7 +181,6 @@ void DatabaseItemsListView::onInsertActionTriggered()
                 }
                 case PointsForPlacesPresetsItems:{
                     PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
-                    qDebug()<<"ROWSSSSSSSSSSSSSSS: "<<model->rowCount();
                     model->insertRows(rowToInsert, 1);
                     model->getPresetsVectorPointer()->insert(rowToInsert + addition, 1, PointsForPlacesPreset("Preset"));
                     emit model->dataChanged(model->index(rowToInsert), model->index(model->rowCount() - 1));

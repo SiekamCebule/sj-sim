@@ -19,7 +19,10 @@ void SeasonDatabaseObjectsManager::removeObject(ulong ID)
 
 ClassWithID *SeasonDatabaseObjectsManager::getObjectByID(ulong ID)
 {
-    return objects.value(ID);
+    if(objects.contains(ID))
+        return objects.value(ID);
+    else
+        return nullptr;
 }
 
 void SeasonDatabaseObjectsManager::clear()

@@ -15,11 +15,9 @@ SeasonCalendar::SeasonCalendar()
 
 SeasonCalendar::~SeasonCalendar()
 {
-    for(auto & comp : competitions)
-        delete comp;
 }
 
-void SeasonCalendar::fixCompetiitonsClassifications()
+void SeasonCalendar::fixCompetitionsClassifications()
 {
     for(auto & comp : competitions){
         for(auto & classification : comp->getClassificationsReference()){
@@ -31,24 +29,64 @@ void SeasonCalendar::fixCompetiitonsClassifications()
     }
 }
 
-void SeasonCalendar::loadCalendarFromJson(QJsonObject &json)
+void SeasonCalendar::fixCompetitionsHills(QVector<Hill> *hillsList)
 {
-    classifications.clear();
-    competitions.clear();
+    for(auto & comp : competitions){
+        int hillID = comp->getHill()->getID();
+        bool contains = false;
+        Hill * hillWhichContains = nullptr;
+        for(auto & hill : qAsConst(*hillsList)){
+            if(hill.getID() == hillID){
+                contains = true;
+                hillWhichContains = const_cast<Hill*>(&hill);
+                break;
+            }
+        }
+        if(contains){
+            comp->setHill(hillWhichContains);
+        }
+        else{
+            comp->setHill(new Hill("Hill"));
+        }
+    }
+}
+
+SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json)
+{
+    SeasonCalendar calendar;
 
     QJsonArray classificationsArray = json.value("classifications").toArray();
     for(auto val : classificationsArray){
         Classification c = Classification::getFromJson(val.toObject());
-        classifications.push_back(c);
-        seasonObjectsManager.addObject(&c);
+        calendar.getClassificationsReference().push_back(c);
     }
+    seasonObjectsManager.fill(&calendar.getClassificationsReference());
 
     QJsonArray competitionsArray = json.value("competitions").toArray();
     for(auto val : competitionsArray){
         CompetitionInfo * c = new CompetitionInfo(CompetitionInfo::getFromJson(val.toObject()));
-        competitions.push_back(c);
-        seasonObjectsManager.addObject(c);
+        calendar.getCompetitionsReference().push_back(c);
     }
+    seasonObjectsManager.fill(&calendar.getCompetitionsReference());
+
+    return calendar;
+}
+
+QJsonObject SeasonCalendar::getJsonObject(SeasonCalendar &calendar)
+{
+    QJsonObject object;
+
+    QJsonArray classificationsArray;
+    for(auto & cls : qAsConst(calendar.getClassificationsReference()))
+        classificationsArray.push_back(Classification::getJsonObject(cls));
+    object.insert("classifications", classificationsArray);
+
+    QJsonArray competitionsArray;
+    for(auto & cmp : qAsConst(calendar.getCompetitionsReference()))
+        competitionsArray.push_back(CompetitionInfo::getJsonObject(*cmp));
+    object.insert("competitions", competitionsArray);
+
+    return object;
 }
 
 QVector<Classification> SeasonCalendar::getClassifications() const

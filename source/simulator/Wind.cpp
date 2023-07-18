@@ -55,7 +55,8 @@ QString Wind::getStyleSheetForAveragedWind(double avgWind)
 }
 
 Wind::Wind(short direction, double value) : direction(direction),
-    strength(value)
+    strength(value),
+    ClassWithID()
 {}
 
 Wind::Wind(double value) : strength(value)

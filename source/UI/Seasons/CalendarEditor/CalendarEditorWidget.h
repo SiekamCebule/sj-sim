@@ -52,13 +52,15 @@ private slots:
     void on_tableView_doubleClicked(const QModelIndex &index);
 
 private:
-    void execMultipleHillEditDialog(QSet<int> * rows, int column);
-    void execMultipleTrainingsEditDialog(QSet<int> * rows, int column);
-    void execMultipleCompetitionRulesEditDialog(QSet<int> * rows, int column);
-    void execMultipleTrialRoundsEditDialog(QSet<int> * rows, int column);
-    void execMultipleClassificationsEditDialog(QSet<int> * rows, int column);
-    void multipleEditCompetitionTypes(QSet<int> * rows, int column);
-    void multipleEditSerieTypes(QSet<int> * rows, int column);
+    void execMultipleHillEditDialog(QVector<int> * rows, int column);
+    void execMultipleTrainingsEditDialog(QVector<int> * rows, int column);
+    void execMultipleCompetitionRulesEditDialog(QVector<int> * rows, int column);
+    void execMultipleTrialRoundsEditDialog(QVector<int> * rows, int column);
+    void execMultipleClassificationsEditDialog(QVector<int> * rows, int column);
+    void multipleEditCompetitionTypes(QVector<int> * rows, int column);
+    void multipleEditSerieTypes(QVector<int> * rows, int column);
+    void execMultipleAdvancementCompetitionEditDialog(QVector<int> *rows, int column);
+    void execMultipleAdvancementClassificationEditDialog(QVector<int> * rows, int column);
 
 public:
     CalendarEditorTableModel *getModel() const;

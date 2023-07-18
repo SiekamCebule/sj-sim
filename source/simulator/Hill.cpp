@@ -26,15 +26,17 @@ Hill::Hill(const QString &name, const QString &countryCode, double KPoint, doubl
     realHS(realHS),
     autoPointsForKPoint(autoPointsForKPoint),
     autoPointsForMeter(autoPointsForMeter),
-    autoPointsForBackWind(autoPointsForBackWind)
+    autoPointsForBackWind(autoPointsForBackWind),
+    ClassWithID()
 {
     setCharacteristics(characteristics);
     setRealHSByCharacteristic();
 }
 
-QJsonObject Hill::getHillJsonObject(const Hill & hill, bool saveKAndHSPoint, bool savePointsInfo, bool saveSimulationParameters)
+QJsonObject Hill::getJsonObject(const Hill & hill)
 {
     QJsonObject object;
+    object.insert("id", QString::number(hill.getID()));
     object.insert("name", hill.getName());
     object.insert("country-code", hill.getCountryCode());
     object.insert("k-point", hill.getKPoint());
@@ -72,7 +74,51 @@ QJsonObject Hill::getHillJsonObject(const Hill & hill, bool saveKAndHSPoint, boo
     return object;
 }
 
-QVector<Hill> Hill::getHillsVectorFromJson(const QByteArray &bytes)
+Hill Hill::getFromJson(QJsonObject obj)
+{
+    Hill hill;
+    hill.setID(obj.value("id").toString().toULong());
+    hill.setName(obj.value("name").toString());
+    hill.setCountryCode(obj.value("country-code").toString());
+    hill.setKPoint(obj.value("k-point").toDouble());
+    hill.setHSPoint(obj.value("hs-point").toDouble());
+
+    if(obj.value("points-for-meter").toString() == "auto")
+    {
+        hill.setPointsForMeter(Hill::calculatePointsForMeter(hill.getKPoint()));
+        hill.setAutoPointsForMeter(true);
+    }
+    else hill.setPointsForMeter(obj.value("points-for-meter").toDouble());
+
+    if(obj.value("points-for-k-point").toString() == "auto")
+    {
+        hill.setPointsForKPoint(Hill::calculatePointsForKPoint(hill.getKPoint()));
+        hill.setAutoPointsForKPoint(true);
+    }
+    else hill.setPointsForKPoint(obj.value("points-for-k-point").toDouble());
+
+    hill.setPointsForGate(obj.value("points-for-gate").toDouble());
+    hill.setPointsForFrontWind(obj.value("points-for-front-wind").toDouble());
+
+    if(obj.value("points-for-back-wind").toString() == "auto")
+    {
+        hill.setPointsForBackWind(Hill::calculatePointsForBackWindBy50PercentsOfFrontWind(hill.getPointsForFrontWind()));
+        hill.setAutoPointsForBackWind(true);
+    }
+    else hill.setPointsForBackWind(obj.value("points-for-back-wind").toDouble());
+
+    hill.setTakeoffEffect(obj.value("takeoff-effect").toDouble());
+    hill.setFlightEffect(obj.value("flight-effect").toDouble());
+
+    QJsonArray characteristicsArray = obj.value("characteristics").toArray();
+    for(const auto & val : characteristicsArray){
+        hill.insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
+    }
+
+    return hill;
+}
+
+QVector<Hill> Hill::getVectorFromJson(const QByteArray &bytes)
 {
     QVector<Hill> hills;
     hills.clear();
@@ -98,46 +144,7 @@ QVector<Hill> Hill::getHillsVectorFromJson(const QByteArray &bytes)
     QJsonArray array = value.toArray();
     for(const auto & val : array)
     {
-        QJsonObject obj = val.toObject();
-        Hill hill;
-        hill.setName(obj.value("name").toString());
-        hill.setCountryCode(obj.value("country-code").toString());
-        hill.setKPoint(obj.value("k-point").toDouble());
-        hill.setHSPoint(obj.value("hs-point").toDouble());
-
-        if(obj.value("points-for-meter").toString() == "auto")
-        {
-            hill.setPointsForMeter(Hill::calculatePointsForMeter(hill.getKPoint()));
-            hill.setAutoPointsForMeter(true);
-        }
-        else hill.setPointsForMeter(obj.value("points-for-meter").toDouble());
-
-        if(obj.value("points-for-k-point").toString() == "auto")
-        {
-            hill.setPointsForKPoint(Hill::calculatePointsForKPoint(hill.getKPoint()));
-            hill.setAutoPointsForKPoint(true);
-        }
-        else hill.setPointsForKPoint(obj.value("points-for-k-point").toDouble());
-
-        hill.setPointsForGate(obj.value("points-for-gate").toDouble());
-        hill.setPointsForFrontWind(obj.value("points-for-front-wind").toDouble());
-
-        if(obj.value("points-for-back-wind").toString() == "auto")
-        {
-            hill.setPointsForBackWind(Hill::calculatePointsForBackWindBy50PercentsOfFrontWind(hill.getPointsForFrontWind()));
-            hill.setAutoPointsForBackWind(true);
-        }
-        else hill.setPointsForBackWind(obj.value("points-for-back-wind").toDouble());
-
-        hill.setTakeoffEffect(obj.value("takeoff-effect").toDouble());
-        hill.setFlightEffect(obj.value("flight-effect").toDouble());
-
-        QJsonArray characteristicsArray = obj.value("characteristics").toArray();
-        for(const auto & val : characteristicsArray){
-            hill.insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
-        }
-
-        hills.push_back(hill);
+        hills.push_back(Hill::getFromJson(val.toObject()));
     }
 
     return hills;

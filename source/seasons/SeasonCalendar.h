@@ -12,9 +12,11 @@ public:
     SeasonCalendar();
     ~SeasonCalendar();
 
-    void fixCompetiitonsClassifications();
+    void fixCompetitionsClassifications();
+    void fixCompetitionsHills(QVector<Hill> * hillsList);
 
-    void loadCalendarFromJson(QJsonObject & json);
+    static SeasonCalendar getFromJson(QJsonObject json);
+    static QJsonObject getJsonObject(SeasonCalendar & calendar);
 
 private:
     QVector<CompetitionInfo *> competitions;

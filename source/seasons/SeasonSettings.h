@@ -1,25 +1,21 @@
 #ifndef SEASONSETTINGS_H
 #define SEASONSETTINGS_H
 
+#include <QVector>
+#include <QString>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
+#include "../global/SeasonDatabaseObjectsManager.h"
 
 class SeasonSettings
 {
 public:
     SeasonSettings();
 
+    static SeasonSettings getFromJson(QJsonObject json);
+    static QJsonObject getJsonObject(SeasonSettings & settings);
 private:
-    short resultsSaveLevel; //  0-żadne,   1-treningi,   2-dodatkowo serie próbne   3-wszystko
-
-public:
-    enum ResultsSaveLevel{
-        Anything,
-        Trainings,
-        TrialRounds,
-        Everything
-    };
-
-    short getResultsSaveLevel() const;
-    void setResultsSaveLevel(short newResultsSaveLevel);
 };
 
 #endif // SEASONSETTINGS_H

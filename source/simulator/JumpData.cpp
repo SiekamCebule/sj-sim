@@ -1,6 +1,7 @@
 #include "JumpData.h"
 #include "JumpSimulator.h"
 #include "wind-generation/WindsGenerator.h"
+#include "../global/SeasonDatabaseObjectsManager.h"
 
 #include <QDebug>
 #include <QJsonDocument>
@@ -10,8 +11,11 @@
 #include <QJsonArray>
 #include <QMessageBox>
 
+extern SeasonDatabaseObjectsManager seasonObjectsManager;
+
 JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
-    hill(hill)
+    hill(hill),
+    ClassWithID()
 {
     DSQ = false;
     DNS = false;
@@ -148,9 +152,10 @@ void JumpData::reset()
     simulationData.reset();
 }
 
-QJsonObject JumpData::getJumpDataJsonObject(const JumpData &jumpData, bool saveJudges, bool saveSimulationData, bool saveWinds)
+QJsonObject JumpData::getJsonObject(const JumpData &jumpData)
 {
     QJsonObject object;
+    object.insert("id", QString::number(jumpData.getID()));
     object.insert("distance", jumpData.getDistance());
     object.insert("points", jumpData.getPoints());
     object.insert("gate", jumpData.getGate());
@@ -159,39 +164,97 @@ QJsonObject JumpData::getJumpDataJsonObject(const JumpData &jumpData, bool saveJ
     object.insert("wind-compensation", jumpData.getWindCompensation());
     object.insert("total-compensation", jumpData.getTotalCompensation());
     object.insert("judges-points", jumpData.getJudgesPoints());
-    object.insert("landing-type", jumpData.getLanding().getTextLandingType());
+    object.insert("landing-type", jumpData.getLanding().getType());
     object.insert("landing-imbalance", jumpData.getLanding().getImbalance());
-    if(saveJudges == true){
-        QJsonArray judgesArray;
-        for(const auto & jg : jumpData.getJudges())
-        {
-            judgesArray.push_back(QJsonValue(jg));
-        }
-        object.insert("judges", judgesArray);
+    object.insert("dsq", jumpData.getDSQ());
+    object.insert("dns", jumpData.getDNS());
+    object.insert("has-coach-gate", jumpData.getHasCoachGate());
+    object.insert("coach-gate", jumpData.getCoachGate());
+    object.insert("beats-95-hs-percents", jumpData.getBeats95HSPercents());
+    QJsonArray judgesArray;
+    for(const auto & jg : jumpData.getJudges())
+    {
+        judgesArray.push_back(QJsonValue(jg));
     }
-    if(saveSimulationData == true){
-        QJsonObject simulationDataObject;
-        simulationDataObject.insert("takeoff-rating", jumpData.getSimulationData().getTakeoffRating());
-        simulationDataObject.insert("flight-rating", jumpData.getSimulationData().getFlightRating());
-        simulationDataObject.insert("judges-rating", jumpData.getSimulationData().getJudgesRating());
-        object.insert("simulation-data", simulationDataObject);
+    object.insert("judges", judgesArray);
+    QJsonObject simulationDataObject;
+    simulationDataObject.insert("takeoff-rating", jumpData.getSimulationData().getTakeoffRating());
+    simulationDataObject.insert("flight-rating", jumpData.getSimulationData().getFlightRating());
+    simulationDataObject.insert("judges-rating", jumpData.getSimulationData().getJudgesRating());
+    simulationDataObject.insert("dsq-probability", jumpData.getSimulationData().getDSQProbability());
+    simulationDataObject.insert("inrun-snow", jumpData.getSimulationData().getInrunSnow());
+    object.insert("simulation-data", simulationDataObject);
+    QJsonArray windsArray;
+    int i=0;
+    for(const auto & wind : jumpData.getWinds())
+    {
+        QJsonObject windObject;
+        windObject.insert("range", QJsonValue(QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData.getHill()->getKPoint()).first) + " - " + QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData.getHill()->getKPoint()).second)));
+        windObject.insert("direction", wind.getDirection());
+        windObject.insert("strength", wind.getStrength());
+        windsArray.push_back(windObject);
+        i++;
     }
-    if(saveWinds == true){
-        QJsonArray windsArray;
-        int i=0;
-        for(const auto & wind : jumpData.getWinds())
-        {
-            QJsonObject windObject;
-            windObject.insert("range", QJsonValue(QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData.getHill()->getKPoint()).first) + " - " + QString::number(WindsGenerator::getRangeOfWindSector(i+1, jumpData.getHill()->getKPoint()).second)));
-            windObject.insert("direction", wind.getDirection());
-            windObject.insert("strength", wind.getStrength());
-            windsArray.push_back(windObject);
-            i++;
-        }
-        object.insert("winds", windsArray);
-    }
+    object.insert("winds", windsArray);
 
+    object.insert("rules-id", QString::number(jumpData.getRules()->getID()));
+    object.insert("jumper-id", QString::number(jumpData.getJumper()->getID()));
+    object.insert("hill-id", QString::number(jumpData.getHill()->getID()));
     return object;
+}
+
+JumpData JumpData::getFromJson(QJsonObject obj)
+{
+    JumpData jump;
+    jump.setID(obj.value("id").toString().toULong());
+    jump.setDistance(obj.value("distance").toDouble());
+    jump.setPoints(obj.value("points").toDouble());
+    jump.setGate(obj.value("gate").toInt());
+    jump.setAveragedWind(obj.value("averaged-wind").toDouble());
+    jump.setGateCompensation(obj.value("gate-compensation").toDouble());
+    jump.setWindCompensation(obj.value("wind-compensation").toDouble());
+    jump.setTotalCompensation(obj.value("total-compensation").toDouble());
+    jump.setJudgesPoints(obj.value("judges-points").toDouble());
+    jump.setLanding(Landing(obj.value("landing-type").toInt(), obj.value("landing-imbalance").toDouble()));
+    jump.setDSQ(obj.value("dsq").toBool());
+    jump.setDNS(obj.value("dns").toBool());
+    jump.setHasCoachGate(obj.value("has-coach-gate").toBool());
+    jump.setCoachGate(obj.value("coach-gate").toInt());
+    jump.setBeats95HSPercents(obj.value("beats-95-hs-percents").toBool());
+    QJsonArray judgesArray = obj.value("judges").toArray();
+    QVector<double> judges;
+    for(const auto & jg : judgesArray)
+    {
+        judges.push_back(jg.toDouble());
+    }
+    jump.setJudges(judges);
+    QJsonObject simulationDataObject = obj.value("simulation-data").toObject();
+    JumpSimulationData simulationData;
+    simulationData.setTakeoffRating(simulationDataObject.value("takeoff-rating").toDouble());
+    simulationData.setFlightRating(simulationDataObject.value("flight-rating").toDouble());
+    simulationData.setJudgesRating(simulationDataObject.value("judges-rating").toDouble());
+    simulationData.setDSQProbability(simulationDataObject.value("dsq-probability").toInt());
+    simulationData.setInrunSnow(simulationDataObject.value("inrun-snow").toDouble());
+    jump.setSimulationData(simulationData);
+    QJsonArray windsArray = obj.value("winds").toArray();
+    QVector<Wind> winds;
+    int i=0;
+    for(const auto & wind : windsArray)
+    {
+        QJsonObject windObject = wind.toObject();
+        Wind w;
+        w.setDirection(windObject.value("direction").toInt());
+        w.setStrength(windObject.value("strength").toDouble());
+        winds.push_back(w);
+        i++;
+    }
+    jump.setWinds(winds);
+
+    jump.setRules(static_cast<CompetitionRules *>(seasonObjectsManager.getObjectByID(obj.value("rules-id").toString().toULong())));
+    jump.setJumper(static_cast<Jumper *>(seasonObjectsManager.getObjectByID(obj.value("jumper-id").toString().toULong())));
+    jump.setHill(static_cast<Hill *>(seasonObjectsManager.getObjectByID(obj.value("hill-id").toString().toULong())));
+
+    return jump;
 }
 
 Jumper *JumpData::getJumper() const

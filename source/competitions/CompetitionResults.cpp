@@ -1,15 +1,78 @@
 #include "CompetitionResults.h"
 
 #include "CompetitionInfo.h"
+#include "../global/SeasonDatabaseObjectsManager.h"
+#include "CompetitionSingleResult.h"
 
-CompetitionResults::CompetitionResults(CompetitionInfo *competitionInfo) : competitionInfo(competitionInfo)
+extern SeasonDatabaseObjectsManager seasonObjectsManager;
+
+
+CompetitionResults::CompetitionResults(CompetitionInfo *competitionInfo) : competitionInfo(competitionInfo),
+    ClassWithID()
 {
 
 }
 
-CompetitionResults::~CompetitionResults()
+QVector<QVector<JumpData *> > CompetitionResults::constructRoundsJumps()
 {
+    QVector<QVector<JumpData *>> roundsJumps;
+    for(int i=0; i<competitionInfo->getRulesPointer()->getRounds().count(); i++){
+        QVector<JumpData *> jumps;
+        for(auto & jp : results){
+            if(jp.getJumpsReference().count() < i){
+                jumps.push_back(&jp.getJumpsReference()[i]);
+            }
+        }
+        roundsJumps.push_back(jumps);
+    }
+    return roundsJumps;
+}
 
+CompetitionResults CompetitionResults::constructRoundsResults(QVector<int> rounds)
+{
+    CompetitionResults results;
+    for(auto & round : rounds){
+        if(round - 1 >= results.getResultsReference().count())
+            break;
+        else{
+            for(auto & jump : constructRoundsJumps()[round - 1]){
+                results.addJump(jump->getJumper(), *jump);
+            }
+        }
+    }
+    results.sortInDescendingOrder();
+    return results;
+}
+
+CompetitionResults CompetitionResults::getFromJson(QJsonObject obj)
+{
+    CompetitionResults results;
+    results.setID(obj.value("id").toString().toULong());
+    results.setCompetitionInfo(static_cast<CompetitionInfo *>(seasonObjectsManager.getObjectByID(obj.value("competition-info-id").toString().toULong())));
+
+    QJsonArray resultsArray = obj.value("results").toArray();
+    for(auto res : resultsArray){
+        results.getResultsReference().push_back(CompetitionSingleResult::getFromJson(res.toObject()));
+    }
+
+    return results;
+}
+
+QJsonObject CompetitionResults::getJsonObject(CompetitionResults &results)
+{
+    QJsonObject object;
+    object.insert("id", QString::number(results.getID()));
+    object.insert("competition-info-id", QString::number(results.getCompetitionInfo()->getID()));
+
+    QJsonArray resultsArray;
+    for(auto & res : qAsConst(results.getResultsReference()))
+    {
+        QJsonObject o = CompetitionSingleResult::getJsonObject(res);
+        resultsArray.push_back(o);
+    }
+    object.insert("results", resultsArray);
+
+    return object;
 }
 
 QVector<CompetitionSingleResult> CompetitionResults::getResults() const

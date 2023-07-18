@@ -15,7 +15,8 @@
 Jumper::Jumper(const QString &name, const QString &surname, const QString &countryCode, const JumperSkills &skills) : name(name),
     surname(surname),
     countryCode(countryCode),
-    jumperSkills(skills)
+    jumperSkills(skills),
+    ClassWithID()
 {
     if(countryCode.length() == 3)
         updateCountryFlagPixmap();
@@ -25,39 +26,59 @@ Jumper::~Jumper()
 {
 }
 
-QJsonObject Jumper::getJumperJsonObject(const Jumper & jumper, bool saveSkills, bool saveCharacteristics)
+QJsonObject Jumper::getJsonObject(const Jumper & jumper)
 {
     QJsonObject object;
+    object.insert("id", QString::number(jumper.getID()));
     object.insert("name", jumper.getName());
     object.insert("surname", jumper.getSurname());
     object.insert("country-code", jumper.getCountryCode().toUpper());
-    if(saveSkills == true){
-        //object.insert("takeoff-power", jumper.getJumperSkills().getTakeoffPower());
-        object.insert("takeoff-technique", jumper.getJumperSkills().getTakeoffTechnique());
-        object.insert("flight-technique", jumper.getJumperSkills().getFlightTechnique());
-        object.insert("flight-style", jumper.getJumperSkills().getFlightStyle());
-        object.insert("landing-style", jumper.getJumperSkills().getLandingStyle());
-        object.insert("form", jumper.getJumperSkills().getForm());
-        object.insert("jumps-equality", jumper.getJumperSkills().getJumpsEquality());
-    }
+    //object.insert("takeoff-power", jumper.getJumperSkills().getTakeoffPower());
+    object.insert("takeoff-technique", jumper.getJumperSkills().getTakeoffTechnique());
+    object.insert("flight-technique", jumper.getJumperSkills().getFlightTechnique());
+    object.insert("flight-style", jumper.getJumperSkills().getFlightStyle());
+    object.insert("landing-style", jumper.getJumperSkills().getLandingStyle());
+    object.insert("form", jumper.getJumperSkills().getForm());
+    object.insert("jumps-equality", jumper.getJumperSkills().getJumpsEquality());
 
-    if(saveCharacteristics == true){
-        QJsonArray characteristicsArray;
-        QSet<Characteristic> cs = jumper.getJumperSkills().getCharacteristics();
-        cs.detach();
-        for(QSet<Characteristic>::iterator it = cs.begin(); it != cs.end(); ++it)
-        {
-            QJsonObject characteristicObject;
-            characteristicObject.insert("type", it->getType());
-            characteristicObject.insert("level", it->getLevel());
-            characteristicsArray.push_back(characteristicObject);
-        }
-        object.insert("characteristics", characteristicsArray);
+    QJsonArray characteristicsArray;
+    QSet<Characteristic> cs = jumper.getJumperSkills().getCharacteristics();
+    cs.detach();
+    for(QSet<Characteristic>::iterator it = cs.begin(); it != cs.end(); ++it)
+    {
+        QJsonObject characteristicObject;
+        characteristicObject.insert("type", it->getType());
+        characteristicObject.insert("level", it->getLevel());
+        characteristicsArray.push_back(characteristicObject);
     }
+    object.insert("characteristics", characteristicsArray);
     return object;
 }
 
-QVector<Jumper> Jumper::getJumpersVectorFromJson(const QByteArray &bytes)
+Jumper Jumper::getFromJson(QJsonObject obj)
+{
+    Jumper jumper;
+    jumper.setID(obj.value("id").toString().toULong());
+    jumper.setName(obj.value("name").toString());
+    jumper.setSurname(obj.value("surname").toString());
+    jumper.setCountryCode(obj.value("country-code").toString());
+
+    jumper.getJumperSkillsPointer()->setTakeoffTechnique(obj.value("takeoff-technique").toDouble());
+    jumper.getJumperSkillsPointer()->setFlightTechnique(obj.value("flight-technique").toDouble());
+    jumper.getJumperSkillsPointer()->setFlightStyle(obj.value("flight-style").toDouble());
+    jumper.getJumperSkillsPointer()->setLandingStyle(obj.value("landing-style").toDouble());
+    jumper.getJumperSkillsPointer()->setForm(obj.value("form").toDouble());
+    jumper.getJumperSkillsPointer()->setJumpsEquality(obj.value("jumps-equality").toDouble());
+
+    QJsonArray characteristicsArray = obj.value("characteristics").toArray();
+    for(const auto & val : characteristicsArray){
+        jumper.getJumperSkillsPointer()->insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
+    }
+
+    return jumper;
+}
+
+QVector<Jumper> Jumper::getVectorFromJson(const QByteArray &bytes)
 {
     QVector<Jumper> jumpers;
     jumpers.clear();
@@ -84,25 +105,7 @@ QVector<Jumper> Jumper::getJumpersVectorFromJson(const QByteArray &bytes)
 
     for(const auto & val : array)
     {
-        QJsonObject obj = val.toObject();
-        Jumper jumper;
-        jumper.setName(obj.value("name").toString());
-        jumper.setSurname(obj.value("surname").toString());
-        jumper.setCountryCode(obj.value("country-code").toString());
-        //jumper.getJumperSkillsPointer()->setTakeoffPower(obj.value("takeoff-power").toDouble());
-        jumper.getJumperSkillsPointer()->setTakeoffTechnique(obj.value("takeoff-technique").toDouble());
-        jumper.getJumperSkillsPointer()->setFlightTechnique(obj.value("flight-technique").toDouble());
-        jumper.getJumperSkillsPointer()->setFlightStyle(obj.value("flight-style").toDouble());
-        jumper.getJumperSkillsPointer()->setLandingStyle(obj.value("landing-style").toDouble());
-        jumper.getJumperSkillsPointer()->setForm(obj.value("form").toDouble());
-        jumper.getJumperSkillsPointer()->setJumpsEquality(obj.value("jumps-equality").toDouble());
-
-        QJsonArray characteristicsArray = obj.value("characteristics").toArray();
-        for(const auto & val : characteristicsArray){
-            jumper.getJumperSkillsPointer()->insertCharacteristic(val.toObject().value("type").toString(), val.toObject().value("level").toDouble());
-        }
-
-        jumpers.push_back(jumper);
+        jumpers.push_back(Jumper::getFromJson(val.toObject()));
     }
 
     Jumper::setupJumpersFlagPixmaps(jumpers);
