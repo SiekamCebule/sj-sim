@@ -14,6 +14,7 @@ public:
 
     void fixCompetitionsClassifications();
     void fixCompetitionsHills(QVector<Hill> * hillsList);
+    void updateCompetitionsQualifyingCompetitions();
 
     static SeasonCalendar getFromJson(QJsonObject json);
     static QJsonObject getJsonObject(SeasonCalendar & calendar);

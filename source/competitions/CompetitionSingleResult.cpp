@@ -3,11 +3,11 @@
 #include "CompetitionInfo.h"
 extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
-CompetitionSingleResult::CompetitionSingleResult(Jumper *jumper, int type) : type(type), jumper(jumper), team(nullptr), competitionInfo(nullptr),
+CompetitionSingleResult::CompetitionSingleResult(Jumper *jumper, int type, CompetitionInfo *competitionInfo) : type(type), jumper(jumper), team(nullptr), competitionInfo(competitionInfo),
     ClassWithID()
 {}
 
-CompetitionSingleResult::CompetitionSingleResult(Team *team, int type) : type(type), jumper(nullptr), team(team), competitionInfo(nullptr),
+CompetitionSingleResult::CompetitionSingleResult(Team *team, int type, CompetitionInfo *competitionInfo) : type(type), jumper(nullptr), team(team), competitionInfo(competitionInfo),
     ClassWithID()
 {}
 
@@ -37,8 +37,10 @@ QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult resul
     resultObject.insert("position", result.getPosition());
     resultObject.insert("points-sum", result.getPointsSum());
     resultObject.insert("type", result.getType());
-    resultObject.insert("jumper-id", QString::number(result.getJumper()->getID()));
-    resultObject.insert("team-id", QString::number(result.getTeam()->getID()));
+    if(result.getJumper() != nullptr)
+        resultObject.insert("jumper-id", QString::number(result.getJumper()->getID()));
+    if(result.getTeam() != nullptr)
+        resultObject.insert("team-id", QString::number(result.getTeam()->getID()));
 
     QJsonArray jumpsArray;
     for(auto & jump : qAsConst(result.getJumpsReference())){

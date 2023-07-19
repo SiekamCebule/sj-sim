@@ -40,10 +40,10 @@ DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, QWid
     connect(ui->listView, &QListView::doubleClicked, this, &DatabaseItemsListView::listViewDoubleClicked);
     connect(ui->listView, &QListView::clicked, this, &DatabaseItemsListView::listViewClicked);\
 
-    connect(this, &DatabaseItemsListView::insert, this, [this](){
+    /*connect(this, &DatabaseItemsListView::insert, this, [this](){
         if(listModel->rowCount() == 1 || listModel->rowCount() == 2)
             selectOnlyFirstRow();
-    });
+    });*/
 }
 
 DatabaseItemsListView::~DatabaseItemsListView()
@@ -141,55 +141,51 @@ void DatabaseItemsListView::onInsertActionTriggered()
         int rowToInsert = 0;
         if(count == 0)
             rowToInsert = 0;
+        else if(rows.size() == 0)
+            rowToInsert = count - 1;
         else if(rows.size() == 1)
             rowToInsert = rows[0].row();
 
-        int addition = 0;
-        if(count > 0)
-            addition = 1;
-        //0x5555572b0450 listModel najpierw
         if(allowInserting == true){
-            if(rows.size() == 1 || count == 0){
-                switch(type){
-                case JumperItems:{
-                    JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
-                    jumpersListModel->insertRows(rowToInsert, 1);
-                    jumpersListModel->getJumpersVectorPointer()->insert(rowToInsert + addition, 1, Jumper("Name", "Surname", "XXX"));
-                    emit jumpersListModel->dataChanged(jumpersListModel->index(rowToInsert), jumpersListModel->index(jumpersListModel->rowCount() - 1));
-                    break;
-                }
-                case HillItems:{
-                    HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
-                    hillsListModel->insertRows(rowToInsert, 1);
-                    hillsListModel->getHillsVectorPointer()->insert(rowToInsert + addition, 1, Hill("Hill", "XXX"));
-                    emit hillsListModel->dataChanged(hillsListModel->index(rowToInsert), hillsListModel->index(hillsListModel->rowCount() - 1));
-                    break;
-                }
-                case CompetitionRulesItems:{
-                    CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
-                    competitionRulesListModel->insertRows(rowToInsert, 1);
-                    competitionRulesListModel->getCompetitonRulesVectorPointer()->insert(rowToInsert + addition, 1, CompetitionRules("Rules"));
-                    emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(rowToInsert), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
-                    break;
-                }
-                case ClassificationItems:{
-                    ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
-                    classificationsListModel->insertRows(rowToInsert, 1);
-                    classificationsListModel->getClassificationsVectorPointer()->insert(rowToInsert + addition, 1, Classification("Classification"));
-                    emit classificationsListModel->dataChanged(classificationsListModel->index(rowToInsert), classificationsListModel->index(classificationsListModel->rowCount() - 1));
-                    break;
-                }
-                case PointsForPlacesPresetsItems:{
-                    PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
-                    model->insertRows(rowToInsert, 1);
-                    model->getPresetsVectorPointer()->insert(rowToInsert + addition, 1, PointsForPlacesPreset("Preset"));
-                    emit model->dataChanged(model->index(rowToInsert), model->index(model->rowCount() - 1));
-                    break;
-                }
-                default: break;
-                }
-                emit insert();
+            switch(type){
+            case JumperItems:{
+                JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
+                jumpersListModel->insertRows(rowToInsert, 1);
+                jumpersListModel->getJumpersVectorPointer()->insert(rowToInsert, 1, Jumper("Name", "Surname", "XXX"));
+                emit jumpersListModel->dataChanged(jumpersListModel->index(rowToInsert), jumpersListModel->index(jumpersListModel->rowCount() - 1));
+                break;
             }
+            case HillItems:{
+                HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
+                hillsListModel->insertRows(rowToInsert, 1);
+                hillsListModel->getHillsVectorPointer()->insert(rowToInsert, 1, Hill("Hill", "XXX"));
+                emit hillsListModel->dataChanged(hillsListModel->index(rowToInsert), hillsListModel->index(hillsListModel->rowCount() - 1));
+                break;
+            }
+            case CompetitionRulesItems:{
+                CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
+                competitionRulesListModel->insertRows(rowToInsert, 1);
+                competitionRulesListModel->getCompetitonRulesVectorPointer()->insert(rowToInsert, 1, CompetitionRules("Rules"));
+                emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(rowToInsert), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
+                break;
+            }
+            case ClassificationItems:{
+                ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
+                classificationsListModel->insertRows(rowToInsert, 1);
+                classificationsListModel->getClassificationsVectorPointer()->insert(rowToInsert, 1, Classification("Classification"));
+                emit classificationsListModel->dataChanged(classificationsListModel->index(rowToInsert), classificationsListModel->index(classificationsListModel->rowCount() - 1));
+                break;
+            }
+            case PointsForPlacesPresetsItems:{
+                PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
+                model->insertRows(rowToInsert, 1);
+                model->getPresetsVectorPointer()->insert(rowToInsert, 1, PointsForPlacesPreset("Preset"));
+                emit model->dataChanged(model->index(rowToInsert), model->index(model->rowCount() - 1));
+                break;
+            }
+            default: break;
+            }
+            emit insert();
         }
     }
 }

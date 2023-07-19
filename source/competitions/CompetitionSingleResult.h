@@ -15,8 +15,8 @@ class CompetitionInfo;
 class CompetitionSingleResult : public ClassWithID
 {
 public:
-    CompetitionSingleResult(Jumper * jumper = nullptr, int type = 0);
-    CompetitionSingleResult(Team * team, int type = 0);
+    CompetitionSingleResult(Jumper * jumper = nullptr, int type = 0, CompetitionInfo * competitionInfo = nullptr);
+    CompetitionSingleResult(Team * team, int type = 0, CompetitionInfo * competitionInfo = nullptr);
     inline bool operator<(const CompetitionSingleResult & second) {return pointsSum < second.getPointsSum();}
     //inline bool operator>(const CompetitionSingleResult & second) {return pointsSum > second.getPointsSum();}
     enum Type{

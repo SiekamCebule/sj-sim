@@ -612,86 +612,89 @@ void CompetitionManagerWindow::autoSimulateGroup()
 
 void CompetitionManagerWindow::autoSimulateJumps()
 {
-    int jumpsCount = QInputDialog::getInt(this, tr("Symulacja kilku skoków"), tr("Ilość skoków"), 5, 0);
-    for(int i = 0; i < jumpsCount; i++){
-        IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(manager);
-        TeamCompetitionManager * tmManager = dynamic_cast<TeamCompetitionManager *>(manager);
-        setupSimulator();
-        simulator.simulateJump();
-        JumpData jump = simulator.getJumpData();
-        if(type == CompetitionRules::Individual){
-            indManager->getResults()->addJump(indManager->getActualJumper(), jump);
-        }
-        else if(type == CompetitionRules::Team){
-            tmManager->getResults()->addJump(tmManager->getActualTeam(), jump);
-            tmManager->getResults()->getResultOfTeam(tmManager->getActualTeam())->updateTeamJumpersResults();
-        }
+    bool ok;
+    int jumpsCount = QInputDialog::getInt(this, tr("Symulacja kilku skoków"), tr("Ilość skoków"), 5, 0, 2147483647, 1, &ok);
+    if(ok == true){
+        for(int i = 0; i < jumpsCount; i++){
+            IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(manager);
+            TeamCompetitionManager * tmManager = dynamic_cast<TeamCompetitionManager *>(manager);
+            setupSimulator();
+            simulator.simulateJump();
+            JumpData jump = simulator.getJumpData();
+            if(type == CompetitionRules::Individual){
+                indManager->getResults()->addJump(indManager->getActualJumper(), jump);
+            }
+            else if(type == CompetitionRules::Team){
+                tmManager->getResults()->addJump(tmManager->getActualTeam(), jump);
+                tmManager->getResults()->getResultOfTeam(tmManager->getActualTeam())->updateTeamJumpersResults();
+            }
 
-        int status = StartListCompetitorStatus::Finished;
-        if(jump.getDSQ())
-            status = StartListCompetitorStatus::Dsq;
-        else if(jump.getDNS())
-            status = StartListCompetitorStatus::Dns;
-        StartListCompetitorStatus::getStatusOfJumper(manager->getActualJumper(), manager->getStartListStatusesReference())->setJumpStatus(status);
+            int status = StartListCompetitorStatus::Finished;
+            if(jump.getDSQ())
+                status = StartListCompetitorStatus::Dsq;
+            else if(jump.getDNS())
+                status = StartListCompetitorStatus::Dns;
+            StartListCompetitorStatus::getStatusOfJumper(manager->getActualJumper(), manager->getStartListStatusesReference())->setJumpStatus(status);
 
-        bool ok = false;
-        if(jump.getLanding().getType() == Landing::Fall && jump.getDistance() >= 0.95 * jump.getHill()->getHSPoint() && manager->getCompetitionRules()->getHas95HSRule()){
-            ok = true;
-        }
-        StartListCompetitorStatus::getStatusOfJumper(manager->getActualJumper(), manager->getStartListStatusesReference())->setQualifiedBy95HSRule(ok);
-        manager->updateLastQualifiedResult();
-        manager->updateLeaderResult();
-        manager->updateToAdvanceLineDistance();
-        manager->updateToBeatLineDistance();
-        manager->updateCompetitorsAdvanceStatuses();
+            bool ok = false;
+            if(jump.getLanding().getType() == Landing::Fall && jump.getDistance() >= 0.95 * jump.getHill()->getHSPoint() && manager->getCompetitionRules()->getHas95HSRule()){
+                ok = true;
+            }
+            StartListCompetitorStatus::getStatusOfJumper(manager->getActualJumper(), manager->getStartListStatusesReference())->setQualifiedBy95HSRule(ok);
+            manager->updateLastQualifiedResult();
+            manager->updateLeaderResult();
+            manager->updateToAdvanceLineDistance();
+            manager->updateToBeatLineDistance();
+            manager->updateCompetitorsAdvanceStatuses();
 
-        setActualWinds(windsGenerator.generateWinds());
+            setActualWinds(windsGenerator.generateWinds());
 
-        if(manager->isAllJumpsAreFinished() == false)
-            manager->setActualJumperToNextUnfinished();
+            if(manager->isAllJumpsAreFinished() == false)
+                manager->setActualJumperToNextUnfinished();
 
-        if(manager->checkCompetitionEnd() == true)
-            break;
-        if(manager->checkRoundEnd() && (manager->getActualRound() != manager->getCompetitionRules()->getRounds().count() && manager->getActualRound() != manager->getCompetitionInfo()->getExceptionalRoundsCount()) && i+1 < jumpsCount){
-            manager->setupNextRound();
-            if(getType() == CompetitionRules::Team)
-                teamResultsTreeModel->setTeams(&dynamic_cast<TeamCompetitionManager *>(manager)->getRoundsTeamsReference()[0]);
-        }
-        else if(type == CompetitionRules::Team && (tmManager->getActualGroup() != tmManager->getCompetitionRules()->getJumpersInTeamCount())){
-            if(tmManager->checkGroupEnd()){
-                tmManager->setupNextGroup();
+            if(manager->checkCompetitionEnd() == true)
+                break;
+            if(manager->checkRoundEnd() && (manager->getActualRound() != manager->getCompetitionRules()->getRounds().count() && manager->getActualRound() != manager->getCompetitionInfo()->getExceptionalRoundsCount()) && i+1 < jumpsCount){
+                manager->setupNextRound();
+                if(getType() == CompetitionRules::Team)
+                    teamResultsTreeModel->setTeams(&dynamic_cast<TeamCompetitionManager *>(manager)->getRoundsTeamsReference()[0]);
+            }
+            else if(type == CompetitionRules::Team && (tmManager->getActualGroup() != tmManager->getCompetitionRules()->getJumpersInTeamCount())){
+                if(tmManager->checkGroupEnd()){
+                    tmManager->setupNextGroup();
+                }
             }
         }
-    }
-    jumperResultsWidget->show();
+        jumperResultsWidget->show();
 
-    emit startListModel->dataChanged(startListModel->index(0), startListModel->index(startListModel->rowCount() - 1));
-    ui->listView_startList->scrollTo(startListModel->index(manager->getActualStartListIndex() - 1));
-    if(getType() == CompetitionRules::Individual){
-        ui->tableView_results->setModel(nullptr);
-        ui->tableView_results->setModel(resultsTableModel);
-        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    }
-    else if(getType() == CompetitionRules::Team){
-        teamResultsTreeModel->setupTreeItems();
-        teamResultsTreeView->setModel(nullptr);
-        teamResultsTreeView->setModel(teamResultsTreeModel);
-        teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::Stretch);
-        teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        teamResultsTreeView->expandToDepth(0);
-    }//teams sie psuje kiedy jest ostatnia seria
+        emit startListModel->dataChanged(startListModel->index(0), startListModel->index(startListModel->rowCount() - 1));
+        ui->listView_startList->scrollTo(startListModel->index(manager->getActualStartListIndex() - 1));
+        if(getType() == CompetitionRules::Individual){
+            ui->tableView_results->setModel(nullptr);
+            ui->tableView_results->setModel(resultsTableModel);
+            ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        }
+        else if(getType() == CompetitionRules::Team){
+            teamResultsTreeModel->setupTreeItems();
+            teamResultsTreeView->setModel(nullptr);
+            teamResultsTreeView->setModel(teamResultsTreeModel);
+            teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::Stretch);
+            teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+            teamResultsTreeView->expandToDepth(0);
+        }//teams sie psuje kiedy jest ostatnia seria
 
-    updateToBeatDistanceLabel();
-    updateToAdvanceDistanceLabel();
-    updatePointsToTheLeaderLabel();
-    ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
+        updateToBeatDistanceLabel();
+        updateToAdvanceDistanceLabel();
+        updatePointsToTheLeaderLabel();
+        ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
 
-    manager->updateCompetitorsAdvanceStatuses();
+        manager->updateCompetitorsAdvanceStatuses();
 
-    if(manager->checkCompetitionEnd() == true){
-        setupGoToNextButtonForCompetitionEnd();
-        showMessageBoxForCompetitionEnd();
+        if(manager->checkCompetitionEnd() == true){
+            setupGoToNextButtonForCompetitionEnd();
+            showMessageBoxForCompetitionEnd();
+        }
     }
 }
 

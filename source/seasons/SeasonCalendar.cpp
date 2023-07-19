@@ -51,6 +51,14 @@ void SeasonCalendar::fixCompetitionsHills(QVector<Hill> *hillsList)
     }
 }
 
+void SeasonCalendar::updateCompetitionsQualifyingCompetitions()
+{
+    for(auto & comp : competitions)
+    {
+        comp->updateQualifyingCompetitions(this);
+    }
+}
+
 SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json)
 {
     SeasonCalendar calendar;
@@ -66,8 +74,11 @@ SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json)
     for(auto val : competitionsArray){
         CompetitionInfo * c = new CompetitionInfo(CompetitionInfo::getFromJson(val.toObject()));
         calendar.getCompetitionsReference().push_back(c);
+        seasonObjectsManager.addObject(c);
     }
     seasonObjectsManager.fill(&calendar.getCompetitionsReference());
+
+    calendar.updateCompetitionsQualifyingCompetitions();
 
     return calendar;
 }

@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QDebug>
 #include <QJsonDocument>
+#include <QFile>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonParseError>
@@ -37,6 +38,53 @@ CompetitionInfo::~CompetitionInfo()
             delete t;
     if(trialRound != nullptr)
         delete trialRound;*/
+}
+
+void CompetitionInfo::updateQualifyingCompetitions(SeasonCalendar *calendar)
+{
+    for(auto & comp : calendar->getCompetitionsReference())
+    {
+        if(this == comp->getAdvancementCompetition())
+        {
+            this->getQualifyingCompetitionsReference().push_back(comp);
+        }
+    }
+}
+
+bool CompetitionInfo::saveToFile(QString dirAndName)
+{
+    QFile file(dirAndName);
+    if(!file.open(QFile::WriteOnly | QFile::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku ", "Nie udało się otworzyć pliku " + dirAndName+ "\nUpewnij się, że istnieją odpowiednie foldery lub aplikacja ma odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    QJsonDocument document;
+    QJsonObject mainObject;
+    mainObject.insert("competition", CompetitionInfo::getJsonObject(*this));
+    document.setObject(mainObject);
+
+    file.resize(0);
+    file.write(document.toJson());
+    file.close();
+    return true;
+}
+
+QVector<CompetitionInfo *> CompetitionInfo::getQualifyingCompetitions() const
+{
+    return qualifyingCompetitions;
+}
+
+QVector<CompetitionInfo *> &CompetitionInfo::getQualifyingCompetitionsReference()
+{
+    return qualifyingCompetitions;
+}
+
+void CompetitionInfo::setQualifyingCompetitions(const QVector<CompetitionInfo *> &newQualifyingCompetitions)
+{
+    qualifyingCompetitions = newQualifyingCompetitions;
 }
 
 CompetitionInfo *CompetitionInfo::getAdvancementCompetition() const
@@ -129,6 +177,7 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json)
         comp.getClassificationsReference().push_back(static_cast<Classification *>(seasonObjectsManager.getObjectByID(val.toString().toULong())));
     }
 
+    SeasonDatabaseObjectsManager * sdom = &seasonObjectsManager;
     comp.setAdvancementClassification(static_cast<Classification *>(seasonObjectsManager.getObjectByID(json.value("advancement-classification-id").toString().toULong())));
     comp.setAdvancementCompetition(static_cast<CompetitionInfo *>(seasonObjectsManager.getObjectByID(json.value("advancement-competition-id").toString().toULong())));
 

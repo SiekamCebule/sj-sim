@@ -72,6 +72,7 @@ bool GlobalAppSettings::loadFromJson()
         return false;
     }
     setLanguageID(value.toObject().value("language-id").toInt());
+    setShowCalendarEditorHelp(value.toObject().value("show-calendar-editor-help").toBool(true));
 
     return true;
 }
@@ -90,6 +91,7 @@ bool GlobalAppSettings::writeToJson()
     QJsonObject mainObject;
     QJsonObject settingsObject;
     settingsObject.insert("language-id", getLanguageID());
+    settingsObject.insert("show-calendar-editor-help", getShowCalendarEditorHelp());
 
     mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);

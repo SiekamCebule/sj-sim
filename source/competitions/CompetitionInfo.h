@@ -2,11 +2,13 @@
 #define COMPETITIONINFO_H
 
 class Hill;
+class SeasonCalendar;
 #include "CompetitionRules.h"
 #include "CompetitionResults.h"
 #include "CompetitionInfo.h"
 #include "../utilities/ClassWithID.h"
 #include "../seasons/Classification.h"
+#include "../seasons/SeasonCalendar.h"
 
 #include <QDate>
 
@@ -23,6 +25,9 @@ public:
         Training
     };
 
+    void updateQualifyingCompetitions(SeasonCalendar * calendar);
+    bool saveToFile(QString dirAndName);
+
 private:
     Hill * hill;
     CompetitionRules rules;
@@ -37,6 +42,7 @@ private:
 
     Classification * advancementClassification;
     CompetitionInfo * advancementCompetition; //Tylko jedno z tych 2 może być "aktywne"
+    QVector<CompetitionInfo *> qualifyingCompetitions; //Konkursy dla których ten konkurs jest kwalifikacjami
 
 public:
     static QJsonObject getJsonObject(CompetitionInfo &competition);
@@ -69,6 +75,9 @@ public:
     void setAdvancementClassification(Classification *newAdvancementClassification);
     CompetitionInfo *getAdvancementCompetition() const;
     void setAdvancementCompetition(CompetitionInfo *newAdvancementCompetition);
+    QVector<CompetitionInfo *> getQualifyingCompetitions() const;
+    QVector<CompetitionInfo *> & getQualifyingCompetitionsReference();
+    void setQualifyingCompetitions(const QVector<CompetitionInfo *> &newQualifyingCompetitions);
 };
 
 #endif // COMPETITIONINFO_H

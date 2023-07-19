@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QAction>
+#include <QToolBox>
 #include "../DatabaseEditor/ListModels/JumpersListModel.h"
 #include "CalendarEditor/CalendarEditorWidget.h"
 #include "../EditorWidgets/ClassificationEditorWidget.h"
@@ -23,6 +24,8 @@ class NewSeasonConfiguratorWindow : public QDialog
 public:
     explicit NewSeasonConfiguratorWindow(QWidget *parent = nullptr);
     ~NewSeasonConfiguratorWindow();
+
+    void showCalendarEditorHelp();
 
 private slots:
     void on_pushButton_submit_clicked();
@@ -71,6 +74,7 @@ public:
     void setHills(const QVector<Hill> &newHills);
     QVector<CompetitionRules> & getCompetitionsRulesReference();
     void setCompetitionsRules(const QVector<CompetitionRules> &newCompetitionsRules);
+    QToolBox * getToolBox();
 };
 
 #endif // NEWSEASONCONFIGURATORWINDOW_H

@@ -6,6 +6,7 @@
 #include "../../seasons/Season.h"
 #include "NewSeasonConfiguratorWindow.h"
 #include "NewSimulationSaveConfigurationWindow.h"
+#include <QTimer>
 
 SimulationSavesWindow::SimulationSavesWindow(QWidget *parent) :
     QDialog(parent),
@@ -36,6 +37,13 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
     NewSimulationSaveConfigurationWindow * simulationSaveWindow = new NewSimulationSaveConfigurationWindow(otherNames, this);
     if(simulationSaveWindow->exec() == QDialog::Accepted){
         NewSeasonConfiguratorWindow * seasonWindow = new NewSeasonConfiguratorWindow(this);
+        connect(seasonWindow->getToolBox(), &QToolBox::currentChanged, this, [this, seasonWindow](){
+            if(seasonWindow->getToolBox()->currentIndex() == 3){ //edytor kalendarzy
+                QTimer::singleShot(200, [this, seasonWindow](){
+                    seasonWindow->showCalendarEditorHelp();
+                });
+            }
+        });
         if(seasonWindow->exec() == QDialog::Accepted){
             SimulationSave simulationSave;
             simulationSave.setName(simulationSaveWindow->getNameFromInput());
@@ -46,6 +54,7 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
             Season season;
             season.setSeasonNumber(simulationSaveWindow->getSeasonNumberFromInput());
             season.setCalendar(seasonWindow->getCalendar());
+            season.getCalendarReference().updateCompetitionsQualifyingCompetitions();
 
             simulationSave.getSeasonsReference().push_back(season);
 
