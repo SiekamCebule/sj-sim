@@ -21,6 +21,8 @@ private slots:
 
     void on_pushButton_add_clicked();
 
+    void on_pushButton_OK_clicked();
+
 private:
     Ui::SimulationSavesWindow *ui;
     SimulationSavesListModel * listModel;

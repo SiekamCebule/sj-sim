@@ -66,6 +66,7 @@ private:
     QAction * downAction;
 
     bool allowInserting;
+    int lastDoubleClickedIndex;
 
 private slots:
     void onInsertActionTriggered();
@@ -90,6 +91,8 @@ public:
     void setClassifications(QVector<Classification> *newClassifications);
     QVector<PointsForPlacesPreset> *getPointsForPlacesPresets() const;
     void setPointsForPlacesPresets(QVector<PointsForPlacesPreset> *newPointsForPlacesPresets);
+    int getLastDoubleClickedIndex() const;
+    void setLastDoubleClickedIndex(int newLastDoubleClickedIndex);
 };
 
 #endif // DATABASEITEMSLISTVIEW_H

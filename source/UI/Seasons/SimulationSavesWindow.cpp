@@ -6,6 +6,7 @@
 #include "../../seasons/Season.h"
 #include "NewSeasonConfiguratorWindow.h"
 #include "NewSimulationSaveConfigurationWindow.h"
+#include "SimulationSaveManagerWindow.h"
 #include <QTimer>
 
 SimulationSavesWindow::SimulationSavesWindow(QWidget *parent) :
@@ -16,6 +17,7 @@ SimulationSavesWindow::SimulationSavesWindow(QWidget *parent) :
     setWindowFlags(Qt::Window);
     listModel = new SimulationSavesListModel(&GlobalDatabase::get()->getEditableGlobalSimulationSaves(), this);
     ui->listView_simulationSaves->setModel(listModel);
+    ui->listView_simulationSaves->setSelectionMode(QAbstractItemView::SingleSelection);
 
 }
 
@@ -57,6 +59,7 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
             season.getCalendarReference().updateCompetitionsQualifyingCompetitions();
 
             simulationSave.getSeasonsReference().push_back(season);
+            simulationSave.setActualSeason(&simulationSave.getSeasonsReference().first());
 
             int index = 0;
             if(ui->listView_simulationSaves->selectionModel()->selectedRows().size() > 0)
@@ -67,6 +70,18 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
             emit listModel->dataChanged(listModel->index(index), listModel->index(listModel->rowCount() - 1));
 
             simulationSave.saveToFile("simulationSaves/");
+        }
+    }
+}
+
+
+void SimulationSavesWindow::on_pushButton_OK_clicked()
+{
+    if(ui->listView_simulationSaves->selectionModel()->selectedRows().count() > 0){
+        SimulationSaveManagerWindow * manager = new SimulationSaveManagerWindow(&GlobalDatabase::get()->getEditableGlobalSimulationSaves()[ui->listView_simulationSaves->selectionModel()->selectedRows().first().row()], this);
+        if(manager->exec() == QDialog::Accepted)
+        {
+
         }
     }
 }

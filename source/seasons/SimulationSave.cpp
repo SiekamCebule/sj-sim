@@ -7,7 +7,7 @@ extern SeasonDatabaseObjectsManager seasonObjectsManager;
 SimulationSave::SimulationSave() :
     ClassWithID()
 {
-
+    actualSeason = nullptr;
 }
 
 SimulationSave::~SimulationSave()
@@ -51,6 +51,8 @@ SimulationSave SimulationSave::getFromJson(QJsonObject obj)
     }
     seasonObjectsManager.fill(&save.getSeasonsReference());
 
+    save.setActualSeason(static_cast<Season *>(seasonObjectsManager.getObjectByID(obj.value("actual-season-id").toString().toULong())));
+
     return save;
 }
 
@@ -83,6 +85,8 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
         seasonsArray.push_back(Season::getJsonObject(season));
     }
     object.insert("seasons", seasonsArray);
+
+    object.insert("actual-season-id", QString::number(save.getActualSeason()->getID()));
 
     return object;
 }
@@ -122,6 +126,29 @@ bool SimulationSave::loadFromFile(QString fileName, QString dir)
     *this = SimulationSave::getFromJson(object);
     file.close();
     return true;
+}
+
+void SimulationSave::updateJumpersActivityVectors()
+{
+    activeJumpers.clear();
+    inactiveJumpers.clear();
+    for(auto & key : jumpersActivity.keys())
+    {
+        if(jumpersActivity.value(key) == true)
+            activeJumpers.push_back(key);
+        else
+            inactiveJumpers.push_back(key);
+    }
+}
+
+Season *SimulationSave::getActualSeason() const
+{
+    return actualSeason;
+}
+
+void SimulationSave::setActualSeason(Season *newActualSeason)
+{
+    actualSeason = newActualSeason;
 }
 
 void SimulationSave::setCompetitionRules(const QVector<CompetitionRules> &newCompetitionRules)

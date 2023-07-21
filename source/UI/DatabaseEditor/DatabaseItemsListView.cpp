@@ -44,6 +44,9 @@ DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, QWid
         if(listModel->rowCount() == 1 || listModel->rowCount() == 2)
             selectOnlyFirstRow();
     });*/
+    connect(this, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex &index){
+        lastDoubleClickedIndex = index.row();
+    });
 }
 
 DatabaseItemsListView::~DatabaseItemsListView()
@@ -84,6 +87,16 @@ void DatabaseItemsListView::selectOnlyFirstRow()
         else if(listModel->rowCount() == 2)
             ui->listView->selectionModel()->select(listModel->index(1), QItemSelectionModel::Select);
     }
+}
+
+int DatabaseItemsListView::getLastDoubleClickedIndex() const
+{
+    return lastDoubleClickedIndex;
+}
+
+void DatabaseItemsListView::setLastDoubleClickedIndex(int newLastDoubleClickedIndex)
+{
+    lastDoubleClickedIndex = newLastDoubleClickedIndex;
 }
 
 QVector<PointsForPlacesPreset> *DatabaseItemsListView::getPointsForPlacesPresets() const

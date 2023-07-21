@@ -47,6 +47,7 @@ SOURCES += \
     source/UI/Seasons/NewSeasonConfiguratorWindow.cpp \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.cpp \
     source/UI/Seasons/SimulationSaveInfoWidget.cpp \
+    source/UI/Seasons/SimulationSaveManagerWindow.cpp \
     source/UI/Seasons/SimulationSavesWindow.cpp \
     source/UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     source/UI/AppSettings/AppSettingsWindow.cpp \
@@ -141,6 +142,7 @@ HEADERS += \
     source/UI/Seasons/NewSeasonConfiguratorWindow.h \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.h \
     source/UI/Seasons/SimulationSaveInfoWidget.h \
+    source/UI/Seasons/SimulationSaveManagerWindow.h \
     source/UI/Seasons/SimulationSavesWindow.h \
     source/UI/SingleJumps/SingleJumpsConfigWindow.h \
     source/UI/AppSettings/AppSettingsWindow.h \
@@ -221,6 +223,7 @@ FORMS += \
     source/UI/Seasons/NewSeasonConfiguratorWindow.ui \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.ui \
     source/UI/Seasons/SimulationSaveInfoWidget.ui \
+    source/UI/Seasons/SimulationSaveManagerWindow.ui \
     source/UI/Seasons/SimulationSavesWindow.ui \
     source/UI/SingleJumps/SingleJumpsConfigWindow.ui \
     source/UI/AppSettings/AppSettingsWindow.ui \
@@ -248,6 +251,8 @@ first.depends = $(first) copydata
 export(first.depends)
 export(copydata.commands)
 QMAKE_EXTRA_TARGETS += first copydata
+
+#UI_DIR = $$PWD
 
 DISTFILES += \
     flaticon_authors \
