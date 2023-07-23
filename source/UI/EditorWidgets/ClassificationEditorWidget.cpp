@@ -49,7 +49,10 @@ ClassificationEditorWidget::ClassificationEditorWidget(Classification * classifi
     }
     connect(ui->comboBox_presets, &QComboBox::currentIndexChanged, this, [this](){
         if(ui->comboBox_presets->currentIndex() == 0)
-            resetInputs();
+        {
+            tableModel->removeRows(0, tableModel->rowCount());
+            pointsForPlaces.clear();
+        }
         else
         {
             tableModel->removeRows(0, tableModel->rowCount());

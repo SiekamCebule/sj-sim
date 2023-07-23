@@ -26,7 +26,7 @@ public:
     };
 
     void updateQualifyingCompetitions(SeasonCalendar * calendar);
-    bool saveToFile(QString dirAndName);
+    bool saveToFile(QString dir, QString name);
 
 private:
     Hill * hill;

@@ -436,10 +436,10 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
 
         QDate date = QDate::currentDate();
         QTime time = QTime::currentTime();
-        QString dateString = QString::number(date.day()) + "-" + QString::number(date.month()) + "-" + QString::number(date.year()) + ": " + QString::number(time.hour()) + "-" + QString::number(time.minute()) + "-" + QString::number(time.second());
-        info.saveToFile("results/single-competitions/" + info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " -> " + dateString +".json");
+        QString dateString = QString::number(date.day()) + "-" + QString::number(date.month()) + "-" + QString::number(date.year()) + " " + QString::number(time.hour()) + "-" + QString::number(time.minute()) + "-" + QString::number(time.second());
+        info.saveToFile("results/single-competitions/", info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString +".json");
         if(qualificationsManager != nullptr)
-            qualsInfo.saveToFile(QString("results/single-competitions/") + info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " -> " + dateString + " (Q).json");
+            qualsInfo.saveToFile(QString("results/single-competitions/"), info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString + " (Q).json");
 
         delete info.getHill();
         delete competitionManager;

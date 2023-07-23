@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QDebug>
 #include <QJsonDocument>
+#include <QDir>
 #include <QFile>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -51,13 +52,17 @@ void CompetitionInfo::updateQualifyingCompetitions(SeasonCalendar *calendar)
     }
 }
 
-bool CompetitionInfo::saveToFile(QString dirAndName)
+bool CompetitionInfo::saveToFile(QString dir, QString name)
 {
-    QFile file(dirAndName);
+    QDir d(dir);
+    if(!d.exists())
+        d.mkpath(".");
+    QFile file(dir + name);
     if(!file.open(QFile::WriteOnly | QFile::Text))
     {
-        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku ", "Nie udało się otworzyć pliku " + dirAndName+ "\nUpewnij się, że istnieją odpowiednie foldery lub aplikacja ma odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
-        message.setModal(true);
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku ", "Nie udało się otworzyć pliku " + dir + name+ "\nUpewnij się, że istnieją odpowiednie foldery lub aplikacja ma odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+       qDebug()<<file.errorString();
+ message.setModal(true);
         message.exec();
         return false;
     }
