@@ -32,14 +32,14 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_jumpers">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>631</width>
+      <width>901</width>
       <height>641</height>
      </rect>
     </property>
@@ -77,7 +77,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>631</width>
+      <width>901</width>
       <height>641</height>
      </rect>
     </property>
@@ -144,6 +144,11 @@
     <attribute name="label">
      <string>Kalendarz</string>
     </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_calendar"/>
+     </item>
+    </layout>
    </widget>
    <widget class="QWidget" name="page_classifications">
     <attribute name="label">

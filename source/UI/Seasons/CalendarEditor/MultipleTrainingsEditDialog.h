@@ -30,9 +30,12 @@ private:
     Ui::MultipleTrainingsEditDialog *ui;
     CompetitionRules trainingsRules;
     QVector<CompetitionRules> * rulesList;
+
 public:
     QVector<CompetitionRules> *getRulesList() const;
     void setRulesList(QVector<CompetitionRules> *newRulesList);
+    void setTrainingsRules(const CompetitionRules &newTrainingsRules);
+    void setCount(int count);
 };
 
 #endif // MULTIPLETRAININGSEDITDIALOG_H

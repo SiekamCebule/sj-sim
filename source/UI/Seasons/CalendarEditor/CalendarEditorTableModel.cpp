@@ -4,11 +4,12 @@
 #include <QIcon>
 #include <QPixmap>
 
-CalendarEditorTableModel::CalendarEditorTableModel(SeasonCalendar *calendar, QVector<Hill> *hillsList, QVector<CompetitionRules> *rulesList, QObject *parent)
+CalendarEditorTableModel::CalendarEditorTableModel(SeasonCalendar *calendar, QVector<Hill> *hillsList, QVector<CompetitionRules> *rulesList, int dontModifiyBefore, QObject *parent)
     : QAbstractTableModel(parent),
       calendar(calendar),
       hillsList(hillsList),
-      rulesList(rulesList)
+      rulesList(rulesList),
+      dontModifyBefore(dontModifiyBefore)
 {
 }
 
@@ -232,7 +233,10 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
         return QColor(qRgb(40, 40, 40));
     }
     else if(role == Qt::BackgroundRole){
-        return QColor(qRgb(255, 255, 255));
+        if(calendar->getCompetitionsReference().indexOf(competition) >= dontModifyBefore)
+            return QColor(qRgb(255, 255, 255));
+        else
+            return QColor(qRgb(200, 200, 200));
     }
     else if(role == Qt::TextAlignmentRole){
         return Qt::AlignCenter;
@@ -271,6 +275,16 @@ bool CalendarEditorTableModel::removeColumns(int column, int count, const QModel
     // FIXME: Implement me!
     endRemoveColumns();
     return true;
+}
+
+int CalendarEditorTableModel::getDontModifyBefore() const
+{
+    return dontModifyBefore;
+}
+
+void CalendarEditorTableModel::setDontModifyBefore(int newDontModifiyBefore)
+{
+    dontModifyBefore = newDontModifiyBefore;
 }
 
 QVector<CompetitionRules> *CalendarEditorTableModel::getRulesList() const

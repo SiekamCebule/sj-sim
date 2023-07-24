@@ -37,7 +37,8 @@ void MultipleTrainingsEditDialog::on_pushButton_trainingsRules_clicked()
 
     CompetitionRulesEditorWidget * editor = new CompetitionRulesEditorWidget(this);
     editor->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    editor->resetInputs();
+    editor->setCompetitionRules(&trainingsRules);
+    editor->fillCompetitionRulesInputs();
 
     QWidget * widget = new QWidget(dialog);
     QHBoxLayout * layout = new QHBoxLayout(dialog);
@@ -78,6 +79,16 @@ void MultipleTrainingsEditDialog::on_pushButton_trainingsRules_clicked()
 void MultipleTrainingsEditDialog::on_pushButton_submit_clicked()
 {
     emit submitted();
+}
+
+void MultipleTrainingsEditDialog::setTrainingsRules(const CompetitionRules &newTrainingsRules)
+{
+    trainingsRules = newTrainingsRules;
+}
+
+void MultipleTrainingsEditDialog::setCount(int count)
+{
+    ui->spinBox_trainingsCount->setValue(count);
 }
 
 QVector<CompetitionRules> *MultipleTrainingsEditDialog::getRulesList() const

@@ -52,6 +52,7 @@ SimulationSave SimulationSave::getFromJson(QJsonObject obj)
     seasonObjectsManager.fill(&save.getSeasonsReference());
 
     save.setActualSeason(static_cast<Season *>(seasonObjectsManager.getObjectByID(obj.value("actual-season-id").toString().toULong())));
+    save.setNextCompetitionIndex(obj.value("next-competition-index").toInt());
 
     return save;
 }
@@ -87,6 +88,7 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
     object.insert("seasons", seasonsArray);
 
     object.insert("actual-season-id", QString::number(save.getActualSeason()->getID()));
+    object.insert("next-competition-index", save.getNextCompetitionIndex());
 
     return object;
 }
@@ -126,6 +128,16 @@ bool SimulationSave::loadFromFile(QString fileName, QString dir)
     *this = SimulationSave::getFromJson(object);
     file.close();
     return true;
+}
+
+int SimulationSave::getNextCompetitionIndex() const
+{
+    return nextCompetitionIndex;
+}
+
+void SimulationSave::setNextCompetitionIndex(int newNextCompetitionIndex)
+{
+    nextCompetitionIndex = newNextCompetitionIndex;
 }
 
 Season *SimulationSave::getActualSeason() const

@@ -6,6 +6,7 @@
 #include "../EditorWidgets/JumperEditorWidget.h"
 #include "../EditorWidgets/HillEditorWidget.h"
 #include "../EditorWidgets/CompetitionRulesEditorWidget.h"
+#include "CalendarEditor/CalendarEditorWidget.h"
 #include "../../seasons/SimulationSave.h"
 
 namespace Ui {
@@ -17,7 +18,7 @@ class SimulationSaveManagerWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit SimulationSaveManagerWindow(SimulationSave * simulationSave, QWidget *parent = nullptr);
+    explicit SimulationSaveManagerWindow(SimulationSave * save, QWidget *parent = nullptr);
     ~SimulationSaveManagerWindow();
 
     void showJumperAndHillsEditingHelp();
@@ -36,8 +37,8 @@ private:
     DatabaseItemsListView * rulesListView;
     CompetitionRulesEditorWidget * rulesEditor;
 
-public:
-
+    CalendarEditorTableModel * calendarTableModel;
+    CalendarEditorWidget * calendarEditor;
 };
 
 #endif // SIMULATIONSAVEMANAGERWINDOW_H

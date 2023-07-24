@@ -194,22 +194,35 @@ QTableView *CalendarEditorWidget::getTableView()
 
 void CalendarEditorWidget::addActionTriggered()
 {
-    calendar->getCompetitionsReference().push_back(new CompetitionInfo(&defaultHill));
-
     int insertIndex = 0;
     if(ui->tableView->selectionModel()->selectedIndexes().count() > 0)
-        insertIndex = ui->tableView->selectionModel()->selectedIndexes().at(0).row();
+        insertIndex = ui->tableView->selectionModel()->selectedIndexes().at(0).row() + 0;
     else if(calendarModel->rowCount() > 0)
         insertIndex = calendarModel->rowCount() - 1;
     else
         insertIndex = 0;
-    calendarModel->insertRow(insertIndex);
 
-    ui->tableView->clearSelection();
-    ui->tableView->selectionModel()->select(calendarModel->index(insertIndex + 1, 0), QItemSelectionModel::Select);
-    emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
-    ui->tableView->resizeColumnsToContents();
-    updateActualCompetitionByID();
+    int insertIndexInCalendar=0;
+    int i=0;
+    for(auto & comp : calendar->getCompetitionsReference())
+    {
+        if(i == insertIndex){
+            break;
+        }
+        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition)
+            i++;
+        insertIndexInCalendar++;
+    }
+    if(insertIndexInCalendar >= calendarModel->getDontModifyBefore()){
+        calendarModel->insertRow(insertIndex);
+        calendar->getCompetitionsReference().insert(insertIndexInCalendar, new CompetitionInfo(&defaultHill));
+
+        ui->tableView->clearSelection();
+        ui->tableView->selectionModel()->select(calendarModel->index(insertIndex + 1, 0), QItemSelectionModel::Select);
+        emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
+        ui->tableView->resizeColumnsToContents();
+        updateActualCompetitionByID();
+    }
 }
 
 void CalendarEditorWidget::removeActionTriggered()
@@ -218,6 +231,7 @@ void CalendarEditorWidget::removeActionTriggered()
         int removeIndex = ui->tableView->selectionModel()->selectedIndexes().at(0).row();
 
         int i=0;
+        int ii=0;
         CompetitionInfo * competitionToRemove = nullptr;
         for(auto & comp : calendar->getCompetitionsReference()){ //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
             if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
@@ -227,23 +241,26 @@ void CalendarEditorWidget::removeActionTriggered()
                 }
                 i++;
             }
+            ii++;
         }
-        if(competitionToRemove != nullptr){
-            if(competitionToRemove->getTrialRound() != nullptr){
-                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), competitionToRemove->getTrialRound());
-                delete competitionToRemove->getTrialRound();
+        if(ii >= calendarModel->getDontModifyBefore()){
+            if(competitionToRemove != nullptr){
+                if(competitionToRemove->getTrialRound() != nullptr){
+                    MyFunctions::removeFromVector(calendar->getCompetitionsReference(), competitionToRemove->getTrialRound());
+                    delete competitionToRemove->getTrialRound();
+                }
+                for(auto & training : competitionToRemove->getTrainingsReference()){
+                    MyFunctions::removeFromVector(calendar->getCompetitionsReference(), training);
+                    delete training;
+                }
+                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), competitionToRemove);
+                delete competitionToRemove;
+                calendarModel->removeRow(removeIndex);
+                ui->tableView->clearSelection();
+                ui->tableView->selectionModel()->select(calendarModel->index(removeIndex, 0), QItemSelectionModel::Select);
             }
-            for(auto & training : competitionToRemove->getTrainingsReference()){
-                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), training);
-                delete training;
-            }
-            MyFunctions::removeFromVector(calendar->getCompetitionsReference(), competitionToRemove);
-            delete competitionToRemove;
-            calendarModel->removeRow(removeIndex);
-            ui->tableView->clearSelection();
-            ui->tableView->selectionModel()->select(calendarModel->index(removeIndex - 1, 0), QItemSelectionModel::Select);
+            updateActualCompetitionByID();
         }
-        updateActualCompetitionByID();
     }
 }
 
@@ -265,77 +282,79 @@ void CalendarEditorWidget::upActionTriggered()
             }
             competitionToMoveIndexInCalendar++;
         }
-        if(competitionToMove != nullptr){
-            int previousCompetitionIndexInCalendar = -1;
-            CompetitionInfo * previousCompetition = nullptr;
-            previousCompetitionIndexInCalendar = competitionToMoveIndexInCalendar - 1;
-            if(competitionToMove->getTrialRound() != nullptr)
-                previousCompetitionIndexInCalendar -= 1;
-            previousCompetitionIndexInCalendar -= competitionToMove->getTrainingsReference().count();
+        if(competitionToMoveIndexInCalendar > calendarModel->getDontModifyBefore()){
+            if(competitionToMove != nullptr){
+                int previousCompetitionIndexInCalendar = -1;
+                CompetitionInfo * previousCompetition = nullptr;
+                previousCompetitionIndexInCalendar = competitionToMoveIndexInCalendar - 1;
+                if(competitionToMove->getTrialRound() != nullptr)
+                    previousCompetitionIndexInCalendar -= 1;
+                previousCompetitionIndexInCalendar -= competitionToMove->getTrainingsReference().count();
 
-            previousCompetition = calendar->getCompetitionsReference()[previousCompetitionIndexInCalendar];
+                previousCompetition = calendar->getCompetitionsReference()[previousCompetitionIndexInCalendar];
 
-            QVector<CompetitionInfo *> competitionToMoveCompetitions;
-            if(competitionToMove->getTrialRound() != nullptr){
-                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), competitionToMove->getTrialRound());
-                competitionToMoveCompetitions.push_back(competitionToMove->getTrialRound());
-            }
-            for(auto & training : competitionToMove->getTrainingsReference()){
-                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), training);
-                competitionToMoveCompetitions.push_back(training);
-            }
-
-            QVector<CompetitionInfo *> previousCompetitionCompetitions;
-            if(previousCompetition->getTrialRound() != nullptr){
-                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), previousCompetition->getTrialRound());
-                previousCompetitionCompetitions.push_back(previousCompetition->getTrialRound());
-            }
-            for(auto & training : previousCompetition->getTrainingsReference()){
-                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), training);
-                previousCompetitionCompetitions.push_back(training);
-            }
-
-            competitionToMoveIndexInCalendar = 0;
-            for(auto & comp : calendar->getCompetitionsReference()){ //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
-                if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
-                    if(competitionToMove == comp){
-                        break;
-                    }
+                QVector<CompetitionInfo *> competitionToMoveCompetitions;
+                if(competitionToMove->getTrialRound() != nullptr){
+                    MyFunctions::removeFromVector(calendar->getCompetitionsReference(), competitionToMove->getTrialRound());
+                    competitionToMoveCompetitions.push_back(competitionToMove->getTrialRound());
                 }
-                competitionToMoveIndexInCalendar++;
-            }
-
-            calendar->getCompetitionsReference().swapItemsAt(competitionToMoveIndexInCalendar, competitionToMoveIndexInCalendar - 1);
-            competitionToMoveIndexInCalendar -= 1;
-            //qSwap(competitionToMoveIndexInCalendar, previousCompetitionIndexInCalendar);
-
-            qDebug()<<"KALENDARZ:";
-            debugCalendar();
-
-            for(auto it = competitionToMoveCompetitions.begin(); it != competitionToMoveCompetitions.end(); it++){
-                calendar->getCompetitionsReference().insert(competitionToMoveIndexInCalendar, *it);
-            }
-            qDebug()<<"PO competitionToMoveCompetitions:";
-            debugCalendar();
-            previousCompetitionIndexInCalendar = 0;
-            for(auto & comp : calendar->getCompetitionsReference()){ //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
-                if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
-                    if(previousCompetition == comp){
-                        break;
-                    }
+                for(auto & training : competitionToMove->getTrainingsReference()){
+                    MyFunctions::removeFromVector(calendar->getCompetitionsReference(), training);
+                    competitionToMoveCompetitions.push_back(training);
                 }
-                previousCompetitionIndexInCalendar++;
+
+                QVector<CompetitionInfo *> previousCompetitionCompetitions;
+                if(previousCompetition->getTrialRound() != nullptr){
+                    MyFunctions::removeFromVector(calendar->getCompetitionsReference(), previousCompetition->getTrialRound());
+                    previousCompetitionCompetitions.push_back(previousCompetition->getTrialRound());
+                }
+                for(auto & training : previousCompetition->getTrainingsReference()){
+                    MyFunctions::removeFromVector(calendar->getCompetitionsReference(), training);
+                    previousCompetitionCompetitions.push_back(training);
+                }
+
+                competitionToMoveIndexInCalendar = 0;
+                for(auto & comp : calendar->getCompetitionsReference()){ //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
+                    if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+                        if(competitionToMove == comp){
+                            break;
+                        }
+                    }
+                    competitionToMoveIndexInCalendar++;
+                }
+
+                calendar->getCompetitionsReference().swapItemsAt(competitionToMoveIndexInCalendar, competitionToMoveIndexInCalendar - 1);
+                competitionToMoveIndexInCalendar -= 1;
+                //qSwap(competitionToMoveIndexInCalendar, previousCompetitionIndexInCalendar);
+
+                qDebug()<<"KALENDARZ:";
+                debugCalendar();
+
+                for(auto it = competitionToMoveCompetitions.begin(); it != competitionToMoveCompetitions.end(); it++){
+                    calendar->getCompetitionsReference().insert(competitionToMoveIndexInCalendar, *it);
+                }
+                qDebug()<<"PO competitionToMoveCompetitions:";
+                debugCalendar();
+                previousCompetitionIndexInCalendar = 0;
+                for(auto & comp : calendar->getCompetitionsReference()){ //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
+                    if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+                        if(previousCompetition == comp){
+                            break;
+                        }
+                    }
+                    previousCompetitionIndexInCalendar++;
+                }
+                for(auto it = previousCompetitionCompetitions.begin(); it != previousCompetitionCompetitions.end(); it++){
+                    calendar->getCompetitionsReference().insert(previousCompetitionIndexInCalendar, *it);
+                }
+                qDebug()<<"PO previousCompetitionIndexInCalendar:";
+                debugCalendar();
+                ui->tableView->clearSelection();
+                ui->tableView->selectionModel()->select(calendarModel->index(moveIndex - 1, 0), QItemSelectionModel::Select);
+                emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
             }
-            for(auto it = previousCompetitionCompetitions.begin(); it != previousCompetitionCompetitions.end(); it++){
-                calendar->getCompetitionsReference().insert(previousCompetitionIndexInCalendar, *it);
-            }
-            qDebug()<<"PO previousCompetitionIndexInCalendar:";
-            debugCalendar();
-            ui->tableView->clearSelection();
-            ui->tableView->selectionModel()->select(calendarModel->index(moveIndex - 1, 0), QItemSelectionModel::Select);
-            emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
+            updateActualCompetitionByID();
         }
-        updateActualCompetitionByID();
     }
 }
 
@@ -357,80 +376,82 @@ void CalendarEditorWidget::downActionTriggered()
             }
             competitionToMoveIndexInCalendar++;
         }
-        if(competitionToMove != nullptr){
-            int nextCompetitionIndexInCalendar = -1;
-            CompetitionInfo * nextCompetition = nullptr;
-            for(int i=competitionToMoveIndexInCalendar + 1; i<calendar->getCompetitionsReference().count(); i++){
-                if(calendar->getCompetitionsReference()[i]->getSerieType() == CompetitionInfo::Qualifications || calendar->getCompetitionsReference()[i]->getSerieType() == CompetitionInfo::Competition){
-                    nextCompetition = calendar->getCompetitionsReference()[i];
-                    nextCompetitionIndexInCalendar = i;
-                    break;
-                }
-            }
-
-            nextCompetition = calendar->getCompetitionsReference()[nextCompetitionIndexInCalendar];
-
-            QVector<CompetitionInfo *> competitionToMoveCompetitions;
-            if(competitionToMove->getTrialRound() != nullptr){
-                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), competitionToMove->getTrialRound());
-                competitionToMoveCompetitions.push_back(competitionToMove->getTrialRound());
-            }
-            for(auto & training : competitionToMove->getTrainingsReference()){
-                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), training);
-                competitionToMoveCompetitions.push_back(training);
-            }
-
-            QVector<CompetitionInfo *> nextCompetitionCompetitions;
-            if(nextCompetition->getTrialRound() != nullptr){
-                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), nextCompetition->getTrialRound());
-                nextCompetitionCompetitions.push_back(nextCompetition->getTrialRound());
-            }
-            for(auto & training : nextCompetition->getTrainingsReference()){
-                MyFunctions::removeFromVector(calendar->getCompetitionsReference(), training);
-                nextCompetitionCompetitions.push_back(training);
-            }
-
-            competitionToMoveIndexInCalendar = 0;
-            for(auto & comp : calendar->getCompetitionsReference()){ //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
-                if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
-                    if(competitionToMove == comp){
+        if(competitionToMoveIndexInCalendar >= calendarModel->getDontModifyBefore()){
+            if(competitionToMove != nullptr){
+                int nextCompetitionIndexInCalendar = -1;
+                CompetitionInfo * nextCompetition = nullptr;
+                for(int i=competitionToMoveIndexInCalendar + 1; i<calendar->getCompetitionsReference().count(); i++){
+                    if(calendar->getCompetitionsReference()[i]->getSerieType() == CompetitionInfo::Qualifications || calendar->getCompetitionsReference()[i]->getSerieType() == CompetitionInfo::Competition){
+                        nextCompetition = calendar->getCompetitionsReference()[i];
+                        nextCompetitionIndexInCalendar = i;
                         break;
                     }
                 }
-                competitionToMoveIndexInCalendar++;
-            }
 
-            calendar->getCompetitionsReference().swapItemsAt(competitionToMoveIndexInCalendar, competitionToMoveIndexInCalendar + 1);
-            competitionToMoveIndexInCalendar += 1;
-            //qSwap(competitionToMoveIndexInCalendar, nextCompetitionIndexInCalendar);
+                nextCompetition = calendar->getCompetitionsReference()[nextCompetitionIndexInCalendar];
 
-            qDebug()<<"KALENDARZ:";
-            debugCalendar();
-
-            for(auto it = competitionToMoveCompetitions.begin(); it != competitionToMoveCompetitions.end(); it++){
-                calendar->getCompetitionsReference().insert(competitionToMoveIndexInCalendar, *it);
-            }
-            qDebug()<<"PO competitionToMoveCompetitions:";
-            debugCalendar();
-            nextCompetitionIndexInCalendar = 0;
-            for(auto & comp : calendar->getCompetitionsReference()){ //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
-                if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
-                    if(nextCompetition == comp){
-                        break;
-                    }
+                QVector<CompetitionInfo *> competitionToMoveCompetitions;
+                if(competitionToMove->getTrialRound() != nullptr){
+                    MyFunctions::removeFromVector(calendar->getCompetitionsReference(), competitionToMove->getTrialRound());
+                    competitionToMoveCompetitions.push_back(competitionToMove->getTrialRound());
                 }
-                nextCompetitionIndexInCalendar++;
+                for(auto & training : competitionToMove->getTrainingsReference()){
+                    MyFunctions::removeFromVector(calendar->getCompetitionsReference(), training);
+                    competitionToMoveCompetitions.push_back(training);
+                }
+
+                QVector<CompetitionInfo *> nextCompetitionCompetitions;
+                if(nextCompetition->getTrialRound() != nullptr){
+                    MyFunctions::removeFromVector(calendar->getCompetitionsReference(), nextCompetition->getTrialRound());
+                    nextCompetitionCompetitions.push_back(nextCompetition->getTrialRound());
+                }
+                for(auto & training : nextCompetition->getTrainingsReference()){
+                    MyFunctions::removeFromVector(calendar->getCompetitionsReference(), training);
+                    nextCompetitionCompetitions.push_back(training);
+                }
+
+                competitionToMoveIndexInCalendar = 0;
+                for(auto & comp : calendar->getCompetitionsReference()){ //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
+                    if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+                        if(competitionToMove == comp){
+                            break;
+                        }
+                    }
+                    competitionToMoveIndexInCalendar++;
+                }
+
+                calendar->getCompetitionsReference().swapItemsAt(competitionToMoveIndexInCalendar, competitionToMoveIndexInCalendar + 1);
+                competitionToMoveIndexInCalendar += 1;
+                //qSwap(competitionToMoveIndexInCalendar, nextCompetitionIndexInCalendar);
+
+                qDebug()<<"KALENDARZ:";
+                debugCalendar();
+
+                for(auto it = competitionToMoveCompetitions.begin(); it != competitionToMoveCompetitions.end(); it++){
+                    calendar->getCompetitionsReference().insert(competitionToMoveIndexInCalendar, *it);
+                }
+                qDebug()<<"PO competitionToMoveCompetitions:";
+                debugCalendar();
+                nextCompetitionIndexInCalendar = 0;
+                for(auto & comp : calendar->getCompetitionsReference()){ //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
+                    if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+                        if(nextCompetition == comp){
+                            break;
+                        }
+                    }
+                    nextCompetitionIndexInCalendar++;
+                }
+                for(auto it = nextCompetitionCompetitions.begin(); it != nextCompetitionCompetitions.end(); it++){
+                    calendar->getCompetitionsReference().insert(nextCompetitionIndexInCalendar, *it);
+                }
+                qDebug()<<"PO nextCompetitionIndexInCalendar:";
+                debugCalendar();
+                ui->tableView->clearSelection();
+                ui->tableView->selectionModel()->select(calendarModel->index(moveIndex + 1, 0), QItemSelectionModel::Select);
+                emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
             }
-            for(auto it = nextCompetitionCompetitions.begin(); it != nextCompetitionCompetitions.end(); it++){
-                calendar->getCompetitionsReference().insert(nextCompetitionIndexInCalendar, *it);
-            }
-            qDebug()<<"PO nextCompetitionIndexInCalendar:";
-            debugCalendar();
-            ui->tableView->clearSelection();
-            ui->tableView->selectionModel()->select(calendarModel->index(moveIndex + 1, 0), QItemSelectionModel::Select);
-            emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
+            updateActualCompetitionByID();
         }
-        updateActualCompetitionByID();
     }
 }
 
@@ -446,6 +467,20 @@ void CalendarEditorWidget::editActionTriggered()
                 return;
             rows.push_back(idx.row());
         }
+
+        int minRow = 0;
+        int i=0;
+        for(auto & comp : calendar->getCompetitionsReference())
+        {
+            if(i == calendarModel->getDontModifyBefore())
+                break;
+            if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition)
+                minRow++;
+            i++;
+        }
+
+        for(auto & row : ui->tableView->selectionModel()->selectedIndexes())
+            if(row.row() < minRow) return;
 
         switch(column){
         case 0: //Skocznia
@@ -502,6 +537,21 @@ void CalendarEditorWidget::execMultipleTrainingsEditDialog(QVector<int> *rows, i
 {
     MultipleTrainingsEditDialog * dialog = new MultipleTrainingsEditDialog();
     dialog->setRulesList(calendarModel->getRulesList());
+    CompetitionInfo * competition;
+    int i=-1;
+    for(auto & comp : calendar->getCompetitionsReference())
+    {
+        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition)
+            i++;
+        if(i == rows->first())
+        {
+            competition = comp;
+            break;
+        }
+    }
+    if(competition->getTrainingsReference().count() > 0)
+        dialog->setTrainingsRules(competition->getTrainingsReference().first()->getRules());
+    dialog->setCount(competition->getTrainingsReference().count());
     connect(dialog, &MultipleTrainingsEditDialog::submitted, dialog, &MultipleTrainingsEditDialog::accept);
     if(dialog->exec() == QDialog::Accepted){
         for(auto & row : qAsConst(*rows)){
@@ -546,6 +596,21 @@ void CalendarEditorWidget::execMultipleTrialRoundsEditDialog(QVector<int> *rows,
 {
     MultipleTrialRoundsEditDialog * dialog = new MultipleTrialRoundsEditDialog();
     dialog->setRulesList(calendarModel->getRulesList());
+    CompetitionInfo * competition;
+    int i=-1;
+    for(auto & comp : calendar->getCompetitionsReference())
+    {
+        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition)
+            i++;
+        if(i == rows->first())
+        {
+            competition = comp;
+            break;
+        }
+    }
+    if(competition->getTrialRound() != nullptr)
+        dialog->setTrialRoundRules(competition->getTrialRound()->getRules());
+    dialog->setTrialRound(competition->getTrialRound() != nullptr);
     connect(dialog, &MultipleTrialRoundsEditDialog::submitted, dialog, &MultipleTrialRoundsEditDialog::accept);
     if(dialog->exec() == QDialog::Accepted){
         for(auto & row : qAsConst(*rows)){
@@ -780,7 +845,20 @@ void CalendarEditorWidget::execMultipleCompetitionRulesEditDialog(QVector<int> *
 
     CompetitionRulesEditorWidget * editor = new CompetitionRulesEditorWidget(this);
     editor->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    editor->resetInputs();
+    CompetitionInfo * competition;
+    int i=-1;
+    for(auto & comp : calendar->getCompetitionsReference())
+    {
+        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition)
+            i++;
+        if(i == rows->first())
+        {
+            competition = comp;
+            break;
+        }
+    }
+    editor->setCompetitionRules(competition->getRulesPointer());
+    editor->fillCompetitionRulesInputs();
 
     QWidget * widget = new QWidget(dialog);
     QHBoxLayout * layout = new QHBoxLayout(dialog);

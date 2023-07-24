@@ -29,6 +29,8 @@ private:
     QVector<Hill> hills;
     QVector<CompetitionRules> competitionRules;
 
+    int nextCompetitionIndex;
+
 public:
     QString getName() const;
     void setName(const QString &newName);
@@ -45,6 +47,8 @@ public:
     void setCompetitionRules(const QVector<CompetitionRules> &newCompetitionRules);
     Season *getActualSeason() const;
     void setActualSeason(Season *newActualSeason);
+    int getNextCompetitionIndex() const;
+    void setNextCompetitionIndex(int newNextCompetitionIndex);
 };
 
 #endif // SIMULATIONSAVE_H

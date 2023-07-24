@@ -36,11 +36,12 @@ private:
     QVector<Classification> * classificationsList;
 
     CompetitionInfoEditorWidget * competitionInfoEditor;
+
     CompetitionInfo * actualCompetition;
     int actualCompetitionIndex;
     ulong actualCompetitionID;
-    void updateActualCompetitionByID();
 
+    void updateActualCompetitionByID();
     void debugCalendar();
 
 private slots:
@@ -69,6 +70,10 @@ public:
     QVector<Classification> *getClassificationsList() const;
     void setClassificationsList(QVector<Classification> *newClassificationsList);
     CompetitionInfoEditorWidget *getCompetitionInfoEditor() const;
+    int getDontRemoveBefore() const;
+    void setDontRemoveBefore(int newDontRemoveBefore);
+    int getDontModifiyBefore() const;
+    void setDontModifiyBefore(int newDontModifiyBefore);
 };
 
 #endif // CALENDAREDITORWIDGET_H

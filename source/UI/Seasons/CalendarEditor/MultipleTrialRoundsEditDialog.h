@@ -35,6 +35,8 @@ private:
 public:
     QVector<CompetitionRules> *getRulesList() const;
     void setRulesList(QVector<CompetitionRules> *newRulesList);
+    void setTrialRoundRules(const CompetitionRules &newTrialRoundRules);
+    void setTrialRound(bool ok);
 };
 
 #endif // MULTIPLETRIALROUNDSEDITDIALOG_H

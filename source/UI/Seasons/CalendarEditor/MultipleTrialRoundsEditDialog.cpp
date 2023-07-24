@@ -36,7 +36,8 @@ void MultipleTrialRoundsEditDialog::on_pushButton_trainingsRules_clicked()
 
     CompetitionRulesEditorWidget * editor = new CompetitionRulesEditorWidget(this);
     editor->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    editor->resetInputs();
+    editor->setCompetitionRules(&trialRoundRules);
+    editor->fillCompetitionRulesInputs();
 
     QWidget * widget = new QWidget(dialog);
     QHBoxLayout * layout = new QHBoxLayout(dialog);
@@ -74,6 +75,16 @@ void MultipleTrialRoundsEditDialog::on_pushButton_trainingsRules_clicked()
 void MultipleTrialRoundsEditDialog::on_pushButton_submit_clicked()
 {
     emit submitted();
+}
+
+void MultipleTrialRoundsEditDialog::setTrialRoundRules(const CompetitionRules &newTrialRoundRules)
+{
+    trialRoundRules = newTrialRoundRules;
+}
+
+void MultipleTrialRoundsEditDialog::setTrialRound(bool ok)
+{
+    ui->checkBox_trialRound->setChecked(ok);
 }
 
 QVector<CompetitionRules> *MultipleTrialRoundsEditDialog::getRulesList() const

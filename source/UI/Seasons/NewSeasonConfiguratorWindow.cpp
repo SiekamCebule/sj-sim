@@ -93,7 +93,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
         }
     });
 
-    calendarTableModel = new CalendarEditorTableModel(&calendar, &hills, &GlobalDatabase::get()->getEditableCompetitionRules(), this);
+    calendarTableModel = new CalendarEditorTableModel(&calendar, &hills, &GlobalDatabase::get()->getEditableCompetitionRules(), 0, this);
     calendarEditor = new CalendarEditorWidget(calendarTableModel, &calendar.getClassificationsReference(), this);
     ui->verticalLayout_calendarEditor->addWidget(calendarEditor);
 
