@@ -1,15 +1,16 @@
 #include "DatabaseItemsListView.h"
 #include "ui_DatabaseItemsListView.h"
+#include <QMessageBox>
 
-DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, QWidget *parent) :
+DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, bool allowRemoving, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DatabaseItemsListView),
     type(type),
-    allowInserting(allowInserting)
+    allowInserting(allowInserting),
+    allowRemoving(allowRemoving)
 {
     ui->setupUi(this);
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
-
     jumpers = nullptr;
     hills = nullptr;
     competitionRules = nullptr;
@@ -202,67 +203,67 @@ void DatabaseItemsListView::onInsertActionTriggered()
         }
     }
 }
-//0x5555572b0450 listModel najpierw
 
 void DatabaseItemsListView::onRemoveActionTriggered()
 {
-    QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
-    if(rows.size() > 0){
-        int firstRow = rows.first().row();
-        QItemSelectionModel * selectionModel = ui->listView->selectionModel();
-        switch(type){
-        case JumperItems:{
-            JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
-            while(ui->listView->selectionModel()->selectedRows().size() > 0){
-                int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
-                jumpersListModel->removeRows(rowToRemove, 1);
-                jumpersListModel->getJumpersVectorPointer()->remove(rowToRemove, 1);
+    if(allowRemoving == true){
+        QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
+        if(rows.size() > 0){
+            int firstRow = rows.first().row();
+            switch(type){
+            case JumperItems:{
+                JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
+                while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                    int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                    jumpersListModel->removeRows(rowToRemove, 1);
+                    jumpersListModel->getJumpersVectorPointer()->remove(rowToRemove, 1);
+                }
+                emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
+                break;
             }
-            emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
-            break;
-        }
-        case HillItems:{
-            HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
-            while(ui->listView->selectionModel()->selectedRows().size() > 0){
-                int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
-                hillsListModel->removeRows(rowToRemove, 1);
-                hillsListModel->getHillsVectorPointer()->remove(rowToRemove, 1);
+            case HillItems:{
+                HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
+                while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                    int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                    hillsListModel->removeRows(rowToRemove, 1);
+                    hillsListModel->getHillsVectorPointer()->remove(rowToRemove, 1);
+                }
+                emit hillsListModel->dataChanged(hillsListModel->index(firstRow), hillsListModel->index(hillsListModel->rowCount() - 1));
+                break;
             }
-            emit hillsListModel->dataChanged(hillsListModel->index(firstRow), hillsListModel->index(hillsListModel->rowCount() - 1));
-            break;
-        }
-        case CompetitionRulesItems:{
-            CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
-            while(ui->listView->selectionModel()->selectedRows().size() > 0){
-                int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
-                competitionRulesListModel->removeRows(rowToRemove, 1);
-                competitionRulesListModel->getCompetitonRulesVectorPointer()->remove(rowToRemove, 1);
+            case CompetitionRulesItems:{
+                CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
+                while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                    int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                    competitionRulesListModel->removeRows(rowToRemove, 1);
+                    competitionRulesListModel->getCompetitonRulesVectorPointer()->remove(rowToRemove, 1);
+                }
+                emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(firstRow), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
+                break;
             }
-            emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(firstRow), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
-            break;
-        }
-        case ClassificationItems:{
-            ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
-            while(ui->listView->selectionModel()->selectedRows().size() > 0){
-                int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
-                classificationsListModel->removeRows(rowToRemove, 1);
-                classificationsListModel->getClassificationsVectorPointer()->remove(rowToRemove, 1);
+            case ClassificationItems:{
+                ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
+                while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                    int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                    classificationsListModel->removeRows(rowToRemove, 1);
+                    classificationsListModel->getClassificationsVectorPointer()->remove(rowToRemove, 1);
+                }
+                emit classificationsListModel->dataChanged(classificationsListModel->index(firstRow), classificationsListModel->index(classificationsListModel->rowCount() - 1));
+                break;
             }
-            emit classificationsListModel->dataChanged(classificationsListModel->index(firstRow), classificationsListModel->index(classificationsListModel->rowCount() - 1));
-            break;
-        }
-        case PointsForPlacesPresetsItems:
-        {
-            PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
-            while(ui->listView->selectionModel()->selectedRows().size() > 0){
-                int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
-                model->removeRows(rowToRemove, 1);
-                model->getPresetsVectorPointer()->remove(rowToRemove, 1);
+            case PointsForPlacesPresetsItems:
+            {
+                PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
+                while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                    int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                    model->removeRows(rowToRemove, 1);
+                    model->getPresetsVectorPointer()->remove(rowToRemove, 1);
+                }
+                emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
+                break;
             }
-            emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
-            break;
-        }
-        default: break;
+            default: break;
+            }
         }
         emit remove();
     }

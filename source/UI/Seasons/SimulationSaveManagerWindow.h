@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "../DatabaseEditor/DatabaseItemsListView.h"
 #include "../EditorWidgets/JumperEditorWidget.h"
+#include "../EditorWidgets/HillEditorWidget.h"
+#include "../EditorWidgets/CompetitionRulesEditorWidget.h"
 #include "../../seasons/SimulationSave.h"
 
 namespace Ui {
@@ -18,6 +20,8 @@ public:
     explicit SimulationSaveManagerWindow(SimulationSave * simulationSave, QWidget *parent = nullptr);
     ~SimulationSaveManagerWindow();
 
+    void showJumperAndHillsEditingHelp();
+
 private:
     Ui::SimulationSaveManagerWindow *ui;
 
@@ -25,6 +29,12 @@ private:
 
     DatabaseItemsListView * jumpersListView;
     JumperEditorWidget * jumperEditor;
+
+    DatabaseItemsListView * hillsListView;
+    HillEditorWidget * hillEditor;
+
+    DatabaseItemsListView * rulesListView;
+    CompetitionRulesEditorWidget * rulesEditor;
 
 public:
 

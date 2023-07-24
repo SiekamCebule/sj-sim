@@ -128,19 +128,6 @@ bool SimulationSave::loadFromFile(QString fileName, QString dir)
     return true;
 }
 
-void SimulationSave::updateJumpersActivityVectors()
-{
-    activeJumpers.clear();
-    inactiveJumpers.clear();
-    for(auto & key : jumpersActivity.keys())
-    {
-        if(jumpersActivity.value(key) == true)
-            activeJumpers.push_back(key);
-        else
-            inactiveJumpers.push_back(key);
-    }
-}
-
 Season *SimulationSave::getActualSeason() const
 {
     return actualSeason;
@@ -164,31 +151,6 @@ QVector<Hill> SimulationSave::getHills() const
 QVector<CompetitionRules> &SimulationSave::getCompetitionRulesReference()
 {
     return competitionRules;
-}
-
-QVector<Jumper *> SimulationSave::getInactiveJumpers() const
-{
-    return inactiveJumpers;
-}
-
-QVector<Jumper *> &SimulationSave::getInactiveJumpersReference()
-{
-    return inactiveJumpers;
-}
-
-void SimulationSave::setInactiveJumpers(const QVector<Jumper *> &newInactiveJumpers)
-{
-    inactiveJumpers = newInactiveJumpers;
-}
-
-QVector<Jumper *> &SimulationSave::getActiveJumpers()
-{
-    return activeJumpers;
-}
-
-void SimulationSave::setActiveJumpers(const QVector<Jumper *> &newActiveJumpers)
-{
-    activeJumpers = newActiveJumpers;
 }
 
 void SimulationSave::setHills(const QVector<Hill> &newHills)

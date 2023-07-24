@@ -141,10 +141,10 @@ void NewSeasonConfiguratorWindow::showCalendarEditorHelp()
 {
     if(GlobalAppSettings::get()->getShowCalendarEditorHelp() == true){
         QMessageBox box;
-        box.setWindowTitle("Edytor kalendarzy");
+        box.setWindowTitle(tr("Edytor kalendarzy"));
         box.setText("Aby dodać konkurs do kalendarza użyj \"Ctrl + A\". Żeby usunąć zawody użyj \"Ctrl + D\".\n Aby przesuwać konkursy, użyj Ctrl i strzałek na klawiaturze.\nAby edytować informacje o konkursie zaznacz w tabeli wiersze informacji o konkursie które chcesz edytować (Wszystkie w tej samej kolumnie) i naciśnij \"Ctrl + E\".\nMożna edytować kilka konkursów na raz (Jedynym wyjątakiem jest kolumna \"Awans (Konkurs)\" gdzie zaznaczyć można tylko jeden wiersz.");
         box.setStandardButtons(QMessageBox::Ok);
-        QAbstractButton *pButtonDontShow = box.addButton("Nie pokazuj ponownie", QMessageBox::ActionRole);
+        QAbstractButton *pButtonDontShow = box.addButton(tr("Nie pokazuj ponownie"), QMessageBox::ActionRole);
         box.exec();
         if(box.clickedButton() == pButtonDontShow)
         {

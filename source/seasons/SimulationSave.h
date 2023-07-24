@@ -21,8 +21,6 @@ public:
     bool saveToFile(QString dir = "");
     bool loadFromFile(QString fileName, QString dir = "");
 
-    void updateJumpersActivityVectors();
-
 private:
     QString name;
     QVector<Season> seasons;
@@ -30,10 +28,6 @@ private:
     QVector<Jumper> jumpers;
     QVector<Hill> hills;
     QVector<CompetitionRules> competitionRules;
-
-    QMap<Jumper *, bool> jumpersActivity;
-    QVector<Jumper *> activeJumpers;
-    QVector<Jumper *> inactiveJumpers;
 
 public:
     QString getName() const;
@@ -46,12 +40,6 @@ public:
     void setJumpers(const QVector<Jumper> &newJumpers);
     QVector<Hill> & getHillsReference();
     void setHills(const QVector<Hill> &newHills);
-    QVector<Jumper *> getActiveJumpers() const;
-    QVector<Jumper *> & getActiveJumpers();
-    void setActiveJumpers(const QVector<Jumper *> &newActiveJumpers);
-    QVector<Jumper *> getInactiveJumpers() const;
-    QVector<Jumper *> & getInactiveJumpersReference();
-    void setInactiveJumpers(const QVector<Jumper *> &newInactiveJumpers);
     QVector<Hill> getHills() const;
     QVector<CompetitionRules> & getCompetitionRulesReference();
     void setCompetitionRules(const QVector<CompetitionRules> &newCompetitionRules);

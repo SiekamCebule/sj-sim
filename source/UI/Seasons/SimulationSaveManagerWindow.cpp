@@ -1,5 +1,9 @@
 #include "SimulationSaveManagerWindow.h"
 #include "ui_SimulationSaveManagerWindow.h"
+#include "../../global/GlobalAppSettings.h"
+#include <QMessageBox>
+#include <QTimer>
+#include <QPushButton>
 
 SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *simulationSave, QWidget *parent) :
     QDialog(parent),
@@ -8,7 +12,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *simulat
 {
     ui->setupUi(this);
 
-    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, this);
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, false, this);
     jumpersListView->setJumpers(&simulationSave->getJumpersReference());
     jumpersListView->setupListModel();
     ui->verticalLayout_jumpersList->addWidget(jumpersListView);
@@ -27,11 +31,80 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *simulat
         emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(idx), jumpersListView->getListModel()->index(idx));
     });
 
+    //-----//
+
+    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::HillItems, true, false, this);
+    hillsListView->setHills(&simulationSave->getHillsReference());
+    hillsListView->setupListModel();
+    ui->verticalLayout_hillsList->addWidget(hillsListView);
+
+    hillEditor = new HillEditorWidget();
+    hillEditor->hide();
+    ui->verticalLayout_hillEditor->addWidget(hillEditor);
+    connect(hillsListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this, simulationSave](const QModelIndex & index){
+        hillEditor->show();
+        hillEditor->setHill(&simulationSave->getHillsReference()[index.row()]);
+        hillEditor->fillHillInputs();
+    });
+    connect(hillEditor, &HillEditorWidget::submitted, this, [this, simulationSave](){
+        int idx = hillsListView->getLastDoubleClickedIndex();
+        simulationSave->getHillsReference()[idx] = hillEditor->getHillFromWidgetInput();
+        emit hillsListView->getListModel()->dataChanged(hillsListView->getListModel()->index(idx), hillsListView->getListModel()->index(idx));
+    });
+
+    //-----//
+
+    rulesListView = new DatabaseItemsListView(DatabaseItemsListView::CompetitionRulesItems, true, true, this);
+    rulesListView->setCompetitionRules(&simulationSave->getCompetitionRulesReference());
+    rulesListView->setupListModel();
+    ui->verticalLayout_rulesList->addWidget(rulesListView);
+
+    rulesEditor = new CompetitionRulesEditorWidget();
+    rulesEditor->hide();
+    ui->verticalLayout_rulesEditor->addWidget(rulesEditor);
+    connect(rulesListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this, simulationSave](const QModelIndex & index){
+        rulesEditor->show();
+        rulesEditor->setCompetitionRules(&simulationSave->getCompetitionRulesReference()[index.row()]);
+        rulesEditor->fillCompetitionRulesInputs();
+    });
+    connect(rulesEditor, &CompetitionRulesEditorWidget::submitted, this, [this, simulationSave](){
+        int idx = rulesListView->getLastDoubleClickedIndex();
+        simulationSave->getCompetitionRulesReference()[idx] = rulesEditor->getCompetitionRulesFromWidgetInputs();
+        emit rulesListView->getListModel()->dataChanged(rulesListView->getListModel()->index(idx), rulesListView->getListModel()->index(idx));
+    });
+
+    //-----------------------------------------------------------------//
     ui->label_saveName->setText(simulationSave->getName() + ": ");
     ui->label_seasonNumber->setText(tr("Sezon ") + QString::number(simulationSave->getActualSeason()->getSeasonNumber()));
+
+    connect(ui->toolBox, &QToolBox::currentChanged, this, [this](){
+        if(ui->toolBox->currentIndex() == 0 || ui->toolBox->currentIndex() == 1)
+        {
+            QTimer::singleShot(276, this, [this](){
+                showJumperAndHillsEditingHelp();
+            });
+        }
+    });
+    emit ui->toolBox->currentChanged(0);
 }
 
 SimulationSaveManagerWindow::~SimulationSaveManagerWindow()
 {
     delete ui;
+}
+
+void SimulationSaveManagerWindow::showJumperAndHillsEditingHelp()
+{
+    QMessageBox box;
+    box.setWindowTitle(tr("Edycja zawodników i skoczni"));
+    box.setText(tr("BARDZO WAŻNE: Zawodników i skoczni które dodano, nie można już później usunąć. Bądź ostrożny podczas dodawania!"));
+    QAbstractButton *pButtonDontShow = box.addButton(tr("Nie pokazuj ponownie"), QMessageBox::ActionRole);
+    box.setStandardButtons(QMessageBox::Ok);
+    box.setDefaultButton(QMessageBox::Ok);
+    box.exec();
+    if(box.clickedButton() == pButtonDontShow)
+    {
+        GlobalAppSettings::get()->setShowSeasonJumpersAndHillsHelp(false);
+        GlobalAppSettings::get()->writeToJson();
+    }
 }

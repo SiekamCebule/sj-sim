@@ -16,6 +16,7 @@ public:
 private:
     short languageID;
     bool showCalendarEditorHelp;
+    bool showSeasonJumpersAndHillsHelp;
 
 public:
     short getLanguageID() const;
@@ -30,6 +31,8 @@ public:
     bool writeToJson();
     bool getShowCalendarEditorHelp() const;
     void setShowCalendarEditorHelp(bool newShowCalendarEditorHelp);
+    bool getShowSeasonJumpersAndHillsHelp() const;
+    void setShowSeasonJumpersAndHillsHelp(bool newShowSeasonJumpersAndHillsHelp);
 };
 
 #endif // GLOBALAPPSETTINGS_H

@@ -26,7 +26,7 @@ class DatabaseItemsListView : public QWidget
     Q_OBJECT
 
 public:
-    explicit DatabaseItemsListView(int type, bool allowInserting = true, QWidget *parent = nullptr);
+    explicit DatabaseItemsListView(int type, bool allowInserting = true, bool allowRemoving = true, QWidget *parent = nullptr);
     ~DatabaseItemsListView();
 
     enum Type{
@@ -66,6 +66,7 @@ private:
     QAction * downAction;
 
     bool allowInserting;
+    bool allowRemoving;
     int lastDoubleClickedIndex;
 
 private slots:

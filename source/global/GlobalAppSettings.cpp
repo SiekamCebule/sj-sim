@@ -22,6 +22,16 @@ GlobalAppSettings *GlobalAppSettings::get()
     return m_globalAppSettings;
 }
 
+bool GlobalAppSettings::getShowSeasonJumpersAndHillsHelp() const
+{
+    return showSeasonJumpersAndHillsHelp;
+}
+
+void GlobalAppSettings::setShowSeasonJumpersAndHillsHelp(bool newShowSeasonJumpersAndHillsHelp)
+{
+    showSeasonJumpersAndHillsHelp = newShowSeasonJumpersAndHillsHelp;
+}
+
 bool GlobalAppSettings::getShowCalendarEditorHelp() const
 {
     return showCalendarEditorHelp;
@@ -73,6 +83,7 @@ bool GlobalAppSettings::loadFromJson()
     }
     setLanguageID(value.toObject().value("language-id").toInt());
     setShowCalendarEditorHelp(value.toObject().value("show-calendar-editor-help").toBool(true));
+    setShowSeasonJumpersAndHillsHelp(value.toObject().value("show-season-jumpers-and-hills-help").toBool(true));
 
     return true;
 }
@@ -92,6 +103,7 @@ bool GlobalAppSettings::writeToJson()
     QJsonObject settingsObject;
     settingsObject.insert("language-id", getLanguageID());
     settingsObject.insert("show-calendar-editor-help", getShowCalendarEditorHelp());
+    settingsObject.insert("show-season-jumpers-and-hills-help", getShowSeasonJumpersAndHillsHelp());
 
     mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);

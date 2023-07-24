@@ -21,7 +21,7 @@
     <rect>
      <x>10</x>
      <y>80</y>
-     <width>631</width>
+     <width>901</width>
      <height>811</height>
     </rect>
    </property>
@@ -32,7 +32,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page_jumpers">
     <property name="geometry">
@@ -40,7 +40,7 @@
       <x>0</x>
       <y>0</y>
       <width>631</width>
-      <height>743</height>
+      <height>641</height>
      </rect>
     </property>
     <attribute name="label">
@@ -78,11 +78,76 @@
       <x>0</x>
       <y>0</y>
       <width>631</width>
-      <height>743</height>
+      <height>641</height>
      </rect>
     </property>
     <attribute name="label">
      <string>Skocznie</string>
+    </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_hillsList"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_hillEditor"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="page_rules">
+    <attribute name="label">
+     <string>Zasady konkursów (presety)</string>
+    </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_rulesList"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_rulesEditor"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="page_calendar">
+    <attribute name="label">
+     <string>Kalendarz</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="page_classifications">
+    <attribute name="label">
+     <string>Klasyfikacje</string>
     </attribute>
    </widget>
   </widget>
