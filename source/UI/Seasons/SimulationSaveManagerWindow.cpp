@@ -139,7 +139,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
         }
         else
         {
-            QMessageBox::information(this, tr("Edycja klasyfikacji"), tr("Nie możesz edytować tej klasyfikacji, ponieważ została ona już użyta w jakimś konkursie.\nMożesz ją tylko całkowicie usunąć"), QMessageBox::Ok);
+            QMessageBox::information(this, tr("Edycja klasyfikacji"), tr("Nie możesz edytować tej klasyfikacji, ponieważ wcześniej został rozegrany konkurs z jej użyciem.\nMożesz ją tylko całkowicie usunąć"), QMessageBox::Ok);
         }
     });
     connect(classificationsListView, &DatabaseItemsListView::remove, this, [this](){

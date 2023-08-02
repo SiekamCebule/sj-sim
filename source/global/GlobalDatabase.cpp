@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QCoreApplication>
 #include <QJsonValue>
+#include <QSysInfo>
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QMessageBox>
@@ -170,7 +171,11 @@ bool GlobalDatabase::loadCompetitionsRules()
 bool GlobalDatabase::loadSimulationSaves()
 {
     globalSimulationSaves.clear();
-    QDir dir(QCoreApplication::applicationDirPath() + "/simulationSaves");
+
+    QDir dir(QCoreApplication::applicationDirPath());
+    if(QSysInfo::productType() == "windows")
+        dir.cdUp();
+    dir.setPath(dir.path() + "/simulationSaves");
     dir.setNameFilters(QStringList() << "*.json");
 
     QStringList fileNames = dir.entryList();
