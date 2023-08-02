@@ -69,8 +69,6 @@ void HillEditorWidget::resetHillInputs()
 
 void HillEditorWidget::fillHillInputs()
 {
-    Hill h = *hill;
-    Hill * hill = &h;
     qDebug()<<hill->getFlightEffect();
     if(hill == nullptr)
     {

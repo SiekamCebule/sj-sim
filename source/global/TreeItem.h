@@ -26,6 +26,7 @@ public:
     static void deleteAllTreeItemsRecursively(TreeItem * rootItem);
     static void deleteTreeItemRecursively(TreeItem * item);
     static int getIndexOfItemInVectorByTreeModelIndex(const QModelIndex & index, TreeItem * rootItem, bool includeParentRows = false);
+    static bool recursivelyContains(TreeItem * item);
 };
 
 #endif // TREEITEM_H

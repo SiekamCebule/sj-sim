@@ -164,7 +164,7 @@ void CompetitionConfigWindow::setupHillToolBoxItem()
 {
     ui->comboBox_existingHill->clear();
     ui->comboBox_existingHill->addItem(tr("BRAK"));
-    for(const auto & hill : GlobalDatabase::get()->getGlobalHills())
+    for(const auto & hill : GlobalDatabase::get()->getEditableGlobalHills())
     {
         ui->comboBox_existingHill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())))) ,hill.getName() + " HS" + QString::number(hill.getHSPoint()));
     }
@@ -176,7 +176,7 @@ void CompetitionConfigWindow::setupHillToolBoxItem()
     connect(ui->comboBox_existingHill, &QComboBox::currentIndexChanged, this, [this](){
         int selected = ui->comboBox_existingHill->currentIndex();
         if(selected > 0){
-            hillEditor->setHill(&GlobalDatabase::get()->getGlobalHills()[selected - 1]);
+            hillEditor->setHill(&GlobalDatabase::get()->getEditableGlobalHills()[selected - 1]);
             hillEditor->fillHillInputs();
             emit hillEditor->KPointInputChanged(hillEditor->getHill()->getKPoint());
         }
@@ -189,7 +189,7 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
     existingCompetitionRulesComboBox = new QComboBox();
     QStringList rulesStringList;
     rulesStringList.push_back("BRAK");
-    for(const auto & rule : GlobalDatabase::get()->getGlobalCompetitionsRules())
+    for(const auto & rule : GlobalDatabase::get()->getEditableCompetitionRules())
     {
         rulesStringList.push_back(rule.getName());
     }

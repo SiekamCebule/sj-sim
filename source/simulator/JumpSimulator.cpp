@@ -310,7 +310,7 @@ void JumpSimulator::generateInrunSnowEffect()
     double inrunSnow = simulationData->getInrunSnow();
     qDebug()<<"inrunSnow -------> "<<inrunSnow;
     qDebug()<<" simulationData->takeoffRating: "<< simulationData->takeoffRating;
-    simulationData->takeoffRating /= (1 + (inrunSnow / 16.44));
+    simulationData->takeoffRating /= (1 + (inrunSnow / 15));
     qDebug()<<" simulationData->takeoffRating: "<< simulationData->takeoffRating;
 }
 

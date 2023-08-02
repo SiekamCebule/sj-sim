@@ -69,14 +69,15 @@ int TeamResultsTreeModel::rowCount(const QModelIndex &parent) const
     else
         parentItem = static_cast<TreeItem*>(parent.internalPointer());
 
+    if(parentItem->getDataVectorReference().count() == 0)
+        return 0;
+
     if(parentItem == rootItem)
         return parentItem->childCount(); // tyle naglowkow druzyn
     else if(parentItem != rootItem && parentItem->getParentItem() == rootItem)
         return results->howManyJumpersJumpedInTeam(teams->at(parentItem->row())); //ilość zawodników którzy NA RAZIE skoczyli w danej drużynie.
     return 0;
 }
-//Być może roundTeams[0] zmieniło nagle adres przez jakieś nie wiem, detach()?
-// i co za tym idzie, teams z modelu wskazuje na jakiś nieistniejący vector czy coś w tym stylu.
 
 int TeamResultsTreeModel::columnCount(const QModelIndex &parent) const
 {
