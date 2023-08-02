@@ -18,7 +18,6 @@ SimulationSavesWindow::SimulationSavesWindow(QWidget *parent) :
     listModel = new SimulationSavesListModel(&GlobalDatabase::get()->getEditableGlobalSimulationSaves(), this);
     ui->listView_simulationSaves->setModel(listModel);
     ui->listView_simulationSaves->setSelectionMode(QAbstractItemView::SingleSelection);
-
 }
 
 SimulationSavesWindow::~SimulationSavesWindow()
@@ -60,6 +59,13 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
 
             simulationSave.getSeasonsReference().push_back(season);
             simulationSave.setActualSeason(&simulationSave.getSeasonsReference().first());
+
+            season.getCalendarReference().getCompetitionsReference()[0]->setPlayed(true);
+            season.getCalendarReference().getCompetitionsReference()[1]->setPlayed(true);
+            season.getCalendarReference().getCompetitionsReference()[2]->setPlayed(true);
+            season.getCalendarReference().getCompetitionsReference()[3]->setPlayed(true);
+            season.getCalendarReference().getCompetitionsReference()[4]->setPlayed(true);
+            simulationSave.updateNextCompetitionIndex();
 
             int index = 0;
             if(ui->listView_simulationSaves->selectionModel()->selectedRows().size() > 0)

@@ -41,6 +41,24 @@ public:
         }
         return false;
     }
+    template<typename T>
+    static bool vectorContainsByID(const QVector<T> & vector, T * item)
+    {
+        for(auto & it : vector){
+            if(it.getID() == item->getID())
+                return true;
+        }
+        return false;
+    }
+    template<typename T>
+    static bool vectorContainsByID(const QVector<T *> & vector, T * item)
+    {
+        for(auto & it : vector){
+            if(it->getID() == item->getID())
+                return true;
+        }
+        return false;
+    }
 
     template<typename T>
     static void removeFromVector(QVector<T*> & vector, T * item)
@@ -63,6 +81,20 @@ public:
         for(auto & it : vector)
         {
             if(&it == item){
+                vector.remove(i);
+                break;
+            }
+            i++;
+        }
+    }
+
+    template<typename T>
+    static void removeFromVectorByID(QVector<T> & vector, ulong id)
+    {
+        int i=0;
+        for(auto & it : vector)
+        {
+            if(it->getID() == id){
                 vector.remove(i);
                 break;
             }

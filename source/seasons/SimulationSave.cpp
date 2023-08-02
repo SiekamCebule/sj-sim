@@ -130,6 +130,17 @@ bool SimulationSave::loadFromFile(QString fileName, QString dir)
     return true;
 }
 
+void SimulationSave::updateNextCompetitionIndex()
+{
+    nextCompetitionIndex = 0;
+    for(auto & comp : getActualSeason()->getCalendarReference().getCompetitionsReference())
+    {
+        if(comp->getPlayed() == false)
+            break;
+        nextCompetitionIndex++;
+    }
+}
+
 int SimulationSave::getNextCompetitionIndex() const
 {
     return nextCompetitionIndex;

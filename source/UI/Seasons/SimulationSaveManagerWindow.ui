@@ -32,7 +32,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="page_jumpers">
     <property name="geometry">
@@ -111,6 +111,14 @@
     </layout>
    </widget>
    <widget class="QWidget" name="page_rules">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>901</width>
+      <height>641</height>
+     </rect>
+    </property>
     <attribute name="label">
      <string>Zasady konkursów (presety)</string>
     </attribute>
@@ -141,6 +149,14 @@
     </layout>
    </widget>
    <widget class="QWidget" name="page_calendar">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>901</width>
+      <height>641</height>
+     </rect>
+    </property>
     <attribute name="label">
      <string>Kalendarz</string>
     </attribute>
@@ -151,9 +167,42 @@
     </layout>
    </widget>
    <widget class="QWidget" name="page_classifications">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>901</width>
+      <height>641</height>
+     </rect>
+    </property>
     <attribute name="label">
      <string>Klasyfikacje</string>
     </attribute>
+    <layout class="QVBoxLayout" name="verticalLayout_7">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_classificationsList"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_classificationEditor"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QWidget" name="layoutWidget">

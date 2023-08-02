@@ -1,6 +1,7 @@
 #include "SimulationSaveManagerWindow.h"
 #include "ui_SimulationSaveManagerWindow.h"
 #include "../../global/GlobalAppSettings.h"
+#include "../../utilities/functions.h"
 #include <QMessageBox>
 #include <QTimer>
 #include <QPushButton>
@@ -92,11 +93,72 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
 
     //-----//
 
-    simulationSave->setNextCompetitionIndex(7);
     calendarTableModel = new CalendarEditorTableModel(&simulationSave->getActualSeason()->getCalendarReference(), &simulationSave->getHillsReference(), &simulationSave->getCompetitionRulesReference(), simulationSave->getNextCompetitionIndex(), this);
     calendarEditor = new CalendarEditorWidget(calendarTableModel, &simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
     ui->verticalLayout_calendar->addWidget(calendarEditor);
+
+    //-----//
+
+    classificationEditor = new ClassificationEditorWidget();
+    classificationEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    classificationEditor->setParent(this);
+    ui->verticalLayout_classificationEditor->addWidget(classificationEditor);
+
+    classificationsListView = new DatabaseItemsListView(DatabaseItemsListView::ClassificationItems, true, this);
+    classificationsListView->setClassifications(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
+    classificationsListView->setupListModel();
+    classificationsListView->selectOnlyFirstRow();
+    ui->verticalLayout_classificationsList->addWidget(classificationsListView);
+    connect(classificationsListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex &index){
+        Classification * classification = &simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference()[index.row()];
+        if(classificationEditor->getClassification() != nullptr)
+            classificationEditor->resetInputs();
+        classificationEditor->setClassification(classification);
+        classificationEditor->fillInputs();
+    });
+    connect(classificationEditor, &ClassificationEditorWidget::submitted, this, [this](){
+        bool classificationWasUsed = false;
+        for(auto & comp : simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference())
+        {
+            if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+                if(comp->getPlayed() == false)
+                    break;
+                if(MyFunctions::vectorContainsByID(comp->getClassificationsReference(), classificationEditor->getClassification()))
+                {
+                    classificationWasUsed = true;
+                    break;
+                }
+            }
+        }
+        if(classificationWasUsed == false){
+            if(classificationsListView->getListView()->selectionModel()->selectedRows().count() > 0)
+            {
+                int row = classificationsListView->getLastDoubleClickedIndex();//->getListView()->selectionModel()->selectedRows().at(0).row();
+                simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference()[row] = classificationEditor->getClassificationFromInputs();
+            }
+        }
+        else
+        {
+            QMessageBox::information(this, tr("Edycja klasyfikacji"), tr("Nie możesz edytować tej klasyfikacji, ponieważ została ona już użyta w jakimś konkursie.\nMożesz ją tylko całkowicie usunąć"), QMessageBox::Ok);
+        }
+    });
+    connect(classificationsListView, &DatabaseItemsListView::remove, this, [this](){
+        simulationSave->getActualSeason()->getCalendarReference().fixCompetitionsClassifications();
+        calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
+    });
 }
+
+/* Jak rozwiązać problem z edycją klasyfikacji podczas trwania sezonu?
+ * 1. Co można robić z klasyfikacjami w trakcie sezonu?
+ *      - Edytować klasyfikacje które nie zostały jeszcze wykorzystane
+ *      - Dodawać nowe
+ *      - Usuwać nowe (z usunięciem ze wszystkich konkursów i usunięciu historii tej klasyfikacji)
+ * 2. Jak wykryć które klasyfikacje nie zostały jeszcze wykorzystane?
+ *      - W pętli posprawdzać wszystkie rozegrane konkursy:
+ *          - Jeżeli w którymś była dana klasyfikacja, ZABLOKUJ możliwość edycji
+ *          - W przeciwnym wypadku, UMOŻLIW edycję
+ *      - Po zatwierdzeniu edycji klasyfikacji sprawdzamy czy ta edycja jest umożliwiona. Jeżeli nie, pokaż QMessageBox::information z informacją że ta klasyfikacja była już używana.
+*/
 
 SimulationSaveManagerWindow::~SimulationSaveManagerWindow()
 {
@@ -117,4 +179,9 @@ void SimulationSaveManagerWindow::showJumperAndHillsEditingHelp()
         GlobalAppSettings::get()->setShowSeasonJumpersAndHillsHelp(false);
         GlobalAppSettings::get()->writeToJson();
     }
+}
+
+SimulationSave *SimulationSaveManagerWindow::getSimulationSave() const
+{
+    return simulationSave;
 }

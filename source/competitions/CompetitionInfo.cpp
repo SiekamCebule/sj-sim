@@ -25,6 +25,7 @@ CompetitionInfo::CompetitionInfo(Hill *hill) : hill(hill),
 {
     exceptionalRoundsCount = (-1);
     cancelled = false;
+    played = false;
     serieType = Competition;
     trialRound = nullptr;
     results.setCompetitionInfo(this);
@@ -75,6 +76,16 @@ bool CompetitionInfo::saveToFile(QString dir, QString name)
     file.write(document.toJson());
     file.close();
     return true;
+}
+
+bool CompetitionInfo::getPlayed() const
+{
+    return played;
+}
+
+void CompetitionInfo::setPlayed(bool newPlayed)
+{
+    played = newPlayed;
 }
 
 QVector<CompetitionInfo *> CompetitionInfo::getQualifyingCompetitions() const
@@ -137,6 +148,7 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     object.insert("serie-type", competition.getSerieType());
     object.insert("exceptional-rounds-count", competition.getExceptionalRoundsCount());
     object.insert("cancelled", competition.getCancelled());
+    object.insert("played", competition.getPlayed());
 
     if(competition.getTrialRound() != nullptr)
         object.insert("trial-round-id", QString::number(competition.getTrialRound()->getID()));
@@ -170,6 +182,7 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json)
     comp.setSerieType(json.value("serie-type").toInt());
     comp.setExceptionalRoundsCount(json.value("exceptional-rounds-count").toInt());
     comp.setCancelled(json.value("cancelled").toBool());
+    comp.setPlayed(json.value("played").toBool());
     comp.setTrialRound(static_cast<CompetitionInfo *>(seasonObjectsManager.getObjectByID(json.value("trial-round-id").toString().toULong())));
 
     QJsonArray trainingsArray = json.value("training-ids").toArray();

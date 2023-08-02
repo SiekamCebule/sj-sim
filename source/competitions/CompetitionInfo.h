@@ -34,7 +34,9 @@ private:
     CompetitionResults results;
     short serieType;
     int exceptionalRoundsCount;
+
     bool cancelled;
+    bool played;
 
     CompetitionInfo * trialRound;
     QVector<CompetitionInfo *> trainings;
@@ -78,6 +80,8 @@ public:
     QVector<CompetitionInfo *> getQualifyingCompetitions() const;
     QVector<CompetitionInfo *> & getQualifyingCompetitionsReference();
     void setQualifyingCompetitions(const QVector<CompetitionInfo *> &newQualifyingCompetitions);
+    bool getPlayed() const;
+    void setPlayed(bool newPlayed);
 };
 
 #endif // COMPETITIONINFO_H

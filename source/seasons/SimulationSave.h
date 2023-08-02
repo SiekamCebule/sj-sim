@@ -21,6 +21,8 @@ public:
     bool saveToFile(QString dir = "");
     bool loadFromFile(QString fileName, QString dir = "");
 
+    void updateNextCompetitionIndex();
+
 private:
     QString name;
     QVector<Season> seasons;

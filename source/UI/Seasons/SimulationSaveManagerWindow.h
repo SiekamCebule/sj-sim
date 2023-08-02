@@ -6,6 +6,7 @@
 #include "../EditorWidgets/JumperEditorWidget.h"
 #include "../EditorWidgets/HillEditorWidget.h"
 #include "../EditorWidgets/CompetitionRulesEditorWidget.h"
+#include "../EditorWidgets/ClassificationEditorWidget.h"
 #include "CalendarEditor/CalendarEditorWidget.h"
 #include "../../seasons/SimulationSave.h"
 
@@ -39,6 +40,13 @@ private:
 
     CalendarEditorTableModel * calendarTableModel;
     CalendarEditorWidget * calendarEditor;
+
+    DatabaseItemsListView * classificationsListView;
+    int classificationsListViewActualElement;
+    ClassificationEditorWidget * classificationEditor;
+
+public:
+    SimulationSave *getSimulationSave() const;
 };
 
 #endif // SIMULATIONSAVEMANAGERWINDOW_H

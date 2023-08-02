@@ -78,8 +78,8 @@ color: rgb(26, 95, 180);
        </property>
        <property name="font">
         <font>
-         <family>Quicksand Medium</family>
-         <pointsize>14</pointsize>
+         <family>Ubuntu</family>
+         <pointsize>13</pointsize>
          <bold>false</bold>
         </font>
        </property>
@@ -88,7 +88,7 @@ color: rgb(26, 95, 180);
 background-color: rgb(253, 253, 253);</string>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -99,7 +99,7 @@ background-color: rgb(253, 253, 253);</string>
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>672</height>
+          <height>696</height>
          </rect>
         </property>
         <attribute name="label">
@@ -148,6 +148,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </layout>
        </widget>
        <widget class="QWidget" name="page_hills">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1227</width>
+          <height>696</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>Skocznie</string>
         </attribute>
@@ -203,6 +211,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </layout>
        </widget>
        <widget class="QWidget" name="page_competitionRules">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1227</width>
+          <height>696</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>Zasady konkursów</string>
         </attribute>
@@ -238,7 +254,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>672</height>
+          <height>696</height>
          </rect>
         </property>
         <attribute name="label">
@@ -256,31 +272,35 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>672</height>
+          <height>696</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Klasyfikacje</string>
         </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_classificationsList"/>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_classificationEditor"/>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_classificationsList"/>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_classificationEditor"/>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -290,7 +310,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>672</height>
+          <height>696</height>
          </rect>
         </property>
         <attribute name="label">

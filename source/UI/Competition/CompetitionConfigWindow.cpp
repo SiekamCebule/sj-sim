@@ -433,13 +433,16 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             this->setModal(true);
         }
         competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers, competitionRulesEditor->getJumpersCountInTeam());
+        info.setPlayed(true);
 
         QDate date = QDate::currentDate();
         QTime time = QTime::currentTime();
         QString dateString = QString::number(date.day()) + "-" + QString::number(date.month()) + "-" + QString::number(date.year()) + " " + QString::number(time.hour()) + "-" + QString::number(time.minute()) + "-" + QString::number(time.second());
         info.saveToFile("results/single-competitions/", info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString +".json");
-        if(qualificationsManager != nullptr)
+        if(qualificationsManager != nullptr){
+            qualsInfo.setPlayed(true);
             qualsInfo.saveToFile(QString("results/single-competitions/"), info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString + " (Q).json");
+        }
 
         delete info.getHill();
         delete competitionManager;

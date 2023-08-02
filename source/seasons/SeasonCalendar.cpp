@@ -21,9 +21,9 @@ void SeasonCalendar::fixCompetitionsClassifications()
 {
     for(auto & comp : competitions){
         for(auto & classification : comp->getClassificationsReference()){
-            if(MyFunctions::vectorContains(classifications, classification) == false){
+            if(MyFunctions::vectorContainsByID(classifications, classification) == false){
                 //Trzeba usunąć classification z classificationsList ponieważ wcześniej classification zostało usunięte
-                MyFunctions::removeFromVector(comp->getClassificationsReference(), classification);
+                MyFunctions::removeFromVectorByID(comp->getClassificationsReference(), classification->getID());
             }
         }
     }
@@ -32,7 +32,7 @@ void SeasonCalendar::fixCompetitionsClassifications()
 void SeasonCalendar::fixCompetitionsHills(QVector<Hill> *hillsList)
 {
     for(auto & comp : competitions){
-        int hillID = comp->getHill()->getID();
+        ulong hillID = comp->getHill()->getID();
         bool contains = false;
         Hill * hillWhichContains = nullptr;
         for(auto & hill : qAsConst(*hillsList)){
