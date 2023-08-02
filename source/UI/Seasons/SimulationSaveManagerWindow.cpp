@@ -148,18 +148,6 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     });
 }
 
-/* Jak rozwiązać problem z edycją klasyfikacji podczas trwania sezonu?
- * 1. Co można robić z klasyfikacjami w trakcie sezonu?
- *      - Edytować klasyfikacje które nie zostały jeszcze wykorzystane
- *      - Dodawać nowe
- *      - Usuwać nowe (z usunięciem ze wszystkich konkursów i usunięciu historii tej klasyfikacji)
- * 2. Jak wykryć które klasyfikacje nie zostały jeszcze wykorzystane?
- *      - W pętli posprawdzać wszystkie rozegrane konkursy:
- *          - Jeżeli w którymś była dana klasyfikacja, ZABLOKUJ możliwość edycji
- *          - W przeciwnym wypadku, UMOŻLIW edycję
- *      - Po zatwierdzeniu edycji klasyfikacji sprawdzamy czy ta edycja jest umożliwiona. Jeżeli nie, pokaż QMessageBox::information z informacją że ta klasyfikacja była już używana.
-*/
-
 SimulationSaveManagerWindow::~SimulationSaveManagerWindow()
 {
     delete ui;

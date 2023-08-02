@@ -1,0 +1,20 @@
+{
+    "pointsForPlacesPresets": [
+        {
+            "name": "Presecikek",
+            "pointsForPlaces": [
+                100,
+                80,
+                70,
+                60,
+                50,
+                44,
+                33,
+                22,
+                11,
+                10,
+                5
+            ]
+        }
+    ]
+}

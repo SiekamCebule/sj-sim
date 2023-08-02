@@ -1,0 +1,773 @@
+{
+    "jumper": {
+        "characteristics": [
+            {
+                "level": 0.2,
+                "type": "takeoff-height"
+            },
+            {
+                "level": 0.1,
+                "type": "flight-height"
+            }
+        ],
+        "country-code": "JPN",
+        "flight-style": 0,
+        "flight-technique": 44,
+        "form": 33,
+        "jumps-equality": 0.4,
+        "landing-style": 12.5,
+        "name": "Keiichi",
+        "surname": "Sato",
+        "takeoff-technique": 47.5
+    },
+    "jumps": [
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 196.5,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                15.5,
+                16,
+                15.5,
+                16,
+                15.5
+            ],
+            "judges-points": 47,
+            "jumper-id": "158",
+            "landing-imbalance": 1.3202219676902476,
+            "landing-type": 3,
+            "points": 244.3,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 76.52184512589288,
+                "inrun-snow": -1,
+                "judges-rating": 15.795263536229928,
+                "takeoff-rating": 74.47522800514486
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        },
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 155,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                12,
+                12,
+                12.5,
+                12,
+                13
+            ],
+            "judges-points": 36.5,
+            "jumper-id": "158",
+            "landing-imbalance": 1.2744935298458013,
+            "landing-type": 3,
+            "points": 159.6,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 73.4089853921518,
+                "inrun-snow": 0,
+                "judges-rating": 12.516527225793428,
+                "takeoff-rating": 77.69466064020739
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        },
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 131,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                17.5,
+                18.5,
+                18.5,
+                18.5,
+                18.5
+            ],
+            "judges-points": 54.5,
+            "jumper-id": "158",
+            "landing-imbalance": 1.436583278224,
+            "landing-type": 0,
+            "points": 134.1,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 77.66197487470578,
+                "inrun-snow": -1,
+                "judges-rating": 18.195743257452527,
+                "takeoff-rating": 87.22438039635202
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        },
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 131,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                19.5,
+                19,
+                19,
+                19,
+                18.5
+            ],
+            "judges-points": 57,
+            "jumper-id": "158",
+            "landing-imbalance": 0.27883113188827724,
+            "landing-type": 0,
+            "points": 136.6,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 75.05900265335158,
+                "inrun-snow": 0,
+                "judges-rating": 18.967578021676342,
+                "takeoff-rating": 72.85959301095892
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        },
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 131,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                18,
+                17.5,
+                17.5,
+                18,
+                18
+            ],
+            "judges-points": 53.5,
+            "jumper-id": "158",
+            "landing-imbalance": 2.0761406561586178,
+            "landing-type": 0,
+            "points": 133.1,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 76.75728594027834,
+                "inrun-snow": -1,
+                "judges-rating": 17.76937167216278,
+                "takeoff-rating": 85.36406133685591
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        },
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 131,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                18.5,
+                18.5,
+                18.5,
+                18.5,
+                18.5
+            ],
+            "judges-points": 55.5,
+            "jumper-id": "158",
+            "landing-imbalance": 0.9489131334408715,
+            "landing-type": 0,
+            "points": 135.1,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 77.55555353432695,
+                "inrun-snow": 0,
+                "judges-rating": 18.520856687307944,
+                "takeoff-rating": 84.73591166230447
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        },
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 131,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                18.5,
+                18,
+                18.5,
+                18.5,
+                18.5
+            ],
+            "judges-points": 55.5,
+            "jumper-id": "158",
+            "landing-imbalance": 1.0645477179006768,
+            "landing-type": 0,
+            "points": 135.1,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 72.856731143647,
+                "inrun-snow": -1,
+                "judges-rating": 18.443766964334742,
+                "takeoff-rating": 89.20464052537947
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        },
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 161.5,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                13,
+                14,
+                13.5,
+                13.5,
+                14
+            ],
+            "judges-points": 40.5,
+            "jumper-id": "158",
+            "landing-imbalance": 0.30619710798003075,
+            "landing-type": 3,
+            "points": 175.1,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 69.80673768251866,
+                "inrun-snow": 0,
+                "judges-rating": 13.725123144214699,
+                "takeoff-rating": 74.58673118636804
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        },
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 131,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                19,
+                19,
+                18.5,
+                19,
+                19
+            ],
+            "judges-points": 57,
+            "jumper-id": "158",
+            "landing-imbalance": 0.32098453656081194,
+            "landing-type": 0,
+            "points": 136.6,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 77.18807942296257,
+                "inrun-snow": -1,
+                "judges-rating": 18.93947575189465,
+                "takeoff-rating": 85.87966362764915
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        },
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 206,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                20,
+                20,
+                19.5,
+                19.5,
+                20
+            ],
+            "judges-points": 59.5,
+            "jumper-id": "158",
+            "landing-imbalance": 0.5110610480746628,
+            "landing-type": 1,
+            "points": 274.1,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 72.82808650781048,
+                "inrun-snow": 0,
+                "judges-rating": 20,
+                "takeoff-rating": 80.90431658186492
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        },
+        {
+            "averaged-wind": 0,
+            "beats-95-hs-percents": false,
+            "coach-gate": 0,
+            "distance": 131,
+            "dns": false,
+            "dsq": false,
+            "gate": 44,
+            "gate-compensation": 0,
+            "has-coach-gate": false,
+            "hill-id": "159",
+            "judges": [
+                18,
+                18,
+                18.5,
+                18,
+                17.5
+            ],
+            "judges-points": 54,
+            "jumper-id": "158",
+            "landing-imbalance": 1.6009573928331142,
+            "landing-type": 0,
+            "points": 133.6,
+            "rules-id": "156",
+            "simulation-data": {
+                "dsq-probability": 0,
+                "flight-rating": 73.78615018545173,
+                "inrun-snow": -1,
+                "judges-rating": 18.086160514379785,
+                "takeoff-rating": 87.65033326257699
+            },
+            "total-compensation": 0,
+            "wind-compensation": 0,
+            "winds": [
+                {
+                    "direction": 1,
+                    "range": "0 - 28",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "28 - 56",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "56 - 84",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "84 - 112",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "112 - 140",
+                    "strength": 0
+                },
+                {
+                    "direction": 1,
+                    "range": "140 - -1",
+                    "strength": 0
+                }
+            ]
+        },
+        {
+        }
+    ]
+}
