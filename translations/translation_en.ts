@@ -450,7 +450,7 @@ Make sure that the file exists there or has the appropriate permissions</transla
     <message>
         <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="57"/>
         <source>Automatycznie przesymuluj...</source>
-        <translation>Auto-simulate</translation>
+        <translation>Auto-simulate...</translation>
     </message>
     <message>
         <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="152"/>
@@ -470,7 +470,7 @@ Make sure that the file exists there or has the appropriate permissions</transla
     <message>
         <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="320"/>
         <source>Następny zawodnik: </source>
-        <translation>Next jumper</translation>
+        <translation>Next jumper: </translation>
     </message>
     <message>
         <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="356"/>
@@ -495,7 +495,7 @@ Make sure that the file exists there or has the appropriate permissions</transla
     <message>
         <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="512"/>
         <source>Do awansu:</source>
-        <translation>To advance</translation>
+        <translation>To advance:</translation>
     </message>
     <message>
         <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="547"/>
@@ -1362,7 +1362,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2194"/>
         <source>Wiatr przy skoku:</source>
-        <translation>Wind in jump</translation>
+        <translation>Wind in jump:</translation>
     </message>
     <message>
         <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2236"/>
@@ -2511,7 +2511,7 @@ You can only remove it completely</translation>
     <message>
         <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="160"/>
         <source>BARDZO WAŻNE: Zawodników i skoczni które dodano, nie można już później usunąć. Bądź ostrożny podczas dodawania!</source>
-        <translation>VERY IMPORTANT: Jumpers and hills that have been added can no longer be removed. Be careful when adding! </translation>
+        <translation>VERY IMPORTANT: Jumpers and hills that have been added can no longer be removed. Be careful when adding!</translation>
     </message>
     <message>
         <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="161"/>
@@ -2525,7 +2525,7 @@ You can only remove it completely</translation>
         <location filename="../source/UI/Seasons/SimulationSavesWindow.ui" line="14"/>
         <location filename="../source/UI/Seasons/SimulationSavesWindow.ui" line="50"/>
         <source>Zapisy symulacji</source>
-        <translation></translation>
+        <translation>Simulation saves</translation>
     </message>
     <message>
         <location filename="../source/UI/Seasons/SimulationSavesWindow.ui" line="182"/>
