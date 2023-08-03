@@ -96,13 +96,13 @@ void JumpSimulator::simulateJump()
     generateDistance();
     generateWindEffects();
 
+    preventVeryLongJumps();
     jumpData.distance += manipulator->getDistanceBonus();
     if(jumpData.distance < manipulator->getDistanceRange().first)
         jumpData.distance = manipulator->getDistanceRange().first;
     else if(jumpData.distance > manipulator->getDistanceRange().second && manipulator->getDistanceRange().second > (-1))
         jumpData.distance = manipulator->getDistanceRange().second;
     if(jumpData.getDistance() < 0) jumpData.distance = 0;
-    preventVeryLongJumps();
     generateLanding();
     generateJudges();
 
@@ -310,7 +310,7 @@ void JumpSimulator::generateInrunSnowEffect()
     double inrunSnow = simulationData->getInrunSnow();
     qDebug()<<"inrunSnow -------> "<<inrunSnow;
     qDebug()<<" simulationData->takeoffRating: "<< simulationData->takeoffRating;
-    simulationData->takeoffRating /= (1 + (inrunSnow / 15));
+    simulationData->takeoffRating /= (1 + (inrunSnow / 14));
     qDebug()<<" simulationData->takeoffRating: "<< simulationData->takeoffRating;
 }
 
@@ -543,6 +543,8 @@ void JumpSimulator::calculatePoints()
     jumpData.points += jumpData.getJudgesPoints();
 
     jumpData.points = roundDoubleToOnePlace(jumpData.getPoints());
+    if(jumpData.points < 0)
+        jumpData.points = 0;
 }
 
 void JumpSimulator::setupJumpData()

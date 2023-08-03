@@ -1,9 +1,13 @@
 #include "TreeItem.h"
 #include "../utilities/functions.h"
+#include "IDGenerator.h"
 #include <QModelIndex>
 
+extern IDGenerator globalIDGenerator;
+
 TreeItem::TreeItem(const QVector<QVariant> &dataVector, TreeItem *parentItem) :
-    parentItem(parentItem), dataVector(dataVector)
+    parentItem(parentItem), dataVector(dataVector),
+    ClassWithID()
 {
     if(this->parentItem)
         this->parentItem->addChild(this);
@@ -79,17 +83,17 @@ void TreeItem::deleteTreeItemRecursively(TreeItem *item)
     delete item;
 }
 
-bool TreeItem::recursivelyContains(TreeItem *item)
+bool TreeItem::recursivelyContains(TreeItem *root, TreeItem * searched)
 {
-    if(item == nullptr) return false;
+    if(root == nullptr || searched == nullptr) return false;
     bool contains = false;
-    for(auto & itm : item->getChildItemsReference())
+    for(auto & itm : root->getChildItemsReference())
     {
-        if(recursivelyContains(itm) == true){
+        if(recursivelyContains(itm, searched) == true){
             return true;
         }
     }
-    if(MyFunctions::vectorContains(item->getChildItemsReference(), item))
+    if(MyFunctions::vectorContains(root->getChildItemsReference(), searched))
         return true;
     else
         return false;

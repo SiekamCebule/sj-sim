@@ -102,6 +102,13 @@ public:
         }
     }
 
+    template <typename Type, typename SourceType>
+    static Type static_cast_checked (SourceType *item)
+    {
+        assert (!item || dynamic_cast<Type> (item)); // sprawdź czy item jest nullptr lub poprawnym wskaźnikiem na Type
+        return static_cast<Type> (item); // zwróć static_cast jako wynik
+    }
+
     static void fileMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & msg);
 };
 

@@ -2,14 +2,18 @@
 #include <QFont>
 #include <QPixmap>
 #include "../../../global/CountryFlagsManager.h"
+#include "../../../global/IDGenerator.h"
+#include "../../../utilities/functions.h"
+
+extern IDGenerator globalIDGenerator;
 
 TeamResultsTreeModel::TeamResultsTreeModel(TeamCompetitionManager * manager, QObject *parent)
     : QAbstractItemModel(parent), manager(manager), results(manager->getResults()), teams(&manager->getRoundsTeamsReference()[0]), teamsAdvanceStatuses(&manager->getTeamsAdvanceStatusesReference())
-{
-    rootItem = new TreeItem({tr("Miejsce"), tr("Drużyna"), tr("Zawodnik"), tr("Punkty")});
-}
+    {
+        rootItem = new TreeItem({tr("Miejsce"), tr("Drużyna"), tr("Zawodnik"), tr("Punkty")});
+    }
 
-QVariant TeamResultsTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
+    QVariant TeamResultsTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if(role == Qt::DisplayRole){
         if(orientation == Qt::Horizontal){
@@ -69,20 +73,19 @@ int TeamResultsTreeModel::rowCount(const QModelIndex &parent) const
     else
         parentItem = static_cast<TreeItem*>(parent.internalPointer());
 
-    if(parentItem->getDataVectorReference().count() == 0)
-        return 0;
 
     if(parentItem == rootItem)
         return parentItem->childCount(); // tyle naglowkow druzyn
     else if(parentItem != rootItem && parentItem->getParentItem() == rootItem)
-        return results->howManyJumpersJumpedInTeam(teams->at(parentItem->row())); //ilość zawodników którzy NA RAZIE skoczyli w danej drużynie.
+        return results->howManyJumpersJumpedInTeam(results->getResultsReference()[parentItem->row()].getTeam()) - 0; //ilość zawodników którzy NA RAZIE skoczyli w danej drużynie.
     return 0;
 }
 
 int TeamResultsTreeModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()){
         return static_cast<TreeItem*>(parent.internalPointer())->columnCount();
+    }
     return rootItem->columnCount();
 }
 
@@ -91,14 +94,14 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
+    TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+
     if(role == Qt::DisplayRole)
-    {
-        TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+    {  
         return item->data(index.column());
     }
     else if(role == Qt::DecorationRole)
     {
-        TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
         if(index.column() == 1 && item->getParentItem() == rootItem){
             int teamIndex = 0;
             if(item->getParentItem() == rootItem)
@@ -113,7 +116,6 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
         }
     }
     else if(role == Qt::FontRole){
-        TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
         QFont font("Quicksand Medium");
         font.setPointSize(8);
         if(item->getParentItem() == rootItem){ //jeśli jest to nagłówek drużyny
@@ -124,14 +126,12 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
         return font;
     }
     else if(role == Qt::ForegroundRole){
-        TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
         if(item->getParentItem() == rootItem)
             return QColor(qRgb(0, 0, 0));
         else
             return QColor(qRgb(30, 30, 30));
     }
     else if(role == Qt::BackgroundRole){
-        TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
         if(item->getParentItem() == rootItem){
             Team * team = results->getResultsReference()[index.row()].getTeam();
             if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::SureDroppedOut){
@@ -182,7 +182,7 @@ void TeamResultsTreeModel::setupTreeItems()
 {
     TreeItem::deleteAllTreeItemsRecursively(rootItem);
     rootItem = new TreeItem({tr("Miejsce"), tr("Drużyna"), tr("Zawodnik"), tr("Punkty")});
-    results->sortInDescendingOrder();
+               results->sortInDescendingOrder();
     for(auto & res : results->getResultsReference()){
         TreeItem * teamHeaderItem = new TreeItem({QString::number(res.getPosition()), res.getTeam()->getCountryCode(), "", QString::number(res.getPointsSum())}, rootItem);
         for(auto & jumper : res.getTeam()->getJumpersReference()){
