@@ -2,7 +2,7 @@
 
 JumpManipulator::JumpManipulator()
 {
-    distanceRange = landingInstabilityRange = inrunSnowRange = takeoffRatingRange = flightRatingRange = judgesRatingRange = averagedWindRange = QPair<double, double>(0, -1);
+    distanceRange = landingInstabilityRange = inrunSnowRange = takeoffRatingRange = flightRatingRange = judgesRatingRange = averagedWindRange = inrunSnowRange = QPair<double, double>(0, -1);
     distanceBonus = landingInstabilityBonus = inrunSnowBonus = takeoffRatingBonus = flightRatingBonus = judgesRatingBonus = averagedWindBonus = 0;
     averagedWindRangeEnabled = false;
     exactLandingType = exactDSQProbability = -1;

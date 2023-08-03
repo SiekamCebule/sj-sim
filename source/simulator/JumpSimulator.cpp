@@ -309,13 +309,17 @@ void JumpSimulator::generateInrunSnowEffect()
 {
     simulationData->inrunSnow += manipulator->getInrunSnowBonus();
     if(simulationData->inrunSnow < manipulator->getInrunSnowRange().first)
-        simulationData->inrunSnow = manipulator->getInrunSnowRange().first;
-    if(simulationData->inrunSnow > manipulator->getInrunSnowRange().second)
+        simulationData->inrunSnow = manipulator->getInrunSnowRange().first;  
+    if(simulationData->inrunSnow > manipulator->getInrunSnowRange().second && manipulator->getInrunSnowRange().second > (-1))
         simulationData->inrunSnow = manipulator->getInrunSnowRange().second;
-    double inrunSnow = simulationData->getInrunSnow();
+
+    if(simulationData->inrunSnow > 10)
+        simulationData->inrunSnow = 10;
+    else if(simulationData->inrunSnow < 0)
+        simulationData->inrunSnow = 0;
     qDebug()<<"inrunSnow -------> "<<inrunSnow;
     qDebug()<<" simulationData->takeoffRating: "<< simulationData->takeoffRating;
-    simulationData->takeoffRating /= (1 + (inrunSnow / 14));
+    simulationData->takeoffRating /= (1 + (simulationData->inrunSnow / 13));
     qDebug()<<" simulationData->takeoffRating: "<< simulationData->takeoffRating;
 }
 
@@ -565,13 +569,7 @@ void JumpSimulator::setupJumpData()
     jumpData.hasCoachGate = this->hasCoachGate;
     jumpData.coachGate = this->coachGate;
     if(hasCoachGate == true) jumpData.setGate(this->coachGate);
-
-    inrunSnow += manipulator->getInrunSnowBonus();
-    if(inrunSnow < manipulator->getInrunSnowRange().first)
-        inrunSnow = manipulator->getInrunSnowRange().first;
-    else if(inrunSnow > manipulator->getInrunSnowRange().second)
-        inrunSnow = manipulator->getInrunSnowRange().second;
-    simulationData->setInrunSnow(inrunSnow);
+    simulationData->inrunSnow = inrunSnow;
 }
 
 JumpSimulationData *JumpSimulator::getSimulationData()
