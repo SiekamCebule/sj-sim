@@ -60,11 +60,11 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
             simulationSave.getSeasonsReference().push_back(season);
             simulationSave.setActualSeason(&simulationSave.getSeasonsReference().first());
 
-            season.getCalendarReference().getCompetitionsReference()[0]->setPlayed(true);
+            /*season.getCalendarReference().getCompetitionsReference()[0]->setPlayed(true);
             season.getCalendarReference().getCompetitionsReference()[1]->setPlayed(true);
             season.getCalendarReference().getCompetitionsReference()[2]->setPlayed(true);
             season.getCalendarReference().getCompetitionsReference()[3]->setPlayed(true);
-            season.getCalendarReference().getCompetitionsReference()[4]->setPlayed(true);
+            season.getCalendarReference().getCompetitionsReference()[4]->setPlayed(true);*/
             simulationSave.updateNextCompetitionIndex();
 
             int index = 0;

@@ -307,6 +307,11 @@ void JumpSimulator::generateWindEffects()
 
 void JumpSimulator::generateInrunSnowEffect()
 {
+    simulationData->inrunSnow += manipulator->getInrunSnowBonus();
+    if(simulationData->inrunSnow < manipulator->getInrunSnowRange().first)
+        simulationData->inrunSnow = manipulator->getInrunSnowRange().first;
+    if(simulationData->inrunSnow > manipulator->getInrunSnowRange().second)
+        simulationData->inrunSnow = manipulator->getInrunSnowRange().second;
     double inrunSnow = simulationData->getInrunSnow();
     qDebug()<<"inrunSnow -------> "<<inrunSnow;
     qDebug()<<" simulationData->takeoffRating: "<< simulationData->takeoffRating;

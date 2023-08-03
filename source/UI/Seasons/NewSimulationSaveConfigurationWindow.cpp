@@ -31,7 +31,7 @@ int NewSimulationSaveConfigurationWindow::getSeasonNumberFromInput() const
 void NewSimulationSaveConfigurationWindow::on_pushButton_submit_clicked()
 {
     if(otherNames.contains(ui->lineEdit_name->text())){
-        QMessageBox::warning(this, "Nazwa jest zajęta", "Wybierz nazwę, która nie została jeszcze wybrana na liście zapisów symulacji", "OK");
+        QMessageBox::warning(this, tr("Nazwa jest zajęta"), tr("Wybierz nazwę, która nie została jeszcze wybrana na liście zapisów symulacji"), "OK");
         return;
     }
     accept();

@@ -56,8 +56,6 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
                 return;
             int teamIndex = item->getParentItem()->row();
             int jumperIndex = item->row();
-            qDebug()<<"teamIndex: "<<teamIndex;
-            qDebug()<<"jumperIndex: "<<jumperIndex;
 
             jumperResultsWidget->setJumperResult(&this->manager->getResults()->getResultsReference()[teamIndex].getTeamJumpersResultsReference()[jumperIndex]);
             jumperResultsWidget->setPositionShowing(false);
@@ -778,7 +776,6 @@ void CompetitionManagerWindow::setupSimulator()
     simulator.setDSQBaseProbability(manager->getBaseDSQProbability());
     simulator.setWinds(actualWinds);
     simulator.setInrunSnow(inrunSnowGenerator.generateInrunSnow());
-    qDebug()<<"Mandark: "<<simulator.getInrunSnow();
 }
 
 void CompetitionManagerWindow::on_pushButton_jump_clicked()

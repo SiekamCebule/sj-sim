@@ -47,14 +47,14 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
 
     ui->toolBox->raise();
     ui->label_title->raise();
-    ui->toolBox->addItem(windsGeneratorSettingsEditor, "Ustawienia generatora wiatru");
-    ui->toolBox->addItem(inrunSnowGeneratorSettingsEditor, "Ustawienia generatora śniegu na najeździe");
+    ui->toolBox->addItem(windsGeneratorSettingsEditor, tr("Ustawienia generatora wiatru"));
+    ui->toolBox->addItem(inrunSnowGeneratorSettingsEditor, tr("Ustawienia generatora śniegu na najeździe"));
     setupCompetitionRulesToolBoxItem();
 
     if(getType() == SeasonCompetition)
     {
         ui->pushButton_loadJumpers->hide();
-        setWindowTitle("Konfiguracja konkursu");
+        setWindowTitle(tr("Konfiguracja konkursu"));
         delete ui->toolBox->widget(0); //index 0
         ui->toolBox->removeItem(0);
         delete ui->toolBox->widget(2); //index 2
@@ -62,7 +62,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     }
     else if(getType() == SingleCompetition)
     {
-        checkBox_singleCompetitionQualifications = new QCheckBox("Przeprowadzenie kwalifikacji", this);
+        checkBox_singleCompetitionQualifications = new QCheckBox(tr("Przeprowadzenie kwalifikacji"), this);
         checkBox_singleCompetitionQualifications->setStyleSheet("color: rgb(30, 30, 30);\nQCheckBox::indicator{\nwidth: 40px;\nheight: 30px;\n}");
         checkBox_singleCompetitionQualifications->setFont(QFont("Quicksand Medium", 12, 650));
         ui->formLayout_competitionOptions->addWidget(checkBox_singleCompetitionQualifications);
@@ -188,7 +188,7 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
 {
     existingCompetitionRulesComboBox = new QComboBox();
     QStringList rulesStringList;
-    rulesStringList.push_back("BRAK");
+    rulesStringList.push_back(tr("BRAK"));
     for(const auto & rule : GlobalDatabase::get()->getEditableCompetitionRules())
     {
         rulesStringList.push_back(rule.getName());
@@ -205,7 +205,7 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
     competitionRulesToolBoxItemLayout->addWidget(competitionRulesEditor);
     //competitionRulesToolBoxItemLayout->addSpacerItem(new QSpacerItem(35, 35, QSizePolicy::Expanding, QSizePolicy::Expanding));
 
-    existingCompetitionRulesLabel = new QLabel("Istniejące zasady konkursu", competitionRulesParentWidget);
+    existingCompetitionRulesLabel = new QLabel(tr("Istniejące zasady konkursu"), competitionRulesParentWidget);
     existingCompetitionRulesLabel->setStyleSheet("color: rgb(20, 20, 20);");
     QFont font;
     font.setPointSize(12);
@@ -215,7 +215,7 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
     existingRulesLabelAndComboBoxLayout->addWidget(existingCompetitionRulesLabel);
     existingRulesLabelAndComboBoxLayout->addWidget(existingCompetitionRulesComboBox);
 
-    ui->toolBox->addItem(competitionRulesParentWidget, "Zasady konkursu");
+    ui->toolBox->addItem(competitionRulesParentWidget, tr("Zasady konkursu"));
 
     connect(existingCompetitionRulesComboBox, &QComboBox::currentIndexChanged, this, [this](){
         int selected = existingCompetitionRulesComboBox->currentIndex();
@@ -461,7 +461,7 @@ void CompetitionConfigWindow::on_pushButton_loadJumpers_clicked()
         QFile file(fileUrl.path());
         if(!(file.open(QIODevice::ReadOnly | QIODevice::Text)))
         {
-            QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zawodnikami", "Nie udało się otworzyć wybranego pliku\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+            QMessageBox message(QMessageBox::Icon::Critical, tr("Nie można otworzyć pliku z zawodnikami"), tr("Nie udało się otworzyć wybranego pliku\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia"),  QMessageBox::StandardButton::Ok);
             message.setModal(true);
             message.exec();
         }
