@@ -85,9 +85,22 @@ void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)
         delete ui->toolBox_rounds->widget(ui->toolBox_rounds->count() - 1);
     }
 
+    int i=ui->toolBox_rounds->count() - 1; //toolBox_count: 2, roundsCount: 3
     while(ui->toolBox_rounds->count() < roundsCount)
     {
-        ui->toolBox_rounds->addItem(new RoundInfoEditorWidget(getCompetitionTypeFromInput() == CompetitionRules::Individual), "");
+        int count = 1;
+        if(i - 1 >= 0) //Czyli jeżeli istnieje poprzednia runda
+            count = dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getCountFromInput();
+
+        short sortGroups = 0;
+        if(i - 1 >= 0) //Czyli jeżeli istnieje poprzednia runda
+            sortGroups = dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getSortAfterGroupsFromInput();
+
+        bool sortStartList = true;
+        if(i - 1 >= 0) //Czyli jeżeli istnieje poprzednia runda
+            sortStartList = dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getSortStartListFromInput();
+
+        ui->toolBox_rounds->addItem(new RoundInfoEditorWidget(getCompetitionTypeFromInput() == CompetitionRules::Individual, count, sortStartList, sortGroups, this), "");
     }
     for(int i=0; i<ui->toolBox_rounds->count(); i++)
     {
@@ -100,8 +113,9 @@ void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)
                 dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->setRoundInfo(const_cast<RoundInfo *>(&competitionRules->getRounds().at(i)));
                 dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->fillRoundInfoInput();
             }
-            else
-                dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->resetRoundInfoInput();
+            //else{
+                //dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->resetRoundInfoInput();
+            //}
             connect(ui->spinBox_roundsCount, &QSpinBox::valueChanged, this, [this](){
                 fillRoundsInputs(false);
             });

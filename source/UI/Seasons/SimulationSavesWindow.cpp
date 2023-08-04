@@ -8,6 +8,8 @@
 #include "NewSimulationSaveConfigurationWindow.h"
 #include "SimulationSaveManagerWindow.h"
 #include <QTimer>
+#include <QModelIndex>
+#include <QFile>
 
 SimulationSavesWindow::SimulationSavesWindow(QWidget *parent) :
     QDialog(parent),
@@ -18,6 +20,16 @@ SimulationSavesWindow::SimulationSavesWindow(QWidget *parent) :
     listModel = new SimulationSavesListModel(&GlobalDatabase::get()->getEditableGlobalSimulationSaves(), this);
     ui->listView_simulationSaves->setModel(listModel);
     ui->listView_simulationSaves->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    saveInfoWidget = new SimulationSaveInfoWidget(this);
+    saveInfoWidget->hide();
+    ui->verticalLayout_saveInfos->addWidget(saveInfoWidget);
+
+    connect(ui->listView_simulationSaves, &QListView::doubleClicked, this, [this](const QModelIndex & index){
+        saveInfoWidget->show();
+        saveInfoWidget->setSimulationSave(&GlobalDatabase::get()->getEditableGlobalSimulationSaves()[index.row()]);
+        saveInfoWidget->fillInputs();
+    });
 }
 
 SimulationSavesWindow::~SimulationSavesWindow()
@@ -85,9 +97,27 @@ void SimulationSavesWindow::on_pushButton_OK_clicked()
 {
     if(ui->listView_simulationSaves->selectionModel()->selectedRows().count() > 0){
         SimulationSaveManagerWindow * manager = new SimulationSaveManagerWindow(&GlobalDatabase::get()->getEditableGlobalSimulationSaves()[ui->listView_simulationSaves->selectionModel()->selectedRows().first().row()], this);
+        manager->fillNextCompetitionInformations();
         if(manager->exec() == QDialog::Accepted)
         {
 
+        }
+    }
+}
+
+
+void SimulationSavesWindow::on_pushButton_remove_clicked()
+{
+    if(ui->listView_simulationSaves->selectionModel()->selectedRows().count() > 0){
+        auto button = QMessageBox::question(this, tr("Usunięcie zapisu symulacji"), tr("Czy na pewno chcesz usunąć ten zapis symulacji?"),
+ QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+        if(button == QMessageBox::Yes)
+        {
+            int row = ui->listView_simulationSaves->selectionModel()->selectedRows().first().row();
+            QFile file("simulationSaves/" + GlobalDatabase::get()->getEditableGlobalSimulationSaves()[row].getName() + ".json");
+            file.remove();
+            GlobalDatabase::get()->getEditableGlobalSimulationSaves().remove(row);
+            listModel->removeRow(row);
         }
     }
 }

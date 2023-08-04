@@ -166,7 +166,7 @@ void DatabaseEditorWindow::closeEvent(QCloseEvent *event)
     QMessageBox message;
     message.setStyleSheet("background-color: white; color: black;");
     QMessageBox::StandardButton button;
-    button = message.question(this, "Wyjście z edytora bazy danych", "Czy zapisać zmiany w bazie danych?", QMessageBox::StandardButton::No | QMessageBox::StandardButton::Cancel | QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::Yes);
+    button = message.question(this, tr("Wyjście z edytora bazy danych"), tr("Czy zapisać zmiany w bazie danych?"), QMessageBox::StandardButton::No | QMessageBox::StandardButton::Cancel | QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::Yes);
     if(button == QMessageBox::Yes)
     {
         GlobalDatabase::get()->writeJumpers();

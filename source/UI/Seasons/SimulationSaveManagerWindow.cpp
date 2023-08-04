@@ -1,6 +1,7 @@
 #include "SimulationSaveManagerWindow.h"
 #include "ui_SimulationSaveManagerWindow.h"
 #include "../../global/GlobalAppSettings.h"
+#include "../../global/CountryFlagsManager.h"
 #include "../../utilities/functions.h"
 #include <QMessageBox>
 #include <QTimer>
@@ -12,8 +13,8 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     simulationSave(save)
 {
     ui->setupUi(this);
-    ui->label_saveName->setText(simulationSave->getName() + ": ");
-    ui->label_seasonNumber->setText(tr("Sezon ") + QString::number(simulationSave->getActualSeason()->getSeasonNumber()));
+    ui->label_saveName->setText(simulationSave->getName());
+    ui->label_4->setText(QString::number(simulationSave->getActualSeason()->getSeasonNumber()));
 
     connect(ui->toolBox, &QToolBox::currentChanged, this, [this](){
         if(ui->toolBox->currentIndex() == 0 || ui->toolBox->currentIndex() == 1)
@@ -166,6 +167,64 @@ void SimulationSaveManagerWindow::showJumperAndHillsEditingHelp()
     {
         GlobalAppSettings::get()->setShowSeasonJumpersAndHillsHelp(false);
         GlobalAppSettings::get()->writeToJson();
+    }
+}
+
+void SimulationSaveManagerWindow::fillNextCompetitionInformations()
+{
+    SeasonCalendar * calendar = &simulationSave->getActualSeason()->getCalendarReference();
+    CompetitionInfo * competition = nullptr;
+    int competitionIndex = 0;
+    int indexInCalendar=0;
+    for(auto & comp : calendar->getCompetitionsReference())
+    {
+        if(indexInCalendar == simulationSave->getNextCompetitionIndex()){
+            competition = comp;
+            break;
+        }
+        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+            competitionIndex++;
+        }
+        indexInCalendar++;
+    }
+    if(competition != nullptr){
+        QString text = QString::number(competitionIndex + 1) + ". " + competition->getHill()->getName() + " HS" + QString::number(competition->getHill()->getHSPoint());
+        ui->label_nextCompetitionIndexAndHill->setText(text);
+        ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(competition->getHill()->getCountryCode().toLower())).scaled(ui->label_hillFlag->size()));
+        switch(competition->getSerieType())
+        {
+        case CompetitionInfo::Competition:
+            ui->label_serieTypeAndTrainingIndex->setText(tr("Konkurs"));
+            break;
+        case CompetitionInfo::Qualifications:
+            ui->label_serieTypeAndTrainingIndex->setText(tr("Kwalifikacje"));
+            break;
+        case CompetitionInfo::TrialRound:
+            ui->label_serieTypeAndTrainingIndex->setText(tr("Seria próbna"));
+            break;
+        case CompetitionInfo::Training:
+            CompetitionInfo * mainCompetition = nullptr;
+            for(int i=indexInCalendar; i<calendar->getCompetitionsReference().count(); i++)
+            {
+                CompetitionInfo * c = calendar->getCompetitionsReference()[i];
+                if(c->getSerieType() == CompetitionInfo::Qualifications || c->getSerieType() == CompetitionInfo::Competition)
+                {
+                    mainCompetition = calendar->getCompetitionsReference()[i];
+                    break;
+                }
+            }
+            int trainingIndex = 0;
+            qDebug()<<"competition: "<<competition;
+            if(mainCompetition != nullptr)
+                trainingIndex = mainCompetition->getTrainingsReference().indexOf(competition) + 1;
+            ui->label_serieTypeAndTrainingIndex->setText(tr("Trening ") + QString::number(trainingIndex));
+            break;
+        }
+    }
+    else{
+        ui->label_nextCompetitionIndexAndHill->setText("BRAK");
+        ui->label_hillFlag->setText("");
+        ui->label_serieTypeAndTrainingIndex->setText("");
     }
 }
 

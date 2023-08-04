@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>244</width>
-    <height>129</height>
+    <height>148</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,45 +29,6 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="font">
-        <font>
-         <pointsize>11</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Obecny sezon</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="font">
-        <font>
-         <pointsize>11</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Rozegrane konkursy</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="font">
-        <font>
-         <pointsize>11</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Ilość zawodników</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="1">
       <widget class="QLabel" name="label_name">
        <property name="font">
@@ -80,6 +41,19 @@
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Obecny sezon</string>
        </property>
       </widget>
      </item>
@@ -98,6 +72,19 @@
        </property>
       </widget>
      </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ilość zawodników</string>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="1">
       <widget class="QLabel" name="label_jumpersCount">
        <property name="font">
@@ -110,6 +97,19 @@
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Rozegrane konkursy</string>
        </property>
       </widget>
      </item>
@@ -137,19 +137,19 @@
         </font>
        </property>
        <property name="text">
-        <string>Rozegrane serie</string>
+        <string>Klasyfikacje</string>
        </property>
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLabel" name="label_playedSeries">
+      <widget class="QLabel" name="label_classifications">
        <property name="font">
         <font>
          <pointsize>11</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>54/221</string>
+        <string>6</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

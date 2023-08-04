@@ -167,7 +167,7 @@ void CalendarEditorWidget::debugCalendar()
             string += "KWALIFIKACJE"; break;
         case CompetitionInfo::TrialRound:
             string += "Seria próbna"; break;
-        case CompetitionInfo::Training:
+            case CompetitionInfo::Training:
             string += "Trening"; break;
         default: break;
         }
@@ -261,6 +261,8 @@ void CalendarEditorWidget::removeActionTriggered()
             }
             updateActualCompetitionByID();
         }
+        calendar->fixAdvancementCompetitions();
+        emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
     }
 }
 
@@ -724,6 +726,7 @@ void CalendarEditorWidget::execMultipleAdvancementCompetitionEditDialog(QVector<
         }
         if(pos - 1 == row) break;
     }
+    comboBox->setCurrentIndex(comboBox->count() - 1);
     layout->addWidget(label);
     layout->addWidget(comboBox);
     widget->setLayout(layout);
@@ -839,7 +842,7 @@ void CalendarEditorWidget::execMultipleCompetitionRulesEditDialog(QVector<int> *
     dialog->setModal(true);
     dialog->setWindowFlags(Qt::Window);
     dialog->setWindowTitle(tr("Zasady konkursów"));
-    dialog->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+        dialog->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     dialog->setLayout(new QVBoxLayout(this));
     dialog->setStyleSheet("background-color: white; color: black;");
 
@@ -921,17 +924,29 @@ void CalendarEditorWidget::execMultipleClassificationsEditDialog(QVector<int> *r
     dialog->setLayout(new QVBoxLayout(this));
     dialog->setStyleSheet("background-color: white; color: black;");
 
+    int i=0;
+    CompetitionInfo * competition = nullptr;
+    for(auto & comp : calendar->getCompetitionsReference()){
+        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
+            if(i == rows->first()){
+                competition = comp;
+                break;
+            }
+            i++;
+        }
+    }
+
     QVBoxLayout * checkBoxesLayout = new QVBoxLayout(dialog);
     for(int i=0; i<classificationsList->count(); i++){
         Classification * c = const_cast<Classification *>(&classificationsList->at(i));
         QCheckBox * checkBox = new QCheckBox(dialog);
-        checkBox->setChecked(false);
+        checkBox->setChecked(competition->getClassificationsReference().contains(c));
         QString text = c->getName();
         if(c->getClassificationType() == Classification::Individual)
             text += tr(" (Indywidualne)");
         else if(c->getClassificationType() == Classification::Team)
             text += tr(" (Drużynowe)");
-        checkBox->setText(text);
+                    checkBox->setText(text);
         checkBoxesLayout->addWidget(checkBox);
     }
 

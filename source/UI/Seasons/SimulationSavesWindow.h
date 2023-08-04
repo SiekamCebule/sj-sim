@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "ItemModels/SimulationSavesListModel.h"
+#include "SimulationSaveInfoWidget.h"
 
 namespace Ui {
 class SimulationSavesWindow;
@@ -23,9 +24,13 @@ private slots:
 
     void on_pushButton_OK_clicked();
 
+    void on_pushButton_remove_clicked();
+
 private:
     Ui::SimulationSavesWindow *ui;
     SimulationSavesListModel * listModel;
+
+    SimulationSaveInfoWidget * saveInfoWidget;
 public:
 };
 

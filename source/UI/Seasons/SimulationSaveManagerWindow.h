@@ -24,6 +24,8 @@ public:
 
     void showJumperAndHillsEditingHelp();
 
+    void fillNextCompetitionInformations();
+
 private:
     Ui::SimulationSaveManagerWindow *ui;
 

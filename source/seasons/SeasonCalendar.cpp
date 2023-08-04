@@ -51,6 +51,34 @@ void SeasonCalendar::fixCompetitionsHills(QVector<Hill> *hillsList)
     }
 }
 
+void SeasonCalendar::fixAdvancementCompetitions()
+{
+    for(auto & comp : competitions)
+    {
+        if(comp->getAdvancementCompetition() != nullptr)
+        {
+            if(MyFunctions::vectorContains(competitions, comp->getAdvancementCompetition()) == false)
+            {
+                comp->setAdvancementCompetition(nullptr);
+            }
+        }
+    }
+}
+
+void SeasonCalendar::fixAdvancementClassifications()
+{
+    for(auto & comp : competitions)
+    {
+        if(comp->getAdvancementClassification() != nullptr)
+        {
+            if(MyFunctions::vectorContains(classifications, comp->getAdvancementClassification()) == false)
+            {
+                comp->setAdvancementClassification(nullptr);
+            }
+        }
+    }
+}
+
 void SeasonCalendar::updateCompetitionsQualifyingCompetitions()
 {
     for(auto & comp : competitions)

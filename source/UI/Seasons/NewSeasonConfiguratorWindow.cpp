@@ -124,11 +124,12 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
 
     connect(classificationsListView, &DatabaseItemsListView::remove, calendarEditor->getCompetitionInfoEditor(), [this](){
         calendar.fixCompetitionsClassifications();
-        calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
+        calendar.fixAdvancementClassifications();
+        emit calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
     });
     connect(hillsListView, &DatabaseItemsListView::remove, this, [this](){
         calendar.fixCompetitionsHills(&hills);
-        calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
+        emit calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
     });
 }
 

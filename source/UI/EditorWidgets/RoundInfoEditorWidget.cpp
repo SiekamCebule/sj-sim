@@ -1,7 +1,7 @@
 #include "RoundInfoEditorWidget.h"
 #include "ui_RoundInfoEditorWidget.h"
 
-RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, QWidget *parent) :
+RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitiorsCount, bool sortStartList, short sortGroups, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RoundInfoEditorWidget)
 {
@@ -12,6 +12,9 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, QWidget *paren
         ui->comboBox_sortingAfterGroups->hide();
         ui->label_sortingGroups->hide();
     }
+    ui->spinBox_count->setValue(competitiorsCount);
+    ui->checkBox_sortStartList->setChecked(sortStartList);
+    ui->comboBox_sortingAfterGroups->setCurrentIndex(sortGroups);
 }
 
 RoundInfoEditorWidget::~RoundInfoEditorWidget()

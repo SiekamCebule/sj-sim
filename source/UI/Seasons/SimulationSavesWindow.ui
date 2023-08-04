@@ -86,7 +86,7 @@ QListView::item:selected
      <item>
       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
        <item>
-        <layout class="QFormLayout" name="formLayout"/>
+        <layout class="QVBoxLayout" name="verticalLayout_saveInfos"/>
        </item>
        <item>
         <spacer name="verticalSpacer">
