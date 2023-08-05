@@ -40,6 +40,13 @@ public:
     };
 
     int getJumpersCountInTeam() const;
+    int getStartingGateFromInput() const;
+    int getBaseDSQProbability() const;
+    WindsGeneratorSettingsEditorWidget * getWindGeneratorSettingsWidget();
+    InrunSnowGeneratorSettingsEditorWidget * getInrunSnowGeneratorSettingsWidget();
+
+signals:
+    void submitted();
 
 private:
     Ui::SingleCompetitionConfigWindow *ui;
@@ -80,7 +87,7 @@ private slots:
 public:
     short getType() const;
     void setType(short newType);
-    WindsGeneratorSettingsEditorWidget *getWindGeneratorSettingsEditor() const;
+    WindsGeneratorSettingsEditorWidget *getWindGeneratorSettingsEditor();
     void setWindGeneratorSettingsEditor(WindsGeneratorSettingsEditorWidget *newWindsGeneratorSettingsEditor);
     CompetitionRulesEditorWidget *getCompetitionRulesEditor() const;
     void setCompetitionRulesEditor(CompetitionRulesEditorWidget *newCompetitionRulesEditor);
@@ -89,7 +96,9 @@ public:
     CompetitionStartListDisplayWidget *getStartListDisplayWidget() const;
     void setStartListDisplayWidget(CompetitionStartListDisplayWidget *newStartListDisplayWidget);
     QVector<Jumper> getCompetitionJumpers() const;
+    QVector<Jumper> & getCompetitionJumpersReference();
     QVector<Team> getCompetitionTeams() const;
+    QVector<Team> & getCompetitionTeamsReference();
     void setCompetitionTeams(const QVector<Team> &newCompetitionTeams);
     void setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers);
     QAction *getMoveToTopShortcut() const;
@@ -104,6 +113,9 @@ public:
     void setSeasonCompetition(CompetitionInfo *newSeasonCompetition);
     SimulationSave *getSimulationSave() const;
     void setSimulationSave(SimulationSave *newSimulationSave);
+
+    QVector<Jumper *> getSeasonCompetitionJumpers() const;
+    void setSeasonCompetitionJumpers(const QVector<Jumper *> &newSeasonCompetitionJumpers);
 
 private slots:
     void on_pushButton_submit_clicked();

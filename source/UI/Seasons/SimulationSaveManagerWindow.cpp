@@ -5,6 +5,10 @@
 #include "../../utilities/functions.h"
 #include "../Competition/CompetitionConfigWindow.h"
 #include "../Competition/CompetitionManagerWindow.h"
+#include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
+#include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
+#include "../../competitions/CompetitionManagers/IndividualCompetitionManager.h"
+#include "../../competitions/CompetitionManagers/TeamCompetitionManager.h"
 #include <QMessageBox>
 #include <QTimer>
 #include <QPushButton>
@@ -228,6 +232,8 @@ void SimulationSaveManagerWindow::fillNextCompetitionInformations()
             ui->label_serieTypeAndTrainingIndex->setText(tr("Trening ") + QString::number(trainingIndex));
             break;
         }
+        calendarTableModel->setDontModifyBefore(simulationSave->getNextCompetitionIndex());
+        emit calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, calendarTableModel->columnCount() - 1));
     }
     else{
         ui->label_nextCompetitionIndexAndHill->setText("BRAK");
@@ -243,12 +249,55 @@ SimulationSave *SimulationSaveManagerWindow::getSimulationSave() const
 
 void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
 {
-    CompetitionInfo * competition = simulationSave->getNextCompetition();
     CompetitionConfigWindow * configWindow = new CompetitionConfigWindow(CompetitionConfigWindow::SeasonCompetition, this, simulationSave);
     configWindow->setModal(true);
+
     if(configWindow->exec() == QDialog::Accepted)
     {
+        CompetitionInfo * competition = simulationSave->getNextCompetition();
+        int type = competition->getRulesPointer()->getCompetitionType();
 
+        for (auto & team : configWindow->getCompetitionTeamsReference())
+            Team::cutTeamJumpers(&team, competition->getRulesPointer()->getJumpersInTeamCount());
+
+        AbstractCompetitionManager * competitionManager = nullptr;
+        if(type == CompetitionRules::Individual)
+            competitionManager = new IndividualCompetitionManager();
+        else if(type == CompetitionRules::Team)
+            competitionManager = new TeamCompetitionManager();
+
+        competitionManager->setCompetitionInfo(competition);
+        competitionManager->setCompetitionRules(competition->getRulesPointer());
+        competitionManager->setResults(&competition->getResultsReference());
+        competitionManager->setActualGate(configWindow->getStartingGateFromInput());
+        competitionManager->setActualRound(1);
+        if(type == CompetitionRules::Team)
+            static_cast<TeamCompetitionManager *>(competitionManager)->setActualGroup(1);
+        competitionManager->setBaseDSQProbability(configWindow->getBaseDSQProbability());
+        competitionManager->setWindGenerationSettings(configWindow->getWindGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
+
+        if(type == CompetitionRules::Individual)
+            static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(configWindow->getSeasonCompetitionJumpers());
+        else if(type == CompetitionRules::Team)
+            static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(MyFunctions::convertToVectorOfPointers(&configWindow->getCompetitionTeamsReference()));
+\
+        if(type == CompetitionRules::Team)
+            dynamic_cast<TeamCompetitionManager *>(competitionManager)->setupStartListStatusesForActualRound(true);
+        else
+            competitionManager->setupStartListStatusesForActualRound();
+        competitionManager->setActualStartListIndex(0);
+        competitionManager->getRoundsStartingGatesReference().push_back(competitionManager->getActualGate());
+
+        CompetitionManagerWindow * managerWindow = new CompetitionManagerWindow(competitionManager, this);
+        managerWindow->setInrunSnowGenerator(InrunSnowGenerator(configWindow->getInrunSnowGeneratorSettingsWidget()->getBase(), configWindow->getInrunSnowGeneratorSettingsWidget()->getDeviation()));
+        if(managerWindow->exec() == QDialog::Accepted)
+        {
+            competition->setPlayed(true);
+            simulationSave->updateNextCompetitionIndex();
+            fillNextCompetitionInformations();
+            simulationSave->saveToFile("simulationSaves/");
+        }
     }
 }
+
 

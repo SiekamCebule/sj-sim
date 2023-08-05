@@ -3,11 +3,11 @@
 #include "CompetitionInfo.h"
 extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
-CompetitionSingleResult::CompetitionSingleResult(Jumper *jumper, int type, CompetitionInfo *competitionInfo) : type(type), jumper(jumper), team(nullptr), competitionInfo(competitionInfo),
+CompetitionSingleResult::CompetitionSingleResult(Jumper *jumper, int type) : type(type), jumper(jumper), team(nullptr),
     ClassWithID()
 {}
 
-CompetitionSingleResult::CompetitionSingleResult(Team *team, int type, CompetitionInfo *competitionInfo) : type(type), jumper(nullptr), team(team), competitionInfo(competitionInfo),
+CompetitionSingleResult::CompetitionSingleResult(Team *team, int type) : type(type), jumper(nullptr), team(team),
     ClassWithID()
 {}
 
@@ -15,7 +15,6 @@ CompetitionSingleResult CompetitionSingleResult::getFromJson(QJsonObject obj)
 {
     CompetitionSingleResult result;
     result.setID(obj.value("id").toString().toULong());
-    result.setCompetitionInfo(static_cast<CompetitionInfo *>(seasonObjectsManager.getObjectByID(obj.value("competition-info-id").toString().toULong())));
     result.setPosition(obj.value("position").toInt());
     result.setPointsSum(obj.value("points-sum").toDouble());
     result.setType(obj.value("type").toInt());
@@ -33,7 +32,6 @@ QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult resul
 {
     QJsonObject resultObject;
     resultObject.insert("id", QString::number(result.getID()));
-    resultObject.insert("competition-info-id", QString::number(result.getCompetitionInfo()->getID()));
     resultObject.insert("position", result.getPosition());
     resultObject.insert("points-sum", result.getPointsSum());
     resultObject.insert("type", result.getType());
@@ -130,16 +128,6 @@ QVector<JumpData> &CompetitionSingleResult::getJumpsReference()
 void CompetitionSingleResult::setJumps(const QVector<JumpData> &newJumps)
 {
     jumps = newJumps;
-}
-
-CompetitionInfo *CompetitionSingleResult::getCompetitionInfo() const
-{
-    return competitionInfo;
-}
-
-void CompetitionSingleResult::setCompetitionInfo(CompetitionInfo *newCompetitionInfo)
-{
-    competitionInfo = newCompetitionInfo;
 }
 
 void CompetitionSingleResult::updatePointsSum()

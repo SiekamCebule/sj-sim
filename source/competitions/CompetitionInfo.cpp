@@ -28,7 +28,6 @@ CompetitionInfo::CompetitionInfo(Hill *hill) : hill(hill),
     played = false;
     serieType = Competition;
     trialRound = nullptr;
-    results.setCompetitionInfo(this);
     advancementClassification = nullptr;
     advancementCompetition = nullptr;
 }

@@ -86,16 +86,6 @@ void JumpData::setWinds(const QVector<Wind> &newWinds)
     winds = newWinds;
 }
 
-CompetitionRules *JumpData::getRules() const
-{
-    return rules;
-}
-
-void JumpData::setRules(CompetitionRules *newRules)
-{
-    rules = newRules;
-}
-
 JumpSimulationData JumpData::getSimulationData() const
 {
     return simulationData;
@@ -147,7 +137,6 @@ void JumpData::reset()
     jumper = nullptr;
     hill = nullptr;
     simulator = nullptr;
-    rules = nullptr;
     DSQ = false;
     simulationData.reset();
 }
@@ -197,7 +186,6 @@ QJsonObject JumpData::getJsonObject(const JumpData &jumpData)
     }
     object.insert("winds", windsArray);
 
-    object.insert("rules-id", QString::number(jumpData.getRules()->getID()));
     object.insert("jumper-id", QString::number(jumpData.getJumper()->getID()));
     object.insert("hill-id", QString::number(jumpData.getHill()->getID()));
     return object;
@@ -250,7 +238,6 @@ JumpData JumpData::getFromJson(QJsonObject obj)
     }
     jump.setWinds(winds);
 
-    jump.setRules(static_cast<CompetitionRules *>(seasonObjectsManager.getObjectByID(obj.value("rules-id").toString().toULong())));
     jump.setJumper(static_cast<Jumper *>(seasonObjectsManager.getObjectByID(obj.value("jumper-id").toString().toULong())));
     jump.setHill(static_cast<Hill *>(seasonObjectsManager.getObjectByID(obj.value("hill-id").toString().toULong())));
 

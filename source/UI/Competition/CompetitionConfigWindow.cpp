@@ -209,6 +209,26 @@ int CompetitionConfigWindow::getJumpersCountInTeam() const
     return competitionRulesEditor->getJumpersCountInTeam();
 }
 
+int CompetitionConfigWindow::getStartingGateFromInput() const
+{
+    return ui->spinBox_startGate->value();
+}
+
+int CompetitionConfigWindow::getBaseDSQProbability() const
+{
+    return ui->spinBox_dsqProbability->value();
+}
+
+WindsGeneratorSettingsEditorWidget *CompetitionConfigWindow::getWindGeneratorSettingsWidget()
+{
+    return windsGeneratorSettingsEditor;
+}
+
+InrunSnowGeneratorSettingsEditorWidget *CompetitionConfigWindow::getInrunSnowGeneratorSettingsWidget()
+{
+    return inrunSnowGeneratorSettingsEditor;
+}
+
 void CompetitionConfigWindow::setupHillToolBoxItem()
 {
     ui->comboBox_existingHill->clear();
@@ -277,6 +297,16 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
     });
 }
 
+QVector<Jumper *> CompetitionConfigWindow::getSeasonCompetitionJumpers() const
+{
+    return seasonCompetitionJumpers;
+}
+
+void CompetitionConfigWindow::setSeasonCompetitionJumpers(const QVector<Jumper *> &newSeasonCompetitionJumpers)
+{
+    seasonCompetitionJumpers = newSeasonCompetitionJumpers;
+}
+
 SimulationSave *CompetitionConfigWindow::getSimulationSave() const
 {
     return simulationSave;
@@ -317,12 +347,22 @@ QVector<Team> CompetitionConfigWindow::getCompetitionTeams() const
     return competitionTeams;
 }
 
+QVector<Team> &CompetitionConfigWindow::getCompetitionTeamsReference()
+{
+    return competitionTeams;
+}
+
 void CompetitionConfigWindow::setCompetitionTeams(const QVector<Team> &newCompetitionTeams)
 {
     competitionTeams = newCompetitionTeams;
 }
 
 QVector<Jumper> CompetitionConfigWindow::getCompetitionJumpers() const
+{
+    return competitionJumpers;
+}
+
+QVector<Jumper> &CompetitionConfigWindow::getCompetitionJumpersReference()
 {
     return competitionJumpers;
 }
@@ -347,7 +387,7 @@ void CompetitionConfigWindow::setCompetitionRulesEditor(CompetitionRulesEditorWi
     competitionRulesEditor = newCompetitionRulesEditor;
 }
 
-WindsGeneratorSettingsEditorWidget *CompetitionConfigWindow::getWindGeneratorSettingsEditor() const
+WindsGeneratorSettingsEditorWidget *CompetitionConfigWindow::getWindGeneratorSettingsEditor()
 {
     return windsGeneratorSettingsEditor;
 }
@@ -369,6 +409,9 @@ void CompetitionConfigWindow::setType(short newType)
 
 void CompetitionConfigWindow::on_pushButton_submit_clicked()
 {
+    emit submitted();
+    if(getType() == SeasonCompetition)
+        accept();
     switch(getType())
     {
     case SingleCompetition:{

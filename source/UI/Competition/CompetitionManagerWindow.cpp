@@ -35,8 +35,10 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
         ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
 
         connect(this->manager, &AbstractCompetitionManager::actualJumperChanged, this, [this](){
-            ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
-            ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+            if(this->manager->getActualStartListIndex() < this->manager->getStartListStatusesReference().count()){
+                ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
+                ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+            }
         });
     }
 
@@ -105,10 +107,6 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
             updateToBeatDistanceLabel();
         }
     });
-
-    /*toolBar = new QToolBar(tr("Zarządzaj konkursem"), this);
-    toolBar->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    toolBar->setStyleSheet("QToolBar QToolButton{background-color: rgb(245, 245, 245); border: 2px solid rgb(100, 100, 240); border-radius: 4px; color: rgb(10, 10, 10);} QToolBar:hover QToolButton:hover{background-color: rgb(255, 255, 255);}");*/
 
     action_cancelCompetition = new QAction(tr("Odwołaj konkurs"), this);
     action_cancelRound = new QAction(tr("Odwołaj aktualną rundę"), this);

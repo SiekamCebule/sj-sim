@@ -55,7 +55,7 @@ void JumpSimulator::setHasCoachGate(bool newHasCoachGate)
 
 bool JumpSimulator::generateDSQ()
 {
-    if(jumpData.rules->getHasDsq() == true){
+    if(competitionRules->getHasDsq() == true){
         int probability = 0;
         if(manipulator->getExactDSQProbability() > (-1))
             probability = manipulator->getExactDSQProbability();
@@ -382,7 +382,7 @@ void JumpSimulator::generateLanding()
 
 void JumpSimulator::generateJudges()
 {
-    if(jumpData.rules->getHasJudgesPoints() == true){
+    if(competitionRules->getHasJudgesPoints() == true){
         //double bothLegsLevel = jumperSkills->getLevelOfCharacteristic("both-legs-landing-tendence");
         simulationData->judgesRating = 18.35;
         simulationData->judgesRating -= jumpData.landing.getImbalance() / 1.5;
@@ -465,7 +465,7 @@ void JumpSimulator::generateJudges()
 void JumpSimulator::calculateCompensations()
 {
     jumpData.setWindCompensation(0);
-    if(jumpData.rules->getHasWindCompensations() == true){
+    if(competitionRules->getHasWindCompensations() == true){
         QVector<Wind> tempWinds = getWinds();
         switch(competitionRules->getWindCompensationDistanceEffect()) //
         {
@@ -512,7 +512,7 @@ void JumpSimulator::calculateCompensations()
 
     jumpData.setGateCompensation(0);
     jumpData.setBeats95HSPercents(false);
-    if(jumpData.rules->getHasGateCompensations() == true){
+    if(competitionRules->getHasGateCompensations() == true){
         jumpData.setGateCompensation(WindsCalculator::getGateCompensation(competitionStartGate, gate, hill));
         double coachGateCompensation = 0;
         if(hasCoachGate == true){
@@ -537,7 +537,7 @@ void JumpSimulator::calculatePoints()
     jumpData.points += jumpData.getWindCompensation();
 
     jumpData.judgesPoints = 0;
-    if(jumpData.rules->getHasJudgesPoints()){
+    if(competitionRules->getHasJudgesPoints()){
         double min = 20, max = 0;
         for(const auto jg : jumpData.getJudges())
         {
@@ -565,7 +565,7 @@ void JumpSimulator::setupJumpData()
     jumpData.winds = winds;
     //sredni wiatr jest zapisywany w jumpDacie w funkcji calculateCompensations().
     jumpData.setGate(this->gate);
-    jumpData.rules = getCompetitionRules();
+    competitionRules = getCompetitionRules();
     jumpData.hasCoachGate = this->hasCoachGate;
     jumpData.coachGate = this->coachGate;
     if(hasCoachGate == true) jumpData.setGate(this->coachGate);

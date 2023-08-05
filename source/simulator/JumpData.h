@@ -34,7 +34,6 @@ private:
     QVector<double> judges;
 
     JumpSimulationData simulationData;
-    CompetitionRules * rules;
 
     QVector<Wind> winds;
     double averagedWind;
@@ -84,8 +83,6 @@ public:
     void setAveragedWind(double newAveragedWind);
     JumpSimulationData getSimulationData() const;
     void setSimulationData(const JumpSimulationData &newSimulationData);
-    CompetitionRules *getRules() const;
-    void setRules(CompetitionRules *newRules);
     QVector<Wind> getWinds() const;
     QVector<Wind>* getWindsPointer();
     void setWinds(const QVector<Wind> &newWinds);

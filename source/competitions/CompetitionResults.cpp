@@ -7,16 +7,16 @@
 extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
 
-CompetitionResults::CompetitionResults(CompetitionInfo *competitionInfo) : competitionInfo(competitionInfo),
+CompetitionResults::CompetitionResults() :
     ClassWithID()
 {
 
 }
 
-QVector<QVector<JumpData *> > CompetitionResults::constructRoundsJumps()
+QVector<QVector<JumpData *> > CompetitionResults::constructRoundsJumps(QVector<RoundInfo> *rounds)
 {
     QVector<QVector<JumpData *>> roundsJumps;
-    for(int i=0; i<competitionInfo->getRulesPointer()->getRounds().count(); i++){
+    for(int i=0; i<rounds->count(); i++){
         QVector<JumpData *> jumps;
         for(auto & jp : results){
             if(jp.getJumpsReference().count() < i){
@@ -28,14 +28,14 @@ QVector<QVector<JumpData *> > CompetitionResults::constructRoundsJumps()
     return roundsJumps;
 }
 
-CompetitionResults CompetitionResults::constructRoundsResults(QVector<int> rounds)
+CompetitionResults CompetitionResults::constructRoundsResults(QVector<RoundInfo> *roundsInfos, QVector<int> rounds)
 {
     CompetitionResults results;
     for(auto & round : rounds){
         if(round - 1 >= results.getResultsReference().count())
             break;
         else{
-            for(auto & jump : constructRoundsJumps()[round - 1]){
+            for(auto & jump : constructRoundsJumps(roundsInfos)[round - 1]){
                 results.addJump(jump->getJumper(), *jump);
             }
         }
@@ -48,7 +48,6 @@ CompetitionResults CompetitionResults::getFromJson(QJsonObject obj)
 {
     CompetitionResults results;
     results.setID(obj.value("id").toString().toULong());
-    results.setCompetitionInfo(static_cast<CompetitionInfo *>(seasonObjectsManager.getObjectByID(obj.value("competition-info-id").toString().toULong())));
 
     QJsonArray resultsArray = obj.value("results").toArray();
     for(auto res : resultsArray){
@@ -62,7 +61,6 @@ QJsonObject CompetitionResults::getJsonObject(CompetitionResults &results)
 {
     QJsonObject object;
     object.insert("id", QString::number(results.getID()));
-    object.insert("competition-info-id", QString::number(results.getCompetitionInfo()->getID()));
 
     QJsonArray resultsArray;
     for(auto & res : qAsConst(results.getResultsReference()))
@@ -126,7 +124,7 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
         }
     }
     if(result == nullptr){
-        results.push_back(CompetitionSingleResult(jumper, CompetitionSingleResult::IndividualResult, competitionInfo));
+        results.push_back(CompetitionSingleResult(jumper, CompetitionSingleResult::IndividualResult));
         result = &results[results.count() - 1];
     }
     int index = jumpNumber;
@@ -151,7 +149,7 @@ void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
         }
     }
     if(result == nullptr){
-        results.push_back(CompetitionSingleResult(team, CompetitionSingleResult::TeamResult, competitionInfo));
+        results.push_back(CompetitionSingleResult(team, CompetitionSingleResult::TeamResult));
         result = &results[results.count() - 1];
     }
     int index = jumpNumber;
@@ -239,14 +237,4 @@ void CompetitionResults::sortInAscendingOrder()
 {
     std::sort(results.begin(), results.end(), std::less<CompetitionSingleResult>());
     updatePositions();
-}
-
-CompetitionInfo *CompetitionResults::getCompetitionInfo() const
-{
-    return competitionInfo;
-}
-
-void CompetitionResults::setCompetitionInfo(CompetitionInfo *newCompetitionInfo)
-{
-    competitionInfo = newCompetitionInfo;
 }

@@ -15,8 +15,8 @@ class CompetitionInfo;
 class CompetitionSingleResult : public ClassWithID
 {
 public:
-    CompetitionSingleResult(Jumper * jumper = nullptr, int type = 0, CompetitionInfo * competitionInfo = nullptr);
-    CompetitionSingleResult(Team * team, int type = 0, CompetitionInfo * competitionInfo = nullptr);
+    CompetitionSingleResult(Jumper * jumper = nullptr, int type = 0);
+    CompetitionSingleResult(Team * team, int type = 0);
     inline bool operator<(const CompetitionSingleResult & second) {return pointsSum < second.getPointsSum();}
     //inline bool operator>(const CompetitionSingleResult & second) {return pointsSum > second.getPointsSum();}
     enum Type{
@@ -28,7 +28,6 @@ public:
     static QJsonObject getJsonObject(CompetitionSingleResult result);
 
 protected:
-    CompetitionInfo * competitionInfo;
     QVector<JumpData> jumps;
     double pointsSum;
     int position;
@@ -43,8 +42,6 @@ public:
     void updateTeamJumpersResults();
     CompetitionSingleResult * getTeamJumperResult(Jumper * jumper);
 
-    CompetitionInfo *getCompetitionInfo() const;
-    void setCompetitionInfo(CompetitionInfo *newCompetitionInfo);
     QVector<JumpData> getJumps() const;
     QVector<JumpData> & getJumpsReference();
     void setJumps(const QVector<JumpData> &newJumps);

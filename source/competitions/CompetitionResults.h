@@ -19,23 +19,20 @@ class CompetitionInfo;
 class CompetitionResults : public ClassWithID
 {
 public:
-    CompetitionResults(CompetitionInfo * competitionInfo = nullptr);
+    CompetitionResults();
 
 private:
-    CompetitionInfo * competitionInfo;
     QVector<CompetitionSingleResult> results;
-    QVector<QVector<JumpData *>> constructRoundsJumps();
+    QVector<QVector<JumpData *>> constructRoundsJumps(QVector<RoundInfo> * rounds);
 
 public:
-    CompetitionResults constructRoundsResults(QVector<int> rounds);
+    CompetitionResults constructRoundsResults(QVector<RoundInfo> *roundsInfos, QVector<int> rounds);
     void updateRoundsJumps();
 
     static CompetitionResults getFromJson(QJsonObject obj);
     static QJsonObject getJsonObject(CompetitionResults & results);
 
 public:
-    CompetitionInfo *getCompetitionInfo() const;
-    void setCompetitionInfo(CompetitionInfo *newCompetitionInfo);
     QVector<CompetitionSingleResult> getResults() const;
     QVector<CompetitionSingleResult> & getResultsReference();
     void setResults(const QVector<CompetitionSingleResult> &newResults);

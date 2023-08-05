@@ -102,11 +102,15 @@ public:
         }
     }
 
-    template <typename Type, typename SourceType>
-    static Type static_cast_checked (SourceType *item)
+    template<typename T>
+    static QVector<T *> convertToVectorOfPointers(QVector<T> * vector)
     {
-        assert (!item || dynamic_cast<Type> (item)); // sprawdź czy item jest nullptr lub poprawnym wskaźnikiem na Type
-        return static_cast<Type> (item); // zwróć static_cast jako wynik
+        QVector<T *> toReturn;
+        for(auto & obj : *vector)
+        {
+            toReturn.push_back(&obj);
+        }
+        return toReturn;
     }
 
     static void fileMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & msg);
