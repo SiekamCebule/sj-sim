@@ -53,6 +53,7 @@ SimulationSave SimulationSave::getFromJson(QJsonObject obj)
 
     save.setActualSeason(static_cast<Season *>(seasonObjectsManager.getObjectByID(obj.value("actual-season-id").toString().toULong())));
     save.setNextCompetitionIndex(obj.value("next-competition-index").toInt());
+    save.setNextCompetition(save.getActualSeason()->getCalendarReference().getCompetitionsReference()[save.getNextCompetitionIndex()]);
 
     return save;
 }
@@ -139,6 +140,17 @@ void SimulationSave::updateNextCompetitionIndex()
             break;
         nextCompetitionIndex++;
     }
+    nextCompetition = getActualSeason()->getCalendarReference().getCompetitionsReference()[nextCompetitionIndex];
+}
+
+CompetitionInfo *SimulationSave::getNextCompetition() const
+{
+    return nextCompetition;
+}
+
+void SimulationSave::setNextCompetition(CompetitionInfo *newNextCompetition)
+{
+    nextCompetition = newNextCompetition;
 }
 
 int SimulationSave::getNextCompetitionIndex() const

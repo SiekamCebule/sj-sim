@@ -23,17 +23,20 @@
 #include <QKeySequence>
 #include <QMessageBox>
 
-CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
+CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, SimulationSave *save) :
     QDialog(parent),
     ui(new Ui::SingleCompetitionConfigWindow),
-    type(type)
+    type(type),
+    simulationSave(save)
 {
+    if(simulationSave != nullptr)
+        seasonCompetition = simulationSave->getNextCompetition();
     ui->setupUi(this);
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
     delete ui->page_2;
     ui->toolBox->removeItem(1);
     setWindowFlags(Qt::Window);
-    setupHillToolBoxItem();
+        setupHillToolBoxItem();
 
     windsGeneratorSettingsEditor = new WindsGeneratorSettingsEditorWidget(this);
     windsGeneratorSettingsEditor->setRemovingSubmitButtons(true);
@@ -51,14 +54,63 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
     ui->toolBox->addItem(inrunSnowGeneratorSettingsEditor, tr("Ustawienia generatora śniegu na najeździe"));
     setupCompetitionRulesToolBoxItem();
 
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, false, true, this);
+    jumpersListView->getListView()->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    jumpersListView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    if(getType() == SingleCompetition)
+        jumpersListView->setJumpers(&competitionJumpers);
+    else{
+        jumpersListView->setType(DatabaseItemsListView::SeasonJumpersItems);
+        for(auto & jp : simulationSave->getJumpersReference())
+        {
+            seasonCompetitionJumpers.push_back(&jp);
+        }
+        jumpersListView->setSeasonJumpers(&seasonCompetitionJumpers);
+    }
+    jumpersListView->setupListModel();
+    ui->verticalLayout_startList->addWidget(jumpersListView);
+
+    teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams);
+    if(getType() == SingleCompetition)
+        teamsSquadsModel->setJumpersInTeam(competitionRulesEditor->getJumpersCountInTeam());
+    else teamsSquadsModel->setJumpersInTeam(seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
+    teamsSquadsModel->setupTreeItems();
+    teamsTreeView = new TeamsSquadsTreeView(teamsSquadsModel, this);
+    ui->verticalLayout_startList->addWidget(teamsTreeView);
+
     if(getType() == SeasonCompetition)
     {
+        if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual){
+            jumpersListView->show();
+            teamsTreeView->hide();
+        }
+        else if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team){
+            jumpersListView->hide();
+            teamsTreeView->show();
+        }
+
         ui->pushButton_loadJumpers->hide();
         setWindowTitle(tr("Konfiguracja konkursu"));
-        delete ui->toolBox->widget(0); //index 0
+        ui->toolBox->widget(0)->hide();
         ui->toolBox->removeItem(0);
-        delete ui->toolBox->widget(2); //index 2
+        ui->toolBox->widget(2)->hide();
         ui->toolBox->removeItem(2);
+
+        windsGeneratorSettingsEditor->setKPoint(seasonCompetition->getHill()->getKPoint());
+        windsGeneratorSettingsEditor->setWindGenerationSettings(new QVector<WindGenerationSettings>());
+        windsGeneratorSettingsEditor->fillWindGenerationSettingsByDefault();
+        windsGeneratorSettingsEditor->fillSettingsInputs();
+
+        competitionTeams = Team::constructTeamsVectorByJumpersList(seasonCompetitionJumpers, seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
+        teamsSquadsModel->setupTreeItems();
+        teamsTreeView->setModel(teamsSquadsModel);
+        //teamsTreeView->getTreeView()->expandToDepth(0);
+        connect(jumpersListView, &DatabaseItemsListView::remove, this, [this](){
+            competitionTeams = Team::constructTeamsVectorByJumpersList(seasonCompetitionJumpers, seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
+            teamsSquadsModel->setupTreeItems();
+            teamsTreeView->setModel(teamsSquadsModel);
+            teamsTreeView->getTreeView()->expandToDepth(0);
+        });
     }
     else if(getType() == SingleCompetition)
     {
@@ -97,17 +149,6 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
             teamsTreeView->setHidden(false);
         }
     });
-    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, false, this);
-    jumpersListView->getListView()->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    jumpersListView->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
-    jumpersListView->setJumpers(&competitionJumpers);
-    jumpersListView->setupListModel();
-    ui->verticalLayout_startList->addWidget(jumpersListView);
-
-    teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
-    teamsSquadsModel->setupTreeItems();
-    teamsTreeView = new TeamsSquadsTreeView(teamsSquadsModel, this);
-    ui->verticalLayout_startList->addWidget(teamsTreeView);
 
     connect(teamsTreeView, &TeamsSquadsTreeView::needToUpdateModel, this, [this]{
         teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
@@ -125,7 +166,12 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
             teamIndex = item->getParentItem()->row();
         }
 
-        TeamEditorWidget * editor = new TeamEditorWidget(&competitionTeams[teamIndex], competitionRulesEditor->getJumpersCountInTeam());
+        TeamEditorWidget * editor = new TeamEditorWidget(&competitionTeams[teamIndex]);
+        if(getType() == SingleCompetition)
+            editor->setJumpersCount(competitionRulesEditor->getJumpersCountInTeam());
+        else editor->setJumpersCount(seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
+        editor->getModel()->setJumpersInTeamCount(editor->getJumpersCount());
+
         editor->setAttribute(Qt::WA_DeleteOnClose);
         editor->fillWidgetInputs();
         editor->show();
@@ -137,7 +183,10 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
         if(dialog.exec() == QDialog::Accepted){
             competitionTeams[teamIndex] = editor->constructTeamFromWidgetInput();
             delete teamsSquadsModel;
-            teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
+            teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams);
+            if(getType() == SingleCompetition)
+                teamsSquadsModel->setJumpersInTeam(competitionRulesEditor->getJumpersCountInTeam());
+            else teamsSquadsModel->setJumpersInTeam(seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
             teamsSquadsModel->setupTreeItems();
             teamsTreeView->setModel(teamsSquadsModel);
             teamsTreeView->getTreeView()->expandToDepth(0);
@@ -146,8 +195,8 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent) :
 
     ui->verticalLayout_startList->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Maximum, QSizePolicy::Maximum));
 
-
-    emit competitionRulesEditor->competitionTypeChanged();
+    if(getType() == SingleCompetition)
+        emit competitionRulesEditor->competitionTypeChanged();
 }
 
 CompetitionConfigWindow::~CompetitionConfigWindow()
@@ -226,6 +275,26 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
         }
         else competitionRulesEditor->resetInputs();
     });
+}
+
+SimulationSave *CompetitionConfigWindow::getSimulationSave() const
+{
+    return simulationSave;
+}
+
+void CompetitionConfigWindow::setSimulationSave(SimulationSave *newSimulationSave)
+{
+    simulationSave = newSimulationSave;
+}
+
+CompetitionInfo *CompetitionConfigWindow::getSeasonCompetition() const
+{
+    return seasonCompetition;
+}
+
+void CompetitionConfigWindow::setSeasonCompetition(CompetitionInfo *newSeasonCompetition)
+{
+    seasonCompetition = newSeasonCompetition;
 }
 
 TeamsSquadsTreeModel *CompetitionConfigWindow::getTeamsSquadsModel() const

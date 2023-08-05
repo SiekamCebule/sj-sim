@@ -67,7 +67,7 @@ color: rgb(26, 95, 180);
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,5,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_startList">
        <property name="sizeConstraint">
@@ -162,8 +162,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>603</width>
-          <height>825</height>
+          <width>682</width>
+          <height>821</height>
          </rect>
         </property>
         <attribute name="label">
@@ -239,8 +239,8 @@ color: black;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>603</width>
-          <height>825</height>
+          <width>682</width>
+          <height>821</height>
          </rect>
         </property>
         <attribute name="label">

@@ -3,6 +3,8 @@
 #include "../../global/GlobalAppSettings.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../../utilities/functions.h"
+#include "../Competition/CompetitionConfigWindow.h"
+#include "../Competition/CompetitionManagerWindow.h"
 #include <QMessageBox>
 #include <QTimer>
 #include <QPushButton>
@@ -147,6 +149,10 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
         simulationSave->getActualSeason()->getCalendarReference().fixCompetitionsClassifications();
         calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
     });
+    connect(calendarEditor, &CalendarEditorWidget::changed, this, [this](){
+        simulationSave->updateNextCompetitionIndex();
+        fillNextCompetitionInformations();
+    });
 }
 
 SimulationSaveManagerWindow::~SimulationSaveManagerWindow()
@@ -156,6 +162,7 @@ SimulationSaveManagerWindow::~SimulationSaveManagerWindow()
 
 void SimulationSaveManagerWindow::showJumperAndHillsEditingHelp()
 {
+    if(GlobalAppSettings::get()->getShowSeasonJumpersAndHillsHelp() == true){
     QMessageBox box;
     box.setWindowTitle(tr("Edycja zawodników i skoczni"));
     box.setText(tr("BARDZO WAŻNE: Zawodników i skoczni które dodano, nie można już później usunąć. Bądź ostrożny podczas dodawania!"));
@@ -167,6 +174,7 @@ void SimulationSaveManagerWindow::showJumperAndHillsEditingHelp()
     {
         GlobalAppSettings::get()->setShowSeasonJumpersAndHillsHelp(false);
         GlobalAppSettings::get()->writeToJson();
+    }
     }
 }
 
@@ -232,3 +240,15 @@ SimulationSave *SimulationSaveManagerWindow::getSimulationSave() const
 {
     return simulationSave;
 }
+
+void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
+{
+    CompetitionInfo * competition = simulationSave->getNextCompetition();
+    CompetitionConfigWindow * configWindow = new CompetitionConfigWindow(CompetitionConfigWindow::SeasonCompetition, this, simulationSave);
+    configWindow->setModal(true);
+    if(configWindow->exec() == QDialog::Accepted)
+    {
+
+    }
+}
+

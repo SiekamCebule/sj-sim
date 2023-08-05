@@ -16,6 +16,7 @@
 #include "ListModels/JumpersListModel.h"
 #include "ListModels/ClassificationsListModel.h"
 #include "ListModels/PointsForPlacesPresetsListModel.h"
+#include "ListModels/SeasonJumpersListModel.h"
 
 namespace Ui {
 class DatabaseItemsListView;
@@ -30,6 +31,7 @@ public:
     ~DatabaseItemsListView();
 
     enum Type{
+        SeasonJumpersItems,
         JumperItems,
         HillItems,
         CompetitionRulesItems,
@@ -52,6 +54,7 @@ private:
     Ui::DatabaseItemsListView *ui;
     int type;
 
+    QVector<Jumper *> * seasonJumpers;
     QVector<Jumper> * jumpers;
     QVector<Hill> * hills;
     QVector<CompetitionRules> * competitionRules;
@@ -94,6 +97,10 @@ public:
     void setPointsForPlacesPresets(QVector<PointsForPlacesPreset> *newPointsForPlacesPresets);
     int getLastDoubleClickedIndex() const;
     void setLastDoubleClickedIndex(int newLastDoubleClickedIndex);
+    QVector<Jumper *> *getSeasonJumpers() const;
+    void setSeasonJumpers(QVector<Jumper *> *newSeasonJumpers);
+    int getType() const;
+    void setType(int newType);
 };
 
 #endif // DATABASEITEMSLISTVIEW_H

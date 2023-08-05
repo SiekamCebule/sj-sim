@@ -223,6 +223,7 @@ void CalendarEditorWidget::addActionTriggered()
         ui->tableView->resizeColumnsToContents();
         updateActualCompetitionByID();
     }
+    emit changed();
 }
 
 void CalendarEditorWidget::removeActionTriggered()
@@ -264,6 +265,7 @@ void CalendarEditorWidget::removeActionTriggered()
         calendar->fixAdvancementCompetitions();
         emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
     }
+    emit changed();
 }
 
 void CalendarEditorWidget::upActionTriggered()
@@ -358,6 +360,7 @@ void CalendarEditorWidget::upActionTriggered()
             updateActualCompetitionByID();
         }
     }
+    emit changed();
 }
 
 void CalendarEditorWidget::downActionTriggered()
@@ -455,6 +458,7 @@ void CalendarEditorWidget::downActionTriggered()
             updateActualCompetitionByID();
         }
     }
+    emit changed();
 }
 
 void CalendarEditorWidget::editActionTriggered()
@@ -533,6 +537,7 @@ void CalendarEditorWidget::editActionTriggered()
         }
         ui->tableView->resizeColumnsToContents();
     }
+    emit changed();
 }
 
 void CalendarEditorWidget::execMultipleTrainingsEditDialog(QVector<int> *rows, int column)

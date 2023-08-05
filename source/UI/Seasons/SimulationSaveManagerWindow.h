@@ -49,6 +49,8 @@ private:
 
 public:
     SimulationSave *getSimulationSave() const;
+private slots:
+    void on_pushButton_competitionConfig_clicked();
 };
 
 #endif // SIMULATIONSAVEMANAGERWINDOW_H

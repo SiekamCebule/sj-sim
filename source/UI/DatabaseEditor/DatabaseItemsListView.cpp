@@ -58,6 +58,9 @@ DatabaseItemsListView::~DatabaseItemsListView()
 void DatabaseItemsListView::setupListModel()
 {
     switch(type){
+    case SeasonJumpersItems:
+        listModel = new SeasonJumpersListModel(this->seasonJumpers);
+        break;
     case JumperItems:
         listModel = new JumpersListModel(this->jumpers);
         break;
@@ -88,6 +91,26 @@ void DatabaseItemsListView::selectOnlyFirstRow()
         else if(listModel->rowCount() == 2)
             ui->listView->selectionModel()->select(listModel->index(1), QItemSelectionModel::Select);
     }
+}
+
+int DatabaseItemsListView::getType() const
+{
+    return type;
+}
+
+void DatabaseItemsListView::setType(int newType)
+{
+    type = newType;
+}
+
+QVector<Jumper *> *DatabaseItemsListView::getSeasonJumpers() const
+{
+    return seasonJumpers;
+}
+
+void DatabaseItemsListView::setSeasonJumpers(QVector<Jumper *> *newSeasonJumpers)
+{
+    seasonJumpers = newSeasonJumpers;
 }
 
 int DatabaseItemsListView::getLastDoubleClickedIndex() const
@@ -130,6 +153,10 @@ void DatabaseItemsListView::onInsertActionTriggered()
     if(allowInserting == true){
         int count = 0;
         switch(type){
+        case SeasonJumpersItems:{
+            count = seasonJumpers->count();
+            break;
+        }
         case JumperItems:{
             count = jumpers->count();
             break;
@@ -162,6 +189,13 @@ void DatabaseItemsListView::onInsertActionTriggered()
 
         if(allowInserting == true){
             switch(type){
+            case SeasonJumpersItems:{
+                SeasonJumpersListModel * jumpersListModel = dynamic_cast<SeasonJumpersListModel *>(listModel);
+                jumpersListModel->insertRows(rowToInsert, 1);
+                jumpersListModel->getSeasonJumpers()->insert(rowToInsert, 1, new Jumper("Name", "Surname", "XXX"));
+                emit jumpersListModel->dataChanged(jumpersListModel->index(rowToInsert), jumpersListModel->index(jumpersListModel->rowCount() - 1));
+                break;
+            }
             case JumperItems:{
                 JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
                 jumpersListModel->insertRows(rowToInsert, 1);
@@ -211,6 +245,16 @@ void DatabaseItemsListView::onRemoveActionTriggered()
         if(rows.size() > 0){
             int firstRow = rows.first().row();
             switch(type){
+            case SeasonJumpersItems:{
+                SeasonJumpersListModel * jumpersListModel = dynamic_cast<SeasonJumpersListModel *>(listModel);
+                while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                    int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                    jumpersListModel->removeRows(rowToRemove, 1);
+                    jumpersListModel->getSeasonJumpers()->remove(rowToRemove, 1);
+                }
+                emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
+                break;
+            }
             case JumperItems:{
                 JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
                 while(ui->listView->selectionModel()->selectedRows().size() > 0){
@@ -291,6 +335,15 @@ void DatabaseItemsListView::onUpActionTriggered()
         std::sort(rows.begin(), rows.end());
         ui->listView->clearSelection();
         switch(type){
+        case SeasonJumpersItems:{
+            SeasonJumpersListModel * jumpersListModel = dynamic_cast<SeasonJumpersListModel *>(listModel);
+            for(auto & index : rows)
+                ui->listView->setCurrentIndex(jumpersListModel->index(index.row() - 1));
+            for(auto & index : rows)
+                jumpersListModel->getSeasonJumpers()->swapItemsAt(index.row(), index.row() - 1);
+            emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
+            break;
+        }
         case JumperItems:{
             JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
             for(auto & index : rows)
@@ -368,6 +421,15 @@ void DatabaseItemsListView::onDownActionTriggered()
         });
         ui->listView->clearSelection();
         switch(type){
+        case SeasonJumpersItems:{
+            SeasonJumpersListModel * jumpersListModel = dynamic_cast<SeasonJumpersListModel *>(listModel);
+            for(auto & index : rows)
+                ui->listView->setCurrentIndex(jumpersListModel->index(index.row() + 1));
+            for(auto & index : rows)
+                jumpersListModel->getSeasonJumpers()->swapItemsAt(index.row(), index.row() + 1);
+            emit jumpersListModel->dataChanged(jumpersListModel->index(lastRow), jumpersListModel->index(0));
+            break;
+        }
         case JumperItems:{
             JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
             for(auto & index : rows)

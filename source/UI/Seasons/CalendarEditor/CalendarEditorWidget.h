@@ -21,6 +21,8 @@ public:
 signals:
     void needToUpdateModel();
 
+    void changed();
+
 private:
     Ui::CalendarEditorWidget *ui;
 

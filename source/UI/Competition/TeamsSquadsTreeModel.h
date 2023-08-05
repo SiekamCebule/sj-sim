@@ -12,7 +12,7 @@ class TeamsSquadsTreeModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit TeamsSquadsTreeModel(QVector<Team> * teams, int jumpersInTeam, QObject *parent = nullptr);
+    explicit TeamsSquadsTreeModel(QVector<Team> * teams, int jumpersInTeam = 0, QObject *parent = nullptr);
     ~TeamsSquadsTreeModel();
 
     // Header:

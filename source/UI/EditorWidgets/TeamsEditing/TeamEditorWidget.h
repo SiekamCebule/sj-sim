@@ -16,7 +16,7 @@ class TeamEditorWidget : public QWidget
     Q_OBJECT
 
 public:
-    TeamEditorWidget(Team * team, int jumpersCount, QWidget * parent = nullptr);
+    TeamEditorWidget(Team * team, int jumpersCount = 0, QWidget * parent = nullptr);
     ~TeamEditorWidget();
 
     void fillWidgetInputs();

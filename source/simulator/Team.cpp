@@ -44,6 +44,45 @@ QVector<Team> Team::constructTeamsVectorByJumpersList(const QVector<Jumper> &jum
     return teams;
 }
 
+QVector<Team> Team::constructTeamsVectorByJumpersList(const QVector<Jumper *> &jumpers, int minCount)
+{
+    qDebug()<<"minCount: "<<minCount;
+    QVector<Team> teams;
+    QStringList codes;
+    for(const auto & jumper : jumpers)
+    {
+        if(codes.contains(jumper->getCountryCode().toUpper()) == true){
+            for(auto & team : teams){
+                if(team.getCountryCode() == jumper->getCountryCode())
+                    team.getJumpersReference().push_back(jumper);
+            }
+        }
+        else{
+            codes.append(jumper->getCountryCode().toUpper());
+            Team team;
+            team.getJumpersReference().push_back(jumper);
+            team.setCountryCode(jumper->getCountryCode());
+            teams.append(team);
+        }
+    }
+    while(true){
+        bool next = false;
+        int i=0;
+        for(auto & team : teams){
+            if(team.getJumpersReference().count() < minCount){
+                teams.remove(i);
+                next = true;
+                break;
+            }
+            i++;
+        }
+        if(next == false)
+            break;
+    }
+
+    return teams;
+}
+
 QVector<Jumper *> Team::getJumpersFilteredByCountryCode(QVector<Jumper> &jumpers, const QString &countryCode)
 {
     QVector<Jumper *> vector;

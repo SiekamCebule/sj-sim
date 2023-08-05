@@ -10,6 +10,8 @@
 #include <QTreeView>
 #include "../../simulator/Jumper.h"
 #include "../../simulator/Team.h"
+#include "../../seasons/SimulationSave.h"
+#include "../../competitions/CompetitionInfo.h"
 #include "../DatabaseEditor/DatabaseItemsListView.h"
 #include "TeamsSquadsTreeModel.h"
 #include "TeamsSquadsTreeView.h"
@@ -29,7 +31,7 @@ class CompetitionConfigWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit CompetitionConfigWindow(short type, QWidget *parent = nullptr);
+    explicit CompetitionConfigWindow(short type, QWidget *parent = nullptr, SimulationSave * save = nullptr);
     ~CompetitionConfigWindow();
 
     enum Type{
@@ -66,6 +68,10 @@ private:
     QVector<Team> competitionTeams;
     QVector<Jumper> competitionJumpers;
 
+    CompetitionInfo * seasonCompetition;
+    SimulationSave * simulationSave;
+    QVector<Jumper *> seasonCompetitionJumpers;
+
 private slots:
     //void removeFromStartList();
     //void moveToTop();
@@ -92,9 +98,12 @@ public:
     void setMoveToDownShortcut(QAction *newMoveToDownShortcut);
     TeamsSquadsTreeModel *getTeamsSquadsModel() const;
     void setTeamsSquadsModel(TeamsSquadsTreeModel *newTeamsSquadsModel);
-
     QTreeView *getTeamsTreeView() const;
     void setTeamsTreeView(QTreeView *newTeamsTreeView);
+    CompetitionInfo *getSeasonCompetition() const;
+    void setSeasonCompetition(CompetitionInfo *newSeasonCompetition);
+    SimulationSave *getSimulationSave() const;
+    void setSimulationSave(SimulationSave *newSimulationSave);
 
 private slots:
     void on_pushButton_submit_clicked();
