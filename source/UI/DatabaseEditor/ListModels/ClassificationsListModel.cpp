@@ -4,7 +4,7 @@
 #include <QFont>
 #include <QColor>
 
-ClassificationsListModel::ClassificationsListModel(QVector<Classification> *classificationsVectorPointer, QObject *parent) : QAbstractListModel(parent),
+ClassificationsListModel::ClassificationsListModel(QVector<Classification *> *classificationsVectorPointer, QObject *parent) : QAbstractListModel(parent),
     classificationsVectorPointer(classificationsVectorPointer)
 {
 }
@@ -29,7 +29,7 @@ QVariant ClassificationsListModel::data(const QModelIndex &index, int role) cons
         return QVariant();
 
     if(role == Qt::DisplayRole){
-        return classificationsVectorPointer->at(index.row()).getName();
+        return classificationsVectorPointer->at(index.row())->getName();
     }
     else if(role == Qt::FontRole){
         return QFont("Quicksand Medium", 11, 600);
@@ -61,12 +61,12 @@ bool ClassificationsListModel::removeRows(int row, int count, const QModelIndex 
     return true;
 }
 
-QVector<Classification> *ClassificationsListModel::getClassificationsVectorPointer() const
+QVector<Classification *> *ClassificationsListModel::getClassificationsVectorPointer() const
 {
     return classificationsVectorPointer;
 }
 
-void ClassificationsListModel::setClassificationsVectorPointer(QVector<Classification> *newClassificationsVectorPointer)
+void ClassificationsListModel::setClassificationsVectorPointer(QVector<Classification *> *newClassificationsVectorPointer)
 {
     classificationsVectorPointer = newClassificationsVectorPointer;
 }

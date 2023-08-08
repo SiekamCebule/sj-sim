@@ -22,6 +22,7 @@ public:
     CompetitionResults();
 
 private:
+    CompetitionInfo * competition;
     QVector<CompetitionSingleResult> results;
     QVector<QVector<JumpData *>> constructRoundsJumps(QVector<RoundInfo> * rounds);
 
@@ -50,6 +51,8 @@ public:
     void updatePositions();
     void sortInDescendingOrder();
     void sortInAscendingOrder();
+    CompetitionInfo *getCompetition() const;
+    void setCompetition(CompetitionInfo *newCompetition);
 };
 
 #endif // COMPETITIONRESULTS_H

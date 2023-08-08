@@ -1,4 +1,7 @@
 #include "Team.h"
+#include <QJsonArray>
+#include "../global/SeasonDatabaseObjectsManager.h"
+extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
 Team::Team(const QString &countryCode) : countryCode(countryCode),
     ClassWithID()
@@ -41,6 +44,13 @@ QVector<Team> Team::constructTeamsVectorByJumpersList(const QVector<Jumper> &jum
             break;
     }
 
+    for(auto & team : teams){
+    std::reverse(team.getJumpersReference().begin(), team.getJumpersReference().end());
+    int count = minCount;
+    if(minCount > team.getJumpersReference().count())
+        count = team.getJumpersReference().count();
+    std::reverse(team.getJumpersReference().begin(), team.getJumpersReference().begin() + count);
+    }
     return teams;
 }
 
@@ -80,6 +90,13 @@ QVector<Team> Team::constructTeamsVectorByJumpersList(const QVector<Jumper *> &j
             break;
     }
 
+    for(auto & team : teams){
+        std::reverse(team.getJumpersReference().begin(), team.getJumpersReference().end());
+        int count = minCount;
+        if(minCount > team.getJumpersReference().count())
+            count = team.getJumpersReference().count();
+        std::reverse(team.getJumpersReference().begin(), team.getJumpersReference().begin() + count);
+    }
     return teams;
 }
 
@@ -103,6 +120,43 @@ void Team::cutTeamJumpers(Team *team, int jumpersCount)
         team->getJumpersReference().erase(team->getJumpersReference().begin() + (jumpersCount), team->getJumpersReference().end());
         qDebug()<<team->getJumpersReference().count();
     }
+}
+
+Team *Team::getTeamByCountryCode(QVector<Team> *teams, QString countryCode)
+{
+    for(auto & team : *teams)
+    {
+        if(team.getCountryCode() == countryCode)
+            return &team;
+    }
+    return nullptr;
+}
+
+QJsonObject Team::getJsonObject(Team &team)
+{
+    QJsonObject object;
+    object.insert("id", QString::number(team.getID()));
+    object.insert("country-code", team.getCountryCode());
+    QJsonArray jumpersArray;
+    for(auto & jumper : team.getJumpersReference())
+    {
+        jumpersArray.push_back(QString::number(jumper->getID()));
+    }
+    object.insert("jumpers-ids", jumpersArray);
+
+    return object;
+}
+
+Team Team::getFromJson(QJsonObject json)
+{
+    Team team;
+    team.setID(json.value("id").toString().toULong());
+    team.setCountryCode(json.value("country-code").toString());
+    QJsonArray jumpersArray = json.value("jumpers-ids").toArray();
+    for(auto jumperID : jumpersArray)
+        team.getJumpersReference().push_back(static_cast<Jumper*>(seasonObjectsManager.getObjectByID(jumperID.toString().toULong())));
+
+    return team;
 }
 
 QString Team::getCountryCode() const

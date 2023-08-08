@@ -88,13 +88,13 @@ void ClassificationEditorWidget::fillInputs()
     emit tableModel->dataChanged(tableModel->index(0, 0), tableModel->index(tableModel->rowCount() - 1, tableModel->columnCount() - 1));
 }
 
-Classification ClassificationEditorWidget::getClassificationFromInputs()
+Classification * ClassificationEditorWidget::getClassificationFromInputs()
 {
-    Classification classification;
-    classification.setName(ui->lineEdit_name->text());
-    classification.setClassificationType(ui->comboBox_type->currentIndex());
-    classification.setPunctationType(ui->comboBox_points->currentIndex());
-    classification.setPointsForPlaces(pointsForPlaces);
+    Classification * classification = new Classification();
+    classification->setName(ui->lineEdit_name->text());
+    classification->setClassificationType(ui->comboBox_type->currentIndex());
+    classification->setPunctationType(ui->comboBox_points->currentIndex());
+    classification->setPointsForPlaces(pointsForPlaces);
     return classification;
 }
 

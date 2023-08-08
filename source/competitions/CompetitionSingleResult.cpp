@@ -25,6 +25,7 @@ CompetitionSingleResult CompetitionSingleResult::getFromJson(QJsonObject obj)
     for(auto jump : jumpsArray){
         result.getJumpsReference().push_back(JumpData::getFromJson(jump.toObject()));
     }
+    result.updateTeamJumpersResults();
     return result;
 }
 

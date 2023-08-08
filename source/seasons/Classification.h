@@ -5,11 +5,13 @@
 #include <QString>
 #include <QJsonObject>
 #include "../utilities/ClassWithID.h"
+#include "ClassificationSingleResult.h"
 
 class Classification : public ClassWithID
 {
 public:
     Classification(QString name = "");
+    ~Classification();
 
     enum PunctationType{
         PointsForPlaces,
@@ -21,25 +23,39 @@ public:
         Team
     };
 
-    static Classification getFromJson(QJsonObject obj);
-    static QJsonObject getJsonObject(Classification classification);
+    void updatePositions();
+    void sortInDescendingOrder();
+    void sortInAscendingOrder();
+
+    ClassificationSingleResult * getResultOfIndividualJumper(Jumper * jumper);
+    ClassificationSingleResult * getResultOfTeam(QString teamCode);
+    ClassificationSingleResult * getResultByIndex(int index);
 
 private:
     QString name;
     short classificationType;
     short punctationType;
-    QMap<int, int> pointsForPlaces;
+    QMap<int, double> pointsForPlaces;
+
+    QVector<ClassificationSingleResult *> results;
 
 public:
     short getClassificationType() const;
     void setClassificationType(short newClassificationType);
-    QMap<int, int> getPointsForPlaces() const;
-    QMap<int, int> &getPointsForPlacesReference();
-    void setPointsForPlaces(const QMap<int, int> &newPointsForPlaces);
+    QMap<int, double> getPointsForPlaces() const;
+    QMap<int, double> &getPointsForPlacesReference();
+    void setPointsForPlaces(const QMap<int, double> &newPointsForPlaces);
     QString getName() const;
     void setName(const QString &newName);
     short getPunctationType() const;
     void setPunctationType(short newPunctationType);
+    QVector<ClassificationSingleResult *> getResults() const;
+    QVector<ClassificationSingleResult *> & getResultsReference();
+    void setResults(const QVector<ClassificationSingleResult *> &newResults);
+
+public:
+    static Classification *getFromJson(QJsonObject obj);
+    static QJsonObject getJsonObject(Classification *classification);
 };
 
 #endif // ABSTRACTCLASSIFICATION_H

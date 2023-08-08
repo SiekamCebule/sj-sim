@@ -30,6 +30,7 @@ CompetitionInfo::CompetitionInfo(Hill *hill) : hill(hill),
     trialRound = nullptr;
     advancementClassification = nullptr;
     advancementCompetition = nullptr;
+    results.setCompetition(this);
 }
 
 CompetitionInfo::~CompetitionInfo()
@@ -75,6 +76,21 @@ bool CompetitionInfo::saveToFile(QString dir, QString name)
     file.write(document.toJson());
     file.close();
     return true;
+}
+
+QVector<Team> CompetitionInfo::getTeams() const
+{
+    return teams;
+}
+
+QVector<Team> &CompetitionInfo::getTeamsReference()
+{
+    return teams;
+}
+
+void CompetitionInfo::setTeams(const QVector<Team> &newTeams)
+{
+    teams = newTeams;
 }
 
 bool CompetitionInfo::getPlayed() const
@@ -168,15 +184,31 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     if(competition.getAdvancementCompetition() != nullptr)
         object.insert("advancement-competition-id", QString::number(competition.getAdvancementCompetition()->getID()));
 
+    QJsonArray teamsArray;
+    for(auto & team : competition.getTeamsReference())
+    {
+        teamsArray.push_back(Team::getJsonObject(team));
+    }
+    object.insert("teams", teamsArray);
+
     return object;
 }
 
 CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json)
 {
     CompetitionInfo comp;
+    QJsonArray teamsArray = json.value("teams").toArray();
+    for(auto val : teamsArray)
+    {
+        comp.getTeamsReference().push_back(Team::getFromJson(val.toObject()));
+    }
+    seasonObjectsManager.fill(&comp.getTeamsReference());
+
     comp.setID(json.value("id").toString().toULong());
     comp.setHill(static_cast<Hill *>(seasonObjectsManager.getObjectByID(json.value("hill-id").toString().toULong())));
     comp.setResults(CompetitionResults::getFromJson(json.value("results").toObject()));
+    comp.getResultsReference().setCompetition(&comp);
+    seasonObjectsManager.addObject(&comp.getResultsReference());
     comp.setRules(CompetitionRules::getFromJson(json.value("rules").toObject()));
     comp.setSerieType(json.value("serie-type").toInt());
     comp.setExceptionalRoundsCount(json.value("exceptional-rounds-count").toInt());

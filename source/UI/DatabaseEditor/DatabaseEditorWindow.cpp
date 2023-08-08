@@ -57,25 +57,25 @@ DatabaseEditorWindow::DatabaseEditorWindow(QWidget *parent) :
     pointsForPlacesPresetEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     pointsForPlacesPresetEditor->hide();
 
-    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, this);
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, true, true, this);
     jumpersListView->setJumpers(&GlobalDatabase::get()->getEditableGlobalJumpers());
     jumpersListView->setupListModel();
     jumpersListView->selectOnlyFirstRow();
     ui->verticalLayout_jumpersList->addWidget(jumpersListView);
 
-    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::HillItems, true, this);
+    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::HillItems, true, true, true, this);
     hillsListView->setHills(&GlobalDatabase::get()->getEditableGlobalHills());
     hillsListView->setupListModel();
     hillsListView->selectOnlyFirstRow();
     ui->verticalLayout_hillsList->addWidget(hillsListView);
 
-    competitionRulesListView = new DatabaseItemsListView(DatabaseItemsListView::CompetitionRulesItems, true, this);
+    competitionRulesListView = new DatabaseItemsListView(DatabaseItemsListView::CompetitionRulesItems, true, true, true, this);
     competitionRulesListView->setCompetitionRules(&GlobalDatabase::get()->getEditableCompetitionRules());
     competitionRulesListView->setupListModel();
     competitionRulesListView->selectOnlyFirstRow();
     ui->verticalLayout_competitionRulesList->addWidget(competitionRulesListView);
 
-    pointsForPlacesPresetsListView = new DatabaseItemsListView(DatabaseItemsListView::PointsForPlacesPresetsItems, true, this);
+    pointsForPlacesPresetsListView = new DatabaseItemsListView(DatabaseItemsListView::PointsForPlacesPresetsItems, true, true, true, this);
     pointsForPlacesPresetsListView->setPointsForPlacesPresets(&GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets());
     pointsForPlacesPresetsListView->setupListModel();
     pointsForPlacesPresetsListView->selectOnlyFirstRow();
@@ -235,6 +235,7 @@ void DatabaseEditorWindow::onPointsForPlacesPresetsListViewDoubleClicked(const Q
         ui->tabWidget_main->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         pointsForPlacesPresetEditor->show();
     }
+    pointsForPlacesPresetEditor->reset();
     pointsForPlacesPresetEditor->setPreset(const_cast<PointsForPlacesPreset *>(&GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets().at(row)));
     pointsForPlacesPresetEditor->fill();
 }

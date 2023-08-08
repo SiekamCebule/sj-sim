@@ -34,7 +34,8 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
 
     //-----//
 
-    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, false, this);
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, false, false, this);
+    jumpersListView->setInsertLast(true);
     jumpersListView->setJumpers(&simulationSave->getJumpersReference());
     jumpersListView->setupListModel();
     ui->verticalLayout_jumpersList->addWidget(jumpersListView);
@@ -55,7 +56,8 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
 
     //-----//
 
-    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::HillItems, true, false, this);
+    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::HillItems, true, false, false, this);
+    hillsListView->setInsertLast(true);
     hillsListView->setHills(&simulationSave->getHillsReference());
     hillsListView->setupListModel();
     ui->verticalLayout_hillsList->addWidget(hillsListView);
@@ -79,7 +81,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
 
     //-----//
 
-    rulesListView = new DatabaseItemsListView(DatabaseItemsListView::CompetitionRulesItems, true, true, this);
+    rulesListView = new DatabaseItemsListView(DatabaseItemsListView::CompetitionRulesItems, true, true, true, this);
     rulesListView->setCompetitionRules(&simulationSave->getCompetitionRulesReference());
     rulesListView->setupListModel();
     ui->verticalLayout_rulesList->addWidget(rulesListView);
@@ -111,13 +113,14 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     classificationEditor->setParent(this);
     ui->verticalLayout_classificationEditor->addWidget(classificationEditor);
 
-    classificationsListView = new DatabaseItemsListView(DatabaseItemsListView::ClassificationItems, true, this);
+    classificationsListView = new DatabaseItemsListView(DatabaseItemsListView::ClassificationItems, true, false, false, this);
+    classificationsListView->setInsertLast(true);
     classificationsListView->setClassifications(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
     classificationsListView->setupListModel();
     classificationsListView->selectOnlyFirstRow();
     ui->verticalLayout_classificationsList->addWidget(classificationsListView);
     connect(classificationsListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex &index){
-        Classification * classification = &simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference()[index.row()];
+        Classification * classification = simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference()[index.row()];
         if(classificationEditor->getClassification() != nullptr)
             classificationEditor->resetInputs();
         classificationEditor->setClassification(classification);
@@ -149,14 +152,34 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
             QMessageBox::information(this, tr("Edycja klasyfikacji"), tr("Nie możesz edytować tej klasyfikacji, ponieważ wcześniej został rozegrany konkurs z jej użyciem.\nMożesz ją tylko całkowicie usunąć"), QMessageBox::Ok);
         }
     });
+    connect(classificationsListView, &DatabaseItemsListView::insert, this, [this](){
+        simulationSave->getActualSeason()->getCalendarReference().fixCompetitionsClassifications();
+        setupClassificationsComboBox();
+        emit ui->comboBox_classifications->currentIndexChanged(0);
+        emit calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
+    });
     connect(classificationsListView, &DatabaseItemsListView::remove, this, [this](){
         simulationSave->getActualSeason()->getCalendarReference().fixCompetitionsClassifications();
-        calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
+        setupClassificationsComboBox();
+        if(ui->comboBox_classifications->count() > 0)
+            emit ui->comboBox_classifications->currentIndexChanged(0);
+        emit calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
     });
     connect(calendarEditor, &CalendarEditorWidget::changed, this, [this](){
         simulationSave->updateNextCompetitionIndex();
         fillNextCompetitionInformations();
     });
+
+    classificationResultsTableView = new ClassificationResultsTableView(false, nullptr, this);
+    classificationResultsTableView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    classificationResultsTableView->setFixedHeight(500);
+    ui->verticalLayout_classificationResults->addWidget(classificationResultsTableView);
+
+    setupClassificationsComboBox();
+    if(ui->comboBox_classifications->count() > 0)
+    {
+        emit ui->comboBox_classifications->currentIndexChanged(0);
+    }
 }
 
 SimulationSaveManagerWindow::~SimulationSaveManagerWindow()
@@ -242,6 +265,35 @@ void SimulationSaveManagerWindow::fillNextCompetitionInformations()
     }
 }
 
+void SimulationSaveManagerWindow::setupClassificationsComboBox()
+{
+    disconnectComboBox();
+    ui->comboBox_classifications->clear();
+    for(auto & classification : simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference())
+    {
+        QString text = classification->getName();
+        ui->comboBox_classifications->addItem(text);
+    }
+    connectComboBox();
+    qDebug()<<"a";
+}
+
+void SimulationSaveManagerWindow::connectComboBox()
+{
+    connect(ui->comboBox_classifications, &QComboBox::currentIndexChanged, this, &SimulationSaveManagerWindow::whenClassificationsComboBoxIndexChanged);
+}
+
+void SimulationSaveManagerWindow::disconnectComboBox()
+{
+    disconnect(ui->comboBox_classifications, &QComboBox::currentIndexChanged, this, &SimulationSaveManagerWindow::whenClassificationsComboBoxIndexChanged);
+}
+
+void SimulationSaveManagerWindow::whenClassificationsComboBoxIndexChanged(int index)
+{
+    classificationResultsTableView->setClassification(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference()[index]);
+    classificationResultsTableView->fillTable();
+}
+
 SimulationSave *SimulationSaveManagerWindow::getSimulationSave() const
 {
     return simulationSave;
@@ -278,8 +330,10 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
 
         if(type == CompetitionRules::Individual)
             static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(configWindow->getSeasonCompetitionJumpers());
-        else if(type == CompetitionRules::Team)
-            static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(MyFunctions::convertToVectorOfPointers(&configWindow->getCompetitionTeamsReference()));
+        else if(type == CompetitionRules::Team){
+            competition->setTeams(configWindow->getCompetitionTeamsReference());
+            static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(MyFunctions::convertToVectorOfPointers(&competition->getTeamsReference()));
+        }
 \
         if(type == CompetitionRules::Team)
             dynamic_cast<TeamCompetitionManager *>(competitionManager)->setupStartListStatusesForActualRound(true);
@@ -293,11 +347,73 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
         if(managerWindow->exec() == QDialog::Accepted)
         {
             competition->setPlayed(true);
+            for(auto & classification : competition->getClassificationsReference())
+            {
+                for(auto & competitionSingleResult : competition->getResultsReference().getResultsReference())
+                {
+                    if(classification->getClassificationType() == Classification::Individual)
+                    {
+                        if(competition->getRulesPointer()->getCompetitionType()== CompetitionRules::Team &&
+                            classification->getPunctationType() == Classification::PointsForPlaces)
+                            break;
+
+                        int count = 1;
+                        if(competitionSingleResult.getTeam() != nullptr)
+                            count = competitionSingleResult.getTeam()->getJumpersCount();
+
+                        for(int i=0; i<count; i++)
+                        {
+                            Jumper * jumper = competitionSingleResult.getJumper();
+                            if(competitionSingleResult.getTeam() != nullptr)
+                                jumper = competitionSingleResult.getTeam()->getJumpersReference()[i];
+
+                            ClassificationSingleResult * classificationResult = classification->getResultOfIndividualJumper(jumper);
+                            if(classificationResult == nullptr){
+                                classification->getResultsReference().push_back(new ClassificationSingleResult(classification, jumper));
+                                classificationResult = classification->getResultOfIndividualJumper(jumper);
+                            }
+                            if(MyFunctions::vectorContains(classificationResult->getCompetitionsResultsReference(), &competition->getResultsReference()) == false){
+                                classificationResult->getCompetitionsResultsReference().push_back(&competition->getResultsReference());
+                                classificationResult->updateSingleResults();
+                                classificationResult->updatePointsSum();
+                            }
+                        }
+                    }
+                    else if(classification->getClassificationType() == Classification::Team)
+                    {
+                        if(competition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual &&
+                            classification->getPunctationType() == Classification::PointsForPlaces)
+                            break;
+
+                        QString countryCode;
+                        if(competitionSingleResult.getJumper() != nullptr)
+                            countryCode = competitionSingleResult.getJumper()->getCountryCode();
+                        else if(competitionSingleResult.getTeam() != nullptr)
+                            countryCode = competitionSingleResult.getTeam()->getCountryCode();
+
+                        ClassificationSingleResult * classificationResult = classification->getResultOfTeam(countryCode);
+                        if(classificationResult == nullptr){
+                            classification->getResultsReference().push_back(new ClassificationSingleResult(classification, countryCode));
+                            classificationResult = classification->getResultOfTeam(countryCode);
+                        }
+                        if(MyFunctions::vectorContains(classificationResult->getCompetitionsResultsReference(), &competition->getResultsReference()) == false){
+                            classificationResult->getCompetitionsResultsReference().push_back(&competition->getResultsReference());
+                            classificationResult->updateSingleResults();
+                            classificationResult->updatePointsSum();
+                        }
+                    }
+                }
+                classification->sortInDescendingOrder();
+            }
+            if(ui->comboBox_classifications->count() > 0)
+            {
+                emit ui->comboBox_classifications->currentIndexChanged(ui->comboBox_classifications->currentIndex());
+            }
+            //classificationResultsTableView->setClassification(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference()[ui->comboBox_classifications->currentIndex()]);
+            //classificationResultsTableView->fillTable();
             simulationSave->updateNextCompetitionIndex();
             fillNextCompetitionInformations();
             simulationSave->saveToFile("simulationSaves/");
         }
     }
 }
-
-

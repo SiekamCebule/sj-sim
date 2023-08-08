@@ -1,32 +1,25 @@
-#ifndef POINTSFORPLACESTABLEMODEL_H
-#define POINTSFORPLACESTABLEMODEL_H
+#ifndef CLASSIFICATIONRESULTSTABLEMODEL_H
+#define CLASSIFICATIONRESULTSTABLEMODEL_H
 
 #include <QAbstractTableModel>
-#include <QMap>
+#include "../../../seasons/Classification.h"
 
-class PointsForPlacesTableModel : public QAbstractTableModel
+class ClassificationResultsTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    explicit PointsForPlacesTableModel(QObject *parent = nullptr);
+    explicit ClassificationResultsTableModel(Classification * classification = nullptr, QObject *parent = nullptr);
+    ~ClassificationResultsTableModel();
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-
-    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole) override;
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-    // Editable:
-    bool setData(const QModelIndex &index, const QVariant &value,
-                 int role = Qt::EditRole) override;
-
-    Qt::ItemFlags flags(const QModelIndex& index) const override;
 
     // Add data:
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
@@ -37,10 +30,10 @@ public:
     bool removeColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
 
 private:
-    QMap<int, double> * pointsForPlaces;
+    Classification * classification;
 public:
-    QMap<int, double> *getPointsForPlaces() const;
-    void setPointsForPlaces(QMap<int, double> *newPointsForPlaces);
+    Classification *getClassification() const;
+    void setClassification(Classification *newClassification);
 };
 
-#endif // POINTSFORPLACESTABLEMODEL_H
+#endif // CLASSIFICATIONRESULTSTABLEMODEL_H

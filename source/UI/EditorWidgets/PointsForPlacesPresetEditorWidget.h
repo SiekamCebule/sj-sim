@@ -31,15 +31,15 @@ signals:
 
 private:
     Ui::PointsForPlacesPresetEditorWidget *ui;
-    QMap<int, int> pointsForPlaces;
+    QMap<int, double> pointsForPlaces;
     PointsForPlacesTableModel * model;
     QAction * action_add;
     QAction * action_remove;
     PointsForPlacesPreset * preset;
 
 public:
-    QMap<int, int> getPointsForPlaces() const;
-    void setPointsForPlaces(const QMap<int, int> &newPointsForPlaces);
+    QMap<int, double> getPointsForPlaces() const;
+    void setPointsForPlaces(const QMap<int, double> &newPointsForPlaces);
     PointsForPlacesPreset *getPreset() const;
     void setPreset(PointsForPlacesPreset *newPreset);
 

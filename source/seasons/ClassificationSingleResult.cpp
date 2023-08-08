@@ -1,0 +1,230 @@
+#include "ClassificationSingleResult.h"
+#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../seasons/Classification.h"
+#include "../competitions/CompetitionInfo.h"
+
+extern SeasonDatabaseObjectsManager seasonObjectsManager;
+
+ClassificationSingleResult::ClassificationSingleResult(Classification *classification, Jumper * jumper) : jumper(jumper), position(0), pointsSum(0), classification(classification)
+{
+
+}
+
+ClassificationSingleResult::ClassificationSingleResult(Classification *classification, QString teamCode) : teamCode(teamCode), position(0), pointsSum(0), classification(classification), jumper(nullptr)
+{
+
+}
+
+void ClassificationSingleResult::updateSingleResults()
+{
+    singleResults.clear();
+    for(auto & results : competitionsResults)
+    {
+        int competitionType = results->getCompetition()->getRulesPointer()->getCompetitionType();
+        for(auto & singleResult : results->getResultsReference())
+        {
+            if(classification->getClassificationType() == Classification::Individual)
+            {
+                if(classification->getPunctationType() == Classification::PointsForPlaces)
+                {
+                    if(competitionType == CompetitionRules::Individual)
+                        if(singleResult.getJumper() == this->getJumper()){
+                            singleResults.push_back(&singleResult);
+                            //break;
+                        }
+                }
+                else if(classification->getPunctationType() == Classification::CompetitionPoints)
+                {
+                    if(competitionType == CompetitionRules::Individual){
+                        if(singleResult.getJumper() == this->getJumper()){
+                            singleResults.push_back(&singleResult);
+                            //break;
+                        }
+                    }
+                    else if(competitionType == CompetitionRules::Team)
+                    {
+                        if(singleResult.getTeam()->getCountryCode() == this->getJumper()->getCountryCode()){
+                            for(auto & jumperResult : singleResult.getTeamJumpersResultsReference()){
+                                if(jumperResult.getJumper() == this->getJumper()){
+                                    singleResults.push_back(&jumperResult);
+                                    //break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else if(classification->getClassificationType() == Classification::Team)
+            {
+                if(classification->getPunctationType() == Classification::PointsForPlaces)
+                {
+                    if(competitionType == CompetitionRules::Team)
+                        if(singleResult.getTeam()->getCountryCode() == this->getTeamCode()){
+                            singleResults.push_back(&singleResult);
+                            //break;
+                        }
+                }
+                else if(classification->getPunctationType() == Classification::CompetitionPoints)
+                {
+                    if(competitionType == CompetitionRules::Team){
+                        if(singleResult.getTeam()->getCountryCode() == this->getTeamCode()){
+                            singleResults.push_back(&singleResult);
+                            //break;
+                        }
+                    }
+                    else if(competitionType == CompetitionRules::Individual)
+                    {
+                        if(singleResult.getJumper()->getCountryCode() == this->getTeamCode()){
+                            singleResults.push_back(&singleResult);
+                            //break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void ClassificationSingleResult::addCompetitionResults(CompetitionResults &results)
+{
+    competitionsResults.push_back(&results);
+    for(auto & singleResult : results.getResultsReference()){
+        if(singleResult.getTeam() != nullptr){
+            if(singleResult.getTeam()->getCountryCode() != "")\
+                    singleResults.push_back(&singleResult);
+        }
+        else if(singleResult.getJumper() == jumper)
+            singleResults.push_back(&singleResult);
+    }
+}
+
+void ClassificationSingleResult::updatePointsSum()
+{
+    pointsSum = 0;
+    for(auto & result : singleResults){
+        if(classification->getPunctationType() == Classification::CompetitionPoints)
+            pointsSum += result->getPointsSum();
+        else if(classification->getPunctationType() == Classification::PointsForPlaces){
+            pointsSum += classification->getPointsForPlacesReference().value(result->getPosition(), 0);
+        }
+    }
+}
+
+QJsonObject ClassificationSingleResult::getJsonObject(ClassificationSingleResult &result)
+{
+    QJsonObject object;
+    object.insert("id", QString::number(result.getID()));
+    object.insert("classification-id", QString::number(result.getClassification()->getID()));
+    if(result.getJumper() != nullptr)
+        object.insert("jumper-id", QString::number(result.getJumper()->getID()));
+    if(result.getTeamCode() != "")
+        object.insert("team-code", result.getTeamCode());
+
+    QJsonArray competitionsResultsArray;
+    for(auto & competitionResults : result.getCompetitionsResultsReference())
+    {
+        competitionsResultsArray.push_back(QString::number(competitionResults->getID()));
+    }
+    object.insert("competitions-results-ids", competitionsResultsArray);
+
+    object.insert("points-sum", result.getPointsSum());
+    object.insert("position", result.getPosition());
+
+    return object;
+}
+
+ClassificationSingleResult ClassificationSingleResult::getFromJson(QJsonObject json)
+{
+    QMap<ulong, ClassWithID *> ids = seasonObjectsManager.getObjects();
+    ids.begin();
+    ClassificationSingleResult result(nullptr);
+    result.setID(json.value("id").toString().toULong());
+    result.setClassification(static_cast<Classification *>(seasonObjectsManager.getObjectByID(json.value("classification-id").toString().toULong())));
+    result.setJumper(static_cast<Jumper *>(seasonObjectsManager.getObjectByID(json.value("jumper-id").toString().toULong())));
+    result.setTeamCode(json.value("team-code").toString());
+
+    result.setPointsSum(json.value("points-sum").toDouble());
+    result.setPosition(json.value("position").toInt());
+
+    return result;
+}
+
+Classification *ClassificationSingleResult::getClassification() const
+{
+    return classification;
+}
+
+void ClassificationSingleResult::setClassification(Classification *newClassification)
+{
+    classification = newClassification;
+}
+
+int ClassificationSingleResult::getPosition() const
+{
+    return position;
+}
+
+void ClassificationSingleResult::setPosition(int newPosition)
+{
+    position = newPosition;
+}
+
+double ClassificationSingleResult::getPointsSum() const
+{
+    return pointsSum;
+}
+
+void ClassificationSingleResult::setPointsSum(double newPointsSum)
+{
+    pointsSum = newPointsSum;
+}
+
+QVector<CompetitionResults *> ClassificationSingleResult::getCompetitionsResults() const
+{
+    return competitionsResults;
+}
+
+QVector<CompetitionResults *> &ClassificationSingleResult::getCompetitionsResultsReference()
+{
+    return competitionsResults;
+}
+
+void ClassificationSingleResult::setCompetitionsResults(const QVector<CompetitionResults *> &newCompetitionsResults)
+{
+    competitionsResults = newCompetitionsResults;
+}
+
+QVector<CompetitionSingleResult *> ClassificationSingleResult::getSingleResults() const
+{
+    return singleResults;
+}
+
+QVector<CompetitionSingleResult *> &ClassificationSingleResult::getSingleResultsReference()
+{
+    return singleResults;
+}
+
+void ClassificationSingleResult::setSingleResults(const QVector<CompetitionSingleResult *> &newSingleResults)
+{
+    singleResults = newSingleResults;
+}
+
+Jumper *ClassificationSingleResult::getJumper() const
+{
+    return jumper;
+}
+
+void ClassificationSingleResult::setJumper(Jumper *newJumper)
+{
+    jumper = newJumper;
+}
+
+QString ClassificationSingleResult::getTeamCode() const
+{
+    return teamCode;
+}
+
+void ClassificationSingleResult::setTeamCode(const QString &newTeamCode)
+{
+    teamCode = newTeamCode;
+}

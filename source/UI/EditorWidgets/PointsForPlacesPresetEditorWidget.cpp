@@ -68,12 +68,12 @@ void PointsForPlacesPresetEditorWidget::setPreset(PointsForPlacesPreset *newPres
     model->setPointsForPlaces(&pointsForPlaces);
 }
 
-QMap<int, int> PointsForPlacesPresetEditorWidget::getPointsForPlaces() const
+QMap<int, double> PointsForPlacesPresetEditorWidget::getPointsForPlaces() const
 {
     return pointsForPlaces;
 }
 
-void PointsForPlacesPresetEditorWidget::setPointsForPlaces(const QMap<int, int> &newPointsForPlaces)
+void PointsForPlacesPresetEditorWidget::setPointsForPlaces(const QMap<int, double> &newPointsForPlaces)
 {
     pointsForPlaces = newPointsForPlaces;
 }

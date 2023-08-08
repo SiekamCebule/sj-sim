@@ -12,7 +12,7 @@
 #include <QPushButton>
 #include <QLabel>
 
-CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVector<Classification> *classificationsList, QWidget *parent) :
+CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVector<Classification *> *classificationsList, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CalendarEditorWidget),
     calendarModel(model),
@@ -120,19 +120,19 @@ CalendarEditorWidget::~CalendarEditorWidget()
     delete ui;
 }
 
-CompetitionInfoEditorWidget *CalendarEditorWidget::getCompetitionInfoEditor() const
-{
-    return competitionInfoEditor;
-}
-
-QVector<Classification> *CalendarEditorWidget::getClassificationsList() const
+QVector<Classification *> *CalendarEditorWidget::getClassificationsList() const
 {
     return classificationsList;
 }
 
-void CalendarEditorWidget::setClassificationsList(QVector<Classification> *newClassificationsList)
+void CalendarEditorWidget::setClassificationsList(QVector<Classification *> *newClassificationsList)
 {
     classificationsList = newClassificationsList;
+}
+
+CompetitionInfoEditorWidget *CalendarEditorWidget::getCompetitionInfoEditor() const
+{
+    return competitionInfoEditor;
 }
 
 void CalendarEditorWidget::updateActualCompetitionByID()
@@ -798,7 +798,7 @@ void CalendarEditorWidget::execMultipleAdvancementClassificationEditDialog(QVect
     int pos = 1;
     comboBox->addItem("BRAK");
     for(auto & cls : calendar->getClassificationsReference()){
-        comboBox->addItem(QString::number(pos) + ". " + cls.getName());
+        comboBox->addItem(QString::number(pos) + ". " + cls->getName());
         pos++;
     }
     layout->addWidget(label);
@@ -821,7 +821,7 @@ void CalendarEditorWidget::execMultipleAdvancementClassificationEditDialog(QVect
     if(dialog->exec() == QDialog::Accepted){
         Classification * advancementClassification = nullptr;
         if(comboBox->currentIndex() > 0)
-            advancementClassification = &calendar->getClassificationsReference()[comboBox->currentIndex() - 1];
+            advancementClassification = calendar->getClassificationsReference()[comboBox->currentIndex() - 1];
 
         for(auto & row : qAsConst(*rows)){
             CompetitionInfo * competition = nullptr;
@@ -943,7 +943,7 @@ void CalendarEditorWidget::execMultipleClassificationsEditDialog(QVector<int> *r
 
     QVBoxLayout * checkBoxesLayout = new QVBoxLayout(dialog);
     for(int i=0; i<classificationsList->count(); i++){
-        Classification * c = const_cast<Classification *>(&classificationsList->at(i));
+        Classification * c = const_cast<Classification *>(classificationsList->at(i));
         QCheckBox * checkBox = new QCheckBox(dialog);
         checkBox->setChecked(competition->getClassificationsReference().contains(c));
         QString text = c->getName();
@@ -989,7 +989,7 @@ void CalendarEditorWidget::execMultipleClassificationsEditDialog(QVector<int> *r
                     competition->getClassificationsReference().clear();
 
                 if(static_cast<QCheckBox *>(checkBoxesLayout->itemAt(i)->widget())->isChecked() == true){
-                    competition->getClassificationsReference().push_back(const_cast<Classification *>(&classificationsList->at(i)));
+                    competition->getClassificationsReference().push_back(const_cast<Classification *>(classificationsList->at(i)));
                     emit calendarModel->dataChanged(calendarModel->index(competitionIndex, 0), calendarModel->index(0, calendarModel->columnCount() - 1));
                 }
             }

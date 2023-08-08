@@ -14,17 +14,17 @@ PointsForPlacesPreset::PointsForPlacesPreset(QString name) : name(name)
 
 }
 
-QMap<int, int> PointsForPlacesPreset::getPointsForPlaces() const
+QMap<int, double> PointsForPlacesPreset::getPointsForPlaces() const
 {
     return pointsForPlaces;
 }
 
-QMap<int, int> &PointsForPlacesPreset::getPointsForPlacesReference()
+QMap<int, double> &PointsForPlacesPreset::getPointsForPlacesReference()
 {
     return pointsForPlaces;
 }
 
-void PointsForPlacesPreset::setPointsForPlaces(const QMap<int, int> &newPointsForPlaces)
+void PointsForPlacesPreset::setPointsForPlaces(const QMap<int, double> &newPointsForPlaces)
 {
     pointsForPlaces = newPointsForPlaces;
 }

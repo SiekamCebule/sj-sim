@@ -27,7 +27,7 @@ class DatabaseItemsListView : public QWidget
     Q_OBJECT
 
 public:
-    explicit DatabaseItemsListView(int type, bool allowInserting = true, bool allowRemoving = true, QWidget *parent = nullptr);
+    explicit DatabaseItemsListView(int type, bool allowInserting = true, bool allowRemoving = true, bool allowMoving = true, QWidget *parent = nullptr);
     ~DatabaseItemsListView();
 
     enum Type{
@@ -58,7 +58,7 @@ private:
     QVector<Jumper> * jumpers;
     QVector<Hill> * hills;
     QVector<CompetitionRules> * competitionRules;
-    QVector<Classification> * classifications;
+    QVector<Classification *> * classifications;
     QVector<PointsForPlacesPreset> * pointsForPlacesPresets;
 
     QAbstractListModel * listModel;
@@ -70,6 +70,8 @@ private:
 
     bool allowInserting;
     bool allowRemoving;
+    bool allowMoving;
+    bool insertLast;
     int lastDoubleClickedIndex;
 
 private slots:
@@ -91,8 +93,6 @@ public:
     void setAllowInserting(bool newAllowInserting);
     QListView * getListView();
     QAbstractListModel *getListModel();
-    QVector<Classification> *getClassifications() const;
-    void setClassifications(QVector<Classification> *newClassifications);
     QVector<PointsForPlacesPreset> *getPointsForPlacesPresets() const;
     void setPointsForPlacesPresets(QVector<PointsForPlacesPreset> *newPointsForPlacesPresets);
     int getLastDoubleClickedIndex() const;
@@ -101,6 +101,12 @@ public:
     void setSeasonJumpers(QVector<Jumper *> *newSeasonJumpers);
     int getType() const;
     void setType(int newType);
+    bool getAllowMoving() const;
+    void setAllowMoving(bool newAllowMoving);
+    bool getInsertLast() const;
+    void setInsertLast(bool newInsertLast);
+    QVector<Classification *> *getClassifications() const;
+    void setClassifications(QVector<Classification *> *newClassifications);
 };
 
 #endif // DATABASEITEMSLISTVIEW_H

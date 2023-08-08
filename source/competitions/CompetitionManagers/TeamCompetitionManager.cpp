@@ -7,7 +7,6 @@ TeamCompetitionManager::TeamCompetitionManager() : AbstractCompetitionManager(Co
     actualGroup = 0;
     connect(this, &TeamCompetitionManager::actualStartListIndexChanged, this, [this](){
         if(roundsTeams.count() > 0){
-            qDebug()<<"JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
             actualJumper = startListStatuses[actualStartListIndex].getJumper();
             emit actualJumperChanged();
             actualTeam = roundsTeams[actualRound - 1][actualStartListIndex];
@@ -168,10 +167,12 @@ bool TeamCompetitionManager::checkGroupEnd()
 
 void TeamCompetitionManager::setupNextGroup()
 {
-    setActualGroup(actualGroup + 1);
-    setupStartListStatusesForActualRound();
-    updateCompetitorsAdvanceStatuses();
-    setActualStartListIndex(0);
+    if(actualGroup + 1 <= competitionRules->getJumpersInTeamCount()){
+        setActualGroup(actualGroup + 1);
+        setupStartListStatusesForActualRound();
+        updateCompetitorsAdvanceStatuses();
+        setActualStartListIndex(0);
+    }
 }
 
 int TeamCompetitionManager::getActualGroup() const

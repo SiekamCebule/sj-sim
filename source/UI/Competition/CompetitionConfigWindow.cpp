@@ -54,7 +54,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
     ui->toolBox->addItem(inrunSnowGeneratorSettingsEditor, tr("Ustawienia generatora śniegu na najeździe"));
     setupCompetitionRulesToolBoxItem();
 
-    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, false, true, this);
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, false, true, true, this);
     jumpersListView->getListView()->setSelectionMode(QAbstractItemView::ExtendedSelection);
     jumpersListView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     if(getType() == SingleCompetition)

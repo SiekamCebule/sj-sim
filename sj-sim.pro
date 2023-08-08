@@ -43,6 +43,8 @@ SOURCES += \
     source/UI/Seasons/CalendarEditor/CalendarEditorWidget.cpp \
     source/UI/Seasons/CalendarEditor/MultipleTrainingsEditDialog.cpp \
     source/UI/Seasons/CalendarEditor/MultipleTrialRoundsEditDialog.cpp \
+    source/UI/Seasons/Classifications/ClassificationResultsTableModel.cpp \
+    source/UI/Seasons/Classifications/ClassificationResultsTableView.cpp \
     source/UI/Seasons/CompetitionInfoEditorWidget.cpp \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.cpp \
     source/UI/Seasons/NewSeasonConfiguratorWindow.cpp \
@@ -78,6 +80,7 @@ SOURCES += \
     source/global/TreeItem.cpp \
     source/main.cpp \
     source/UI/mainwindow.cpp \
+    source/seasons/ClassificationSingleResult.cpp \
     source/seasons/Season.cpp \
     source/seasons/SeasonCalendar.cpp \
     source/seasons/SeasonSettings.cpp \
@@ -139,6 +142,8 @@ HEADERS += \
     source/UI/Seasons/CalendarEditor/CalendarEditorWidget.h \
     source/UI/Seasons/CalendarEditor/MultipleTrainingsEditDialog.h \
     source/UI/Seasons/CalendarEditor/MultipleTrialRoundsEditDialog.h \
+    source/UI/Seasons/Classifications/ClassificationResultsTableModel.h \
+    source/UI/Seasons/Classifications/ClassificationResultsTableView.h \
     source/UI/Seasons/CompetitionInfoEditorWidget.h \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.h \
     source/UI/Seasons/NewSeasonConfiguratorWindow.h \
@@ -173,6 +178,7 @@ HEADERS += \
     source/global/PointsForPlacesPreset.h \
     source/global/SeasonDatabaseObjectsManager.h \
     source/global/TreeItem.h \
+    source/seasons/ClassificationSingleResult.h \
     source/seasons/Season.h \
     source/seasons/SeasonCalendar.h \
     source/seasons/SeasonSettings.h \
@@ -221,6 +227,7 @@ FORMS += \
     source/UI/Seasons/CalendarEditor/CalendarEditorWidget.ui \
     source/UI/Seasons/CalendarEditor/MultipleTrainingsEditDialog.ui \
     source/UI/Seasons/CalendarEditor/MultipleTrialRoundsEditDialog.ui \
+    source/UI/Seasons/Classifications/ClassificationResultsTableView.ui \
     source/UI/Seasons/CompetitionInfoEditorWidget.ui \
     source/UI/Seasons/NewSeasonConfiguratorWindow.ui \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.ui \

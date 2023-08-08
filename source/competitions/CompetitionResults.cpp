@@ -13,6 +13,16 @@ CompetitionResults::CompetitionResults() :
 
 }
 
+CompetitionInfo *CompetitionResults::getCompetition() const
+{
+    return competition;
+}
+
+void CompetitionResults::setCompetition(CompetitionInfo *newCompetition)
+{
+    competition = newCompetition;
+}
+
 QVector<QVector<JumpData *> > CompetitionResults::constructRoundsJumps(QVector<RoundInfo> *rounds)
 {
     QVector<QVector<JumpData *>> roundsJumps;
@@ -53,6 +63,7 @@ CompetitionResults CompetitionResults::getFromJson(QJsonObject obj)
     for(auto res : resultsArray){
         results.getResultsReference().push_back(CompetitionSingleResult::getFromJson(res.toObject()));
     }
+    seasonObjectsManager.fill(&results.getResultsReference());
 
     return results;
 }

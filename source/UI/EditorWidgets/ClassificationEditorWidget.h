@@ -20,7 +20,7 @@ public:
 
     void resetInputs();
     void fillInputs();
-    Classification getClassificationFromInputs();
+    Classification * getClassificationFromInputs();
 
 signals:
     void submitted();
@@ -33,7 +33,7 @@ private slots:
 private:
     Ui::ClassificationEditorWidget *ui;
     Classification * classification;
-    QMap<int, int> pointsForPlaces;
+    QMap<int, double> pointsForPlaces;
 
     QAction * action_add;
     QAction * action_remove;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>490</width>
-    <height>205</height>
+    <width>513</width>
+    <height>217</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,6 +24,12 @@
      </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label_baseStrength">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
@@ -42,6 +48,12 @@ background: transparent;</string>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_strengthChange">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
@@ -60,6 +72,12 @@ background: transparent;</string>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_baseDirection">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
@@ -78,6 +96,12 @@ background: transparent;</string>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_directionChange">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
          <family>Quicksand Medium</family>
@@ -96,6 +120,12 @@ background: transparent;</string>
      </item>
      <item row="2" column="1">
       <widget class="QComboBox" name="comboBox_baseWindDirection">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
          <pointsize>12</pointsize>
@@ -136,6 +166,12 @@ background-color: rgb(245, 245, 245);</string>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QDoubleSpinBox" name="doubleSpinBox_baseWindStrength">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <pointsize>12</pointsize>
@@ -189,6 +225,12 @@ background-color: rgb(245, 245, 245);</string>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QDoubleSpinBox" name="doubleSpinBox_windDirectionChange">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <pointsize>12</pointsize>
@@ -202,7 +244,7 @@ background-color: rgb(245, 245, 245);</string>
           <set>Qt::AlignCenter</set>
          </property>
          <property name="maximum">
-          <double>10.000000000000000</double>
+          <double>5.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -233,6 +275,12 @@ background-color: rgb(245, 245, 245);</string>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QDoubleSpinBox" name="doubleSpinBox_windStrengthChange">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <pointsize>12</pointsize>

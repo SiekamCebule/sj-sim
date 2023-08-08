@@ -8,6 +8,7 @@
 #include "../EditorWidgets/CompetitionRulesEditorWidget.h"
 #include "../EditorWidgets/ClassificationEditorWidget.h"
 #include "CalendarEditor/CalendarEditorWidget.h"
+#include "Classifications/ClassificationResultsTableView.h"
 #include "../../seasons/SimulationSave.h"
 
 namespace Ui {
@@ -23,8 +24,11 @@ public:
     ~SimulationSaveManagerWindow();
 
     void showJumperAndHillsEditingHelp();
-
     void fillNextCompetitionInformations();
+
+    void setupClassificationsComboBox();
+    void connectComboBox();
+    void disconnectComboBox();
 
 private:
     Ui::SimulationSaveManagerWindow *ui;
@@ -46,6 +50,11 @@ private:
     DatabaseItemsListView * classificationsListView;
     int classificationsListViewActualElement;
     ClassificationEditorWidget * classificationEditor;
+
+    ClassificationResultsTableView * classificationResultsTableView;
+
+
+    void whenClassificationsComboBoxIndexChanged(int index);
 
 public:
     SimulationSave *getSimulationSave() const;

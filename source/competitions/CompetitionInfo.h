@@ -46,6 +46,8 @@ private:
     CompetitionInfo * advancementCompetition; //Tylko jedno z tych 2 może być "aktywne"
     QVector<CompetitionInfo *> qualifyingCompetitions; //Konkursy dla których ten konkurs jest kwalifikacjami
 
+    QVector<Team> teams;
+
 public:
     static QJsonObject getJsonObject(CompetitionInfo &competition);
     static CompetitionInfo getFromJson(const QJsonObject & json);
@@ -82,6 +84,9 @@ public:
     void setQualifyingCompetitions(const QVector<CompetitionInfo *> &newQualifyingCompetitions);
     bool getPlayed() const;
     void setPlayed(bool newPlayed);
+    QVector<Team> getTeams() const;
+    QVector<Team> & getTeamsReference();
+    void setTeams(const QVector<Team> &newTeams);
 };
 
 #endif // COMPETITIONINFO_H

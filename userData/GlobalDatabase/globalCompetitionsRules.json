@@ -5,20 +5,40 @@
             "competition-type": 0,
             "dsq": true,
             "gate-compensations": true,
-            "id": "146",
+            "id": "2838",
             "judges-points": true,
-            "jumpers-in-team-count": 0,
-            "name": "FIS World Cup",
+            "jumpers-in-team-count": 4,
+            "name": "World Cup",
             "rounds": [
                 {
-                    "count": 50,
-                    "sort-after-groups": 0,
+                    "count": 10,
+                    "sort-after-groups": 3,
                     "sort-start-list": false
                 },
                 {
                     "count": 30,
                     "sort-after-groups": 0,
                     "sort-start-list": true
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": true,
+            "competition-type": 0,
+            "dsq": true,
+            "gate-compensations": true,
+            "id": "2787",
+            "judges-points": true,
+            "jumpers-in-team-count": 0,
+            "name": "World Cup Qualifications",
+            "rounds": [
+                {
+                    "count": 50,
+                    "sort-after-groups": 0,
+                    "sort-start-list": false
                 }
             ],
             "wind-average-calculating-type": 0,
@@ -52,6 +72,66 @@
         },
         {
             "95-hs-rule": true,
+            "competition-type": 0,
+            "dsq": true,
+            "gate-compensations": true,
+            "id": "2802",
+            "judges-points": false,
+            "jumpers-in-team-count": 4,
+            "name": "WC Training",
+            "rounds": [
+                {
+                    "count": 50,
+                    "sort-after-groups": 0,
+                    "sort-start-list": false
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": false,
+            "competition-type": 1,
+            "dsq": true,
+            "gate-compensations": true,
+            "id": "2803",
+            "judges-points": false,
+            "jumpers-in-team-count": 4,
+            "name": "Team WC Training",
+            "rounds": [
+                {
+                    "count": 10,
+                    "sort-after-groups": 3,
+                    "sort-start-list": false
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": true,
+            "competition-type": 1,
+            "dsq": true,
+            "gate-compensations": true,
+            "id": "2793",
+            "judges-points": true,
+            "jumpers-in-team-count": 0,
+            "name": "Team World Cup Qualifications",
+            "rounds": [
+                {
+                    "count": 10,
+                    "sort-after-groups": 3,
+                    "sort-start-list": false
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": true,
             "competition-type": 1,
             "dsq": true,
             "gate-compensations": true,
@@ -68,26 +148,6 @@
                 {
                     "count": 8,
                     "sort-after-groups": 1,
-                    "sort-start-list": false
-                }
-            ],
-            "wind-average-calculating-type": 0,
-            "wind-compensation-distance-effect": 1,
-            "wind-compensations": true
-        },
-        {
-            "95-hs-rule": true,
-            "competition-type": 0,
-            "dsq": true,
-            "gate-compensations": true,
-            "id": "149",
-            "judges-points": false,
-            "jumpers-in-team-count": 4,
-            "name": "Trial Round",
-            "rounds": [
-                {
-                    "count": 50,
-                    "sort-after-groups": 0,
                     "sort-start-list": false
                 }
             ],

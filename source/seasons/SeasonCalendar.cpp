@@ -93,8 +93,7 @@ SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json)
 
     QJsonArray classificationsArray = json.value("classifications").toArray();
     for(auto val : classificationsArray){
-        Classification c = Classification::getFromJson(val.toObject());
-        calendar.getClassificationsReference().push_back(c);
+        calendar.getClassificationsReference().push_back(Classification::getFromJson(val.toObject()));
     }
     seasonObjectsManager.fill(&calendar.getClassificationsReference());
 
@@ -104,9 +103,27 @@ SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json)
         calendar.getCompetitionsReference().push_back(c);
         seasonObjectsManager.addObject(c);
     }
-    seasonObjectsManager.fill(&calendar.getCompetitionsReference());
-
     calendar.updateCompetitionsQualifyingCompetitions();
+
+    for(auto val : classificationsArray){
+        Classification * classification = static_cast<Classification *>(seasonObjectsManager.getObjectByID(val.toObject().value("id").toString().toULong()));
+        for(auto & singleResult : classification->getResultsReference())
+        {
+            singleResult->setClassification(classification);
+            QJsonArray singleResultsArray = val.toObject().value("results").toArray();
+            for(auto jsonRes : singleResultsArray)
+            {
+                if(jsonRes.toObject().value("id").toString().toULong() == singleResult->getID())
+                {
+                    QJsonArray compsIds = jsonRes.toObject().value("competitions-results-ids").toArray();
+                    for(auto id : compsIds)
+                        singleResult->getCompetitionsResultsReference().push_back(static_cast<CompetitionResults *>(seasonObjectsManager.getObjectByID(id.toString().toULong())));
+                }
+            }
+            singleResult->updateSingleResults();
+        }
+        classification->sortInDescendingOrder();
+    }
 
     return calendar;
 }
@@ -128,17 +145,17 @@ QJsonObject SeasonCalendar::getJsonObject(SeasonCalendar &calendar)
     return object;
 }
 
-QVector<Classification> SeasonCalendar::getClassifications() const
+QVector<Classification *> SeasonCalendar::getClassifications() const
 {
     return classifications;
 }
 
-QVector<Classification> &SeasonCalendar::getClassificationsReference()
+QVector<Classification *> &SeasonCalendar::getClassificationsReference()
 {
     return classifications;
 }
 
-void SeasonCalendar::setClassifications(const QVector<Classification> &newClassifications)
+void SeasonCalendar::setClassifications(const QVector<Classification *> &newClassifications)
 {
     classifications = newClassifications;
 }

@@ -206,8 +206,8 @@ void JumpSimulator::generateWindEffects()
             case JumperSkills::WideVStyle: change *= 0.995; break;
             case JumperSkills::HStyle: change *= 1.0; break;
             }
-            change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 57);
-            change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 32.5);
+            change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 54);
+            change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 31);
         }
         else if(wind.getDirection() == Wind::BackSide)
         {
@@ -221,8 +221,8 @@ void JumpSimulator::generateWindEffects()
             case JumperSkills::WideVStyle: change *= 1.00; break;
             case JumperSkills::HStyle: change *= 1.0; break;
             }
-            change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 80);
-            change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 56);
+            change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 77);
+            change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 53);
         }
         else if(wind.getDirection() == Wind::Side)
         {
@@ -236,8 +236,8 @@ void JumpSimulator::generateWindEffects()
             case JumperSkills::WideVStyle: change *= 1.011; break;
             case JumperSkills::HStyle: change *= 1.0174; break;
             }
-            change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 90);
-            change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 60);
+            change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 110);
+            change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 70);
         }
         else if(wind.getDirection() == Wind::FrontSide)
         {
@@ -251,8 +251,8 @@ void JumpSimulator::generateWindEffects()
             case JumperSkills::WideVStyle: change *= 1.03; break;
             case JumperSkills::HStyle: change *= 1.07; break;
             }
-            change *= 1 - (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 85);
-            change *= 1 - (jumperSkills->getLevelOfCharacteristic("flight-height") / 60);
+            change /= 1 - (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 80);
+            change /= 1 - (jumperSkills->getLevelOfCharacteristic("flight-height") / 56);
         }
         else if(wind.getDirection() == Wind::Front)
         {
@@ -262,12 +262,15 @@ void JumpSimulator::generateWindEffects()
             switch(jumperSkills->getFlightStyle())
             {
             case JumperSkills::VStyle: change *= 0.87; break;
-            case JumperSkills::ModernVStyle: change *= 1.985; break;
+            case JumperSkills::ModernVStyle: change *= 1.085; break;
             case JumperSkills::WideVStyle: change *= 1.05; break;
             case JumperSkills::HStyle: change *= 1.12; break;
             }
-            change *= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 63);
-            change *= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 35);
+            qDebug()<<"CHANGE: "<<change;
+            change /= 1 + (jumperSkills->getLevelOfCharacteristic("takeoff-height") / 60);
+            qDebug()<<"AFTER TAKEOFF HEIGHT: "<<change;
+            change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 32);
+            qDebug()<<"AFTER FLIGHT HEIGHT: "<<change;
         }
         if(i != getWinds().count()){
             qDebug()<<"distance: "<<jumpData.getDistance()<<",  (i + 1) * getWindSegmentDistance(): "<<(i + 1) * getWindSegmentDistance();

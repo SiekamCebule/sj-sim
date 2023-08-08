@@ -15,7 +15,7 @@ class CalendarEditorWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit CalendarEditorWidget(CalendarEditorTableModel *model, QVector<Classification> * classificationsList, QWidget *parent = nullptr);
+    explicit CalendarEditorWidget(CalendarEditorTableModel *model, QVector<Classification *> * classificationsList, QWidget *parent = nullptr);
     ~CalendarEditorWidget();
 
 signals:
@@ -35,7 +35,7 @@ private:
     QAction * action_edit;
     Hill defaultHill;
 
-    QVector<Classification> * classificationsList;
+    QVector<Classification *> * classificationsList;
 
     CompetitionInfoEditorWidget * competitionInfoEditor;
 
@@ -69,13 +69,13 @@ public:
     CalendarEditorTableModel *getModel() const;
     void setModel(CalendarEditorTableModel *newModel);
     QTableView * getTableView();
-    QVector<Classification> *getClassificationsList() const;
-    void setClassificationsList(QVector<Classification> *newClassificationsList);
     CompetitionInfoEditorWidget *getCompetitionInfoEditor() const;
     int getDontRemoveBefore() const;
     void setDontRemoveBefore(int newDontRemoveBefore);
     int getDontModifiyBefore() const;
     void setDontModifiyBefore(int newDontModifiyBefore);
+    QVector<Classification *> *getClassificationsList() const;
+    void setClassificationsList(QVector<Classification *> *newClassificationsList);
 };
 
 #endif // CALENDAREDITORWIDGET_H

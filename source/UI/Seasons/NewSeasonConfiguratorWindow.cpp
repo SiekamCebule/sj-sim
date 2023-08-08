@@ -16,7 +16,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     jumpers = GlobalDatabase::get()->getEditableGlobalJumpers();
-    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, this);
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, true, true ,this);
     jumpersListView->setJumpers(&jumpers);
     jumpersListView->setupListModel();
     jumpersListView->selectOnlyFirstRow();
@@ -40,7 +40,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     });
 
     hills = GlobalDatabase::get()->getEditableGlobalHills();
-    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::HillItems, true, this);
+    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::HillItems, true, true, true, this);
     hillsListView->setHills(&hills);
     hillsListView->setupListModel();
     hillsListView->selectOnlyFirstRow();
@@ -70,7 +70,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     });
 
     competitionsRules = GlobalDatabase::get()->getEditableCompetitionRules();
-    rulesListView = new DatabaseItemsListView(DatabaseItemsListView::CompetitionRulesItems, true, this);
+    rulesListView = new DatabaseItemsListView(DatabaseItemsListView::CompetitionRulesItems, true, true, true, this);
     rulesListView->setCompetitionRules(&competitionsRules);
     rulesListView->setupListModel();
     rulesListView->selectOnlyFirstRow();
@@ -102,13 +102,13 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     classificationEditor->setParent(this);
     ui->verticalLayout_classificationEditor->addWidget(classificationEditor);
 
-    classificationsListView = new DatabaseItemsListView(DatabaseItemsListView::ClassificationItems, true, this);
+    classificationsListView = new DatabaseItemsListView(DatabaseItemsListView::ClassificationItems, true, true, true, this);
     classificationsListView->setClassifications(&calendar.getClassificationsReference());
     classificationsListView->setupListModel();
     classificationsListView->selectOnlyFirstRow();
     ui->verticalLayout_classificationsList->addWidget(classificationsListView);
     connect(classificationsListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex &index){
-        Classification * classification = &calendar.getClassificationsReference()[index.row()];
+        Classification * classification = calendar.getClassificationsReference()[index.row()];
         if(classificationEditor->getClassification() != nullptr)
             classificationEditor->resetInputs();
         classificationEditor->setClassification(classification);

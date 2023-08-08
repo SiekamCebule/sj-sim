@@ -30,6 +30,7 @@ public:
         for(auto & o : *vector)
             addObject(dynamic_cast<ClassWithID *>(o));
     }
+    QMap<ulong, ClassWithID *> getObjects() const;
 };
 
 #endif // SEASONDATABASEOBJECTSMANAGER_H

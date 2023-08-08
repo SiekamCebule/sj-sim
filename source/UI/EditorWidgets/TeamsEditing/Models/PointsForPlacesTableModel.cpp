@@ -136,12 +136,12 @@ bool PointsForPlacesTableModel::removeColumns(int column, int count, const QMode
     return true;
 }
 
-QMap<int, int> *PointsForPlacesTableModel::getPointsForPlaces() const
+QMap<int, double> *PointsForPlacesTableModel::getPointsForPlaces() const
 {
     return pointsForPlaces;
 }
 
-void PointsForPlacesTableModel::setPointsForPlaces(QMap<int, int> *newPointsForPlaces)
+void PointsForPlacesTableModel::setPointsForPlaces(QMap<int, double> *newPointsForPlaces)
 {
     pointsForPlaces = newPointsForPlaces;
 }

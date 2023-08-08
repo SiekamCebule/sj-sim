@@ -23,15 +23,15 @@ public:
 
 private:
     QVector<CompetitionInfo *> competitions;
-    QVector<Classification> classifications;
+    QVector<Classification *> classifications;
 
 public:
     QVector<CompetitionInfo *> getCompetitions() const;
     QVector<CompetitionInfo *>  & getCompetitionsReference();
     void setCompetitions(const QVector<CompetitionInfo *> &newCompetitions);
-    QVector<Classification> getClassifications() const;
-    QVector<Classification> &getClassificationsReference();
-    void setClassifications(const QVector<Classification> &newClassifications);
+    QVector<Classification *> getClassifications() const;
+    QVector<Classification *> &getClassificationsReference();
+    void setClassifications(const QVector<Classification *> &newClassifications);
 };
 
 #endif // SEASONCALENDAR_H

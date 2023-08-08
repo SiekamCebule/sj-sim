@@ -1,19 +1,66 @@
 {
     "pointsForPlacesPresets": [
         {
-            "name": "Presecikek",
+            "name": "Team World Cup",
+            "pointsForPlaces": [
+                400,
+                350,
+                300,
+                250,
+                200,
+                150,
+                100,
+                50
+            ]
+        },
+        {
+            "name": "World Cup",
             "pointsForPlaces": [
                 100,
                 80,
-                70,
                 60,
                 50,
-                44,
-                33,
+                45,
+                40,
+                36,
+                32,
+                29,
+                26,
+                24,
                 22,
+                20,
+                18,
+                16,
+                15,
+                14,
+                13,
+                12,
                 11,
                 10,
-                5
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                2,
+                1
+            ]
+        },
+        {
+            "name": "Mini World Cup",
+            "pointsForPlaces": [
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                2,
+                1
             ]
         }
     ]

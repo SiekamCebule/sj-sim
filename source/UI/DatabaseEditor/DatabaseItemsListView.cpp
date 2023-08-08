@@ -2,12 +2,14 @@
 #include "ui_DatabaseItemsListView.h"
 #include <QMessageBox>
 
-DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, bool allowRemoving, QWidget *parent) :
+DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, bool allowRemoving, bool allowMoving, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DatabaseItemsListView),
     type(type),
     allowInserting(allowInserting),
-    allowRemoving(allowRemoving)
+    allowRemoving(allowRemoving),
+    allowMoving(allowMoving),
+    insertLast(0)
 {
     ui->setupUi(this);
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -41,13 +43,13 @@ DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, bool
     connect(ui->listView, &QListView::doubleClicked, this, &DatabaseItemsListView::listViewDoubleClicked);
     connect(ui->listView, &QListView::clicked, this, &DatabaseItemsListView::listViewClicked);\
 
-    /*connect(this, &DatabaseItemsListView::insert, this, [this](){
+        /*connect(this, &DatabaseItemsListView::insert, this, [this](){
         if(listModel->rowCount() == 1 || listModel->rowCount() == 2)
             selectOnlyFirstRow();
     });*/
-    connect(this, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex &index){
-        lastDoubleClickedIndex = index.row();
-    });
+        connect(this, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex &index){
+            lastDoubleClickedIndex = index.row();
+        });
 }
 
 DatabaseItemsListView::~DatabaseItemsListView()
@@ -93,6 +95,36 @@ void DatabaseItemsListView::selectOnlyFirstRow()
     }
 }
 
+QVector<Classification *> *DatabaseItemsListView::getClassifications() const
+{
+    return classifications;
+}
+
+void DatabaseItemsListView::setClassifications(QVector<Classification *> *newClassifications)
+{
+    classifications = newClassifications;
+}
+
+bool DatabaseItemsListView::getInsertLast() const
+{
+    return insertLast;
+}
+
+void DatabaseItemsListView::setInsertLast(bool newInsertLast)
+{
+    insertLast = newInsertLast;
+}
+
+bool DatabaseItemsListView::getAllowMoving() const
+{
+    return allowMoving;
+}
+
+void DatabaseItemsListView::setAllowMoving(bool newAllowMoving)
+{
+    allowMoving = newAllowMoving;
+}
+
 int DatabaseItemsListView::getType() const
 {
     return type;
@@ -131,16 +163,6 @@ QVector<PointsForPlacesPreset> *DatabaseItemsListView::getPointsForPlacesPresets
 void DatabaseItemsListView::setPointsForPlacesPresets(QVector<PointsForPlacesPreset> *newPointsForPlacesPresets)
 {
     pointsForPlacesPresets = newPointsForPlacesPresets;
-}
-
-QVector<Classification> *DatabaseItemsListView::getClassifications() const
-{
-    return classifications;
-}
-
-void DatabaseItemsListView::setClassifications(QVector<Classification> *newClassifications)
-{
-    classifications = newClassifications;
 }
 
 QAbstractListModel *DatabaseItemsListView::getListModel()
@@ -182,8 +204,8 @@ void DatabaseItemsListView::onInsertActionTriggered()
         int rowToInsert = 0;
         if(count == 0)
             rowToInsert = 0;
-        else if(rows.size() == 0)
-            rowToInsert = count - 1;
+        else if(rows.size() == 0 || insertLast == true)
+            rowToInsert = count;
         else if(rows.size() == 1)
             rowToInsert = rows[0].row();
 
@@ -220,7 +242,7 @@ void DatabaseItemsListView::onInsertActionTriggered()
             case ClassificationItems:{
                 ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
                 classificationsListModel->insertRows(rowToInsert, 1);
-                classificationsListModel->getClassificationsVectorPointer()->insert(rowToInsert, 1, Classification("Classification"));
+                classificationsListModel->getClassificationsVectorPointer()->insert(rowToInsert, 1, new Classification("Classification"));
                 emit classificationsListModel->dataChanged(classificationsListModel->index(rowToInsert), classificationsListModel->index(classificationsListModel->rowCount() - 1));
                 break;
             }
@@ -315,169 +337,173 @@ void DatabaseItemsListView::onRemoveActionTriggered()
 
 void DatabaseItemsListView::onUpActionTriggered()
 {
-    QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
-    if(rows.size() > 0){
-        int firstRow = rows.first().row();
-        if(firstRow == 0){
-            QItemSelectionModel * selectionModel = ui->listView->selectionModel();
-            QVector<QModelIndex> rows = selectionModel->selectedRows();
-            rows.remove(0);
-            selectionModel->clearSelection();
-            for(auto & index : rows){
-                selectionModel->select(index, QItemSelectionModel::Select);
+    if(allowMoving){
+        QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
+        if(rows.size() > 0){
+            int firstRow = rows.first().row();
+            if(firstRow == 0){
+                QItemSelectionModel * selectionModel = ui->listView->selectionModel();
+                QVector<QModelIndex> rows = selectionModel->selectedRows();
+                rows.remove(0);
+                selectionModel->clearSelection();
+                for(auto & index : rows){
+                    selectionModel->select(index, QItemSelectionModel::Select);
+                }
+                ui->listView->setSelectionModel(selectionModel);
+                if(ui->listView->selectionModel()->selectedRows().size() > 0)
+                    firstRow = ui->listView->selectionModel()->selectedRows().first().row();
+                else return;
             }
-            ui->listView->setSelectionModel(selectionModel);
-            if(ui->listView->selectionModel()->selectedRows().size() > 0)
-                firstRow = ui->listView->selectionModel()->selectedRows().first().row();
-            else return;
+            rows = ui->listView->selectionModel()->selectedRows();
+            std::sort(rows.begin(), rows.end());
+            ui->listView->clearSelection();
+            switch(type){
+            case SeasonJumpersItems:{
+                SeasonJumpersListModel * jumpersListModel = dynamic_cast<SeasonJumpersListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(jumpersListModel->index(index.row() - 1));
+                for(auto & index : rows)
+                    jumpersListModel->getSeasonJumpers()->swapItemsAt(index.row(), index.row() - 1);
+                emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
+                break;
+            }
+            case JumperItems:{
+                JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(jumpersListModel->index(index.row() - 1));
+                for(auto & index : rows)
+                    jumpersListModel->getJumpersVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
+                emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
+                break;
+            }
+            case HillItems:{
+                HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(hillsListModel->index(index.row() - 1));
+                for(auto & index : rows)
+                    hillsListModel->getHillsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
+                emit hillsListModel->dataChanged(hillsListModel->index(firstRow), hillsListModel->index(hillsListModel->rowCount() - 1));
+                break;
+            }
+            case CompetitionRulesItems:{
+                CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(competitionRulesListModel->index(index.row() - 1));
+                for(auto & index : rows)
+                    competitionRulesListModel->getCompetitonRulesVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
+                emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(firstRow), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
+                break;
+            }
+            case ClassificationItems:{
+                ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(classificationsListModel->index(index.row() - 1));
+                for(auto & index : rows)
+                    classificationsListModel->getClassificationsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
+                emit classificationsListModel->dataChanged(classificationsListModel->index(firstRow), classificationsListModel->index(classificationsListModel->rowCount() - 1));
+                break;
+            }
+            case PointsForPlacesPresetsItems:{
+                PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(model->index(index.row() - 1));
+                for(auto & index : rows)
+                    model->getPresetsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
+                emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
+                break;
+            }
+            default: break;
+            }
+            emit up();
         }
-        rows = ui->listView->selectionModel()->selectedRows();
-        std::sort(rows.begin(), rows.end());
-        ui->listView->clearSelection();
-        switch(type){
-        case SeasonJumpersItems:{
-            SeasonJumpersListModel * jumpersListModel = dynamic_cast<SeasonJumpersListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(jumpersListModel->index(index.row() - 1));
-            for(auto & index : rows)
-                jumpersListModel->getSeasonJumpers()->swapItemsAt(index.row(), index.row() - 1);
-            emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
-            break;
-        }
-        case JumperItems:{
-            JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(jumpersListModel->index(index.row() - 1));
-            for(auto & index : rows)
-                jumpersListModel->getJumpersVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
-            emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
-            break;
-        }
-        case HillItems:{
-            HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(hillsListModel->index(index.row() - 1));
-            for(auto & index : rows)
-                hillsListModel->getHillsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
-            emit hillsListModel->dataChanged(hillsListModel->index(firstRow), hillsListModel->index(hillsListModel->rowCount() - 1));
-            break;
-        }
-        case CompetitionRulesItems:{
-            CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(competitionRulesListModel->index(index.row() - 1));
-            for(auto & index : rows)
-                competitionRulesListModel->getCompetitonRulesVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
-            emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(firstRow), competitionRulesListModel->index(competitionRulesListModel->rowCount() - 1));
-            break;
-        }
-        case ClassificationItems:{
-            ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(classificationsListModel->index(index.row() - 1));
-            for(auto & index : rows)
-                classificationsListModel->getClassificationsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
-            emit classificationsListModel->dataChanged(classificationsListModel->index(firstRow), classificationsListModel->index(classificationsListModel->rowCount() - 1));
-            break;
-        }
-        case PointsForPlacesPresetsItems:{
-            PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(model->index(index.row() - 1));
-            for(auto & index : rows)
-                model->getPresetsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
-            emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
-            break;
-        }
-        default: break;
-        }
-        emit up();
     }
 }
 
 void DatabaseItemsListView::onDownActionTriggered()
 {
-    int rowCount = listModel->rowCount();
+    if(allowMoving){
+        int rowCount = listModel->rowCount();
 
-    QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
-    if(rows.size() > 0){
-        int lastRow = rows.last().row();
-        if(lastRow == rowCount - 1){
-            QItemSelectionModel * selectionModel = ui->listView->selectionModel();
-            QVector<QModelIndex> rows = selectionModel->selectedRows();
-            rows.removeLast();
-            selectionModel->clearSelection();
-            for(auto & index : rows){
-                selectionModel->select(index, QItemSelectionModel::Select);
+        QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
+        if(rows.size() > 0){
+            int lastRow = rows.last().row();
+            if(lastRow == rowCount - 1){
+                QItemSelectionModel * selectionModel = ui->listView->selectionModel();
+                QVector<QModelIndex> rows = selectionModel->selectedRows();
+                rows.removeLast();
+                selectionModel->clearSelection();
+                for(auto & index : rows){
+                    selectionModel->select(index, QItemSelectionModel::Select);
+                }
+                ui->listView->setSelectionModel(selectionModel);
+                if(ui->listView->selectionModel()->selectedRows().size() > 0)
+                    lastRow = ui->listView->selectionModel()->selectedRows().last().row();
+                else return;
             }
-            ui->listView->setSelectionModel(selectionModel);
-            if(ui->listView->selectionModel()->selectedRows().size() > 0)
-                lastRow = ui->listView->selectionModel()->selectedRows().last().row();
-            else return;
+            rows = ui->listView->selectionModel()->selectedRows();
+            std::sort(rows.begin(), rows.end(), [](const QModelIndex & index1, const QModelIndex & index2){
+                return index1.row() > index2.row();
+            });
+            ui->listView->clearSelection();
+            switch(type){
+            case SeasonJumpersItems:{
+                SeasonJumpersListModel * jumpersListModel = dynamic_cast<SeasonJumpersListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(jumpersListModel->index(index.row() + 1));
+                for(auto & index : rows)
+                    jumpersListModel->getSeasonJumpers()->swapItemsAt(index.row(), index.row() + 1);
+                emit jumpersListModel->dataChanged(jumpersListModel->index(lastRow), jumpersListModel->index(0));
+                break;
+            }
+            case JumperItems:{
+                JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(jumpersListModel->index(index.row() + 1));
+                for(auto & index : rows)
+                    jumpersListModel->getJumpersVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
+                emit jumpersListModel->dataChanged(jumpersListModel->index(lastRow), jumpersListModel->index(0));
+                break;
+            }
+            case HillItems:{
+                HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(hillsListModel->index(index.row() + 1));
+                for(auto & index : rows)
+                    hillsListModel->getHillsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
+                emit hillsListModel->dataChanged(hillsListModel->index(lastRow), hillsListModel->index(0));
+                break;
+            }
+            case CompetitionRulesItems:{
+                CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(competitionRulesListModel->index(index.row() + 1));
+                for(auto & index : rows)
+                    competitionRulesListModel->getCompetitonRulesVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
+                emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(lastRow), competitionRulesListModel->index(0));
+                break;
+            }
+            case ClassificationItems:{
+                ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(classificationsListModel->index(index.row() + 1));
+                for(auto & index : rows)
+                    classificationsListModel->getClassificationsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
+                emit classificationsListModel->dataChanged(classificationsListModel->index(lastRow), classificationsListModel->index(0));
+                break;
+            }
+            case PointsForPlacesPresetsItems:{
+                PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(model->index(index.row() + 1));
+                for(auto & index : rows)
+                    model->getPresetsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
+                emit model->dataChanged(model->index(lastRow), model->index(0));
+                break;
+            }
+            default: break;
+            }
+            emit down();
         }
-        rows = ui->listView->selectionModel()->selectedRows();
-        std::sort(rows.begin(), rows.end(), [](const QModelIndex & index1, const QModelIndex & index2){
-            return index1.row() > index2.row();
-        });
-        ui->listView->clearSelection();
-        switch(type){
-        case SeasonJumpersItems:{
-            SeasonJumpersListModel * jumpersListModel = dynamic_cast<SeasonJumpersListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(jumpersListModel->index(index.row() + 1));
-            for(auto & index : rows)
-                jumpersListModel->getSeasonJumpers()->swapItemsAt(index.row(), index.row() + 1);
-            emit jumpersListModel->dataChanged(jumpersListModel->index(lastRow), jumpersListModel->index(0));
-            break;
-        }
-        case JumperItems:{
-            JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(jumpersListModel->index(index.row() + 1));
-            for(auto & index : rows)
-                jumpersListModel->getJumpersVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
-            emit jumpersListModel->dataChanged(jumpersListModel->index(lastRow), jumpersListModel->index(0));
-            break;
-        }
-        case HillItems:{
-            HillsListModel * hillsListModel = dynamic_cast<HillsListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(hillsListModel->index(index.row() + 1));
-            for(auto & index : rows)
-                hillsListModel->getHillsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
-            emit hillsListModel->dataChanged(hillsListModel->index(lastRow), hillsListModel->index(0));
-            break;
-        }
-        case CompetitionRulesItems:{
-            CompetitionRulesListModel * competitionRulesListModel = dynamic_cast<CompetitionRulesListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(competitionRulesListModel->index(index.row() + 1));
-            for(auto & index : rows)
-                competitionRulesListModel->getCompetitonRulesVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
-            emit competitionRulesListModel->dataChanged(competitionRulesListModel->index(lastRow), competitionRulesListModel->index(0));
-            break;
-        }
-        case ClassificationItems:{
-            ClassificationsListModel * classificationsListModel = dynamic_cast<ClassificationsListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(classificationsListModel->index(index.row() + 1));
-            for(auto & index : rows)
-                classificationsListModel->getClassificationsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
-            emit classificationsListModel->dataChanged(classificationsListModel->index(lastRow), classificationsListModel->index(0));
-            break;
-        }
-        case PointsForPlacesPresetsItems:{
-            PointsForPlacesPresetsListModel * model = dynamic_cast<PointsForPlacesPresetsListModel *>(listModel);
-            for(auto & index : rows)
-                ui->listView->setCurrentIndex(model->index(index.row() + 1));
-            for(auto & index : rows)
-                model->getPresetsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
-            emit model->dataChanged(model->index(lastRow), model->index(0));
-            break;
-        }
-        default: break;
-        }
-        emit down();
     }
 }
 
