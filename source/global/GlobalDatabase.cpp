@@ -173,8 +173,8 @@ bool GlobalDatabase::loadSimulationSaves()
     globalSimulationSaves.clear();
 
     QDir dir(QCoreApplication::applicationDirPath());
-    //if(QSysInfo::productType() == "windows")
-      //  dir.cdUp();
+    if(dir.exists("userData") == false && QSysInfo::productType() == "windows")
+        dir.cdUp();
     dir.setPath(dir.path() + "/simulationSaves");
     dir.setNameFilters(QStringList() << "*.json");
 

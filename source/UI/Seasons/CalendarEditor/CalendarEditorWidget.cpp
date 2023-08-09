@@ -774,6 +774,7 @@ void CalendarEditorWidget::execMultipleAdvancementCompetitionEditDialog(QVector<
             }
         }
         competition->setAdvancementCompetition(advancementCompetition);
+        calendar->updateCompetitionsQualifyingCompetitions();
         emit calendarModel->dataChanged(calendarModel->index(row, column), calendarModel->index(row, column));
     }
 }

@@ -70,6 +70,8 @@ protected:
 
     int baseDSQProbability;
 
+    int altQualifiersLimit;
+
 public:
     short getType() const;
     void setType(short newType);
@@ -116,6 +118,8 @@ public:
     QVector<StartListCompetitorStatus> getStartListStatuses() const;
     QVector<StartListCompetitorStatus> & getStartListStatusesReference();
     void setStartListStatuses(const QVector<StartListCompetitorStatus> &newStartListStatuses);
+    int getAltQualifiersLimit() const;
+    void setAltQualifiersLimit(int newAltQualifiersLimit);
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

@@ -147,7 +147,7 @@ CompetitionRules CompetitionRules::getFromJson(const QJsonObject &obj)
         roundInfo.setCount(round.toObject().value("count").toInt());
         roundInfo.setSortStartList(round.toObject().value("sort-start-list").toBool(true));
         roundInfo.setSortAfterGroups(round.toObject().value("sort-after-groups").toInt());
-        rules.getEditableRounds().push_back(roundInfo);
+        rules.getRoundsReference().push_back(roundInfo);
     }
     return rules;
 }
@@ -163,7 +163,7 @@ void CompetitionRules::setRounds(const QVector<RoundInfo> &newRounds)
     rounds = newRounds;
 }
 
-QVector<RoundInfo> &CompetitionRules::getEditableRounds()
+QVector<RoundInfo> &CompetitionRules::getRoundsReference()
 {
     return rounds;
 }

@@ -301,8 +301,14 @@ SimulationSave *SimulationSaveManagerWindow::getSimulationSave() const
 
 void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
 {
+    // To teraz trzeba ustawić ten limit jeżeli skonfigurowany konkurs jest dla czyjegoś konkursu kwalifikacjami. Jeśli tak to bierzemy 1 z brzegu'
+    // i ustalamy altLimit jako limit tamtego koknkursu w 1 rundzie.
+
     CompetitionConfigWindow * configWindow = new CompetitionConfigWindow(CompetitionConfigWindow::SeasonCompetition, this, simulationSave);
     configWindow->setModal(true);
+
+    if(Classification::getSpecificTypeClassifications(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference(), simulationSave->getNextCompetition()->getRulesPointer()->getCompetitionType()).count() > 0)
+        configWindow->setClassificationsComboBoxIndex(1);
 
     if(configWindow->exec() == QDialog::Accepted)
     {
@@ -317,6 +323,9 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
             competitionManager = new IndividualCompetitionManager();
         else if(type == CompetitionRules::Team)
             competitionManager = new TeamCompetitionManager();
+
+        if(competition->getQualifyingCompetitionsReference().count() > 0)
+            competitionManager->setAltQualifiersLimit(competition->getQualifyingCompetitionsReference()[0]->getRulesPointer()->getRoundsReference()[0].getCount());
 
         competitionManager->setCompetitionInfo(competition);
         competitionManager->setCompetitionRules(competition->getRulesPointer());

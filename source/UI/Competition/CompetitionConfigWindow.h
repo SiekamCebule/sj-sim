@@ -45,6 +45,8 @@ public:
     WindsGeneratorSettingsEditorWidget * getWindGeneratorSettingsWidget();
     InrunSnowGeneratorSettingsEditorWidget * getInrunSnowGeneratorSettingsWidget();
 
+    void setClassificationsComboBoxIndex(int index);
+
 signals:
     void submitted();
 
@@ -78,11 +80,6 @@ private:
     CompetitionInfo * seasonCompetition;
     SimulationSave * simulationSave;
     QVector<Jumper *> seasonCompetitionJumpers;
-
-private slots:
-    //void removeFromStartList();
-    //void moveToTop();
-    //void moveToDown();
 
 public:
     short getType() const;
@@ -120,6 +117,8 @@ public:
 private slots:
     void on_pushButton_submit_clicked();
     void on_pushButton_loadJumpers_clicked();
+    void on_comboBox_competition_currentIndexChanged(int index);
+    void on_comboBox_classification_activated(int index);
 };
 
 #endif // COMPETITIONCONFIGWINDOW_H

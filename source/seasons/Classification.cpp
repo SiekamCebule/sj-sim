@@ -90,6 +90,17 @@ ClassificationSingleResult *Classification::getResultByIndex(int index)
     return const_cast<ClassificationSingleResult *>(results[index]);
 }
 
+QVector<Classification *> Classification::getSpecificTypeClassifications(QVector<Classification *> classifications, int type)
+{
+    QVector<Classification *> toReturn;
+    for(auto & classification : classifications)
+    {
+        if(classification->getClassificationType() == type)
+            toReturn.push_back(classification);
+    }
+    return toReturn;
+}
+
 Classification * Classification::getFromJson(QJsonObject obj)
 {
     Classification * classification = new Classification();

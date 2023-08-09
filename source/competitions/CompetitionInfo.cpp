@@ -48,7 +48,8 @@ void CompetitionInfo::updateQualifyingCompetitions(SeasonCalendar *calendar)
     {
         if(this == comp->getAdvancementCompetition())
         {
-            this->getQualifyingCompetitionsReference().push_back(comp);
+            if(this->getQualifyingCompetitionsReference().contains(comp) == false)
+                this->getQualifyingCompetitionsReference().push_back(comp);
         }
     }
 }

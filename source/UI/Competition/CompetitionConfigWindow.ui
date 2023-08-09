@@ -69,44 +69,148 @@ color: rgb(26, 95, 180);
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_startList">
+      <layout class="QVBoxLayout" name="verticalLayout_startList" stretch="0,0,0,0">
        <property name="sizeConstraint">
-        <enum>QLayout::SetMaximumSize</enum>
+        <enum>QLayout::SetDefaultConstraint</enum>
        </property>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <widget class="QLabel" name="label_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: black;</string>
+           </property>
+           <property name="text">
+            <string>Kolejność listy startowej</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMaximumSize</enum>
+           </property>
            <item>
-            <widget class="QPushButton" name="pushButton_loadJumpers">
+            <widget class="QComboBox" name="comboBox_classification">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="maximumSize">
-              <size>
-               <width>252</width>
-               <height>16777215</height>
-              </size>
-             </property>
              <property name="font">
               <font>
-               <pointsize>11</pointsize>
+               <pointsize>8</pointsize>
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QPushButton{color: black; background-color: rgb(245, 172, 166); border: 1px solid rgb(75, 75, 75); border-radius: 9px; margin: 2px; padding: 4px;} QPushButton:hover{background-color: rgb(255, 200, 195)}</string>
+              <string notr="true">color: black;</string>
              </property>
-             <property name="text">
-              <string>Wczytaj zawodników z innego pliku</string>
+             <item>
+              <property name="text">
+               <string>Według klasyfikacji</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_competition">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: black;</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>Według konkursu</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+color: rgb(0, 0, 0);
+background-color: rgb(220, 236, 255)
+}
+QPushButton:hover{
+background-color: rgb(240, 255, 255);
+}</string>
+         </property>
+         <property name="text">
+          <string>Domyślna kolejność</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_loadJumpers">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>252</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{color: black; background-color: rgb(245, 172, 166); border: 1px solid rgb(75, 75, 75); border-radius: 9px; margin: 2px; padding: 4px;} QPushButton:hover{background-color: rgb(255, 200, 195)}</string>
+         </property>
+         <property name="text">
+          <string>Wczytaj zawodników z innego pliku</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_title_2">
@@ -162,7 +266,7 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>682</width>
+          <width>686</width>
           <height>821</height>
          </rect>
         </property>
@@ -192,6 +296,19 @@ color: rgb(26, 95, 180);
               </widget>
              </item>
              <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
               <widget class="QComboBox" name="comboBox_existingHill">
                <property name="minimumSize">
                 <size>
@@ -219,19 +336,6 @@ color: black;
            </item>
           </layout>
          </item>
-         <item>
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="page_2">
@@ -239,7 +343,7 @@ color: black;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>682</width>
+          <width>686</width>
           <height>821</height>
          </rect>
         </property>

@@ -135,7 +135,6 @@ void CompetitionSingleResult::updatePointsSum()
 {
     pointsSum = 0;
     for(auto & res : jumps){
-        qDebug()<<"AAAAAAAAAAAAAAAAAAAAAA: "<<res.getPoints();
         pointsSum += res.getPoints();
     }
 }

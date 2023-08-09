@@ -8,6 +8,9 @@
 #include <QPixmap>
 #include <algorithm>
 
+// Musimy dać możliwość ustalenia własnej liczby kwalifikujących się zawodników. Tzn tak: Jeżeli konkurs jest jednoseryjny to to działa. Robimy to w updateAdvanceStatuses.
+
+
 ResultsTableModel::ResultsTableModel(int type, CompetitionResults *results, AbstractCompetitionManager *manager, QObject *parent)
     : QAbstractTableModel(parent),
       type(type),
@@ -132,6 +135,16 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
 
     // FIXME: Implement me!
     return QVariant();
+}
+
+int ResultsTableModel::getQualifiersLimit() const
+{
+    return qualifiersLimit;
+}
+
+void ResultsTableModel::setQualifiersLimit(int newQualifiersLimit)
+{
+    qualifiersLimit = newQualifiersLimit;
 }
 
 QVector<StartListCompetitorStatus> *ResultsTableModel::getStartListStatuses() const

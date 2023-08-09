@@ -8,6 +8,7 @@
 #include "../../simulator/Jumper.h"
 #include "../CompetitionSingleResult.h"
 #include "../CompetitionResults.h"
+#include "../CompetitionInfo.h"
 
 class IndividualCompetitionManager : public AbstractCompetitionManager
 {
@@ -20,6 +21,9 @@ public:
     void updateCompetitorsAdvanceStatuses();
 
     QVector<Jumper *> getFilteredJumpersForNextRound();
+    static QVector<Jumper *> getFilteredJumpersAfterQualifications(CompetitionInfo *competition, QVector<Jumper> &jumpers);
+    static void setStartListOrderByClassification(QVector<Jumper *> &jumpers, Classification * classification);
+    static void setStartListOrderByCompetitionResults(QVector<Jumper *> &jumpers, CompetitionInfo * competition);
 
 private:
     QVector<QVector<Jumper *>> roundsJumpers;

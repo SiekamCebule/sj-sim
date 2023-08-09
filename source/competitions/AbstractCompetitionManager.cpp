@@ -17,6 +17,7 @@ AbstractCompetitionManager::AbstractCompetitionManager(short type) : type(type)
     actualCompetitorPointsToTheLeader = 0;
     leaderResult = nullptr;
     lastQualifiedResult = nullptr;
+    altQualifiersLimit = 0;
 }
 
 bool AbstractCompetitionManager::checkRoundEnd()
@@ -26,7 +27,7 @@ bool AbstractCompetitionManager::checkRoundEnd()
 
 bool AbstractCompetitionManager::checkCompetitionEnd()
 {
-    return (checkRoundEnd() && (actualRound == competitionRules->getEditableRounds().count() || actualRound == competitionInfo->getExceptionalRoundsCount()));
+    return (checkRoundEnd() && (actualRound == competitionRules->getRoundsReference().count() || actualRound == competitionInfo->getExceptionalRoundsCount()));
 }
 
 void AbstractCompetitionManager::updateToBeatLineDistance()
@@ -148,15 +149,18 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
 
     int lastQualifiedPosition = 0;
 
-    int shouldBeQualified = 0;
-    if(actualRound < competitionRules->getRounds().count())
-        shouldBeQualified = competitionRules->getRounds().at(actualRound).getCount();
-    if(competitorsCount - shouldBeQualified - (actualStartListIndex) > 0 || actualRound == competitionRules->getRounds().count() || competitorsCount <= shouldBeQualified){
+    int limit = 0;
+    if(competitionRules->getRounds().count() > actualRound)
+        limit = competitionRules->getRounds().at(actualRound).getCount();
+    if(altQualifiersLimit > 0 && actualRound == competitionRules->getRounds().count())
+        limit = altQualifiersLimit;
+    if(competitorsCount - limit - (actualStartListIndex) > 0 || (actualRound == competitionRules->getRounds().count() && altQualifiersLimit == 0) || competitorsCount <= limit){
         lastQualifiedPosition = -1;
     }
     else{
+        qDebug()<<"no";
         bool exaequo = true;
-        lastQualifiedPosition = abs(competitorsCount - shouldBeQualified - (actualStartListIndex + 1));
+        lastQualifiedPosition = abs(competitorsCount - limit - (actualStartListIndex + 1));
 
         for(auto & res : results->getResultsReference()){ // Sprawdzamy, czy wystąpiło ex aequo.
             if(res.getPosition() == lastQualifiedPosition){
@@ -174,11 +178,18 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
             }
         }
     }
-
-    if(lastQualifiedPosition > 0 && lastQualifiedPosition <= results->getResultsReference().count() && actualRound < competitionRules->getRounds().count())
+    bool isLastQualifiedPositionValid = lastQualifiedPosition > 0 && lastQualifiedPosition <= results->getResultsReference().count();
+    bool isActualRoundGoodOne = actualRound < competitionRules->getRounds().count();
+    bool isActualRoundGoodSecond = altQualifiersLimit > 0 && actualRound == competitionRules->getRounds().count();
+    qDebug()<<"lastQualifiedPosition: "<<lastQualifiedPosition;
+    qDebug()<<"isLastQualifiedPositionValid: "<<isLastQualifiedPositionValid;
+    qDebug()<<"isActualRoundGoodOne: "<<isActualRoundGoodOne;
+    qDebug()<<"isActualRoundGoodSecond: "<<isActualRoundGoodSecond;
+    if(isLastQualifiedPositionValid && (isActualRoundGoodOne || isActualRoundGoodSecond))
         lastQualifiedResult = results->getResultByIndex(lastQualifiedPosition - 1);
     else
         lastQualifiedResult = nullptr;
+    qDebug()<<"lastQualifiedResult: "<<lastQualifiedResult;
 }
 
 void AbstractCompetitionManager::updateActualCompetitorPointsToTheLeader()
@@ -223,6 +234,16 @@ void AbstractCompetitionManager::setActualJumperToNextUnfinished()
 {
     setActualStartListIndex(getFirstUnfinishedStartListStatus());
     setActualJumper(startListStatuses[getFirstUnfinishedStartListStatus()].getJumper());
+}
+
+int AbstractCompetitionManager::getAltQualifiersLimit() const
+{
+    return altQualifiersLimit;
+}
+
+void AbstractCompetitionManager::setAltQualifiersLimit(int newAltQualifiersLimit)
+{
+    altQualifiersLimit = newAltQualifiersLimit;
 }
 
 QVector<StartListCompetitorStatus> AbstractCompetitionManager::getStartListStatuses() const

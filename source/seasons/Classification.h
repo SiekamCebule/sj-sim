@@ -31,6 +31,8 @@ public:
     ClassificationSingleResult * getResultOfTeam(QString teamCode);
     ClassificationSingleResult * getResultByIndex(int index);
 
+    static QVector<Classification *> getSpecificTypeClassifications(QVector<Classification *> classifications, int type);
+
 private:
     QString name;
     short classificationType;

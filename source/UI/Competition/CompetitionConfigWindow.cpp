@@ -29,9 +29,9 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
     type(type),
     simulationSave(save)
 {
+    ui->setupUi(this);
     if(simulationSave != nullptr)
         seasonCompetition = simulationSave->getNextCompetition();
-    ui->setupUi(this);
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
     delete ui->page_2;
     ui->toolBox->removeItem(1);
@@ -54,16 +54,34 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
     ui->toolBox->addItem(inrunSnowGeneratorSettingsEditor, tr("Ustawienia generatora śniegu na najeździe"));
     setupCompetitionRulesToolBoxItem();
 
+    if(getType() == SingleCompetition)
+    {
+        ui->comboBox_classification->hide();
+        ui->comboBox_competition->hide();
+        ui->pushButton->hide();
+        ui->label_3->hide();
+    }
+    else
+    {
+        int type = seasonCompetition->getRulesPointer()->getCompetitionType();
+        for(auto & classification : Classification::getSpecificTypeClassifications(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference(), type))
+            ui->comboBox_classification->addItem(classification->getName());
+    }
+
     jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, false, true, true, this);
     jumpersListView->getListView()->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    jumpersListView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    jumpersListView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     if(getType() == SingleCompetition)
         jumpersListView->setJumpers(&competitionJumpers);
     else{
         jumpersListView->setType(DatabaseItemsListView::SeasonJumpersItems);
-        for(auto & jp : simulationSave->getJumpersReference())
-        {
-            seasonCompetitionJumpers.push_back(&jp);
+        if(seasonCompetition->getAdvancementCompetition() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+            seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersAfterQualifications(seasonCompetition, simulationSave->getJumpersReference());
+        else{
+            for(auto & jp : simulationSave->getJumpersReference())
+            {
+                seasonCompetitionJumpers.push_back(&jp);
+            }
         }
         jumpersListView->setSeasonJumpers(&seasonCompetitionJumpers);
     }
@@ -101,7 +119,12 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
         windsGeneratorSettingsEditor->fillWindGenerationSettingsByDefault();
         windsGeneratorSettingsEditor->fillSettingsInputs();
 
-        competitionTeams = Team::constructTeamsVectorByJumpersList(seasonCompetitionJumpers, seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
+        if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team){
+        if(seasonCompetition->getAdvancementCompetition() != nullptr){
+            competitionTeams = TeamCompetitionManager::getFilteredTeamsAfterQualifications(seasonCompetition);
+        }
+        else
+            competitionTeams = Team::constructTeamsVectorByJumpersList(seasonCompetitionJumpers, seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
         teamsSquadsModel->setupTreeItems();
         teamsTreeView->setModel(teamsSquadsModel);
         //teamsTreeView->getTreeView()->expandToDepth(0);
@@ -111,6 +134,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
             teamsTreeView->setModel(teamsSquadsModel);
             teamsTreeView->getTreeView()->expandToDepth(0);
         });
+        }
     }
     else if(getType() == SingleCompetition)
     {
@@ -151,11 +175,15 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
     });
 
     connect(teamsTreeView, &TeamsSquadsTreeView::needToUpdateModel, this, [this]{
-        teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, competitionRulesEditor->getJumpersCountInTeam());
+        int count = competitionRulesEditor->getJumpersCountInTeam();
+        if(seasonCompetition != nullptr)
+            count = seasonCompetition->getRulesPointer()->getJumpersInTeamCount();
+        teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, count );
         teamsSquadsModel->setupTreeItems();
         teamsTreeView->setModel(teamsSquadsModel);
     });
 
+    if(seasonCompetition->getAdvancementCompetition() == nullptr){
     connect(teamsTreeView, &TeamsSquadsTreeView::treeViewDoubleClicked, this, [this](const QModelIndex & index){
         TreeItem * item = static_cast<TreeItem *>(index.internalPointer());
         int teamIndex = 0;
@@ -192,6 +220,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
             teamsTreeView->getTreeView()->expandToDepth(0);
         }
     });
+    }
 
     ui->verticalLayout_startList->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Maximum, QSizePolicy::Maximum));
 
@@ -227,6 +256,12 @@ WindsGeneratorSettingsEditorWidget *CompetitionConfigWindow::getWindGeneratorSet
 InrunSnowGeneratorSettingsEditorWidget *CompetitionConfigWindow::getInrunSnowGeneratorSettingsWidget()
 {
     return inrunSnowGeneratorSettingsEditor;
+}
+
+void CompetitionConfigWindow::setClassificationsComboBoxIndex(int index)
+{
+    ui->comboBox_classification->setCurrentIndex(index);
+    emit ui->comboBox_classification->activated(index);
 }
 
 void CompetitionConfigWindow::setupHillToolBoxItem()
@@ -594,3 +629,33 @@ void CompetitionConfigWindow::on_pushButton_loadJumpers_clicked()
         }
     }
 }
+
+void CompetitionConfigWindow::on_comboBox_competition_currentIndexChanged(int index)
+{
+
+}
+
+
+void CompetitionConfigWindow::on_comboBox_classification_activated(int index)
+{
+    if(index > 0)
+    {
+        index--; //Nie liczymy pierwszego item'a - "Według klasyfikacji"
+        int type = seasonCompetition->getRulesPointer()->getCompetitionType();
+        Classification * classification = Classification::getSpecificTypeClassifications(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference(), type).at(index);
+        if(type == CompetitionRules::Individual)
+        {
+            IndividualCompetitionManager::setStartListOrderByClassification(seasonCompetitionJumpers, classification);
+            emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(0, 0), jumpersListView->getListModel()->index(jumpersListView->getListModel()->rowCount() - 1));
+        }
+        else{
+            TeamCompetitionManager::setStartListOrderByClassification(competitionTeams, classification);
+            delete teamsSquadsModel;
+            teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
+            teamsSquadsModel->setupTreeItems();
+            teamsTreeView->setModel(teamsSquadsModel);
+            teamsTreeView->getTreeView()->expandToDepth(0);
+        }
+    }
+}
+

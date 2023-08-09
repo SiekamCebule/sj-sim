@@ -122,7 +122,10 @@ CompetitionSingleResult *CompetitionResults::getResultOfTeam(Team *team)
 
 CompetitionSingleResult *CompetitionResults::getResultByIndex(int index)
 {
-    return const_cast<CompetitionSingleResult *>(&results[index]);
+    if(results.count() > index){
+        return &results[index];
+    }
+    return nullptr;
 }
 
 void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)

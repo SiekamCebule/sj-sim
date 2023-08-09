@@ -47,7 +47,7 @@ ClassificationEditorWidget::ClassificationEditorWidget(Classification * classifi
         ui->comboBox_presets->addItem(QString::number(i) + ". " + preset.getName());
         i++;
     }
-    connect(ui->comboBox_presets, &QComboBox::currentIndexChanged, this, [this](){
+    connect(ui->comboBox_presets, &QComboBox::activated, this, [this](){
         if(ui->comboBox_presets->currentIndex() == 0)
         {
             tableModel->removeRows(0, tableModel->rowCount());

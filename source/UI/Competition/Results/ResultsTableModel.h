@@ -29,6 +29,8 @@ private:
 
     QVector<StartListCompetitorStatus> * startListStatuses;
 
+    int qualifiersLimit;
+
 public:
     CompetitionResults *getResults() const;
     void setResults(CompetitionResults *newResults);
@@ -38,6 +40,8 @@ public:
     void setManager(AbstractCompetitionManager *newManager);
     QVector<StartListCompetitorStatus> *getStartListStatuses() const;
     void setStartListStatuses(QVector<StartListCompetitorStatus> *newStartListStatuses);
+    int getQualifiersLimit() const;
+    void setQualifiersLimit(int newQualifiersLimit);
 };
 
 #endif // RESULTSTABLEMODEL_H

@@ -47,7 +47,7 @@ public:
     void setCompetitionType(short newCompetitionType);
     QVector<RoundInfo> getRounds() const;
     void setRounds(const QVector<RoundInfo> &newRounds);
-    QVector<RoundInfo> & getEditableRounds();
+    QVector<RoundInfo> & getRoundsReference();
     QString getName() const;
     void setName(const QString &newName);
     int getJumpersInTeamCount() const;

@@ -24,6 +24,10 @@ public:
     int getAdvanceStatusOfTeam(Team * team);
     QVector<Team *> getFilteredTeamsForNextRound();
 
+    static QVector<Team> getFilteredTeamsAfterQualifications(CompetitionInfo *competition);
+    static void setStartListOrderByClassification(QVector<Team> &teams, Classification * classification);
+    static void setStartListOrderByCompetitionResults(QVector<Team>& teams, CompetitionInfo * competition);
+
 private:
     int actualGroup;
     Team * actualTeam;
