@@ -5,13 +5,13 @@
             "competition-type": 0,
             "dsq": true,
             "gate-compensations": true,
-            "id": "2838",
+            "id": "8157",
             "judges-points": true,
             "jumpers-in-team-count": 4,
             "name": "World Cup",
             "rounds": [
                 {
-                    "count": 10,
+                    "count": 50,
                     "sort-after-groups": 3,
                     "sort-start-list": false
                 },
@@ -95,7 +95,7 @@
             "competition-type": 1,
             "dsq": true,
             "gate-compensations": true,
-            "id": "2803",
+            "id": "8159",
             "judges-points": false,
             "jumpers-in-team-count": 4,
             "name": "Team WC Training",
@@ -115,9 +115,9 @@
             "competition-type": 1,
             "dsq": true,
             "gate-compensations": true,
-            "id": "2793",
+            "id": "8156",
             "judges-points": true,
-            "jumpers-in-team-count": 0,
+            "jumpers-in-team-count": 4,
             "name": "Team World Cup Qualifications",
             "rounds": [
                 {
@@ -135,7 +135,7 @@
             "competition-type": 1,
             "dsq": true,
             "gate-compensations": true,
-            "id": "148",
+            "id": "8158",
             "judges-points": true,
             "jumpers-in-team-count": 4,
             "name": "Team World Cup",
@@ -148,7 +148,7 @@
                 {
                     "count": 8,
                     "sort-after-groups": 1,
-                    "sort-start-list": false
+                    "sort-start-list": true
                 }
             ],
             "wind-average-calculating-type": 0,
