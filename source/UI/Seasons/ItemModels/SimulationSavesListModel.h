@@ -10,7 +10,7 @@ class SimulationSavesListModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit SimulationSavesListModel(QVector<SimulationSave> * globalSimulationSavesVectorPointer = nullptr, QObject *parent = nullptr);
+    explicit SimulationSavesListModel(QVector<SimulationSave *> * globalSimulationSavesVectorPointer = nullptr, QObject *parent = nullptr);
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -25,10 +25,10 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
 private:
-    QVector<SimulationSave> * globalSimulationSavesVectorPointer;
+    QVector<SimulationSave *> * globalSimulationSavesVectorPointer;
 public:
-    QVector<SimulationSave> *getGlobalSimulationSavesVectorPointer() const;
-    void setGlobalSimulationSavesVectorPointer(QVector<SimulationSave> *newGlobalSimulationSavesVectorPointer);
+    QVector<SimulationSave *> *getGlobalSimulationSavesVectorPointer() const;
+    void setGlobalSimulationSavesVectorPointer(QVector<SimulationSave *> *newGlobalSimulationSavesVectorPointer);
 };
 
 #endif // SIMULATIONSAVESLISTMODEL_H

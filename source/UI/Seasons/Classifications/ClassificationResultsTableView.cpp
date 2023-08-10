@@ -27,7 +27,8 @@ ClassificationResultsTableView::~ClassificationResultsTableView()
 void ClassificationResultsTableView::fillTable()
 {
     tableModel->setClassification(classification);
-    qDebug()<<tableModel->getClassification()->getResultsReference().count();
+    //tableModel->insertRows(0, classification->getResultsReference().count());
+    ui->tableView->setModel(nullptr);
     ui->tableView->setModel(tableModel);
     ui->tableView->resizeColumnsToContents();
 }

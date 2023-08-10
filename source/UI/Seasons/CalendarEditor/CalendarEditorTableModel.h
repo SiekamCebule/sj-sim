@@ -12,7 +12,7 @@ class CalendarEditorTableModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    explicit CalendarEditorTableModel(SeasonCalendar * calendar, QVector<Hill> * hillsList, QVector<CompetitionRules> * rulesList, int dontModifiyBefore = 0, QObject *parent = nullptr);
+    explicit CalendarEditorTableModel(SeasonCalendar * calendar, QVector<Hill *> *hillsList, QVector<CompetitionRules> * rulesList, int dontModifiyBefore = 0, QObject *parent = nullptr);
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -33,14 +33,14 @@ public:
 
 private:
     SeasonCalendar * calendar;
-    QVector<Hill> * hillsList;
+    QVector<Hill *> * hillsList;
     QVector<CompetitionRules> * rulesList;
     int dontModifyBefore;
 public:
     SeasonCalendar *getCalendar() const;
     void setCalendar(SeasonCalendar *newCalendar);
-    QVector<Hill> *getHillsList() const;
-    void setHillsList(QVector<Hill> *newHillsList);
+    QVector<Hill *> *getHillsList() const;
+    void setHillsList(QVector<Hill *> *newHillsList);
     QVector<CompetitionRules> *getRulesList() const;
     void setRulesList(QVector<CompetitionRules> *newRulesList);
     int getDontModifyBefore() const;

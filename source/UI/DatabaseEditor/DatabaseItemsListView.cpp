@@ -13,6 +13,8 @@ DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, bool
 {
     ui->setupUi(this);
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    seasonJumpers = nullptr;
+    seasonHills = nullptr;
     jumpers = nullptr;
     hills = nullptr;
     competitionRules = nullptr;
@@ -63,6 +65,9 @@ void DatabaseItemsListView::setupListModel()
     case SeasonJumpersItems:
         listModel = new SeasonJumpersListModel(this->seasonJumpers);
         break;
+    case SeasonHillsItems:
+        listModel = new SeasonHillsListModel(this->seasonHills);
+        break;
     case JumperItems:
         listModel = new JumpersListModel(this->jumpers);
         break;
@@ -79,6 +84,7 @@ void DatabaseItemsListView::setupListModel()
         listModel = new PointsForPlacesPresetsListModel(this->pointsForPlacesPresets);
         break;
     }
+    listModel->setParent(this);
     ui->listView->setModel(listModel);
 }
 
@@ -93,6 +99,16 @@ void DatabaseItemsListView::selectOnlyFirstRow()
         else if(listModel->rowCount() == 2)
             ui->listView->selectionModel()->select(listModel->index(1), QItemSelectionModel::Select);
     }
+}
+
+QVector<Hill *> *DatabaseItemsListView::getSeasonHills() const
+{
+    return seasonHills;
+}
+
+void DatabaseItemsListView::setSeasonHills(QVector<Hill *> *newSeasonHills)
+{
+    seasonHills = newSeasonHills;
 }
 
 QVector<Classification *> *DatabaseItemsListView::getClassifications() const
@@ -179,6 +195,10 @@ void DatabaseItemsListView::onInsertActionTriggered()
             count = seasonJumpers->count();
             break;
         }
+        case SeasonHillsItems:{
+            count = seasonHills->count();
+            break;
+        }
         case JumperItems:{
             count = jumpers->count();
             break;
@@ -216,6 +236,13 @@ void DatabaseItemsListView::onInsertActionTriggered()
                 jumpersListModel->insertRows(rowToInsert, 1);
                 jumpersListModel->getSeasonJumpers()->insert(rowToInsert, 1, new Jumper("Name", "Surname", "XXX"));
                 emit jumpersListModel->dataChanged(jumpersListModel->index(rowToInsert), jumpersListModel->index(jumpersListModel->rowCount() - 1));
+                break;
+            }
+            case SeasonHillsItems:{
+                SeasonHillsListModel * hillsListModel = dynamic_cast<SeasonHillsListModel *>(listModel);
+                hillsListModel->insertRows(rowToInsert, 1);
+                hillsListModel->getSeasonHills()->insert(rowToInsert, 1, new Hill("Hill"));
+                emit hillsListModel->dataChanged(hillsListModel->index(rowToInsert), hillsListModel->index(hillsListModel->rowCount() - 1));
                 break;
             }
             case JumperItems:{
@@ -275,6 +302,16 @@ void DatabaseItemsListView::onRemoveActionTriggered()
                     jumpersListModel->getSeasonJumpers()->remove(rowToRemove, 1);
                 }
                 emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
+                break;
+            }
+            case SeasonHillsItems:{
+                SeasonHillsListModel * hillsListModel = dynamic_cast<SeasonHillsListModel *>(listModel);
+                while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                    int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                    hillsListModel->removeRows(rowToRemove, 1);
+                    hillsListModel->getSeasonHills()->remove(rowToRemove, 1);
+                }
+                emit hillsListModel->dataChanged(hillsListModel->index(firstRow), hillsListModel->index(hillsListModel->rowCount() - 1));
                 break;
             }
             case JumperItems:{
@@ -367,6 +404,15 @@ void DatabaseItemsListView::onUpActionTriggered()
                 emit jumpersListModel->dataChanged(jumpersListModel->index(firstRow), jumpersListModel->index(jumpersListModel->rowCount() - 1));
                 break;
             }
+            case SeasonHillsItems:{
+                SeasonHillsListModel * hillsListModel = dynamic_cast<SeasonHillsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(hillsListModel->index(index.row() - 1));
+                for(auto & index : rows)
+                    hillsListModel->getSeasonHills()->swapItemsAt(index.row(), index.row() - 1);
+                emit hillsListModel->dataChanged(hillsListModel->index(firstRow), hillsListModel->index(hillsListModel->rowCount() - 1));
+                break;
+            }
             case JumperItems:{
                 JumpersListModel * jumpersListModel = dynamic_cast<JumpersListModel *>(listModel);
                 for(auto & index : rows)
@@ -453,6 +499,15 @@ void DatabaseItemsListView::onDownActionTriggered()
                 for(auto & index : rows)
                     jumpersListModel->getSeasonJumpers()->swapItemsAt(index.row(), index.row() + 1);
                 emit jumpersListModel->dataChanged(jumpersListModel->index(lastRow), jumpersListModel->index(0));
+                break;
+            }
+            case SeasonHillsItems:{
+               SeasonHillsListModel * hillsListModel = dynamic_cast<SeasonHillsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(hillsListModel->index(index.row() + 1));
+                for(auto & index : rows)
+                    hillsListModel->getSeasonHills()->swapItemsAt(index.row(), index.row() + 1);
+                emit hillsListModel->dataChanged(hillsListModel->index(lastRow), hillsListModel->index(0));
                 break;
             }
             case JumperItems:{

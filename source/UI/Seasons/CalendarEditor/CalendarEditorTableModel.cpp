@@ -4,7 +4,7 @@
 #include <QIcon>
 #include <QPixmap>
 
-CalendarEditorTableModel::CalendarEditorTableModel(SeasonCalendar *calendar, QVector<Hill> *hillsList, QVector<CompetitionRules> *rulesList, int dontModifiyBefore, QObject *parent)
+CalendarEditorTableModel::CalendarEditorTableModel(SeasonCalendar *calendar, QVector<Hill *> *hillsList, QVector<CompetitionRules> *rulesList, int dontModifiyBefore, QObject *parent)
     : QAbstractTableModel(parent),
       calendar(calendar),
       hillsList(hillsList),
@@ -297,12 +297,12 @@ void CalendarEditorTableModel::setRulesList(QVector<CompetitionRules> *newRulesL
     rulesList = newRulesList;
 }
 
-QVector<Hill> *CalendarEditorTableModel::getHillsList() const
+QVector<Hill *> *CalendarEditorTableModel::getHillsList() const
 {
     return hillsList;
 }
 
-void CalendarEditorTableModel::setHillsList(QVector<Hill> *newHillsList)
+void CalendarEditorTableModel::setHillsList(QVector<Hill *> *newHillsList)
 {
     hillsList = newHillsList;
 }

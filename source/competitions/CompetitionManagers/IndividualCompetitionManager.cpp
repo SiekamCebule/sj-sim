@@ -100,7 +100,7 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound()
     return jumpers;
 }
 
-QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersAfterQualifications(CompetitionInfo *competition, QVector<Jumper> & jumpers)
+QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersAfterQualifications(CompetitionInfo *competition, QVector<Jumper *> & jumpers)
 {
     CompetitionResults * results = &competition->getAdvancementCompetition()->getResultsReference();
     int lastQualifiedPosition = competition->getRulesPointer()->getRoundsReference()[0].getCount();
@@ -125,9 +125,9 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersAfterQualifica
     QVector<Jumper *> toReturn;
     for(auto & jumper : jumpers)
     {
-        if(results->getResultOfIndividualJumper(&jumper) != nullptr)
-            if(results->getResultOfIndividualJumper(&jumper)->getPosition() <= lastQualifiedPosition)
-                toReturn.push_back(&jumper);
+        if(results->getResultOfIndividualJumper(jumper) != nullptr)
+            if(results->getResultOfIndividualJumper(jumper)->getPosition() <= lastQualifiedPosition)
+                toReturn.push_back(jumper);
     }
     return toReturn;
 }

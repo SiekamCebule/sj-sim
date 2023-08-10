@@ -18,7 +18,7 @@ class CompetitionInfoEditorWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit CompetitionInfoEditorWidget(CompetitionInfo * competitionInfo = nullptr, QVector<Hill> * hillsList = nullptr, QVector<CompetitionRules> * rulesList = nullptr, QWidget *parent = nullptr);
+    explicit CompetitionInfoEditorWidget(CompetitionInfo * competitionInfo = nullptr, QVector<Hill *> * hillsList = nullptr, QVector<CompetitionRules> * rulesList = nullptr, QWidget *parent = nullptr);
     ~CompetitionInfoEditorWidget();
 
     void fillInputs();
@@ -45,7 +45,7 @@ private:
     CompetitionRules trainingsRules;
 
     CompetitionInfo * competitionInfo;
-    QVector<Hill> * hillsList;
+    QVector<Hill *> * hillsList;
     Hill * defaultHill;
     QVector<CompetitionRules> * rulesList;
 
@@ -54,8 +54,8 @@ public:
     void setRulesEditor(CompetitionRulesEditorWidget *newRulesEditor);
     CompetitionInfo *getCompetitionInfo() const;
     void setCompetitionInfo(CompetitionInfo *newCompetitionInfo);
-    QVector<Hill> *getHillsList() const;
-    void setHillsList(QVector<Hill> *newHillsList);
+    QVector<Hill *> *getHillsList() const;
+    void setHillsList(QVector<Hill *> *newHillsList);
     QVector<CompetitionRules> *getRulesList() const;
     void setRulesList(QVector<CompetitionRules> *newRulesList);
     Hill *getDefaultHill() const;

@@ -33,8 +33,8 @@ private slots:
 private:
     Ui::NewSeasonConfiguratorDialog *ui;
 
-    QVector<Jumper> jumpers;
-    QVector<Hill> hills;
+    QVector<Jumper *> jumpers;
+    QVector<Hill *> hills;
     QVector<CompetitionRules> competitionsRules;
 
     DatabaseItemsListView * jumpersListView;
@@ -58,9 +58,9 @@ private:
     CalendarEditorTableModel * calendarTableModel;
 
 public:
-    QVector<Jumper> getJumpers() const;
-    QVector<Jumper>& getJumpersReference();
-    void setJumpers(const QVector<Jumper> &newJumpers);
+    QVector<Jumper *> getJumpers() const;
+    QVector<Jumper *>& getJumpersReference();
+    void setJumpers(const QVector<Jumper *> &newJumpers);
     CalendarEditorWidget *getCalendarEditor() const;
     void setCalendarEditor(CalendarEditorWidget *newCalendarEditor);
     SeasonCalendar getCalendar() const;
@@ -69,9 +69,9 @@ public:
     void setCalendarTableModel(CalendarEditorTableModel *newCalendarTableModel);
     ClassificationEditorWidget *getClassificationEditor() const;
     void setClassificationEditor(ClassificationEditorWidget *newClassificationEditor);
-    QVector<Hill> getHills() const;
-    QVector<Hill> getHillsReference();
-    void setHills(const QVector<Hill> &newHills);
+    QVector<Hill *> getHills() const;
+    QVector<Hill *> getHillsReference();
+    void setHills(const QVector<Hill *> &newHills);
     QVector<CompetitionRules> & getCompetitionsRulesReference();
     void setCompetitionsRules(const QVector<CompetitionRules> &newCompetitionsRules);
     QToolBox * getToolBox();

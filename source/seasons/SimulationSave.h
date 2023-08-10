@@ -15,7 +15,7 @@ public:
     SimulationSave();
     ~SimulationSave();
 
-    static SimulationSave getFromJson(QJsonObject obj);
+    static SimulationSave *getFromJson(QJsonObject obj);
     static QJsonObject getJsonObject(SimulationSave & save);
 
     bool saveToFile(QString dir = "");
@@ -27,8 +27,8 @@ private:
     QString name;
     QVector<Season> seasons;
     Season * actualSeason;
-    QVector<Jumper> jumpers;
-    QVector<Hill> hills;
+    QVector<Jumper *> jumpers;
+    QVector<Hill *> hills;
     QVector<CompetitionRules> competitionRules;
 
     CompetitionInfo * nextCompetition;
@@ -40,12 +40,12 @@ public:
     QVector<Season> getSeasons() const;
     QVector<Season>& getSeasonsReference();
     void setSeasons(const QVector<Season> &newSeasons);
-    QVector<Jumper> getJumpers() const;
-    QVector<Jumper> & getJumpersReference();
-    void setJumpers(const QVector<Jumper> &newJumpers);
-    QVector<Hill> & getHillsReference();
-    void setHills(const QVector<Hill> &newHills);
-    QVector<Hill> getHills() const;
+    QVector<Jumper *> getJumpers() const;
+    QVector<Jumper *> & getJumpersReference();
+    void setJumpers(const QVector<Jumper *> &newJumpers);
+    QVector<Hill *> & getHillsReference();
+    void setHills(const QVector<Hill *> &newHills);
+    QVector<Hill *> getHills() const;
     QVector<CompetitionRules> & getCompetitionRulesReference();
     void setCompetitionRules(const QVector<CompetitionRules> &newCompetitionRules);
     Season *getActualSeason() const;

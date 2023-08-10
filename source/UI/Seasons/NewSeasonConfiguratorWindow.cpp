@@ -15,9 +15,10 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     actualRulesIndex(0)
 {
     ui->setupUi(this);
-    jumpers = GlobalDatabase::get()->getEditableGlobalJumpers();
-    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, true, true ,this);
-    jumpersListView->setJumpers(&jumpers);
+    for(auto & globalJumper : GlobalDatabase::get()->getEditableGlobalJumpers())
+        jumpers.push_back(new Jumper(globalJumper));
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonJumpersItems, true, true, true ,this);
+    jumpersListView->setSeasonJumpers(&jumpers);
     jumpersListView->setupListModel();
     jumpersListView->selectOnlyFirstRow();
     ui->verticalLayout_jumpersList->addWidget(jumpersListView);
@@ -28,20 +29,21 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     ui->verticalLayout_jumperEditor->addWidget(jumperEditor);
     connect(jumpersListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex &index){
         jumperEditor->show();
-        jumperEditor->setJumper(&jumpers[index.row()]);
+        jumperEditor->setJumper(jumpers[index.row()]);
         jumperEditor->fillJumperInputs();
         actualJumperIndex = index.row();
     });
     connect(jumperEditor, &JumperEditorWidget::submitted, this, [this](){
         if(actualJumperIndex > (-1) && actualJumperIndex < jumpers.count()){
-            jumpers[actualJumperIndex] = jumperEditor->getJumperFromWidgetInput();
+            *jumpers[actualJumperIndex] = jumperEditor->getJumperFromWidgetInput();
             emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(actualJumperIndex), jumpersListView->getListModel()->index(actualJumperIndex));
         }
     });
 
-    hills = GlobalDatabase::get()->getEditableGlobalHills();
-    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::HillItems, true, true, true, this);
-    hillsListView->setHills(&hills);
+    for(auto & hill : GlobalDatabase::get()->getEditableGlobalHills())
+        hills.push_back(new Hill(hill));
+    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonHillsItems, true, true, true, this);
+    hillsListView->setSeasonHills(&hills);
     hillsListView->setupListModel();
     hillsListView->selectOnlyFirstRow();
     ui->verticalLayout_hillsList->addWidget(hillsListView);
@@ -52,7 +54,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
 
     connect(hillsListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex &index){
         hillEditor->show();
-        hillEditor->setHill(&hills[index.row()]);
+        hillEditor->setHill(hills[index.row()]);
         hillEditor->fillHillInputs();
         actualHillIndex = index.row();
     });
@@ -64,7 +66,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     });
     connect(hillEditor, &HillEditorWidget::submitted, this, [this](){
         if(actualHillIndex > (-1) && actualHillIndex < hills.count()){
-            hills[actualHillIndex] = hillEditor->getHillFromWidgetInput();
+            *hills[actualHillIndex] = hillEditor->getHillFromWidgetInput();
             emit hillsListView->getListModel()->dataChanged(hillsListView->getListModel()->index(actualHillIndex), hillsListView->getListModel()->index(actualHillIndex));
         }
     });
@@ -175,17 +177,17 @@ QToolBox *NewSeasonConfiguratorWindow::getToolBox()
     return ui->toolBox;
 }
 
-QVector<Hill> NewSeasonConfiguratorWindow::getHills() const
+QVector<Hill *> NewSeasonConfiguratorWindow::getHills() const
 {
     return hills;
 }
 
-QVector<Hill> NewSeasonConfiguratorWindow::getHillsReference()
+QVector<Hill *> NewSeasonConfiguratorWindow::getHillsReference()
 {
     return hills;
 }
 
-void NewSeasonConfiguratorWindow::setHills(const QVector<Hill> &newHills)
+void NewSeasonConfiguratorWindow::setHills(const QVector<Hill *> &newHills)
 {
     hills = newHills;
 }
@@ -230,17 +232,17 @@ void NewSeasonConfiguratorWindow::setCalendarEditor(CalendarEditorWidget *newCal
     calendarEditor = newCalendarEditor;
 }
 
-QVector<Jumper> NewSeasonConfiguratorWindow::getJumpers() const
+QVector<Jumper *> NewSeasonConfiguratorWindow::getJumpers() const
 {
     return jumpers;
 }
 
-QVector<Jumper> &NewSeasonConfiguratorWindow::getJumpersReference()
+QVector<Jumper *> &NewSeasonConfiguratorWindow::getJumpersReference()
 {
     return jumpers;
 }
 
-void NewSeasonConfiguratorWindow::setJumpers(const QVector<Jumper> &newJumpers)
+void NewSeasonConfiguratorWindow::setJumpers(const QVector<Jumper *> &newJumpers)
 {
     jumpers = newJumpers;
 }

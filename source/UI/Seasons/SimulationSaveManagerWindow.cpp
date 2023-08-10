@@ -34,9 +34,9 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
 
     //-----//
 
-    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, false, false, this);
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonJumpersItems, true, false, true, this);
     jumpersListView->setInsertLast(true);
-    jumpersListView->setJumpers(&simulationSave->getJumpersReference());
+    jumpersListView->setSeasonJumpers(&simulationSave->getJumpersReference());
     jumpersListView->setupListModel();
     ui->verticalLayout_jumpersList->addWidget(jumpersListView);
 
@@ -45,20 +45,20 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     ui->verticalLayout_jumperEditor->addWidget(jumperEditor);
     connect(jumpersListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex & index){
         jumperEditor->show();
-        jumperEditor->setJumper(&simulationSave->getJumpersReference()[index.row()]);
+        jumperEditor->setJumper(simulationSave->getJumpersReference()[index.row()]);
         jumperEditor->fillJumperInputs();
     });
     connect(jumperEditor, &JumperEditorWidget::submitted, this, [this](){
         int idx = jumpersListView->getLastDoubleClickedIndex();
-        simulationSave->getJumpersReference()[idx] = jumperEditor->getJumperFromWidgetInput();
+        *simulationSave->getJumpersReference()[idx] = jumperEditor->getJumperFromWidgetInput();
         emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(idx), jumpersListView->getListModel()->index(idx));
     });
 
     //-----//
 
-    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::HillItems, true, false, false, this);
+    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonHillsItems, true, false, true, this);
     hillsListView->setInsertLast(true);
-    hillsListView->setHills(&simulationSave->getHillsReference());
+    hillsListView->setSeasonHills(&simulationSave->getHillsReference());
     hillsListView->setupListModel();
     ui->verticalLayout_hillsList->addWidget(hillsListView);
 
@@ -67,12 +67,12 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     ui->verticalLayout_hillEditor->addWidget(hillEditor);
     connect(hillsListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex & index){
         hillEditor->show();
-        hillEditor->setHill(&simulationSave->getHillsReference()[index.row()]);
+        hillEditor->setHill(simulationSave->getHillsReference()[index.row()]);
         hillEditor->fillHillInputs();
     });
     connect(hillEditor, &HillEditorWidget::submitted, this, [this](){
         int idx = hillsListView->getLastDoubleClickedIndex();
-        simulationSave->getHillsReference()[idx] = hillEditor->getHillFromWidgetInput();
+        *simulationSave->getHillsReference()[idx] = hillEditor->getHillFromWidgetInput();
         emit hillsListView->getListModel()->dataChanged(hillsListView->getListModel()->index(idx), hillsListView->getListModel()->index(idx));
     });
     connect(hillsListView, &DatabaseItemsListView::insert, this, [this](){
@@ -168,6 +168,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     connect(calendarEditor, &CalendarEditorWidget::changed, this, [this](){
         simulationSave->updateNextCompetitionIndex();
         fillNextCompetitionInformations();
+        simulationSave->getActualSeason()->getCalendarReference().updateCompetitionsQualifyingCompetitions();
     });
 
     classificationResultsTableView = new ClassificationResultsTableView(false, nullptr, this);

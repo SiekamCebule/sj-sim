@@ -23,6 +23,8 @@ GlobalDatabase::GlobalDatabase()
 
 GlobalDatabase::~GlobalDatabase()
 {
+    for(auto & save : globalSimulationSaves)
+        delete save;
     delete m_globalDatabase;
 }
 
@@ -41,17 +43,17 @@ void GlobalDatabase::setGlobalPointsForPlacesPresets(const QVector<PointsForPlac
     globalPointsForPlacesPresets = newGlobalPointsForPlacesPresets;
 }
 
-QVector<SimulationSave> GlobalDatabase::getGlobalSimulationSaves() const
+QVector<SimulationSave *> GlobalDatabase::getGlobalSimulationSaves() const
 {
     return globalSimulationSaves;
 }
 
-QVector<SimulationSave> &GlobalDatabase::getEditableGlobalSimulationSaves()
+QVector<SimulationSave *> &GlobalDatabase::getEditableGlobalSimulationSaves()
 {
     return globalSimulationSaves;
 }
 
-void GlobalDatabase::setGlobalSimulationSaves(const QVector<SimulationSave> &newGlobalSimulationSaves)
+void GlobalDatabase::setGlobalSimulationSaves(const QVector<SimulationSave *> &newGlobalSimulationSaves)
 {
     globalSimulationSaves = newGlobalSimulationSaves;
 }
@@ -192,8 +194,9 @@ bool GlobalDatabase::loadSimulationSaves()
             message.exec();
             ok = false;
         }
-        SimulationSave s;
-        s.loadFromFile(fileName, "simulationSaves/");
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        QJsonObject object = doc.object().value("simulation-save").toObject();
+        SimulationSave * s = SimulationSave::getFromJson(object);
         globalSimulationSaves.push_back(s);
         file.close();
     }
@@ -300,7 +303,7 @@ bool GlobalDatabase::writeSimulationSaves()
     bool ok = true;
     for(auto & save : globalSimulationSaves)
     {
-        if(save.saveToFile("simulationSaves/") == false)
+        if(save->saveToFile("simulationSaves/") == false)
             ok = false;
     }
     return ok;

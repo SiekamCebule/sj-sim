@@ -20,7 +20,7 @@ private:
     QVector<Jumper> globalJumpers;
     QVector<Hill> globalHills;
     QVector<CompetitionRules> globalCompetitionsRules;
-    QVector<SimulationSave> globalSimulationSaves;
+    QVector<SimulationSave *> globalSimulationSaves;
     QVector<PointsForPlacesPreset> globalPointsForPlacesPresets;
 
 public:
@@ -56,9 +56,9 @@ public:
     QVector<CompetitionRules> getGlobalCompetitionsRules() const;
     void setGlobalCompetitionsRules(const QVector<CompetitionRules> &newGlobalCompetitionsRules);
     QVector<CompetitionRules> & getEditableCompetitionRules();
-    QVector<SimulationSave> getGlobalSimulationSaves() const;
-    QVector<SimulationSave> & getEditableGlobalSimulationSaves();
-    void setGlobalSimulationSaves(const QVector<SimulationSave> &newGlobalSimulationSaves);
+    QVector<SimulationSave *> getGlobalSimulationSaves() const;
+    QVector<SimulationSave *> & getEditableGlobalSimulationSaves();
+    void setGlobalSimulationSaves(const QVector<SimulationSave *> &newGlobalSimulationSaves);
     QVector<PointsForPlacesPreset> getGlobalPointsForPlacesPresets() const;
     QVector<PointsForPlacesPreset> & getEditableGlobalPointsForPlacesPresets();
     void setGlobalPointsForPlacesPresets(const QVector<PointsForPlacesPreset> &newGlobalPointsForPlacesPresets);

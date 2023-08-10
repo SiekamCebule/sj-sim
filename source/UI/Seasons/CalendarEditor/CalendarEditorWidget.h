@@ -33,7 +33,7 @@ private:
     QAction * action_up;
     QAction * action_down;
     QAction * action_edit;
-    Hill defaultHill;
+    Hill * defaultHill;
 
     QVector<Classification *> * classificationsList;
 

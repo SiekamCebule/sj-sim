@@ -31,6 +31,8 @@ QVariant SeasonJumpersListModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
+    seasonJumpers->at(index.row())-> getCountryCode();
+
     if(role == Qt::DisplayRole){
         return seasonJumpers->at(index.row())->getNameAndSurname();
     }

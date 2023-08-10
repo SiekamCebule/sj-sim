@@ -27,7 +27,7 @@ SimulationSavesWindow::SimulationSavesWindow(QWidget *parent) :
 
     connect(ui->listView_simulationSaves, &QListView::doubleClicked, this, [this](const QModelIndex & index){
         saveInfoWidget->show();
-        saveInfoWidget->setSimulationSave(&GlobalDatabase::get()->getEditableGlobalSimulationSaves()[index.row()]);
+        saveInfoWidget->setSimulationSave(GlobalDatabase::get()->getEditableGlobalSimulationSaves()[index.row()]);
         saveInfoWidget->fillInputs();
     });
 }
@@ -45,7 +45,7 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
 {
     QStringList otherNames;
     for(auto & save : GlobalDatabase::get()->getEditableGlobalSimulationSaves()){
-        otherNames.push_back(save.getName());
+        otherNames.push_back(save->getName());
     }
     NewSimulationSaveConfigurationWindow * simulationSaveWindow = new NewSimulationSaveConfigurationWindow(otherNames, this);
     if(simulationSaveWindow->exec() == QDialog::Accepted){
@@ -58,26 +58,21 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
             }
         });
         if(seasonWindow->exec() == QDialog::Accepted){
-            SimulationSave simulationSave;
-            simulationSave.setName(simulationSaveWindow->getNameFromInput());
-            simulationSave.setJumpers(seasonWindow->getJumpersReference());
-            simulationSave.setHills(seasonWindow->getHillsReference());
-            simulationSave.setCompetitionRules(seasonWindow->getCompetitionsRulesReference());
+            SimulationSave * simulationSave = new SimulationSave();
+            simulationSave->setName(simulationSaveWindow->getNameFromInput());
+            simulationSave->setJumpers(seasonWindow->getJumpersReference());
+            simulationSave->setHills(seasonWindow->getHillsReference());
+            simulationSave->setCompetitionRules(seasonWindow->getCompetitionsRulesReference());
 
             Season season;
             season.setSeasonNumber(simulationSaveWindow->getSeasonNumberFromInput());
             season.setCalendar(seasonWindow->getCalendar());
             season.getCalendarReference().updateCompetitionsQualifyingCompetitions();
 
-            simulationSave.getSeasonsReference().push_back(season);
-            simulationSave.setActualSeason(&simulationSave.getSeasonsReference().first());
+            simulationSave->getSeasonsReference().push_back(season);
+            simulationSave->setActualSeason(&simulationSave->getSeasonsReference().first());
 
-            /*season.getCalendarReference().getCompetitionsReference()[0]->setPlayed(true);
-            season.getCalendarReference().getCompetitionsReference()[1]->setPlayed(true);
-            season.getCalendarReference().getCompetitionsReference()[2]->setPlayed(true);
-            season.getCalendarReference().getCompetitionsReference()[3]->setPlayed(true);
-            season.getCalendarReference().getCompetitionsReference()[4]->setPlayed(true);*/
-            simulationSave.updateNextCompetitionIndex();
+            simulationSave->updateNextCompetitionIndex();
 
             int index = 0;
             if(ui->listView_simulationSaves->selectionModel()->selectedRows().size() > 0)
@@ -87,7 +82,7 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
 
             emit listModel->dataChanged(listModel->index(index), listModel->index(listModel->rowCount() - 1));
 
-            simulationSave.saveToFile("simulationSaves/");
+            simulationSave->saveToFile("simulationSaves/");
         }
     }
 }
@@ -96,7 +91,7 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
 void SimulationSavesWindow::on_pushButton_OK_clicked()
 {
     if(ui->listView_simulationSaves->selectionModel()->selectedRows().count() > 0){
-        SimulationSaveManagerWindow * manager = new SimulationSaveManagerWindow(&GlobalDatabase::get()->getEditableGlobalSimulationSaves()[ui->listView_simulationSaves->selectionModel()->selectedRows().first().row()], this);
+        SimulationSaveManagerWindow * manager = new SimulationSaveManagerWindow(GlobalDatabase::get()->getEditableGlobalSimulationSaves()[ui->listView_simulationSaves->selectionModel()->selectedRows().first().row()], this);
         manager->fillNextCompetitionInformations();
         if(manager->exec() == QDialog::Accepted)
         {
@@ -114,7 +109,7 @@ void SimulationSavesWindow::on_pushButton_remove_clicked()
         if(button == QMessageBox::Yes)
         {
             int row = ui->listView_simulationSaves->selectionModel()->selectedRows().first().row();
-            QFile file("simulationSaves/" + GlobalDatabase::get()->getEditableGlobalSimulationSaves()[row].getName() + ".json");
+            QFile file("simulationSaves/" + GlobalDatabase::get()->getEditableGlobalSimulationSaves()[row]->getName() + ".json");
             file.remove();
             GlobalDatabase::get()->getEditableGlobalSimulationSaves().remove(row);
             listModel->removeRow(row);

@@ -13,7 +13,7 @@ public:
     ~SeasonCalendar();
 
     void fixCompetitionsClassifications();
-    void fixCompetitionsHills(QVector<Hill> * hillsList);
+    void fixCompetitionsHills(QVector<Hill *> *hillsList);
     void fixAdvancementCompetitions();
     void fixAdvancementClassifications();
     void updateCompetitionsQualifyingCompetitions();

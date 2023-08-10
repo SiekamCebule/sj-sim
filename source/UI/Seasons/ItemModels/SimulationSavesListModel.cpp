@@ -2,7 +2,7 @@
 #include <QFont>
 #include <QColor>
 
-SimulationSavesListModel::SimulationSavesListModel(QVector<SimulationSave> * globalSimulationSavesVectorPointer, QObject *parent)
+SimulationSavesListModel::SimulationSavesListModel(QVector<SimulationSave *> * globalSimulationSavesVectorPointer, QObject *parent)
     : QAbstractListModel(parent),
       globalSimulationSavesVectorPointer(globalSimulationSavesVectorPointer)
 {
@@ -26,7 +26,7 @@ QVariant SimulationSavesListModel::data(const QModelIndex &index, int role) cons
         return QVariant();
 
     if(role == Qt::DisplayRole)
-        return globalSimulationSavesVectorPointer->at(index.row()).getName();
+        return globalSimulationSavesVectorPointer->at(index.row())->getName();
     else if(role == Qt::DecorationRole)
         return QString::number(index.row());
     else if(role == Qt::FontRole){
@@ -79,12 +79,12 @@ bool SimulationSavesListModel::removeRows(int row, int count, const QModelIndex 
     return true;
 }
 
-QVector<SimulationSave> *SimulationSavesListModel::getGlobalSimulationSavesVectorPointer() const
+QVector<SimulationSave *> *SimulationSavesListModel::getGlobalSimulationSavesVectorPointer() const
 {
     return globalSimulationSavesVectorPointer;
 }
 
-void SimulationSavesListModel::setGlobalSimulationSavesVectorPointer(QVector<SimulationSave> *newGlobalSimulationSavesVectorPointer)
+void SimulationSavesListModel::setGlobalSimulationSavesVectorPointer(QVector<SimulationSave *> *newGlobalSimulationSavesVectorPointer)
 {
     globalSimulationSavesVectorPointer = newGlobalSimulationSavesVectorPointer;
 }

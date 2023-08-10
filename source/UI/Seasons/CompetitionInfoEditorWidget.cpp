@@ -3,7 +3,7 @@
 #include <QDialog>
 #include "../../utilities/functions.h"
 
-CompetitionInfoEditorWidget::CompetitionInfoEditorWidget(CompetitionInfo * competitionInfo, QVector<Hill> *hillsList, QVector<CompetitionRules> *rulesList, QWidget *parent) :
+CompetitionInfoEditorWidget::CompetitionInfoEditorWidget(CompetitionInfo * competitionInfo, QVector<Hill *> *hillsList, QVector<CompetitionRules> *rulesList, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CompetitionInfoEditorWidget),
     competitionInfo(competitionInfo),
@@ -61,7 +61,7 @@ void CompetitionInfoEditorWidget::fillInputs()
     int i=0;
     ui->comboBox_hill->setCurrentIndex(0);
     for(auto & h : *hillsList){
-        if(competitionInfo->getHill() == &h){
+        if(competitionInfo->getHill() == h){
             ui->comboBox_hill->setCurrentIndex(i+1);
             break;
         }
@@ -90,7 +90,7 @@ CompetitionInfo CompetitionInfoEditorWidget::getCompetitionInfoFromInputs()
 {
     CompetitionInfo competition;
     if(ui->comboBox_hill->currentIndex() > 0)
-        competition.setHill(const_cast<Hill*>(&hillsList->at(ui->comboBox_hill->currentIndex() - 1)));
+        competition.setHill(const_cast<Hill*>(hillsList->at(ui->comboBox_hill->currentIndex() - 1)));
     else
         competition.setHill(defaultHill);
     competition.setSerieType(ui->comboBox_seriesType->currentIndex());
@@ -105,7 +105,7 @@ void CompetitionInfoEditorWidget::setupHillsComboBox()
     ui->comboBox_hill->clear();
     ui->comboBox_hill->addItem(tr("BRAK"));
     for(const auto & hill : *hillsList){
-        ui->comboBox_hill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())))) ,hill.getName() + " HS" + QString::number(hill.getHSPoint()));
+        ui->comboBox_hill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())))), hill->getName() + " HS" + QString::number(hill->getHSPoint()));
     }
 }
 
@@ -173,12 +173,12 @@ void CompetitionInfoEditorWidget::setRulesList(QVector<CompetitionRules> *newRul
     rulesList = newRulesList;
 }
 
-QVector<Hill> *CompetitionInfoEditorWidget::getHillsList() const
+QVector<Hill *> *CompetitionInfoEditorWidget::getHillsList() const
 {
     return hillsList;
 }
 
-void CompetitionInfoEditorWidget::setHillsList(QVector<Hill> *newHillsList)
+void CompetitionInfoEditorWidget::setHillsList(QVector<Hill *> *newHillsList)
 {
     hillsList = newHillsList;
 }

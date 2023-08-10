@@ -12,48 +12,58 @@ SimulationSave::SimulationSave() :
 
 SimulationSave::~SimulationSave()
 {
-
+    for(auto & hill : hills)
+        delete hill;
+    for(auto & jumper : jumpers)
+        delete jumper;
+    for(auto & season : seasons)
+    {
+        for(auto & competition : season.getCalendarReference().getCompetitionsReference())
+            delete competition;
+        for(auto & classification : season.getCalendarReference().getClassificationsReference())
+            delete classification;
+    }
 }
 
-SimulationSave SimulationSave::getFromJson(QJsonObject obj)
+SimulationSave * SimulationSave::getFromJson(QJsonObject obj)
 {
     SeasonDatabaseObjectsManager * sdom = &seasonObjectsManager;
-    SimulationSave save;
-    save.setID(obj.value("id").toString().toULong());
-    save.setName(obj.value("name").toString());
+    SimulationSave * save = new SimulationSave();
+    save->setID(obj.value("id").toString().toULong());
+    save->setName(obj.value("name").toString());
 
     QJsonArray jumpersArray = obj.value("jumpers").toArray();
     for(auto val : jumpersArray){
         //qDebug()<<val;
-        Jumper jumper = Jumper::getFromJson(val.toObject());
-        save.getJumpersReference().push_back(jumper);
+        Jumper * jumper = new Jumper(Jumper::getFromJson(val.toObject()));
+        save->getJumpersReference().push_back(jumper);
     }
-    seasonObjectsManager.fill(&save.getJumpersReference());
+    seasonObjectsManager.fill(&save->getJumpersReference());
 
     QJsonArray hillsArray = obj.value("hills").toArray();
     for(auto val : hillsArray){
-        Hill hill = Hill::getFromJson(val.toObject());
-        save.getHillsReference().push_back(hill);
+        Hill * hill = new Hill(Hill::getFromJson(val.toObject()));
+        save->getHillsReference().push_back(hill);
     }
-    seasonObjectsManager.fill(&save.getHillsReference());
+    seasonObjectsManager.fill(&save->getHillsReference());
 
     QJsonArray rulesArray = obj.value("rules").toArray();
     for(auto val : rulesArray){
         CompetitionRules rules = CompetitionRules::getFromJson(val.toObject());
-        save.getCompetitionRulesReference().push_back(rules);
+        save->getCompetitionRulesReference().push_back(rules);
     }
-    seasonObjectsManager.fill(&save.getCompetitionRulesReference());
+    seasonObjectsManager.fill(&save->getCompetitionRulesReference());
 
     QJsonArray seasonsArray = obj.value("seasons").toArray();
     for(auto val : seasonsArray){
         Season season = Season::getFromJson(val.toObject());
-        save.getSeasonsReference().push_back(season);
+        save->getSeasonsReference().push_back(season);
     }
-    seasonObjectsManager.fill(&save.getSeasonsReference());
+    seasonObjectsManager.fill(&save->getSeasonsReference());
 
-    save.setActualSeason(static_cast<Season *>(seasonObjectsManager.getObjectByID(obj.value("actual-season-id").toString().toULong())));
-    save.setNextCompetitionIndex(obj.value("next-competition-index").toInt());
-    save.setNextCompetition(save.getActualSeason()->getCalendarReference().getCompetitionsReference()[save.getNextCompetitionIndex()]);
+    save->setActualSeason(static_cast<Season *>(seasonObjectsManager.getObjectByID(obj.value("actual-season-id").toString().toULong())));
+    save->setNextCompetitionIndex(obj.value("next-competition-index").toInt());
+    save->setNextCompetition(save->getActualSeason()->getCalendarReference().getCompetitionsReference()[save->getNextCompetitionIndex()]);
 
     return save;
 }
@@ -66,13 +76,13 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
 
     QJsonArray jumpersArray;
     for(auto & jumper : save.getJumpersReference()){
-        jumpersArray.push_back(Jumper::getJsonObject(jumper));
+        jumpersArray.push_back(Jumper::getJsonObject(*jumper));
     }
     object.insert("jumpers", jumpersArray);
 
     QJsonArray hillsArray;
     for(auto & hill : save.getHillsReference()){
-        hillsArray.push_back(Hill::getJsonObject(hill));
+        hillsArray.push_back(Hill::getJsonObject(*hill));
     }
     object.insert("hills", hillsArray);
 
@@ -111,22 +121,6 @@ bool SimulationSave::saveToFile(QString dir)
     }
     file.resize(0);
     file.write(document.toJson(QJsonDocument::Indented));
-    file.close();
-    return true;
-}
-
-bool SimulationSave::loadFromFile(QString fileName, QString dir)
-{
-    QFile file(dir + fileName);
-    if(!file.open(QFile::ReadOnly | QFile::Text)){
-        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zapisem symulacji " + fileName, "Nie udało się otworzyć pliku " + dir + fileName + ".json" + "\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
-        message.setModal(true);
-        message.exec();
-        return false;
-    }
-    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
-    QJsonObject object = doc.object().value("simulation-save").toObject();
-    *this = SimulationSave::getFromJson(object);
     file.close();
     return true;
 }
@@ -178,7 +172,7 @@ void SimulationSave::setCompetitionRules(const QVector<CompetitionRules> &newCom
     competitionRules = newCompetitionRules;
 }
 
-QVector<Hill> SimulationSave::getHills() const
+QVector<Hill *> SimulationSave::getHills() const
 {
     return hills;
 }
@@ -188,27 +182,27 @@ QVector<CompetitionRules> &SimulationSave::getCompetitionRulesReference()
     return competitionRules;
 }
 
-void SimulationSave::setHills(const QVector<Hill> &newHills)
+void SimulationSave::setHills(const QVector<Hill *> &newHills)
 {
     hills = newHills;
 }
 
-QVector<Jumper> SimulationSave::getJumpers() const
+QVector<Jumper *> SimulationSave::getJumpers() const
 {
     return jumpers;
 }
 
-QVector<Jumper> &SimulationSave::getJumpersReference()
+QVector<Jumper *> &SimulationSave::getJumpersReference()
 {
     return jumpers;
 }
 
-void SimulationSave::setJumpers(const QVector<Jumper> &newJumpers)
+void SimulationSave::setJumpers(const QVector<Jumper *> &newJumpers)
 {
     jumpers = newJumpers;
 }
 
-QVector<Hill> &SimulationSave::getHillsReference()
+QVector<Hill *> &SimulationSave::getHillsReference()
 {
     return hills;
 }

@@ -50,7 +50,7 @@ CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVec
     this->addAction(action_edit);
     connect(action_edit, &QAction::triggered, this, &CalendarEditorWidget::editActionTriggered);
 
-    defaultHill.setName("Hill");
+    defaultHill = new Hill("Hill");
 
     competitionInfoEditor = new CompetitionInfoEditorWidget();
     competitionInfoEditor->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
@@ -59,7 +59,7 @@ CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVec
     competitionInfoEditor->setupHillsComboBox();
     competitionInfoEditor->setRulesList(model->getRulesList());
     competitionInfoEditor->setupRulesComboBox();
-    competitionInfoEditor->setDefaultHill(&defaultHill);
+    competitionInfoEditor->setDefaultHill(defaultHill);
     ui->verticalLayout_competitionInfo->addWidget(competitionInfoEditor);
     competitionInfoEditor->hide();
     connect(competitionInfoEditor, &CompetitionInfoEditorWidget::submitted, this, [this](){
@@ -215,7 +215,7 @@ void CalendarEditorWidget::addActionTriggered()
     }
     if(insertIndexInCalendar >= calendarModel->getDontModifyBefore()){
         calendarModel->insertRow(insertIndex);
-        calendar->getCompetitionsReference().insert(insertIndexInCalendar, new CompetitionInfo(&defaultHill));
+        calendar->getCompetitionsReference().insert(insertIndexInCalendar, new CompetitionInfo(defaultHill));
 
         ui->tableView->clearSelection();
         ui->tableView->selectionModel()->select(calendarModel->index(insertIndex + 1, 0), QItemSelectionModel::Select);
@@ -1016,7 +1016,7 @@ void CalendarEditorWidget::execMultipleHillEditDialog(QVector<int> *rows, int co
     label->setFont(font);
     QComboBox * comboBox = new QComboBox(dialog);
     for(auto & hill : *calendarModel->getHillsList()){
-        comboBox->addItem(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())), hill.getName() + " HS" + QString::number(hill.getHSPoint()));
+        comboBox->addItem(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())), hill->getName() + " HS" + QString::number(hill->getHSPoint()));
     }
     layout->addWidget(label);
     layout->addWidget(comboBox);
@@ -1036,7 +1036,7 @@ void CalendarEditorWidget::execMultipleHillEditDialog(QVector<int> *rows, int co
     dialog->layout()->addWidget(w);
 
     if(dialog->exec() == QDialog::Accepted){
-        Hill * hill = const_cast<Hill*>(&calendarModel->getHillsList()->at(comboBox->currentIndex()));
+        Hill * hill = const_cast<Hill*>(calendarModel->getHillsList()->at(comboBox->currentIndex()));
         for(auto & row : qAsConst(*rows)){
             CompetitionInfo * competition = nullptr;
             int competitionIndex = 0;

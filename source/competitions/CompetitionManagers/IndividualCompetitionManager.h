@@ -21,7 +21,7 @@ public:
     void updateCompetitorsAdvanceStatuses();
 
     QVector<Jumper *> getFilteredJumpersForNextRound();
-    static QVector<Jumper *> getFilteredJumpersAfterQualifications(CompetitionInfo *competition, QVector<Jumper> &jumpers);
+    static QVector<Jumper *> getFilteredJumpersAfterQualifications(CompetitionInfo *competition, QVector<Jumper *> &jumpers);
     static void setStartListOrderByClassification(QVector<Jumper *> &jumpers, Classification * classification);
     static void setStartListOrderByCompetitionResults(QVector<Jumper *> &jumpers, CompetitionInfo * competition);
 

@@ -80,7 +80,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
         else{
             for(auto & jp : simulationSave->getJumpersReference())
             {
-                seasonCompetitionJumpers.push_back(&jp);
+                seasonCompetitionJumpers.push_back(jp);
             }
         }
         jumpersListView->setSeasonJumpers(&seasonCompetitionJumpers);

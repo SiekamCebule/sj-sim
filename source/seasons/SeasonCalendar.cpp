@@ -29,16 +29,16 @@ void SeasonCalendar::fixCompetitionsClassifications()
     }
 }
 
-void SeasonCalendar::fixCompetitionsHills(QVector<Hill> *hillsList)
+void SeasonCalendar::fixCompetitionsHills(QVector<Hill *> *hillsList)
 {
     for(auto & comp : competitions){
         ulong hillID = comp->getHill()->getID();
         bool contains = false;
         Hill * hillWhichContains = nullptr;
         for(auto & hill : qAsConst(*hillsList)){
-            if(hill.getID() == hillID){
+            if(hill->getID() == hillID){
                 contains = true;
-                hillWhichContains = const_cast<Hill*>(&hill);
+                hillWhichContains = hill;
                 break;
             }
         }

@@ -23,6 +23,7 @@ SOURCES += \
     source/UI/DatabaseEditor/ListModels/HillsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/JumpersListModel.cpp \
     source/UI/DatabaseEditor/ListModels/PointsForPlacesPresetsListModel.cpp \
+    source/UI/DatabaseEditor/ListModels/SeasonHillsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/SeasonJumpersListModel.cpp \
     source/UI/EditorWidgets/ClassificationEditorWidget.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
@@ -122,6 +123,7 @@ HEADERS += \
     source/UI/DatabaseEditor/ListModels/HillsListModel.h \
     source/UI/DatabaseEditor/ListModels/JumpersListModel.h \
     source/UI/DatabaseEditor/ListModels/PointsForPlacesPresetsListModel.h \
+    source/UI/DatabaseEditor/ListModels/SeasonHillsListModel.h \
     source/UI/DatabaseEditor/ListModels/SeasonJumpersListModel.h \
     source/UI/EditorWidgets/ClassificationEditorWidget.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
