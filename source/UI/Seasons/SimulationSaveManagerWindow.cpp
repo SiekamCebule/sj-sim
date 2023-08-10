@@ -427,3 +427,10 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
         }
     }
 }
+
+void SimulationSaveManagerWindow::on_pushButton_saveToFile_clicked()
+{
+    simulationSave->saveToFile("simulationSaves/");
+    QMessageBox::information(this, tr("Zapis do pliku"), tr("Pomyślnie zapisano aktualny zapis symulacji do pliku"), QMessageBox::Ok);
+}
+

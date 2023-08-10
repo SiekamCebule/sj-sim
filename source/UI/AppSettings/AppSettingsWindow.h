@@ -36,6 +36,8 @@ private slots:
 
     void on_pushButton_repairDatabase_clicked();
 
+    void on_pushButton_cutSurnames_clicked();
+
 private:
     Ui::AppSettingsWindow *ui;
 

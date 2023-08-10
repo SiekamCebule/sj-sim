@@ -52,8 +52,8 @@ void SingleJumpsManager::simulate()
     dialog.setStyleSheet("QProgressDialog{background-color: white; color: black;}");
     dialog.setMinimum(0);
     dialog.setMaximum(jumpsCount);
-    dialog.setWindowTitle("Symulacja pojedynczych skoków");
-    dialog.setLabelText(QString("Przesymulowano %1 z %2 skoków").arg(QString::number(dialog.value()).arg(QString::number(dialog.maximum()))));
+    dialog.setWindowTitle(QObject::tr("Symulacja pojedynczych skoków"));
+        dialog.setLabelText(QString(QObject::tr("Przesymulowano %1 z %2 skoków")).arg(QString::number(dialog.value()).arg(QString::number(dialog.maximum()))));
     dialog.setModal(true);
     dialog.setWindowModality(Qt::WindowModal);
 
@@ -69,7 +69,7 @@ void SingleJumpsManager::simulate()
         jumps.push_back(jumpSimulator.getJumpData());
 
         dialog.setValue(i+1);
-        dialog.setLabelText(QString("Przesymulowano %1 z %2 skoków").arg(QString::number(dialog.value()), QString::number(dialog.maximum())));
+        dialog.setLabelText(QString(QObject::tr("Przesymulowano %1 z %2 skoków")).arg(QString::number(dialog.value()), QString::number(dialog.maximum())));
     }
 
     delete jumpSimulator.getManipulator();

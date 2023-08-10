@@ -324,6 +324,11 @@ color: rgb(13, 13, 13);</string>
        <height>40</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
      <property name="whatsThis">
       <string>Od nowa przypisuje ID dla każdego obiektu w globalnej bazie danych.
 Użyteczne kiedy chcemy przenieść bazę danych z wczesnych wersji.</string>
@@ -336,6 +341,36 @@ Użyteczne kiedy chcemy przenieść bazę danych z wczesnych wersji.</string>
      </property>
      <property name="text">
       <string>Napraw bazę danych</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_cutSurnames">
+     <property name="minimumSize">
+      <size>
+       <width>180</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>180</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+	background-color: rgb(188, 255, 222);
+	color: rgb(0, 0, 0);
+}</string>
+     </property>
+     <property name="text">
+      <string>Skróć nazwiska zawodników</string>
      </property>
     </widget>
    </item>

@@ -98,7 +98,7 @@ void AppSettingsWindow::on_pushButton_repairDatabase_clicked()
     globalIDGenerator.reset();
 
     QProgressBar progressBar;
-    progressBar.setWindowTitle("Naprawa bazy danych");
+    progressBar.setWindowTitle(tr("Naprawa bazy danych"));
     progressBar.setMaximum(5);
     progressBar.show();
 
@@ -118,6 +118,24 @@ void AppSettingsWindow::on_pushButton_repairDatabase_clicked()
     db->writeToJson();
     progressBar.setValue(5);
 
-    QMessageBox::information(this, "Naprawa bazy danych", "Naprawiono bazę danych", QMessageBox::Ok);
+    QMessageBox::information(this, tr("Naprawa bazy danych"), tr("Naprawiono bazę danych"), QMessageBox::Ok);
+}
+
+
+void AppSettingsWindow::on_pushButton_cutSurnames_clicked()
+{
+    GlobalDatabase * db = GlobalDatabase::get();
+    for(auto & jumper : db->getEditableGlobalJumpers())
+    {
+        QStringList words = jumper.getSurname().split(' ');
+        jumper.setSurname("");
+        if(words.count() > 0)
+            for(auto & word : words){
+                jumper.setSurname(jumper.getSurname() + word[0] + " ");
+            jumper.setSurname(jumper.getSurname().trimmed());
+        }
+    }
+    db->writeJumpers();
+    QMessageBox::information(this, tr("Nazwiska zawodników"), tr("Pomyślnie skrócono nazwiska zawodników"), QMessageBox::Ok);
 }
 
