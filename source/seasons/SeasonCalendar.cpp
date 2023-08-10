@@ -20,9 +20,9 @@ SeasonCalendar::~SeasonCalendar()
 void SeasonCalendar::fixCompetitionsClassifications()
 {
     for(auto & comp : competitions){
+        int type = comp->getRulesPointer()->getCompetitionType();
         for(auto & classification : comp->getClassificationsReference()){
-            if(MyFunctions::vectorContainsByID(classifications, classification) == false){
-                //Trzeba usunąć classification z classificationsList ponieważ wcześniej classification zostało usunięte
+            if(MyFunctions::vectorContainsByID(classifications, classification) == false || type != classification->getClassificationType() && classification->getPunctationType() == Classification::PointsForPlaces){
                 MyFunctions::removeFromVectorByID(comp->getClassificationsReference(), classification->getID());
             }
         }
@@ -57,7 +57,8 @@ void SeasonCalendar::fixAdvancementCompetitions()
     {
         if(comp->getAdvancementCompetition() != nullptr)
         {
-            if(MyFunctions::vectorContains(competitions, comp->getAdvancementCompetition()) == false)
+            if(MyFunctions::vectorContains(competitions, comp->getAdvancementCompetition()) == false
+                || comp->getAdvancementCompetition()->getRulesPointer()->getCompetitionType() != comp->getRulesPointer()->getCompetitionType())
             {
                 comp->setAdvancementCompetition(nullptr);
             }
@@ -71,7 +72,8 @@ void SeasonCalendar::fixAdvancementClassifications()
     {
         if(comp->getAdvancementClassification() != nullptr)
         {
-            if(MyFunctions::vectorContains(classifications, comp->getAdvancementClassification()) == false)
+            if(MyFunctions::vectorContains(classifications, comp->getAdvancementClassification()) == false
+                || comp->getAdvancementClassification()->getClassificationType() != comp->getRulesPointer()->getCompetitionType())
             {
                 comp->setAdvancementClassification(nullptr);
             }
@@ -143,6 +145,32 @@ QJsonObject SeasonCalendar::getJsonObject(SeasonCalendar &calendar)
     object.insert("competitions", competitionsArray);
 
     return object;
+}
+
+int SeasonCalendar::getCompetitionMainIndex(QVector<CompetitionInfo *> &competitions, CompetitionInfo *competition)
+{
+    int index = 0;
+    for(auto & comp : competitions)
+    {
+        if(comp == competition)
+            return index;
+        if(comp->getSerieType() == CompetitionInfo::Competition || comp->getSerieType() == CompetitionInfo::Qualifications)
+            index++;
+    }
+    return index;
+}
+
+CompetitionInfo *SeasonCalendar::getMainCompetitionByIndex(QVector<CompetitionInfo *> &competitions, int index)
+{
+    int i=0;
+    for(auto & comp : competitions)
+    {
+        if(i == index)
+            return comp;
+        if(comp->getSerieType() == CompetitionInfo::Competition || comp->getSerieType() == CompetitionInfo::Qualifications)
+            i++;
+    }
+    return nullptr;
 }
 
 QVector<Classification *> SeasonCalendar::getClassifications() const

@@ -132,6 +132,37 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersAfterQualifica
     return toReturn;
 }
 
+QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersByClassification(CompetitionInfo *competition, Classification *classification, QVector<Jumper *> &jumpers)
+{
+    int lastQualifiedPosition = competition->getRulesPointer()->getRoundsReference()[0].getCount();
+
+    bool exaequo = true;
+    for(auto & res : classification->getResultsReference()){ // Sprawdzamy, czy wystąpiło ex aequo.
+        if(res->getPosition() == lastQualifiedPosition){
+            exaequo = false;
+            break;
+        }
+    }
+    if(exaequo == true)
+    {
+        for(auto & res : classification->getResultsReference()){
+            if(res->getPosition() > lastQualifiedPosition){
+                lastQualifiedPosition = res->getPosition();
+                break;
+            }
+        }
+    }
+
+    QVector<Jumper *> toReturn;
+    for(auto & jumper : jumpers)
+    {
+        if(classification->getResultOfIndividualJumper(jumper) != nullptr)
+            if(classification->getResultOfIndividualJumper(jumper)->getPosition() <= lastQualifiedPosition)
+                toReturn.push_back(jumper);
+    }
+    return toReturn;
+}
+
 void IndividualCompetitionManager::setStartListOrderByClassification(QVector<Jumper *> & jumpers, Classification *classification)
 {
     if(classification->getClassificationType() == Classification::Individual)
@@ -179,6 +210,17 @@ void IndividualCompetitionManager::setStartListOrderByCompetitionResults(QVector
         std::reverse(tempJumpers.begin(), tempJumpers.end());
         jumpers = tempJumpers;
     }
+}
+
+void IndividualCompetitionManager::setStartListOrderByDefault(QVector<Jumper *> *jumpersList, QVector<Jumper *> &startList)
+{
+    QVector<Jumper *> tempJumpers;
+    for(auto & jumper : *jumpersList)
+    {
+        if(startList.contains(jumper))
+            tempJumpers.push_back(jumper);
+    }
+    startList = tempJumpers;
 }
 
 QVector<StartListCompetitorStatus> IndividualCompetitionManager::getStartListStatuses() const

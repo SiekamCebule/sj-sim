@@ -79,6 +79,23 @@ bool CompetitionInfo::saveToFile(QString dir, QString name)
     return true;
 }
 
+QVector<CompetitionInfo *> CompetitionInfo::getSpecificTypeCompetitions(QVector<CompetitionInfo *> competitions, int type)
+{
+    QVector<CompetitionInfo *> toReturn;
+    for(auto & competition : competitions)
+    {
+        if(competition->getSerieType() == CompetitionInfo::Qualifications || competition->getSerieType() == CompetitionInfo::Competition)
+        {
+            if(competition->getRulesPointer()->getCompetitionType() == type)
+            {
+                toReturn.push_back(competition);
+            }
+        }
+    }
+
+    return toReturn;
+}
+
 QVector<Team> CompetitionInfo::getTeams() const
 {
     return teams;

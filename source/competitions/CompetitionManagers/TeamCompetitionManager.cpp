@@ -188,6 +188,39 @@ QVector<Team> TeamCompetitionManager::getFilteredTeamsAfterQualifications(Compet
     return toReturn;
 }
 
+QVector<Team> TeamCompetitionManager::getFilteredTeamsByClassification(CompetitionInfo *competition, Classification *classification, QVector<Team> &teams)
+{
+    int lastQualifiedPosition = competition->getRulesPointer()->getRoundsReference()[0].getCount();
+
+    bool exaequo = true;
+    for(auto & res : classification->getResultsReference()){ // Sprawdzamy, czy wystąpiło ex aequo.
+        if(res->getPosition() == lastQualifiedPosition){
+            exaequo = false;
+            break;
+        }
+    }
+    if(exaequo == true) // Jeżeli wystąpiło ex aequo
+    {
+        for(auto & res : classification->getResultsReference()){
+            if(res->getPosition() > lastQualifiedPosition){
+                lastQualifiedPosition = res->getPosition();
+                break;
+            }
+        }
+    }
+
+    QVector<Team> toReturn;
+    for(auto & team : teams)
+    {
+        if(classification->getResultOfTeam(team.getCountryCode()) != nullptr)
+        {
+            if(classification->getResultOfTeam(team.getCountryCode())->getPosition() <= lastQualifiedPosition)
+                toReturn.push_back(team);
+        }
+    }
+    return toReturn;
+}
+
 void TeamCompetitionManager::setStartListOrderByClassification(QVector<Team> & teams, Classification *classification)
 {
     if(classification->getClassificationType() == Classification::Team)
@@ -222,15 +255,21 @@ void TeamCompetitionManager::setStartListOrderByCompetitionResults(QVector<Team>
         QVector<Team> tempTeams;
         for(auto & result : competition->getResultsReference().getResultsReference())
         {
-            if(MyFunctions::vectorContains(teams, result.getTeam()))
-                tempTeams.push_back(*result.getTeam());
+            if(MyFunctions::vectorContains(teams, Team::getTeamByCountryCode(&teams, result.getTeam()->getCountryCode())) && result.getPointsSum() != 0)
+            {
+                tempTeams.push_back(*Team::getTeamByCountryCode(&teams, result.getTeam()->getCountryCode()));
+            }
         }
+        QVector<Team> others;
         std::reverse(teams.begin(), teams.end());
         for(auto & team : teams)
         {
-            if(MyFunctions::vectorContains(tempTeams, &team) == false)
-                tempTeams.push_back(team);
+            if(MyFunctions::vectorContains(tempTeams, Team::getTeamByCountryCode(&tempTeams, team.getCountryCode())) == false)
+                others.push_back(team);
         }
+        std::random_shuffle(others.begin(), others.end());
+
+        tempTeams.append(others);
 
         std::reverse(tempTeams.begin(), tempTeams.end());
         teams = tempTeams;

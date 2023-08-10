@@ -3,12 +3,18 @@
 
 #include <QTranslator>
 #include <QCloseEvent>
+#include <QProgressBar>
+#include <QMessageBox>
 
 #include "../mainwindow.h"
 #include "../../global/GlobalAppSettings.h"
 #include "../../global/GlobalTranslators.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../../global/GlobalSimulationSettings.h"
+#include "../../global/GlobalDatabase.h"
+#include "../../global/IDGenerator.h"
+
+extern IDGenerator globalIDGenerator;
 
 AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
     QDialog(parent),
@@ -83,5 +89,35 @@ void AppSettingsWindow::on_spinBox_dsqProbability_valueChanged(int arg1)
 void AppSettingsWindow::on_spinBox_skillsRange_valueChanged(int arg1)
 {
     GlobalSimulationSettings::get()->setMaxSkills(arg1);
+}
+
+
+void AppSettingsWindow::on_pushButton_repairDatabase_clicked()
+{
+    GlobalDatabase * db = GlobalDatabase::get();
+    globalIDGenerator.reset();
+
+    QProgressBar progressBar;
+    progressBar.setWindowTitle("Naprawa bazy danych");
+    progressBar.setMaximum(5);
+    progressBar.show();
+
+    for(auto & jumper : db->getEditableGlobalJumpers())
+        jumper.regenerateID();
+    progressBar.setValue(1);
+    for(auto & hill : db->getEditableGlobalHills())
+        hill.regenerateID();
+    progressBar.setValue(2);
+    for(auto & rules : db->getEditableCompetitionRules())
+        rules.regenerateID();
+    progressBar.setValue(3);
+    for(auto & save : db->getEditableGlobalSimulationSaves())
+        save->regenerateID();
+    progressBar.setValue(4);
+
+    db->writeToJson();
+    progressBar.setValue(5);
+
+    QMessageBox::information(this, "Naprawa bazy danych", "Naprawiono bazę danych", QMessageBox::Ok);
 }
 

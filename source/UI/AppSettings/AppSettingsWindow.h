@@ -34,6 +34,8 @@ private slots:
     void on_spinBox_dsqProbability_valueChanged(int arg1);
     void on_spinBox_skillsRange_valueChanged(int arg1);
 
+    void on_pushButton_repairDatabase_clicked();
+
 private:
     Ui::AppSettingsWindow *ui;
 

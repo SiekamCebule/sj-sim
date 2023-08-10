@@ -311,6 +311,35 @@ color: rgb(13, 13, 13);</string>
     </layout>
    </item>
    <item>
+    <widget class="QPushButton" name="pushButton_repairDatabase">
+     <property name="minimumSize">
+      <size>
+       <width>144</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>144</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="whatsThis">
+      <string>Od nowa przypisuje ID dla każdego obiektu w globalnej bazie danych.
+Użyteczne kiedy chcemy przenieść bazę danych z wczesnych wersji.</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+	background-color: rgb(255, 107, 109);
+	color: rgb(0, 0, 0);
+}</string>
+     </property>
+     <property name="text">
+      <string>Napraw bazę danych</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -367,7 +396,7 @@ color: rgb(13, 13, 13);</string>
        </property>
        <property name="font">
         <font>
-         <family>Quicksand Medium</family>
+         <family>Segoe UI</family>
          <pointsize>10</pointsize>
          <bold>true</bold>
         </font>

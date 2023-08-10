@@ -25,6 +25,8 @@ public:
     QVector<Team *> getFilteredTeamsForNextRound();
 
     static QVector<Team> getFilteredTeamsAfterQualifications(CompetitionInfo *competition);
+    static QVector<Team> getFilteredTeamsByClassification(CompetitionInfo *competition, Classification *classification, QVector<Team> & teams);
+
     static void setStartListOrderByClassification(QVector<Team> &teams, Classification * classification);
     static void setStartListOrderByCompetitionResults(QVector<Team>& teams, CompetitionInfo * competition);
 

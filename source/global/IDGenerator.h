@@ -16,6 +16,7 @@ public:
     ulong getLastID() const;
 
     QSet<ulong> getValues() const;
+    void reset();
 
 private:
     QSet<ulong> values;

@@ -51,3 +51,8 @@ QSet<ulong> IDGenerator::getValues() const
 {
     return values;
 }
+
+void IDGenerator::reset()
+{
+    values.clear();
+}

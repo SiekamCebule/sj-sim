@@ -28,6 +28,8 @@ public:
     void updateQualifyingCompetitions(SeasonCalendar * calendar);
     bool saveToFile(QString dir, QString name);
 
+    static QVector<CompetitionInfo *> getSpecificTypeCompetitions(QVector<CompetitionInfo *> competitions, int type);
+
 private:
     Hill * hill;
     CompetitionRules rules;

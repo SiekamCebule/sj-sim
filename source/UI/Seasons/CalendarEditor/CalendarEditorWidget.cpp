@@ -675,7 +675,8 @@ void CalendarEditorWidget::multipleEditCompetitionTypes(QVector<int> *rows, int 
             competition->getRulesPointer()->setCompetitionType(CompetitionRules::Team);
         else
             competition->getRulesPointer()->setCompetitionType(CompetitionRules::Individual);
-        emit calendarModel->dataChanged(calendarModel->index(competitionIndex, 4), calendarModel->index(4, calendarModel->columnCount() - 1));
+        calendar->fixCompetitionsClassifications();
+        emit calendarModel->dataChanged(calendarModel->index(0, calendarModel->rowCount() - 1), calendarModel->index(0, calendarModel->columnCount() - 1));
     }
 }
 
@@ -706,6 +707,7 @@ void CalendarEditorWidget::multipleEditSerieTypes(QVector<int> *rows, int column
 void CalendarEditorWidget::execMultipleAdvancementCompetitionEditDialog(QVector<int> *rows, int column)
 {
     int row = rows->at(0);
+    CompetitionInfo * competition = SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), row);
 
     QDialog * dialog = new QDialog(this);
     dialog->setWindowFlags(Qt::Window);
@@ -722,13 +724,14 @@ void CalendarEditorWidget::execMultipleAdvancementCompetitionEditDialog(QVector<
     font.setBold(true);
     label->setFont(font);
     QComboBox * comboBox = new QComboBox(dialog);
+    comboBox->addItem("BRAK");
     int pos = 1;
-    comboBox->addItem("BRAK");;
     for(auto & comp : calendar->getCompetitionsReference()){
-        if(comp->getSerieType() == CompetitionInfo::Competition || comp->getSerieType() == CompetitionInfo::Qualifications){
-            comboBox->addItem(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(comp->getHill()->getCountryCode().toLower())), QString::number(pos) + ". " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()));
-            pos++;
+        if((comp->getSerieType() == CompetitionInfo::Competition || comp->getSerieType() == CompetitionInfo::Qualifications) && (competition->getRulesPointer()->getCompetitionType() == comp->getRulesPointer()->getCompetitionType())){
+            int mainIndex = SeasonCalendar::getCompetitionMainIndex(calendar->getCompetitionsReference(), comp) + 1;
+            comboBox->addItem(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(comp->getHill()->getCountryCode().toLower())), QString::number(mainIndex) + ". " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()));
         }
+        pos++;
         if(pos - 1 == row) break;
     }
     comboBox->setCurrentIndex(comboBox->count() - 1);
@@ -750,30 +753,12 @@ void CalendarEditorWidget::execMultipleAdvancementCompetitionEditDialog(QVector<
     dialog->layout()->addWidget(w);
 
     if(dialog->exec() == QDialog::Accepted){
-        CompetitionInfo * advancementCompetition = nullptr;
-        int advancementRow = comboBox->currentIndex() - 1;
-        int i=0;
-        for(auto & comp : calendar->getCompetitionsReference()){
-            if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
-                if(i == advancementRow){
-                    advancementCompetition = comp;
-                    break;
-                }
-                i++;
-            }
+        if(comboBox->currentIndex() > 0){
+            QVector<CompetitionInfo *> comps = CompetitionInfo::getSpecificTypeCompetitions(calendar->getCompetitionsReference(), competition->getRulesPointer()->getCompetitionType());
+            CompetitionInfo * advancementCompetition = SeasonCalendar::getMainCompetitionByIndex(comps, comboBox->currentIndex() - 1);
+            competition->setAdvancementCompetition(advancementCompetition);
         }
-        CompetitionInfo * competition = nullptr;
-        int ii=0;
-        for(auto & comp : calendar->getCompetitionsReference()){
-            if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
-                if(ii == row){
-                    competition = comp;
-                    break;
-                }
-                ii++;
-            }
-        }
-        competition->setAdvancementCompetition(advancementCompetition);
+        else competition->setAdvancementCompetition(nullptr);
         calendar->updateCompetitionsQualifyingCompetitions();
         emit calendarModel->dataChanged(calendarModel->index(row, column), calendarModel->index(row, column));
     }
@@ -837,8 +822,9 @@ void CalendarEditorWidget::execMultipleAdvancementClassificationEditDialog(QVect
                 }
             }
             competition->setAdvancementClassification(advancementClassification);
-            emit calendarModel->dataChanged(calendarModel->index(row, column), calendarModel->index(row, column));
         }
+        calendar->fixAdvancementClassifications();
+        emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
     }
 }
 
@@ -917,6 +903,8 @@ void CalendarEditorWidget::execMultipleCompetitionRulesEditDialog(QVector<int> *
                 emit calendarModel->dataChanged(calendarModel->index(row, column), calendarModel->index(row, column));
             }
         }
+        calendar->fixAdvancementClassifications();
+        emit calendarModel->dataChanged(calendarModel->index(0, 8), calendarModel->index(calendarModel->rowCount() - 1, 8));
     }
 }
 
@@ -931,16 +919,7 @@ void CalendarEditorWidget::execMultipleClassificationsEditDialog(QVector<int> *r
     dialog->setStyleSheet("background-color: white; color: black;");
 
     int i=0;
-    CompetitionInfo * competition = nullptr;
-    for(auto & comp : calendar->getCompetitionsReference()){
-        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
-            if(i == rows->first()){
-                competition = comp;
-                break;
-            }
-            i++;
-        }
-    }
+    CompetitionInfo * competition = SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), rows->first());
 
     QVBoxLayout * checkBoxesLayout = new QVBoxLayout(dialog);
     for(int i=0; i<classificationsList->count(); i++){
@@ -995,6 +974,8 @@ void CalendarEditorWidget::execMultipleClassificationsEditDialog(QVector<int> *r
                 }
             }
         }
+        calendar->fixCompetitionsClassifications();
+        emit calendarModel->dataChanged(calendarModel->index(0, 6), calendarModel->index(calendarModel->rowCount() - 1, 6));
     }
 }
 

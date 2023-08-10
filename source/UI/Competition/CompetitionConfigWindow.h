@@ -119,6 +119,7 @@ private slots:
     void on_pushButton_loadJumpers_clicked();
     void on_comboBox_competition_currentIndexChanged(int index);
     void on_comboBox_classification_activated(int index);
+    void on_pushButton_defaultStartListOrder_clicked();
 };
 
 #endif // COMPETITIONCONFIGWINDOW_H
