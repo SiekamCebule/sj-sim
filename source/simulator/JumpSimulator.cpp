@@ -373,7 +373,7 @@ void JumpSimulator::generateLanding()
     if(manipulator->getExactLandingType() > (-1))
         jumpData.landing.setType(manipulator->getExactLandingType());
 
-    double landingImbalance = MyRandom::lognormalDistributionRandom((0.5 - (jumperSkills->getLandingStyle() / 30)), (0.585 + hill->getLandingImbalanceChangeByHillProfile(jumpData.distance) - jumperSkills->getLandingStyle() / 80));
+    double landingImbalance = MyRandom::lognormalDistributionRandom((0.5 - (jumperSkills->getLandingStyle() / 20)), (0.585 + hill->getLandingImbalanceChangeByHillProfile(jumpData.distance) - jumperSkills->getLandingStyle() / 50));
 
     jumpData.landing.setImbalance(landingImbalance + manipulator->getLandingInstabilityBonus());
     if(jumpData.landing.getImbalance() < manipulator->getLandingInstabilityRange().first)
@@ -388,7 +388,7 @@ void JumpSimulator::generateJudges()
     if(competitionRules->getHasJudgesPoints() == true){
         //double bothLegsLevel = jumperSkills->getLevelOfCharacteristic("both-legs-landing-tendence");
         simulationData->judgesRating = 18.35;
-        simulationData->judgesRating -= jumpData.landing.getImbalance() / 1.5;
+        simulationData->judgesRating -= jumpData.landing.getImbalance() / 1.8;
         simulationData->judgesRating += ((jumpData.distance - hill->getKPoint()) / (hill->getKAndRealHSDifference())) / 1.135;
         switch(jumpData.landing.getType())
         {
@@ -857,7 +857,7 @@ double JumpSimulator::getLandingChance(short landingType, double distance, Hill 
 
     //tendencja do lądowania na dwie nogi (np. Ammann)
     if(landingType == Landing::BothLegsLanding){
-        chance *= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("both-legs-landing-tendence") / 3.5));
+        chance *= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("both-legs-landing-tendence")));
     }
 
     //Umiejętność lądowania

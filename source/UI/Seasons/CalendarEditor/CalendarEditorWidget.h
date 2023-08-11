@@ -5,6 +5,7 @@
 #include <QTableView>
 #include "CalendarEditorTableModel.h"
 #include "../CompetitionInfoEditorWidget.h"
+#include "../../../seasons/SimulationSave.h"
 
 namespace Ui {
 class CalendarEditorWidget;
@@ -36,6 +37,7 @@ private:
     Hill * defaultHill;
 
     QVector<Classification *> * classificationsList;
+    SimulationSave * save;
 
     CompetitionInfoEditorWidget * competitionInfoEditor;
 
@@ -76,6 +78,8 @@ public:
     void setDontModifiyBefore(int newDontModifiyBefore);
     QVector<Classification *> *getClassificationsList() const;
     void setClassificationsList(QVector<Classification *> *newClassificationsList);
+    SimulationSave *getSave() const;
+    void setSave(SimulationSave *newSave);
 };
 
 #endif // CALENDAREDITORWIDGET_H

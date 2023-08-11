@@ -3,6 +3,178 @@
         {
             "characteristics": [
                 {
+                    "level": -1,
+                    "type": "real-hs-point"
+                }
+            ],
+            "country-code": "POL",
+            "flight-effect": 0.392,
+            "hs-point": 134,
+            "id": "64",
+            "k-point": 120,
+            "name": "Wisła",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 10.8,
+            "points-for-gate": 7.24,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.238
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "POL",
+            "flight-effect": 0.24,
+            "hs-point": 104,
+            "id": "429",
+            "k-point": 95,
+            "name": "Szczyrk",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 8,
+            "points-for-gate": 7,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.25
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.5,
+                    "type": "takeoff-form-effect"
+                }
+            ],
+            "country-code": "POL",
+            "flight-effect": 0.389,
+            "hs-point": 140,
+            "id": "70",
+            "k-point": 125,
+            "name": "Zakopane",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 10.8,
+            "points-for-gate": 7.56,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.251
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 1.5,
+                    "type": "flight-technique-effect"
+                }
+            ],
+            "country-code": "POL",
+            "flight-effect": 0.2525,
+            "hs-point": 105,
+            "id": "434",
+            "k-point": 95,
+            "name": "Zakopane",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 8,
+            "points-for-gate": 7,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.2375
+        },
+        {
+            "characteristics": [
+                {
+                    "level": -1.3,
+                    "type": "real-hs-point"
+                },
+                {
+                    "level": 0.86,
+                    "type": "takeoff-form-effect"
+                }
+            ],
+            "country-code": "DEU",
+            "flight-effect": 0.3925,
+            "hs-point": 142,
+            "id": "69",
+            "k-point": 125,
+            "name": "Garmisch-Partenkirchen",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 10.8,
+            "points-for-gate": 7.67,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.2475
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "DEU",
+            "flight-effect": 0.385,
+            "hs-point": 137,
+            "id": "414",
+            "k-point": 120,
+            "name": "Oberstdorf",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 10.8,
+            "points-for-gate": 7.56,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.245
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.6,
+                    "type": "takeoff-technique-effect"
+                },
+                {
+                    "level": -0.5,
+                    "type": "flight-technique-effect"
+                },
+                {
+                    "level": 0.3,
+                    "type": "flight-randomness-effect"
+                },
+                {
+                    "level": 0.4,
+                    "type": "takeoff-power-effect"
+                },
+                {
+                    "level": -2,
+                    "type": "real-hs-point"
+                }
+            ],
+            "country-code": "DEU",
+            "flight-effect": 0.795,
+            "hs-point": 235,
+            "id": "408",
+            "k-point": 200,
+            "name": "Oberstdorf",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 14.4,
+            "points-for-gate": 8.46,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.215
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 0.2,
+                    "type": "real-hs-point"
+                }
+            ],
+            "country-code": "DEU",
+            "flight-effect": 0.39,
+            "hs-point": 140,
+            "id": "74",
+            "k-point": 125,
+            "name": "Klingenthal",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 10.8,
+            "points-for-gate": 7.67,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.25
+        },
+        {
+            "characteristics": [
+                {
                     "level": 0.5,
                     "type": "flight-form-effect"
                 },
@@ -22,7 +194,7 @@
             "country-code": "DEU",
             "flight-effect": 0.46,
             "hs-point": 147,
-            "id": "125",
+            "id": "63",
             "k-point": 130,
             "name": "Willingen",
             "points-for-back-wind": "auto",
@@ -35,19 +207,19 @@
         {
             "characteristics": [
                 {
-                    "level": -1,
+                    "level": 1.5,
                     "type": "real-hs-point"
                 }
             ],
-            "country-code": "POL",
-            "flight-effect": 0.392,
-            "hs-point": 134,
-            "id": "126",
+            "country-code": "AUT",
+            "flight-effect": 0.38,
+            "hs-point": 128,
+            "id": "80",
             "k-point": 120,
-            "name": "Wisła",
+            "name": "Innsbruck",
             "points-for-back-wind": "auto",
-            "points-for-front-wind": 10.8,
-            "points-for-gate": 7.24,
+            "points-for-front-wind": 9.9,
+            "points-for-gate": 3.9,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
             "takeoff-effect": 0.238
@@ -55,31 +227,79 @@
         {
             "characteristics": [
                 {
-                    "level": -1.4,
+                    "level": 3.35,
+                    "type": "real-hs-point"
+                }
+            ],
+            "country-code": "AUT",
+            "flight-effect": 0.2,
+            "hs-point": 90,
+            "id": "78",
+            "k-point": 85,
+            "name": "Hinzenbach",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 7,
+            "points-for-gate": 4.8,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.23
+        },
+        {
+            "characteristics": [
+                {
+                    "level": -1.5,
                     "type": "real-hs-point"
                 },
                 {
-                    "level": 0.3,
-                    "type": "takeoff-power-effect"
-                },
-                {
-                    "level": 0.1,
-                    "type": "takeoff-technique-effect"
+                    "level": 0.5,
+                    "type": "takeoff-form-effect"
                 },
                 {
                     "level": -0.2,
-                    "type": "flight-technique-effect"
+                    "type": "takeoff-power-effect"
                 }
             ],
-            "country-code": "ITA",
-            "flight-effect": 0.39,
-            "hs-point": 135,
-            "id": "127",
-            "k-point": 120,
-            "name": "Predazzo",
+            "country-code": "AUT",
+            "flight-effect": 0.3955,
+            "hs-point": 142,
+            "id": "425",
+            "k-point": 125,
+            "name": "Bischofshofen",
             "points-for-back-wind": "auto",
             "points-for-front-wind": 10.8,
-            "points-for-gate": 5.58,
+            "points-for-gate": 4.86,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.246
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "NOR",
+            "flight-effect": 0.39,
+            "hs-point": 134,
+            "id": "449",
+            "k-point": 120,
+            "name": "Oslo",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 9.9,
+            "points-for-gate": 7.13,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.24
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "NOR",
+            "flight-effect": 0.22,
+            "hs-point": 98,
+            "id": "392",
+            "k-point": 90,
+            "name": "Lillehammer",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 8,
+            "points-for-gate": 7,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
             "takeoff-effect": 0.24
@@ -87,22 +307,126 @@
         {
             "characteristics": [
                 {
-                    "level": 0.25,
+                    "level": -0.43,
                     "type": "real-hs-point"
                 }
             ],
-            "country-code": "CHE",
-            "flight-effect": 0.295,
-            "hs-point": 117,
-            "id": "128",
-            "k-point": 105,
-            "name": "Einsiedeln",
+            "country-code": "NOR",
+            "flight-effect": 0.4155,
+            "hs-point": 140,
+            "id": "83",
+            "k-point": 123,
+            "name": "Lillehammer",
             "points-for-back-wind": "auto",
-            "points-for-front-wind": 7.29,
-            "points-for-gate": 6.32,
+            "points-for-front-wind": 9.9,
+            "points-for-gate": 7.56,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.271
+            "takeoff-effect": 0.2405
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "NOR",
+            "flight-effect": 0.3885,
+            "hs-point": 140,
+            "id": "459",
+            "k-point": 124,
+            "name": "Trondheim",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 10.8,
+            "points-for-gate": 7.45,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.2485
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "NOR",
+            "flight-effect": 0.218,
+            "hs-point": 100,
+            "id": "465",
+            "k-point": 90,
+            "name": "Trondheim",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 8,
+            "points-for-gate": 7,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.239
+        },
+        {
+            "characteristics": [
+                {
+                    "level": -3,
+                    "type": "real-hs-point"
+                },
+                {
+                    "level": -1.5,
+                    "type": "takeoff-power-effect"
+                },
+                {
+                    "level": -1,
+                    "type": "takeoff-randomness-effect"
+                }
+            ],
+            "country-code": "NOR",
+            "flight-effect": 0.8,
+            "hs-point": 240,
+            "id": "475",
+            "k-point": 200,
+            "name": "Vikersund",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 14.4,
+            "points-for-gate": 8.64,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.22
+        },
+        {
+            "characteristics": [
+                {
+                    "level": 4.5,
+                    "type": "real-hs-point"
+                },
+                {
+                    "level": 1.35,
+                    "type": "takeoff-technique-effect"
+                },
+                {
+                    "level": -4.5,
+                    "type": "takeoff-power-effect"
+                },
+                {
+                    "level": -3,
+                    "type": "takeoff-randomness-effect"
+                },
+                {
+                    "level": 0.85,
+                    "type": "flight-form-effect"
+                },
+                {
+                    "level": 3.5,
+                    "type": "flight-technique-effect"
+                },
+                {
+                    "level": -0.8,
+                    "type": "flight-randomness-effect"
+                }
+            ],
+            "country-code": "NOR",
+            "flight-effect": 0.82,
+            "hs-point": 225,
+            "id": "393",
+            "k-point": 200,
+            "name": "Vikersund",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 14.4,
+            "points-for-gate": 8.64,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.2
         },
         {
             "characteristics": [
@@ -130,7 +454,7 @@
             "country-code": "FIN",
             "flight-effect": 0.3475,
             "hs-point": 130,
-            "id": "129",
+            "id": "67",
             "k-point": 116,
             "name": "Lahti",
             "points-for-back-wind": "auto",
@@ -170,7 +494,7 @@
             "country-code": "FIN",
             "flight-effect": 0.415,
             "hs-point": 142,
-            "id": "130",
+            "id": "68",
             "k-point": 120,
             "name": "Kuusamo",
             "points-for-back-wind": "auto",
@@ -183,46 +507,70 @@
         {
             "characteristics": [
                 {
-                    "level": -1.3,
+                    "level": 0.25,
                     "type": "real-hs-point"
-                },
-                {
-                    "level": 0.86,
-                    "type": "takeoff-form-effect"
                 }
             ],
-            "country-code": "DEU",
-            "flight-effect": 0.3925,
-            "hs-point": 142,
-            "id": "131",
-            "k-point": 125,
-            "name": "Garmisch-Partenkirchen",
+            "country-code": "CHE",
+            "flight-effect": 0.295,
+            "hs-point": 117,
+            "id": "66",
+            "k-point": 105,
+            "name": "Einsiedeln",
             "points-for-back-wind": "auto",
-            "points-for-front-wind": 10.8,
-            "points-for-gate": 7.67,
+            "points-for-front-wind": 7.29,
+            "points-for-gate": 6.32,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.2475
+            "takeoff-effect": 0.271
+        },
+        {
+            "characteristics": [
+            ],
+            "country-code": "CHE",
+            "flight-effect": 0.39,
+            "hs-point": 140,
+            "id": "407",
+            "k-point": 125,
+            "name": "Engelberg",
+            "points-for-back-wind": "auto",
+            "points-for-front-wind": 10.44,
+            "points-for-gate": 7.56,
+            "points-for-k-point": "auto",
+            "points-for-meter": "auto",
+            "takeoff-effect": 0.25
         },
         {
             "characteristics": [
                 {
-                    "level": 0.5,
-                    "type": "takeoff-form-effect"
+                    "level": -1.4,
+                    "type": "real-hs-point"
+                },
+                {
+                    "level": 0.3,
+                    "type": "takeoff-power-effect"
+                },
+                {
+                    "level": 0.1,
+                    "type": "takeoff-technique-effect"
+                },
+                {
+                    "level": -0.2,
+                    "type": "flight-technique-effect"
                 }
             ],
-            "country-code": "POL",
-            "flight-effect": 0.389,
-            "hs-point": 140,
-            "id": "132",
-            "k-point": 125,
-            "name": "Zakopane",
+            "country-code": "ITA",
+            "flight-effect": 0.39,
+            "hs-point": 135,
+            "id": "65",
+            "k-point": 120,
+            "name": "Predazzo",
             "points-for-back-wind": "auto",
             "points-for-front-wind": 10.8,
-            "points-for-gate": 7.56,
+            "points-for-gate": 5.58,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.251
+            "takeoff-effect": 0.24
         },
         {
             "characteristics": [
@@ -238,7 +586,7 @@
             "country-code": "ROU",
             "flight-effect": 0.22,
             "hs-point": 97,
-            "id": "133",
+            "id": "71",
             "k-point": 90,
             "name": "Rasnov",
             "points-for-back-wind": "auto",
@@ -264,9 +612,9 @@
                 }
             ],
             "country-code": "SVN",
-            "flight-effect": 0.825,
+            "flight-effect": 0.805,
             "hs-point": 240,
-            "id": "134",
+            "id": "401",
             "k-point": 200,
             "name": "Planica",
             "points-for-back-wind": "auto",
@@ -274,71 +622,7 @@
             "points-for-gate": 8.64,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.195
-        },
-        {
-            "characteristics": [
-                {
-                    "level": 4.5,
-                    "type": "real-hs-point"
-                },
-                {
-                    "level": 1.35,
-                    "type": "takeoff-technique-effect"
-                },
-                {
-                    "level": -4.5,
-                    "type": "takeoff-power-effect"
-                },
-                {
-                    "level": -3,
-                    "type": "takeoff-randomness-effect"
-                },
-                {
-                    "level": 0.85,
-                    "type": "flight-form-effect"
-                },
-                {
-                    "level": 3.5,
-                    "type": "flight-technique-effect"
-                },
-                {
-                    "level": -0.8,
-                    "type": "flight-randomness-effect"
-                }
-            ],
-            "country-code": "NOR",
-            "flight-effect": 0.841,
-            "hs-point": 225,
-            "id": "135",
-            "k-point": 200,
-            "name": "Vikersund",
-            "points-for-back-wind": "auto",
-            "points-for-front-wind": 14.4,
-            "points-for-gate": 8.64,
-            "points-for-k-point": "auto",
-            "points-for-meter": "auto",
-            "takeoff-effect": 0.179
-        },
-        {
-            "characteristics": [
-                {
-                    "level": 0.2,
-                    "type": "real-hs-point"
-                }
-            ],
-            "country-code": "DEU",
-            "flight-effect": 0.39,
-            "hs-point": 140,
-            "id": "136",
-            "k-point": 125,
-            "name": "Klingenthal",
-            "points-for-back-wind": "auto",
-            "points-for-front-wind": 10.8,
-            "points-for-gate": 7.67,
-            "points-for-k-point": "auto",
-            "points-for-meter": "auto",
-            "takeoff-effect": 0.25
+            "takeoff-effect": 0.215
         },
         {
             "characteristics": [
@@ -354,7 +638,7 @@
             "country-code": "RUS",
             "flight-effect": 0.398,
             "hs-point": 134,
-            "id": "137",
+            "id": "75",
             "k-point": 120,
             "name": "Niżny Tagił",
             "points-for-back-wind": "auto",
@@ -374,7 +658,7 @@
             "country-code": "KAZ",
             "flight-effect": 0.388,
             "hs-point": 138,
-            "id": "138",
+            "id": "76",
             "k-point": 125,
             "name": "Almaty",
             "points-for-back-wind": "auto",
@@ -394,7 +678,7 @@
             "country-code": "CZE",
             "flight-effect": 0.24,
             "hs-point": 104,
-            "id": "139",
+            "id": "77",
             "k-point": 95,
             "name": "Frenstat",
             "points-for-back-wind": "auto",
@@ -403,26 +687,6 @@
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
             "takeoff-effect": 0.25
-        },
-        {
-            "characteristics": [
-                {
-                    "level": 3.35,
-                    "type": "real-hs-point"
-                }
-            ],
-            "country-code": "AUT",
-            "flight-effect": 0.2,
-            "hs-point": 90,
-            "id": "140",
-            "k-point": 85,
-            "name": "Hinzenbach",
-            "points-for-back-wind": "auto",
-            "points-for-front-wind": 7,
-            "points-for-gate": 4.8,
-            "points-for-k-point": "auto",
-            "points-for-meter": "auto",
-            "takeoff-effect": 0.23
         },
         {
             "characteristics": [
@@ -454,7 +718,7 @@
             "country-code": "JPN",
             "flight-effect": 0.408,
             "hs-point": 137,
-            "id": "141",
+            "id": "79",
             "k-point": 123,
             "name": "Sapporo",
             "points-for-back-wind": "auto",
@@ -467,58 +731,22 @@
         {
             "characteristics": [
                 {
-                    "level": 1.5,
-                    "type": "real-hs-point"
-                }
-            ],
-            "country-code": "AUT",
-            "flight-effect": 0.38,
-            "hs-point": 128,
-            "id": "142",
-            "k-point": 120,
-            "name": "Innsbruck",
-            "points-for-back-wind": "auto",
-            "points-for-front-wind": 9.9,
-            "points-for-gate": 3.9,
-            "points-for-k-point": "auto",
-            "points-for-meter": "auto",
-            "takeoff-effect": 0.238
-        },
-        {
-            "characteristics": [
-                {
-                    "level": 0.6,
-                    "type": "takeoff-technique-effect"
-                },
-                {
-                    "level": -0.5,
-                    "type": "flight-technique-effect"
-                },
-                {
-                    "level": 0.3,
-                    "type": "flight-randomness-effect"
-                },
-                {
-                    "level": -2.4,
-                    "type": "real-hs-point"
-                },
-                {
                     "level": 0.4,
-                    "type": "takeoff-power-effect"
+                    "type": "takeoff-randomness-effect"
                 }
             ],
-            "country-code": "DEU",
-            "flight-effect": 0.818,
-            "hs-point": 235,
-            "id": "143",
-            "k-point": 200,
-            "name": "Oberstdorf",
+            "country-code": "USA",
+            "flight-effect": 0.36,
+            "hs-point": 128,
+            "id": "445",
+            "k-point": 115,
+            "name": "Lake Placid",
             "points-for-back-wind": "auto",
-            "points-for-front-wind": 14.4,
-            "points-for-gate": 8.46,
+            "points-for-front-wind": 8.46,
+            "points-for-gate": 7.2,
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
-            "takeoff-effect": 0.193
+            "takeoff-effect": 0.23
         },
         {
             "characteristics": [
@@ -530,7 +758,7 @@
             "country-code": "CHN",
             "flight-effect": 0.3875,
             "hs-point": 140,
-            "id": "144",
+            "id": "82",
             "k-point": 125,
             "name": "Zhangjiakou",
             "points-for-back-wind": "auto",
@@ -539,26 +767,6 @@
             "points-for-k-point": "auto",
             "points-for-meter": "auto",
             "takeoff-effect": 0.2525
-        },
-        {
-            "characteristics": [
-                {
-                    "level": -0.43,
-                    "type": "real-hs-point"
-                }
-            ],
-            "country-code": "NOR",
-            "flight-effect": 0.4155,
-            "hs-point": 140,
-            "id": "145",
-            "k-point": 123,
-            "name": "Lillehammer",
-            "points-for-back-wind": "auto",
-            "points-for-front-wind": 9.9,
-            "points-for-gate": 7.56,
-            "points-for-k-point": "auto",
-            "points-for-meter": "auto",
-            "takeoff-effect": 0.2405
         }
     ]
 }

@@ -132,7 +132,9 @@ void AppSettingsWindow::on_pushButton_cutSurnames_clicked()
         if(words.count() > 0)
             for(auto & word : words){
                 jumper.setSurname(jumper.getSurname() + word[0] + " ");
-            jumper.setSurname(jumper.getSurname().trimmed());
+                QString surname = jumper.getSurname();
+                surname.chop(1);
+                jumper.setSurname(surname);
         }
     }
     db->writeJumpers();

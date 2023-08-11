@@ -120,6 +120,16 @@ CalendarEditorWidget::~CalendarEditorWidget()
     delete ui;
 }
 
+SimulationSave *CalendarEditorWidget::getSave() const
+{
+    return save;
+}
+
+void CalendarEditorWidget::setSave(SimulationSave *newSave)
+{
+    save = newSave;
+}
+
 QVector<Classification *> *CalendarEditorWidget::getClassificationsList() const
 {
     return classificationsList;
@@ -676,7 +686,9 @@ void CalendarEditorWidget::multipleEditCompetitionTypes(QVector<int> *rows, int 
         else
             competition->getRulesPointer()->setCompetitionType(CompetitionRules::Individual);
         calendar->fixCompetitionsClassifications();
-        emit calendarModel->dataChanged(calendarModel->index(0, calendarModel->rowCount() - 1), calendarModel->index(0, calendarModel->columnCount() - 1));
+        calendar->fixAdvancementClassifications();
+        calendar->fixAdvancementCompetitions();
+        emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
     }
 }
 
@@ -725,14 +737,22 @@ void CalendarEditorWidget::execMultipleAdvancementCompetitionEditDialog(QVector<
     label->setFont(font);
     QComboBox * comboBox = new QComboBox(dialog);
     comboBox->addItem("BRAK");
-    int pos = 1;
-    for(auto & comp : calendar->getCompetitionsReference()){
-        if((comp->getSerieType() == CompetitionInfo::Competition || comp->getSerieType() == CompetitionInfo::Qualifications) && (competition->getRulesPointer()->getCompetitionType() == comp->getRulesPointer()->getCompetitionType())){
-            int mainIndex = SeasonCalendar::getCompetitionMainIndex(calendar->getCompetitionsReference(), comp) + 1;
-            comboBox->addItem(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(comp->getHill()->getCountryCode().toLower())), QString::number(mainIndex) + ". " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()));
+    QVector<CompetitionInfo *> comps = CompetitionInfo::getSpecificTypeCompetitions(calendar->getCompetitionsReference(), competition->getRulesPointer()->getCompetitionType());
+    int maxMainIndex = row;//SeasonCalendar::getCompetitionMainIndex(comps, SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), row));
+    // comps to tylko konkursy indywidualne i tylko kwalifikacje lub konkurs.
+    // czego szukamy w maxMainIndex? Maksymalnego wiersza w tabeli odejmując drużynówki
+    // nie działa bo row to 2 a drugi element w kalendarzu to drużynówka. a jak przefiltrujemy tylko na indwydiaulne to nie ma szans że ten z tamtej funkcji tam będzie
+    for(auto & comp : comps){
+        if((comp->getSerieType() == CompetitionInfo::Competition || comp->getSerieType() == CompetitionInfo::Qualifications) && (competition->getRulesPointer()->getCompetitionType() == comp->getRulesPointer()->getCompetitionType()))
+        {
+            int mainIndex = SeasonCalendar::getCompetitionMainIndex(calendar->getCompetitionsReference(), comp);
+            int displayIndex = SeasonCalendar::getCompetitionMainIndex(calendar->getCompetitionsReference(), comp) + 1;
+            if(mainIndex < maxMainIndex)
+            {
+                comboBox->addItem(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(comp->getHill()->getCountryCode().toLower())), QString::number(displayIndex) + ". " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()));
+            }
+            else break;
         }
-        pos++;
-        if(pos - 1 == row) break;
     }
     comboBox->setCurrentIndex(comboBox->count() - 1);
     layout->addWidget(label);
@@ -754,13 +774,12 @@ void CalendarEditorWidget::execMultipleAdvancementCompetitionEditDialog(QVector<
 
     if(dialog->exec() == QDialog::Accepted){
         if(comboBox->currentIndex() > 0){
-            QVector<CompetitionInfo *> comps = CompetitionInfo::getSpecificTypeCompetitions(calendar->getCompetitionsReference(), competition->getRulesPointer()->getCompetitionType());
             CompetitionInfo * advancementCompetition = SeasonCalendar::getMainCompetitionByIndex(comps, comboBox->currentIndex() - 1);
             competition->setAdvancementCompetition(advancementCompetition);
         }
         else competition->setAdvancementCompetition(nullptr);
         calendar->updateCompetitionsQualifyingCompetitions();
-        emit calendarModel->dataChanged(calendarModel->index(row, column), calendarModel->index(row, column));
+        emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
     }
 }
 

@@ -19,6 +19,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     simulationSave(save)
 {
     ui->setupUi(this);
+    ui->toolBox->setCurrentIndex(0);
     ui->label_saveName->setText(simulationSave->getName());
     ui->label_4->setText(QString::number(simulationSave->getActualSeason()->getSeasonNumber()));
 

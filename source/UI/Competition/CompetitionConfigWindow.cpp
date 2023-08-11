@@ -205,8 +205,11 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
         teamsTreeView->setModel(teamsSquadsModel);
     });
 
-    if(seasonCompetition->getAdvancementCompetition() == nullptr){
+
     connect(teamsTreeView, &TeamsSquadsTreeView::treeViewDoubleClicked, this, [this](const QModelIndex & index){
+        if(getType() == SeasonCompetition)
+            if(seasonCompetition->getAdvancementCompetition() != nullptr || seasonCompetition->getAdvancementClassification() != nullptr)
+                return;
         TreeItem * item = static_cast<TreeItem *>(index.internalPointer());
         int teamIndex = 0;
         if(item->getParentItem() == teamsSquadsModel->getRootItem()){
@@ -242,7 +245,6 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
             teamsTreeView->getTreeView()->expandToDepth(0);
         }
     });
-    }
 
     ui->verticalLayout_startList->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Maximum, QSizePolicy::Maximum));
 

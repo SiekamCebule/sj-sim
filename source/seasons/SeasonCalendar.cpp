@@ -165,10 +165,11 @@ CompetitionInfo *SeasonCalendar::getMainCompetitionByIndex(QVector<CompetitionIn
     int i=0;
     for(auto & comp : competitions)
     {
-        if(i == index)
-            return comp;
-        if(comp->getSerieType() == CompetitionInfo::Competition || comp->getSerieType() == CompetitionInfo::Qualifications)
+        if(comp->getSerieType() == CompetitionInfo::Competition || comp->getSerieType() == CompetitionInfo::Qualifications){
+            if(i == index)
+                return comp;
             i++;
+        }
     }
     return nullptr;
 }
