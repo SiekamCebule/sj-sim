@@ -13,6 +13,8 @@
 #include <QTimer>
 #include <QPushButton>
 
+
+
 SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SimulationSaveManagerWindow),
@@ -36,7 +38,6 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     //-----//
 
     jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonJumpersItems, true, false, true, this);
-    jumpersListView->setInsertLast(true);
     jumpersListView->setSeasonJumpers(&simulationSave->getJumpersReference());
     jumpersListView->setupListModel();
     ui->verticalLayout_jumpersList->addWidget(jumpersListView);
@@ -58,7 +59,6 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     //-----//
 
     hillsListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonHillsItems, true, false, true, this);
-    hillsListView->setInsertLast(true);
     hillsListView->setSeasonHills(&simulationSave->getHillsReference());
     hillsListView->setupListModel();
     ui->verticalLayout_hillsList->addWidget(hillsListView);
@@ -433,5 +433,34 @@ void SimulationSaveManagerWindow::on_pushButton_saveToFile_clicked()
 {
     simulationSave->saveToFile("simulationSaves/");
     QMessageBox::information(this, tr("Zapis do pliku"), tr("Pomyślnie zapisano aktualny zapis symulacji do pliku"), QMessageBox::Ok);
+}
+
+
+void SimulationSaveManagerWindow::on_pushButton_repairDatabase_clicked()
+{
+    /* Problem jest taki:
+     * Dwie skocznie mają takie samo ID.
+     * Możemy po prostu od nowa wygenerować ID, tylko że wtedy najpierw usuwa się ID a potem dodaje się nowe. Tak naprawdę to otrzymujemy wtedy te same ID.
+     * Co mogę zrobić aby wygenerować ponownie ID skoczni ale żeby te które się powtarzały były inne?
+     *      - funkcja generateNew() która ustawia skoczni ID bez usuwania poprzedniego z generatora.
+     *
+    */
+    QSet<ulong> previousIDs;
+    for(auto & hill : simulationSave->getHillsReference())
+    {
+        qDebug()<<hill->getName()<<" before: "<<hill->getID();
+        if(previousIDs.contains(hill->getID()) == false)
+        {
+            hill->regenerateID();
+            previousIDs.insert(hill->getID());
+        }
+        else{
+            hill->generateID(); //generate, czyli bez usuwania starego ID
+        }
+        qDebug()<<hill->getName()<<" after: "<<hill->getID();
+    }
+
+    QMessageBox::information(this, tr("Naprawa bazy danych"), tr("Naprawiono bazę danych tego zapisu symulacji"), QMessageBox::Ok);
+    simulationSave->saveToFile("simulationSaves/");
 }
 

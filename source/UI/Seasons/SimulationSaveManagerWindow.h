@@ -61,6 +61,7 @@ public:
 private slots:
     void on_pushButton_competitionConfig_clicked();
     void on_pushButton_saveToFile_clicked();
+    void on_pushButton_repairDatabase_clicked();
 };
 
 #endif // SIMULATIONSAVEMANAGERWINDOW_H

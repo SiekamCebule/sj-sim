@@ -1052,8 +1052,12 @@ void CalendarEditorWidget::execMultipleHillEditDialog(QVector<int> *rows, int co
                 competitionIndex ++;
             }
             competition->setHill(hill);
-            emit calendarModel->dataChanged(calendarModel->index(competitionIndex, 0), calendarModel->index(0, calendarModel->columnCount() - 1));
+            for(auto & t : competition->getTrainingsReference())
+                t->setHill(hill);
+            if(competition->getTrialRound() != nullptr)
+                competition->getTrialRound()->setHill(hill);
         }
+        emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
     }
 }
 

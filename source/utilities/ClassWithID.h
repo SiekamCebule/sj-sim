@@ -11,7 +11,9 @@ public:
 
     bool operator==(const ClassWithID & r) const;
 
-    ulong regenerateID();
+    void regenerateID();
+    void generateID(); //bez usuwania z generatora starego ID
+
     void resetID();
     ulong getID() const;
     void setID(ulong id);

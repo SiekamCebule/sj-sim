@@ -19,13 +19,17 @@ bool ClassWithID::operator==(const ClassWithID &r) const
     return this->getID() == r.getID();
 }
 
-ulong ClassWithID::regenerateID()
+void ClassWithID::regenerateID()
 {
     if(globalIDGenerator.hasValue(ID)){
         resetID();
     }
     ID = globalIDGenerator.generateNewID();
-    return ID;
+}
+
+void ClassWithID::generateID()
+{
+    ID = globalIDGenerator.generateNewID();
 }
 
 void ClassWithID::resetID()

@@ -130,6 +130,19 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_repairDatabase">
+         <property name="font">
+          <font>
+           <family>Quicksand</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Napraw bazę danych</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer_11">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
