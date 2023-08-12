@@ -4,6 +4,36 @@ RoundInfo::RoundInfo(int count, bool sortStartList) : count(count),
     sortStartList(sortStartList)
 {}
 
+int RoundInfo::getCountInKOGroup() const
+{
+    return countInKOGroup;
+}
+
+void RoundInfo::setCountInKOGroup(int newCountInKOGroup)
+{
+    countInKOGroup = newCountInKOGroup;
+}
+
+int RoundInfo::getAdvancingFromKOGroup() const
+{
+    return advancingFromKOGroup;
+}
+
+void RoundInfo::setAdvancingFromKOGroup(int newAdvancingFromKOGroup)
+{
+    advancingFromKOGroup = newAdvancingFromKOGroup;
+}
+
+bool RoundInfo::getKO() const
+{
+    return KO;
+}
+
+void RoundInfo::setKO(bool newKO)
+{
+    KO = newKO;
+}
+
 int RoundInfo::getSortAfterGroups() const
 {
     return sortAfterGroups;

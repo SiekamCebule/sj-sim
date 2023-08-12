@@ -9,6 +9,7 @@ class SeasonCalendar;
 #include "../utilities/ClassWithID.h"
 #include "../seasons/Classification.h"
 #include "../seasons/SeasonCalendar.h"
+#include "KOSystem/KOGroup.h"
 
 #include <QDate>
 
@@ -49,6 +50,7 @@ private:
     QVector<CompetitionInfo *> qualifyingCompetitions; //Konkursy dla których ten konkurs jest kwalifikacjami
 
     QVector<Team> teams;
+    QVector<KOGroup> KOGroups;
 
 public:
     static QJsonObject getJsonObject(CompetitionInfo &competition);
@@ -89,6 +91,9 @@ public:
     QVector<Team> getTeams() const;
     QVector<Team> & getTeamsReference();
     void setTeams(const QVector<Team> &newTeams);
+    QVector<KOGroup> getKOGroups() const;
+    QVector<KOGroup> & getKOGroupsReference();
+    void setKOGroups(const QVector<KOGroup> &newKOGroups);
 };
 
 #endif // COMPETITIONINFO_H

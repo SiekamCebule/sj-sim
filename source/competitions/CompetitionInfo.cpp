@@ -96,6 +96,21 @@ QVector<CompetitionInfo *> CompetitionInfo::getSpecificTypeCompetitions(QVector<
     return toReturn;
 }
 
+QVector<KOGroup> CompetitionInfo::getKOGroups() const
+{
+    return KOGroups;
+}
+
+QVector<KOGroup> &CompetitionInfo::getKOGroupsReference()
+{
+    return KOGroups;
+}
+
+void CompetitionInfo::setKOGroups(const QVector<KOGroup> &newKOGroups)
+{
+    KOGroups = newKOGroups;
+}
+
 QVector<Team> CompetitionInfo::getTeams() const
 {
     return teams;
@@ -209,6 +224,13 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     }
     object.insert("teams", teamsArray);
 
+    QJsonArray KOGroupsArray;
+    for(auto & group : competition.getKOGroupsReference())
+    {
+        KOGroupsArray.push_back(KOGroup::getJsonObject(group));
+    }
+    object.insert("ko-groups", KOGroupsArray);
+
     return object;
 }
 
@@ -221,6 +243,13 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json)
         comp.getTeamsReference().push_back(Team::getFromJson(val.toObject()));
     }
     seasonObjectsManager.fill(&comp.getTeamsReference());
+
+    QJsonArray KOGroupsArray = json.value("ko-groups").toArray();
+    for(auto val : KOGroupsArray)
+    {
+        comp.getKOGroupsReference().push_back(KOGroup::getFromJson(val.toObject()));
+    }
+    seasonObjectsManager.fill(&comp.getKOGroupsReference());
 
     comp.setID(json.value("id").toString().toULong());
     comp.setHill(static_cast<Hill *>(seasonObjectsManager.getObjectByID(json.value("hill-id").toString().toULong())));
@@ -244,7 +273,6 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json)
         comp.getClassificationsReference().push_back(static_cast<Classification *>(seasonObjectsManager.getObjectByID(val.toString().toULong())));
     }
 
-    SeasonDatabaseObjectsManager * sdom = &seasonObjectsManager;
     comp.setAdvancementClassification(static_cast<Classification *>(seasonObjectsManager.getObjectByID(json.value("advancement-classification-id").toString().toULong())));
     comp.setAdvancementCompetition(static_cast<CompetitionInfo *>(seasonObjectsManager.getObjectByID(json.value("advancement-competition-id").toString().toULong())));
 

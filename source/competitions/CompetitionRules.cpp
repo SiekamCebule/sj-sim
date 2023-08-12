@@ -88,6 +88,9 @@ QJsonObject CompetitionRules::getJsonObject(const CompetitionRules &competitionR
         roundObject.insert("count", round.getCount());
         roundObject.insert("sort-start-list", round.getSortStartList());
         roundObject.insert("sort-after-groups", round.getSortAfterGroups());
+        roundObject.insert("ko", round.getKO());
+        roundObject.insert("ko-group-count", round.getCountInKOGroup());
+        roundObject.insert("ko-group-advancing", round.getAdvancingFromKOGroup());
         roundsArray.push_back(roundObject);
     }
     object.insert("rounds", roundsArray);
@@ -147,6 +150,9 @@ CompetitionRules CompetitionRules::getFromJson(const QJsonObject &obj)
         roundInfo.setCount(round.toObject().value("count").toInt());
         roundInfo.setSortStartList(round.toObject().value("sort-start-list").toBool(true));
         roundInfo.setSortAfterGroups(round.toObject().value("sort-after-groups").toInt());
+        roundInfo.setKO(round.toObject().value("ko").toBool());
+        roundInfo.setCountInKOGroup(round.toObject().value("ko-group-count").toInt());
+        roundInfo.setAdvancingFromKOGroup(round.toObject().value("ko-group-advancing").toInt());
         rules.getRoundsReference().push_back(roundInfo);
     }
     return rules;

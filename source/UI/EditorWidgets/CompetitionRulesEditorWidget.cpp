@@ -100,7 +100,19 @@ void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)
         if(i - 1 >= 0) //Czyli jeżeli istnieje poprzednia runda
             sortStartList = dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getSortStartListFromInput();
 
-        ui->toolBox_rounds->addItem(new RoundInfoEditorWidget(getCompetitionTypeFromInput() == CompetitionRules::Individual, count, sortStartList, sortGroups, this), "");
+        bool KO = false;
+        if(i - 1 >= 0) //Czyli jeżeli istnieje poprzednia runda
+            sortStartList = dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getKORoundFromInput();
+
+        int KOGroupCount = 0;
+        if(i - 1 >= 0) //Czyli jeżeli istnieje poprzednia runda
+            sortStartList = dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getKOGroupCountFromInput();
+
+        int KOAdvanceCount = 0;
+        if(i - 1 >= 0) //Czyli jeżeli istnieje poprzednia runda
+            sortStartList = dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getAdvancingFromKOGroup();
+
+        ui->toolBox_rounds->addItem(new RoundInfoEditorWidget(getCompetitionTypeFromInput() == CompetitionRules::Individual, count, sortStartList, sortGroups, KO, KOGroupCount, KOAdvanceCount, this), "");
     }
     for(int i=0; i<ui->toolBox_rounds->count(); i++)
     {
@@ -144,6 +156,9 @@ QVector<RoundInfo> CompetitionRulesEditorWidget::getRoundsFromInput()
         round.setCount(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getCountFromInput());
         round.setSortStartList(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getSortStartListFromInput());
         round.setSortAfterGroups(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getSortAfterGroupsFromInput());
+        round.setKO(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getKORoundFromInput());
+        round.setCountInKOGroup(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getKOGroupCountFromInput());
+        round.setAdvancingFromKOGroup(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getAdvancingFromKOGroup());
         rounds.push_back(round);
     }
     return rounds;

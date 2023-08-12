@@ -28,6 +28,8 @@ SOURCES += \
     source/UI/EditorWidgets/ClassificationEditorWidget.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.cpp \
+    source/UI/EditorWidgets/KOSystem/KOGroupInfoWidget.cpp \
+    source/UI/EditorWidgets/KOSystem/KOGroupsListView.cpp \
     source/UI/EditorWidgets/PointsForPlacesPresetEditorWidget.cpp \
     source/UI/EditorWidgets/RoundInfoEditorWidget.cpp \
     source/UI/EditorWidgets/TeamsEditing/Models/PointsForPlacesTableModel.cpp \
@@ -69,6 +71,7 @@ SOURCES += \
     source/competitions/CompetitionRules.cpp \
     source/competitions/CompetitionSingleResult.cpp \
     source/competitions/CompetitionManagers/IndividualCompetitionManager.cpp \
+    source/competitions/KOSystem/KOGroup.cpp \
     source/competitions/RoundInfo.cpp \
     source/competitions/StartListCompetitorStatus.cpp \
     source/global/CountryFlagsManager.cpp \
@@ -128,6 +131,8 @@ HEADERS += \
     source/UI/EditorWidgets/ClassificationEditorWidget.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h \
+    source/UI/EditorWidgets/KOSystem/KOGroupInfoWidget.h \
+    source/UI/EditorWidgets/KOSystem/KOGroupsListView.h \
     source/UI/EditorWidgets/PointsForPlacesPresetEditorWidget.h \
     source/UI/EditorWidgets/RoundInfoEditorWidget.h \
     source/UI/EditorWidgets/TeamsEditing/Models/PointsForPlacesTableModel.h \
@@ -170,6 +175,7 @@ HEADERS += \
     source/competitions/CompetitionRules.h \
     source/competitions/CompetitionSingleResult.h \
     source/competitions/CompetitionManagers/IndividualCompetitionManager.h \
+    source/competitions/KOSystem/KOGroup.h \
     source/competitions/RoundInfo.h \
     source/competitions/StartListCompetitorStatus.h \
     source/global/CountryFlagsManager.h \
@@ -216,6 +222,8 @@ FORMS += \
     source/UI/EditorWidgets/ClassificationEditorWidget.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.ui \
+    source/UI/EditorWidgets/KOSystem/KOGroupInfoWidgetui \
+    source/UI/EditorWidgets/KOSystem/KOGroupsListView.ui \
     source/UI/EditorWidgets/PointsForPlacesPresetEditorWidget.ui \
     source/UI/EditorWidgets/RoundInfoEditorWidget.ui \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.ui \
