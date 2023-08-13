@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QVector>
 #include "../../../competitions/KOSystem/KOGroup.h"
+#include "KOGroupInfoWidget.h"
 
 namespace Ui {
 class KOGroupsListView;
@@ -17,8 +18,12 @@ public:
     explicit KOGroupsListView(QWidget *parent = nullptr);
     ~KOGroupsListView();
 
+    void fillListLayout();
+
 private:
     Ui::KOGroupsListView *ui;
+
+    QVector<KOGroupInfoWidget *> groupWidgets;
 
     QVector<KOGroup> * KOGroups;
 public:

@@ -9,7 +9,8 @@ DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, bool
     allowInserting(allowInserting),
     allowRemoving(allowRemoving),
     allowMoving(allowMoving),
-    insertLast(0)
+    insertLast(false),
+    showItemsNumbers(false)
 {
     ui->setupUi(this);
     ui->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -61,9 +62,12 @@ DatabaseItemsListView::~DatabaseItemsListView()
 
 void DatabaseItemsListView::setupListModel()
 {
+    if(listModel != nullptr)
+        delete listModel;
     switch(type){
     case SeasonJumpersItems:
         listModel = new SeasonJumpersListModel(this->seasonJumpers);
+        static_cast<SeasonJumpersListModel *>(listModel)->setShowItemsNumbers(this->showItemsNumbers);
         break;
     case SeasonHillsItems:
         listModel = new SeasonHillsListModel(this->seasonHills);
@@ -99,6 +103,26 @@ void DatabaseItemsListView::selectOnlyFirstRow()
         else if(listModel->rowCount() == 2)
             ui->listView->selectionModel()->select(listModel->index(1), QItemSelectionModel::Select);
     }
+}
+
+void DatabaseItemsListView::hideInstructions()
+{
+    ui->textEdit_shortcuts->hide();
+}
+
+void DatabaseItemsListView::showInstructions()
+{
+    ui->textEdit_shortcuts->show();
+}
+
+bool DatabaseItemsListView::getShowItemsNumbers() const
+{
+    return showItemsNumbers;
+}
+
+void DatabaseItemsListView::setShowItemsNumbers(bool newShowItemsNumbers)
+{
+    showItemsNumbers = newShowItemsNumbers;
 }
 
 QVector<Hill *> *DatabaseItemsListView::getSeasonHills() const

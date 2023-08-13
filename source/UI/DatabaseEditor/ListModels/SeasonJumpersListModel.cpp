@@ -31,10 +31,13 @@ QVariant SeasonJumpersListModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    seasonJumpers->at(index.row())-> getCountryCode();
 
     if(role == Qt::DisplayRole){
-        return seasonJumpers->at(index.row())->getNameAndSurname();
+        QString string;
+        if(showItemsNumbers)
+            string += QString::number(index.row() + 1) + ". ";
+        string += seasonJumpers->at(index.row())->getNameAndSurname();
+        return string;
     }
     else if(role == Qt::DecorationRole){
         return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(seasonJumpers->at(index.row())->getCountryCode().toLower())));
@@ -67,6 +70,16 @@ bool SeasonJumpersListModel::removeRows(int row, int count, const QModelIndex &p
     // FIXME: Implement me!
     endRemoveRows();
     return true;
+}
+
+bool SeasonJumpersListModel::getShowItemsNumbers() const
+{
+    return showItemsNumbers;
+}
+
+void SeasonJumpersListModel::setShowItemsNumbers(bool newShowItemsNumbers)
+{
+    showItemsNumbers = newShowItemsNumbers;
 }
 
 QVector<Jumper *> *SeasonJumpersListModel::getSeasonJumpers() const

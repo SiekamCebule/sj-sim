@@ -34,10 +34,6 @@ public:
     void setSortStartList(bool newSortStartList);
     int getSortAfterGroups() const;
     void setSortAfterGroups(int newSortAfterGroups);
-    int getCountInGroup() const;
-    void setCountInGroup(int newCountInGroup);
-    int getAdvancingFromGroup() const;
-    void setAdvancingFromGroup(int newAdvancingFromGroup);
     bool getKO() const;
     void setKO(bool newKO);
     int getAdvancingFromKOGroup() const;

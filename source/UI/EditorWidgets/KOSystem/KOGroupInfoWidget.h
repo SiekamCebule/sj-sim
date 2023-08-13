@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "../../../competitions/KOSystem/KOGroup.h"
+#include "../../DatabaseEditor/DatabaseItemsListView.h"
 
 namespace Ui {
 class KOGroupListView;
@@ -13,15 +14,18 @@ class KOGroupInfoWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit KOGroupInfoWidget(QWidget *parent = nullptr);
+    explicit KOGroupInfoWidget(KOGroup * group, QWidget *parent = nullptr);
     ~KOGroupInfoWidget();
 
-signals:
-    void listViewDoubleClicked();
+    void updateWidget();
 
 private:
     Ui::KOGroupListView *ui;
     KOGroup * group;
+    DatabaseItemsListView * jumpersListView;
+public:
+    KOGroup *getGroup() const;
+    void setGroup(KOGroup *newGroup);
 };
 
 #endif // KOGROUPINFOWIDGET_H

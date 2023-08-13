@@ -8,18 +8,28 @@
 #include "../../utilities/ClassWithID.h"
 
 class CompetitionInfo;
+class CompetitionRules;
+class RoundInfo;
 
 class KOGroup : public ClassWithID
 {
 public:
     KOGroup();
 
+    enum GroupsSelectionType{
+        Classic, //50-1, 49-2, 30-21
+        ForLargerGroups, //1, 11, 21, 31, 41
+        BasketsDraw,
+        Random
+    };
+
     static QJsonObject getJsonObject(KOGroup &group);
     static KOGroup getFromJson(const QJsonObject & json);
 
+    static QVector<KOGroup> constructDefaultKOGroups(RoundInfo * roundInfo, QVector<Jumper *> * jumpers, int selectionType, CompetitionInfo *competition);
+
 private:
     CompetitionInfo * competition;
-    int competitionType;
 
     int number;
 
@@ -29,7 +39,6 @@ private:
 public:
     CompetitionInfo *getCompetition() const;
     void setCompetition(CompetitionInfo *newCompetition);
-    int getCompetitionType() const;
     int getNumber() const;
     void setNumber(int newNumber);
     QVector<Jumper *> getJumpers() const;
@@ -37,7 +46,6 @@ public:
     void setJumpers(const QVector<Jumper *> &newJumpers);
     QVector<Team *> & getTeamsReference();
     void setTeams(const QVector<Team *> &newTeams);
-    void setCompetitionType(int newCompetitionType);
 };
 
 #endif // KOGROUP_H

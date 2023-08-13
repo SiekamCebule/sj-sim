@@ -6,10 +6,10 @@
 
 CalendarEditorTableModel::CalendarEditorTableModel(SeasonCalendar *calendar, QVector<Hill *> *hillsList, QVector<CompetitionRules> *rulesList, int dontModifiyBefore, QObject *parent)
     : QAbstractTableModel(parent),
-      calendar(calendar),
-      hillsList(hillsList),
-      rulesList(rulesList),
-      dontModifyBefore(dontModifiyBefore)
+    calendar(calendar),
+    hillsList(hillsList),
+    rulesList(rulesList),
+    dontModifyBefore(dontModifiyBefore)
 {
 }
 
@@ -26,8 +26,8 @@ QVariant CalendarEditorTableModel::headerData(int section, Qt::Orientation orien
             case 2:
                 return tr("Rodzaj serii");
             case 3:
-                return tr("Seria próbna");
-            case 4:
+            return tr("Seria próbna");
+                case 4:
                 return tr("Treningi");
             case 5:
                 return tr("Zasady konkursu");
@@ -72,17 +72,7 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
     if (!index.isValid())
         return QVariant();
 
-    CompetitionInfo * competition = nullptr;
-    int i=0;
-    for(auto & comp : calendar->getCompetitionsReference()){ //znajdujemy odpowiedni konkurs z listy (Bo nie pokazujemy treningów i serii próbnych)
-        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
-            if(i == index.row()){
-                competition = comp;
-                break;
-            }
-            i++;
-        }
-    }
+    CompetitionInfo * competition = SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), index.row());
 
     if(role == Qt::DisplayRole){
         if(competition != nullptr){
@@ -94,7 +84,7 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
                     return tr("Indywidualny");
                 else if(competition->getRules().getCompetitionType() == CompetitionRules::Team)
                     return tr("Drużynowy");
-                break;
+                        break;
             case 2:
                 if(competition->getSerieType() == CompetitionInfo::Qualifications)
                     return tr("Kwalifikacje");
@@ -143,10 +133,12 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
                 int i=0;
                 int count = competition->getClassificationsReference().count();
                 for(auto & c : competition->getClassificationsReference()){
-                    string += c->getName();
-                    if(i+1 != count)
-                        string += ", ";
-                    i++;
+                    if(c != nullptr){
+                        string += c->getName();
+                        if(i+1 != count)
+                            string += ", ";
+                        i++;
+                    }
                 }
                 return string;
             }

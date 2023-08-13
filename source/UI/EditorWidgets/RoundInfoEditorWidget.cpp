@@ -1,6 +1,8 @@
 #include "RoundInfoEditorWidget.h"
 #include "ui_RoundInfoEditorWidget.h"
 
+#include "CompetitionRulesEditorWidget.h"
+
 RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitiorsCount, bool sortStartList, short sortGroups, bool KO, int KOCount, int KOAdvance, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RoundInfoEditorWidget)
@@ -36,6 +38,8 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitio
     ui->checkBox_KORound->setChecked(KO);
     ui->spinBox_KOGroupCount->setValue(KOCount);
     ui->spinBox_AdvancingFromKOGroup->setValue(KOAdvance);
+
+    connect(ui->checkBox_KORound, &QCheckBox::stateChanged, static_cast<CompetitionRulesEditorWidget *>(parent), &CompetitionRulesEditorWidget::KORoundChanged);
 }
 
 RoundInfoEditorWidget::~RoundInfoEditorWidget()
@@ -109,6 +113,21 @@ void RoundInfoEditorWidget::showGroupsInfo()
 {
     ui->comboBox_sortingAfterGroups->show();
     ui->label_sortingGroups->show();
+}
+
+void RoundInfoEditorWidget::hideKOCheckBox()
+{
+    ui->checkBox_KORound->hide();
+}
+
+void RoundInfoEditorWidget::showKOCheckBox()
+{
+    ui->checkBox_KORound->show();
+}
+
+void RoundInfoEditorWidget::setKO(bool ok)
+{
+    ui->checkBox_KORound->setChecked(ok);
 }
 
 RoundInfo *RoundInfoEditorWidget::getRoundInfo() const

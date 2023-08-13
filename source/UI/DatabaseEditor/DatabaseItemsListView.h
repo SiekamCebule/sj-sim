@@ -44,6 +44,9 @@ public:
     void setupListModel();
     void selectOnlyFirstRow();
 
+    void hideInstructions();
+    void showInstructions();
+
 signals:
     void listViewDoubleClicked(const QModelIndex &index);
     void listViewClicked(const QModelIndex &index);
@@ -71,6 +74,7 @@ private:
     QAction * upAction;
     QAction * downAction;
 
+    bool showItemsNumbers;
     bool allowInserting;
     bool allowRemoving;
     bool allowMoving;
@@ -112,6 +116,8 @@ public:
     void setClassifications(QVector<Classification *> *newClassifications);
     QVector<Hill *> *getSeasonHills() const;
     void setSeasonHills(QVector<Hill *> *newSeasonHills);
+    bool getShowItemsNumbers() const;
+    void setShowItemsNumbers(bool newShowItemsNumbers);
 };
 
 #endif // DATABASEITEMSLISTVIEW_H

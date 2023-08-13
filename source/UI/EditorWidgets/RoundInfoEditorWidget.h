@@ -27,6 +27,11 @@ public:
 
     void hideGroupsInfo();
     void showGroupsInfo();
+    //---------------------//
+    void hideKOCheckBox();
+    void showKOCheckBox();
+
+    void setKO(bool ok);
 
 private:
     Ui::RoundInfoEditorWidget *ui;

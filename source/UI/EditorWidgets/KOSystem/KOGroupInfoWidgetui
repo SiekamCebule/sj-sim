@@ -30,7 +30,7 @@
     <number>2</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <property name="spacing">
       <number>3</number>
      </property>
@@ -68,7 +68,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QListView" name="listView"/>
+      <layout class="QVBoxLayout" name="verticalLayout_jumpersListView"/>
      </item>
     </layout>
    </item>

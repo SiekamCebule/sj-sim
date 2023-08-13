@@ -11,6 +11,7 @@
 #include "../../competitions/CompetitionManagers/IndividualCompetitionManager.h"
 #include "../../competitions/CompetitionManagers/TeamCompetitionManager.h"
 #include "../../competitions/CompetitionResults.h"
+#include "../../utilities/functions.h"
 #include "CompetitionManagerWindow.h"
 
 #include <QSizePolicy>
@@ -250,6 +251,111 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
 
     if(getType() == SingleCompetition)
         emit competitionRulesEditor->competitionTypeChanged();
+
+    KOGroupsList = new KOGroupsListView(this);
+    KOGroupsList->hide();
+    comboBox_groupsSelectionType = new QComboBox(this);
+    comboBox_groupsSelectionType->addItem(tr("Dobierz grupy"));
+    comboBox_groupsSelectionType->addItem(tr("Klasycznie"));
+    comboBox_groupsSelectionType->addItem(tr("Klasycznie (Dla dużych grup)"));
+    comboBox_groupsSelectionType->addItem(tr("Losowo (Z podziałem na koszyki)"));
+    comboBox_groupsSelectionType->addItem(tr("Losowo"));
+    ui->verticalLayout_startList->addWidget(comboBox_groupsSelectionType);
+    comboBox_groupsSelectionType->hide();
+    ui->verticalLayout_startList->addWidget(KOGroupsList);
+
+    if(getType() == SingleCompetition){
+        /*RoundInfo roundInfo;//= competitionRulesEditor->getRoundsFromInput().at(0);
+        roundInfo.setAdvancingFromKOGroup(1);
+        roundInfo.setCountInKOGroup(2);
+        roundInfo.setKO(true);
+        if(competitionRulesEditor->getCompetitionTypeFromInput() == CompetitionRules::Individual){
+            QVector<Jumper *> jms = MyFunctions::convertToVectorOfPointers(&competitionJumpers);
+            competitionGroups = KOGroup::constructDefaultKOGroups(&roundInfo, &jms, KOGroup::Random, nullptr);
+        }*/
+        KOGroupsList->setKOGroups(&competitionGroups);
+    }
+    else{
+        KOGroupsList->setKOGroups(&seasonCompetition->getKOGroupsReference());
+    }
+
+    if(getType() == SingleCompetition){
+        if(competitionRulesEditor->getRoundsFromInput().count() > 0){
+            if(competitionRulesEditor->getRoundsFromInput().at(0).getKO() == true)
+            {
+                jumpersListView->hide();
+                teamsTreeView->hide();
+                KOGroupsList->show();
+                comboBox_groupsSelectionType->show();
+                KOGroupsList->fillListLayout();
+            }
+            else{
+                KOGroupsList->hide();
+                comboBox_groupsSelectionType->hide();
+                emit competitionRulesEditor->competitionTypeChanged();
+            }
+        }
+    }
+    else{
+        if(seasonCompetition != nullptr){
+            if(seasonCompetition->getRulesPointer()->getRoundsReference()[0].getKO() == true)
+            {
+                jumpersListView->hide();
+                teamsTreeView->hide();
+                KOGroupsList->show();
+                comboBox_groupsSelectionType->show();
+                KOGroupsList->fillListLayout();
+            }
+            else{
+                KOGroupsList->hide();
+                comboBox_groupsSelectionType->hide();
+                emit competitionRulesEditor->competitionTypeChanged();
+            }
+        }
+    }
+    connect(competitionRulesEditor, &CompetitionRulesEditorWidget::KORoundChanged, this, [this](){
+        if(competitionRulesEditor->getRoundsFromInput().count() > 0){
+            if(competitionRulesEditor->getRoundsFromInput().at(0).getKO() == true)
+            {
+                jumpersListView->hide();
+                teamsTreeView->hide();
+                KOGroupsList->show();
+                comboBox_groupsSelectionType->show();
+                KOGroupsList->fillListLayout();
+            }
+            else{
+                KOGroupsList->hide();
+                comboBox_groupsSelectionType->hide();
+                emit competitionRulesEditor->competitionTypeChanged();
+            }
+        }
+    });
+    if(getType() == SingleCompetition)
+        emit competitionRulesEditor->KORoundChanged();
+
+    connect(comboBox_groupsSelectionType, &QComboBox::activated, this, [this](int index){
+        if(index > 0)
+        {
+            index--;
+            bool singleCompetitionCondition = false;
+            bool seasonCompetitionCondition = false;
+            if(getType() == SingleCompetition)
+            {
+                if(index != KOGroup::Classic || (index == KOGroup::Classic && ((competitionJumpers.count() % 2 == 0) || (competitionRulesEditor->getRoundsFromInput().at(0).getCountInKOGroup() == 2))))
+                {
+                    RoundInfo roundInfo = competitionRulesEditor->getRoundsFromInput().at(0);
+                    QVector<Jumper *> jms = MyFunctions::convertToVectorOfPointers(&competitionJumpers);
+                    competitionGroups = KOGroup::constructDefaultKOGroups(&roundInfo, &jms, index, nullptr);
+                }
+            }
+            else if((seasonCompetitionJumpers.count() % 2 == 0) && (seasonCompetition->getRulesPointer()->getRoundsReference()[0].getCountInKOGroup() == 2))
+            {
+                if(index != KOGroup::Classic || (index == KOGroup::Classic && ((seasonCompetitionJumpers.count() % 2 == 0) || (seasonCompetition->getRulesPointer()->getRoundsReference()[0].getCountInKOGroup() == 2))))
+                    competitionGroups = KOGroup::constructDefaultKOGroups(&seasonCompetition->getRulesPointer()->getRoundsReference()[0], &seasonCompetitionJumpers, index, seasonCompetition);
+            }
+            KOGroupsList->fillListLayout();
+        }
+    });
 }
 
 CompetitionConfigWindow::~CompetitionConfigWindow()
@@ -356,6 +462,16 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
     });
 }
 
+QVector<KOGroup> CompetitionConfigWindow::getCompetitionGroups() const
+{
+    return competitionGroups;
+}
+
+void CompetitionConfigWindow::setCompetitionGroups(const QVector<KOGroup> &newCompetitionGroups)
+{
+    competitionGroups = newCompetitionGroups;
+}
+
 QVector<Jumper *> CompetitionConfigWindow::getSeasonCompetitionJumpers() const
 {
     return seasonCompetitionJumpers;
@@ -364,6 +480,11 @@ QVector<Jumper *> CompetitionConfigWindow::getSeasonCompetitionJumpers() const
 void CompetitionConfigWindow::setSeasonCompetitionJumpers(const QVector<Jumper *> &newSeasonCompetitionJumpers)
 {
     seasonCompetitionJumpers = newSeasonCompetitionJumpers;
+}
+
+QVector<KOGroup> &CompetitionConfigWindow::getCompetitionGroupsReference()
+{
+    return competitionGroups;
 }
 
 SimulationSave *CompetitionConfigWindow::getSimulationSave() const

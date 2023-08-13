@@ -28,9 +28,12 @@ public:
 
 private:
     QVector<Jumper *> * seasonJumpers;
+    bool showItemsNumbers;
 public:
     QVector<Jumper *> *getSeasonJumpers() const;
     void setSeasonJumpers(QVector<Jumper *> *newSeasonJumpers);
+    bool getShowItemsNumbers() const;
+    void setShowItemsNumbers(bool newShowItemsNumbers);
 };
 
 #endif // SEASONJUMPERSLISTMODEL_H

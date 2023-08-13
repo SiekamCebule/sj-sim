@@ -39,6 +39,7 @@ public:
 signals:
     void jumpersCountInTeamChanged();
     void competitionTypeChanged();
+    void KORoundChanged();
     void submitted();
 
 private:

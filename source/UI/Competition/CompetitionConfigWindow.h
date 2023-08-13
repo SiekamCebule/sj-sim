@@ -16,6 +16,7 @@
 #include "TeamsSquadsTreeModel.h"
 #include "TeamsSquadsTreeView.h"
 #include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
+#include "../EditorWidgets/KOSystem/KOGroupsListView.h"
 
 class HillEditorWidget;
 class WindsGeneratorSettingsEditorWidget;
@@ -71,15 +72,19 @@ private:
     DatabaseItemsListView * jumpersListView;
     TeamsSquadsTreeView * teamsTreeView;
     TeamsSquadsTreeModel * teamsSquadsModel;
+    KOGroupsListView * KOGroupsList;
 
     QCheckBox * checkBox_singleCompetitionQualifications;
 
     QVector<Team> competitionTeams;
     QVector<Jumper> competitionJumpers;
+    QVector<KOGroup> competitionGroups;
 
     CompetitionInfo * seasonCompetition;
     SimulationSave * simulationSave;
     QVector<Jumper *> seasonCompetitionJumpers;
+
+    QComboBox * comboBox_groupsSelectionType;
 
 public:
     short getType() const;
@@ -110,9 +115,11 @@ public:
     void setSeasonCompetition(CompetitionInfo *newSeasonCompetition);
     SimulationSave *getSimulationSave() const;
     void setSimulationSave(SimulationSave *newSimulationSave);
-
     QVector<Jumper *> getSeasonCompetitionJumpers() const;
     void setSeasonCompetitionJumpers(const QVector<Jumper *> &newSeasonCompetitionJumpers);
+    QVector<KOGroup> & getCompetitionGroupsReference();
+    QVector<KOGroup> getCompetitionGroups() const;
+    void setCompetitionGroups(const QVector<KOGroup> &newCompetitionGroups);
 
 private slots:
     void on_pushButton_submit_clicked();
