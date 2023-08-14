@@ -15,6 +15,8 @@ KOGroupInfoWidget::KOGroupInfoWidget(KOGroup *group, QWidget *parent) :
     jumpersListView->setSeasonJumpers(&group->getJumpersReference());
     jumpersListView->setupListModel();
     ui->verticalLayout_jumpersListView->addWidget(jumpersListView);
+
+    connect(jumpersListView, &DatabaseItemsListView::listViewDoubleClicked, this, &KOGroupInfoWidget::jumpersListViewDoubleClicked);
 }
 
 KOGroupInfoWidget::~KOGroupInfoWidget()

@@ -12,6 +12,7 @@ CONFIG += c++17
 SOURCES += \
     source/UI/Competition/CompetitionManagerWindow.cpp \
     source/UI/Competition/JumperCompetitionResultsWidget.cpp \
+    source/UI/Competition/Results/KOGroupResultsTableModel.cpp \
     source/UI/Competition/Results/ResultsTableModel.cpp \
     source/UI/Competition/Results/TeamResultsTreeModel.cpp \
     source/UI/Competition/StartList/StartListModel.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
     source/UI/EditorWidgets/ClassificationEditorWidget.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.cpp \
+    source/UI/EditorWidgets/KOSystem/KOGroupEditorWidget.cpp \
     source/UI/EditorWidgets/KOSystem/KOGroupInfoWidget.cpp \
     source/UI/EditorWidgets/KOSystem/KOGroupsListView.cpp \
     source/UI/EditorWidgets/PointsForPlacesPresetEditorWidget.cpp \
@@ -66,6 +68,7 @@ SOURCES += \
     source/UI/SingleJumps/SingleJumpsResultsWindow.cpp \
     source/competitions/AbstractCompetitionManager.cpp \
     source/competitions/CompetitionInfo.cpp \
+    source/competitions/CompetitionManagers/KORoundManager.cpp \
     source/competitions/CompetitionManagers/TeamCompetitionManager.cpp \
     source/competitions/CompetitionResults.cpp \
     source/competitions/CompetitionRules.cpp \
@@ -115,6 +118,7 @@ SOURCES += \
 HEADERS += \
     source/UI/Competition/CompetitionManagerWindow.h \
     source/UI/Competition/JumperCompetitionResultsWidget.h \
+    source/UI/Competition/Results/KOGroupResultsTableModel.h \
     source/UI/Competition/Results/ResultsTableModel.h \
     source/UI/Competition/Results/TeamResultsTreeModel.h \
     source/UI/Competition/StartList/StartListModel.h \
@@ -131,6 +135,7 @@ HEADERS += \
     source/UI/EditorWidgets/ClassificationEditorWidget.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h \
+    source/UI/EditorWidgets/KOSystem/KOGroupEditorWidget.h \
     source/UI/EditorWidgets/KOSystem/KOGroupInfoWidget.h \
     source/UI/EditorWidgets/KOSystem/KOGroupsListView.h \
     source/UI/EditorWidgets/PointsForPlacesPresetEditorWidget.h \
@@ -170,6 +175,7 @@ HEADERS += \
     source/UI/mainwindow.h \
     source/competitions/AbstractCompetitionManager.h \
     source/competitions/CompetitionInfo.h \
+    source/competitions/CompetitionManagers/KORoundManager.h \
     source/competitions/CompetitionManagers/TeamCompetitionManager.h \
     source/competitions/CompetitionResults.h \
     source/competitions/CompetitionRules.h \
@@ -222,6 +228,7 @@ FORMS += \
     source/UI/EditorWidgets/ClassificationEditorWidget.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.ui \
+    source/UI/EditorWidgets/KOSystem/KOGroupEditorWidget.ui \
     source/UI/EditorWidgets/KOSystem/KOGroupInfoWidgetui \
     source/UI/EditorWidgets/KOSystem/KOGroupsListView.ui \
     source/UI/EditorWidgets/PointsForPlacesPresetEditorWidget.ui \

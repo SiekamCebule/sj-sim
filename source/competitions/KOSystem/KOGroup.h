@@ -27,6 +27,7 @@ public:
     static KOGroup getFromJson(const QJsonObject & json);
 
     static QVector<KOGroup> constructDefaultKOGroups(RoundInfo * roundInfo, QVector<Jumper *> * jumpers, int selectionType, CompetitionInfo *competition);
+    static QVector<Jumper *> getJumpersFromGroups(QVector<KOGroup> & groups);
 
 private:
     CompetitionInfo * competition;
@@ -35,7 +36,6 @@ private:
 
     //Aktywny jeden z tych vectorów w zależności competitionType
     QVector<Jumper *> jumpers;
-    QVector<Team *> teams;
 public:
     CompetitionInfo *getCompetition() const;
     void setCompetition(CompetitionInfo *newCompetition);
@@ -44,8 +44,6 @@ public:
     QVector<Jumper *> getJumpers() const;
     QVector<Jumper *> & getJumpersReference();
     void setJumpers(const QVector<Jumper *> &newJumpers);
-    QVector<Team *> & getTeamsReference();
-    void setTeams(const QVector<Team *> &newTeams);
 };
 
 #endif // KOGROUP_H

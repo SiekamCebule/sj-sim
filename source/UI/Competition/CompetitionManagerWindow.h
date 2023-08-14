@@ -9,6 +9,7 @@
 #include "StartList/StartListModel.h"
 #include "Results/ResultsTableModel.h"
 #include "Results/TeamResultsTreeModel.h"
+#include "Results/KOGroupResultsTableModel.h"
 #include "../../competitions/AbstractCompetitionManager.h"
 #include "../../simulator/JumpManipulator.h"
 #include "../../simulator/InrunSnowGenerator.h"
@@ -62,6 +63,9 @@ private:
     StartListModel * startListModel;
     ResultsTableModel * resultsTableModel;
 
+    KORoundManager * KOManager;
+    KOGroupResultsTableModel * KOGroupsResultsModel;
+
     TeamResultsTreeModel * teamResultsTreeModel;
     QTreeView * teamResultsTreeView;
 
@@ -105,6 +109,12 @@ public:
     void setActualWinds(const QVector<Wind> &newActualWinds);
     InrunSnowGenerator getInrunSnowGenerator() const;
     void setInrunSnowGenerator(const InrunSnowGenerator &newInrunSnowGenerator);
+
+    KOGroupResultsTableModel *getKOGroupsResultsModel() const;
+    void setKOGroupsResultsModel(KOGroupResultsTableModel *newKOGroupsResultsModel);
+
+    KORoundManager *getKOManager() const;
+    void setKOManager(KORoundManager *newKOManager);
 
 private slots:
     void on_pushButton_jump_clicked();

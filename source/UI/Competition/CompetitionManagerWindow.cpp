@@ -23,24 +23,47 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
         ui->spinBox_actualGate->setValue(manager->getActualGate());
     }
 
-    ui->pushButton_competitionDetails->hide();
     ui->pushButton_goToNext->hide();
 
-    {
-        startListModel = new StartListModel(this->manager, this);
-        startListModel->setType(getType());
-        startListModel->setStartListStatuses(&this->manager->getStartListStatusesReference());
+    startListModel = new StartListModel(this->manager, this);
+    startListModel->setType(getType());
+    startListModel->setStartListStatuses(&this->manager->getStartListStatusesReference());
+    if(dynamic_cast<IndividualCompetitionManager *>(manager) != nullptr){
+        if(dynamic_cast<IndividualCompetitionManager *>(manager)->getRoundsKOGroupsReference().count() > 0){
+            startListModel->setKOGroups(&dynamic_cast<IndividualCompetitionManager *>(manager)->getActualRoundKOGroupsReference());
 
-        ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
-        ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
-
-        connect(this->manager, &AbstractCompetitionManager::actualJumperChanged, this, [this](){
-            if(this->manager->getActualStartListIndex() < this->manager->getStartListStatusesReference().count()){
-                ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
-                ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
-            }
-        });
+            KOManager = new KORoundManager(startListModel->getKOGroups(), manager->getResults(), &manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound() - 1]);
+            KOManager->updateJumpersSortedByResults();
+            if(manager->getCompetitionRules()->getRoundsReference().count() > manager->getActualRound())
+                KOManager->setLuckyLosersCount(manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound()].getCount() - (KOManager->getGroups()->count() * KOManager->getRoundInfo()->getAdvancingFromKOGroup()));
+            else
+                KOManager->setLuckyLosersCount(0);
+            dynamic_cast<IndividualCompetitionManager *>(manager)->setKOManager(KOManager);
+            KOManager->updateActualGroup(manager->getActualJumper());
+            KOGroupsResultsModel = new KOGroupResultsTableModel(KOManager, &dynamic_cast<IndividualCompetitionManager *>(manager)->getActualRoundKOGroupsReference()[0], this);
+            ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
+            ui->tableView_KOGroupResults->resizeColumnsToContents();
+        }
+        else
+        {
+            ui->tableView_KOGroupResults->hide();
+        }
     }
+    else
+    {
+        ui->tableView_KOGroupResults->hide();
+    }
+
+
+    ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
+    ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+
+    connect(this->manager, &AbstractCompetitionManager::actualJumperChanged, this, [this](){
+        if(this->manager->getActualStartListIndex() < this->manager->getStartListStatusesReference().count()){
+            ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
+            ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+        }
+    });
 
 
     ui->listView_startList->setModel(startListModel);
@@ -173,7 +196,6 @@ void CompetitionManagerWindow::updateAvgWindLabel()
 void CompetitionManagerWindow::disableCompetitionManagementButtons()
 {
     ui->pushButton_coachGate->setDisabled(true);
-    ui->pushButton_competitionDetails->setDisabled(true);
     ui->pushButton_generateNewWinds->setDisabled(true);
     ui->pushButton_jump->setDisabled(true);
     ui->pushButton_manipulateJump->setDisabled(true);
@@ -183,7 +205,6 @@ void CompetitionManagerWindow::disableCompetitionManagementButtons()
 void CompetitionManagerWindow::enableCompetitionManagementButtons()
 {
     ui->pushButton_coachGate->setEnabled(true);
-    ui->pushButton_competitionDetails->setEnabled(true);
     ui->pushButton_generateNewWinds->setEnabled(true);
     ui->pushButton_jump->setEnabled(true);
     ui->pushButton_manipulateJump->setEnabled(true);
@@ -271,6 +292,32 @@ void CompetitionManagerWindow::setupGoToNextButtonForNextRound()
     QMetaObject::Connection * const connection = new QMetaObject::Connection;
     *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, this, [this, connection](){
         manager->setupNextRound();
+
+        IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(manager);
+        if(indManager != nullptr)
+        {
+            if(KOManager != nullptr)
+            {
+                delete KOManager;
+                KOManager = nullptr;
+                indManager->setKOManager(nullptr);
+                delete KOGroupsResultsModel;
+                ui->tableView_KOGroupResults->hide();
+                startListModel->setKOGroups(nullptr);
+            }
+            if(indManager->getCompetitionRules()->getRoundsReference()[manager->getActualRound() - 1].getKO() == true)
+            {
+                KOManager = new KORoundManager(&indManager->getRoundsKOGroupsReference()[manager->getActualRound() - 1], manager->getResults(), &indManager->getCompetitionRules()->getRoundsReference()[manager->getActualRound() - 1]);
+                KOManager->updateJumpersSortedByResults();
+                KOManager->setLuckyLosersCount(startListModel->getStartListStatuses()->count() - (KOManager->getGroups()->count() * KOManager->getRoundInfo()->getAdvancingFromKOGroup()));
+                indManager->setKOManager(KOManager);
+                KOGroupsResultsModel = new KOGroupResultsTableModel(KOManager, &dynamic_cast<IndividualCompetitionManager *>(manager)->getActualRoundKOGroupsReference()[0], this);
+                ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
+                ui->tableView_KOGroupResults->resizeColumnsToContents();
+                ui->tableView_KOGroupResults->show();
+            }
+        }
+
         if(getType() == CompetitionRules::Team)
             teamResultsTreeModel->setTeams(&dynamic_cast<TeamCompetitionManager *>(manager)->getRoundsTeamsReference()[0]);
         currentInputJumpManipulator = JumpManipulator();
@@ -408,6 +455,12 @@ void CompetitionManagerWindow::autoSimulateRound()
         manager->updateLeaderResult();
         manager->updateToAdvanceLineDistance();
         manager->updateToBeatLineDistance();
+        if(KOManager != nullptr)
+        {
+            KOManager->updateActualGroup(manager->getActualJumper());
+            KOManager->updateJumpersSortedByResults();
+            KOManager->updateStatuses();
+        }
         manager->updateCompetitorsAdvanceStatuses();
         if(getType() == CompetitionRules::Team)
             teamResultsTreeModel->setTeams(&dynamic_cast<TeamCompetitionManager *>(manager)->getRoundsTeamsReference()[0]);
@@ -431,6 +484,19 @@ void CompetitionManagerWindow::autoSimulateRound()
         ui->tableView_results->setModel(resultsTableModel);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        if(KOManager != nullptr)
+        {
+            KOManager->updateActualGroup(manager->getActualJumper());
+            KOManager->updateJumpersSortedByResults();
+            KOManager->updateStatuses();
+            KOGroupsResultsModel->setGroup(KOManager->getActualGroup());
+            manager->updateLastQualifiedResult();
+            updateToAdvanceDistanceLabel();
+            ui->tableView_KOGroupResults->setModel(nullptr);
+            ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
+            ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        }
     }
     else if(getType() == CompetitionRules::Team){
         teamResultsTreeModel->setupTreeItems();
@@ -490,6 +556,12 @@ void CompetitionManagerWindow::autoSimulateCompetition()
         manager->updateLeaderResult();
         manager->updateToAdvanceLineDistance();
         manager->updateToBeatLineDistance();
+        if(KOManager != nullptr)
+        {
+            KOManager->updateActualGroup(manager->getActualJumper());
+            KOManager->updateJumpersSortedByResults();
+            KOManager->updateStatuses();
+        }
         manager->updateCompetitorsAdvanceStatuses();
 
         setActualWinds(windsGenerator.generateWinds());
@@ -517,6 +589,19 @@ void CompetitionManagerWindow::autoSimulateCompetition()
         ui->tableView_results->setModel(resultsTableModel);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        if(KOManager != nullptr)
+        {
+            KOManager->updateActualGroup(manager->getActualJumper());
+            KOManager->updateJumpersSortedByResults();
+            KOManager->updateStatuses();
+            KOGroupsResultsModel->setGroup(KOManager->getActualGroup());
+            manager->updateLastQualifiedResult();
+            updateToAdvanceDistanceLabel();
+            ui->tableView_KOGroupResults->setModel(nullptr);
+            ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
+            ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        }
     }
     else if(getType() == CompetitionRules::Team){
         teamResultsTreeModel->setupTreeItems();
@@ -641,6 +726,12 @@ void CompetitionManagerWindow::autoSimulateJumps()
             manager->updateLeaderResult();
             manager->updateToAdvanceLineDistance();
             manager->updateToBeatLineDistance();
+            if(KOManager != nullptr)
+            {
+                KOManager->updateActualGroup(manager->getActualJumper());
+                KOManager->updateJumpersSortedByResults();
+                KOManager->updateStatuses();
+            }
             manager->updateCompetitorsAdvanceStatuses();
 
             setActualWinds(windsGenerator.generateWinds());
@@ -670,6 +761,19 @@ void CompetitionManagerWindow::autoSimulateJumps()
             ui->tableView_results->setModel(resultsTableModel);
             ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
             ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+            if(KOManager != nullptr)
+            {
+                KOManager->updateActualGroup(manager->getActualJumper());
+                KOManager->updateJumpersSortedByResults();
+                KOManager->updateStatuses();
+                KOGroupsResultsModel->setGroup(KOManager->getActualGroup());
+                manager->updateLastQualifiedResult();
+                updateToAdvanceDistanceLabel();
+                ui->tableView_KOGroupResults->setModel(nullptr);
+                ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
+                ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+                ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+            }
         }
         else if(getType() == CompetitionRules::Team){
             teamResultsTreeModel->setupTreeItems();
@@ -694,6 +798,26 @@ void CompetitionManagerWindow::autoSimulateJumps()
     }
 }
 
+KORoundManager *CompetitionManagerWindow::getKOManager() const
+{
+    return KOManager;
+}
+
+void CompetitionManagerWindow::setKOManager(KORoundManager *newKOManager)
+{
+    KOManager = newKOManager;
+}
+
+KOGroupResultsTableModel *CompetitionManagerWindow::getKOGroupsResultsModel() const
+{
+    return KOGroupsResultsModel;
+}
+
+void CompetitionManagerWindow::setKOGroupsResultsModel(KOGroupResultsTableModel *newKOGroupsResultsModel)
+{
+    KOGroupsResultsModel = newKOGroupsResultsModel;
+}
+
 InrunSnowGenerator CompetitionManagerWindow::getInrunSnowGenerator() const
 {
     return inrunSnowGenerator;
@@ -716,6 +840,19 @@ void CompetitionManagerWindow::cancelCompetition()
         ui->tableView_results->setModel(resultsTableModel);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        if(KOManager != nullptr)
+        {
+            KOManager->updateActualGroup(manager->getActualJumper());
+            KOManager->updateJumpersSortedByResults();
+            KOManager->updateStatuses();
+            KOGroupsResultsModel->setGroup(KOManager->getActualGroup());
+            manager->updateLastQualifiedResult();
+            updateToAdvanceDistanceLabel();
+            ui->tableView_KOGroupResults->setModel(nullptr);
+            ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
+            ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        }
     }
     else if(getType() == CompetitionRules::Team){
         teamResultsTreeView->setModel(nullptr);
@@ -744,6 +881,19 @@ void CompetitionManagerWindow::cancelActualRound()
             ui->tableView_results->setModel(resultsTableModel);
             ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
             ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+            if(KOManager != nullptr)
+            {
+                KOManager->updateActualGroup(manager->getActualJumper());
+                KOManager->updateJumpersSortedByResults();
+                KOManager->updateStatuses();
+                KOGroupsResultsModel->setGroup(KOManager->getActualGroup());
+                manager->updateLastQualifiedResult();
+                updateToAdvanceDistanceLabel();
+                ui->tableView_KOGroupResults->setModel(nullptr);
+                ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
+                ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+                ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+            }
         }
         else if(getType() == CompetitionRules::Team){
             teamResultsTreeView->setModel(nullptr);
@@ -810,6 +960,12 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     manager->updateLeaderResult();
     updateToAdvanceDistanceLabel();
     updateToBeatDistanceLabel();
+    if(KOManager != nullptr)
+    {
+        KOManager->updateActualGroup(manager->getActualJumper());
+        KOManager->updateJumpersSortedByResults();
+        KOManager->updateStatuses();
+    }
     manager->updateCompetitorsAdvanceStatuses();
 
     if(jumperResultsWidget->isHidden()) jumperResultsWidget->show();
@@ -829,6 +985,20 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         ui->tableView_results->setModel(resultsTableModel);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+        if(KOManager != nullptr)
+        {
+            KOManager->updateActualGroup(manager->getActualJumper());
+            KOManager->updateJumpersSortedByResults();
+            KOManager->updateStatuses();
+            KOGroupsResultsModel->setGroup(KOManager->getActualGroup());
+            manager->updateLastQualifiedResult();
+            updateToAdvanceDistanceLabel();
+            ui->tableView_KOGroupResults->setModel(nullptr);
+            ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
+            ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        }
     }
     else if(getType() == CompetitionRules::Team){
         teamResultsTreeModel->setupTreeItems();

@@ -77,7 +77,7 @@ private:
     QCheckBox * checkBox_singleCompetitionQualifications;
 
     QVector<Team> competitionTeams;
-    QVector<Jumper> competitionJumpers;
+    QVector<Jumper *> competitionJumpers;
     QVector<KOGroup> competitionGroups;
 
     CompetitionInfo * seasonCompetition;
@@ -97,12 +97,12 @@ public:
     void setHillEditor(HillEditorWidget *newHillEditor);
     CompetitionStartListDisplayWidget *getStartListDisplayWidget() const;
     void setStartListDisplayWidget(CompetitionStartListDisplayWidget *newStartListDisplayWidget);
-    QVector<Jumper> getCompetitionJumpers() const;
-    QVector<Jumper> & getCompetitionJumpersReference();
+    QVector<Jumper *> getCompetitionJumpers() const;
+    QVector<Jumper *> & getCompetitionJumpersReference();
     QVector<Team> getCompetitionTeams() const;
     QVector<Team> & getCompetitionTeamsReference();
     void setCompetitionTeams(const QVector<Team> &newCompetitionTeams);
-    void setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers);
+    void setCompetitionJumpers(const QVector<Jumper *> &newCompetitionJumpers);
     QAction *getMoveToTopShortcut() const;
     void setMoveToTopShortcut(QAction *newMoveToTopShortcut);
     QAction *getMoveToDownShortcut() const;

@@ -72,7 +72,7 @@ void AbstractCompetitionManager::updateToBeatLineDistance()
 
 void AbstractCompetitionManager::updateToAdvanceLineDistance()
 {
-    results->sortInDescendingOrder();
+    results->sortInDescendingOrder();  
     Hill * hill = competitionInfo->getHill();
 
     int shouldBeQualified = 0;
@@ -82,13 +82,14 @@ void AbstractCompetitionManager::updateToAdvanceLineDistance()
 
     int competitorsCount = 0;
     if(type == CompetitionRules::Individual){
-        competitorsCount = dynamic_cast<IndividualCompetitionManager*>(this)->getActualRoundJumpersReference().count();
+        IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager*>(this);
+        competitorsCount = indManager->getActualRoundJumpersReference().count();
     }
     else if(type == CompetitionRules::Team){
         competitorsCount = dynamic_cast<TeamCompetitionManager*>(this)->getActualRoundTeamsReference().count();
     }
 
-    if(competitorsCount - shouldBeQualified - (actualStartListIndex) > 0 || actualRound == competitionRules->getRounds().count() || competitorsCount <= shouldBeQualified || lastQualifiedResult == nullptr)
+    if((competitorsCount - shouldBeQualified - (actualStartListIndex) > 0 || actualRound == competitionRules->getRounds().count() || competitorsCount <= shouldBeQualified) && lastQualifiedResult == nullptr)
     {
         toAdvanceLineDistance = -1;
     }
@@ -137,6 +138,8 @@ void AbstractCompetitionManager::updateLeaderResult()
 
 void AbstractCompetitionManager::updateLastQualifiedResult()
 {
+    IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager*>(this);
+
     results->sortInDescendingOrder();
 
     int competitorsCount = 0;
@@ -147,6 +150,15 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
         competitorsCount = dynamic_cast<TeamCompetitionManager*>(this)->getActualRoundTeamsReference().count();
     }
 
+    bool condition = false;
+    if(indManager != nullptr)
+        if(indManager->getKOManager()){
+            QVector<Jumper *> sortedGroupJumpers = indManager->getKOManager()->getActualGroup()->getJumpersReference();
+            results->sortJumpersByResults(sortedGroupJumpers);
+            if(sortedGroupJumpers.count() >= indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() && sortedGroupJumpers.count() < indManager->getKOManager()->getActualGroup()->getJumpersReference().count())
+                condition = true;
+        }
+
     int lastQualifiedPosition = 0;
 
     int limit = 0;
@@ -154,26 +166,44 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
         limit = competitionRules->getRounds().at(actualRound).getCount();
     if(altQualifiersLimit > 0 && actualRound == competitionRules->getRounds().count())
         limit = altQualifiersLimit;
-    if(competitorsCount - limit - (actualStartListIndex) > 0 || (actualRound == competitionRules->getRounds().count() && altQualifiersLimit == 0) || competitorsCount <= limit){
+    if((competitorsCount - limit - (actualStartListIndex) > 0 || (actualRound == competitionRules->getRounds().count() && altQualifiersLimit == 0) || competitorsCount <= limit) && condition == false){
         lastQualifiedPosition = -1;
     }
     else{
-        qDebug()<<"no";
-        bool exaequo = true;
-        lastQualifiedPosition = abs(competitorsCount - limit - (actualStartListIndex + 1));
-
-        for(auto & res : results->getResultsReference()){ // Sprawdzamy, czy wystąpiło ex aequo.
-            if(res.getPosition() == lastQualifiedPosition){
-                exaequo = false;
-                break;
-            }
-        }
-        if(exaequo == true) // Jeżeli wystąpiło ex aequo
+        bool condition = indManager != nullptr;
+        if(condition == true)
         {
-            for(auto & res : results->getResultsReference()){
-                if(res.getPosition() > lastQualifiedPosition){
-                    lastQualifiedPosition = res.getPosition();
+            if(indManager->getKOManager() == nullptr)
+                condition = false;
+        }
+
+        if(condition == true)
+        {
+            //DLA KO
+            QVector<Jumper *> sortedGroupJumpers = indManager->getKOManager()->getActualGroup()->getJumpersReference();
+            results->sortJumpersByResults(sortedGroupJumpers);
+            Jumper * lastQualified = sortedGroupJumpers[indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() - 1];
+            qDebug()<<"KLIST: "<<&results->getResultsReference()[0];
+            qDebug()<<"LQ JUMPER: "<<lastQualified;
+            lastQualifiedPosition = results->getResultOfIndividualJumper(lastQualified)->getPosition();
+        }
+        else{
+            bool exaequo = true;
+            lastQualifiedPosition = abs(competitorsCount - limit - (actualStartListIndex + 1));
+
+            for(auto & res : results->getResultsReference()){ // Sprawdzamy, czy wystąpiło ex aequo.
+                if(res.getPosition() == lastQualifiedPosition){
+                    exaequo = false;
                     break;
+                }
+            }
+            if(exaequo == true) // Jeżeli wystąpiło ex aequo
+            {
+                for(auto & res : results->getResultsReference()){
+                    if(res.getPosition() > lastQualifiedPosition){
+                        lastQualifiedPosition = res.getPosition();
+                        break;
+                    }
                 }
             }
         }

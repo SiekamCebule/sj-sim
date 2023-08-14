@@ -19,6 +19,9 @@ public:
 
     void updateWidget();
 
+signals:
+    void jumpersListViewDoubleClicked();
+
 private:
     Ui::KOGroupListView *ui;
     KOGroup * group;

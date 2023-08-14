@@ -7,6 +7,7 @@
 #include "../../../simulator/Team.h"
 #include "../../../competitions/StartListCompetitorStatus.h"
 #include "../../../competitions/AbstractCompetitionManager.h"
+#include "../../../competitions/KOSystem/KOGroup.h"
 
 class StartListModel : public QAbstractListModel
 {
@@ -21,6 +22,7 @@ public:
 
 private:
     QVector<StartListCompetitorStatus> * startListStatuses;
+    QVector<KOGroup> * KOGroups;
 
     short type;
 public:
@@ -33,6 +35,8 @@ public:
     void setType(short newType);
     QVector<StartListCompetitorStatus> *getStartListStatuses() const;
     void setStartListStatuses(QVector<StartListCompetitorStatus> *newStartListStatuses);
+    QVector<KOGroup> *getKOGroups() const;
+    void setKOGroups(QVector<KOGroup> *newKOGroups);
 };
 
 #endif // STARTLISTMODEL_H

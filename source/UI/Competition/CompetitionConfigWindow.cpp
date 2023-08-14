@@ -83,11 +83,11 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
             ui->pushButton_defaultStartListOrder->hide();
     }
 
-    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, false, true, true, this);
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonJumpersItems, false, true, true, this);
     jumpersListView->getListView()->setSelectionMode(QAbstractItemView::ExtendedSelection);
     jumpersListView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     if(getType() == SingleCompetition)
-        jumpersListView->setJumpers(&competitionJumpers);
+        jumpersListView->setSeasonJumpers(&competitionJumpers);
     else{
         jumpersListView->setType(DatabaseItemsListView::SeasonJumpersItems);
         if(seasonCompetition->getAdvancementCompetition() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
@@ -167,7 +167,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
         ui->formLayout_competitionOptions->addWidget(checkBox_singleCompetitionQualifications);
 
         setWindowTitle("Konfiguracja pojedynczego konkursu");
-        competitionJumpers = GlobalDatabase::get()->getGlobalJumpers();
+        competitionJumpers = MyFunctions::convertToVectorOfPointers(&GlobalDatabase::get()->getEditableGlobalJumpers());
         competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers, competitionRulesEditor->getJumpersCountInTeam());
     }
     connect(competitionRulesEditor, &CompetitionRulesEditorWidget::jumpersCountInTeamChanged, this, [this](){
@@ -253,6 +253,13 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
         emit competitionRulesEditor->competitionTypeChanged();
 
     KOGroupsList = new KOGroupsListView(this);
+    if(getType() == SingleCompetition)
+    {
+        KOGroupsList->setJumpersList(&competitionJumpers);
+    }
+    else{
+        KOGroupsList->setJumpersList(&seasonCompetitionJumpers);
+    }
     KOGroupsList->hide();
     comboBox_groupsSelectionType = new QComboBox(this);
     comboBox_groupsSelectionType->addItem(tr("Dobierz grupy"));
@@ -344,8 +351,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
                 if(index != KOGroup::Classic || (index == KOGroup::Classic && ((competitionJumpers.count() % 2 == 0) || (competitionRulesEditor->getRoundsFromInput().at(0).getCountInKOGroup() == 2))))
                 {
                     RoundInfo roundInfo = competitionRulesEditor->getRoundsFromInput().at(0);
-                    QVector<Jumper *> jms = MyFunctions::convertToVectorOfPointers(&competitionJumpers);
-                    competitionGroups = KOGroup::constructDefaultKOGroups(&roundInfo, &jms, index, nullptr);
+                    competitionGroups = KOGroup::constructDefaultKOGroups(&roundInfo, &competitionJumpers, index, nullptr);
                 }
             }
             else if((seasonCompetitionJumpers.count() % 2 == 0) && (seasonCompetition->getRulesPointer()->getRoundsReference()[0].getCountInKOGroup() == 2))
@@ -517,7 +523,7 @@ void CompetitionConfigWindow::setTeamsSquadsModel(TeamsSquadsTreeModel *newTeams
     teamsSquadsModel = newTeamsSquadsModel;
 }
 
-void CompetitionConfigWindow::setCompetitionJumpers(const QVector<Jumper> &newCompetitionJumpers)
+void CompetitionConfigWindow::setCompetitionJumpers(const QVector<Jumper *> &newCompetitionJumpers)
 {
     competitionJumpers = newCompetitionJumpers;
 }
@@ -537,12 +543,12 @@ void CompetitionConfigWindow::setCompetitionTeams(const QVector<Team> &newCompet
     competitionTeams = newCompetitionTeams;
 }
 
-QVector<Jumper> CompetitionConfigWindow::getCompetitionJumpers() const
+QVector<Jumper *> CompetitionConfigWindow::getCompetitionJumpers() const
 {
     return competitionJumpers;
 }
 
-QVector<Jumper> &CompetitionConfigWindow::getCompetitionJumpersReference()
+QVector<Jumper *> &CompetitionConfigWindow::getCompetitionJumpersReference()
 {
     return competitionJumpers;
 }
@@ -621,18 +627,15 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             qualificationsManager->getRoundsStartingGatesReference().push_back(ui->spinBox_startGate->value());
 
             if(type == CompetitionRules::Individual){
-                QVector<Jumper *> jumpers;
-                for(auto & j : competitionJumpers)
-                    jumpers.push_back(&j);
-                static_cast<IndividualCompetitionManager *>(qualificationsManager)->getRoundsJumpersReference().push_back(jumpers);
+                static_cast<IndividualCompetitionManager *>(qualificationsManager)->getRoundsJumpersReference().push_back(competitionJumpers);
+                //if(competitionRulesEditor->getRoundsFromInput().at(0).getKO() == true)
+                  //  static_cast<IndividualCompetitionManager *>(qualificationsManager)->getRoundsKOGroupsReference().push_back(competitionGroups);
             }
             else if(type == CompetitionRules::Team){
                 QVector<Team *> teams;
                 for(auto & t : competitionTeams)
                     teams.push_back(&t);
                 static_cast<TeamCompetitionManager *>(qualificationsManager)->getRoundsTeamsReference().push_back(teams);
-
-
             }
 
             qualificationsManager->setCompetitionInfo(&qualsInfo);
@@ -690,7 +693,6 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             return;
         if(qualsInfo.getResultsReference().getResultsReference().count() > 0){
             if(type == CompetitionRules::Individual){
-
                 static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(static_cast<IndividualCompetitionManager *>(qualificationsManager)->getFilteredJumpersForNextRound());
             }
             else if(type == CompetitionRules::Team){
@@ -701,9 +703,14 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         }
         else{
             if(type == CompetitionRules::Individual){
-                QVector<Jumper *> jumpers;
-                for(auto & j : competitionJumpers) jumpers.push_back(&j);
-                static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(jumpers);
+                if(competitionRulesEditor-> getRoundsFromInput().at(0).getKO() == true){
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(KOGroup::getJumpersFromGroups(competitionGroups));
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(competitionGroups);
+                }
+                else
+                {
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(competitionJumpers);
+                }
             }
             else if(type == CompetitionRules::Team){
                 QVector<Team *> teams;
@@ -760,8 +767,10 @@ void CompetitionConfigWindow::on_pushButton_loadJumpers_clicked()
         QVector<Jumper> jumpers = Jumper::getVectorFromJson(file.readAll());
         file.close();
         if(jumpers.isEmpty() == false){
-            competitionJumpers = jumpers;
-            jumpersListView->setJumpers(&competitionJumpers);
+            competitionJumpers.clear();
+            for(auto & j : jumpers)
+                competitionJumpers.push_back(new Jumper(j));
+            jumpersListView->setSeasonJumpers(&competitionJumpers);
             delete jumpersListView->getListModel();
             jumpersListView->setupListModel();
 

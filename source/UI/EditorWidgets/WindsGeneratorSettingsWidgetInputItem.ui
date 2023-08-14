@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>513</width>
+    <width>557</width>
     <height>217</height>
    </rect>
   </property>
@@ -325,19 +325,6 @@ background-color: rgb(245, 245, 245);</string>
       </layout>
      </item>
     </layout>
-   </item>
-   <item>
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>3</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_characteristicsEditor">

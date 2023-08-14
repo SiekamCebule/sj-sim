@@ -231,9 +231,15 @@ QVector<KOGroup> KOGroup::constructDefaultKOGroups(RoundInfo *roundInfo, QVector
     return groups;
 }
 
-void KOGroup::setTeams(const QVector<Team *> &newTeams)
+QVector<Jumper *> KOGroup::getJumpersFromGroups(QVector<KOGroup> &groups)
 {
-    teams = newTeams;
+    QVector<Jumper *> jumpers;
+    for(auto & group : groups)
+    {
+        for(auto & jumper : group.getJumpersReference())
+            jumpers.push_back(jumper);
+    }
+    return jumpers;
 }
 
 QVector<Jumper *> KOGroup::getJumpers() const
@@ -249,11 +255,6 @@ QVector<Jumper *> &KOGroup::getJumpersReference()
 void KOGroup::setJumpers(const QVector<Jumper *> &newJumpers)
 {
     jumpers = newJumpers;
-}
-
-QVector<Team *> &KOGroup::getTeamsReference()
-{
-    return teams;
 }
 
 int KOGroup::getNumber() const

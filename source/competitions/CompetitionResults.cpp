@@ -84,6 +84,57 @@ QJsonObject CompetitionResults::getJsonObject(CompetitionResults &results)
     return object;
 }
 
+QVector<int> CompetitionResults::getJumpersPositions(const QVector<Jumper *> * jumpers) const
+{
+    QVector<int> positions;
+
+    double previousResultPoints = 0;
+    int actualPosition = 1;
+    int add = 1;
+    int i=0;
+    for(auto & result : results){
+        if(jumpers->contains(result.getJumper())){
+            int pos = 0;
+            if(i==0){
+                positions.push_back(1);
+                previousResultPoints = result.getPointsSum();
+                i++;
+                continue;
+            }
+
+            if(previousResultPoints == result.getPointsSum())
+            {
+                pos = actualPosition;;
+                add += 1;
+            }
+            else{
+                actualPosition += add;
+                add = 1;
+                pos = actualPosition;
+            }
+
+            previousResultPoints = result.getPointsSum();
+            i++;
+            positions.push_back(pos);
+        }
+    }
+
+    return positions;
+}
+
+void CompetitionResults::sortJumpersByResults(QVector<Jumper *> &jumpers)
+{
+    QVector<Jumper *> temp;
+    for(auto & res : results)
+    {
+        if(jumpers.contains(res.getJumper()))
+        {
+            temp.push_back(res.getJumper());
+        }
+    }
+    jumpers = temp;
+}
+
 QVector<CompetitionSingleResult> CompetitionResults::getResults() const
 {
     return results;

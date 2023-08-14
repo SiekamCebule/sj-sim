@@ -57,7 +57,11 @@
         <number>2</number>
        </property>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_groupsWidgets"/>
+        <layout class="QVBoxLayout" name="verticalLayout_groupsWidgets">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+        </layout>
        </item>
       </layout>
      </widget>

@@ -23,7 +23,24 @@ void IndividualCompetitionManager::updateCompetitorsAdvanceStatuses()
     results->updatePositions();
     for(auto & status : startListStatuses)
     {
-        if(actualRound == competitionRules->getRounds().count() && (altQualifiersLimit == 0 && actualRound != competitionRules->getRounds().count())){
+        if(KOManager != nullptr){
+            if(KOManager->getStatusesReference().value(status.getJumper()) == KORoundManager::Winner)
+                status.setAdvanceStatus(StartListCompetitorStatus::SureAdvanced);
+            else if(KOManager->getLuckyLoserReference().contains(status.getJumper()))
+            {
+                bool allFinished = true;
+                for(auto & status : startListStatuses)
+                    if(status.getJumpStatus() == StartListCompetitorStatus::Unfinished)
+                        allFinished = false;
+                if(allFinished)
+                    status.setAdvanceStatus(StartListCompetitorStatus::SureAdvanced);
+                else
+                    status.setAdvanceStatus(StartListCompetitorStatus::Waiting);
+            }
+            else
+                status.setAdvanceStatus(StartListCompetitorStatus::SureDroppedOut);
+        }
+        else if(actualRound == competitionRules->getRounds().count() && (altQualifiersLimit == 0 && actualRound != competitionRules->getRounds().count())){
             status.setAdvanceStatus(StartListCompetitorStatus::Waiting);
         }
         else if(getActualRoundJumpersReference().count() <= limit || status.getQualifiedBy95HSRule()){
@@ -223,9 +240,34 @@ void IndividualCompetitionManager::setStartListOrderByDefault(QVector<Jumper *> 
     startList = tempJumpers;
 }
 
+KORoundManager *IndividualCompetitionManager::getKOManager() const
+{
+    return KOManager;
+}
+
+void IndividualCompetitionManager::setKOManager(KORoundManager *newKOManager)
+{
+    KOManager = newKOManager;
+}
+
+QVector<QVector<KOGroup> > IndividualCompetitionManager::getRoundsKOGroups() const
+{
+    return roundsKOGroups;
+}
+
+void IndividualCompetitionManager::setRoundsKOGroups(const QVector<QVector<KOGroup> > &newRoundsKOGroups)
+{
+    roundsKOGroups = newRoundsKOGroups;
+}
+
 QVector<StartListCompetitorStatus> IndividualCompetitionManager::getStartListStatuses() const
 {
     return startListStatuses;
+}
+
+QVector<QVector<KOGroup> > &IndividualCompetitionManager::getRoundsKOGroupsReference()
+{
+    return roundsKOGroups;
 }
 
 void IndividualCompetitionManager::setupNextRound()

@@ -68,11 +68,36 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
         }
     }
     else if(role == Qt::BackgroundRole){
-        if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished){
-            return QBrush(QColor(qRgb(242, 242, 242)));
+        if(KOGroups == nullptr){
+            if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished){
+                return QBrush(QColor(qRgb(242, 242, 242)));
+            }
+            else{
+                return QBrush(QColor("white"));
+            }
         }
         else{
-            return QBrush(QColor("white"));
+            Jumper * jumper = startListStatuses->at(index.row()).getJumper();
+            for(auto & group : *KOGroups)
+            {
+                for(auto & groupJumper : group.getJumpers()){
+                    if(groupJumper== jumper)
+                    {
+                        if(group.getNumber() % 2 == 0){
+                            if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished)
+                                return QBrush(QColor(qRgb(230, 230, 218)));
+                            else
+                                return QBrush(QColor(qRgb(242, 245, 225)));
+                        }
+                        else{
+                            if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Finished)
+                                return QBrush(QColor(qRgb(242, 242, 242)));
+                            else
+                                return QBrush(QColor("white"));
+                        }
+                    }
+                }
+            }
         }
     }
     else if(role == Qt::FontRole){
@@ -84,21 +109,31 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
     }
     //if(jumpers->count() > index.row())
     //{
-        //Trzeba dodać numer startowy do "stringa"
-        QString string = QString::number(index.row() + 1) + ". " + startListStatuses->at(index.row()).getJumper()->getNameAndSurname();
-        if(role == Qt::DisplayRole){
-            if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
-                return string + "   (Nie wystartował)";
-            else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
-                return string + "   (Dyskwalifikacja)";
-            else
-                return string;
-        }
-        else if(role == Qt::DecorationRole){
-            return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(startListStatuses->at(index.row()).getJumper()->getCountryCode().toLower())));
-        }
+    //Trzeba dodać numer startowy do "stringa"
+    QString string = QString::number(index.row() + 1) + ". " + startListStatuses->at(index.row()).getJumper()->getNameAndSurname();
+    if(role == Qt::DisplayRole){
+        if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
+            return string + "   (Nie wystartował)";
+                   else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
+                   return string + "   (Dyskwalifikacja)";
+        else
+            return string;
+    }
+    else if(role == Qt::DecorationRole){
+        return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(startListStatuses->at(index.row()).getJumper()->getCountryCode().toLower())));
+    }
     //}
     return QVariant();
+}
+
+QVector<KOGroup> *StartListModel::getKOGroups() const
+{
+    return KOGroups;
+}
+
+void StartListModel::setKOGroups(QVector<KOGroup> *newKOGroups)
+{
+    KOGroups = newKOGroups;
 }
 
 QVector<StartListCompetitorStatus> *StartListModel::getStartListStatuses() const
