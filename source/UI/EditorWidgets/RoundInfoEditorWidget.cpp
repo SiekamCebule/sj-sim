@@ -36,7 +36,6 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitio
             ui->label_KOAdvanceCount->hide();
             ui->label_KOGroupsSelectionType->hide();
             ui->comboBox_KOGroupsSelectionType->hide();
-            ui->label_warningIcon->hide();
         }
     });
 
@@ -155,7 +154,7 @@ void RoundInfoEditorWidget::setRoundInfo(RoundInfo *newRoundInfo)
     roundInfo = newRoundInfo;
 }
 
-void RoundInfoEditorWidget::on_comboBox_KOGroupsSelectionType_activated(int index)
+void RoundInfoEditorWidget::on_comboBox_KOGroupsSelectionType_currentIndexChanged(int index)
 {
     if(index == 0)
         ui->label_warningIcon->show();
