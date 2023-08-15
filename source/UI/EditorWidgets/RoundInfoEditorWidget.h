@@ -24,6 +24,7 @@ public:
     bool getKORoundFromInput();
     int getKOGroupCountFromInput();
     int getAdvancingFromKOGroup();
+    int getKOGroupsSelectionTypeFromInputs();
 
     void hideGroupsInfo();
     void showGroupsInfo();
@@ -40,6 +41,8 @@ private:
 public:
     RoundInfo *getRoundInfo() const;
     void setRoundInfo(RoundInfo *newRoundInfo);
+private slots:
+    void on_comboBox_KOGroupsSelectionType_activated(int index);
 };
 
 #endif // ROUNDINFOEDITORWIDGET_H

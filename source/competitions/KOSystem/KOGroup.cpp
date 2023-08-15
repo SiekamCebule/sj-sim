@@ -39,7 +39,7 @@ KOGroup KOGroup::getFromJson(const QJsonObject &json)
     return group;
 }
 
-QVector<KOGroup> KOGroup::constructDefaultKOGroups(RoundInfo *roundInfo, QVector<Jumper *> *jumpers, int selectionType, CompetitionInfo * competition)
+QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper *> *jumpers, int selectionType, CompetitionInfo * competition)
 {
     QVector<KOGroup> groups;
     switch(selectionType)
@@ -215,7 +215,7 @@ QVector<KOGroup> KOGroup::constructDefaultKOGroups(RoundInfo *roundInfo, QVector
         {
             KOGroup additionalGroup;
             if(groups.count() > 0)
-                additionalGroup.setNumber(groups.last().getNumber());
+                additionalGroup.setNumber(groups.last().getNumber() + 1);
             else
                 additionalGroup.setNumber(1);
             additionalGroup.setCompetition(competition);

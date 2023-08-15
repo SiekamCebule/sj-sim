@@ -91,6 +91,7 @@ QJsonObject CompetitionRules::getJsonObject(const CompetitionRules &competitionR
         roundObject.insert("ko", round.getKO());
         roundObject.insert("ko-group-count", round.getCountInKOGroup());
         roundObject.insert("ko-group-advancing", round.getAdvancingFromKOGroup());
+        roundObject.insert("ko-groups-selection-type", round.getKoGroupsSelectionType());
         roundsArray.push_back(roundObject);
     }
     object.insert("rounds", roundsArray);
@@ -153,6 +154,7 @@ CompetitionRules CompetitionRules::getFromJson(const QJsonObject &obj)
         roundInfo.setKO(round.toObject().value("ko").toBool());
         roundInfo.setCountInKOGroup(round.toObject().value("ko-group-count").toInt());
         roundInfo.setAdvancingFromKOGroup(round.toObject().value("ko-group-advancing").toInt());
+        roundInfo.setKoGroupsSelectionType(round.toObject().value("ko-groups-selection-type").toInt());
         rules.getRoundsReference().push_back(roundInfo);
     }
     return rules;

@@ -160,6 +160,7 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
         }
 
     int lastQualifiedPosition = 0;
+    int koLastQualifiedPosition = (-1);
 
     int limit = 0;
     if(competitionRules->getRounds().count() > actualRound)
@@ -190,6 +191,7 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
         else{
             bool exaequo = true;
             lastQualifiedPosition = abs(competitorsCount - limit - (actualStartListIndex + 1));
+            koLastQualifiedPosition = lastQualifiedPosition;
 
             for(auto & res : results->getResultsReference()){ // Sprawdzamy, czy wystąpiło ex aequo.
                 if(res.getPosition() == lastQualifiedPosition){
@@ -215,8 +217,18 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
     qDebug()<<"isLastQualifiedPositionValid: "<<isLastQualifiedPositionValid;
     qDebug()<<"isActualRoundGoodOne: "<<isActualRoundGoodOne;
     qDebug()<<"isActualRoundGoodSecond: "<<isActualRoundGoodSecond;
-    if(isLastQualifiedPositionValid && (isActualRoundGoodOne || isActualRoundGoodSecond))
+    if(isLastQualifiedPositionValid && (isActualRoundGoodOne || isActualRoundGoodSecond)){
         lastQualifiedResult = results->getResultByIndex(lastQualifiedPosition - 1);
+        if(getType() == CompetitionRules::Individual)
+        {
+            if(competitionRules->getRoundsReference().count() > actualRound){
+                if(competitionRules->getRoundsReference()[actualRound].getKO() && competitionRules->getRoundsReference()[actualRound].getKoGroupsSelectionType() == CompetitionRules::Classic) //KO w next rundzie
+                {
+                    lastQualifiedResult = results->getResultByIndex(koLastQualifiedPosition - 1);
+                }
+            }
+        }
+    }
     else
         lastQualifiedResult = nullptr;
     qDebug()<<"lastQualifiedResult: "<<lastQualifiedResult;

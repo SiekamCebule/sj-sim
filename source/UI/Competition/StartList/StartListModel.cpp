@@ -9,6 +9,7 @@
 StartListModel::StartListModel(AbstractCompetitionManager * manager, QObject *parent)
     : QAbstractListModel(parent)
 {
+    KOGroups = nullptr;
 }
 
 QVariant StartListModel::headerData(int section, Qt::Orientation orientation, int role) const

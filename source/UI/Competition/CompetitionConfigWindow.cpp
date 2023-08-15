@@ -351,13 +351,13 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
                 if(index != KOGroup::Classic || (index == KOGroup::Classic && ((competitionJumpers.count() % 2 == 0) || (competitionRulesEditor->getRoundsFromInput().at(0).getCountInKOGroup() == 2))))
                 {
                     RoundInfo roundInfo = competitionRulesEditor->getRoundsFromInput().at(0);
-                    competitionGroups = KOGroup::constructDefaultKOGroups(&roundInfo, &competitionJumpers, index, nullptr);
+                    competitionGroups = KOGroup::constructKOGroups(&roundInfo, &competitionJumpers, index, nullptr);
                 }
             }
             else if((seasonCompetitionJumpers.count() % 2 == 0) && (seasonCompetition->getRulesPointer()->getRoundsReference()[0].getCountInKOGroup() == 2))
             {
                 if(index != KOGroup::Classic || (index == KOGroup::Classic && ((seasonCompetitionJumpers.count() % 2 == 0) || (seasonCompetition->getRulesPointer()->getRoundsReference()[0].getCountInKOGroup() == 2))))
-                    competitionGroups = KOGroup::constructDefaultKOGroups(&seasonCompetition->getRulesPointer()->getRoundsReference()[0], &seasonCompetitionJumpers, index, seasonCompetition);
+                    competitionGroups = KOGroup::constructKOGroups(&seasonCompetition->getRulesPointer()->getRoundsReference()[0], &seasonCompetitionJumpers, index, seasonCompetition);
             }
             KOGroupsList->fillListLayout();
         }
@@ -710,6 +710,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
                 else
                 {
                     static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(competitionJumpers);
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(QVector<KOGroup>());
                 }
             }
             else if(type == CompetitionRules::Team){

@@ -259,6 +259,18 @@ int CompetitionResults::howManyJumpersJumpedInTeam(Team *team)
     return i;
 }
 
+int CompetitionResults::getIndexOfJumperResult(Jumper *jumper)
+{
+    int index = 0;
+    for(auto & result : results)
+    {
+        if(result.getJumper() == jumper)
+            return index;
+        index++;
+    }
+    return -1;
+}
+
 void CompetitionResults::updatePositions()
 {
     double previousResultPoints = 0;

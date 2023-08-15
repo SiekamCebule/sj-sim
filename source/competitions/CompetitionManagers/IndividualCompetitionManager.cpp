@@ -10,6 +10,7 @@ IndividualCompetitionManager::IndividualCompetitionManager() : AbstractCompetiti
             emit actualJumperChanged();
         }
     });
+    KOManager = nullptr;
 }
 
 void IndividualCompetitionManager::updateCompetitorsAdvanceStatuses()
@@ -23,24 +24,40 @@ void IndividualCompetitionManager::updateCompetitorsAdvanceStatuses()
     results->updatePositions();
     for(auto & status : startListStatuses)
     {
-        if(KOManager != nullptr){
+        bool condition1 = competitionRules->getRoundsReference().count() > actualRound; //Istnieje następna runda
+        bool condition2 = false;
+        if(condition1 == true)
+        {
+            condition2 = competitionRules->getRoundsReference()[actualRound].getKO() && competitionRules->getRoundsReference()[actualRound].getKoGroupsSelectionType() == CompetitionRules::Classic;
+        }
+        if(condition1 && condition2)
+        {
+            if(lastQualifiedResult != nullptr && status.getJumpStatus() == StartListCompetitorStatus::Finished){
+                int lastQualifiedJumperIndexInResults = results->getIndexOfJumperResult(lastQualifiedResult->getJumper());
+
+                if(results->getIndexOfJumperResult(status.getJumper()) <= lastQualifiedJumperIndexInResults){
+                    status.setAdvanceStatus(StartListCompetitorStatus::SureAdvanced);
+                }
+            }
+        }
+        else if(KOManager != nullptr && actualRound != competitionRules->getRoundsReference().count()){
             if(KOManager->getStatusesReference().value(status.getJumper()) == KORoundManager::Winner)
                 status.setAdvanceStatus(StartListCompetitorStatus::SureAdvanced);
             else if(KOManager->getLuckyLoserReference().contains(status.getJumper()))
             {
-                bool allFinished = true;
+                /*bool allFinished = true;
                 for(auto & status : startListStatuses)
                     if(status.getJumpStatus() == StartListCompetitorStatus::Unfinished)
                         allFinished = false;
                 if(allFinished)
                     status.setAdvanceStatus(StartListCompetitorStatus::SureAdvanced);
-                else
+                else*/
                     status.setAdvanceStatus(StartListCompetitorStatus::Waiting);
             }
             else
                 status.setAdvanceStatus(StartListCompetitorStatus::SureDroppedOut);
         }
-        else if(actualRound == competitionRules->getRounds().count() && (altQualifiersLimit == 0 && actualRound != competitionRules->getRounds().count())){
+        else if(actualRound == competitionRules->getRoundsReference().count() && (altQualifiersLimit == 0 && actualRound != competitionRules->getRounds().count())){
             status.setAdvanceStatus(StartListCompetitorStatus::Waiting);
         }
         else if(getActualRoundJumpersReference().count() <= limit || status.getQualifiedBy95HSRule()){
@@ -84,16 +101,44 @@ void IndividualCompetitionManager::updateCompetitorsAdvanceStatuses()
     }
 }
 
-QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound()
+//W filtered jumpers bierzemy zawodnikóW z uprzednio ustalonych grup. Grupy ustalamy w innej funkcji, w getFilteredGroups
+
+QVector<KOGroup> IndividualCompetitionManager::getFilteredGroupsForNextRound()
+{
+    QVector<KOGroup> groups;
+    QVector<Jumper *> jumpers = getActualRoundJumpersReference();
+    //std::reverse(jumpers.begin(), jumpers.end());
+
+    if(competitionRules->getRoundsReference()[actualRound - 1].getKO() == true)
+    {
+        int selectionType = competitionRules->getRoundsReference()[actualRound - 1].getKoGroupsSelectionType();
+        if(selectionType != CompetitionRules::Manual)
+        {
+            groups = KOGroup::constructKOGroups(&competitionRules->getRoundsReference()[actualRound - 1], &jumpers, selectionType, competitionInfo);
+        }
+    }
+    return groups;
+}
+
+QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound(bool checkKO)
 {
     QVector<Jumper *> jumpers;
     int i = 1;
     for(auto & status : startListStatuses){
-        qDebug()<<i<<"> "<<status.getJumper()->getNameAndSurname()<<" --> "<<status.getAdvanceStatus();
         i++;
     }
+    if(checkKO){
+        if(competitionRules->getRoundsReference()[actualRound - 1].getKO() == true)
+        {
+            int selectionType = competitionRules->getRoundsReference()[actualRound - 1].getKoGroupsSelectionType();
+            if(selectionType != CompetitionRules::Manual)
+            {
+                return KOGroup::getJumpersFromGroups(getActualRoundKOGroupsReference());
+            }
+        }
+    }
 
-    if(competitionRules->getRounds().at(actualRound - 1).getSortStartList() == true){
+    if(competitionRules->getRoundsReference()[actualRound - 1].getSortStartList() == true){
         results->sortInAscendingOrder();
         QVector<CompetitionSingleResult *> roundResults;
         for(auto & res : results->getResultsReference()){
@@ -102,7 +147,6 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound()
         }
 
         for(auto & res : roundResults){
-            qDebug()<<res->getJumper()->getNameAndSurname()<<": "<<StartListCompetitorStatus::getStatusOfJumper(res->getJumper(), startListStatuses);
             if(StartListCompetitorStatus::getStatusOfJumper(res->getJumper(), startListStatuses)->getAdvanceStatus() == StartListCompetitorStatus::SureAdvanced)
                 jumpers.push_back(res->getJumper());
         }
@@ -274,6 +318,9 @@ void IndividualCompetitionManager::setupNextRound()
 {
     actualRound++; //Przechodzi do następnej rundy
     roundsJumpers.push_back(getFilteredJumpersForNextRound());
+    roundsKOGroups.push_back(getFilteredGroupsForNextRound());
+    if(competitionRules->getRoundsReference()[actualRound - 1].getKO())
+        roundsJumpers.last() = getFilteredJumpersForNextRound(true);
     setActualStartListIndex(0);
     roundsStartingGates.push_back(actualGate);
     setupStartListStatusesForActualRound();

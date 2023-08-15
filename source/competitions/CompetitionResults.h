@@ -50,6 +50,7 @@ public:
     void addJump(CompetitionSingleResult * result, JumpData & jump, int jumpNumber = -1);
 
     int howManyJumpersJumpedInTeam(Team * team);
+    int getIndexOfJumperResult(Jumper * jumper);
 
     void updatePositions();
     void sortInDescendingOrder();

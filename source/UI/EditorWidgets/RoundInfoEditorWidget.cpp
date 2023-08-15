@@ -25,6 +25,9 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitio
             ui->spinBox_AdvancingFromKOGroup->show();
             ui->label_KOCount->show();
             ui->label_KOAdvanceCount->show();
+            ui->label_KOGroupsSelectionType->show();
+            ui->comboBox_KOGroupsSelectionType->show();
+            emit ui->comboBox_KOGroupsSelectionType->activated(ui->comboBox_KOGroupsSelectionType->currentIndex());
         }
         else
         {
@@ -32,12 +35,17 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitio
             ui->spinBox_AdvancingFromKOGroup->hide();
             ui->label_KOCount->hide();
             ui->label_KOAdvanceCount->hide();
+            ui->label_KOGroupsSelectionType->hide();
+            ui->comboBox_KOGroupsSelectionType->hide();
+            ui->label_warningIcon->hide();
         }
     });
 
     ui->checkBox_KORound->setChecked(KO);
     ui->spinBox_KOGroupCount->setValue(KOCount);
     ui->spinBox_AdvancingFromKOGroup->setValue(KOAdvance);
+
+    ui->label_warningIcon->setPixmap(QPixmap("://img/warning.png").scaled(ui->label_warningIcon->size()));
 
     connect(ui->checkBox_KORound, &QCheckBox::stateChanged, static_cast<CompetitionRulesEditorWidget *>(parent), &CompetitionRulesEditorWidget::KORoundChanged);
 }
@@ -59,6 +67,7 @@ void RoundInfoEditorWidget::fillRoundInfoInput()
         ui->checkBox_KORound->setChecked(roundInfo->getKO());
         ui->spinBox_KOGroupCount->setValue(roundInfo->getCountInKOGroup());
         ui->spinBox_AdvancingFromKOGroup->setValue(roundInfo->getAdvancingFromKOGroup());
+        ui->comboBox_KOGroupsSelectionType->setCurrentIndex(roundInfo->getKoGroupsSelectionType());
     }
 }
 
@@ -71,6 +80,7 @@ void RoundInfoEditorWidget::resetRoundInfoInput()
     ui->checkBox_KORound->setChecked(false);
     ui->spinBox_KOGroupCount->setValue(0);
     ui->spinBox_AdvancingFromKOGroup->setValue(0);
+    ui->comboBox_KOGroupsSelectionType->setCurrentIndex(0);
 }
 
 int RoundInfoEditorWidget::getCountFromInput()
@@ -101,6 +111,11 @@ int RoundInfoEditorWidget::getKOGroupCountFromInput()
 int RoundInfoEditorWidget::getAdvancingFromKOGroup()
 {
     return ui->spinBox_AdvancingFromKOGroup->value();
+}
+
+int RoundInfoEditorWidget::getKOGroupsSelectionTypeFromInputs()
+{
+    return ui->comboBox_KOGroupsSelectionType->currentIndex();
 }
 
 void RoundInfoEditorWidget::hideGroupsInfo()
@@ -139,3 +154,12 @@ void RoundInfoEditorWidget::setRoundInfo(RoundInfo *newRoundInfo)
 {
     roundInfo = newRoundInfo;
 }
+
+void RoundInfoEditorWidget::on_comboBox_KOGroupsSelectionType_activated(int index)
+{
+    if(index == 0)
+        ui->label_warningIcon->show();
+    else
+        ui->label_warningIcon->hide();
+}
+

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>369</width>
-    <height>221</height>
+    <width>422</width>
+    <height>254</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -64,6 +64,13 @@ listy startowej</string>
        </property>
       </widget>
      </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_sortingGroups">
+       <property name="text">
+        <string>Sortowanie zawodników po grupach</string>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="1">
       <widget class="QComboBox" name="comboBox_sortingAfterGroups">
        <property name="styleSheet">
@@ -96,13 +103,6 @@ listy startowej</string>
        </item>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_sortingGroups">
-       <property name="text">
-        <string>Sortowanie zawodników po grupach</string>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="1">
       <widget class="QCheckBox" name="checkBox_KORound">
        <property name="text">
@@ -110,6 +110,13 @@ listy startowej</string>
        </property>
        <property name="checked">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_KOCount">
+       <property name="text">
+        <string>Ilość zawodników w grupie KO</string>
        </property>
       </widget>
      </item>
@@ -128,13 +135,6 @@ listy startowej</string>
        </property>
        <property name="maximum">
         <number>1000000</number>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_KOCount">
-       <property name="text">
-        <string>Ilość zawodników w grupie KO</string>
        </property>
       </widget>
      </item>
@@ -163,10 +163,133 @@ listy startowej</string>
        </property>
       </widget>
      </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_KOGroupsSelectionType">
+       <property name="text">
+        <string>Dobór grup KO</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QComboBox" name="comboBox_KOGroupsSelectionType">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 7px;
+}</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Klasyczny</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Dla dużych grup</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Losowo (koszyki)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Losowo</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Ręcznie</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>15</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_warningIcon">
+         <property name="minimumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ff3434;&quot;&gt;Aby klasyczny dobór grup działał, ilość zawodników w grupie musi być równa 2, a ilość skoczków w rundzie parzysta.&lt;/span&gt;&lt;span style=&quot; color:#ff3434;&quot;&gt; W trybie klasycznym pierwszy zawodnik rywalizuje z ostatnim itd.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="whatsThis">
+          <string/>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background: transparent;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../../../assets.qrc">:/img/warning.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+         <property name="buddy">
+          <cstring></cstring>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../assets.qrc"/>
+ </resources>
  <connections/>
 </ui>

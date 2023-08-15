@@ -21,5 +21,6 @@
         <file>img/pipes.webp</file>
         <file>img/check-mark.png</file>
         <file>img/close.png</file>
+        <file>img/warning.png</file>
     </qresource>
 </RCC>

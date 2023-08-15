@@ -17,6 +17,14 @@ public:
         Team
     };
 
+    enum KOGroupsSelectionType{
+        Classic,
+        ForLargerGroups,
+        BasketsDraw,
+        Random,
+        Manual
+    };
+
 private:
     QString name;
     QVector<RoundInfo> rounds;

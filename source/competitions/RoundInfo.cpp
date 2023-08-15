@@ -4,6 +4,16 @@ RoundInfo::RoundInfo(int count, bool sortStartList) : count(count),
     sortStartList(sortStartList)
 {}
 
+int RoundInfo::getKoGroupsSelectionType() const
+{
+    return koGroupsSelectionType;
+}
+
+void RoundInfo::setKoGroupsSelectionType(int newKoGroupsSelectionType)
+{
+    koGroupsSelectionType = newKoGroupsSelectionType;
+}
+
 int RoundInfo::getCountInKOGroup() const
 {
     return countInKOGroup;

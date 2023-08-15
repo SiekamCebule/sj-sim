@@ -13,7 +13,8 @@
 CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *manager, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CompetitionManagerWindow),
-    manager(manager)
+    manager(manager),
+    KOManager(nullptr)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
@@ -29,7 +30,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     startListModel->setType(getType());
     startListModel->setStartListStatuses(&this->manager->getStartListStatusesReference());
     if(dynamic_cast<IndividualCompetitionManager *>(manager) != nullptr){
-        if(dynamic_cast<IndividualCompetitionManager *>(manager)->getRoundsKOGroupsReference().count() > 0){
+        if(dynamic_cast<IndividualCompetitionManager *>(manager)->getRoundsKOGroupsReference()[0].count() > 0){
             startListModel->setKOGroups(&dynamic_cast<IndividualCompetitionManager *>(manager)->getActualRoundKOGroupsReference());
 
             KOManager = new KORoundManager(startListModel->getKOGroups(), manager->getResults(), &manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound() - 1]);
@@ -309,12 +310,14 @@ void CompetitionManagerWindow::setupGoToNextButtonForNextRound()
             {
                 KOManager = new KORoundManager(&indManager->getRoundsKOGroupsReference()[manager->getActualRound() - 1], manager->getResults(), &indManager->getCompetitionRules()->getRoundsReference()[manager->getActualRound() - 1]);
                 KOManager->updateJumpersSortedByResults();
-                KOManager->setLuckyLosersCount(startListModel->getStartListStatuses()->count() - (KOManager->getGroups()->count() * KOManager->getRoundInfo()->getAdvancingFromKOGroup()));
+                KOManager->setLuckyLosersCount(manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound()].getCount() - (KOManager->getGroups()->count() * KOManager->getRoundInfo()->getAdvancingFromKOGroup()));
+                KOManager->updateActualGroup(manager->getActualJumper());
                 indManager->setKOManager(KOManager);
                 KOGroupsResultsModel = new KOGroupResultsTableModel(KOManager, &dynamic_cast<IndividualCompetitionManager *>(manager)->getActualRoundKOGroupsReference()[0], this);
                 ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
                 ui->tableView_KOGroupResults->resizeColumnsToContents();
                 ui->tableView_KOGroupResults->show();
+                startListModel->setKOGroups(KOManager->getGroups());
             }
         }
 

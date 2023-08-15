@@ -166,6 +166,7 @@ QVector<RoundInfo> CompetitionRulesEditorWidget::getRoundsFromInput()
         round.setKO(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getKORoundFromInput());
         round.setCountInKOGroup(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getKOGroupCountFromInput());
         round.setAdvancingFromKOGroup(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getAdvancingFromKOGroup());
+        round.setKoGroupsSelectionType(dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getKOGroupsSelectionTypeFromInputs());
         rounds.push_back(round);
     }
     return rounds;

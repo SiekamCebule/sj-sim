@@ -26,7 +26,7 @@ public:
     static QJsonObject getJsonObject(KOGroup &group);
     static KOGroup getFromJson(const QJsonObject & json);
 
-    static QVector<KOGroup> constructDefaultKOGroups(RoundInfo * roundInfo, QVector<Jumper *> * jumpers, int selectionType, CompetitionInfo *competition);
+    static QVector<KOGroup> constructKOGroups(RoundInfo * roundInfo, QVector<Jumper *> * jumpers, int selectionType, CompetitionInfo *competition);
     static QVector<Jumper *> getJumpersFromGroups(QVector<KOGroup> & groups);
 
 private:

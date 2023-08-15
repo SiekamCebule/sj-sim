@@ -26,6 +26,7 @@ private:
     bool KO; //Określa czy ta runda jest rundą K.O
     int countInKOGroup; //Ilość zawodników w grupie K.O
     int advancingFromKOGroup; //Ilość zawodników awansujących z grupy K.O
+    int koGroupsSelectionType; //Jak mają być ustalane grupy po przejściu do rundy KO. Manual sprawia że wyświetla się okno z doborem grup przez użytkownika.
     //Ilość lucky looserów jest obliczana automatycznie na podstawie następnej rundy/następnego konkursu dla którego K.O jest kwalifikacjami
 public:
     int getCount() const;
@@ -40,6 +41,8 @@ public:
     void setAdvancingFromKOGroup(int newAdvancingFromKOGroup);
     int getCountInKOGroup() const;
     void setCountInKOGroup(int newCountInKOGroup);
+    int getKoGroupsSelectionType() const;
+    void setKoGroupsSelectionType(int newKoGroupsSelectionType);
 };
 
 #endif // ROUNDINFO_H
