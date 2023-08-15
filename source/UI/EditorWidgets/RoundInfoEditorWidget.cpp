@@ -46,6 +46,7 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitio
     ui->spinBox_AdvancingFromKOGroup->setValue(KOAdvance);
 
     ui->label_warningIcon->setPixmap(QPixmap("://img/warning.png").scaled(ui->label_warningIcon->size()));
+    emit ui->comboBox_KOGroupsSelectionType->activated(ui->comboBox_KOGroupsSelectionType->currentIndex());
 
     connect(ui->checkBox_KORound, &QCheckBox::stateChanged, static_cast<CompetitionRulesEditorWidget *>(parent), &CompetitionRulesEditorWidget::KORoundChanged);
 }

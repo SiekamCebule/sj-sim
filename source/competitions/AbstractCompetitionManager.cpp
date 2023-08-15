@@ -89,7 +89,7 @@ void AbstractCompetitionManager::updateToAdvanceLineDistance()
         competitorsCount = dynamic_cast<TeamCompetitionManager*>(this)->getActualRoundTeamsReference().count();
     }
 
-    if((competitorsCount - shouldBeQualified - (actualStartListIndex) > 0 || actualRound == competitionRules->getRounds().count() || competitorsCount <= shouldBeQualified) && lastQualifiedResult == nullptr)
+    if((competitorsCount - shouldBeQualified - (actualStartListIndex) > 0 || actualRound == competitionRules->getRounds().count() || competitorsCount <= shouldBeQualified) || lastQualifiedResult == nullptr)
     {
         toAdvanceLineDistance = -1;
     }
@@ -183,10 +183,12 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
             //DLA KO
             QVector<Jumper *> sortedGroupJumpers = indManager->getKOManager()->getActualGroup()->getJumpersReference();
             results->sortJumpersByResults(sortedGroupJumpers);
-            Jumper * lastQualified = sortedGroupJumpers[indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() - 1];
-            qDebug()<<"KLIST: "<<&results->getResultsReference()[0];
-            qDebug()<<"LQ JUMPER: "<<lastQualified;
-            lastQualifiedPosition = results->getResultOfIndividualJumper(lastQualified)->getPosition();
+            if(sortedGroupJumpers.count() > indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() - 1){
+                Jumper * lastQualified = sortedGroupJumpers[indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() - 1];
+                qDebug()<<"KLIST: "<<&results->getResultsReference()[0];
+                qDebug()<<"LQ JUMPER: "<<lastQualified;
+                lastQualifiedPosition = results->getResultOfIndividualJumper(lastQualified)->getPosition();
+            }
         }
         else{
             bool exaequo = true;
