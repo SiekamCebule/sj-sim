@@ -6,14 +6,17 @@
 #include "../StartListCompetitorStatus.h"
 #include "../CompetitionResults.h"
 
+class IndividualCompetitionManager;
+
 class KORoundManager
 {
 public:
-    KORoundManager(QVector<KOGroup> * groups, CompetitionResults * results, RoundInfo * roundInfo);
+    KORoundManager(QVector<KOGroup> * groups, CompetitionResults * results, RoundInfo * roundInfo, IndividualCompetitionManager * indManager);
 
     enum KOJumperStatus{
         Winner,
-        Loser
+        Loser,
+        Waiting
     };
 
     void updateStatuses();
@@ -22,6 +25,7 @@ public:
     void updateActualGroup(Jumper * actualJumper);
 
 private:
+    IndividualCompetitionManager * indManager;
     QVector<KOGroup> * groups;
     KOGroup * actualGroup;
 
@@ -52,6 +56,8 @@ public:
     void setLuckyLosersCount(int newLuckyLosersCount);
     KOGroup *getActualGroup() const;
     void setActualGroup(KOGroup *newActualGroup);
+    IndividualCompetitionManager *getIndManager() const;
+    void setIndManager(IndividualCompetitionManager *newIndManager);
 };
 
 #endif // KOROUNDMANAGER_H

@@ -79,6 +79,8 @@ QVariant KOGroupResultsTableModel::data(const QModelIndex &index, int role) cons
         {
             return QColor(qRgb(228, 255, 222));
         }
+        else if(KOManager->getStatusesReference().value(sortedGroupJumpers[index.row()]) == KORoundManager::Waiting)
+            return QColor(qRgb(255, 255, 247));
         else{
             return QColor(qRgb(255, 214, 214));
         }

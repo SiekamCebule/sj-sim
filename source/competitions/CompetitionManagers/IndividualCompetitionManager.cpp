@@ -43,15 +43,17 @@ void IndividualCompetitionManager::updateCompetitorsAdvanceStatuses()
         else if(KOManager != nullptr && actualRound != competitionRules->getRoundsReference().count()){
             if(KOManager->getStatusesReference().value(status.getJumper()) == KORoundManager::Winner)
                 status.setAdvanceStatus(StartListCompetitorStatus::SureAdvanced);
+            else if(KOManager->getStatusesReference().value(status.getJumper()) == KORoundManager::Waiting)
+                status.setAdvanceStatus(StartListCompetitorStatus::Waiting);
             else if(KOManager->getLuckyLoserReference().contains(status.getJumper()))
             {
-                /*bool allFinished = true;
+                bool allFinished = true;
                 for(auto & status : startListStatuses)
                     if(status.getJumpStatus() == StartListCompetitorStatus::Unfinished)
                         allFinished = false;
                 if(allFinished)
                     status.setAdvanceStatus(StartListCompetitorStatus::SureAdvanced);
-                else*/
+                else
                     status.setAdvanceStatus(StartListCompetitorStatus::Waiting);
             }
             else

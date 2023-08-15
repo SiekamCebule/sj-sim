@@ -3,7 +3,7 @@
 
 #include "CompetitionRulesEditorWidget.h"
 
-RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitiorsCount, bool sortStartList, short sortGroups, bool KO, int KOCount, int KOAdvance, QWidget *parent) :
+RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitiorsCount, bool sortStartList, short sortGroups, bool KO, int KOCount, int KOAdvance, int selection,  QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RoundInfoEditorWidget)
 {
@@ -27,7 +27,6 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitio
             ui->label_KOAdvanceCount->show();
             ui->label_KOGroupsSelectionType->show();
             ui->comboBox_KOGroupsSelectionType->show();
-            emit ui->comboBox_KOGroupsSelectionType->activated(ui->comboBox_KOGroupsSelectionType->currentIndex());
         }
         else
         {
@@ -44,9 +43,9 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitio
     ui->checkBox_KORound->setChecked(KO);
     ui->spinBox_KOGroupCount->setValue(KOCount);
     ui->spinBox_AdvancingFromKOGroup->setValue(KOAdvance);
+    ui->comboBox_KOGroupsSelectionType->setCurrentIndex(selection);
 
     ui->label_warningIcon->setPixmap(QPixmap("://img/warning.png").scaled(ui->label_warningIcon->size()));
-    emit ui->comboBox_KOGroupsSelectionType->activated(ui->comboBox_KOGroupsSelectionType->currentIndex());
 
     connect(ui->checkBox_KORound, &QCheckBox::stateChanged, static_cast<CompetitionRulesEditorWidget *>(parent), &CompetitionRulesEditorWidget::KORoundChanged);
 }

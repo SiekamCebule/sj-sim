@@ -119,7 +119,11 @@ void CompetitionRulesEditorWidget::fillRoundsInputs(bool setup)
         if(i - 1 >= 0) //Czyli jeżeli istnieje poprzednia runda
             sortStartList = dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getAdvancingFromKOGroup();
 
-        ui->toolBox_rounds->addItem(new RoundInfoEditorWidget(getCompetitionTypeFromInput() == CompetitionRules::Individual, count, sortStartList, sortGroups, KO, KOGroupCount, KOAdvanceCount, this), "");
+        int selection = 0;
+        if(i - 1 >= 0) //Czyli jeżeli istnieje poprzednia runda
+            sortStartList = dynamic_cast<RoundInfoEditorWidget *>(ui->toolBox_rounds->widget(i))->getKOGroupsSelectionTypeFromInputs();
+
+        ui->toolBox_rounds->addItem(new RoundInfoEditorWidget(getCompetitionTypeFromInput() == CompetitionRules::Individual, count, sortStartList, sortGroups, KO, KOGroupCount, KOAdvanceCount, selection, this), "");
     }
     for(int i=0; i<ui->toolBox_rounds->count(); i++)
     {

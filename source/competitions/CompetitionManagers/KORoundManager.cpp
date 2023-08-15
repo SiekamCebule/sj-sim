@@ -1,6 +1,9 @@
 #include "KORoundManager.h"
 
-KORoundManager::KORoundManager(QVector<KOGroup> *groups, CompetitionResults *results, RoundInfo *roundInfo) : groups(groups), results(results), roundInfo(roundInfo)
+#include "IndividualCompetitionManager.h"
+
+KORoundManager::KORoundManager(QVector<KOGroup> *groups, CompetitionResults *results, RoundInfo *roundInfo, IndividualCompetitionManager *indManager)
+    : groups(groups), results(results), roundInfo(roundInfo), indManager(indManager)
 {
 
 }
@@ -17,11 +20,24 @@ void KORoundManager::updateStatuses()
 
             if(sortedGroupJumpers.count() > 0)
             {
+                int remaining = 0;
+                for(auto & jumper : group.getJumpersReference())
+                {
+                    if(results->getResultOfIndividualJumper(jumper) != nullptr)
+                    {
+                        if(results->getResultOfIndividualJumper(jumper)->getJumpsReference().count() < indManager->getActualRound())
+                            remaining++;
+                    }
+                    else
+                        remaining++;
+                }
                 QVector<int> positions = results->getJumpersPositions(&sortedGroupJumpers);
-                if(positions[sortedGroupJumpers.indexOf(jumper)] <= roundInfo->getAdvancingFromKOGroup())
+                if(positions[sortedGroupJumpers.indexOf(jumper)] + remaining <= roundInfo->getAdvancingFromKOGroup())
                     statuses.insert(jumper, KORoundManager::Winner);
-                else
+                else if(positions[sortedGroupJumpers.indexOf(jumper)] > roundInfo->getAdvancingFromKOGroup())
                     statuses.insert(jumper, KORoundManager::Loser);
+                else
+                    statuses.insert(jumper, KORoundManager::Waiting);
             }
         }
     }
@@ -66,6 +82,16 @@ void KORoundManager::updateActualGroup(Jumper *actualJumper)
         if(group.getJumpersReference().contains(actualJumper))
             actualGroup = &group;
     }
+}
+
+IndividualCompetitionManager *KORoundManager::getIndManager() const
+{
+    return indManager;
+}
+
+void KORoundManager::setIndManager(IndividualCompetitionManager *newIndManager)
+{
+    indManager = newIndManager;
 }
 
 KOGroup *KORoundManager::getActualGroup() const

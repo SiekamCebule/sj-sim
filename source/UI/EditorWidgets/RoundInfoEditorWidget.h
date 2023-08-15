@@ -13,7 +13,7 @@ class RoundInfoEditorWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit RoundInfoEditorWidget(bool hideGroupsInfo = true, int competitiorsCount = 1, bool sortStartList = true, short sortGroups = 0, bool KO = false, int KOCount = 0, int KOAdvance = 0, QWidget *parent = nullptr);
+    explicit RoundInfoEditorWidget(bool hideGroupsInfo = true, int competitiorsCount = 1, bool sortStartList = true, short sortGroups = 0, bool KO = false, int KOCount = 0, int KOAdvance = 0, int selection = 0, QWidget *parent = nullptr);
     ~RoundInfoEditorWidget();
 
     void fillRoundInfoInput();
