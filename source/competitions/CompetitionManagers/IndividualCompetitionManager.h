@@ -33,7 +33,7 @@ public:
 
 private:
     QVector<QVector<Jumper *>> roundsJumpers;
-    QVector<QVector<KOGroup>> roundsKOGroups;
+    QVector<QVector<KOGroup> *> roundsKOGroups;
     KORoundManager * KOManager;
 
 public:
@@ -44,13 +44,11 @@ public:
     QVector<QVector<Jumper *> > & getRoundsJumpersReference();
     void setRoundsJumpers(const QVector<QVector<Jumper *> > &newRoundsJumpers);
     QVector<StartListCompetitorStatus> getStartListStatuses() const;
-    QVector<QVector<KOGroup> > & getRoundsKOGroupsReference();
-    QVector<QVector<KOGroup> > getRoundsKOGroups() const;
-    void setRoundsKOGroups(const QVector<QVector<KOGroup> > &newRoundsKOGroups);
-    QVector<KOGroup> & getFirstRoundKOGroupsReference() {return roundsKOGroups[0];}
-    QVector<KOGroup> & getActualRoundKOGroupsReference() {return roundsKOGroups[actualRound - 1];}
     KORoundManager *getKOManager() const;
     void setKOManager(KORoundManager *newKOManager);
+    QVector<QVector<KOGroup> *> getRoundsKOGroups() const;
+    QVector<QVector<KOGroup> *> & getRoundsKOGroupsReference();
+    void setRoundsKOGroups(const QVector<QVector<KOGroup> *> &newRoundsKOGroups);
 };
 
 #endif // INDIVIDUALCOMPETITIONMANAGER_H

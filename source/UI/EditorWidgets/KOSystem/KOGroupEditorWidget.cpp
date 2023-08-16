@@ -48,7 +48,6 @@ KOGroup KOGroupEditorWidget::getKOGroupFromInputs()
 {
     KOGroup group;
     group.setNumber(this->group->getNumber());
-    group.setCompetition(this->group->getCompetition());
     for(auto & comboBox : comboBoxes)
     {
         group.getJumpersReference().push_back(jumpersList->at(comboBox->currentIndex()));

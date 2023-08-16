@@ -27,18 +27,14 @@ public:
     static KOGroup getFromJson(const QJsonObject & json);
 
     static QVector<KOGroup> constructKOGroups(RoundInfo * roundInfo, QVector<Jumper *> * jumpers, int selectionType, CompetitionInfo *competition);
-    static QVector<Jumper *> getJumpersFromGroups(QVector<KOGroup> & groups);
+    static QVector<Jumper *> getJumpersFromGroups(QVector<KOGroup> * groups);
 
 private:
-    CompetitionInfo * competition;
-
     int number;
 
     //Aktywny jeden z tych vectorów w zależności competitionType
     QVector<Jumper *> jumpers;
 public:
-    CompetitionInfo *getCompetition() const;
-    void setCompetition(CompetitionInfo *newCompetition);
     int getNumber() const;
     void setNumber(int newNumber);
     QVector<Jumper *> getJumpers() const;

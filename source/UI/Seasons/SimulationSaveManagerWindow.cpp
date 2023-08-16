@@ -339,8 +339,20 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
         competitionManager->setBaseDSQProbability(configWindow->getBaseDSQProbability());
         competitionManager->setWindGenerationSettings(configWindow->getWindGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
 
-        if(type == CompetitionRules::Individual)
-            static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(configWindow->getSeasonCompetitionJumpers());
+        if(type == CompetitionRules::Individual){
+            if(competition->getRulesPointer()->getRoundsReference()[0].getKO())
+            {
+                competition->getRoundsKOGroupsReference().push_back(configWindow->getSeasonCompetitionGroups());
+                static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&competition->getRoundsKOGroupsReference().last());
+                static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(KOGroup::getJumpersFromGroups(&competition->getRoundsKOGroupsReference().first()));
+            }
+            else{
+                static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(configWindow->getSeasonCompetitionJumpers());
+                competition->getRoundsKOGroupsReference().push_back(QVector<KOGroup>());
+                static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&competition->getRoundsKOGroupsReference().last());
+            }
+
+        }
         else if(type == CompetitionRules::Team){
             competition->setTeams(configWindow->getCompetitionTeamsReference());
             static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(MyFunctions::convertToVectorOfPointers(&competition->getTeamsReference()));

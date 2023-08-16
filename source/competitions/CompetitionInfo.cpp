@@ -96,19 +96,14 @@ QVector<CompetitionInfo *> CompetitionInfo::getSpecificTypeCompetitions(QVector<
     return toReturn;
 }
 
-QVector<KOGroup> CompetitionInfo::getKOGroups() const
+QVector<QVector<KOGroup> > CompetitionInfo::getRoundsKOGroups() const
 {
-    return KOGroups;
+    return roundsKOGroups;
 }
 
-QVector<KOGroup> &CompetitionInfo::getKOGroupsReference()
+void CompetitionInfo::setRoundsKOGroups(const QVector<QVector<KOGroup> > &newRoundsKOGroups)
 {
-    return KOGroups;
-}
-
-void CompetitionInfo::setKOGroups(const QVector<KOGroup> &newKOGroups)
-{
-    KOGroups = newKOGroups;
+    roundsKOGroups = newRoundsKOGroups;
 }
 
 QVector<Team> CompetitionInfo::getTeams() const
@@ -124,6 +119,11 @@ QVector<Team> &CompetitionInfo::getTeamsReference()
 void CompetitionInfo::setTeams(const QVector<Team> &newTeams)
 {
     teams = newTeams;
+}
+
+QVector<QVector<KOGroup> > &CompetitionInfo::getRoundsKOGroupsReference()
+{
+    return roundsKOGroups;
 }
 
 bool CompetitionInfo::getPlayed() const
@@ -225,11 +225,14 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     object.insert("teams", teamsArray);
 
     QJsonArray KOGroupsArray;
-    for(auto & group : competition.getKOGroupsReference())
+    for(auto & groups : competition.getRoundsKOGroupsReference())
     {
-        KOGroupsArray.push_back(KOGroup::getJsonObject(group));
+        QJsonArray groupArray;
+        for(auto & group : groups)
+            groupArray.push_back(KOGroup::getJsonObject(group));
+        KOGroupsArray.push_back(groupArray);
     }
-    object.insert("ko-groups", KOGroupsArray);
+    object.insert("rounds-ko-groups", KOGroupsArray);
 
     return object;
 }
@@ -244,12 +247,18 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json)
     }
     seasonObjectsManager.fill(&comp.getTeamsReference());
 
-    QJsonArray KOGroupsArray = json.value("ko-groups").toArray();
+    QJsonArray KOGroupsArray = json.value("rounds-ko-groups").toArray();
     for(auto val : KOGroupsArray)
     {
-        comp.getKOGroupsReference().push_back(KOGroup::getFromJson(val.toObject()));
+        QVector<KOGroup> groups;
+        for(auto v : val.toArray())
+        {
+            groups.push_back(KOGroup::getFromJson(v.toObject()));
+        }
+        comp.getRoundsKOGroupsReference().push_back(groups);
+        seasonObjectsManager.fill(&groups);
     }
-    seasonObjectsManager.fill(&comp.getKOGroupsReference());
+    //seasonObjectsManager.fill(&comp.getKOGroupsReference());
 
     comp.setID(json.value("id").toString().toULong());
     comp.setHill(static_cast<Hill *>(seasonObjectsManager.getObjectByID(json.value("hill-id").toString().toULong())));

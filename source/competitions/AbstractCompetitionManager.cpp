@@ -153,9 +153,6 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
     bool condition = false;
     if(indManager != nullptr)
         if(indManager->getKOManager()){
-            /*QVector<Jumper *> sortedGroupJumpers = indManager->getKOManager()->getActualGroup()->getJumpersReference();
-            results->sortJumpersByResults(sortedGroupJumpers);*/
-
             int finished = 0; //Zawodnicy którzy skoczyli w aktualnej rundzie
             for(auto & jumper : indManager->getKOManager()->getActualGroup()->getJumpersReference())
                 if(results->getResultOfIndividualJumper(jumper) != nullptr)

@@ -44,7 +44,7 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitio
     ui->checkBox_KORound->setChecked(KO);
     ui->spinBox_KOGroupCount->setValue(KOCount);
     ui->spinBox_AdvancingFromKOGroup->setValue(KOAdvance);
-    ui->comboBox_KOGroupsSelectionType->setCurrentIndex(selection);s
+    ui->comboBox_KOGroupsSelectionType->setCurrentIndex(selection);
 
     connect(ui->checkBox_KORound, &QCheckBox::stateChanged, static_cast<CompetitionRulesEditorWidget *>(parent), &CompetitionRulesEditorWidget::KORoundChanged);
 }

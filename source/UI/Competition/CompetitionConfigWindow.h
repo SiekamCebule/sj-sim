@@ -83,6 +83,7 @@ private:
     CompetitionInfo * seasonCompetition;
     SimulationSave * simulationSave;
     QVector<Jumper *> seasonCompetitionJumpers;
+    QVector<KOGroup> seasonCompetitionGroups;
 
     QComboBox * comboBox_groupsSelectionType;
 
@@ -120,13 +121,16 @@ public:
     QVector<KOGroup> & getCompetitionGroupsReference();
     QVector<KOGroup> getCompetitionGroups() const;
     void setCompetitionGroups(const QVector<KOGroup> &newCompetitionGroups);
+    QVector<KOGroup> getSeasonCompetitionGroups() const;
+    QVector<KOGroup> & getSeasonCompetitionGroupsReference();
+    void setSeasonCompetitionGroups(const QVector<KOGroup> &newSeasonCompetitionGroups);
 
 private slots:
     void on_pushButton_submit_clicked();
     void on_pushButton_loadJumpers_clicked();
-    void on_comboBox_competition_currentIndexChanged(int index);
     void on_comboBox_classification_activated(int index);
     void on_pushButton_defaultStartListOrder_clicked();
+    void on_comboBox_competition_activated(int index);
 };
 
 #endif // COMPETITIONCONFIGWINDOW_H

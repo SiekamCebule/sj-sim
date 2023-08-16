@@ -12,11 +12,19 @@
             "rounds": [
                 {
                     "count": 50,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 3,
                     "sort-start-list": false
                 },
                 {
                     "count": 30,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": true
                 }
@@ -30,13 +38,17 @@
             "competition-type": 0,
             "dsq": true,
             "gate-compensations": true,
-            "id": "381",
+            "id": "85",
             "judges-points": true,
             "jumpers-in-team-count": 0,
             "name": "World Cup Qualifications",
             "rounds": [
                 {
                     "count": 100,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": false
                 }
@@ -57,11 +69,19 @@
             "rounds": [
                 {
                     "count": 40,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": false
                 },
                 {
                     "count": 30,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": true
                 }
@@ -82,6 +102,10 @@
             "rounds": [
                 {
                     "count": 50,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": false
                 }
@@ -95,13 +119,17 @@
             "competition-type": 1,
             "dsq": true,
             "gate-compensations": true,
-            "id": "167",
+            "id": "88",
             "judges-points": false,
             "jumpers-in-team-count": 4,
             "name": "Team WC Training",
             "rounds": [
                 {
                     "count": 15,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 3,
                     "sort-start-list": false
                 }
@@ -115,13 +143,17 @@
             "competition-type": 1,
             "dsq": true,
             "gate-compensations": true,
-            "id": "386",
+            "id": "89",
             "judges-points": true,
             "jumpers-in-team-count": 4,
             "name": "Team World Cup Qualifications",
             "rounds": [
                 {
                     "count": 15,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 3,
                     "sort-start-list": false
                 }
@@ -142,11 +174,19 @@
             "rounds": [
                 {
                     "count": 15,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 3,
                     "sort-start-list": false
                 },
                 {
                     "count": 8,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 1,
                     "sort-start-list": true
                 }
@@ -160,28 +200,119 @@
             "competition-type": 0,
             "dsq": true,
             "gate-compensations": true,
-            "id": "390",
+            "id": "91",
             "judges-points": true,
             "jumpers-in-team-count": 4,
             "name": "Ski Flying World Championship",
             "rounds": [
                 {
                     "count": 40,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": false
                 },
                 {
                     "count": 30,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": true
                 },
                 {
                     "count": 30,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": true
                 },
                 {
                     "count": 30,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 0,
+                    "sort-start-list": true
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": false,
+            "competition-type": 1,
+            "dsq": true,
+            "gate-compensations": true,
+            "id": "180",
+            "judges-points": true,
+            "jumpers-in-team-count": 2,
+            "name": "Duo Team World Cup",
+            "rounds": [
+                {
+                    "count": 20,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 3,
+                    "sort-start-list": false
+                },
+                {
+                    "count": 12,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 1,
+                    "sort-start-list": true
+                },
+                {
+                    "count": 8,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 1,
+                    "sort-start-list": true
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": true,
+            "competition-type": 0,
+            "dsq": true,
+            "gate-compensations": true,
+            "id": "33510",
+            "judges-points": true,
+            "jumpers-in-team-count": 0,
+            "name": "Classical KO",
+            "rounds": [
+                {
+                    "count": 50,
+                    "ko": true,
+                    "ko-group-advancing": 1,
+                    "ko-group-count": 2,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 0,
+                    "sort-start-list": true
+                },
+                {
+                    "count": 30,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": true
                 }
@@ -195,33 +326,44 @@
             "competition-type": 0,
             "dsq": true,
             "gate-compensations": true,
-            "id": "395",
+            "id": "33506",
             "judges-points": true,
-            "jumpers-in-team-count": 4,
-            "name": "Diamond Cup",
+            "jumpers-in-team-count": 0,
+            "name": "SuperKO by fortonese",
             "rounds": [
                 {
                     "count": 20,
-                    "sort-after-groups": 0,
-                    "sort-start-list": false
-                },
-                {
-                    "count": 20,
-                    "sort-after-groups": 0,
-                    "sort-start-list": true
-                },
-                {
-                    "count": 15,
+                    "ko": true,
+                    "ko-group-advancing": 1,
+                    "ko-group-count": 2,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": true
                 },
                 {
-                    "count": 10,
+                    "count": 12,
+                    "ko": true,
+                    "ko-group-advancing": 1,
+                    "ko-group-count": 2,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": true
                 },
                 {
-                    "count": 10,
+                    "count": 6,
+                    "ko": true,
+                    "ko-group-advancing": 1,
+                    "ko-group-count": 2,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 0,
+                    "sort-start-list": true
+                },
+                {
+                    "count": 3,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": true
                 }
@@ -235,24 +377,92 @@
             "competition-type": 0,
             "dsq": false,
             "gate-compensations": true,
-            "id": "387",
+            "id": "93",
             "judges-points": true,
             "jumpers-in-team-count": 4,
             "name": "Future Cup",
             "rounds": [
                 {
                     "count": 35,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": true
                 },
                 {
                     "count": 20,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
                     "sort-after-groups": 0,
                     "sort-start-list": true
                 }
             ],
             "wind-average-calculating-type": 1,
             "wind-compensation-distance-effect": 2,
+            "wind-compensations": true
+        },
+        {
+            "95-hs-rule": true,
+            "competition-type": 0,
+            "dsq": true,
+            "gate-compensations": true,
+            "id": "92",
+            "judges-points": true,
+            "jumpers-in-team-count": 4,
+            "name": "Diamond Cup",
+            "rounds": [
+                {
+                    "count": 20,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 0,
+                    "sort-start-list": false
+                },
+                {
+                    "count": 20,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 0,
+                    "sort-start-list": true
+                },
+                {
+                    "count": 15,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 0,
+                    "sort-start-list": true
+                },
+                {
+                    "count": 10,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 0,
+                    "sort-start-list": true
+                },
+                {
+                    "count": 10,
+                    "ko": false,
+                    "ko-group-advancing": 0,
+                    "ko-group-count": 0,
+                    "ko-groups-selection-type": 0,
+                    "sort-after-groups": 0,
+                    "sort-start-list": true
+                }
+            ],
+            "wind-average-calculating-type": 0,
+            "wind-compensation-distance-effect": 1,
             "wind-compensations": true
         }
     ]

@@ -283,7 +283,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
         KOGroupsList->setKOGroups(&competitionGroups);
     }
     else{
-        KOGroupsList->setKOGroups(&seasonCompetition->getKOGroupsReference());
+        KOGroupsList->setKOGroups(&seasonCompetitionGroups);
     }
 
     if(getType() == SingleCompetition){
@@ -311,6 +311,8 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
                 teamsTreeView->hide();
                 KOGroupsList->show();
                 comboBox_groupsSelectionType->show();
+
+                seasonCompetitionGroups = KOGroup::constructKOGroups(&seasonCompetition->getRulesPointer()->getRoundsReference()[0], &seasonCompetitionJumpers, seasonCompetition->getRulesPointer()->getRoundsReference()[0].getKoGroupsSelectionType(), seasonCompetition);
                 KOGroupsList->fillListLayout();
             }
             else{
@@ -348,16 +350,15 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
             bool seasonCompetitionCondition = false;
             if(getType() == SingleCompetition)
             {
-                if(index != KOGroup::Classic || (index == KOGroup::Classic && ((competitionJumpers.count() % 2 == 0) || (competitionRulesEditor->getRoundsFromInput().at(0).getCountInKOGroup() == 2))))
+                if(index != KOGroup::Classic || (index == KOGroup::Classic || (competitionRulesEditor->getRoundsFromInput().at(0).getCountInKOGroup() == 2)))
                 {
                     RoundInfo roundInfo = competitionRulesEditor->getRoundsFromInput().at(0);
                     competitionGroups = KOGroup::constructKOGroups(&roundInfo, &competitionJumpers, index, nullptr);
                 }
             }
-            else if((seasonCompetitionJumpers.count() % 2 == 0) && (seasonCompetition->getRulesPointer()->getRoundsReference()[0].getCountInKOGroup() == 2))
+            else if(index != KOGroup::Classic || (index == KOGroup::Classic || (seasonCompetition->getRulesPointer()->getRoundsReference()[0].getCountInKOGroup() == 2)))
             {
-                if(index != KOGroup::Classic || (index == KOGroup::Classic && ((seasonCompetitionJumpers.count() % 2 == 0) || (seasonCompetition->getRulesPointer()->getRoundsReference()[0].getCountInKOGroup() == 2))))
-                    competitionGroups = KOGroup::constructKOGroups(&seasonCompetition->getRulesPointer()->getRoundsReference()[0], &seasonCompetitionJumpers, index, seasonCompetition);
+                seasonCompetitionGroups = KOGroup::constructKOGroups(&seasonCompetition->getRulesPointer()->getRoundsReference()[0], &seasonCompetitionJumpers, index, seasonCompetition);
             }
             KOGroupsList->fillListLayout();
         }
@@ -466,6 +467,21 @@ void CompetitionConfigWindow::setupCompetitionRulesToolBoxItem()
         }
         else competitionRulesEditor->resetInputs();
     });
+}
+
+QVector<KOGroup> CompetitionConfigWindow::getSeasonCompetitionGroups() const
+{
+    return seasonCompetitionGroups;
+}
+
+QVector<KOGroup> &CompetitionConfigWindow::getSeasonCompetitionGroupsReference()
+{
+    return seasonCompetitionGroups;
+}
+
+void CompetitionConfigWindow::setSeasonCompetitionGroups(const QVector<KOGroup> &newSeasonCompetitionGroups)
+{
+    seasonCompetitionGroups = newSeasonCompetitionGroups;
 }
 
 QVector<KOGroup> CompetitionConfigWindow::getCompetitionGroups() const
@@ -704,13 +720,15 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         else{
             if(type == CompetitionRules::Individual){
                 if(competitionRulesEditor-> getRoundsFromInput().at(0).getKO() == true){
-                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(KOGroup::getJumpersFromGroups(competitionGroups));
-                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(competitionGroups);
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(KOGroup::getJumpersFromGroups(&competitionGroups));
+                    info.getRoundsKOGroupsReference().push_back(competitionGroups);
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&info.getRoundsKOGroupsReference().last());
                 }
                 else
                 {
                     static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(competitionJumpers);
-                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(QVector<KOGroup>());
+                    info.getRoundsKOGroupsReference().push_back(QVector<KOGroup>());
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&info.getRoundsKOGroupsReference().last());
                 }
             }
             else if(type == CompetitionRules::Team){
@@ -785,7 +803,7 @@ void CompetitionConfigWindow::on_pushButton_loadJumpers_clicked()
     }
 }
 
-void CompetitionConfigWindow::on_comboBox_competition_currentIndexChanged(int index)
+void CompetitionConfigWindow::on_comboBox_competition_activated(int index)
 {
     if(index > 0)
     {
@@ -795,6 +813,12 @@ void CompetitionConfigWindow::on_comboBox_competition_currentIndexChanged(int in
         CompetitionInfo * competition = SeasonCalendar::getMainCompetitionByIndex(competitions, index);
         if(type == CompetitionRules::Individual){
             IndividualCompetitionManager::setStartListOrderByCompetitionResults(seasonCompetitionJumpers, competition);
+            if(seasonCompetition->getRulesPointer()->getRoundsReference()[0].getKO() == true)
+                if(comboBox_groupsSelectionType->currentIndex() > 0){
+                    seasonCompetitionGroups = KOGroup::constructKOGroups(&seasonCompetition->getRulesPointer()->getRoundsReference()[0], &seasonCompetitionJumpers, comboBox_groupsSelectionType->currentIndex() - 1, seasonCompetition);
+                    KOGroupsList->setKOGroups(&seasonCompetitionGroups);
+                    KOGroupsList->fillListLayout();
+                }
             emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(0, 0), jumpersListView->getListModel()->index(jumpersListView->getListModel()->rowCount() - 1));
         }
         else{
@@ -818,6 +842,12 @@ void CompetitionConfigWindow::on_comboBox_classification_activated(int index)
         if(type == CompetitionRules::Individual)
         {
             IndividualCompetitionManager::setStartListOrderByClassification(seasonCompetitionJumpers, classification);
+            if(seasonCompetition->getRulesPointer()->getRoundsReference()[0].getKO() == true)
+                if(comboBox_groupsSelectionType->currentIndex() > 0){
+                    seasonCompetitionGroups = KOGroup::constructKOGroups(&seasonCompetition->getRulesPointer()->getRoundsReference()[0], &seasonCompetitionJumpers, comboBox_groupsSelectionType->currentIndex() - 1, seasonCompetition);
+                    KOGroupsList->setKOGroups(&seasonCompetitionGroups);
+                    KOGroupsList->fillListLayout();
+                }
             emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(0, 0), jumpersListView->getListModel()->index(jumpersListView->getListModel()->rowCount() - 1));
         }
         else{
@@ -838,6 +868,11 @@ void CompetitionConfigWindow::on_pushButton_defaultStartListOrder_clicked()
     if(type == CompetitionRules::Individual)
     {
         IndividualCompetitionManager::setStartListOrderByDefault(&simulationSave->getJumpersReference(), seasonCompetitionJumpers);
+        if(seasonCompetition->getRulesPointer()->getRoundsReference()[0].getKO() == true){
+                seasonCompetitionGroups = KOGroup::constructKOGroups(&seasonCompetition->getRulesPointer()->getRoundsReference()[0], &seasonCompetitionJumpers, comboBox_groupsSelectionType->currentIndex() - 1, seasonCompetition);
+                KOGroupsList->setKOGroups(&seasonCompetitionGroups);
+                KOGroupsList->fillListLayout();
+            }
         emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(0, 0), jumpersListView->getListModel()->index(jumpersListView->getListModel()->rowCount() - 1));
     }
 }

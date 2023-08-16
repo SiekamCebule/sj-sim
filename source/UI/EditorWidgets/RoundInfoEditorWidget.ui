@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>422</width>
-    <height>254</height>
+    <height>261</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -257,7 +257,7 @@ listy startowej</string>
           </font>
          </property>
          <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ff3434;&quot;&gt;Aby klasyczny dobór grup działał, ilość zawodników w grupie musi być równa 2, a ilość skoczków w rundzie parzysta.&lt;/span&gt;&lt;span style=&quot; color:#ff3434;&quot;&gt; W trybie klasycznym pierwszy zawodnik rywalizuje z ostatnim itd.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#ff3434;&quot;&gt;Aby klasyczny dobór grup działał, ilość zawodników w grupie musi być równa 2.&lt;/span&gt;&lt;span style=&quot; color:#ff3434;&quot;&gt; W trybie klasycznym pierwszy zawodnik rywalizuje z ostatnim itd.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="whatsThis">
           <string/>

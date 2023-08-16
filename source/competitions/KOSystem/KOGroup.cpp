@@ -17,7 +17,6 @@ QJsonObject KOGroup::getJsonObject(KOGroup &group)
     QJsonObject object;
     object.insert("id", QString::number(group.getID()));
     object.insert("number", group.getNumber());
-    object.insert("competition-id", QString::number(group.getCompetition()->getID()));
     QJsonArray jumpersArray;
     for(auto & jumper : group.getJumpersReference())
         jumpersArray.push_back(QString::number(jumper->getID()));
@@ -31,7 +30,6 @@ KOGroup KOGroup::getFromJson(const QJsonObject &json)
     KOGroup group;
     group.setID(json.value("id").toString().toULong());
     group.setNumber(json.value("number").toInt());
-    group.setCompetition(static_cast<CompetitionInfo*>(seasonObjectsManager.getObjectByID(json.value("competition-id").toString().toULong())));
     QJsonArray jumpersArray = json.value("jumpers-ids").toArray();
     for(auto val : jumpersArray)
         group.getJumpersReference().push_back(static_cast<Jumper *>(seasonObjectsManager.getObjectByID(val.toString().toULong())));
@@ -47,31 +45,37 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
     case KOGroup::Classic:{ //Tak jak w TCS
         if(roundInfo->getCountInKOGroup() == 2)
         {
-            if(jumpers->count() % 2 == 0) //Jeżeli ilość skoczków jest parzysta
+            int additionalGroupJumpersCount = jumpers->count() % roundInfo->getCountInKOGroup();
+            int number = jumpers->count() / 2;
+            for(int i=0; i<number; i++)
             {
-                int number = jumpers->count() / 2;
-                for(int i=0; i<number; i++)
-                {
-                    KOGroup group;
-                    group.setNumber(i+1);
-                    group.setCompetition(competition);
-                    //group.setCompetitionType(competition->getRulesPointer()->getCompetitionType());
+                KOGroup group;
+                group.setNumber(i+1);
 
-                    Jumper * firstJumper = jumpers->at(jumpers->count() - 1 - i); //Ten gorszy w kwalifikacjach
-                    Jumper * secondJumper = jumpers->at(i); //Ten lepszy w kwalifikacjach
-                    group.setJumpers({secondJumper, firstJumper}); //na odwrót ponieważ w jumpers zawodnicy są od najgorszego do najlepszego
+                Jumper * firstJumper = jumpers->at(jumpers->count() - 1 - i); //Ten gorszy w kwalifikacjach
+                Jumper * secondJumper = jumpers->at(i); //Ten lepszy w kwalifikacjach
+                group.setJumpers({secondJumper, firstJumper}); //na odwrót ponieważ w jumpers zawodnicy są od najgorszego do najlepszego
 
-                    groups.push_back(group);
-                }
-                std::reverse(groups.begin(), groups.end());
-                int nm=1;
-                for(auto & g : groups){
-                    g.setNumber(nm);
-                    nm++;
-                }
+                groups.push_back(group);
             }
+            std::reverse(groups.begin(), groups.end());
+            int nm=1;
+            for(auto & g : groups){
+                g.setNumber(nm);
+                nm++;
+            }
+            if(additionalGroupJumpersCount > 0) //jest konieczność zrobienia dodatkowej grupy bo nie starcza zawodniów
+            {
+                KOGroup additionalGroup;
+                if(groups.count() > 0)
+                    additionalGroup.setNumber(groups.last().getNumber() + 1);
+                else
+                    additionalGroup.setNumber(1);
+                additionalGroup.getJumpersReference().push_back(jumpers->at(number));
+                groups.push_back(additionalGroup);
+            }
+            break;
         }
-        break;
     }
     case KOGroup::ForLargerGroups:
     {
@@ -82,8 +86,6 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
         {
             KOGroup group;
             group.setNumber(i+1);
-            group.setCompetition(competition);
-            //group.setCompetitionType(competition->getRulesPointer()->getCompetitionType());
 
             int jumperIndex = i;
             for(int ii=0; ii<roundInfo->getCountInKOGroup(); ii++)
@@ -102,8 +104,6 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
                 additionalGroup.setNumber(groups.last().getNumber() + 1);
             else
                 additionalGroup.setNumber(1);
-            additionalGroup.setCompetition(competition);
-            //additionalGroup.setCompetitionType(competition->getRulesPointer()->getCompetitionType());
 
             for(int jumperIndex=jumpers->count() - 1; jumperIndex>jumpers->count() - 1 - additionalGroupJumpersCount; jumperIndex--)
             {
@@ -148,7 +148,6 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
         {
             KOGroup group;
             group.setNumber(i+1);
-            group.setCompetition(competition);
             //group.setCompetitionType(competition->getRulesPointer()->getCompetitionType());
 
             groups.push_back(group);
@@ -184,17 +183,12 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
         {
             KOGroup group;
             group.setNumber(i+1);
-            group.setCompetition(competition);
-            //group.setCompetitionType(competition->getRulesPointer()->getCompetitionType());
 
             groups.push_back(group);
         }
         QVector<Jumper *> toDraw = *jumpers;
         toDraw.detach();
         int normalJumpersCountLimit = roundInfo->getCountInKOGroup();
-        int higherJumpersCountLimit = roundInfo->getCountInKOGroup() + 1;
-        //int canReachHigherLimit = jumpers->count() % roundInfo->getCountInKOGroup(); //Ilość drużyn która może osiągnąć limit zawodników na wyższym poziomie
-
 
         for(auto & group : groups)
         {
@@ -204,7 +198,7 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
             {
                 for(int i=0; i<roundInfo->getCountInKOGroup(); i++){
                     if(toDraw.count() > 0){
-                        Jumper * randomJumper = toDraw[MyRandom::randomInt(0, toDraw.count() - 1)];
+                        Jumper * randomJumper = toDraw[MyRandom::randomInt(0, toDraw.count())];
                         group.getJumpersReference().push_back(randomJumper);
                         MyFunctions::removeFromVector(toDraw, randomJumper);
                     }
@@ -218,7 +212,6 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
                 additionalGroup.setNumber(groups.last().getNumber() + 1);
             else
                 additionalGroup.setNumber(1);
-            additionalGroup.setCompetition(competition);
 
             for(auto & j : toDraw)
                 additionalGroup.getJumpersReference().push_back(j);
@@ -227,14 +220,13 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
         break;
     }
     }
-
     return groups;
 }
 
-QVector<Jumper *> KOGroup::getJumpersFromGroups(QVector<KOGroup> &groups)
+QVector<Jumper *> KOGroup::getJumpersFromGroups(QVector<KOGroup> *groups)
 {
     QVector<Jumper *> jumpers;
-    for(auto & group : groups)
+    for(auto & group : *groups)
     {
         for(auto & jumper : group.getJumpersReference())
             jumpers.push_back(jumper);
@@ -265,14 +257,4 @@ int KOGroup::getNumber() const
 void KOGroup::setNumber(int newNumber)
 {
     number = newNumber;
-}
-
-CompetitionInfo *KOGroup::getCompetition() const
-{
-    return competition;
-}
-
-void KOGroup::setCompetition(CompetitionInfo *newCompetition)
-{
-    competition = newCompetition;
 }

@@ -133,7 +133,7 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound(b
         if(competitionRules->getRoundsReference()[actualRound - 1].getKO() == true)
         {
             int selectionType = competitionRules->getRoundsReference()[actualRound - 1].getKoGroupsSelectionType();
-            return KOGroup::getJumpersFromGroups(getActualRoundKOGroupsReference());
+            return KOGroup::getJumpersFromGroups(getRoundsKOGroupsReference()[0]);
         }
     }
 
@@ -163,7 +163,9 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound(b
 QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersAfterQualifications(CompetitionInfo *competition, QVector<Jumper *> & jumpers)
 {
     CompetitionResults * results = &competition->getAdvancementCompetition()->getResultsReference();
+
     int lastQualifiedPosition = competition->getRulesPointer()->getRoundsReference()[0].getCount();
+    int koLastQualifiedPosition = lastQualifiedPosition;
 
     bool exaequo = true;
     for(auto & res : results->getResultsReference()){ // Sprawdzamy, czy wystąpiło ex aequo.
@@ -183,11 +185,21 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersAfterQualifica
     }
 
     QVector<Jumper *> toReturn;
-    for(auto & jumper : jumpers)
+
+    if(competition->getRulesPointer()->getRoundsReference()[0].getKO())
     {
-        if(results->getResultOfIndividualJumper(jumper) != nullptr)
-            if(results->getResultOfIndividualJumper(jumper)->getPosition() <= lastQualifiedPosition)
-                toReturn.push_back(jumper);
+        for(int i=koLastQualifiedPosition - 1; i>=0; i--)
+        {
+            toReturn.push_back(results->getResultByIndex(i)->getJumper());
+        }
+    }
+    else{
+        for(auto & jumper : jumpers)
+        {
+            if(results->getResultOfIndividualJumper(jumper) != nullptr)
+                if(results->getResultOfIndividualJumper(jumper)->getPosition() <= lastQualifiedPosition)
+                    toReturn.push_back(jumper);
+        }
     }
     return toReturn;
 }
@@ -283,6 +295,21 @@ void IndividualCompetitionManager::setStartListOrderByDefault(QVector<Jumper *> 
     startList = tempJumpers;
 }
 
+QVector<QVector<KOGroup> *> IndividualCompetitionManager::getRoundsKOGroups() const
+{
+    return roundsKOGroups;
+}
+
+QVector<QVector<KOGroup> *> &IndividualCompetitionManager::getRoundsKOGroupsReference()
+{
+    return roundsKOGroups;
+}
+
+void IndividualCompetitionManager::setRoundsKOGroups(const QVector<QVector<KOGroup> *> &newRoundsKOGroups)
+{
+    roundsKOGroups = newRoundsKOGroups;
+}
+
 KORoundManager *IndividualCompetitionManager::getKOManager() const
 {
     return KOManager;
@@ -293,24 +320,10 @@ void IndividualCompetitionManager::setKOManager(KORoundManager *newKOManager)
     KOManager = newKOManager;
 }
 
-QVector<QVector<KOGroup> > IndividualCompetitionManager::getRoundsKOGroups() const
-{
-    return roundsKOGroups;
-}
-
-void IndividualCompetitionManager::setRoundsKOGroups(const QVector<QVector<KOGroup> > &newRoundsKOGroups)
-{
-    roundsKOGroups = newRoundsKOGroups;
-}
 
 QVector<StartListCompetitorStatus> IndividualCompetitionManager::getStartListStatuses() const
 {
     return startListStatuses;
-}
-
-QVector<QVector<KOGroup> > &IndividualCompetitionManager::getRoundsKOGroupsReference()
-{
-    return roundsKOGroups;
 }
 
 void IndividualCompetitionManager::setupNextRound(QVector<KOGroup> manualGroups)
@@ -318,10 +331,14 @@ void IndividualCompetitionManager::setupNextRound(QVector<KOGroup> manualGroups)
     actualRound++; //Przechodzi do następnej rundy
     roundsJumpers.push_back(getFilteredJumpersForNextRound());
 
-    if(manualGroups.count() > 0)
-        roundsKOGroups.push_back(manualGroups);
-    else
-        roundsKOGroups.push_back(getFilteredGroupsForNextRound());
+    if(manualGroups.count() > 0){
+        competitionInfo->getRoundsKOGroupsReference().push_back(manualGroups);
+        roundsKOGroups.push_back(&competitionInfo->getRoundsKOGroupsReference().last());
+    }
+    else{
+        competitionInfo->getRoundsKOGroupsReference().push_back(getFilteredGroupsForNextRound());
+        roundsKOGroups.push_back(&competitionInfo->getRoundsKOGroupsReference().last());
+    }
 
     if(competitionRules->getRoundsReference()[actualRound - 1].getKO())
         roundsJumpers.last() = getFilteredJumpersForNextRound(true);
