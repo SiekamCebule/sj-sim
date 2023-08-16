@@ -17,7 +17,7 @@ class IndividualCompetitionManager : public AbstractCompetitionManager
 public:
     IndividualCompetitionManager();
 
-    void setupNextRound();
+    void setupNextRound(QVector<KOGroup> manualGroups = QVector<KOGroup>());
     void setupStartListStatusesForActualRound();
     void updateCompetitorsAdvanceStatuses();
 

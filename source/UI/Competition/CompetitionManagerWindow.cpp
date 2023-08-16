@@ -6,9 +6,12 @@
 #include "../../utilities/functions.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
+#include "../EditorWidgets/KOSystem/KOGroupsListView.h"
 #include "../JumpManipulation/JumpManipulatorConfigWindow.h"
 #include <QInputDialog>
+#include <QComboBox>
 #include <QMessageBox>
+#include <QStringListModel>
 
 CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *manager, QWidget *parent) :
     QDialog(parent),
@@ -285,6 +288,61 @@ AbstractCompetitionManager *CompetitionManagerWindow::getManager() const
     return manager;
 }
 
+QVector<KOGroup> CompetitionManagerWindow::getManualKOGroupsFromDialogInputs()
+{
+    IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(manager);
+    QDialog * dialog = new QDialog(this);
+    QHBoxLayout * mainLayout = new QHBoxLayout(this);
+    dialog->setLayout(mainLayout);
+    dialog->setFixedSize(600, 820);
+
+    QVBoxLayout * groupsListLayout = new QVBoxLayout(this);
+    QComboBox * selectionComboBox = new QComboBox(this);
+    selectionComboBox->setModel(new QStringListModel({tr("Dobór grup"), tr("Klasyczne"), tr("Dla dużych grup"), tr("Losowe (Z podziałem na koszyki)"), tr("Losowe")}, this));
+
+    KOGroupsListView groupsListView = KOGroupsListView();
+    QVector<Jumper *> jumpers = indManager->getFilteredJumpersForNextRound();
+    QVector<KOGroup> groups = KOGroup::constructKOGroups(&manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound()], &jumpers, KOGroup::Random, manager->getCompetitionInfo());
+    groupsListView.setKOGroups(&groups);
+    groupsListView.setJumpersList(&indManager->getActualRoundJumpersReference());
+    groupsListView.fillListLayout();
+    groupsListLayout->addWidget(selectionComboBox);
+    groupsListLayout->addWidget(&groupsListView);
+
+    connect(selectionComboBox, &QComboBox::activated, this, [this, & groupsListView, & jumpers, & groups](int index){
+        if(index != KOGroup::Classic || (index == KOGroup::Classic && ((jumpers.count() % 2 == 0) || (manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound()].getCountInKOGroup() == 2))))
+        {
+            if(index > 0){
+                index--;
+                RoundInfo * roundInfo = &manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound()];
+                groups = KOGroup::constructKOGroups(roundInfo, &jumpers, index, manager->getCompetitionInfo());
+                groupsListView.setKOGroups(&groups);
+                groupsListView.fillListLayout();
+            }
+        }
+    });
+
+    QVBoxLayout * submitButtonLayout = new QVBoxLayout(this);
+    QPushButton * submitButton = new QPushButton("OK", this);
+    submitButton->setFixedSize(111, 111);
+    submitButton->setStyleSheet("QPushButton{\nborder: 1px solid rgb(0, 59, 23);\nborder-radius: 6px;\ncolor: rgb(0, 0, 0);\nbackground-color: rgb(123, 220, 144);\n}\nQPushButton:hover{\nbackground-color: rgb(153, 253, 174);\n}");
+    submitButton->setFont(QFont("Ubuntu", 18));
+    connect(submitButton, &QPushButton::clicked, dialog, &QDialog::accept);
+    submitButtonLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    submitButtonLayout->addWidget(submitButton);
+    submitButtonLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
+
+    mainLayout->addLayout(groupsListLayout);
+    mainLayout->addSpacerItem(new QSpacerItem(50, 0, QSizePolicy::Fixed, QSizePolicy::Fixed));
+    mainLayout->addLayout(submitButtonLayout);
+
+    if(dialog->exec() == QDialog::Accepted)
+    {
+
+    }
+    return groups;
+}
+
 void CompetitionManagerWindow::setupGoToNextButtonForNextRound()
 {
     ui->pushButton_goToNext->show();
@@ -293,7 +351,18 @@ void CompetitionManagerWindow::setupGoToNextButtonForNextRound()
 
     QMetaObject::Connection * const connection = new QMetaObject::Connection;
     *connection = connect(ui->pushButton_goToNext, &QPushButton::clicked, this, [this, connection](){
-        manager->setupNextRound();
+        //Tu będzie ten dialog z edycją grup
+        int condition1 = manager->getCompetitionRules()->getRoundsReference().count() > manager->getActualRound();
+        int condition2 = false;
+        if(condition1)
+            condition2 = manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound()].getKO() == true && manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound()].getKoGroupsSelectionType() == CompetitionRules::Manual;
+
+        if(condition1 && condition2)
+            dynamic_cast<IndividualCompetitionManager *>(manager)->setupNextRound(getManualKOGroupsFromDialogInputs());
+        else if(dynamic_cast<IndividualCompetitionManager *>(manager) != nullptr)
+            dynamic_cast<IndividualCompetitionManager *>(manager)->setupNextRound();
+        else
+            manager->setupNextRound();
 
         IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(manager);
         if(indManager != nullptr)

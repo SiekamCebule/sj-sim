@@ -42,7 +42,7 @@ public:
     RoundInfo *getRoundInfo() const;
     void setRoundInfo(RoundInfo *newRoundInfo);
 private slots:
-    void on_comboBox_KOGroupsSelectionType_currentIndexChanged(int index);
+    void on_comboBox_KOGroupsSelectionType_activated(int index);
 };
 
 #endif // ROUNDINFOEDITORWIDGET_H

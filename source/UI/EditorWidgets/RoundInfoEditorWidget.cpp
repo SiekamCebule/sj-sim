@@ -36,15 +36,15 @@ RoundInfoEditorWidget::RoundInfoEditorWidget(bool hideGroupsInfo, int competitio
             ui->label_KOAdvanceCount->hide();
             ui->label_KOGroupsSelectionType->hide();
             ui->comboBox_KOGroupsSelectionType->hide();
+            ui->label_warningIcon->hide();
         }
     });
+    ui->label_warningIcon->setPixmap(QPixmap("://img/warning.png").scaled(ui->label_warningIcon->size()));
 
     ui->checkBox_KORound->setChecked(KO);
     ui->spinBox_KOGroupCount->setValue(KOCount);
     ui->spinBox_AdvancingFromKOGroup->setValue(KOAdvance);
-    ui->comboBox_KOGroupsSelectionType->setCurrentIndex(selection);
-
-    ui->label_warningIcon->setPixmap(QPixmap("://img/warning.png").scaled(ui->label_warningIcon->size()));
+    ui->comboBox_KOGroupsSelectionType->setCurrentIndex(selection);s
 
     connect(ui->checkBox_KORound, &QCheckBox::stateChanged, static_cast<CompetitionRulesEditorWidget *>(parent), &CompetitionRulesEditorWidget::KORoundChanged);
 }
@@ -154,11 +154,11 @@ void RoundInfoEditorWidget::setRoundInfo(RoundInfo *newRoundInfo)
     roundInfo = newRoundInfo;
 }
 
-void RoundInfoEditorWidget::on_comboBox_KOGroupsSelectionType_currentIndexChanged(int index)
+void RoundInfoEditorWidget::on_comboBox_KOGroupsSelectionType_activated(int index)
 {
-    if(index == 0)
-        ui->label_warningIcon->show();
-    else
+    if(index != 0 || getKORoundFromInput() == false)
         ui->label_warningIcon->hide();
+    else
+        ui->label_warningIcon->show();
 }
 

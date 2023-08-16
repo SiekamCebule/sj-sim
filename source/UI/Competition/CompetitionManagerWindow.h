@@ -95,6 +95,7 @@ private:
     QAction * action_autoSimulateGroup;
     QAction * action_autoSimulateJumps;
 
+    QVector<KOGroup> getManualKOGroupsFromDialogInputs();
 
 public:
     AbstractCompetitionManager *getManager() const;

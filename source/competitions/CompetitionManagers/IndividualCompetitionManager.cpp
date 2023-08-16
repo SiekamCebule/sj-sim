@@ -133,10 +133,7 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound(b
         if(competitionRules->getRoundsReference()[actualRound - 1].getKO() == true)
         {
             int selectionType = competitionRules->getRoundsReference()[actualRound - 1].getKoGroupsSelectionType();
-            if(selectionType != CompetitionRules::Manual)
-            {
-                return KOGroup::getJumpersFromGroups(getActualRoundKOGroupsReference());
-            }
+            return KOGroup::getJumpersFromGroups(getActualRoundKOGroupsReference());
         }
     }
 
@@ -316,11 +313,16 @@ QVector<QVector<KOGroup> > &IndividualCompetitionManager::getRoundsKOGroupsRefer
     return roundsKOGroups;
 }
 
-void IndividualCompetitionManager::setupNextRound()
+void IndividualCompetitionManager::setupNextRound(QVector<KOGroup> manualGroups)
 {
     actualRound++; //Przechodzi do następnej rundy
     roundsJumpers.push_back(getFilteredJumpersForNextRound());
-    roundsKOGroups.push_back(getFilteredGroupsForNextRound());
+
+    if(manualGroups.count() > 0)
+        roundsKOGroups.push_back(manualGroups);
+    else
+        roundsKOGroups.push_back(getFilteredGroupsForNextRound());
+
     if(competitionRules->getRoundsReference()[actualRound - 1].getKO())
         roundsJumpers.last() = getFilteredJumpersForNextRound(true);
     setActualStartListIndex(0);

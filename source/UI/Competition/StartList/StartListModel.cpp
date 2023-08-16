@@ -108,9 +108,6 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
         }
         return font;
     }
-    //if(jumpers->count() > index.row())
-    //{
-    //Trzeba dodać numer startowy do "stringa"
     QString string = QString::number(index.row() + 1) + ". " + startListStatuses->at(index.row()).getJumper()->getNameAndSurname();
     if(role == Qt::DisplayRole){
         if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)

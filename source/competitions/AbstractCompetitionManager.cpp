@@ -153,9 +153,15 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
     bool condition = false;
     if(indManager != nullptr)
         if(indManager->getKOManager()){
-            QVector<Jumper *> sortedGroupJumpers = indManager->getKOManager()->getActualGroup()->getJumpersReference();
-            results->sortJumpersByResults(sortedGroupJumpers);
-            if(sortedGroupJumpers.count() >= indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() && sortedGroupJumpers.count() < indManager->getKOManager()->getActualGroup()->getJumpersReference().count())
+            /*QVector<Jumper *> sortedGroupJumpers = indManager->getKOManager()->getActualGroup()->getJumpersReference();
+            results->sortJumpersByResults(sortedGroupJumpers);*/
+
+            int finished = 0; //Zawodnicy którzy skoczyli w aktualnej rundzie
+            for(auto & jumper : indManager->getKOManager()->getActualGroup()->getJumpersReference())
+                if(results->getResultOfIndividualJumper(jumper) != nullptr)
+                    if(results->getResultOfIndividualJumper(jumper)->getJumpsReference().count() == actualRound)
+                        finished++;
+            if(finished >= indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() && finished < indManager->getKOManager()->getActualGroup()->getJumpersReference().count())
                 condition = true;
         }
 
@@ -194,9 +200,14 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
                 else
                     remaining++;
             }
-            int addition = int(indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() == 1);
-            if(remaining <= indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() + addition){
-                Jumper * lastQualified = sortedGroupJumpers[indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() - remaining];
+            int addition = 0;
+            //int addition = int(indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() == 1);
+            if(remaining <= indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() && remaining > 0){
+                Jumper * lastQualified = nullptr;
+                if(indManager->getKOManager()->getActualGroup()->getJumpersReference().count() <= indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup())
+                    lastQualified = sortedGroupJumpers.last();
+                else
+                    lastQualified = sortedGroupJumpers[indManager->getKOManager()->getRoundInfo()->getAdvancingFromKOGroup() - remaining];
                 lastQualifiedPosition = results->getResultOfIndividualJumper(lastQualified)->getPosition();
             }
         }
