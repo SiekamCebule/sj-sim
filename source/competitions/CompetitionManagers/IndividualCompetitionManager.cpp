@@ -28,7 +28,7 @@ void IndividualCompetitionManager::updateCompetitorsAdvanceStatuses()
         bool condition2 = false;
         if(condition1 == true)
         {
-            condition2 = competitionRules->getRoundsReference()[actualRound].getKO() && competitionRules->getRoundsReference()[actualRound].getKoGroupsSelectionType() == CompetitionRules::Classic;
+            condition2 = competitionRules->getRoundsReference()[actualRound - 1].getKO() == false && competitionRules->getRoundsReference()[actualRound].getKO();// && competitionRules->getRoundsReference()[actualRound].getKoGroupsSelectionType() == CompetitionRules::Classic;
         }
         if(condition1 && condition2)
         {
@@ -133,7 +133,7 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound(b
         if(competitionRules->getRoundsReference()[actualRound - 1].getKO() == true)
         {
             int selectionType = competitionRules->getRoundsReference()[actualRound - 1].getKoGroupsSelectionType();
-            return KOGroup::getJumpersFromGroups(getRoundsKOGroupsReference()[0]);
+            return KOGroup::getJumpersFromGroups(getRoundsKOGroupsReference()[actualRound - 1]);
         }
     }
 

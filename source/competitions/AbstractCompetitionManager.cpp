@@ -242,7 +242,7 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
         if(getType() == CompetitionRules::Individual)
         {
             if(competitionRules->getRoundsReference().count() > actualRound){
-                if(competitionRules->getRoundsReference()[actualRound].getKO() && competitionRules->getRoundsReference()[actualRound].getKoGroupsSelectionType() == CompetitionRules::Classic) //KO w next rundzie
+                if(competitionRules->getRoundsReference()[actualRound - 1].getKO() == false && competitionRules->getRoundsReference()[actualRound].getKO())// && competitionRules->getRoundsReference()[actualRound].getKoGroupsSelectionType() == CompetitionRules::Classic) //KO w next rundzie
                 {
                     lastQualifiedResult = results->getResultByIndex(koLastQualifiedPosition - 1);
                 }
