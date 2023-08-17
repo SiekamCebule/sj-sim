@@ -51,6 +51,8 @@ SOURCES += \
     source/UI/Seasons/Classifications/ClassificationResultsTableModel.cpp \
     source/UI/Seasons/Classifications/ClassificationResultsTableView.cpp \
     source/UI/Seasons/CompetitionInfoEditorWidget.cpp \
+    source/UI/Seasons/ItemModels/ClassificationsArchiveListModel.cpp \
+    source/UI/Seasons/ItemModels/CompetitionsArchiveListModel.cpp \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.cpp \
     source/UI/Seasons/NewSeasonConfiguratorWindow.cpp \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.cpp \
@@ -157,6 +159,8 @@ HEADERS += \
     source/UI/Seasons/Classifications/ClassificationResultsTableModel.h \
     source/UI/Seasons/Classifications/ClassificationResultsTableView.h \
     source/UI/Seasons/CompetitionInfoEditorWidget.h \
+    source/UI/Seasons/ItemModels/ClassificationsArchiveListModel.h \
+    source/UI/Seasons/ItemModels/CompetitionsArchiveListModel.h \
     source/UI/Seasons/ItemModels/SimulationSavesListModel.h \
     source/UI/Seasons/NewSeasonConfiguratorWindow.h \
     source/UI/Seasons/NewSimulationSaveConfigurationWindow.h \

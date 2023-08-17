@@ -9,6 +9,8 @@
 #include "../EditorWidgets/ClassificationEditorWidget.h"
 #include "CalendarEditor/CalendarEditorWidget.h"
 #include "Classifications/ClassificationResultsTableView.h"
+#include "ItemModels/CompetitionsArchiveListModel.h"
+#include "ItemModels/ClassificationsArchiveListModel.h"
 #include "../../seasons/SimulationSave.h"
 
 namespace Ui {
@@ -53,6 +55,9 @@ private:
 
     ClassificationResultsTableView * classificationResultsTableView;
 
+    CompetitionsArchiveListModel * competitionsArchiveModel;
+    ClassificationsArchiveListModel * classificationsArchiveModel;
+    ClassificationResultsTableView * archiveClassificationResults;
 
     void whenClassificationsComboBoxIndexChanged(int index);
 
@@ -62,6 +67,9 @@ private slots:
     void on_pushButton_competitionConfig_clicked();
     void on_pushButton_saveToFile_clicked();
     void on_pushButton_repairDatabase_clicked();
+    void on_comboBox_archiveSeason_currentIndexChanged(int index);
+    void on_listView_competitionsArchive_doubleClicked(const QModelIndex &index);
+    void on_listView_classificationsArchive_doubleClicked(const QModelIndex &index);
 };
 
 #endif // SIMULATIONSAVEMANAGERWINDOW_H

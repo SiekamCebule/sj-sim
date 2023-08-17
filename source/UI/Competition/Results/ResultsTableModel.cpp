@@ -13,9 +13,10 @@
 
 ResultsTableModel::ResultsTableModel(int type, CompetitionResults *results, AbstractCompetitionManager *manager, QObject *parent)
     : QAbstractTableModel(parent),
-      type(type),
-      results(results),
-      manager(manager)
+    type(type),
+    results(results),
+    manager(manager),
+    startListStatuses(nullptr)
 {
 }
 
@@ -64,28 +65,32 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         }
     }
     else if(role == Qt::BackgroundRole){
-        switch(type){
-        case CompetitionRules::Individual:{
-            results->sortInDescendingOrder();
-            if(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses) == nullptr){
-                return QColor(qRgb(255, 255, 255));
-            }
-            switch(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses)->getAdvanceStatus())
-            {
-            case StartListCompetitorStatus::Waiting:
-                return QColor(qRgb(253, 253, 249));
-            case StartListCompetitorStatus::SureAdvanced:
-                if(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses)->getQualifiedBy95HSRule())
-                    return QColor(qRgb(233, 245, 236));
-                else{
-                    return QColor(qRgb(242, 255, 246));
+        if(startListStatuses != nullptr){
+            switch(type){
+            case CompetitionRules::Individual:{
+                results->sortInDescendingOrder();
+                if(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses) == nullptr){
+                    return QColor(qRgb(255, 255, 255));
                 }
-            case StartListCompetitorStatus::SureDroppedOut:
-                return QColor(qRgb(252, 237, 237));
+                switch(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses)->getAdvanceStatus())
+                {
+                case StartListCompetitorStatus::Waiting:
+                    return QColor(qRgb(253, 253, 249));
+                case StartListCompetitorStatus::SureAdvanced:
+                    if(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses)->getQualifiedBy95HSRule())
+                        return QColor(qRgb(233, 245, 236));
+                    else{
+                        return QColor(qRgb(242, 255, 246));
+                    }
+                case StartListCompetitorStatus::SureDroppedOut:
+                    return QColor(qRgb(252, 237, 237));
+                }
+                break;
             }
-            break;
+            }
         }
-        }
+        else
+            return QColor(qRgb(253, 253, 249));
     }
     else if(role == Qt::DecorationRole){
         switch(index.column()){
@@ -178,8 +183,8 @@ QVariant ResultsTableModel::headerData(int section, Qt::Orientation orientation,
                 case 0:
                     return tr("Poz.");
                 case 1:
-                    return tr("Imię i nazwisko");
-                case 2:
+                return tr("Imię i nazwisko");
+                    case 2:
                     return tr("Suma punktów");
                 }
                 if(section > 2){

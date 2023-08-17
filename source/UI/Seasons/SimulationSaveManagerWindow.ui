@@ -174,7 +174,7 @@
           </font>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>5</number>
          </property>
          <widget class="QWidget" name="page_jumpers">
           <property name="geometry">
@@ -182,7 +182,7 @@
             <x>0</x>
             <y>0</y>
             <width>845</width>
-            <height>614</height>
+            <height>581</height>
            </rect>
           </property>
           <attribute name="label">
@@ -220,7 +220,7 @@
             <x>0</x>
             <y>0</y>
             <width>845</width>
-            <height>614</height>
+            <height>581</height>
            </rect>
           </property>
           <attribute name="label">
@@ -258,7 +258,7 @@
             <x>0</x>
             <y>0</y>
             <width>845</width>
-            <height>614</height>
+            <height>581</height>
            </rect>
           </property>
           <attribute name="label">
@@ -296,7 +296,7 @@
             <x>0</x>
             <y>0</y>
             <width>845</width>
-            <height>614</height>
+            <height>581</height>
            </rect>
           </property>
           <attribute name="label">
@@ -314,7 +314,7 @@
             <x>0</x>
             <y>0</y>
             <width>845</width>
-            <height>614</height>
+            <height>581</height>
            </rect>
           </property>
           <attribute name="label">
@@ -343,6 +343,78 @@
               <layout class="QVBoxLayout" name="verticalLayout_classificationEditor"/>
              </item>
             </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page">
+          <attribute name="label">
+           <string>Archiwum</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <widget class="QComboBox" name="comboBox_archiveSeason">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <item>
+              <property name="text">
+               <string>2024</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolBox" name="toolBox_2">
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <widget class="QWidget" name="page_2">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>827</width>
+                <height>473</height>
+               </rect>
+              </property>
+              <attribute name="label">
+               <string>Konkursy</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_12">
+               <item>
+                <widget class="QListView" name="listView_competitionsArchive"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="page_3">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>827</width>
+                <height>473</height>
+               </rect>
+              </property>
+              <attribute name="label">
+               <string>Klasyfikacje</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_10">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_classificationsArchive" stretch="1,1">
+                 <item>
+                  <widget class="QListView" name="listView_classificationsArchive"/>
+                 </item>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_archiveClassificationResults"/>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </widget>
            </item>
           </layout>
          </widget>
