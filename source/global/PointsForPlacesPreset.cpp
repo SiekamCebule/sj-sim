@@ -44,7 +44,6 @@ QJsonObject PointsForPlacesPreset::getPointsForPlacesPresetJsonObject(PointsForP
 QVector<PointsForPlacesPreset> PointsForPlacesPreset::getPointsForPlacesPresetsVectorFromJson(const QByteArray &bytes)
 {
     QVector<PointsForPlacesPreset> presets;
-    presets.clear();
 
     QJsonParseError error;
     QJsonDocument document = QJsonDocument::fromJson(bytes, &error);

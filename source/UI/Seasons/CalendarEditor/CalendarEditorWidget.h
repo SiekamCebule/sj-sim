@@ -54,7 +54,8 @@ private slots:
     void upActionTriggered();
     void downActionTriggered();
     void editActionTriggered();
-    void on_tableView_doubleClicked(const QModelIndex &index);
+
+    void on_pushButton_saveCalendarPreset_clicked();
 
 private:
     void execMultipleHillEditDialog(QVector<int> * rows, int column);
@@ -71,7 +72,6 @@ public:
     CalendarEditorTableModel *getModel() const;
     void setModel(CalendarEditorTableModel *newModel);
     QTableView * getTableView();
-    CompetitionInfoEditorWidget *getCompetitionInfoEditor() const;
     int getDontRemoveBefore() const;
     void setDontRemoveBefore(int newDontRemoveBefore);
     int getDontModifiyBefore() const;

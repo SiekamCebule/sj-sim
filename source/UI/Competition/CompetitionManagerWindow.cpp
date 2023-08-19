@@ -643,8 +643,39 @@ void CompetitionManagerWindow::autoSimulateCompetition()
         if(manager->isAllJumpsAreFinished() == false)
             manager->setActualJumperToNextUnfinished();
         if(manager->checkRoundEnd() && (manager->getActualRound() != manager->getCompetitionRules()->getRounds().count() && manager->getActualRound() != manager->getCompetitionInfo()->getExceptionalRoundsCount())){
-            manager->setupNextRound();
-            if(type == CompetitionRules::Team){
+            if(type == CompetitionRules::Individual)
+            {
+                indManager->setupNextRound();
+                IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(manager);
+                if(indManager != nullptr)
+                {
+                    if(KOManager != nullptr)
+                    {
+                        delete KOManager;
+                        KOManager = nullptr;
+                        indManager->setKOManager(nullptr);
+                        delete KOGroupsResultsModel;
+                        ui->tableView_KOGroupResults->hide();
+                        startListModel->setKOGroups(nullptr);
+                    }
+                    if(indManager->getCompetitionRules()->getRoundsReference()[manager->getActualRound() - 1].getKO() == true)
+                    {
+                        KOManager = new KORoundManager(indManager->getRoundsKOGroupsReference()[manager->getActualRound() - 1], manager->getResults(), &indManager->getCompetitionRules()->getRoundsReference()[manager->getActualRound() - 1], dynamic_cast<IndividualCompetitionManager *>(manager));
+                        KOManager->updateJumpersSortedByResults();
+                        KOManager->setLuckyLosersCount(manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound()].getCount() - (KOManager->getGroups()->count() * KOManager->getRoundInfo()->getAdvancingFromKOGroup()));
+                        KOManager->updateActualGroup(manager->getActualJumper());
+                        KOManager->setIndManager(dynamic_cast<IndividualCompetitionManager *>(manager));
+                        indManager->setKOManager(KOManager);
+                        KOGroupsResultsModel = new KOGroupResultsTableModel(KOManager, &dynamic_cast<IndividualCompetitionManager *>(manager)->getRoundsKOGroupsReference()[0]->first(), this);
+                        ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
+                        ui->tableView_KOGroupResults->resizeColumnsToContents();
+                        ui->tableView_KOGroupResults->show();
+                        startListModel->setKOGroups(KOManager->getGroups());
+                    }
+                }
+            }
+            else if(type == CompetitionRules::Team){
+                tmManager->setupNextRound();
                 teamResultsTreeModel->setTeams(&dynamic_cast<TeamCompetitionManager *>(manager)->getRoundsTeamsReference()[0]);
             }
         }
@@ -816,9 +847,41 @@ void CompetitionManagerWindow::autoSimulateJumps()
             if(manager->checkCompetitionEnd() == true)
                 break;
             if(manager->checkRoundEnd() && (manager->getActualRound() != manager->getCompetitionRules()->getRounds().count() && manager->getActualRound() != manager->getCompetitionInfo()->getExceptionalRoundsCount()) && i+1 < jumpsCount){
-                manager->setupNextRound();
-                if(getType() == CompetitionRules::Team)
+                if(type == CompetitionRules::Individual)
+                {
+                    indManager->setupNextRound();
+                    IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(manager);
+                    if(indManager != nullptr)
+                    {
+                        if(KOManager != nullptr)
+                        {
+                            delete KOManager;
+                            KOManager = nullptr;
+                            indManager->setKOManager(nullptr);
+                            delete KOGroupsResultsModel;
+                            ui->tableView_KOGroupResults->hide();
+                            startListModel->setKOGroups(nullptr);
+                        }
+                        if(indManager->getCompetitionRules()->getRoundsReference()[manager->getActualRound() - 1].getKO() == true)
+                        {
+                            KOManager = new KORoundManager(indManager->getRoundsKOGroupsReference()[manager->getActualRound() - 1], manager->getResults(), &indManager->getCompetitionRules()->getRoundsReference()[manager->getActualRound() - 1], dynamic_cast<IndividualCompetitionManager *>(manager));
+                            KOManager->updateJumpersSortedByResults();
+                            KOManager->setLuckyLosersCount(manager->getCompetitionRules()->getRoundsReference()[manager->getActualRound()].getCount() - (KOManager->getGroups()->count() * KOManager->getRoundInfo()->getAdvancingFromKOGroup()));
+                            KOManager->updateActualGroup(manager->getActualJumper());
+                            KOManager->setIndManager(dynamic_cast<IndividualCompetitionManager *>(manager));
+                            indManager->setKOManager(KOManager);
+                            KOGroupsResultsModel = new KOGroupResultsTableModel(KOManager, &dynamic_cast<IndividualCompetitionManager *>(manager)->getRoundsKOGroupsReference()[0]->first(), this);
+                            ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
+                            ui->tableView_KOGroupResults->resizeColumnsToContents();
+                            ui->tableView_KOGroupResults->show();
+                            startListModel->setKOGroups(KOManager->getGroups());
+                        }
+                    }
+                }
+                else if(type == CompetitionRules::Team){
+                    tmManager->setupNextRound();
                     teamResultsTreeModel->setTeams(&dynamic_cast<TeamCompetitionManager *>(manager)->getRoundsTeamsReference()[0]);
+                }
             }
             else if(type == CompetitionRules::Team && (tmManager->getActualGroup() != tmManager->getCompetitionRules()->getJumpersInTeamCount())){
                 if(tmManager->checkGroupEnd()){

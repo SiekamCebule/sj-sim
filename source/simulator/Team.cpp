@@ -1,7 +1,5 @@
 #include "Team.h"
 #include <QJsonArray>
-#include "../global/SeasonDatabaseObjectsManager.h"
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
 Team::Team(const QString &countryCode) : countryCode(countryCode),
     ClassWithID()
@@ -147,14 +145,14 @@ QJsonObject Team::getJsonObject(Team &team)
     return object;
 }
 
-Team Team::getFromJson(QJsonObject json)
+Team Team::getFromJson(QJsonObject json, SeasonDatabaseObjectsManager * objectsManager)
 {
     Team team;
     team.setID(json.value("id").toString().toULong());
     team.setCountryCode(json.value("country-code").toString());
     QJsonArray jumpersArray = json.value("jumpers-ids").toArray();
     for(auto jumperID : jumpersArray)
-        team.getJumpersReference().push_back(static_cast<Jumper*>(seasonObjectsManager.getObjectByID(jumperID.toString().toULong())));
+        team.getJumpersReference().push_back(static_cast<Jumper*>(objectsManager->getObjectByID(jumperID.toString().toULong())));
 
     return team;
 }

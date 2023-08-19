@@ -11,10 +11,9 @@
 #include "Jumper.h"
 #include "Hill.h"
 #include "JumpSimulationData.h"
-
+#include "../global/SeasonDatabaseObjectsManager.h"
 
 class JumpSimulator;
-
 
 class JumpData : public ClassWithID
 {
@@ -53,7 +52,7 @@ public:
     void reset();
 
     static QJsonObject getJsonObject(const JumpData &jumpData);
-    static JumpData getFromJson(QJsonObject obj);
+    static JumpData getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager *objectsManager);
 
     double getDistance() const;
     void setDistance(double newDistance);

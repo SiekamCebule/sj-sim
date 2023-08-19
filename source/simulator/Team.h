@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include "Jumper.h"
 #include "../utilities/ClassWithID.h"
+#include "../global/SeasonDatabaseObjectsManager.h"
 
 class Team : public ClassWithID
 {
@@ -19,7 +20,7 @@ public:
     static Team * getTeamByCountryCode(QVector<Team> * teams, QString countryCode);
 
     static QJsonObject getJsonObject(Team & team);
-    static Team getFromJson(QJsonObject json);
+    static Team getFromJson(QJsonObject json, SeasonDatabaseObjectsManager *objectsManager);
 
 private:
     QString countryCode;

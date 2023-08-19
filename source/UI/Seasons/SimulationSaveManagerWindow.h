@@ -32,6 +32,9 @@ public:
     void connectComboBox();
     void disconnectComboBox();
 
+    void setupNextSeasonConfigButton();
+    void configNextSeason();
+
 private:
     Ui::SimulationSaveManagerWindow *ui;
 

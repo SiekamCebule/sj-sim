@@ -1,8 +1,8 @@
 #include "SimulationSave.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
 #include <QFile>
+#include "../global/IDGenerator.h"
 
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
+extern IDGenerator globalIDGenerator;
 
 SimulationSave::SimulationSave() :
     ClassWithID()
@@ -25,9 +25,8 @@ SimulationSave::~SimulationSave()
     }
 }
 
-SimulationSave * SimulationSave::getFromJson(QJsonObject obj)
+SimulationSave * SimulationSave::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
 {
-    SeasonDatabaseObjectsManager * sdom = &seasonObjectsManager;
     SimulationSave * save = new SimulationSave();
     save->setID(obj.value("id").toString().toULong());
     save->setName(obj.value("name").toString());
@@ -38,30 +37,30 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj)
         Jumper * jumper = new Jumper(Jumper::getFromJson(val.toObject()));
         save->getJumpersReference().push_back(jumper);
     }
-    seasonObjectsManager.fill(&save->getJumpersReference());
+    objectsManager->fill(&save->getJumpersReference());
 
     QJsonArray hillsArray = obj.value("hills").toArray();
     for(auto val : hillsArray){
         Hill * hill = new Hill(Hill::getFromJson(val.toObject()));
         save->getHillsReference().push_back(hill);
     }
-    seasonObjectsManager.fill(&save->getHillsReference());
+    objectsManager->fill(&save->getHillsReference());
 
     QJsonArray rulesArray = obj.value("rules").toArray();
     for(auto val : rulesArray){
         CompetitionRules rules = CompetitionRules::getFromJson(val.toObject());
         save->getCompetitionRulesReference().push_back(rules);
     }
-    seasonObjectsManager.fill(&save->getCompetitionRulesReference());
+    objectsManager->fill(&save->getCompetitionRulesReference());
 
     QJsonArray seasonsArray = obj.value("seasons").toArray();
     for(auto val : seasonsArray){
-        Season season = Season::getFromJson(val.toObject());
+        Season season = Season::getFromJson(val.toObject(), objectsManager);
         save->getSeasonsReference().push_back(season);
     }
-    seasonObjectsManager.fill(&save->getSeasonsReference());
+    objectsManager->fill(&save->getSeasonsReference());
 
-    save->setActualSeason(static_cast<Season *>(seasonObjectsManager.getObjectByID(obj.value("actual-season-id").toString().toULong())));
+    save->setActualSeason(static_cast<Season *>(objectsManager->getObjectByID(obj.value("actual-season-id").toString().toULong())));
     save->setNextCompetitionIndex(obj.value("next-competition-index").toInt());
     save->setNextCompetition(save->getActualSeason()->getCalendarReference().getCompetitionsReference()[save->getNextCompetitionIndex()]);
 
@@ -134,7 +133,56 @@ void SimulationSave::updateNextCompetitionIndex()
             break;
         nextCompetitionIndex++;
     }
-    nextCompetition = getActualSeason()->getCalendarReference().getCompetitionsReference()[nextCompetitionIndex];
+    if(nextCompetitionIndex == actualSeason->getCalendarReference().getCompetitionsReference().count())
+        nextCompetition = nullptr;
+    else
+        nextCompetition = getActualSeason()->getCalendarReference().getCompetitionsReference()[nextCompetitionIndex];
+}
+
+void SimulationSave::repairDatabase()
+{
+    QVector<ClassWithID *> objects;
+    for(auto & jumper : jumpers)
+        objects.push_back(jumper);
+    for(auto & hill : hills)
+        objects.push_back(hill);
+    for(auto & rules : competitionRules)
+        objects.push_back(&rules);
+    for(auto & season : seasons)
+    {
+        for(auto & competition : season.getCalendarReference().getCompetitionsReference())
+        {
+            objects.push_back(competition);
+            objects.push_back(&competition->getResultsReference());
+            for(auto & groups : competition->getRoundsKOGroupsReference())
+            {
+                for(auto & group : groups)
+                    objects.push_back(&group);
+            }
+            for(auto & team : competition->getTeamsReference())
+                objects.push_back(&team);
+        }
+        for(auto & classification : season.getCalendarReference().getClassificationsReference())
+        {
+            objects.push_back(classification);
+            for(auto & result : classification->getResultsReference())
+            {
+                objects.push_back(result);
+            }
+        }
+    }
+
+    globalIDGenerator.reset();
+    /*for(auto & object : objects)
+    {
+        object->setID(0);
+    }*/
+    for(auto & object : objects)
+    {
+        object->generateID();
+    }
+
+    return;
 }
 
 CompetitionInfo *SimulationSave::getNextCompetition() const

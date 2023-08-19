@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1247</width>
-    <height>1038</height>
+    <height>1035</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -88,7 +88,7 @@ color: rgb(26, 95, 180);
 background-color: rgb(253, 253, 253);</string>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -99,7 +99,7 @@ background-color: rgb(253, 253, 253);</string>
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>706</height>
+          <height>699</height>
          </rect>
         </property>
         <attribute name="label">
@@ -153,7 +153,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>706</height>
+          <height>646</height>
          </rect>
         </property>
         <attribute name="label">
@@ -216,7 +216,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>706</height>
+          <height>646</height>
          </rect>
         </property>
         <attribute name="label">
@@ -254,7 +254,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>706</height>
+          <height>646</height>
          </rect>
         </property>
         <attribute name="label">
@@ -264,6 +264,24 @@ li.checked::marker { content: &quot;\2612&quot;; }
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_calendarEditor"/>
          </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_loadCalendarPreset">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Wczytaj preset kalendarza</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="page_classifications">
@@ -272,7 +290,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>706</height>
+          <height>646</height>
          </rect>
         </property>
         <attribute name="label">
@@ -310,7 +328,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>706</height>
+          <height>646</height>
          </rect>
         </property>
         <attribute name="label">

@@ -141,3 +141,29 @@ void AppSettingsWindow::on_pushButton_cutSurnames_clicked()
     QMessageBox::information(this, tr("Nazwiska zawodników"), tr("Pomyślnie skrócono nazwiska zawodników"), QMessageBox::Ok);
 }
 
+
+void AppSettingsWindow::on_pushButton_repairDatabase_2_clicked()
+{
+    QProgressBar progressBar;
+    progressBar.setWindowTitle(tr("Naprawa zapisów symulacji"));
+    progressBar.setMaximum(11 * GlobalDatabase::get()->getEditableGlobalSimulationSaves().count());
+    progressBar.show();
+    for(auto & save : GlobalDatabase::get()->getEditableGlobalSimulationSaves())
+    {
+        SeasonCalendar * calendar = &save->getActualSeason()->getCalendarReference();
+        calendar->fixAdvancementClassifications();
+        progressBar.setValue(progressBar.value() + 1);
+        calendar->fixAdvancementCompetitions();
+        progressBar.setValue(progressBar.value() + 1);
+        calendar->fixCompetitionsClassifications();
+        progressBar.setValue(progressBar.value() + 1);
+        calendar->fixCompetitionsHills(&save->getHillsReference());
+        progressBar.setValue(progressBar.value() + 1);
+        save->repairDatabase();
+        progressBar.setValue(progressBar.value() + 5);
+        save->saveToFile("simulationSaves/");
+        progressBar.setValue(progressBar.value() + 2);
+    }
+    QMessageBox::information(this, tr("Naprawiono zapisy symulacji"), tr("Naprawiono zapisy symulacji. Aby zmiana weszła w życie wejdź jeszcze raz do programu aby ponownie wczytać zapisy symulacji."), QMessageBox::Ok);
+}
+

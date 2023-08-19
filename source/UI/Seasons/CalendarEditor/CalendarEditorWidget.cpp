@@ -1,16 +1,18 @@
 #include "CalendarEditorWidget.h"
 #include "ui_CalendarEditorWidget.h"
 #include "../../../global/CountryFlagsManager.h"
+#include "../../../global/GlobalDatabase.h"
 #include "../../../utilities/functions.h"
+#include "../../../seasons/SeasonCalendarPreset.h"
 #include "../../EditorWidgets/HillEditorWidget.h"
 #include "MultipleTrainingsEditDialog.h"
 #include "MultipleTrialRoundsEditDialog.h"
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QComboBox>
-#include <QCheckBox>
-#include <QPushButton>
 #include <QLabel>
+#include <QInputDialog>
+#include <QCheckBox>
 
 CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVector<Classification *> *classificationsList, QWidget *parent) :
     QWidget(parent),
@@ -60,7 +62,6 @@ CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVec
     competitionInfoEditor->setRulesList(model->getRulesList());
     competitionInfoEditor->setupRulesComboBox();
     competitionInfoEditor->setDefaultHill(defaultHill);
-    ui->verticalLayout_competitionInfo->addWidget(competitionInfoEditor);
     competitionInfoEditor->hide();
     connect(competitionInfoEditor, &CompetitionInfoEditorWidget::submitted, this, [this](){
         if(actualCompetitionIndex > (-1)){
@@ -138,11 +139,6 @@ QVector<Classification *> *CalendarEditorWidget::getClassificationsList() const
 void CalendarEditorWidget::setClassificationsList(QVector<Classification *> *newClassificationsList)
 {
     classificationsList = newClassificationsList;
-}
-
-CompetitionInfoEditorWidget *CalendarEditorWidget::getCompetitionInfoEditor() const
-{
-    return competitionInfoEditor;
 }
 
 void CalendarEditorWidget::updateActualCompetitionByID()
@@ -1061,7 +1057,7 @@ void CalendarEditorWidget::execMultipleHillEditDialog(QVector<int> *rows, int co
     }
 }
 
-void CalendarEditorWidget::on_tableView_doubleClicked(const QModelIndex &index)
+/*void CalendarEditorWidget::on_tableView_doubleClicked(const QModelIndex &index)
 {
     CompetitionInfo * competition = nullptr;
     int i=0;
@@ -1090,5 +1086,54 @@ void CalendarEditorWidget::on_tableView_doubleClicked(const QModelIndex &index)
     else{
         actualCompetitionID = (-1);
         updateActualCompetitionByID();
+    }
+}*/
+
+void CalendarEditorWidget::on_pushButton_saveCalendarPreset_clicked()
+{
+    bool ok = false;
+    QString text = QInputDialog::getText(this, tr("Nazwa presetu"), tr("Podaj nazwę jaką ma mieć ten preset kalendarza. Jeżeli istnieje już preset o takiej nazwie, zostanie on nadpisany."), QLineEdit::Normal, "", &ok);
+    if(ok == true)
+    {
+        bool textExsists = false;
+        int index=0;
+        for(auto & p : GlobalDatabase::get()->getEditableGlobalCalendarPresets())
+        {
+            if(p.getName() == text){
+                textExsists = true;
+                break;
+            }
+            index++;
+        }
+        if(textExsists == false)
+            index = (-1);
+
+        SeasonCalendarPreset * preset;
+        if(index == -1){
+            GlobalDatabase::get()->getEditableGlobalCalendarPresets().push_back(SeasonCalendarPreset(this->calendar));
+            preset = &GlobalDatabase::get()->getEditableGlobalCalendarPresets().last();
+        }
+        else{
+            GlobalDatabase::get()->getEditableGlobalCalendarPresets()[index] = SeasonCalendarPreset(this->calendar);
+            preset = &GlobalDatabase::get()->getEditableGlobalCalendarPresets()[index];
+        }
+        preset->setName(text);
+        SeasonCalendar * calendar = &preset->getCalendarReference();
+        for(auto & comp : calendar->getCompetitionsReference())
+        {
+            comp->setPlayed(false);
+            comp->setCancelled(false);
+            comp->getResultsReference().getResultsReference().clear();
+            comp->getRoundsKOGroupsReference().clear();
+            comp->getTeamsReference().clear();
+            QPair hillPair = {comp->getHill()->getName(), comp->getHill()->getHSPoint()};
+            preset->getHillsReference().push_back(hillPair);
+            comp->setHill(nullptr);
+        }
+        for(auto & cls : calendar->getClassificationsReference())
+        {
+            cls->getResultsReference().clear();
+        }
+        GlobalDatabase::get()->writeCalendarPresets();
     }
 }

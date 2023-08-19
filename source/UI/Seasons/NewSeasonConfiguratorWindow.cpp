@@ -5,8 +5,12 @@
 #include "../../global/GlobalAppSettings.h"
 #include "../DatabaseEditor/DatabaseItemsListView.h"
 #include <QMessageBox>
+#include <QComboBox>
+#include <QInputDialog>
+#include <QDialog>
+#include <QLabel>
 
-NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
+NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(bool nextSeason, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NewSeasonConfiguratorDialog),
     classificationsListViewActualElement(-1),
@@ -15,9 +19,10 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
     actualRulesIndex(0)
 {
     ui->setupUi(this);
+    ui->toolBox->setCurrentIndex(0);
     for(auto & globalJumper : GlobalDatabase::get()->getEditableGlobalJumpers())
         jumpers.push_back(new Jumper(globalJumper));
-    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonJumpersItems, true, true, true ,this);
+    jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonJumpersItems, true, !nextSeason, true, this);
     jumpersListView->setSeasonJumpers(&jumpers);
     jumpersListView->setupListModel();
     jumpersListView->selectOnlyFirstRow();
@@ -42,7 +47,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
 
     for(auto & hill : GlobalDatabase::get()->getEditableGlobalHills())
         hills.push_back(new Hill(hill));
-    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonHillsItems, true, true, true, this);
+    hillsListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonHillsItems, true, !nextSeason, true, this);
     hillsListView->setSeasonHills(&hills);
     hillsListView->setupListModel();
     hillsListView->selectOnlyFirstRow();
@@ -124,7 +129,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(QWidget *parent) :
         }
     });
 
-    connect(classificationsListView, &DatabaseItemsListView::remove, calendarEditor->getCompetitionInfoEditor(), [this](){
+    connect(classificationsListView, &DatabaseItemsListView::remove, this, [this](){
         calendar.fixCompetitionsClassifications();
         calendar.fixAdvancementClassifications();
         emit calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
@@ -245,5 +250,60 @@ QVector<Jumper *> &NewSeasonConfiguratorWindow::getJumpersReference()
 void NewSeasonConfiguratorWindow::setJumpers(const QVector<Jumper *> &newJumpers)
 {
     jumpers = newJumpers;
+}
+
+
+void NewSeasonConfiguratorWindow::on_pushButton_loadCalendarPreset_clicked()
+{
+    bool ok = false;
+    QStringList presetsNames;
+    for(auto & preset : GlobalDatabase::get()->getEditableGlobalCalendarPresets())
+        presetsNames.push_back(preset.getName());
+    QString itemText = QInputDialog::getItem(this, tr("Wybierz preset kalendarza"), tr("Wybierz z listy preset kalendarza który chcesz wczytać"), presetsNames,0, false, &ok);
+
+    if(ok == true)
+    {
+        SeasonCalendarPreset * preset = &GlobalDatabase::get()->getEditableGlobalCalendarPresets()[presetsNames.indexOf(itemText)];
+        this->calendar = preset->getCalendarReference();
+
+        int i=0;
+        for(auto & presetHill : preset->getHillsReference())
+        {
+            Hill * hillToSet = nullptr;
+            for(auto & hill : this->hills)
+            {
+                if(hill->getName() == presetHill.first && hill->getHSPoint() == presetHill.second){
+                    hillToSet = hill;
+                }
+            }
+            if(hillToSet != nullptr)
+            {
+                calendar.getCompetitionsReference()[i]->setHill(hillToSet);
+            }
+            else
+            {
+                calendar.getCompetitionsReference()[i]->setHill(new Hill("Hill"));
+            }
+            i++;
+        }
+        calendarTableModel->setCalendar(&calendar);
+        calendarEditor->getTableView()->setModel(nullptr);
+        calendarEditor->getTableView()->setModel(calendarTableModel);
+        calendarEditor->getTableView()->resizeColumnsToContents();
+
+        classificationsListView->setClassifications(&calendar.getClassificationsReference());
+        classificationsListView->getListModel()->insertRows(0, calendar.getClassificationsReference().count());
+        emit classificationsListView->getListView()->reset();
+    }
+}
+
+bool NewSeasonConfiguratorWindow::getNextSeason() const
+{
+    return nextSeason;
+}
+
+void NewSeasonConfiguratorWindow::setNextSeason(bool newNextSeason)
+{
+    nextSeason = newNextSeason;
 }
 

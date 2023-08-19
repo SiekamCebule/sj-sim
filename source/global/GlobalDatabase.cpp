@@ -15,6 +15,8 @@
 #include "../global/CountryFlagsManager.h"
 
 GlobalDatabase* GlobalDatabase::m_globalDatabase = nullptr;
+SeasonDatabaseObjectsManager globalObjectsManager;
+SeasonDatabaseObjectsManager calendarPresetsObjectsManager;
 
 GlobalDatabase::GlobalDatabase()
 {
@@ -25,7 +27,28 @@ GlobalDatabase::~GlobalDatabase()
 {
     for(auto & save : globalSimulationSaves)
         delete save;
+    for(auto & calendarPreset : globalCalendarPresets){
+        for(auto & comp : calendarPreset.getCalendarReference().getCompetitionsReference())
+            delete comp;
+        for(auto & cls : calendarPreset.getCalendarReference().getClassificationsReference())
+            delete cls;
+    }
     delete m_globalDatabase;
+}
+
+QVector<SeasonCalendarPreset> GlobalDatabase::getGlobalCalendarPresets() const
+{
+    return globalCalendarPresets;
+}
+
+QVector<SeasonCalendarPreset> &GlobalDatabase::getEditableGlobalCalendarPresets()
+{
+    return globalCalendarPresets;
+}
+
+void GlobalDatabase::setGlobalCalendarPresets(const QVector<SeasonCalendarPreset> &newGlobalCalendarPresets)
+{
+    globalCalendarPresets = newGlobalCalendarPresets;
 }
 
 QVector<PointsForPlacesPreset> GlobalDatabase::getGlobalPointsForPlacesPresets() const
@@ -117,12 +140,13 @@ void GlobalDatabase::removeJumper(int index)
 
 bool GlobalDatabase::loadFromJson()
 {
-    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadSimulationSaves() && loadPointsForPlacesPresets());
+    globalObjectsManager.clear();
+    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadSimulationSaves() && loadPointsForPlacesPresets() && loadCalendarPresets());
 }
 
 bool GlobalDatabase::writeToJson()
 {
-    return (writeJumpers() && writeHills() && writeCompetitionsRules() && writeSimulationSaves() && writePointsForPlacesPresets());
+    return (writeJumpers() && writeHills() && writeCompetitionsRules() && writeSimulationSaves() && writePointsForPlacesPresets() && writeCalendarPresets());
 }
 
 bool GlobalDatabase::loadJumpers()
@@ -135,7 +159,11 @@ bool GlobalDatabase::loadJumpers()
         message.exec();
         return false;
     }
+    /*QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    QJsonObject obj = doc.object();
+    QJsonArray jumpersArray = obj.value("jumpers");*/
     globalJumpers = Jumper::getVectorFromJson(file.readAll());
+    globalObjectsManager.fill(&globalJumpers);
     file.close();
     return true;
 }
@@ -151,6 +179,7 @@ bool GlobalDatabase::loadHills()
         return false;
     }
     globalHills = Hill::getVectorFromJson(file.readAll());
+    globalObjectsManager.fill(&globalHills);
     file.close();
     return true;
 }
@@ -166,6 +195,7 @@ bool GlobalDatabase::loadCompetitionsRules()
         return false;
     }
     globalCompetitionsRules = CompetitionRules::getCompetitionRulesVectorFromJson(file.readAll());
+    globalObjectsManager.fill(&globalCompetitionsRules);
     file.close();
     return true;
 }
@@ -196,7 +226,7 @@ bool GlobalDatabase::loadSimulationSaves()
         }
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         QJsonObject object = doc.object().value("simulation-save").toObject();
-        SimulationSave * s = SimulationSave::getFromJson(object);
+        SimulationSave * s = SimulationSave::getFromJson(object, &seasonObjectsManager);
         globalSimulationSaves.push_back(s);
         file.close();
     }
@@ -214,6 +244,21 @@ bool GlobalDatabase::loadPointsForPlacesPresets()
         return false;
     }
     globalPointsForPlacesPresets = PointsForPlacesPreset::getPointsForPlacesPresetsVectorFromJson(file.readAll());
+    file.close();
+    return true;
+}
+
+bool GlobalDatabase::loadCalendarPresets()
+{
+    QFile file("userData/GlobalDatabase/globalCalendarPresets.json");
+    if(!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z presetami kalendarzy", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalCalendarPresets.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    globalCalendarPresets = SeasonCalendarPreset::getVectorFromJson(file.readAll());
     file.close();
     return true;
 }
@@ -335,20 +380,33 @@ bool GlobalDatabase::writePointsForPlacesPresets()
     file.close();
     return true;
 }
-/*{
-    "pointsForPlacesPresets": [
-        {
-            "name": "Presecik",
-            "pointsForPlaces": [
-            100,
-            80,
-            70,
-            60,
-            50
-            ]
-        }
-    ]
-    }*/
+
+bool GlobalDatabase::writeCalendarPresets()
+{
+    QJsonDocument document;
+    QJsonObject mainObject;
+    QJsonArray array;
+
+    for(auto & preset : globalCalendarPresets)
+    {
+        array.push_back(QJsonValue(SeasonCalendarPreset::getJsonObject(preset)));
+    }
+    mainObject.insert("calendarPresets", array);
+    document.setObject(mainObject);
+
+    QFile file("userData/GlobalDatabase/globalCalendarPresets.json");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z presetami kalendarzy", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalCalendarPresets.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    file.resize(0);
+    file.write(document.toJson(QJsonDocument::Indented));
+    file.close();
+    return true;
+}
 
 void GlobalDatabase::setupJumpersFlags()
 {

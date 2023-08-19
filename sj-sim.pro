@@ -92,6 +92,7 @@ SOURCES += \
     source/seasons/ClassificationSingleResult.cpp \
     source/seasons/Season.cpp \
     source/seasons/SeasonCalendar.cpp \
+    source/seasons/SeasonCalendarPreset.cpp \
     source/seasons/SeasonSettings.cpp \
     source/seasons/SimulationSave.cpp \
     source/seasons/Classification.cpp \
@@ -199,6 +200,7 @@ HEADERS += \
     source/seasons/ClassificationSingleResult.h \
     source/seasons/Season.h \
     source/seasons/SeasonCalendar.h \
+    source/seasons/SeasonCalendarPreset.h \
     source/seasons/SeasonSettings.h \
     source/seasons/SimulationSave.h \
     source/seasons/Classification.h \

@@ -1,7 +1,6 @@
 #include "JumpData.h"
 #include "JumpSimulator.h"
 #include "wind-generation/WindsGenerator.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
 
 #include <QDebug>
 #include <QJsonDocument>
@@ -191,7 +190,7 @@ QJsonObject JumpData::getJsonObject(const JumpData &jumpData)
     return object;
 }
 
-JumpData JumpData::getFromJson(QJsonObject obj)
+JumpData JumpData::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
 {
     JumpData jump;
     jump.setID(obj.value("id").toString().toULong());
@@ -238,8 +237,8 @@ JumpData JumpData::getFromJson(QJsonObject obj)
     }
     jump.setWinds(winds);
 
-    jump.setJumper(static_cast<Jumper *>(seasonObjectsManager.getObjectByID(obj.value("jumper-id").toString().toULong())));
-    jump.setHill(static_cast<Hill *>(seasonObjectsManager.getObjectByID(obj.value("hill-id").toString().toULong())));
+    jump.setJumper(static_cast<Jumper *>(objectsManager->getObjectByID(obj.value("jumper-id").toString().toULong())));
+    jump.setHill(static_cast<Hill *>(objectsManager->getObjectByID(obj.value("hill-id").toString().toULong())));
 
     return jump;
 }

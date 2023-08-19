@@ -19,7 +19,7 @@ public:
     Season();
 
     static QJsonObject getJsonObject(Season & season);
-    static Season getFromJson(QJsonObject obj);
+    static Season getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager *objectsManager);
 
 private:
     SeasonCalendar calendar;

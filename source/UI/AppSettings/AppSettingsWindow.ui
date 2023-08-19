@@ -375,6 +375,40 @@ Użyteczne kiedy chcemy przenieść bazę danych z wczesnych wersji.</string>
     </widget>
    </item>
    <item>
+    <widget class="QPushButton" name="pushButton_repairDatabase_2">
+     <property name="minimumSize">
+      <size>
+       <width>160</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>160</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="whatsThis">
+      <string>Od nowa przypisuje ID dla każdego obiektu w globalnej bazie danych.
+Użyteczne kiedy chcemy przenieść bazę danych z wczesnych wersji.</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+	background-color: rgb(234, 242, 255);
+	color: rgb(0, 0, 0);
+}</string>
+     </property>
+     <property name="text">
+      <string>Napraw zapisy symulacji</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

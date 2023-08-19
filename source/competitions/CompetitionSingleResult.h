@@ -24,7 +24,7 @@ public:
         TeamResult
     };
 
-    static CompetitionSingleResult getFromJson(QJsonObject obj);
+    static CompetitionSingleResult getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager *objectsManager);
     static QJsonObject getJsonObject(CompetitionSingleResult result);
 
 protected:

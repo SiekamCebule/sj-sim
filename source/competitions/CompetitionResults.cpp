@@ -1,7 +1,6 @@
 #include "CompetitionResults.h"
 
 #include "CompetitionInfo.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
 #include "CompetitionSingleResult.h"
 
 extern SeasonDatabaseObjectsManager seasonObjectsManager;
@@ -54,16 +53,16 @@ CompetitionResults CompetitionResults::constructRoundsResults(QVector<RoundInfo>
     return results;
 }
 
-CompetitionResults CompetitionResults::getFromJson(QJsonObject obj)
+CompetitionResults CompetitionResults::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
 {
     CompetitionResults results;
     results.setID(obj.value("id").toString().toULong());
 
     QJsonArray resultsArray = obj.value("results").toArray();
     for(auto res : resultsArray){
-        results.getResultsReference().push_back(CompetitionSingleResult::getFromJson(res.toObject()));
+        results.getResultsReference().push_back(CompetitionSingleResult::getFromJson(res.toObject(), objectsManager));
     }
-    seasonObjectsManager.fill(&results.getResultsReference());
+    objectsManager->fill(&results.getResultsReference());
 
     return results;
 }

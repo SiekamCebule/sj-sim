@@ -318,7 +318,6 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
             else{
                 KOGroupsList->hide();
                 comboBox_groupsSelectionType->hide();
-                emit competitionRulesEditor->competitionTypeChanged();
             }
         }
     }

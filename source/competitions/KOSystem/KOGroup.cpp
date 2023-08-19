@@ -25,14 +25,14 @@ QJsonObject KOGroup::getJsonObject(KOGroup &group)
     return object;
 }
 
-KOGroup KOGroup::getFromJson(const QJsonObject &json)
+KOGroup KOGroup::getFromJson(const QJsonObject &json, SeasonDatabaseObjectsManager * objectsManager)
 {
     KOGroup group;
     group.setID(json.value("id").toString().toULong());
     group.setNumber(json.value("number").toInt());
     QJsonArray jumpersArray = json.value("jumpers-ids").toArray();
     for(auto val : jumpersArray)
-        group.getJumpersReference().push_back(static_cast<Jumper *>(seasonObjectsManager.getObjectByID(val.toString().toULong())));
+        group.getJumpersReference().push_back(static_cast<Jumper *>(objectsManager->getObjectByID(val.toString().toULong())));
 
     return group;
 }

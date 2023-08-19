@@ -328,6 +328,7 @@ QVector<StartListCompetitorStatus> IndividualCompetitionManager::getStartListSta
 
 void IndividualCompetitionManager::setupNextRound(QVector<KOGroup> manualGroups)
 {
+    updateCompetitorsAdvanceStatuses();
     actualRound++; //Przechodzi do następnej rundy
     roundsJumpers.push_back(getFilteredJumpersForNextRound());
 

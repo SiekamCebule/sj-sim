@@ -91,7 +91,7 @@ void SeasonCalendar::updateCompetitionsQualifyingCompetitions()
     }
 }
 
-SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json)
+SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json, SeasonDatabaseObjectsManager * objectsManager)
 {
     SeasonCalendar calendar;
 
@@ -99,18 +99,18 @@ SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json)
     for(auto val : classificationsArray){
         calendar.getClassificationsReference().push_back(Classification::getFromJson(val.toObject()));
     }
-    seasonObjectsManager.fill(&calendar.getClassificationsReference());
+    objectsManager->fill(&calendar.getClassificationsReference());
 
     QJsonArray competitionsArray = json.value("competitions").toArray();
     for(auto val : competitionsArray){
-        CompetitionInfo * c = new CompetitionInfo(CompetitionInfo::getFromJson(val.toObject()));
+        CompetitionInfo * c = new CompetitionInfo(CompetitionInfo::getFromJson(val.toObject(), objectsManager));
         calendar.getCompetitionsReference().push_back(c);
-        seasonObjectsManager.addObject(c);
+        objectsManager->addObject(c);
     }
     calendar.updateCompetitionsQualifyingCompetitions();
 
     for(auto val : classificationsArray){
-        Classification * classification = static_cast<Classification *>(seasonObjectsManager.getObjectByID(val.toObject().value("id").toString().toULong()));
+        Classification * classification = static_cast<Classification *>(objectsManager->getObjectByID(val.toObject().value("id").toString().toULong()));
         for(auto & singleResult : classification->getResultsReference())
         {
             singleResult->setClassification(classification);
@@ -121,7 +121,7 @@ SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json)
                 {
                     QJsonArray compsIds = jsonRes.toObject().value("competitions-results-ids").toArray();
                     for(auto id : compsIds)
-                        singleResult->getCompetitionsResultsReference().push_back(static_cast<CompetitionResults *>(seasonObjectsManager.getObjectByID(id.toString().toULong())));
+                        singleResult->getCompetitionsResultsReference().push_back(static_cast<CompetitionResults *>(objectsManager->getObjectByID(id.toString().toULong())));
                 }
             }
             singleResult->updateSingleResults();

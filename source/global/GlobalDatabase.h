@@ -5,6 +5,7 @@
 #include "../simulator/Hill.h"
 #include "../competitions/CompetitionRules.h"
 #include "../seasons/SimulationSave.h"
+#include "../seasons/SeasonCalendarPreset.h"
 #include "PointsForPlacesPreset.h"
 
 #include <QVector>
@@ -22,6 +23,7 @@ private:
     QVector<CompetitionRules> globalCompetitionsRules;
     QVector<SimulationSave *> globalSimulationSaves;
     QVector<PointsForPlacesPreset> globalPointsForPlacesPresets;
+    QVector<SeasonCalendarPreset> globalCalendarPresets;
 
 public:
     GlobalDatabase(GlobalDatabase &) = delete;
@@ -37,12 +39,14 @@ public:
     bool loadCompetitionsRules();
     bool loadSimulationSaves();
     bool loadPointsForPlacesPresets();
+    bool loadCalendarPresets();
 
     bool writeJumpers();
     bool writeHills();
     bool writeCompetitionsRules();
     bool writeSimulationSaves();
     bool writePointsForPlacesPresets();
+    bool writeCalendarPresets();
 
     void setupJumpersFlags();
     void setupHillsFlags();
@@ -62,6 +66,9 @@ public:
     QVector<PointsForPlacesPreset> getGlobalPointsForPlacesPresets() const;
     QVector<PointsForPlacesPreset> & getEditableGlobalPointsForPlacesPresets();
     void setGlobalPointsForPlacesPresets(const QVector<PointsForPlacesPreset> &newGlobalPointsForPlacesPresets);
+    QVector<SeasonCalendarPreset> getGlobalCalendarPresets() const;
+    QVector<SeasonCalendarPreset> & getEditableGlobalCalendarPresets();
+    void setGlobalCalendarPresets(const QVector<SeasonCalendarPreset> &newGlobalCalendarPresets);
 };
 
 #endif // GLOBALDATABASE_H

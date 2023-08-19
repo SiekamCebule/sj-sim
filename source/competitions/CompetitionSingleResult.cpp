@@ -11,19 +11,19 @@ CompetitionSingleResult::CompetitionSingleResult(Team *team, int type) : type(ty
     ClassWithID()
 {}
 
-CompetitionSingleResult CompetitionSingleResult::getFromJson(QJsonObject obj)
+CompetitionSingleResult CompetitionSingleResult::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
 {
     CompetitionSingleResult result;
     result.setID(obj.value("id").toString().toULong());
     result.setPosition(obj.value("position").toInt());
     result.setPointsSum(obj.value("points-sum").toDouble());
     result.setType(obj.value("type").toInt());
-    result.setJumper(static_cast<Jumper *>(seasonObjectsManager.getObjectByID(obj.value("jumper-id").toString().toULong())));
-    result.setTeam(static_cast<Team *>(seasonObjectsManager.getObjectByID(obj.value("team-id").toString().toULong())));
+    result.setJumper(static_cast<Jumper *>(objectsManager->getObjectByID(obj.value("jumper-id").toString().toULong())));
+    result.setTeam(static_cast<Team *>(objectsManager->getObjectByID(obj.value("team-id").toString().toULong())));
 
     QJsonArray jumpsArray = obj.value("jumps").toArray();
     for(auto jump : jumpsArray){
-        result.getJumpsReference().push_back(JumpData::getFromJson(jump.toObject()));
+        result.getJumpsReference().push_back(JumpData::getFromJson(jump.toObject(), objectsManager));
     }
     result.updateTeamJumpersResults();
     return result;

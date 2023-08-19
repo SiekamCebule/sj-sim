@@ -17,12 +17,12 @@ QJsonObject Season::getJsonObject(Season &season)
     return obj;
 }
 
-Season Season::getFromJson(QJsonObject obj)
+Season Season::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
 {
     Season season;
     season.setID(obj.value("id").toString().toULong());
     season.setSeasonNumber(obj.value("season-number").toInt());
-    season.setCalendar(SeasonCalendar::getFromJson(obj.value("calendar").toObject()));
+    season.setCalendar(SeasonCalendar::getFromJson(obj.value("calendar").toObject(), objectsManager));
     season.setSettings(SeasonSettings::getFromJson(obj.value("settings").toObject()));
 
     return season;

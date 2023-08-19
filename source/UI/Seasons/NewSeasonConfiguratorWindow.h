@@ -22,13 +22,15 @@ class NewSeasonConfiguratorWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit NewSeasonConfiguratorWindow(QWidget *parent = nullptr);
+    explicit NewSeasonConfiguratorWindow(bool nextSeason = false, QWidget *parent = nullptr);
     ~NewSeasonConfiguratorWindow();
 
     void showCalendarEditorHelp();
 
 private slots:
     void on_pushButton_submit_clicked();
+
+    void on_pushButton_loadCalendarPreset_clicked();
 
 private:
     Ui::NewSeasonConfiguratorDialog *ui;
@@ -57,6 +59,8 @@ private:
     CalendarEditorWidget * calendarEditor;
     CalendarEditorTableModel * calendarTableModel;
 
+    bool nextSeason;
+
 public:
     QVector<Jumper *> getJumpers() const;
     QVector<Jumper *>& getJumpersReference();
@@ -75,6 +79,8 @@ public:
     QVector<CompetitionRules> & getCompetitionsRulesReference();
     void setCompetitionsRules(const QVector<CompetitionRules> &newCompetitionsRules);
     QToolBox * getToolBox();
+    bool getNextSeason() const;
+    void setNextSeason(bool newNextSeason);
 };
 
 #endif // NEWSEASONCONFIGURATORWINDOW_H

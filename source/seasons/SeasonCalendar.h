@@ -18,7 +18,7 @@ public:
     void fixAdvancementClassifications();
     void updateCompetitionsQualifyingCompetitions();
 
-    static SeasonCalendar getFromJson(QJsonObject json);
+    static SeasonCalendar getFromJson(QJsonObject json, SeasonDatabaseObjectsManager *objectsManager);
     static QJsonObject getJsonObject(SeasonCalendar & calendar);
     static int getCompetitionMainIndex(QVector<CompetitionInfo *> & competitions, CompetitionInfo * competition);
     static CompetitionInfo * getMainCompetitionByIndex(QVector<CompetitionInfo *> & competitions, int index);

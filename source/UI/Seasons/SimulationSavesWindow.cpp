@@ -49,7 +49,7 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
     }
     NewSimulationSaveConfigurationWindow * simulationSaveWindow = new NewSimulationSaveConfigurationWindow(otherNames, this);
     if(simulationSaveWindow->exec() == QDialog::Accepted){
-        NewSeasonConfiguratorWindow * seasonWindow = new NewSeasonConfiguratorWindow(this);
+        NewSeasonConfiguratorWindow * seasonWindow = new NewSeasonConfiguratorWindow(false, this);
         connect(seasonWindow->getToolBox(), &QToolBox::currentChanged, this, [this, seasonWindow](){
             if(seasonWindow->getToolBox()->currentIndex() == 3){ //edytor kalendarzy
                 QTimer::singleShot(200, [this, seasonWindow](){
@@ -70,7 +70,7 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
             season.getCalendarReference().updateCompetitionsQualifyingCompetitions();
 
             simulationSave->getSeasonsReference().push_back(season);
-            simulationSave->setActualSeason(&simulationSave->getSeasonsReference().first());
+            simulationSave->setActualSeason(&simulationSave->getSeasonsReference().last());
 
             simulationSave->updateNextCompetitionIndex();
 
@@ -92,6 +92,9 @@ void SimulationSavesWindow::on_pushButton_OK_clicked()
 {
     if(ui->listView_simulationSaves->selectionModel()->selectedRows().count() > 0){
         SimulationSaveManagerWindow * manager = new SimulationSaveManagerWindow(GlobalDatabase::get()->getEditableGlobalSimulationSaves()[ui->listView_simulationSaves->selectionModel()->selectedRows().first().row()], this);
+        manager->getSimulationSave()->updateNextCompetitionIndex();
+        if(manager->getSimulationSave()->getNextCompetition() == nullptr)
+            manager->setupNextSeasonConfigButton();
         manager->fillNextCompetitionInformations();
         if(manager->exec() == QDialog::Accepted)
         {
