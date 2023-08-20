@@ -90,8 +90,22 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
         jumpersListView->setSeasonJumpers(&competitionJumpers);
     else{
         jumpersListView->setType(DatabaseItemsListView::SeasonJumpersItems);
-        if(seasonCompetition->getAdvancementCompetition() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
-            seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersAfterQualifications(seasonCompetition, simulationSave->getJumpersReference());
+        bool condition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference().count() > simulationSave->getNextCompetitionIndex() + 1;
+        bool secondCondition = false;
+        bool thirdCondition = false;
+        if(condition)
+            secondCondition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1]->getTrialRound() == seasonCompetition;
+
+        //Czy seria próbna następnego konkursu po aktualnym równa się aktualnemu konkursowi
+
+                //Jeżeli tak, przefiltruj na podstawie następnego po aktualnym
+        if(secondCondition || seasonCompetition->getAdvancementCompetition() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual){
+            CompetitionInfo * comp;
+            if(secondCondition)
+                comp = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1];
+            else comp = seasonCompetition;
+            seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersAfterQualifications(comp, simulationSave->getJumpersReference());
+        }
         else if(seasonCompetition->getAdvancementClassification() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
             seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersByClassification(seasonCompetition, seasonCompetition->getAdvancementClassification(), simulationSave->getJumpersReference());
         else{
