@@ -107,6 +107,7 @@ bool SimulationSave::saveToFile(QString dir)
 {
     QJsonDocument document;
     QJsonObject mainObject;
+    repairDatabase();
     mainObject.insert("simulation-save", SimulationSave::getJsonObject(*this));
     document.setObject(mainObject);
 
@@ -172,11 +173,11 @@ void SimulationSave::repairDatabase()
         }
     }
 
-    globalIDGenerator.reset();
-    /*for(auto & object : objects)
+    //globalIDGenerator.reset();
+    for(auto & object : objects)
     {
         object->setID(0);
-    }*/
+    }
     for(auto & object : objects)
     {
         object->generateID();

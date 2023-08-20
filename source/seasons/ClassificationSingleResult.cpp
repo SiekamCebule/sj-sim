@@ -58,11 +58,17 @@ void ClassificationSingleResult::updateSingleResults()
             {
                 if(classification->getPunctationType() == Classification::PointsForPlaces)
                 {
-                    if(competitionType == CompetitionRules::Team)
+                    if(competitionType == CompetitionRules::Team){
                         if(singleResult.getTeam()->getCountryCode() == this->getTeamCode()){
                             singleResults.push_back(&singleResult);
-                            //break;
                         }
+                    }
+                    else if(competitionType == CompetitionRules::Individual)
+                    {
+                        if(singleResult.getJumper()->getCountryCode() == this->getTeamCode()){
+                            singleResults.push_back(&singleResult);
+                        }
+                    }
                 }
                 else if(classification->getPunctationType() == Classification::CompetitionPoints)
                 {
@@ -105,6 +111,7 @@ void ClassificationSingleResult::updatePointsSum()
         if(classification->getPunctationType() == Classification::CompetitionPoints)
             pointsSum += result->getPointsSum();
         else if(classification->getPunctationType() == Classification::PointsForPlaces){
+
             pointsSum += classification->getPointsForPlacesReference().value(result->getPosition(), 0);
         }
     }

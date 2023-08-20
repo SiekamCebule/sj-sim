@@ -15,7 +15,7 @@
 #include "NewSeasonConfiguratorWindow.h"
 #include <QMessageBox>
 #include <QTimer>
-#include <QProgressBar>
+#include <QProgressDialog>
 #include <QPushButton>
 #include <QTableView>
 
@@ -31,6 +31,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     ui->toolBox_2->setCurrentIndex(0);
     ui->label_saveName->setText(simulationSave->getName());
     ui->label_seasonNumber->setText(QString::number(simulationSave->getActualSeason()->getSeasonNumber()));
+     ui->comboBox_archiveSeason->setCurrentIndex(0);
 
     connect(ui->toolBox, &QToolBox::currentChanged, this, [this](){
         if(ui->toolBox->currentIndex() == 0 || ui->toolBox->currentIndex() == 1)
@@ -371,14 +372,17 @@ calendarEditor->setClassificationsList(&simulationSave->getActualSeason()->getCa
         ui->listView_classificationsArchive->setModel(classificationsArchiveModel);
 
         setupClassificationsComboBox();
+        ui->comboBox_archiveSeason->setCurrentIndex(0);
         emit ui->comboBox_classifications->currentIndexChanged(0);
     }
 }
 
 void SimulationSaveManagerWindow::whenClassificationsComboBoxIndexChanged(int index)
 {
-    classificationResultsTableView->setClassification(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference()[index]);
-    classificationResultsTableView->fillTable();
+    if(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference().count() > 0){
+        classificationResultsTableView->setClassification(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference()[index]);
+        classificationResultsTableView->fillTable();
+    }
 }
 
 SimulationSave *SimulationSaveManagerWindow::getSimulationSave() const
@@ -491,10 +495,6 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
                         }
                         else if(classification->getClassificationType() == Classification::Team)
                         {
-                            if(competition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual &&
-                                classification->getPunctationType() == Classification::PointsForPlaces)
-                                break;
-
                             QString countryCode;
                             if(competitionSingleResult.getJumper() != nullptr)
                                 countryCode = competitionSingleResult.getJumper()->getCountryCode();
@@ -544,24 +544,28 @@ void SimulationSaveManagerWindow::on_pushButton_saveToFile_clicked()
 
 void SimulationSaveManagerWindow::on_pushButton_repairDatabase_clicked()
 {
-    QProgressBar bar;
-    bar.show();
-    bar.setMinimum(0);
-    bar.setMaximum(11);
+    QProgressDialog * dialog = new QProgressDialog(this);
+    dialog->setLabelText("Naprawianie zapisu symulacji...");
+    dialog->setWindowModality(Qt::WindowModal);
+    dialog->setStyleSheet("QProgressDialog{background-color: white; color: black;}");
+    dialog->setMinimum(0);
+    dialog->setMaximum(11);
+    dialog->setWindowTitle(QObject::tr("Naprawa zapisu symulacji."));
+    dialog->setValue(0);
 
     SeasonCalendar * calendar = &simulationSave->getActualSeason()->getCalendarReference();
     calendar->fixCompetitionsClassifications();
-    bar.setValue(1);
+    dialog->setValue(1);
     calendar->fixAdvancementClassifications();
-    bar.setValue(2);
+    dialog->setValue(2);
     calendar->fixAdvancementCompetitions();
-    bar.setValue(3);
+    dialog->setValue(3);
     calendar->fixCompetitionsHills(&simulationSave->getHillsReference());
-    bar.setValue(4);
+    dialog->setValue(4);
     simulationSave->repairDatabase();
-    bar.setValue(9);
+    dialog->setValue(9);
     simulationSave->saveToFile("simulationSaves/");
-    bar.setValue(11);
+    dialog->setValue(11);
 
     QMessageBox::information(this, tr("Naprawa bazy danych"), tr("Naprawiono bazę danych tego zapisu symulacji i zapisano do pliku."), QMessageBox::Ok);
 }

@@ -268,6 +268,10 @@ void CalendarEditorWidget::removeActionTriggered()
             }
             updateActualCompetitionByID();
         }
+        if(calendarModel->rowCount() == 0)
+        {
+            calendar->getCompetitionsReference().clear();
+        }
         calendar->fixAdvancementCompetitions();
         emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
     }
@@ -1121,17 +1125,21 @@ void CalendarEditorWidget::on_pushButton_saveCalendarPreset_clicked()
         SeasonCalendar * calendar = &preset->getCalendarReference();
         for(auto & comp : calendar->getCompetitionsReference())
         {
+            comp->generateID();
+            comp->getResultsReference().generateID();
             comp->setPlayed(false);
             comp->setCancelled(false);
             comp->getResultsReference().getResultsReference().clear();
             comp->getRoundsKOGroupsReference().clear();
             comp->getTeamsReference().clear();
+            comp->getTrainingsReference().detach();
             QPair hillPair = {comp->getHill()->getName(), comp->getHill()->getHSPoint()};
             preset->getHillsReference().push_back(hillPair);
             comp->setHill(nullptr);
         }
         for(auto & cls : calendar->getClassificationsReference())
         {
+            cls->generateID();
             cls->getResultsReference().clear();
         }
         GlobalDatabase::get()->writeCalendarPresets();

@@ -24,7 +24,7 @@ void SeasonCalendar::fixCompetitionsClassifications()
         for(auto & classification : comp->getClassificationsReference()){
             if(classification == nullptr)
                 MyFunctions::removeFromVector(comp->getClassificationsReference(), classification);
-            if(MyFunctions::vectorContainsByID(classifications, classification) == false || type != classification->getClassificationType() && classification->getPunctationType() == Classification::PointsForPlaces){
+            if(MyFunctions::vectorContainsByID(classifications, classification) == false || ((type != classification->getClassificationType()) && classification->getPunctationType() == Classification::PointsForPlaces && classification->getClassificationType() == Classification::Individual)){
                 MyFunctions::removeFromVectorByID(comp->getClassificationsReference(), classification->getID());
             }
         }

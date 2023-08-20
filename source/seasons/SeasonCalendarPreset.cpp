@@ -1,20 +1,62 @@
 #include "SeasonCalendarPreset.h"
 #include <QJsonValue>
+#include <QHash>
 
 extern SeasonDatabaseObjectsManager globalObjectsManager;
 
-SeasonCalendarPreset::SeasonCalendarPreset(SeasonCalendar *calendar)
+SeasonCalendarPreset::SeasonCalendarPreset(SeasonCalendar *seasonCalendar)
 {
-    if(calendar != nullptr)
+    if(seasonCalendar != nullptr)
     {
-        for(auto & comp : calendar->getCompetitionsReference())
+        SeasonCalendar * presetCalendar = &this->calendar;
+        QHash<CompetitionInfo *, CompetitionInfo *> competitions; //1. Konkurs z kalendarza, 2. Konkurs z presetu
+        for(auto & comp : seasonCalendar->getCompetitionsReference())
         {
-            this->calendar.getCompetitionsReference().push_back(new CompetitionInfo(*comp));
+            CompetitionInfo * presetCompetition = new CompetitionInfo(*comp);
+            presetCompetition->generateID();
+            presetCompetition->getResultsReference().generateID();
+            presetCalendar->getCompetitionsReference().push_back(presetCompetition);
+            competitions.insert(comp, presetCompetition);
         }
-        for(auto & cls : calendar->getClassificationsReference())
+        for(auto & presetCompetition : presetCalendar->getCompetitionsReference())
         {
-            this->calendar.getClassificationsReference().push_back(new Classification(*cls));
+            for(auto & calendarCompetition : seasonCalendar->getCompetitionsReference())
+            {
+                if(presetCompetition->getAdvancementCompetition() == calendarCompetition)
+                    presetCompetition->setAdvancementCompetition(competitions.value(calendarCompetition));
+                if(presetCompetition->getTrialRound() == calendarCompetition)
+                    presetCompetition->setTrialRound(competitions.value(calendarCompetition));
+                for(auto & presetTraining : presetCompetition->getTrainingsReference())
+                {
+                    if(presetTraining == calendarCompetition){
+                        presetTraining = competitions.value(calendarCompetition);
+                    }
+                }
+            }
         }
+        QHash<Classification *, Classification *> classifications; //1. Klasyfikacja z kalendarza, 2. Klasyfikacja z presetu
+        for(auto & cls : seasonCalendar->getClassificationsReference())
+        {
+            Classification * presetClassification = new Classification(*cls);
+            presetClassification->generateID();
+            presetCalendar->getClassificationsReference().push_back(presetClassification);
+            classifications.insert(cls, presetClassification);
+        }
+        for(auto & presetCompetition : presetCalendar->getCompetitionsReference())
+        {
+            for(auto & calendarClassification : seasonCalendar->getClassificationsReference())
+            {
+                if(presetCompetition->getAdvancementClassification() == calendarClassification)
+                    presetCompetition->setAdvancementClassification(classifications.value(calendarClassification));
+                for(auto & presetCls : presetCompetition->getClassificationsReference())
+                {
+                    if(presetCls == calendarClassification){
+                        presetCls = classifications.value(calendarClassification);
+                    }
+                }
+            }
+        }
+        presetCalendar->updateCompetitionsQualifyingCompetitions();
     }
 }
 
@@ -30,6 +72,8 @@ QJsonObject SeasonCalendarPreset::getJsonObject(SeasonCalendarPreset preset)
 {
     QJsonObject object;
     object.insert("name", preset.getName());
+    for(auto & comp : preset.getCalendarReference().getCompetitionsReference())
+        comp->setHill(nullptr);
     object.insert("calendar", SeasonCalendar::getJsonObject(preset.getCalendarReference()));
     QJsonArray hillsArray;
     for(auto & hill : preset.getHillsReference()){

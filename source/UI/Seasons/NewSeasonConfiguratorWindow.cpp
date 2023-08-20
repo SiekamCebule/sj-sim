@@ -3,6 +3,7 @@
 
 #include "../../global/GlobalDatabase.h"
 #include "../../global/GlobalAppSettings.h"
+#include "../../utilities/functions.h"
 #include "../DatabaseEditor/DatabaseItemsListView.h"
 #include <QMessageBox>
 #include <QComboBox>
@@ -252,7 +253,6 @@ void NewSeasonConfiguratorWindow::setJumpers(const QVector<Jumper *> &newJumpers
     jumpers = newJumpers;
 }
 
-
 void NewSeasonConfiguratorWindow::on_pushButton_loadCalendarPreset_clicked()
 {
     bool ok = false;
@@ -264,7 +264,73 @@ void NewSeasonConfiguratorWindow::on_pushButton_loadCalendarPreset_clicked()
     if(ok == true)
     {
         SeasonCalendarPreset * preset = &GlobalDatabase::get()->getEditableGlobalCalendarPresets()[presetsNames.indexOf(itemText)];
-        this->calendar = preset->getCalendarReference();
+        for(auto & comp : calendar.getCompetitionsReference())
+        {
+            MyFunctions::removeFromVector(calendar.getCompetitionsReference(), comp);
+            delete comp;
+        }
+        QHash<CompetitionInfo *, CompetitionInfo *> competitions; //1. Konkurs z presetu, 2. Nowy konkurs z kalendarza
+        for(auto & presetCompetition : preset->getCalendarReference().getCompetitionsReference())
+        {
+            CompetitionInfo * calendarCompetition = new CompetitionInfo(*presetCompetition);
+            calendarCompetition->generateID();
+            calendarCompetition->getResultsReference().generateID();
+
+            calendarCompetition->getClassificationsReference().detach();
+            calendarCompetition->getQualifyingCompetitionsReference().detach();
+            calendarCompetition->getResultsReference().getResultsReference().detach();
+            calendarCompetition->getRoundsKOGroupsReference().detach();
+            calendarCompetition->getTeamsReference().detach();
+            calendarCompetition->getTrainingsReference().detach();
+            calendar.getCompetitionsReference().push_back(calendarCompetition);
+            competitions.insert(presetCompetition, calendarCompetition);
+        }
+        for(auto & calendarCompetition : calendar.getCompetitionsReference())
+        {
+            for(auto & presetCompetition : preset->getCalendarReference().getCompetitionsReference())
+            {
+                if(calendarCompetition->getAdvancementCompetition() == presetCompetition)
+                    calendarCompetition->setAdvancementCompetition(competitions.value(presetCompetition));
+                if(calendarCompetition->getTrialRound() == presetCompetition)
+                    calendarCompetition->setTrialRound(competitions.value(presetCompetition));
+                for(auto & calendarTraining : calendarCompetition->getTrainingsReference())
+                {
+                    if(calendarTraining == presetCompetition){
+                        calendarTraining = competitions.value(presetCompetition);
+                    }
+                }
+            }
+        }
+        for(auto & cls : calendar.getClassificationsReference())
+        {
+            MyFunctions::removeFromVector(calendar.getClassificationsReference(), cls);
+            delete cls;
+        }
+        QHash<Classification *, Classification *> classifications; //1. Klasyfikacja z presetu, 2. Nowa Klasyfikacja z kalendarza
+        for(auto & presetClassification : preset->getCalendarReference().getClassificationsReference())
+        {
+            Classification * calendarClassification = new Classification(*presetClassification);
+            calendarClassification->regenerateID();
+
+            calendarClassification->getPointsForPlacesReference().detach();
+            calendarClassification->getResultsReference().detach();
+            calendar.getClassificationsReference().push_back(calendarClassification);
+            classifications.insert(presetClassification, calendarClassification);
+        }
+        for(auto & calendarCompetition : calendar.getCompetitionsReference())
+        {
+            for(auto & presetClassification : preset->getCalendarReference().getClassificationsReference())
+            {
+                if(calendarCompetition->getAdvancementClassification() == presetClassification)
+                    calendarCompetition->setAdvancementClassification(classifications.value(presetClassification));
+                for(auto & cls : calendarCompetition->getClassificationsReference())
+                {
+                    if(cls == presetClassification)
+                        cls = classifications.value(presetClassification);
+                }
+            }
+        }
+        calendar.updateCompetitionsQualifyingCompetitions();
 
         int i=0;
         for(auto & presetHill : preset->getHillsReference())
@@ -293,7 +359,7 @@ void NewSeasonConfiguratorWindow::on_pushButton_loadCalendarPreset_clicked()
 
         classificationsListView->setClassifications(&calendar.getClassificationsReference());
         classificationsListView->getListModel()->insertRows(0, calendar.getClassificationsReference().count());
-        emit classificationsListView->getListView()->reset();
+        classificationsListView->getListView()->reset();
     }
 }
 

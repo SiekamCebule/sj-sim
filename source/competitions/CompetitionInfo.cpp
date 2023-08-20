@@ -44,6 +44,7 @@ CompetitionInfo::~CompetitionInfo()
 
 void CompetitionInfo::updateQualifyingCompetitions(SeasonCalendar *calendar)
 {
+    getQualifyingCompetitionsReference().clear();
     for(auto & comp : calendar->getCompetitionsReference())
     {
         if(this == comp->getAdvancementCompetition())

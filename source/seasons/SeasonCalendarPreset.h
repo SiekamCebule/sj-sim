@@ -12,7 +12,7 @@
 class SeasonCalendarPreset
 {
 public:
-    SeasonCalendarPreset(SeasonCalendar * calendar = nullptr);
+    SeasonCalendarPreset(SeasonCalendar * seasonCalendar = nullptr);
     ~SeasonCalendarPreset();
 
     static QJsonObject getJsonObject(SeasonCalendarPreset preset);
