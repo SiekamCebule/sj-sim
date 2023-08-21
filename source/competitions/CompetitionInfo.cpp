@@ -266,8 +266,10 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json, SeasonData
     comp.setID(json.value("id").toString().toULong());
     comp.setHill(static_cast<Hill *>(objectsManager->getObjectByID(json.value("hill-id").toString().toULong())));
     comp.setResults(CompetitionResults::getFromJson(json.value("results").toObject(), objectsManager));
-    comp.getResultsReference().setCompetition(&comp);
     objectsManager->addObject(&comp.getResultsReference());
+    for(auto & sr : comp.getResultsReference().getResultsReference())
+        sr.setCompetition(&comp);
+    comp.getResultsReference().setCompetition(&comp);
     comp.setRules(CompetitionRules::getFromJson(json.value("rules").toObject()));
     comp.setSerieType(json.value("serie-type").toInt());
     comp.setExceptionalRoundsCount(json.value("exceptional-rounds-count").toInt());

@@ -101,6 +101,21 @@ QVector<Classification *> Classification::getSpecificTypeClassifications(QVector
     return toReturn;
 }
 
+QMap<int, double> Classification::getAltPointsForPlaces() const
+{
+    return altPointsForPlaces;
+}
+
+QMap<int, double> &Classification::getAltPointsForPlacesReference()
+{
+    return altPointsForPlaces;
+}
+
+void Classification::setAltPointsForPlaces(const QMap<int, double> &newAltPointsForPlaces)
+{
+    altPointsForPlaces = newAltPointsForPlaces;
+}
+
 Classification * Classification::getFromJson(QJsonObject obj)
 {
     Classification * classification = new Classification();
@@ -113,6 +128,12 @@ Classification * Classification::getFromJson(QJsonObject obj)
     for(auto val : array){
         classification->getPointsForPlacesReference().insert(i, val.toDouble());
         i++;
+    }
+    QJsonArray altArray = obj.value("alt-points-for-places").toArray();
+    int ii=1;
+    for(auto val : altArray){
+        classification->getAltPointsForPlacesReference().insert(ii, val.toDouble());
+        ii++;
     }
 
     QJsonArray resultsArray = obj.value("results").toArray();
@@ -133,11 +154,18 @@ QJsonObject Classification::getJsonObject(Classification * classification)
     obj.insert("name", classification->getName());
     obj.insert("classification-type", classification->getClassificationType());
     obj.insert("punctation-type", classification->getPunctationType());
+
     QJsonArray pointsForPlacesArray;
     for(int i=1; i<=classification->getPointsForPlacesReference().count(); i++){
         pointsForPlacesArray.push_back(classification->getPointsForPlacesReference().value(i));
     }
     obj.insert("points-for-places", pointsForPlacesArray);
+
+    QJsonArray altPointsForPlacesArray;
+    for(int i=1; i<=classification->getAltPointsForPlacesReference().count(); i++){
+        altPointsForPlacesArray.push_back(classification->getAltPointsForPlacesReference().value(i));
+    }
+    obj.insert("alt-points-for-places", altPointsForPlacesArray);
 
     QJsonArray resultsArray;
     for(auto result : classification->getResultsReference())

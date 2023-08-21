@@ -13,7 +13,7 @@
 
 #include <QMap>
 
-class Competition;
+class CompetitionInfo;
 
 class JumpSimulator
 {

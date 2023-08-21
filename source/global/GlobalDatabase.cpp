@@ -11,6 +11,7 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QMessageBox>
+#include <QProgressDialog>
 
 #include "../global/CountryFlagsManager.h"
 
@@ -20,7 +21,7 @@ SeasonDatabaseObjectsManager calendarPresetsObjectsManager;
 
 GlobalDatabase::GlobalDatabase()
 {
-
+    loadedSimulationSaves = false;
 }
 
 GlobalDatabase::~GlobalDatabase()
@@ -34,6 +35,16 @@ GlobalDatabase::~GlobalDatabase()
             delete cls;
     }
     delete m_globalDatabase;
+}
+
+bool GlobalDatabase::getLoadedSimulationSaves() const
+{
+    return loadedSimulationSaves;
+}
+
+void GlobalDatabase::setLoadedSimulationSaves(bool newLoadedSimulationSaves)
+{
+    loadedSimulationSaves = newLoadedSimulationSaves;
 }
 
 QVector<SeasonCalendarPreset> GlobalDatabase::getGlobalCalendarPresets() const
@@ -141,7 +152,7 @@ void GlobalDatabase::removeJumper(int index)
 bool GlobalDatabase::loadFromJson()
 {
     globalObjectsManager.clear();
-    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadSimulationSaves() && loadPointsForPlacesPresets() && loadCalendarPresets());
+    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadPointsForPlacesPresets() && loadCalendarPresets());
 }
 
 bool GlobalDatabase::writeToJson()
@@ -200,7 +211,7 @@ bool GlobalDatabase::loadCompetitionsRules()
     return true;
 }
 
-bool GlobalDatabase::loadSimulationSaves()
+bool GlobalDatabase::loadSimulationSaves(bool progressDialog)
 {
     globalSimulationSaves.clear();
 
@@ -211,6 +222,17 @@ bool GlobalDatabase::loadSimulationSaves()
     dir.setNameFilters(QStringList() << "*.json");
 
     QStringList fileNames = dir.entryList();
+
+    QProgressDialog dialog;
+    dialog.setStyleSheet("QProgressDialog{background-color: white; color: black;}");
+    dialog.setMinimum(0);
+    dialog.setMaximum(fileNames.count() * 5);
+    dialog.setMinimumDuration(0);
+    dialog.setValue(0);
+    dialog.setWindowTitle(QObject::tr("Wczytywanie zapisów symulacji"));
+    //dialog.setLabelText(QString(QObject::tr("Postęp wczytywania zapisów symulacji: %1 z %2")).arg(QString::number(dialog.value())).arg(QString::number(dialog.maximum())));
+    dialog.setModal(true);
+    dialog.setWindowModality(Qt::WindowModal);
 
     bool ok = true;
     for(auto & fileName : fileNames){
@@ -224,10 +246,20 @@ bool GlobalDatabase::loadSimulationSaves()
             message.exec();
             ok = false;
         }
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
         QJsonObject object = doc.object().value("simulation-save").toObject();
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
         SimulationSave * s = SimulationSave::getFromJson(object, &seasonObjectsManager);
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
         globalSimulationSaves.push_back(s);
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
         file.close();
     }
     return ok;
@@ -250,17 +282,32 @@ bool GlobalDatabase::loadPointsForPlacesPresets()
 
 bool GlobalDatabase::loadCalendarPresets()
 {
-    QFile file("userData/GlobalDatabase/globalCalendarPresets.json");
-    if(!file.open(QFile::ReadOnly | QFile::Text))
-    {
-        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z presetami kalendarzy", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalCalendarPresets.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
-        message.setModal(true);
-        message.exec();
-        return false;
+    QDir dir(QCoreApplication::applicationDirPath());
+    if(dir.exists("userData") == false && QSysInfo::productType() == "windows")
+        dir.cdUp();
+    dir.setPath(dir.path() + "/userData/GlobalDatabase/calendarPresets");
+    dir.setNameFilters(QStringList() << "*.json");
+
+    QStringList fileNames = dir.entryList();
+
+    bool ok = true;
+    for(auto & fileName : fileNames){
+        globalObjectsManager.clear();
+        QFile file("userData/GlobalDatabase/calendarPresets/" + fileName);
+        if(!file.open(QFile::ReadOnly | QFile::Text))
+        {
+            QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zapisem symulacji", "Nie udało się otworzyć pliku simulationSaves/" + fileName +"\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+            message.setModal(true);
+            message.exec();
+            ok = false;
+        }
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        QJsonObject object = doc.object().value("calendar-preset").toObject();
+        SeasonCalendarPreset p = SeasonCalendarPreset::getFromJson(object, &globalObjectsManager);
+        globalCalendarPresets.push_back(p);
+        file.close();
     }
-    globalCalendarPresets = SeasonCalendarPreset::getVectorFromJson(file.readAll());
-    file.close();
-    return true;
+    return ok;
 }
 
 bool GlobalDatabase::writeJumpers()
@@ -383,29 +430,14 @@ bool GlobalDatabase::writePointsForPlacesPresets()
 
 bool GlobalDatabase::writeCalendarPresets()
 {
-    QJsonDocument document;
-    QJsonObject mainObject;
-    QJsonArray array;
-
+    bool ok = true;
     for(auto & preset : globalCalendarPresets)
     {
-        array.push_back(QJsonValue(SeasonCalendarPreset::getJsonObject(preset)));
+        if(preset.saveToFile("userData/GlobalDatabase/calendarPresets/") == false)
+            ok = false;
     }
-    mainObject.insert("calendarPresets", array);
-    document.setObject(mainObject);
+    return ok;
 
-    QFile file("userData/GlobalDatabase/globalCalendarPresets.json");
-    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z presetami kalendarzy", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalCalendarPresets.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
-        message.setModal(true);
-        message.exec();
-        return false;
-    }
-    file.resize(0);
-    file.write(document.toJson(QJsonDocument::Indented));
-    file.close();
-    return true;
 }
 
 void GlobalDatabase::setupJumpersFlags()

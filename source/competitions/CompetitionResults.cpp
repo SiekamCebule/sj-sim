@@ -188,7 +188,7 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
         }
     }
     if(result == nullptr){
-        results.push_back(CompetitionSingleResult(jumper, CompetitionSingleResult::IndividualResult));
+        results.push_back(CompetitionSingleResult(competition, jumper, CompetitionSingleResult::IndividualResult));
         result = &results[results.count() - 1];
     }
     int index = jumpNumber;
@@ -213,7 +213,7 @@ void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
         }
     }
     if(result == nullptr){
-        results.push_back(CompetitionSingleResult(team, CompetitionSingleResult::TeamResult));
+        results.push_back(CompetitionSingleResult(competition, team, CompetitionSingleResult::TeamResult));
         result = &results[results.count() - 1];
     }
     int index = jumpNumber;

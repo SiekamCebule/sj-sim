@@ -30,15 +30,19 @@ private slots:
     void addActionTriggered();
     void removeActionTriggered();
 
+    void on_comboBox_altPreset_activated(int index);
+
 private:
     Ui::ClassificationEditorWidget *ui;
     Classification * classification;
     QMap<int, double> pointsForPlaces;
+    QMap<int, double> altPointsForPlaces;
 
     QAction * action_add;
     QAction * action_remove;
 
     PointsForPlacesTableModel * tableModel;
+    PointsForPlacesTableModel * altTableModel;
 
 public:
     Classification *getClassification() const;

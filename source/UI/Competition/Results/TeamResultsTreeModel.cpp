@@ -8,12 +8,18 @@
 extern IDGenerator globalIDGenerator;
 
 TeamResultsTreeModel::TeamResultsTreeModel(TeamCompetitionManager * manager, QObject *parent)
-    : QAbstractItemModel(parent), manager(manager), results(manager->getResults()), teams(&manager->getRoundsTeamsReference()[0]), teamsAdvanceStatuses(&manager->getTeamsAdvanceStatusesReference())
+    : QAbstractItemModel(parent), manager(manager)
+{
+    rootItem = new TreeItem({tr("Miejsce"), tr("Drużyna"), tr("Zawodnik"), tr("Punkty")});
+    if(manager != nullptr)
     {
-        rootItem = new TreeItem({tr("Miejsce"), tr("Drużyna"), tr("Zawodnik"), tr("Punkty")});
+        results = manager->getResults();
+        teams = &manager->getRoundsTeamsReference()[0];
+        teamsAdvanceStatuses = &manager->getTeamsAdvanceStatusesReference();
     }
+}
 
-    QVariant TeamResultsTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant TeamResultsTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if(role == Qt::DisplayRole){
         if(orientation == Qt::Horizontal){
@@ -97,7 +103,7 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
     TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
 
     if(role == Qt::DisplayRole)
-    {  
+    {
         return item->data(index.column());
     }
     else if(role == Qt::DecorationRole)
@@ -132,25 +138,41 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
             return QColor(qRgb(30, 30, 30));
     }
     else if(role == Qt::BackgroundRole){
-        if(item->getParentItem() == rootItem){
-            Team * team = results->getResultsReference()[index.row()].getTeam();
-            if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::SureDroppedOut){
-                return QColor(qRgb(252, 237, 237));
+        if(manager != nullptr){
+            if(item->getParentItem() == rootItem){
+                Team * team = results->getResultsReference()[index.row()].getTeam();
+                if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::SureDroppedOut){
+                    return QColor(qRgb(252, 237, 237));
+                }
+                else if(results->getResultByIndex(index.row())->getJumpsReference().count() < manager->getActualRound() * manager->getActualGroup()) //Ilość skoków jest mniejsza niż round * group
+                {
+                    return QColor(qRgb(254, 254, 254));
+                }
+                else if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::Waiting){
+                    return QColor(qRgb(248, 248, 244));
+                }
+                else if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::SureAdvanced){
+                    return QColor(qRgb(242, 255, 246));
+                }
             }
-            else if(results->getResultByIndex(index.row())->getJumpsReference().count() < manager->getActualRound() * manager->getActualGroup()) //Ilość skoków jest mniejsza niż round * group
-            {
-                return QColor(qRgb(254, 254, 254));
-            }
-            else if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::Waiting){
-                return QColor(qRgb(248, 248, 244));
-            }
-            else if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::SureAdvanced){
-                return QColor(qRgb(242, 255, 246));
-            }
+        }
+        else
+        {
+            return QColor(qRgb(248, 248, 244));
         }
     }
 
     return QVariant();
+}
+
+CompetitionResults *TeamResultsTreeModel::getResults() const
+{
+    return results;
+}
+
+void TeamResultsTreeModel::setResults(CompetitionResults *newResults)
+{
+    results = newResults;
 }
 
 QVector<Team *> *TeamResultsTreeModel::getTeams() const

@@ -12,12 +12,14 @@
 #include "../ResultsShowing/JumpDataDetailedInfoWindow.h"
 #include "../Competition/JumperCompetitionResultsWidget.h"
 #include "../Competition/Results/ResultsTableModel.h"
+#include "../Competition/Results/TeamResultsTreeModel.h"
 #include "NewSeasonConfiguratorWindow.h"
 #include <QMessageBox>
 #include <QTimer>
 #include <QProgressDialog>
 #include <QPushButton>
 #include <QTableView>
+#include <QTreeView>
 
 extern SeasonDatabaseObjectsManager globalObjectsManager;
 
@@ -467,10 +469,6 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
                     {
                         if(classification->getClassificationType() == Classification::Individual)
                         {
-                            if(competition->getRulesPointer()->getCompetitionType()== CompetitionRules::Team &&
-                                classification->getPunctationType() == Classification::PointsForPlaces)
-                                break;
-
                             int count = 1;
                             if(competitionSingleResult.getTeam() != nullptr)
                                 count = competitionSingleResult.getTeam()->getJumpersCount();
@@ -525,7 +523,7 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
                 ui->listView_competitionsArchive->reset();
                 simulationSave->saveToFile("simulationSaves/");
 
-                if(simulationSave->getNextCompetition() == nullptr)
+                 if(simulationSave->getNextCompetition() == nullptr)
                 {
                     QMessageBox::information(this, tr("Koniec sezonu"), tr("Sezon dobiegł końca! Aby skonfigurować kolejny sezon, wciśnij odpowiedni przycisk w oknie."), QMessageBox::Ok);
                     setupNextSeasonConfigButton();
@@ -544,28 +542,36 @@ void SimulationSaveManagerWindow::on_pushButton_saveToFile_clicked()
 
 void SimulationSaveManagerWindow::on_pushButton_repairDatabase_clicked()
 {
-    QProgressDialog * dialog = new QProgressDialog(this);
-    dialog->setLabelText("Naprawianie zapisu symulacji...");
-    dialog->setWindowModality(Qt::WindowModal);
-    dialog->setStyleSheet("QProgressDialog{background-color: white; color: black;}");
-    dialog->setMinimum(0);
-    dialog->setMaximum(11);
-    dialog->setWindowTitle(QObject::tr("Naprawa zapisu symulacji."));
-    dialog->setValue(0);
+    QProgressDialog dialog;
+    dialog.setStyleSheet("QProgressDialog{background-color: white; color: black;}");
+    dialog.setMinimum(0);
+    dialog.setMaximum(11);
+    dialog.setValue(0);
+    dialog.setMinimumDuration(0);
+    dialog.setWindowTitle(QObject::tr("Naprawia zapisów symulacji "));
+    //dialog.setLabelText(QString(QObject::tr("Postęp naprawy zapisu symulacji: %1 z %2")).arg(QString::number(dialog.value())).arg(QString::number(dialog.maximum())));
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.show();
 
     SeasonCalendar * calendar = &simulationSave->getActualSeason()->getCalendarReference();
     calendar->fixCompetitionsClassifications();
-    dialog->setValue(1);
+    dialog.setValue(dialog.value() + 1);
+    QCoreApplication::processEvents();
     calendar->fixAdvancementClassifications();
-    dialog->setValue(2);
+    dialog.setValue(dialog.value() + 1);
+    QCoreApplication::processEvents();
     calendar->fixAdvancementCompetitions();
-    dialog->setValue(3);
+    dialog.setValue(dialog.value() + 1);
+    QCoreApplication::processEvents();
     calendar->fixCompetitionsHills(&simulationSave->getHillsReference());
-    dialog->setValue(4);
+    dialog.setValue(dialog.value() + 1);
+    QCoreApplication::processEvents();
     simulationSave->repairDatabase();
-    dialog->setValue(9);
+    dialog.setValue(dialog.value() + 1);
+    QCoreApplication::processEvents();
     simulationSave->saveToFile("simulationSaves/");
-    dialog->setValue(11);
+    dialog.setValue(dialog.value() + 1);
+    QCoreApplication::processEvents();
 
     QMessageBox::information(this, tr("Naprawa bazy danych"), tr("Naprawiono bazę danych tego zapisu symulacji i zapisano do pliku."), QMessageBox::Ok);
 }
@@ -587,6 +593,7 @@ void SimulationSaveManagerWindow::on_comboBox_archiveSeason_currentIndexChanged(
 void SimulationSaveManagerWindow::on_listView_competitionsArchive_doubleClicked(const QModelIndex &index)
 {
     CompetitionInfo * competition = competitionsArchiveModel->getSeasonCompetitions()->at(index.row());
+    int compType = competition->getRulesPointer()->getCompetitionType();
 
     QDialog * dialog = new QDialog(this);
     dialog->setWindowTitle(tr("Wyniki konkursu"));
@@ -598,7 +605,20 @@ void SimulationSaveManagerWindow::on_listView_competitionsArchive_doubleClicked(
     ResultsTableModel * resultsModel = new ResultsTableModel(competition->getRulesPointer()->getCompetitionType(), &competition->getResultsReference(), nullptr, this);
     resultsTableView->setModel(resultsModel);
     resultsTableView->resizeColumnsToContents();
-    mainLayout->addWidget(resultsTableView);
+    if(compType == CompetitionRules::Individual)
+        mainLayout->addWidget(resultsTableView);
+
+    QTreeView * teamResultsTreeView = new QTreeView(this);
+    TeamResultsTreeModel * teamResultsModel = new TeamResultsTreeModel(nullptr, this);
+    if(compType == CompetitionRules::Team){
+        QVector<Team *> teams = MyFunctions::convertToVectorOfPointers(&competition->getTeamsReference());
+        teamResultsModel->setTeams(&teams);
+        teamResultsModel->setResults(&competition->getResultsReference());
+        teamResultsModel->setupTreeItems();
+        teamResultsTreeView->setModel(teamResultsModel);
+        teamResultsTreeView->expandToDepth(0);
+        mainLayout->addWidget(teamResultsTreeView);
+    }
 
     JumperCompetitionResultsWidget * jumperResultWidget = new JumperCompetitionResultsWidget(this);
     mainLayout->addWidget(jumperResultWidget);
@@ -606,6 +626,16 @@ void SimulationSaveManagerWindow::on_listView_competitionsArchive_doubleClicked(
 
     connect(resultsTableView, &QListView::doubleClicked, this, [jumperResultWidget, competition](const QModelIndex index){
         jumperResultWidget->setJumperResult(competition->getResultsReference().getResultByIndex(index.row()));
+        jumperResultWidget->fillWidget();
+    });
+    connect(teamResultsTreeView, &QTreeView::doubleClicked, this, [jumperResultWidget, competition, teamResultsModel](const QModelIndex index){
+        TreeItem * item = static_cast<TreeItem *>(index.internalPointer());
+        if(item->getParentItem() == teamResultsModel->getRootItem())
+            return;
+        int teamIndex = item->getParentItem()->row();
+        int jumperIndex = item->row();
+        jumperResultWidget->setJumperResult(&competition->getResultsReference().getResultsReference()[teamIndex].getTeamJumpersResultsReference()[jumperIndex]);
+        jumperResultWidget->setPositionShowing(false);
         jumperResultWidget->fillWidget();
     });
 

@@ -94,17 +94,22 @@ void AppSettingsWindow::on_spinBox_skillsRange_valueChanged(int arg1)
 
 void AppSettingsWindow::on_pushButton_repairDatabase_clicked()
 {
-    QProgressDialog * dialog = new QProgressDialog(this);
-    dialog->setLabelText("Naprawianie bazy danych...");
-    dialog->setWindowModality(Qt::WindowModal);
-    dialog->setStyleSheet("QProgressDialog{background-color: white; color: black;}");
-    dialog->setMinimum(0);
-    dialog->setMaximum(6);
-    dialog->setWindowTitle(QObject::tr("Naprawa bazy danych"));
-    dialog->setValue(0);
-
     GlobalDatabase * db = GlobalDatabase::get();
-    dialog->setValue(1);
+    if(db->getLoadedSimulationSaves() == false){
+        db->loadSimulationSaves(true);
+        db->setLoadedSimulationSaves(true);
+    }
+    QProgressDialog dialog;
+    dialog.setStyleSheet("QProgressDialog{background-color: white; color: black;}");
+    dialog.setMinimum(0);
+    dialog.setMaximum(db->getEditableGlobalJumpers().count() +  db->getEditableGlobalHills().count()
+                      + db->getEditableCompetitionRules().count() + db->getEditableGlobalSimulationSaves().count() + 1);
+    dialog.setMinimumDuration(0);
+    dialog.setValue(0);
+    dialog.setWindowTitle(QObject::tr("Naprawia bazy danych"));
+    //dialog.setLabelText(QString(QObject::tr("Postęp naprawy bazy danych: %1 z %2")).arg(QString::number(dialog.value())).arg(QString::number(dialog.maximum())));
+    dialog.setModal(true);
+    dialog.setWindowModality(Qt::WindowModal);
 
     QSet<ulong> values; //Te ktore już wystąpiły
 
@@ -113,32 +118,36 @@ void AppSettingsWindow::on_pushButton_repairDatabase_clicked()
             jumper.generateID();
         else jumper.regenerateID();
         values.insert(jumper.getID());
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
     }
-    dialog->setValue(2);
     for(auto & hill : db->getEditableGlobalHills()){
         if(values.contains(hill.getID()))
             hill.generateID();
         else hill.regenerateID();
         values.insert(hill.getID());
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
     }
-    dialog->setValue(3);
     for(auto & rules : db->getEditableCompetitionRules()){
         if(values.contains(rules.getID()))
             rules.generateID();
         else rules.regenerateID();
         values.insert(rules.getID());
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
     }
-    dialog->setValue(4);
     for(auto & save : db->getEditableGlobalSimulationSaves()){
         if(values.contains(save->getID()))
             save->generateID();
         else save->regenerateID();
         values.insert(save->getID());
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
     }
-    dialog->setValue(5);
 
     db->writeToJson();
-    dialog->setValue(6);
+    dialog.setValue(dialog.value() + 1);
 
     QMessageBox::information(this, tr("Naprawa bazy danych"), tr("Naprawiono bazę danych"), QMessageBox::Ok);
 }
@@ -166,30 +175,43 @@ void AppSettingsWindow::on_pushButton_cutSurnames_clicked()
 
 void AppSettingsWindow::on_pushButton_repairDatabase_2_clicked()
 {
-    QProgressDialog * dialog = new QProgressDialog(this);
-    dialog->setLabelText("Naprawianie zapisów symulacji...");
-    dialog->setWindowModality(Qt::WindowModal);
-    dialog->setStyleSheet("QProgressDialog{background-color: white; color: black;}");
-    dialog->setMinimum(0);
-    dialog->setMaximum(11 * GlobalDatabase::get()->getEditableGlobalSimulationSaves().count());
-    dialog->setWindowTitle(QObject::tr("Naprawa zapisów symulacji."));
-    dialog->setValue(0);
+    GlobalDatabase * db = GlobalDatabase::get();
+    if(db->getLoadedSimulationSaves() == false){
+        db->loadSimulationSaves(true);
+        db->setLoadedSimulationSaves(true);
+    }
+
+    QProgressDialog dialog;
+    dialog.setStyleSheet("QProgressDialog{background-color: white; color: black;}");
+    dialog.setMinimum(0);
+    dialog.setMaximum(db->getEditableGlobalSimulationSaves().count() * 11);
+    dialog.setMinimumDuration(0);
+    dialog.setValue(0);
+    dialog.setWindowTitle(QObject::tr("Naprawia zapisów symulacji "));
+    //dialog.setLabelText(QString(QObject::tr("Postęp naprawiania zapisów symulacji: %1 z %2")).arg(QString::number(dialog.value())).arg(QString::number(dialog.maximum())));
+    dialog.setWindowModality(Qt::WindowModal);
 
     for(auto & save : GlobalDatabase::get()->getEditableGlobalSimulationSaves())
     {
         SeasonCalendar * calendar = &save->getActualSeason()->getCalendarReference();
         calendar->fixAdvancementClassifications();
-        dialog->setValue(dialog->value() + 1);
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
         calendar->fixAdvancementCompetitions();
-        dialog->setValue(dialog->value() + 1);
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
         calendar->fixCompetitionsClassifications();
-        dialog->setValue(dialog->value() + 1);
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
         calendar->fixCompetitionsHills(&save->getHillsReference());
-        dialog->setValue(dialog->value() + 1);
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
         save->repairDatabase();
-        dialog->setValue(dialog->value() + 5);
+        dialog.setValue(dialog.value() + 5);
+        QCoreApplication::processEvents();
         save->saveToFile("simulationSaves/");
-        dialog->setValue(dialog->value() + 2);
+        dialog.setValue(dialog.value() + 2);
+        QCoreApplication::processEvents();
     }
     QMessageBox::information(this, tr("Naprawiono zapisy symulacji"), tr("Naprawiono zapisy symulacji. Aby zmiana weszła w życie wejdź jeszcze raz do programu aby ponownie wczytać zapisy symulacji."), QMessageBox::Ok);
 }

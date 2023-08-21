@@ -33,11 +33,15 @@ public:
 
     static QVector<Classification *> getSpecificTypeClassifications(QVector<Classification *> classifications, int type);
 
+    static Classification *getFromJson(QJsonObject obj);
+    static QJsonObject getJsonObject(Classification *classification);
+
 private:
     QString name;
     short classificationType;
     short punctationType;
     QMap<int, double> pointsForPlaces;
+    QMap<int, double> altPointsForPlaces;
 
     QVector<ClassificationSingleResult *> results;
 
@@ -54,10 +58,9 @@ public:
     QVector<ClassificationSingleResult *> getResults() const;
     QVector<ClassificationSingleResult *> & getResultsReference();
     void setResults(const QVector<ClassificationSingleResult *> &newResults);
-
-public:
-    static Classification *getFromJson(QJsonObject obj);
-    static QJsonObject getJsonObject(Classification *classification);
+    QMap<int, double> getAltPointsForPlaces() const;
+    QMap<int, double> & getAltPointsForPlacesReference();
+    void setAltPointsForPlaces(const QMap<int, double> &newAltPointsForPlaces);
 };
 
 #endif // ABSTRACTCLASSIFICATION_H

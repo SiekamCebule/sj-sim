@@ -25,6 +25,8 @@ private:
     QVector<PointsForPlacesPreset> globalPointsForPlacesPresets;
     QVector<SeasonCalendarPreset> globalCalendarPresets;
 
+    bool loadedSimulationSaves;
+
 public:
     GlobalDatabase(GlobalDatabase &) = delete;
     static GlobalDatabase * get();
@@ -37,7 +39,7 @@ public:
     bool loadJumpers();
     bool loadHills();
     bool loadCompetitionsRules();
-    bool loadSimulationSaves();
+    bool loadSimulationSaves(bool progressDialog = false);
     bool loadPointsForPlacesPresets();
     bool loadCalendarPresets();
 
@@ -69,6 +71,8 @@ public:
     QVector<SeasonCalendarPreset> getGlobalCalendarPresets() const;
     QVector<SeasonCalendarPreset> & getEditableGlobalCalendarPresets();
     void setGlobalCalendarPresets(const QVector<SeasonCalendarPreset> &newGlobalCalendarPresets);
+    bool getLoadedSimulationSaves() const;
+    void setLoadedSimulationSaves(bool newLoadedSimulationSaves);
 };
 
 #endif // GLOBALDATABASE_H

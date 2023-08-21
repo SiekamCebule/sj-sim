@@ -92,19 +92,24 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
         jumpersListView->setType(DatabaseItemsListView::SeasonJumpersItems);
         bool condition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference().count() > simulationSave->getNextCompetitionIndex() + 1;
         bool secondCondition = false;
-        bool thirdCondition = false;
         if(condition)
-            secondCondition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1]->getTrialRound() == seasonCompetition;
-
+            secondCondition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1]->getTrialRound() == seasonCompetition && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual;
+        CompetitionInfo * comp;
+        if(secondCondition)
+            comp = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1];
+        else
+            comp = seasonCompetition;
         //Czy seria próbna następnego konkursu po aktualnym równa się aktualnemu konkursowi
 
                 //Jeżeli tak, przefiltruj na podstawie następnego po aktualnym
-        if(secondCondition || seasonCompetition->getAdvancementCompetition() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual){
-            CompetitionInfo * comp;
-            if(secondCondition)
-                comp = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1];
-            else comp = seasonCompetition;
-            seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersAfterQualifications(comp, simulationSave->getJumpersReference());
+        if((comp->getAdvancementCompetition() != nullptr) && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual){
+            if(comp->getAdvancementCompetition()->getCancelled() == false)
+                seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersAfterQualifications(comp, simulationSave->getJumpersReference());
+            else
+                for(auto & jp : simulationSave->getJumpersReference())
+                {
+                    seasonCompetitionJumpers.push_back(jp);
+                }
         }
         else if(seasonCompetition->getAdvancementClassification() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
             seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersByClassification(seasonCompetition, seasonCompetition->getAdvancementClassification(), simulationSave->getJumpersReference());
@@ -152,8 +157,19 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
 
         if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
         {
-            if(seasonCompetition->getAdvancementCompetition() != nullptr)
-                competitionTeams = TeamCompetitionManager::getFilteredTeamsAfterQualifications(seasonCompetition);
+            bool condition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference().count() > simulationSave->getNextCompetitionIndex() + 1;
+            bool secondCondition = false;
+            if(condition)
+                secondCondition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1]->getTrialRound() == seasonCompetition;
+            CompetitionInfo * comp;
+            if(secondCondition)
+                comp = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1];
+            else
+                comp = seasonCompetition;
+            if(comp->getAdvancementCompetition() != nullptr)
+            {
+                competitionTeams = TeamCompetitionManager::getFilteredTeamsAfterQualifications(comp);
+            }
             else
             {
                 competitionTeams = Team::constructTeamsVectorByJumpersList(seasonCompetitionJumpers, seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
@@ -172,7 +188,6 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
             });
         }
     }
-
     else if(getType() == SingleCompetition)
     {
         checkBox_singleCompetitionQualifications = new QCheckBox(tr("Przeprowadzenie kwalifikacji"), this);

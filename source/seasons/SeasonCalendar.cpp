@@ -24,7 +24,7 @@ void SeasonCalendar::fixCompetitionsClassifications()
         for(auto & classification : comp->getClassificationsReference()){
             if(classification == nullptr)
                 MyFunctions::removeFromVector(comp->getClassificationsReference(), classification);
-            if(MyFunctions::vectorContainsByID(classifications, classification) == false || ((type != classification->getClassificationType()) && classification->getPunctationType() == Classification::PointsForPlaces && classification->getClassificationType() == Classification::Individual)){
+            else if(MyFunctions::vectorContainsByID(classifications, classification) == false){// || ((type != classification->getClassificationType()) && classification->getPunctationType() == Classification::PointsForPlaces && classification->getClassificationType() == Classification::Individual)){
                 MyFunctions::removeFromVectorByID(comp->getClassificationsReference(), classification->getID());
             }
         }
@@ -170,6 +170,41 @@ CompetitionInfo *SeasonCalendar::getMainCompetitionByIndex(QVector<CompetitionIn
         if(comp->getSerieType() == CompetitionInfo::Competition || comp->getSerieType() == CompetitionInfo::Qualifications){
             if(i == index)
                 return comp;
+            i++;
+        }
+    }
+    return nullptr;
+}
+
+CompetitionInfo *SeasonCalendar::getCompetitionByIndexAndType(QVector<CompetitionInfo *> &competitions, int index, int type)
+{
+    int i=0;
+    for(auto & comp : competitions)
+    {
+        if(comp->getRulesPointer()->getCompetitionType() == type)
+        {
+            if(i == index)
+                return comp;
+            i++;
+        }
+    }
+    return nullptr;
+}
+
+CompetitionInfo *SeasonCalendar::getCompetitionAfterCompetitionFilteredByType(QVector<CompetitionInfo *> &competitions, int actualIndex, int type, int howMany)
+{
+    if(actualIndex + howMany > competitions.count()){
+        for(int i=actualIndex; i<competitions.count(); i++)
+        {
+            if(competitions[i]->getRulesPointer()->getCompetitionType() == type)
+            {
+                if(howMany <= 0)
+                    return competitions[i];
+                else
+                {
+                    howMany--;
+                }
+            }
             i++;
         }
     }

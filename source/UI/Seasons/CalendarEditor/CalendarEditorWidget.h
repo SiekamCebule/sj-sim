@@ -34,6 +34,7 @@ private:
     QAction * action_up;
     QAction * action_down;
     QAction * action_edit;
+    QAction * action_duplicate;
     Hill * defaultHill;
 
     QVector<Classification *> * classificationsList;
@@ -54,6 +55,7 @@ private slots:
     void upActionTriggered();
     void downActionTriggered();
     void editActionTriggered();
+    //void duplicateActionTriggered();
 
     void on_pushButton_saveCalendarPreset_clicked();
 

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>268</width>
-    <height>542</height>
+    <width>277</width>
+    <height>641</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,5,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
@@ -261,7 +261,7 @@ color: rgb(0, 0, 0);
       </spacer>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0">
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0,0,0">
        <item>
         <widget class="QTableView" name="tableView_pointsForPlaces">
          <property name="sizePolicy">
@@ -269,6 +269,12 @@ color: rgb(0, 0, 0);
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>220</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -291,7 +297,7 @@ color: rgb(0, 0, 0);
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="label_preset">
            <property name="font">
             <font>
              <bold>true</bold>
@@ -310,6 +316,51 @@ color: rgb(0, 0, 0);
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="label_altPreset">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Alternatywna punktacja</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox_altPreset">
+           <property name="styleSheet">
+            <string notr="true">color: black; background-color: white;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTableView" name="tableView_altPointsForPlaces">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>150</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Alternatywna punktacja określa:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;1&lt;/span&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;. &lt;/span&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Dla klasyfikacji indywidualnej&lt;/span&gt;: Ilość punktów do klasyfikacji zawodnika za miejsce jego drużyny w konkursie (Np zawodnik dostaje 50 punktów do swojej klasyfikacji za zwycięstwo swojej drużyny).&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;2. &lt;/span&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Dla klasyfikacji drużynowej&lt;/span&gt;: Ilość punktów do klasyfikacji za miejsce zawodnika z drużyny w konkursie indywidualnym (Np drużyna dostaje 12 punktów do klasyfikacji za 15 miejsce swojego zawodnika)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(235,235,235);</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

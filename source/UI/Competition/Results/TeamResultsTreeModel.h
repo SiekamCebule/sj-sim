@@ -43,6 +43,8 @@ public:
     void setManager(TeamCompetitionManager *newManager);
     QVector<Team *> *getTeams() const;
     void setTeams(QVector<Team *> *newTeams);
+    CompetitionResults *getResults() const;
+    void setResults(CompetitionResults *newResults);
 };
 
 #endif // TEAMRESULTSTREEMODEL_H

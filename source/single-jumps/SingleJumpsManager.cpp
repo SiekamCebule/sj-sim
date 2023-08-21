@@ -53,7 +53,7 @@ void SingleJumpsManager::simulate()
     dialog.setMinimum(0);
     dialog.setMaximum(jumpsCount);
     dialog.setWindowTitle(QObject::tr("Symulacja pojedynczych skoków"));
-        dialog.setLabelText(QString(QObject::tr("Przesymulowano %1 z %2 skoków")).arg(QString::number(dialog.value()).arg(QString::number(dialog.maximum()))));
+    dialog.setLabelText(QString(QObject::tr("Przesymulowano %1 z %2 skoków")).arg(QString::number(dialog.value()).arg(QString::number(dialog.maximum()))));
     dialog.setModal(true);
     dialog.setWindowModality(Qt::WindowModal);
 

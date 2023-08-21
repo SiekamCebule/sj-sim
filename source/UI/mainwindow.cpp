@@ -29,7 +29,7 @@
 #include <random>
 
 extern IDGenerator globalIDGenerator;
-const QString appVersion = "0.8.9beta";
+const QString appVersion = "0.9.0beta";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -49,7 +49,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 
 void MainWindow::on_pushButton_singleJumps_clicked()
 {
@@ -149,9 +148,13 @@ void MainWindow::on_pushButton_reportIssue_clicked()
     QDesktopServices::openUrl(QUrl("https://github.com/SiekamCebule/sj-sim/issues/new"));
 }
 
-
 void MainWindow::on_pushButton_season_clicked()
 {
+    if(GlobalDatabase::get()->getLoadedSimulationSaves() == false){
+        GlobalDatabase::get()->loadSimulationSaves(true);
+        GlobalDatabase::get()->setLoadedSimulationSaves(true);
+    }
+
     SimulationSavesWindow savesWindow;
     savesWindow.setModal(true);
     if(savesWindow.exec() == QDialog::Accepted){

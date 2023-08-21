@@ -3,18 +3,19 @@
 #include "CompetitionInfo.h"
 extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
-CompetitionSingleResult::CompetitionSingleResult(Jumper *jumper, int type) : type(type), jumper(jumper), team(nullptr),
+CompetitionSingleResult::CompetitionSingleResult(CompetitionInfo *competition, Jumper *jumper, int type) : type(type), jumper(jumper), team(nullptr), competition(competition),
     ClassWithID()
 {}
 
-CompetitionSingleResult::CompetitionSingleResult(Team *team, int type) : type(type), jumper(nullptr), team(team),
+CompetitionSingleResult::CompetitionSingleResult(CompetitionInfo *competition, Team *team, int type) : type(type), jumper(nullptr), team(team), competition(competition),
     ClassWithID()
 {}
 
 CompetitionSingleResult CompetitionSingleResult::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
 {
-    CompetitionSingleResult result;
+    CompetitionSingleResult result(nullptr);
     result.setID(obj.value("id").toString().toULong());
+    //result.setCompetition(static_cast<CompetitionInfo *>(objectsManager->getObjectByID(obj.value("competition-id").toString().toULong())));
     result.setPosition(obj.value("position").toInt());
     result.setPointsSum(obj.value("points-sum").toDouble());
     result.setType(obj.value("type").toInt());
@@ -33,6 +34,7 @@ QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult resul
 {
     QJsonObject resultObject;
     resultObject.insert("id", QString::number(result.getID()));
+    //resultObject.insert("competition-id", QString::number(result.getCompetition()->getID()));
     resultObject.insert("position", result.getPosition());
     resultObject.insert("points-sum", result.getPointsSum());
     resultObject.insert("type", result.getType());
@@ -49,6 +51,16 @@ QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult resul
     resultObject.insert("jumps", jumpsArray);
 
     return resultObject;
+}
+
+CompetitionInfo *CompetitionSingleResult::getCompetition() const
+{
+    return competition;
+}
+
+void CompetitionSingleResult::setCompetition(CompetitionInfo *newCompetition)
+{
+    competition = newCompetition;
 }
 
 QVector<CompetitionSingleResult> CompetitionSingleResult::getTeamJumpersResults() const
@@ -145,7 +157,7 @@ void CompetitionSingleResult::updateTeamJumpersResults()
     QSet<Jumper *> jumpers;
     for(auto & jump : getJumpsReference()){
         if(jumpers.contains(jump.getJumper()) == false){
-            CompetitionSingleResult result(jump.getJumper());
+            CompetitionSingleResult result(competition, jump.getJumper());
             result.getJumpsReference().push_back(jump);
             result.updatePointsSum();
 

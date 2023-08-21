@@ -76,8 +76,10 @@ void AbstractCompetitionManager::updateToAdvanceLineDistance()
     Hill * hill = competitionInfo->getHill();
 
     int shouldBeQualified = 0;
-    if(actualRound < competitionRules->getRounds().count())
+    if(actualRound < competitionRules->getRoundsReference().count())
         shouldBeQualified = competitionRules->getRounds().at(actualRound).getCount();
+    else if(actualRound == competitionRules->getRoundsReference().count() && altQualifiersLimit > 0)
+        shouldBeQualified = altQualifiersLimit;
     toAdvanceLineDistance = 0;
 
     int competitorsCount = 0;
@@ -89,7 +91,7 @@ void AbstractCompetitionManager::updateToAdvanceLineDistance()
         competitorsCount = dynamic_cast<TeamCompetitionManager*>(this)->getActualRoundTeamsReference().count();
     }
 
-    if((competitorsCount - shouldBeQualified - (actualStartListIndex) > 0 && competitionRules->getRoundsReference()[actualRound - 1].getKO() == false) || actualRound == competitionRules->getRounds().count() || competitorsCount <= shouldBeQualified || lastQualifiedResult == nullptr)
+    if((competitorsCount - shouldBeQualified - (actualStartListIndex) > 0 && competitionRules->getRoundsReference()[actualRound - 1].getKO() == false) || (actualRound == competitionRules->getRounds().count() && altQualifiersLimit == 0) || competitorsCount <= shouldBeQualified || lastQualifiedResult == nullptr)
     {
         toAdvanceLineDistance = -1;
     }

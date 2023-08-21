@@ -296,7 +296,7 @@ void JumpSimulator::generateWindEffects()
         case Wind::BackSide:
             jumpData.distance -= change; break;
         case Wind::Side:
-            jumpData.distance += change; break;
+            jumpData.distance -= change; break;
         case Wind::FrontSide:
             jumpData.distance += change; break;
         case Wind::Front:

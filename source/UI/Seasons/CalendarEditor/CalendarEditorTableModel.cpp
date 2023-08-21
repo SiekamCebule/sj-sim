@@ -229,6 +229,8 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
         return QColor(qRgb(40, 40, 40));
     }
     else if(role == Qt::BackgroundRole){
+        if(competition->getCancelled() == true)
+            return QColor(qRgb(255, 199, 199));
         if(calendar->getCompetitionsReference().indexOf(competition) >= dontModifyBefore)
             return QColor(qRgb(255, 255, 255));
         else

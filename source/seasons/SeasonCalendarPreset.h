@@ -19,6 +19,9 @@ public:
     static SeasonCalendarPreset getFromJson(QJsonObject json, SeasonDatabaseObjectsManager *objectsManager);
     static QVector<SeasonCalendarPreset> getVectorFromJson(QByteArray json);
 
+    bool saveToFile(QString dir = "");
+    bool loadFromFile(QString fileName, QString dir = "");
+
 private:
     QString name;
     SeasonCalendar calendar;

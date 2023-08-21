@@ -27,11 +27,18 @@ void ClassificationSingleResult::updateSingleResults()
             {
                 if(classification->getPunctationType() == Classification::PointsForPlaces)
                 {
-                    if(competitionType == CompetitionRules::Individual)
+                    if(competitionType == CompetitionRules::Individual){
                         if(singleResult.getJumper() == this->getJumper()){
                             singleResults.push_back(&singleResult);
                             //break;
                         }
+                    }
+                    else if(competitionType == CompetitionRules::Team){
+                        if(singleResult.getTeam()->getJumpersReference().contains(this->getJumper()))
+                        {
+                            singleResults.push_back(&singleResult);
+                        }
+                    }
                 }
                 else if(classification->getPunctationType() == Classification::CompetitionPoints)
                 {
@@ -107,12 +114,34 @@ void ClassificationSingleResult::addCompetitionResults(CompetitionResults &resul
 void ClassificationSingleResult::updatePointsSum()
 {
     pointsSum = 0;
-    for(auto & result : singleResults){
+    for(auto & result : singleResults)
+    {
         if(classification->getPunctationType() == Classification::CompetitionPoints)
             pointsSum += result->getPointsSum();
-        else if(classification->getPunctationType() == Classification::PointsForPlaces){
-
-            pointsSum += classification->getPointsForPlacesReference().value(result->getPosition(), 0);
+        else if(classification->getPunctationType() == Classification::PointsForPlaces)
+        {
+            if(classification->getClassificationType() == Classification::Individual)
+            {
+                if(result->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+                {
+                    pointsSum += classification->getPointsForPlacesReference().value(result->getPosition(), 0);
+                }
+                else if(result->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
+                {
+                    pointsSum += classification->getAltPointsForPlacesReference().value(result->getPosition(), 0);
+                }
+            }
+            else if(classification->getClassificationType() == Classification::Team)
+            {
+                if(result->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+                {
+                    pointsSum += classification->getAltPointsForPlacesReference().value(result->getPosition(), 0);
+                }
+                else if(result->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
+                {
+                    pointsSum += classification->getPointsForPlacesReference().value(result->getPosition(), 0);
+                }
+            }
         }
     }
 }

@@ -1,6 +1,9 @@
 #include "SeasonCalendarPreset.h"
 #include <QJsonValue>
 #include <QHash>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 extern SeasonDatabaseObjectsManager globalObjectsManager;
 
@@ -129,6 +132,26 @@ QVector<SeasonCalendarPreset> SeasonCalendarPreset::getVectorFromJson(QByteArray
         presets.push_back(SeasonCalendarPreset::getFromJson(val.toObject(), &globalObjectsManager));
     }
     return presets;
+}
+
+bool SeasonCalendarPreset::saveToFile(QString dir)
+{
+    QJsonDocument document;
+    QJsonObject mainObject;
+    mainObject.insert("calendar-preset", SeasonCalendarPreset::getJsonObject(*this));
+    document.setObject(mainObject);
+    QFile file(dir + getName() + ".json");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zapisem symulacji " + getName(), "Nie udało się otworzyć pliku " + dir + getName() + ".json" + "\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        message.setModal(true);
+        message.exec();
+        return false;
+    }
+    file.resize(0);
+    file.write(document.toJson(QJsonDocument::Indented));
+    file.close();
+    return true;
 }
 
 QString SeasonCalendarPreset::getName() const

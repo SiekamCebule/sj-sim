@@ -57,6 +57,8 @@ QVariant CompetitionsArchiveListModel::data(const QModelIndex &index, int role) 
                 break;
             }
             string += ")";
+            /*if(competition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
+                string += tr(" --> (Konkurs drużynowy)");*/
             return string;
         }
     }
@@ -67,12 +69,39 @@ QVariant CompetitionsArchiveListModel::data(const QModelIndex &index, int role) 
     }
     else if(role == Qt::FontRole)
     {
-        return QFont("Ubuntu", 10);
+        CompetitionInfo * competition = seasonCompetitions->at(index.row());
+        QFont font("Ubuntu", 9);
+        if(competition->getSerieType() == CompetitionInfo::Competition || competition->getSerieType() == CompetitionInfo::Qualifications)
+            font.setBold(true);
+        if(competition->getSerieType() == CompetitionInfo::Qualifications)
+            font.setItalic(true);
+        return font;
     }
     else if(role == Qt::ForegroundRole)
         return QColor("black");
     else if(role == Qt::TextAlignmentRole)
         return Qt::AlignLeft;
+    else if(role == Qt::BackgroundRole)
+    {
+        CompetitionInfo * competition = seasonCompetitions->at(index.row());
+        if(competition->getCancelled() == true)
+            return QColor(qRgb(255, 238, 238));
+        if(competition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
+            return QColor(qRgb(230, 238, 255));
+        else// if(competition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+            return QColor(qRgb(249, 255, 252));
+        /*switch(competition->getSerieType())
+        {
+        case CompetitionInfo::Competition:
+            return QColor(qRgb(197, 224, 252));
+        case CompetitionInfo::Qualifications:
+            return QColor(qRgb(197, 224, 252));
+        case CompetitionInfo::TrialRound:
+            return QColor(qRgb(197, 224, 252));
+        case CompetitionInfo::Training:
+            return QColor(qRgb(197, 224, 252));
+        }*/
+    }
 
     return QVariant();
 }

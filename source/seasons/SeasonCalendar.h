@@ -22,6 +22,8 @@ public:
     static QJsonObject getJsonObject(SeasonCalendar & calendar);
     static int getCompetitionMainIndex(QVector<CompetitionInfo *> & competitions, CompetitionInfo * competition);
     static CompetitionInfo * getMainCompetitionByIndex(QVector<CompetitionInfo *> & competitions, int index);
+    static CompetitionInfo * getCompetitionByIndexAndType(QVector<CompetitionInfo *> & competitions, int index, int type);
+    static CompetitionInfo * getCompetitionAfterCompetitionFilteredByType(QVector<CompetitionInfo *> & competitions, int actualIndex, int type, int howMany);
 
 private:
     QVector<CompetitionInfo *> competitions;

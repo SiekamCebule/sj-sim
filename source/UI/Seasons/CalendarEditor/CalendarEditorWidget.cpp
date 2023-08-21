@@ -52,6 +52,11 @@ CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVec
     this->addAction(action_edit);
     connect(action_edit, &QAction::triggered, this, &CalendarEditorWidget::editActionTriggered);
 
+    action_duplicate = new QAction(this);
+    action_duplicate->setShortcut(Qt::CTRL | Qt::Key_Shift | Qt::Key_A);
+    this->addAction(action_duplicate);
+    //connect(action_duplicate, &QAction::triggered, this, &CalendarEditorWidget::duplicateActionTriggered);
+
     defaultHill = new Hill("Hill");
 
     competitionInfoEditor = new CompetitionInfoEditorWidget();
@@ -197,6 +202,51 @@ QTableView *CalendarEditorWidget::getTableView()
 {
     return ui->tableView;
 }
+
+/*void CalendarEditorWidget::duplicateActionTriggered()
+{
+    int insertIndex = 0;
+    if(ui->tableView->selectionModel()->selectedIndexes().count() > 0)
+        insertIndex = ui->tableView->selectionModel()->selectedIndexes().at(0).row() + 0;
+    else if(calendarModel->rowCount() > 0)
+        insertIndex = calendarModel->rowCount() - 1;
+    else
+        insertIndex = 0;
+
+    int insertIndexInCalendar=0;
+    int i=0;
+    for(auto & comp : calendar->getCompetitionsReference())
+    {
+        if(i == insertIndex){
+            break;
+        }
+        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition)
+            i++;
+        insertIndexInCalendar++;
+    }
+    if(insertIndexInCalendar >= calendarModel->getDontModifyBefore()){
+        calendarModel->insertRow(insertIndex);
+        CompetitionInfo * selectedCompetition = SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), insertIndex);
+        CompetitionInfo * competition = new CompetitionInfo(*selectedCompetition);
+        competition->generateID();
+        competition->getResultsReference().generateID();
+        competition->getClassificationsReference().detach();
+        competition->getQualifyingCompetitionsReference().clear();
+        competition->getResultsReference().getResultsReference().clear();
+        competition->getRoundsKOGroupsReference().clear();
+        competition->getTeamsReference().clear();
+        competition->getTrainingsReference().clear;
+
+        calendar->getCompetitionsReference().insert(insertIndexInCalendar, competition);
+
+        ui->tableView->clearSelection();
+        ui->tableView->selectionModel()->select(calendarModel->index(insertIndex + 1, 0), QItemSelectionModel::Select);
+        emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
+        ui->tableView->resizeColumnsToContents();
+        updateActualCompetitionByID();
+    }
+    emit changed();
+}*/
 
 void CalendarEditorWidget::addActionTriggered()
 {
