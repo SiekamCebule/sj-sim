@@ -31,9 +31,14 @@ void SeasonCalendar::fixCompetitionsClassifications()
     }
 }
 
-void SeasonCalendar::fixCompetitionsHills(QVector<Hill *> *hillsList)
+void SeasonCalendar::fixCompetitionsHills(QVector<Hill *> *hillsList, Hill * defaultHill)
 {
     for(auto & comp : competitions){
+        if(comp->getHill() == nullptr)
+        {
+            comp->setHill(defaultHill);
+            continue;
+        }
         ulong hillID = comp->getHill()->getID();
         bool contains = false;
         Hill * hillWhichContains = nullptr;
@@ -48,7 +53,7 @@ void SeasonCalendar::fixCompetitionsHills(QVector<Hill *> *hillsList)
             comp->setHill(hillWhichContains);
         }
         else{
-            comp->setHill(new Hill("Hill"));
+            comp->setHill(defaultHill);
         }
     }
 }

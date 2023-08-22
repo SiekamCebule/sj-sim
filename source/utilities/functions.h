@@ -113,6 +113,28 @@ public:
         return toReturn;
     }
 
+    /*template<typename T, typename AverageType>
+    static T standardDeviation(QVector<T> & values, AverageType average)
+    {
+        T dev = 0;
+        for(auto & value : values)
+        {
+            dev += qPow(qAbs(value - average), 2);
+        }
+        dev = qSqrt(dev / (values.count() - 1));
+    }*/
+
+    static double standardDeviation(QVector<int> & values, double average)
+    {
+        double dev = 0;
+        for(auto & value : values)
+        {
+            dev += qPow(qAbs(double(value) - average), 2);
+        }
+        dev = qSqrt(dev / (values.count() - 1));
+        return dev;
+    }
+
     static void fileMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & msg);
 };
 

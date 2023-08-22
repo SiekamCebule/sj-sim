@@ -203,7 +203,7 @@ void AppSettingsWindow::on_pushButton_repairDatabase_2_clicked()
         calendar->fixCompetitionsClassifications();
         dialog.setValue(dialog.value() + 1);
         QCoreApplication::processEvents();
-        calendar->fixCompetitionsHills(&save->getHillsReference());
+        calendar->fixCompetitionsHills(&save->getHillsReference(), save->getHillsReference().first()  );
         dialog.setValue(dialog.value() + 1);
         QCoreApplication::processEvents();
         save->repairDatabase();

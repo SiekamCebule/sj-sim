@@ -3,6 +3,7 @@
 
 class Hill;
 class SeasonCalendar;
+class Season;
 #include "CompetitionRules.h"
 #include "CompetitionResults.h"
 #include "CompetitionInfo.h"
@@ -30,6 +31,8 @@ public:
     bool saveToFile(QString dir, QString name);
 
     static QVector<CompetitionInfo *> getSpecificTypeCompetitions(QVector<CompetitionInfo *> competitions, int type);
+    static QVector<CompetitionInfo *> getCompetitionsByStartAndEnd(QVector<CompetitionInfo *> competitions, CompetitionInfo * start, CompetitionInfo * end);
+    static QVector<CompetitionInfo *> mergeSeasonsCompetitions(QVector<Season> *seasons);
 
 private:
     Hill * hill;

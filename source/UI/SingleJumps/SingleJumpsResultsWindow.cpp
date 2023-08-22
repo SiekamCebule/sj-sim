@@ -80,7 +80,7 @@ void SingleJumpsResultsWindow::fillPointsChart()
     QChart * pointsChart = new QChart;
     pointsChart->legend()->hide();
     pointsChart->addSeries(getSplineSeriesForPointsChart());
-    pointsChart->setTitle("Rozkład punktów zawodnika");
+    pointsChart->setTitle(tr("Rozkład punktów zawodnika"));
     pointsChart->setTitleFont(QFont("Quicksand Medium", 15, 1, false));
     pointsChart->createDefaultAxes();
     pointsChart->axes(Qt::Vertical).first()->setRange(1, getMaxNumberOfPointsForChart() * 1.15);

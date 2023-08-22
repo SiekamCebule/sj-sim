@@ -57,7 +57,7 @@ CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVec
     this->addAction(action_duplicate);
     //connect(action_duplicate, &QAction::triggered, this, &CalendarEditorWidget::duplicateActionTriggered);
 
-    defaultHill = new Hill("Hill");
+    defaultHill = calendarModel->getHillsList()->first();
 
     competitionInfoEditor = new CompetitionInfoEditorWidget();
     competitionInfoEditor->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);

@@ -4,6 +4,7 @@
 #include "../global/SeasonDatabaseObjectsManager.h"
 #include "CompetitionRules.h"
 #include "CompetitionResults.h"
+#include "../seasons/Season.h"
 
 #include <QDate>
 #include <QObject>
@@ -95,6 +96,26 @@ QVector<CompetitionInfo *> CompetitionInfo::getSpecificTypeCompetitions(QVector<
     }
 
     return toReturn;
+}
+
+QVector<CompetitionInfo *> CompetitionInfo::getCompetitionsByStartAndEnd(QVector<CompetitionInfo *> competitions, CompetitionInfo *start, CompetitionInfo *end)
+{
+    qDebug()<<"indexof start: "<<competitions.indexOf(start);
+    qDebug()<<"indexof end: "<<competitions.indexOf(end);
+    competitions.remove(0, competitions.indexOf(start));
+    competitions.remove(competitions.indexOf(end) + 1, competitions.count() - competitions.indexOf(end) - 1);
+    return competitions;
+}
+
+QVector<CompetitionInfo *> CompetitionInfo::mergeSeasonsCompetitions(QVector<Season> *seasons)
+{
+    QVector<CompetitionInfo *> competitions;
+    for(auto & season : *seasons)
+    {
+        for(auto & comp : season.getCalendarReference().getCompetitionsReference())
+            competitions.push_back(comp);
+    }
+    return competitions;
 }
 
 QVector<QVector<KOGroup> > CompetitionInfo::getRoundsKOGroups() const

@@ -535,7 +535,7 @@ void JumpSimulator::calculateCompensations()
 void JumpSimulator::calculatePoints()
 {
     jumpData.points = hill->getPointsForKPoint();
-    jumpData.points += (jumpData.getDistance() - hill->getKPoint()) * hill->getPointsForMeter();
+    jumpData.points += (roundDoubleToHalf(jumpData.getDistance()) - hill->getKPoint()) * hill->getPointsForMeter();
     jumpData.points += jumpData.getGateCompensation();
     jumpData.points += jumpData.getWindCompensation();
 

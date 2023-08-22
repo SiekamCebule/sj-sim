@@ -9,6 +9,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
+#include <QSet>
 
 class CompetitionInfo;
 
@@ -26,6 +27,8 @@ public:
 
     static CompetitionSingleResult getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager *objectsManager);
     static QJsonObject getJsonObject(CompetitionSingleResult result);
+
+    static QVector<CompetitionSingleResult *> getFilteredSingleResults(QVector<CompetitionInfo *> & competitions, Jumper * jumper, QSet<int> serieTypes);
 
 protected:
     CompetitionInfo * competition;

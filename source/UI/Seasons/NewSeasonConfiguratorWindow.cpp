@@ -65,10 +65,10 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(bool nextSeason, QWidge
         actualHillIndex = index.row();
     });
     connect(hillsListView, &DatabaseItemsListView::insert, this, [this](){
-        calendar.fixCompetitionsHills(&hills);
+        calendar.fixCompetitionsHills(&hills, hills.first());
     });
     connect(hillsListView, &DatabaseItemsListView::remove, this, [this](){
-        calendar.fixCompetitionsHills(&hills);
+        calendar.fixCompetitionsHills(&hills, hills.first());
     });
     connect(hillEditor, &HillEditorWidget::submitted, this, [this](){
         if(actualHillIndex > (-1) && actualHillIndex < hills.count()){
@@ -136,7 +136,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(bool nextSeason, QWidge
         emit calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
     });
     connect(hillsListView, &DatabaseItemsListView::remove, this, [this](){
-        calendar.fixCompetitionsHills(&hills);
+        calendar.fixCompetitionsHills(&hills, hills.first());
         emit calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
     });
 }

@@ -13,6 +13,7 @@
 #include "../Competition/JumperCompetitionResultsWidget.h"
 #include "../Competition/Results/ResultsTableModel.h"
 #include "../Competition/Results/TeamResultsTreeModel.h"
+#include "Stats/JumperStatsWindow.h"
 #include "NewSeasonConfiguratorWindow.h"
 #include <QMessageBox>
 #include <QTimer>
@@ -87,7 +88,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
         emit hillsListView->getListModel()->dataChanged(hillsListView->getListModel()->index(idx), hillsListView->getListModel()->index(idx));
     });
     connect(hillsListView, &DatabaseItemsListView::insert, this, [this](){
-        simulationSave->getActualSeason()->getCalendarReference().fixCompetitionsHills(&simulationSave->getHillsReference());
+        simulationSave->getActualSeason()->getCalendarReference().fixCompetitionsHills(&simulationSave->getHillsReference(), simulationSave->getHillsReference().first());
     });
 
     //-----//
@@ -563,7 +564,7 @@ void SimulationSaveManagerWindow::on_pushButton_repairDatabase_clicked()
     calendar->fixAdvancementCompetitions();
     dialog.setValue(dialog.value() + 1);
     QCoreApplication::processEvents();
-    calendar->fixCompetitionsHills(&simulationSave->getHillsReference());
+    calendar->fixCompetitionsHills(&simulationSave->getHillsReference(), simulationSave->getHillsReference().first());
     dialog.setValue(dialog.value() + 1);
     QCoreApplication::processEvents();
     simulationSave->repairDatabase();
@@ -597,7 +598,7 @@ void SimulationSaveManagerWindow::on_listView_competitionsArchive_doubleClicked(
 
     QDialog * dialog = new QDialog(this);
     dialog->setWindowTitle(tr("Wyniki konkursu"));
-    dialog->setFixedSize(1400, 800);
+    dialog->resize(1400, 800);
     QHBoxLayout * mainLayout = new QHBoxLayout(this);
     dialog->setLayout(mainLayout);
 
@@ -648,5 +649,28 @@ void SimulationSaveManagerWindow::on_listView_classificationsArchive_doubleClick
     Classification * classification = classificationsArchiveModel->getSeasonClassifications()->at(index.row());
     archiveClassificationResults->setClassification(classification);
     archiveClassificationResults->fillTable();
+}
+
+void SimulationSaveManagerWindow::on_pushButton_jumperStats_clicked()
+{
+    if(jumpersListView->getListView()->selectionModel()->selectedRows().count() == 0)
+    {
+        QMessageBox::warning(this, tr("Statystyki skoczka"), tr("Najpierw zaznacz jakiegoś zawodnika!"), QMessageBox::Ok);
+    }
+    else
+    {
+        int index = jumpersListView->getListView()->selectionModel()->selectedRows().first().row();
+        Jumper * jumper = simulationSave->getJumpersReference()[index];
+        JumperStatsWindow statsWindow;
+        statsWindow.setJumper(jumper);
+        statsWindow.getRangeComboBoxes()->setSeasonsList(&simulationSave->getSeasonsReference());
+        statsWindow.getRangeComboBoxes()->setupComboBoxes();
+        statsWindow.fillWindow();
+        statsWindow.setupConnections();
+        if(statsWindow.exec() == QDialog::Accepted)
+        {
+
+        }
+    }
 }
 

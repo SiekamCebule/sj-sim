@@ -73,6 +73,7 @@ private slots:
     void on_comboBox_archiveSeason_currentIndexChanged(int index);
     void on_listView_competitionsArchive_doubleClicked(const QModelIndex &index);
     void on_listView_classificationsArchive_doubleClicked(const QModelIndex &index);
+    void on_pushButton_jumperStats_clicked();
 };
 
 #endif // SIMULATIONSAVEMANAGERWINDOW_H
