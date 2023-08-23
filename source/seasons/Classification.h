@@ -7,6 +7,8 @@
 #include "../utilities/ClassWithID.h"
 #include "ClassificationSingleResult.h"
 
+class Season;
+
 class Classification : public ClassWithID
 {
 public:
@@ -35,6 +37,9 @@ public:
 
     static Classification *getFromJson(QJsonObject obj);
     static QJsonObject getJsonObject(Classification *classification);
+
+    QHash<Jumper *, QHash<CompetitionInfo *, int> > constructJumpersArchiveResults(Season * season);
+    QHash<QString, QHash<CompetitionInfo *, int> > constructTeamsArchiveResults(Season * season);
 
 private:
     QString name;

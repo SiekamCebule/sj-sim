@@ -43,6 +43,11 @@ void ClassificationResultsTableView::setAllowShowDetails(bool newAllowShowDetail
     allowShowDetails = newAllowShowDetails;
 }
 
+QTableView *ClassificationResultsTableView::getTableView()
+{
+    return ui->tableView;
+}
+
 Classification *ClassificationResultsTableView::getClassification() const
 {
     return classification;

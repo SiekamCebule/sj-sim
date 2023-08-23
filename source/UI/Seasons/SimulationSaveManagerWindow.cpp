@@ -14,6 +14,7 @@
 #include "../Competition/Results/ResultsTableModel.h"
 #include "../Competition/Results/TeamResultsTreeModel.h"
 #include "Stats/JumperStatsWindow.h"
+#include "Stats/ApperanceInClassificationWindow.h"
 #include "NewSeasonConfiguratorWindow.h"
 #include <QMessageBox>
 #include <QTimer>
@@ -207,6 +208,47 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
 
     archiveClassificationResults = new ClassificationResultsTableView(false, nullptr, this);
     ui->verticalLayout_archiveClassificationResults->addWidget(archiveClassificationResults);
+
+    connect(classificationResultsTableView->getTableView(), &QTableView::doubleClicked, this, [this](const QModelIndex & index){
+        if(index.column() == 1)
+        {
+            Classification * classification = classificationResultsTableView->getClassification();
+            ApperanceInClassificationWindow * window = new ApperanceInClassificationWindow(this);
+            if(classification->getClassificationType() == Classification::Individual){
+                Jumper * jumper = classificationResultsTableView->getClassification()->getResultByIndex(index.row())->getJumper();
+                window->setJumper(jumper);
+            }
+            else{
+                QString teamCode = classificationResultsTableView->getClassification()->getResultByIndex(index.row())->getTeamCode();
+            }
+            window->setClassification(classification);
+
+            Season * classificationSeason = nullptr;
+            for(auto & season : simulationSave->getSeasonsReference())
+            {
+                for(auto & classification : season.getCalendarReference().getClassificationsReference())
+                    if(classification == window->getClassification())
+                        classificationSeason = &season;
+            }
+            window->setSeason(classificationSeason);
+
+            if(classification->getClassificationType() == Classification::Individual){
+                QHash<Jumper *, QHash<CompetitionInfo *, int>> archiveResults; //Tu są pozycje danego zawodnika z danych etapów klasyfikacji.
+                archiveResults = classification->constructJumpersArchiveResults(classificationSeason);
+                window->setArchiveResults(archiveResults.value(window->getJumper())); //Daliśmy do windowa informacje o pozycjach Kamila Stocha w różnych etapach klasyfikacji
+            }
+            else{
+                QHash<QString, QHash<CompetitionInfo *, int>> archiveResults;
+                archiveResults = classification->constructTeamsArchiveResults(classificationSeason);
+                window->setArchiveResults(archiveResults.value(window->getTeamCode()));
+            }
+            window->fillWindow();
+
+            if(window->exec() == QDialog::Accepted){
+
+            }
+        }
+    });
 }
 
 SimulationSaveManagerWindow::~SimulationSaveManagerWindow()
@@ -665,6 +707,8 @@ void SimulationSaveManagerWindow::on_pushButton_jumperStats_clicked()
         statsWindow.setJumper(jumper);
         statsWindow.getRangeComboBoxes()->setSeasonsList(&simulationSave->getSeasonsReference());
         statsWindow.getRangeComboBoxes()->setupComboBoxes();
+        statsWindow.getClassificationsCheckBoxes()->setClassificationsList(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
+        statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
         statsWindow.fillWindow();
         statsWindow.setupConnections();
         if(statsWindow.exec() == QDialog::Accepted)

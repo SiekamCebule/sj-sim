@@ -20,6 +20,16 @@ JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     DNS = false;
 }
 
+double JumpData::getJumperForm() const
+{
+    return jumperForm;
+}
+
+void JumpData::setJumperForm(double newJumperForm)
+{
+    jumperForm = newJumperForm;
+}
+
 bool JumpData::getDSQ() const
 {
     return DSQ;
@@ -186,6 +196,7 @@ QJsonObject JumpData::getJsonObject(const JumpData &jumpData)
     object.insert("winds", windsArray);
 
     object.insert("jumper-id", QString::number(jumpData.getJumper()->getID()));
+    object.insert("jumper-form", jumpData.getJumperForm());
     object.insert("hill-id", QString::number(jumpData.getHill()->getID()));
     return object;
 }
@@ -238,6 +249,7 @@ JumpData JumpData::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * o
     jump.setWinds(winds);
 
     jump.setJumper(static_cast<Jumper *>(objectsManager->getObjectByID(obj.value("jumper-id").toString().toULong())));
+    jump.setJumperForm(obj.value("jumper-form").toDouble());
     jump.setHill(static_cast<Hill *>(objectsManager->getObjectByID(obj.value("hill-id").toString().toULong())));
 
     return jump;

@@ -573,6 +573,8 @@ void JumpSimulator::setupJumpData()
     jumpData.coachGate = this->coachGate;
     if(hasCoachGate == true) jumpData.setGate(this->coachGate);
     simulationData->inrunSnow = inrunSnow;
+
+    jumpData.jumperForm = jumper->getJumperSkills().getForm();
 }
 
 JumpSimulationData *JumpSimulator::getSimulationData()
@@ -669,7 +671,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
     {
     case JumpSimulator::TakeoffRating:
     {
-        double base = 1.815;
+        double base = 1.7;
         double deviation = 0.71;
         deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height") / 46);
         deviation -= (jumper->getJumperSkills().getJumpsEquality() / 22.75);
@@ -685,7 +687,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
     }
     case JumpSimulator::FlightRating:
     {
-        double base = 1.66;
+        double base = 1.7;
         double deviation = 0.77;
         deviation -= (jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") / 41.5);
         deviation -= (jumper->getJumperSkills().getJumpsEquality() / 21);

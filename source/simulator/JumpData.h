@@ -48,6 +48,8 @@ private:
     Hill * hill;
     JumpSimulator * simulator;
 
+    double jumperForm;
+
 public:
     void reset();
 
@@ -95,6 +97,8 @@ public:
     void setBeats95HSPercents(bool newBeats95HSPercents);
     bool getDSQ() const;
     void setDSQ(bool newDSQ);
+    double getJumperForm() const;
+    void setJumperForm(double newJumperForm);
 };
 
 QDebug operator<<(QDebug d, const JumpData & jumpData);

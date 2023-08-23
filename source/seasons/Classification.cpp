@@ -4,8 +4,9 @@
 #include <QJsonArray>
 #include <QMap>
 #include <QJsonValue>
-
+#include "../seasons/Season.h"
 #include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/MyRandom.h"
 extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
 Classification::Classification(QString name) : name(name),
@@ -175,6 +176,68 @@ QJsonObject Classification::getJsonObject(Classification * classification)
     obj.insert("results", resultsArray);
 
     return obj;
+}
+
+QHash<QString, QHash<CompetitionInfo *, int> > Classification::constructTeamsArchiveResults(Season *season)
+{
+
+}
+
+QHash<Jumper *, QHash<CompetitionInfo *, int>> Classification::constructJumpersArchiveResults(Season *season)
+{
+    QHash<Jumper *, QHash<CompetitionInfo *, int>> results;
+    QHash<Jumper *, double> tempResultsToSort;
+
+    for(auto & seasonCompetition : season->getCalendarReference().getCompetitionsReference())
+    {
+        if(seasonCompetition->getPlayed() == true)
+        {
+            if(seasonCompetition->getClassificationsReference().contains(this) == true)
+            {
+                QSet<Jumper *> remainingJumpers;
+                for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                {
+                    tempResultsToSort[singleResult.getJumper()] = tempResultsToSort.value(singleResult.getJumper()) + singleResult.getPointsSum();
+                    remainingJumpers.insert(singleResult.getJumper());
+                }
+                QHash<Jumper *, int> poss = CompetitionResults::getResultsWithPositionsForClassificationArchiveResults(tempResultsToSort);
+                for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                {
+                    QHash<CompetitionInfo *, int> resultsMap;
+                    if(results.contains(singleResult.getJumper()))
+                    {
+                        resultsMap = results.value(singleResult.getJumper());
+                    }
+                    else
+                    {
+                        resultsMap = QHash<CompetitionInfo *, int>();
+                    }
+                    resultsMap.insert(seasonCompetition, poss.value(singleResult.getJumper()));
+
+                    results[singleResult.getJumper()] = resultsMap;
+                    if(remainingJumpers.contains(singleResult.getJumper()))
+                        remainingJumpers.remove(singleResult.getJumper());
+                }
+                for(auto & remainingJumper : remainingJumpers)
+                {
+                    QHash<CompetitionInfo *, int> resultsMap;
+                    if(results.contains(remainingJumper))
+                    {
+                        resultsMap = results.value(remainingJumper);
+                    }
+                    else
+                    {
+                        resultsMap = QHash<CompetitionInfo *, int>();
+                    }
+                    resultsMap.insert(seasonCompetition, poss.value(remainingJumper));
+                    results[remainingJumper] = resultsMap;
+                }
+            }
+        }
+        else break;
+    }
+
+    return results;
 }
 
 QVector<ClassificationSingleResult *> Classification::getResults() const

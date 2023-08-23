@@ -103,7 +103,7 @@ QVector<int> CompetitionResults::getJumpersPositions(const QVector<Jumper *> * j
 
             if(previousResultPoints == result.getPointsSum())
             {
-                pos = actualPosition;;
+                pos = actualPosition;
                 add += 1;
             }
             else{
@@ -132,6 +132,60 @@ void CompetitionResults::sortJumpersByResults(QVector<Jumper *> &jumpers)
         }
     }
     jumpers = temp;
+}
+
+QHash<Jumper *, int> CompetitionResults::getResultsWithPositionsForClassificationArchiveResults(QHash<Jumper *, double> results)
+{
+    QList<QPair<Jumper *, double>> list;
+    for (auto it = results.begin(); it != results.end(); ++it)
+    {
+        list.append(qMakePair(it.key(), it.value()));
+    }
+
+    // Sortowanie listy według wartości za pomocą funkcji lambda
+    std::sort(list.begin(), list.end(), [] (const QPair<Jumper *, double> &a, const QPair<Jumper *, double> &b) {
+        return a.second > b.second;
+    });
+
+    QVector<int> positions;
+    double previousResultPoints = 0;
+    int actualPosition = 1;
+    int add = 1;
+    int i=0;
+    for(auto & pair : list)
+    {
+        int pos = 0;
+        if(i == 0)
+        {
+            positions.push_back(1);
+            previousResultPoints = pair.second;
+            i++;
+            continue;
+        }
+        if(previousResultPoints == pair.second)
+        {
+            pos = actualPosition;
+            add == 1;
+        }
+        else{
+            actualPosition += add;
+            add = 1;
+            pos = actualPosition;
+        }
+
+        previousResultPoints = pair.second;
+        i++;
+        positions.push_back(pos);
+    }
+
+    QHash<Jumper *, int> toReturn;
+    int ii=0;
+    for(auto & pos : positions)
+    {
+        toReturn.insert(list[ii].first, pos);
+        ii++;
+    }
+    return toReturn;
 }
 
 QVector<CompetitionSingleResult> CompetitionResults::getResults() const

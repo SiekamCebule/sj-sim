@@ -12,6 +12,7 @@
 #include <QSet>
 
 class CompetitionInfo;
+class Classification;
 
 class CompetitionSingleResult : public ClassWithID
 {
@@ -28,7 +29,8 @@ public:
     static CompetitionSingleResult getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager *objectsManager);
     static QJsonObject getJsonObject(CompetitionSingleResult result);
 
-    static QVector<CompetitionSingleResult *> getFilteredSingleResults(QVector<CompetitionInfo *> & competitions, Jumper * jumper, QSet<int> serieTypes);
+    static QVector<CompetitionSingleResult *> getFilteredSingleResults(QVector<CompetitionInfo *> & competitions, Jumper * jumper, QSet<int> serieTypes,
+                                                                       QVector<Classification *> classifications, bool skipClassifications);
 
 protected:
     CompetitionInfo * competition;

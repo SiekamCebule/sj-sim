@@ -2,6 +2,7 @@
 #define CLASSIFICATIONRESULTSTABLEVIEW_H
 
 #include <QWidget>
+#include <QTableView>
 #include "ClassificationResultsTableModel.h"
 #include "../../../seasons/Classification.h"
 
@@ -30,6 +31,7 @@ public:
     void setClassification(Classification *newClassification);
     bool getAllowShowDetails() const;
     void setAllowShowDetails(bool newAllowShowDetails);
+    QTableView * getTableView();
 };
 
 #endif // CLASSIFICATIONRESULTSTABLEVIEW_H

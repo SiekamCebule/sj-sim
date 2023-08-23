@@ -59,6 +59,8 @@ SOURCES += \
     source/UI/Seasons/SimulationSaveInfoWidget.cpp \
     source/UI/Seasons/SimulationSaveManagerWindow.cpp \
     source/UI/Seasons/SimulationSavesWindow.cpp \
+    source/UI/Seasons/Stats/ApperanceInClassificationWindow.cpp \
+    source/UI/Seasons/Stats/FilteringWidgets/ClassificationsCheckBoxesWidget.cpp \
     source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.cpp \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.cpp \
     source/UI/Seasons/Stats/JumperStatsWindow.cpp \
@@ -171,6 +173,8 @@ HEADERS += \
     source/UI/Seasons/SimulationSaveInfoWidget.h \
     source/UI/Seasons/SimulationSaveManagerWindow.h \
     source/UI/Seasons/SimulationSavesWindow.h \
+    source/UI/Seasons/Stats/ApperanceInClassificationWindow.h \
+    source/UI/Seasons/Stats/FilteringWidgets/ClassificationsCheckBoxesWidget.h \
     source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.h \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.h \
     source/UI/Seasons/Stats/JumperStatsWindow.h \
@@ -263,6 +267,8 @@ FORMS += \
     source/UI/Seasons/SimulationSaveInfoWidget.ui \
     source/UI/Seasons/SimulationSaveManagerWindow.ui \
     source/UI/Seasons/SimulationSavesWindow.ui \
+    source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui \
+    source/UI/Seasons/Stats/FilteringWidgets/ClassificationsCheckBoxesWidget.ui \
     source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.ui \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.ui \
     source/UI/Seasons/Stats/JumperStatsWindow.ui \

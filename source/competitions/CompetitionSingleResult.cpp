@@ -53,12 +53,24 @@ QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult resul
     return resultObject;
 }
 
-QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleResults(QVector<CompetitionInfo *> &competitions, Jumper *jumper, QSet<int> serieTypes)
+QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleResults(QVector<CompetitionInfo *> &competitions, Jumper *jumper, QSet<int> serieTypes, QVector<Classification *> classifications, bool skipClassifications)
 {
     QVector<CompetitionSingleResult *> singleResults;
     for(auto & comp : competitions)
     {
-        if(serieTypes.contains(comp->getSerieType()))
+        bool ok = false;
+        for(auto & compCls : comp->getClassificationsReference()){
+            for(auto & cls : classifications){
+                if(compCls->getName() == cls->getName())
+                {
+                    ok = true;
+                    break;
+                }
+            }
+        }
+        if(skipClassifications == true)
+            ok = true;
+        if(serieTypes.contains(comp->getSerieType())&& ok)
         {
             if(comp->getResultsReference().getResultOfIndividualJumper(jumper) != nullptr)
             {
