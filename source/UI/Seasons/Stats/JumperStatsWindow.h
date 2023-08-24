@@ -25,14 +25,33 @@ public:
     explicit JumperStatsWindow(QWidget *parent = nullptr);
     ~JumperStatsWindow();
 
+    enum ChartStatType{
+        Positions,
+        JudgesPoints,
+        Form,
+        TakeoffRating,
+        FlightRating
+    };
+
     void setupConnections();
     void fillWindow();
 
-    void fillJumperApperancesChart(QVector<CompetitionSingleResult *> &singleResults);
-    void fillJudgesPointsChart(QVector<CompetitionSingleResult *> &singleResults);
-    void fillJumperFormChart(QVector<CompetitionSingleResult *> &singleResults);
-    void fillTakeoffRatingChart(QVector<CompetitionSingleResult *> &singleResults);
-    void fillFlightRatingChart(QVector<CompetitionSingleResult *> &singleResults);
+    void fillJumperApperancesChart();
+    void fillJudgesPointsChart();
+    void fillJumperFormChart();
+    void fillTakeoffRatingChart();
+    void fillFlightRatingChart();
+
+private slots:
+    void updateChartCompetitionBySingleResult(const QPointF & point, bool state, int type);
+    void updateChartCompetitionByJumpData(const QPointF & point, bool state, int type);
+
+    void updateChartCompetitionByJumpDataForJumperApperances(const QPointF & point, bool state);
+    void updateChartCompetitionByJumpDataForJudges(const QPointF & point, bool state);
+    void updateChartCompetitionByJumpDataForForm(const QPointF & point, bool state);
+    void updateChartCompetitionByJumpDataForTakeoffRating(const QPointF & point, bool state);
+    void updateChartCompetitionByJumpDataForFlightRating(const QPointF & point, bool state);
+
 private:
     Ui::JumperStatsWindow *ui;
     CompetitionsRangeComboBoxesWidget * rangeComboBoxes;
@@ -40,6 +59,7 @@ private:
     ClassificationsCheckBoxesWidget * classificationsCheckBoxes;
 
     Jumper * jumper;
+    QVector<CompetitionSingleResult *> singleResults;
 
     //Jumper apperances
     QChart * jumperApperancesChart;

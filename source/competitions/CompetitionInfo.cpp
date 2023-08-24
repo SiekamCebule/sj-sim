@@ -103,7 +103,7 @@ QVector<CompetitionInfo *> CompetitionInfo::getCompetitionsByStartAndEnd(QVector
     qDebug()<<"indexof start: "<<competitions.indexOf(start);
     qDebug()<<"indexof end: "<<competitions.indexOf(end);
     competitions.remove(0, competitions.indexOf(start));
-    competitions.remove(competitions.indexOf(end) + 1, competitions.count() - competitions.indexOf(end) - 1);
+    competitions.remove(competitions.indexOf(end), competitions.count() - competitions.indexOf(end) - 1);
     return competitions;
 }
 

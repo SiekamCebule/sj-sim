@@ -74,6 +74,7 @@ private slots:
     void on_listView_competitionsArchive_doubleClicked(const QModelIndex &index);
     void on_listView_classificationsArchive_doubleClicked(const QModelIndex &index);
     void on_pushButton_jumperStats_clicked();
+    void on_pushButton_clicked();
 };
 
 #endif // SIMULATIONSAVEMANAGERWINDOW_H

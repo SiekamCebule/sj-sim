@@ -195,7 +195,13 @@ void CompetitionManagerWindow::updatePointsToTheLeaderLabel()
 
 void CompetitionManagerWindow::updateAvgWindLabel()
 {
-    ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
+    double wind = WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind();
+    ui->label_actualAvgWind->setText(QString::number(wind) + " m/s");
+    if(wind > 0)
+        ui->label->setStyleSheet("color: rgb(68, 130, 26);");
+    else if(wind < 0)
+        ui->label->setStyleSheet("color: rgb(145, 35, 28);");
+    else ui->label->setStyleSheet("color: rgb(50, 50, 50);");
 }
 
 void CompetitionManagerWindow::disableCompetitionManagementButtons()

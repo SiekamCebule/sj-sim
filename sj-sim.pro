@@ -64,6 +64,8 @@ SOURCES += \
     source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.cpp \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.cpp \
     source/UI/Seasons/Stats/JumperStatsWindow.cpp \
+    source/UI/Seasons/Stats/Models/SimulationRatingTableModel.cpp \
+    source/UI/Seasons/Stats/SimulationRatingsWindow.cpp \
     source/UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     source/UI/AppSettings/AppSettingsWindow.cpp \
     source/UI/DatabaseEditor/DatabaseEditorWindow.cpp \
@@ -178,6 +180,8 @@ HEADERS += \
     source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.h \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.h \
     source/UI/Seasons/Stats/JumperStatsWindow.h \
+    source/UI/Seasons/Stats/Models/SimulationRatingTableModel.h \
+    source/UI/Seasons/Stats/SimulationRatingsWindow.h \
     source/UI/SingleJumps/SingleJumpsConfigWindow.h \
     source/UI/AppSettings/AppSettingsWindow.h \
     source/UI/DatabaseEditor/DatabaseEditorWindow.h \
@@ -272,6 +276,7 @@ FORMS += \
     source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.ui \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.ui \
     source/UI/Seasons/Stats/JumperStatsWindow.ui \
+    source/UI/Seasons/Stats/SimulationRatingsWindow.ui \
     source/UI/SingleJumps/SingleJumpsConfigWindow.ui \
     source/UI/AppSettings/AppSettingsWindow.ui \
     source/UI/DatabaseEditor/DatabaseEditorWindow.ui \

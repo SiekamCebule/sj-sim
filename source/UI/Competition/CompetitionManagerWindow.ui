@@ -572,7 +572,7 @@
                   </font>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">color: rgb(25, 37, 54);</string>
+                  <string notr="true">color: black;</string>
                  </property>
                  <property name="text">
                   <string>2.3 m/s</string>

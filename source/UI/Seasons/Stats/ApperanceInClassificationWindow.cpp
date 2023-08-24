@@ -49,8 +49,11 @@ void ApperanceInClassificationWindow::setupChart()
     chart->setTitleFont(QFont("Quicksand Medium", 15, 1, false));
     chartView = new QChartView(this);
     chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setRubberBand(QChartView::HorizontalRubberBand);
     ui->verticalLayout_chart->addWidget(chartView);
     series = new QLineSeries(this);
+    series->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(series, &QLineSeries::hovered, this, &ApperanceInClassificationWindow::updateChartCompetition);
 }
 
 void ApperanceInClassificationWindow::fillChart()
@@ -59,8 +62,8 @@ void ApperanceInClassificationWindow::fillChart()
 
     //Mamy w archiveResults pozycje Kamila Stocha w klasyfikacji po każdym konkursie
     //Chcemy na wykresie pokazać pozycje po koleji (od najstarszego konkursu)
-    QVector<CompetitionInfo* > archiveResultsCompetitions = archiveResults.keys();
-    QVector<int> positions;
+    archiveResultsCompetitions = archiveResults.keys();
+    positions.clear();
     for(auto & comp : season->getCalendarReference().getCompetitionsReference())
     {
         if(archiveResultsCompetitions.contains(comp))
@@ -99,6 +102,45 @@ void ApperanceInClassificationWindow::fillChart()
     ui->label_worstPos->setText(QString::number(worstPos));
     ui->label_averagePos->setText(QString::number(avgPos));
     ui->label_standardDeviation->setText(QString::number(standardDeviation));
+}
+
+void ApperanceInClassificationWindow::updateChartCompetition(const QPointF &point, bool state)
+{
+    if(state)
+    {
+        if((point.x() + 0.4 > int(point.x()) && point.x() - 0.4 < int(point.x())) && (point.y() + 0.4 > point.y() && point.y() - 0.4 < point.y()))
+        {
+            CompetitionInfo * competition = nullptr;
+            int i=0;
+            for(auto & comp : season->getCalendarReference().getCompetitionsReference())
+            {
+                if(archiveResultsCompetitions.contains(comp)){
+                    if(i==int(point.x() - 1)){
+                        competition = comp;
+                        break;
+                    }
+                    i++;
+                }
+            }
+            Hill * hill = competition->getHill();
+
+            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getCalendarReference().getCompetitionsReference().indexOf(competition) + 1)
+                             + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint());
+            switch(competition->getSerieType())
+            {
+            case CompetitionInfo::Competition:
+                string += tr(" (Konkurs)");
+                break;
+            case CompetitionInfo::Qualifications:
+                string += tr(" (Kwalifikacje)");
+                break;
+            }
+            ui->label_chartStat->setText(QString::number(positions[int(point.x()) - 1]) + tr(" miejsce"));
+            ui->label_chartCompetition->setText(string);
+            QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size());
+            ui->label_hillFlag->setPixmap(pixmap);
+        }
+    }
 }
 
 Season *ApperanceInClassificationWindow::getSeason() const

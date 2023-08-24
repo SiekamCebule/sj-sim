@@ -15,6 +15,7 @@
 #include "../Competition/Results/TeamResultsTreeModel.h"
 #include "Stats/JumperStatsWindow.h"
 #include "Stats/ApperanceInClassificationWindow.h"
+#include "Stats/SimulationRatingsWindow.h"
 #include "NewSeasonConfiguratorWindow.h"
 #include <QMessageBox>
 #include <QTimer>
@@ -31,6 +32,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     simulationSave(save)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::Window);
     ui->toolBox->setCurrentIndex(0);
     ui->toolBox_2->setCurrentIndex(0);
     ui->label_saveName->setText(simulationSave->getName());
@@ -718,3 +720,17 @@ void SimulationSaveManagerWindow::on_pushButton_jumperStats_clicked()
     }
 }
 
+void SimulationSaveManagerWindow::on_pushButton_clicked()
+{
+    SimulationRatingsWindow statsWindow(simulationSave, this);
+    statsWindow.getRangeComboBoxes()->setSeasonsList(&simulationSave->getSeasonsReference());
+    statsWindow.getRangeComboBoxes()->setupComboBoxes();
+    statsWindow.getClassificationsCheckBoxes()->setClassificationsList(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
+    statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
+    statsWindow.fillWindow();
+    statsWindow.setupConnections();
+    if(statsWindow.exec() == QDialog::Accepted)
+    {
+
+    }
+}

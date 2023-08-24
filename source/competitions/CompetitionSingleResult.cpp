@@ -82,6 +82,16 @@ QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleRes
     return singleResults;
 }
 
+QHash<Jumper *, QVector<CompetitionSingleResult *> > CompetitionSingleResult::getJumpersFilteredSingleResults(QVector<Jumper *> &jumpers, QVector<CompetitionInfo *> &competitions, QSet<int> serieTypes, QVector<Classification *> classifications, bool skipClassifications)
+{
+    QHash<Jumper *, QVector<CompetitionSingleResult *>> toReturn;
+    for(auto & jumper : jumpers)
+    {
+        toReturn.insert(jumper, CompetitionSingleResult::getFilteredSingleResults(competitions, jumper, serieTypes, classifications, skipClassifications));
+    }
+    return toReturn;
+}
+
 CompetitionInfo *CompetitionSingleResult::getCompetition() const
 {
     return competition;

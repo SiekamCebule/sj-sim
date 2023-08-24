@@ -117,6 +117,37 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Quicksand</family>
+           <pointsize>17</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+color: rgb(0, 0, 0);
+background-color: rgb(239, 255, 231);
+padding: 3px;
+}
+QPushButton:hover{
+background-color: rgb(249, 255, 241);
+}</string>
+         </property>
+         <property name="text">
+          <string>Statystyki zapisu</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButton_saveToFile">
          <property name="font">
           <font>
@@ -421,7 +452,7 @@ background-color: rgb(255, 223, 189);
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>88</width>
+                <width>98</width>
                 <height>88</height>
                </rect>
               </property>

@@ -24,6 +24,7 @@ JumperStatsWindow::JumperStatsWindow(QWidget *parent) :
     ui->verticalLayout_charts->layout()->addItem(layout_flightRatingChart);*/
 
     setupCharts();
+    emit ui->checkBox->stateChanged(0);
 }
 
 JumperStatsWindow::~JumperStatsWindow()
@@ -45,17 +46,17 @@ void JumperStatsWindow::fillWindow()
 
     QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList()),
                                                                                             rangeComboBoxes->getCompetition(1), rangeComboBoxes->getCompetition(2));
-    QVector<CompetitionSingleResult *> singleResults = CompetitionSingleResult::getFilteredSingleResults(competitions, jumper,
+    singleResults = CompetitionSingleResult::getFilteredSingleResults(competitions, jumper,
         serieTypesCheckBoxes->getSerieTypes(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked());
 
-    fillJumperApperancesChart(singleResults);
-    fillJudgesPointsChart(singleResults);
-    fillJumperFormChart(singleResults);
-    fillTakeoffRatingChart(singleResults);
-    fillFlightRatingChart(singleResults);
+    fillJumperApperancesChart();
+    fillJudgesPointsChart();
+    fillJumperFormChart();
+    fillTakeoffRatingChart();
+    fillFlightRatingChart();
 }
 
-void JumperStatsWindow::fillJumperApperancesChart(QVector<CompetitionSingleResult *> & singleResults)
+void JumperStatsWindow::fillJumperApperancesChart()
 {
     jumperApperancesLineSeries->clear();
     int bestPosition = 100000000;
@@ -80,6 +81,7 @@ void JumperStatsWindow::fillJumperApperancesChart(QVector<CompetitionSingleResul
     standardDev = roundDoubleToTwoPlaces(standardDev);
     averagePosition = roundDoubleToTwoPlaces(averagePosition);
 
+    jumperApperancesLineSeries->setMarkerSize(20);
     jumperApperancesChart->addSeries(jumperApperancesLineSeries);
     jumperApperancesChart->createDefaultAxes();
     jumperApperancesChart->axes(Qt::Vertical).first()->setReverse(true);
@@ -93,7 +95,7 @@ void JumperStatsWindow::fillJumperApperancesChart(QVector<CompetitionSingleResul
     ui->label_standardDeviation->setText(QString::number(standardDev));
 }
 
-void JumperStatsWindow::fillJudgesPointsChart(QVector<CompetitionSingleResult *> &singleResults)
+void JumperStatsWindow::fillJudgesPointsChart()
 {
     judgesPointsLineSeries->clear();
     QVector<double> judgesPoints;
@@ -116,7 +118,7 @@ void JumperStatsWindow::fillJudgesPointsChart(QVector<CompetitionSingleResult *>
     judgesPointsChartView->setRenderHint(QPainter::Antialiasing);
 }
 
-void JumperStatsWindow::fillJumperFormChart(QVector<CompetitionSingleResult *> &singleResults)
+void JumperStatsWindow::fillJumperFormChart()
 {
     jumperFormLineSeries->clear();
     QVector<double> forms;
@@ -136,7 +138,7 @@ void JumperStatsWindow::fillJumperFormChart(QVector<CompetitionSingleResult *> &
     jumperFormChartView->setRenderHint(QPainter::Antialiasing);
 }
 
-void JumperStatsWindow::fillTakeoffRatingChart(QVector<CompetitionSingleResult *> &singleResults)
+void JumperStatsWindow::fillTakeoffRatingChart()
 {
     takeoffRatingLineSeries->clear();
     QVector<double> ratings;
@@ -160,7 +162,7 @@ void JumperStatsWindow::fillTakeoffRatingChart(QVector<CompetitionSingleResult *
     takeoffRatingChartView->setRenderHint(QPainter::Antialiasing);
 }
 
-void JumperStatsWindow::fillFlightRatingChart(QVector<CompetitionSingleResult *> &singleResults)
+void JumperStatsWindow::fillFlightRatingChart()
 {
     flightRatingLineSeries->clear();
     QVector<double> ratings;
@@ -184,6 +186,173 @@ void JumperStatsWindow::fillFlightRatingChart(QVector<CompetitionSingleResult *>
     flightRatingChartView->setRenderHint(QPainter::Antialiasing);
 }
 
+void JumperStatsWindow::updateChartCompetitionBySingleResult(const QPointF &point, bool state, int type)
+{
+    if(state)
+    {
+        if((point.x() + 0.4 > int(point.x()) && point.x() - 0.4 < int(point.x())) && (point.y() + 0.4 > point.y() && point.y() - 0.4 < point.y()))
+        {
+            CompetitionSingleResult * result = singleResults[int(point.x() - 1)];
+            Hill * hill = result->getCompetition()->getHill();
+
+            Season * season = nullptr;
+            for(auto & s : *rangeComboBoxes->getSeasonsList())
+                if(s.getCalendarReference().getCompetitionsReference().contains(result->getCompetition()))
+                    season = &s;
+
+            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getCalendarReference().getCompetitionsReference().indexOf(result->getCompetition()) + 1)
+                             + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint());
+            switch(result->getCompetition()->getSerieType())
+            {
+            case CompetitionInfo::Competition:
+                string += tr(" (Konkurs)");
+                break;
+            case CompetitionInfo::Qualifications:
+                string += tr(" (Kwalifikacje)");
+                break;
+            case CompetitionInfo::TrialRound:
+                string += tr(" (Seria próbna)");
+                break;
+            case CompetitionInfo::Training:
+            {
+                CompetitionInfo * mainCompetition = nullptr;
+                for(int i=season->getCalendarReference().getCompetitionsReference().indexOf(result->getCompetition()); i<season->getCalendarReference().getCompetitionsReference().count(); i++)
+                {
+                    CompetitionInfo * c = season->getCalendarReference().getCompetitionsReference()[i];
+                    if(c->getSerieType() == CompetitionInfo::Qualifications || c->getSerieType() == CompetitionInfo::Competition)
+                    {
+                        mainCompetition = season->getCalendarReference().getCompetitionsReference()[i];
+                        break;
+                    }
+                }
+                int trainingIndex = 0;
+                if(mainCompetition != nullptr)
+                    trainingIndex = mainCompetition->getTrainingsReference().indexOf(result->getCompetition()) + 1;
+                string += tr(" (Trening ") + QString::number(trainingIndex) + ")";
+                break;
+            }
+            }
+            ui->label_chartCompetition->setText(string);
+            if(type == Positions)
+                ui->label_chartStat->setText(QString::number(result->getPosition()) + tr(" miejsce"));
+            else if(type == Form)
+                ui->label_chartStat->setText(QString::number(result->getJumpsReference().first().getJumperForm()));
+
+            QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size());
+            ui->label_hillFlag->setPixmap(pixmap);
+        }
+    }
+}
+
+void JumperStatsWindow::updateChartCompetitionByJumpData(const QPointF &point, bool state, int type)
+{
+    if(state)
+    {
+        if((point.x() + 0.4 > int(point.x()) && point.x() - 0.4 < int(point.x())) && (point.y() + 0.4 > point.y() && point.y() - 0.4 < point.y()))
+        {
+            int jumpDataIndex = point.x();
+            int remaining = jumpDataIndex;
+            JumpData * jumpData = nullptr;
+            CompetitionSingleResult * result = nullptr;
+            for(auto & res : singleResults)
+            {
+                for(auto & jump : res->getJumpsReference())
+                {
+                    bool ok = res->getCompetition()->getRulesPointer()->getHasJudgesPoints();
+                    if(type != JudgesPoints)
+                        ok = true;
+                    if(jump.getDSQ() == false && ok){
+                        remaining--;
+                        if(remaining == 0)
+                        {
+                            jumpData = &jump;
+                            result = res;
+                            break;
+                        }
+                    }
+                }
+            }
+            int whichJump = MyFunctions::getIndexOfItemInVector(result->getJumpsReference(), jumpData) + 1;
+
+            Hill * hill = result->getCompetition()->getHill();
+
+            Season * season = nullptr;
+            for(auto & s : *rangeComboBoxes->getSeasonsList())
+                if(s.getCalendarReference().getCompetitionsReference().contains(result->getCompetition()))
+                    season = &s;
+
+            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getCalendarReference().getCompetitionsReference().indexOf(result->getCompetition()) + 1)
+                             + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint());
+            switch(result->getCompetition()->getSerieType())
+            {
+            case CompetitionInfo::Competition:
+                string += tr(" (Konkurs)");
+                break;
+            case CompetitionInfo::Qualifications:
+                string += tr(" (Kwalifikacje)");
+                break;
+            case CompetitionInfo::TrialRound:
+                string += tr(" (Seria próbna)");
+                    break;
+            case CompetitionInfo::Training:
+            {
+                CompetitionInfo * mainCompetition = nullptr;
+                for(int i=season->getCalendarReference().getCompetitionsReference().indexOf(result->getCompetition()); i<season->getCalendarReference().getCompetitionsReference().count(); i++)
+                {
+                    CompetitionInfo * c = season->getCalendarReference().getCompetitionsReference()[i];
+                    if(c->getSerieType() == CompetitionInfo::Qualifications || c->getSerieType() == CompetitionInfo::Competition)
+                    {
+                        mainCompetition = season->getCalendarReference().getCompetitionsReference()[i];
+                        break;
+                    }
+                }
+                int trainingIndex = 0;
+                if(mainCompetition != nullptr)
+                    trainingIndex = mainCompetition->getTrainingsReference().indexOf(result->getCompetition()) + 1;
+                string += tr(" (Trening ") + QString::number(trainingIndex) + ")";
+                break;
+            }
+            }
+            string += tr(" (Skok ") + QString::number(whichJump) + ")";
+            ui->label_chartCompetition->setText(string);
+            if(type == JudgesPoints)
+                ui->label_chartStat->setText(QString::number(jumpData->getJudgesPoints()) + tr(" pkt"));
+            else if(type == TakeoffRating)
+                ui->label_chartStat->setText(QString::number(jumpData->getSimulationData().getTakeoffRating()));
+            else if(type == FlightRating)
+                ui->label_chartStat->setText(QString::number(jumpData->getSimulationData().getFlightRating()));
+
+            QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size());
+            ui->label_hillFlag->setPixmap(pixmap);
+        }
+    }
+}
+
+void JumperStatsWindow::updateChartCompetitionByJumpDataForJumperApperances(const QPointF &point, bool state)
+{
+    updateChartCompetitionBySingleResult(point, state, Positions);
+}
+
+void JumperStatsWindow::updateChartCompetitionByJumpDataForJudges(const QPointF &point, bool state)
+{
+    updateChartCompetitionByJumpData(point, state, JudgesPoints);
+}
+
+void JumperStatsWindow::updateChartCompetitionByJumpDataForForm(const QPointF &point, bool state)
+{
+    updateChartCompetitionBySingleResult(point, state, Form);
+}
+
+void JumperStatsWindow::updateChartCompetitionByJumpDataForTakeoffRating(const QPointF &point, bool state)
+{
+    updateChartCompetitionByJumpData(point, state, TakeoffRating);
+}
+
+void JumperStatsWindow::updateChartCompetitionByJumpDataForFlightRating(const QPointF &point, bool state)
+{
+    updateChartCompetitionByJumpData(point, state, FlightRating);
+}
+
 ClassificationsCheckBoxesWidget *JumperStatsWindow::getClassificationsCheckBoxes() const
 {
     return classificationsCheckBoxes;
@@ -202,8 +371,11 @@ void JumperStatsWindow::setupCharts()
     jumperApperancesChart->setTitleFont(QFont("Quicksand Medium", 15, 1, false));
     jumperApperancesChartView = new QChartView(this);
     jumperApperancesChartView->setRenderHint(QPainter::Antialiasing);
+    jumperApperancesChartView->setRubberBand(QChartView::HorizontalRubberBand);
     ui->verticalLayout_jumperApperancesChart->addWidget(jumperApperancesChartView);
     jumperApperancesLineSeries = new QLineSeries(this);
+    jumperApperancesLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(jumperApperancesLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForJumperApperances);
 
     judgesPointsChart = new QChart();
     judgesPointsChart->legend()->hide();
@@ -212,8 +384,11 @@ void JumperStatsWindow::setupCharts()
     judgesPointsChartView = new QChartView(this);
     judgesPointsChartView->setRenderHint(QPainter::Antialiasing);
     judgesPointsChartView->setFixedHeight(450);
+    judgesPointsChartView->setRubberBand(QChartView::HorizontalRubberBand);
     ui->verticalLayout_charts->addWidget(judgesPointsChartView);
     judgesPointsLineSeries = new QLineSeries(this);
+    judgesPointsLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(judgesPointsLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForJudges);
 
     jumperFormChart = new QChart();
     jumperFormChart->legend()->hide();
@@ -222,8 +397,11 @@ void JumperStatsWindow::setupCharts()
     jumperFormChartView = new QChartView(this);
     jumperFormChartView->setRenderHint(QPainter::Antialiasing);
     jumperFormChartView->setFixedHeight(450);
+    jumperFormChartView->setRubberBand(QChartView::HorizontalRubberBand);
     ui->verticalLayout_charts->addWidget(jumperFormChartView);
     jumperFormLineSeries = new QLineSeries(this);
+    jumperFormLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(jumperFormLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForForm);
 
     takeoffRatingChart = new QChart();
     takeoffRatingChart->legend()->hide();
@@ -232,8 +410,11 @@ void JumperStatsWindow::setupCharts()
     takeoffRatingChartView = new QChartView(this);
     takeoffRatingChartView->setRenderHint(QPainter::Antialiasing);
     takeoffRatingChartView->setFixedHeight(450);
+    takeoffRatingChartView->setRubberBand(QChartView::HorizontalRubberBand);
     ui->verticalLayout_charts->addWidget(takeoffRatingChartView);
     takeoffRatingLineSeries = new QLineSeries(this);
+    takeoffRatingLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(takeoffRatingLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForTakeoffRating);
 
     flightRatingChart = new QChart();
     flightRatingChart->legend()->hide();
@@ -242,8 +423,11 @@ void JumperStatsWindow::setupCharts()
     flightRatingChartView = new QChartView(this);
     flightRatingChartView->setRenderHint(QPainter::Antialiasing);
     flightRatingChartView->setFixedHeight(450);
+    flightRatingChartView->setRubberBand(QChartView::HorizontalRubberBand);
     ui->verticalLayout_charts->addWidget(flightRatingChartView);
     flightRatingLineSeries = new QLineSeries(this);
+    flightRatingLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(flightRatingLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForFlightRating);
 }
 
 Jumper *JumperStatsWindow::getJumper() const

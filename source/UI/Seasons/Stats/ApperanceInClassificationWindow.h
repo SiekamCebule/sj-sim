@@ -28,6 +28,8 @@ public:
     void setupChart();
     void fillChart();
 
+    void updateChartCompetition(const QPointF & point, bool state);
+
 private:
     Ui::ApperanceInClassificationWindow *ui;
 
@@ -41,6 +43,9 @@ private:
     QLineSeries * series;
 
     QHash<CompetitionInfo *, int> archiveResults;
+
+    QVector<CompetitionInfo* > archiveResultsCompetitions;
+    QVector<int> positions;
 public:
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
