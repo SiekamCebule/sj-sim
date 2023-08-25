@@ -47,7 +47,7 @@ void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
                 break;
             case CompetitionInfo::TrialRound:
                 string += tr(" (Prób.)");
-                break;
+                    break;
             case CompetitionInfo::Training:
                 string += tr(" (Tren.)");
                 break;
@@ -71,24 +71,28 @@ CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
     switch(which)
     {
     case 1:
-        index = ui->comboBox_firstCompetition->currentIndex();
+        index = ui->comboBox_firstCompetition->currentIndex() - 1;
         break;
     case 2:
-        index = ui->comboBox_secondCompetition->currentIndex();
+        index = ui->comboBox_secondCompetition->currentIndex() - 1;
         break;
     }
-    //Teraz odejmijmy index za każdy sezon
-    for(auto & season : *seasonsList)
-    {
-        if(index >= season.getCalendarReference().getCompetitionsReference().count())
+    if(index == -1)
+        index = 0;
+    if(index >= 0){
+        //Teraz odejmijmy index za każdy sezon
+        for(auto & season : *seasonsList)
         {
-            index -= season.getCalendarReference().getCompetitionsReference().count() - 1 + 1;
-            continue;
-        }
-        else
-        {
-            qDebug()<<season.getCalendarReference().getCompetitionsReference()[index]->getHill()->getName();
-            return season.getCalendarReference().getCompetitionsReference()[index + 1];
+            if(index >= season.getCalendarReference().getCompetitionsReference().count())
+            {
+                index -= season.getCalendarReference().getCompetitionsReference().count() - 1;
+                continue;
+            }
+            else
+            {
+                qDebug()<<season.getCalendarReference().getCompetitionsReference()[index]->getHill()->getName();
+                return season.getCalendarReference().getCompetitionsReference()[index];
+            }
         }
     }
     return nullptr;

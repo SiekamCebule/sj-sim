@@ -92,6 +92,110 @@ Useful when you want to transfer a database from early versions.</translation>
     </message>
 </context>
 <context>
+    <name>ApperanceInClassificationWindow</name>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="14"/>
+        <source>Występ w klasyfikacji</source>
+        <translation>Apperance in classification</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="45"/>
+        <source>Włodzimierz Garnek</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="85"/>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="161"/>
+        <source>&lt;FLAG&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="122"/>
+        <source>Puchar Azji Wschodniej</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="191"/>
+        <source>Zawody: 66. Innsbruck HS128 (Trening 1)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="226"/>
+        <source>12 miejsce</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="268"/>
+        <source>Średnia pozycja</source>
+        <translation>Average position</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="290"/>
+        <source>9,46</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="317"/>
+        <source>Najlepsza pozycja</source>
+        <translation>Best position</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="339"/>
+        <source>2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="366"/>
+        <source>Najgorsza pozycja</source>
+        <translation>Worst position</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="388"/>
+        <source>36</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="415"/>
+        <source>Odchylenie standardowe</source>
+        <translation>Standard deviation</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui" line="437"/>
+        <source>4,65</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.cpp" line="47"/>
+        <source>Miejsca w klasyfikacji</source>
+        <translation>Places in classification</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.cpp" line="134"/>
+        <source> (Konkurs)</source>
+        <translation> (Competition)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.cpp" line="137"/>
+        <source> (Kwalifikacje)</source>
+        <translation> (Qualifications)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.cpp" line="143"/>
+        <source> (Ind.)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.cpp" line="146"/>
+        <source> (Druż.)</source>
+        <translation> (Team)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/ApperanceInClassificationWindow.cpp" line="152"/>
+        <source> miejsce</source>
+        <translation> place</translation>
+    </message>
+</context>
+<context>
     <name>CalendarEditorTableModel</name>
     <message>
         <location filename="../source/UI/Seasons/CalendarEditor/CalendarEditorTableModel.cpp" line="23"/>
@@ -450,6 +554,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
 </context>
 <context>
+    <name>ClassificationsCheckBoxesWidget</name>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/ClassificationsCheckBoxesWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>CompetitionConfigWindow</name>
     <message>
         <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="49"/>
@@ -746,25 +858,25 @@ by coach</translation>
         <translation type="vanished">Auto-simulate round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="225"/>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="259"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="231"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="265"/>
         <source>Zakończenie </source>
         <translation>End of </translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="259"/>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="349"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="265"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="355"/>
         <source> serii</source>
         <translation> round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="260"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="266"/>
         <source>Aby przejść do następnej serii, wciśnij przycisk na dole okna konkursu</source>
         <translation>To go to the next round, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="238"/>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="349"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="244"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="355"/>
         <source>Przejdź do </source>
         <translation>Go to </translation>
     </message>
@@ -789,123 +901,123 @@ by coach</translation>
         <translation>Auto-simulate group</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="225"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="231"/>
         <source> grupy zawodników</source>
         <translation>jumpers groups</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="226"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="232"/>
         <source>Aby przejść do następnej grupy zawodników, wciśnij przycisk na dole okna konkursu</source>
         <translation>To go to the next group, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="238"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="244"/>
         <source> grupy</source>
         <translation> groups</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="301"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="307"/>
         <source>Dobór grup</source>
         <translation>Groups selection</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="301"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="307"/>
         <source>Klasyczne</source>
         <translation>Classical</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="301"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="307"/>
         <source>Dla dużych grup</source>
         <translation>For larger groups</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="301"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="307"/>
         <source>Losowe (Z podziałem na koszyki)</source>
         <translation>Random (by baskets)</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="301"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="307"/>
         <source>Losowe</source>
         <translation>Random</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="411"/>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="451"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="417"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="457"/>
         <source>Zakończenie kwalifikacji</source>
         <translation>Qualifications end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="412"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="418"/>
         <source>Aby przejść do konkursu, wciśnij przycisk na dole okna konkursu</source>
         <translation>To go to the competition, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="422"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="428"/>
         <source>Przejdź do konkursu</source>
         <translation>Go to competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="446"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="452"/>
         <source>Zakończenie konkursu</source>
         <translation>Competition end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="447"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="453"/>
         <source>Aby zakończyć konkurs, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the competition, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="452"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="458"/>
         <source>Aby zakończyć kwalifikacje, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the qualifications, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="456"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="462"/>
         <source>Zakończenie serii próbnej</source>
         <translation>Trial round end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="457"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="463"/>
         <source>Aby zakończyć serię próbną, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the trial round, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="461"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="467"/>
         <source>Zakończenie treningu</source>
         <translation>Training end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="462"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="468"/>
         <source>Aby zakończyć trening, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the training, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="476"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="482"/>
         <source>Zakończ konkurs</source>
         <translation>Finish competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="479"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="485"/>
         <source>Zakończ kwalifikacje</source>
         <translation>Finish qualifications</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="482"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="488"/>
         <source>Zakończ serię próbną</source>
         <translation>Finish trial round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="485"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="491"/>
         <source>Zakończ trening</source>
         <translation>Finish training</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="802"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="811"/>
         <source>Symulacja kilku skoków</source>
         <translation>Few jumps simulation</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="802"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="811"/>
         <source>Ilość skoków</source>
         <translation>Jumps count</translation>
     </message>
@@ -1120,6 +1232,49 @@ Are you sure?</translation>
     </message>
 </context>
 <context>
+    <name>CompetitionsRangeComboBoxesWidget</name>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.ui" line="41"/>
+        <source>Pierwszy konkurs</source>
+        <translation>First competition</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.ui" line="63"/>
+        <source>Ostatni konkurs</source>
+        <translation>Last competition</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.cpp" line="39"/>
+        <source> (D)</source>
+        <translation> (T)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.cpp" line="43"/>
+        <source> (Konk.)</source>
+        <translation> (Comp.)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.cpp" line="46"/>
+        <source> (Kwal.)</source>
+        <translation> (Qual.)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.cpp" line="49"/>
+        <source> (Prób.)</source>
+        <translation> (Trial.)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.cpp" line="52"/>
+        <source> (Tren.)</source>
+        <translation> (Train.)</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseEditorWindow</name>
     <message>
         <location filename="../source/UI/DatabaseEditor/DatabaseEditorWindow.ui" line="20"/>
@@ -1181,7 +1336,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Ctrl+A&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; --&amp;gt; Dodaj (Tylko przy edycji bazy danych)&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Ctrl+D&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; --&amp;gt; Usuń&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Ctrl+Strzałki&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;--&amp;gt; Przesuwaj&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Ctrl+A&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; --&amp;gt; Add&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Ctrl+D&lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt; --&amp;gt; Remove&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Ctrl+Arrows&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;--&amp;gt; Move&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1257,6 +1421,44 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../source/UI/EditorWidgets/HillEditorWidget.ui" line="1139"/>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>HillTypesCheckBoxesWidget</name>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.ui" line="34"/>
+        <source>Skocznia średnia</source>
+        <translation>Average hill</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.ui" line="44"/>
+        <source>Skocznia mała</source>
+        <translation>Small hill</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.ui" line="54"/>
+        <source>Skocznia normalna</source>
+        <translation>Normal hill</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.ui" line="64"/>
+        <source>Skocznia duża</source>
+        <translation>Large hill</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.ui" line="74"/>
+        <source>Skocznia wielka</source>
+        <translation>Big hill</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.ui" line="84"/>
+        <source>Skocznia mamucia</source>
+        <translation>Flying hill</translation>
     </message>
 </context>
 <context>
@@ -1770,6 +1972,147 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="1002"/>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>JumperStatsWindow</name>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="17"/>
+        <source>Statystyki zawodnika</source>
+        <translation>Jumper stats</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="56"/>
+        <source>Name Surname</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="106"/>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="250"/>
+        <source>&lt;FLAG&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="210"/>
+        <source>Pokaż
+ukryte wykresy</source>
+        <translation>Show hidden charts</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="280"/>
+        <source>Zawody: 66. Innsbruck HS128 (Trening 1)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="315"/>
+        <source>12 miejsce</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="347"/>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="395"/>
+        <source>Występy zawodnika</source>
+        <translation>Jumper apperances</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="373"/>
+        <source>Średnia pozycja</source>
+        <translation>Average position</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="395"/>
+        <source>9,46</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="422"/>
+        <source>Najlepsza pozycja</source>
+        <translation>Best position</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="444"/>
+        <source>2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="471"/>
+        <source>Najgorsza pozycja</source>
+        <translation>Worst position</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="493"/>
+        <source>36</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="520"/>
+        <source>Odchylenie standardowe</source>
+        <translation>Standard deviation</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="542"/>
+        <source>4,65</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.ui" line="557"/>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="420"/>
+        <source>Forma zawodnika</source>
+        <translation>Jumper form</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="223"/>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="304"/>
+        <source> (Konkurs)</source>
+        <translation> (Competition)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="226"/>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="307"/>
+        <source> (Kwalifikacje)</source>
+        <translation> (Qualifications)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="229"/>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="310"/>
+        <source> (Seria próbna)</source>
+        <translation> (Trial round)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="246"/>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="327"/>
+        <source> (Trening </source>
+        <translation> (Training </translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="252"/>
+        <source> miejsce</source>
+        <translation> place</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="331"/>
+        <source> (Skok </source>
+        <translation> (Jump </translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="334"/>
+        <source> pkt</source>
+        <translation> pts</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="407"/>
+        <source>Punkty od sędziów</source>
+        <translation>Judges points</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="433"/>
+        <source>Ocena wybicia</source>
+        <translation>Takeoff rating</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/JumperStatsWindow.cpp" line="446"/>
+        <source>Ocena lotu</source>
+        <translation>Flight rating</translation>
     </message>
 </context>
 <context>
@@ -2488,7 +2831,7 @@ You can edit several competitions at once (The only exception is the &quot;Advan
     </message>
     <message>
         <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="190"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="551"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="601"/>
         <source>Naprawia zapisów symulacji </source>
         <translation>Simulation saves repair</translation>
     </message>
@@ -2744,6 +3087,232 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
 </context>
 <context>
+    <name>SerieTypesComboBoxesWidget</name>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.ui" line="43"/>
+        <source>Konkursy</source>
+        <translation>Competitions</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.ui" line="61"/>
+        <source>Serie próbne</source>
+        <translation>Trial rounds</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.ui" line="79"/>
+        <source>Kwalifikacje</source>
+        <translation>Qualifications</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.ui" line="97"/>
+        <source>Treningi</source>
+        <translation>Trainings</translation>
+    </message>
+</context>
+<context>
+    <name>SimulationRatingTableModel</name>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRatingTableModel.cpp" line="19"/>
+        <source>Miejsce</source>
+        <translation>Position</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRatingTableModel.cpp" line="21"/>
+        <source>Zawodnik</source>
+        <translation>Jumper</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRatingTableModel.cpp" line="23"/>
+        <source>Wartość</source>
+        <translation>Value</translation>
+    </message>
+</context>
+<context>
+    <name>SimulationRatingsWindow</name>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="14"/>
+        <source>Statystyki zapisu</source>
+        <translation>Simulation stats</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="43"/>
+        <source>Ilość rekordów: </source>
+        <translation>Records count: </translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="167"/>
+        <source>Pokaż ukryte tabele</source>
+        <translation>Show hidden tables</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="180"/>
+        <source>Rankingi</source>
+        <translation>Rankings</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="203"/>
+        <source>Średnia ocena lotu</source>
+        <translation>Average takeoff rating</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="240"/>
+        <source>Średnia pozycja</source>
+        <translation>Average position</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="274"/>
+        <source>Średnie noty za styl</source>
+        <translation>Average judges</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="311"/>
+        <source>Średnia ocena wybicia</source>
+        <translation>Average takeoff rating</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="348"/>
+        <source>Średnia odległość</source>
+        <translation>Average distance</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="385"/>
+        <source>Średni wiatr</source>
+        <translation>Average wind</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="410"/>
+        <source>Rekordy</source>
+        <translation>Records</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="441"/>
+        <source>Odległość</source>
+        <translation>Distance</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="469"/>
+        <source>Najlepsza</source>
+        <translation>Best</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="500"/>
+        <source>Najgorsza</source>
+        <translation>Worst</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="527"/>
+        <source>Punkty od sędziów</source>
+        <translation>Judges points</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="555"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="641"/>
+        <source>Najwięcej</source>
+        <translation>Most</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="586"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="672"/>
+        <source>Najmniej</source>
+        <translation>Least</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="613"/>
+        <source>Punkty za skok</source>
+        <translation>Points for jump</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="699"/>
+        <source>Uśredniony wiatr</source>
+        <translation>Averaged wind</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="727"/>
+        <source>Najlepszy</source>
+        <translation>Best</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="758"/>
+        <source>Najgorszy</source>
+        <translation>Worst</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="785"/>
+        <source>Ocena lotu</source>
+        <translation>Flight rating</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="813"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="899"/>
+        <source>Największa</source>
+        <translation>Most</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="844"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="930"/>
+        <source>Najmniejsza</source>
+        <translation>Least</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="871"/>
+        <source>Ocena wybicia</source>
+        <translation>Takeoff rating</translation>
+    </message>
+</context>
+<context>
+    <name>SimulationRecordsTableModel</name>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp" line="16"/>
+        <source>Lp</source>
+        <translation>Pos</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp" line="18"/>
+        <source>Zawodnik</source>
+        <translation>Jumper</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp" line="20"/>
+        <source>Wartość</source>
+        <translation>Value</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp" line="22"/>
+        <source>Zawody/Skok</source>
+        <translation>Competition/Jump</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp" line="65"/>
+        <source> (Runda </source>
+        <translation> (Round </translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp" line="70"/>
+        <source>(Konk.)</source>
+        <translation>(Comp.)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp" line="73"/>
+        <source>(Kwal.)</source>
+        <translation>(Qual.)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp" line="76"/>
+        <source>(Prób.)</source>
+        <translation>(Trial.)</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp" line="79"/>
+        <source>(Tren.)</source>
+        <translation>(Train.)</translation>
+    </message>
+</context>
+<context>
     <name>SimulationSaveInfoWidget</name>
     <message>
         <location filename="../source/UI/Seasons/SimulationSaveInfoWidget.ui" line="14"/>
@@ -2833,79 +3402,89 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="128"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="146"/>
+        <source>Statystyki zapisu</source>
+        <translation>Simulation stats</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="159"/>
         <source>Zapisz do pliku</source>
         <translation>Save to file</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="141"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="172"/>
         <source>Napraw bazę danych</source>
         <translation>Repair database</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="189"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="220"/>
         <source>Zawodnicy</source>
         <translation>Jumpers</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="227"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="277"/>
+        <source>Statystyki zawodnika</source>
+        <translation>Jumper stats</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="295"/>
         <source>Skocznie</source>
         <translation>Hills</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="265"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="333"/>
         <source>Zasady konkursów (presety)</source>
         <translation>Competition rules (presets)</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="303"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="371"/>
         <source>Kalendarz</source>
         <translation>Calendar</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="321"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="410"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="389"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="478"/>
         <source>Klasyfikacje</source>
         <translation>Classifications</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="359"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="427"/>
         <source>Archiwum</source>
         <translation>Archive</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="372"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="440"/>
         <source>2024</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="392"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="460"/>
         <source>Konkursy</source>
         <translation>Competitions</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="483"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="551"/>
         <source>Następny konkurs: </source>
         <translation>Next competition: </translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="517"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="585"/>
         <source>1. Zakopane HS140</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="558"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="626"/>
         <source>&lt;Flaga&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="589"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="657"/>
         <source>(Trening 1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="667"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="340"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="735"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="390"/>
         <source>Konfiguruj konkurs</source>
         <translation>Configure the competition</translation>
     </message>
@@ -2914,91 +3493,101 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation type="vanished">Season </translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="163"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="167"/>
         <source>Edycja klasyfikacji</source>
         <translation>Classification edit</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="163"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="167"/>
         <source>Nie możesz edytować tej klasyfikacji, ponieważ wcześniej został rozegrany konkurs z jej użyciem.
 Możesz ją tylko całkowicie usunąć</source>
         <translation>You can&apos;t edit this classification because you&apos;ve previously played a competition using it.
 You can only remove it completely</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="220"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="270"/>
         <source>Edycja zawodników i skoczni</source>
         <translation>Jumpers and hills editing</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="221"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="271"/>
         <source>BARDZO WAŻNE: Zawodników i skoczni które dodano, nie można już później usunąć. Bądź ostrożny podczas dodawania!</source>
         <translation>VERY IMPORTANT: Jumpers and hills that have been added can no longer be removed. Be careful when adding!</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="222"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="272"/>
         <source>Nie pokazuj ponownie</source>
         <translation>Don&apos;t show again</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="258"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="308"/>
         <source>Konkurs</source>
         <translation>Competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="261"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="311"/>
         <source>Kwalifikacje</source>
         <translation>Qualifications</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="264"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="314"/>
         <source>Seria próbna</source>
         <translation>Trial round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="281"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="331"/>
         <source>Trening </source>
         <translation>Training</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="319"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="369"/>
         <source>Konfiguruj nowy sezon</source>
         <translation>Configure next season</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="528"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="578"/>
         <source>Koniec sezonu</source>
         <translation>Season end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="528"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="578"/>
         <source>Sezon dobiegł końca! Aby skonfigurować kolejny sezon, wciśnij odpowiedni przycisk w oknie.</source>
         <translation>The season has come to an end! To set up the next season, press the appropriate button in the window.</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="539"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="589"/>
         <source>Zapis do pliku</source>
         <translation>Writing to file</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="539"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="589"/>
         <source>Pomyślnie zapisano aktualny zapis symulacji do pliku</source>
         <translation>Successfully saved the current simulation save to file</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="576"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="626"/>
         <source>Naprawa bazy danych</source>
         <translation>Database repair</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="576"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="626"/>
         <source>Naprawiono bazę danych tego zapisu symulacji i zapisano do pliku.</source>
         <translation>The database of this simulation save was repaired and saved to a file.</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="599"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="649"/>
         <source>Wyniki konkursu</source>
         <translation>Competition results</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="707"/>
+        <source>Statystyki skoczka</source>
+        <translation>Jumper stats</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="707"/>
+        <source>Najpierw zaznacz jakiegoś zawodnika!</source>
+        <translation>First, mark some player!</translation>
     </message>
     <message>
         <source>Naprawiono bazę danych tego zapisu symulacji</source>
@@ -3428,6 +4017,11 @@ in team</translation>
     <message>
         <source>Statystyki lądowania</source>
         <translation type="vanished">Landing statistics</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="83"/>
+        <source>Rozkład punktów zawodnika</source>
+        <translation>Distribution of jumper&apos;s points</translation>
     </message>
     <message>
         <location filename="../source/UI/SingleJumps/SingleJumpsResultsWindow.cpp" line="239"/>

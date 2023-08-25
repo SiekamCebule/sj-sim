@@ -101,6 +101,7 @@ void ApperanceInClassificationWindow::fillChart()
     chart->axes(Qt::Vertical).first()->setReverse(true);
     chart->axes(Qt::Vertical).first()->setRange(1, worstPos);
     chart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
+    chart->zoomReset();
     chartView->setChart(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 }

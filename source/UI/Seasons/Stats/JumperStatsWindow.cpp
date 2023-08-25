@@ -91,6 +91,7 @@ void JumperStatsWindow::fillJumperApperancesChart()
     jumperApperancesChart->axes(Qt::Vertical).first()->setReverse(true);
     jumperApperancesChart->axes(Qt::Vertical).first()->setRange(1, worstPosition);
     jumperApperancesChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
+    judgesPointsChart->zoomReset();
     jumperApperancesChartView->setChart(jumperApperancesChart);
     jumperApperancesChartView->setRenderHint(QPainter::Antialiasing);
 
@@ -123,6 +124,7 @@ void JumperStatsWindow::fillJudgesPointsChart()
     judgesPointsChart->createDefaultAxes();
     judgesPointsChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
     judgesPointsChart->axes(Qt::Vertical).first()->setRange(worst, 60);
+    judgesPointsChart->zoomReset();
     judgesPointsChartView->setChart(judgesPointsChart);
     judgesPointsChartView->setRenderHint(QPainter::Antialiasing);
 }
@@ -144,6 +146,7 @@ void JumperStatsWindow::fillJumperFormChart()
     jumperFormChart->addSeries(jumperFormLineSeries);
     jumperFormChart->createDefaultAxes();
     jumperFormChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
+    jumperFormChart->zoomReset();
     jumperFormChartView->setChart(jumperFormChart);
     jumperFormChartView->setRenderHint(QPainter::Antialiasing);
 }
@@ -168,6 +171,7 @@ void JumperStatsWindow::fillTakeoffRatingChart()
     takeoffRatingChart->addSeries(takeoffRatingLineSeries);
     takeoffRatingChart->createDefaultAxes();
     takeoffRatingChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
+    takeoffRatingChart->zoomReset();
     takeoffRatingChartView->setChart(takeoffRatingChart);
     takeoffRatingChartView->setRenderHint(QPainter::Antialiasing);
 }
@@ -192,6 +196,7 @@ void JumperStatsWindow::fillFlightRatingChart()
     flightRatingChart->addSeries(flightRatingLineSeries);
     flightRatingChart->createDefaultAxes();
     flightRatingChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
+    flightRatingChart->zoomReset();
     flightRatingChartView->setChart(flightRatingChart);
     flightRatingChartView->setRenderHint(QPainter::Antialiasing);
 }
