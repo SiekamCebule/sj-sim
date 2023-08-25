@@ -12,6 +12,7 @@
 #include "FilteringWidgets/CompetitionsRangeComboBoxesWidget.h"
 #include "FilteringWidgets/SerieTypesComboBoxesWidget.h"
 #include "FilteringWidgets/ClassificationsCheckBoxesWidget.h"
+#include "FilteringWidgets/HillTypesCheckBoxesWidget.h"
 
 namespace Ui {
 class JumperStatsWindow;
@@ -57,6 +58,7 @@ private:
     CompetitionsRangeComboBoxesWidget * rangeComboBoxes;
     SerieTypesComboBoxesWidget * serieTypesCheckBoxes;
     ClassificationsCheckBoxesWidget * classificationsCheckBoxes;
+    HillTypesCheckBoxesWidget * hillTypesCheckBoxes;
 
     Jumper * jumper;
     QVector<CompetitionSingleResult *> singleResults;
@@ -96,7 +98,9 @@ public:
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
     ClassificationsCheckBoxesWidget *getClassificationsCheckBoxes() const;
-    void setClassificationsCheckBoxes(ClassificationsCheckBoxesWidget *newClassificationsCheckBoxes);
+    void setClassificationsCheckBoxes(ClassificationsCheckBoxesWidget *newClassificationsCheckBoxes);   
+    HillTypesCheckBoxesWidget *getHillTypesCheckBoxes() const;
+    void setHillTypesCheckBoxes(HillTypesCheckBoxesWidget *newHillTypesCheckBoxes);
 
 private slots:
     void on_horizontalScrollBar_jumperStatsChartScrollBar_valueChanged(int value);

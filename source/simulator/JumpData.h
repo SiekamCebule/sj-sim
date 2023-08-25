@@ -14,6 +14,8 @@
 #include "../global/SeasonDatabaseObjectsManager.h"
 
 class JumpSimulator;
+class CompetitionSingleResult;
+class CompetitionInfo;
 
 class JumpData : public ClassWithID
 {
@@ -47,13 +49,15 @@ private:
     Jumper * jumper;
     Hill * hill;
     JumpSimulator * simulator;
+    CompetitionInfo * competition;
+    CompetitionSingleResult * singleResult;
 
     double jumperForm;
 
 public:
     void reset();
 
-    static QJsonObject getJsonObject(const JumpData &jumpData);
+    static QJsonObject getJsonObject(JumpData jumpData);
     static JumpData getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager *objectsManager);
 
     double getDistance() const;
@@ -82,7 +86,7 @@ public:
     void setGate(int newGate);
     double getAveragedWind() const;
     void setAveragedWind(double newAveragedWind);
-    JumpSimulationData getSimulationData() const;
+    JumpSimulationData &getSimulationDataReference();
     void setSimulationData(const JumpSimulationData &newSimulationData);
     QVector<Wind> getWinds() const;
     QVector<Wind>* getWindsPointer();
@@ -99,6 +103,10 @@ public:
     void setDSQ(bool newDSQ);
     double getJumperForm() const;
     void setJumperForm(double newJumperForm);
+    CompetitionInfo *getCompetition() const;
+    void setCompetition(CompetitionInfo *newCompetition);
+    CompetitionSingleResult *getSingleResult() const;
+    void setSingleResult(CompetitionSingleResult *newSingleResult);
 };
 
 QDebug operator<<(QDebug d, const JumpData & jumpData);

@@ -18,6 +18,9 @@ JumperStatsWindow::JumperStatsWindow(QWidget *parent) :
     classificationsCheckBoxes = new ClassificationsCheckBoxesWidget(this);
     ui->verticalLayout_classificationsComboBoxes->addWidget(classificationsCheckBoxes);
 
+    hillTypesCheckBoxes = new HillTypesCheckBoxesWidget(this);
+    ui->verticalLayout_hillTypesCheckBoxes->addWidget(hillTypesCheckBoxes);
+
     /*layout_takeoffRatingChart = new QVBoxLayout();
     ui->verticalLayout_charts->addItem(layout_takeoffRatingChart);
     layout_flightRatingChart = new QVBoxLayout();
@@ -37,6 +40,7 @@ void JumperStatsWindow::setupConnections()
     connect(rangeComboBoxes, &CompetitionsRangeComboBoxesWidget::changed, this, &JumperStatsWindow::fillWindow);
     connect(serieTypesCheckBoxes, &SerieTypesComboBoxesWidget::changed, this, &JumperStatsWindow::fillWindow);
     connect(classificationsCheckBoxes, &ClassificationsCheckBoxesWidget::changed, this, &JumperStatsWindow::fillWindow);
+    connect(hillTypesCheckBoxes, &HillTypesCheckBoxesWidget::changed, this, &JumperStatsWindow::fillWindow);
 }
 
 void JumperStatsWindow::fillWindow()
@@ -47,7 +51,7 @@ void JumperStatsWindow::fillWindow()
     QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList()),
                                                                                             rangeComboBoxes->getCompetition(1), rangeComboBoxes->getCompetition(2));
     singleResults = CompetitionSingleResult::getFilteredSingleResults(competitions, jumper,
-        serieTypesCheckBoxes->getSerieTypes(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked());
+        serieTypesCheckBoxes->getSerieTypes(), hillTypesCheckBoxes->getHillTypesSet(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked());
 
     fillJumperApperancesChart();
     fillJudgesPointsChart();
@@ -85,6 +89,7 @@ void JumperStatsWindow::fillJumperApperancesChart()
     jumperApperancesChart->addSeries(jumperApperancesLineSeries);
     jumperApperancesChart->createDefaultAxes();
     jumperApperancesChart->axes(Qt::Vertical).first()->setReverse(true);
+    jumperApperancesChart->axes(Qt::Vertical).first()->setRange(1, worstPosition);
     jumperApperancesChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
     jumperApperancesChartView->setChart(jumperApperancesChart);
     jumperApperancesChartView->setRenderHint(QPainter::Antialiasing);
@@ -99,6 +104,7 @@ void JumperStatsWindow::fillJudgesPointsChart()
 {
     judgesPointsLineSeries->clear();
     QVector<double> judgesPoints;
+    double worst = 60;
     int i = 1;
     for(auto & singleResult : singleResults)
     {
@@ -108,12 +114,15 @@ void JumperStatsWindow::fillJudgesPointsChart()
                 judgesPoints.push_back(jump.getJudgesPoints());
                 judgesPointsLineSeries->append(i, jump.getJudgesPoints());
                 i++;
+                if(jump.getJudgesPoints() < worst)
+                    worst = jump.getJudgesPoints();
             }
         }
     }
     judgesPointsChart->addSeries(judgesPointsLineSeries);
     judgesPointsChart->createDefaultAxes();
     judgesPointsChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
+    judgesPointsChart->axes(Qt::Vertical).first()->setRange(worst, 60);
     judgesPointsChartView->setChart(judgesPointsChart);
     judgesPointsChartView->setRenderHint(QPainter::Antialiasing);
 }
@@ -122,6 +131,7 @@ void JumperStatsWindow::fillJumperFormChart()
 {
     jumperFormLineSeries->clear();
     QVector<double> forms;
+    double worst;
     int i = 1;
     for(auto & singleResult : singleResults)
     {
@@ -149,7 +159,7 @@ void JumperStatsWindow::fillTakeoffRatingChart()
         {
             if(jump.getDSQ() == false)
             {
-                ratings.push_back(jump.getSimulationData().getTakeoffRating());
+                ratings.push_back(jump.getSimulationDataReference().getTakeoffRating());
                 takeoffRatingLineSeries->append(i, ratings.last());
                 i++;
             }
@@ -173,7 +183,7 @@ void JumperStatsWindow::fillFlightRatingChart()
         {
             if(jump.getDSQ() == false)
             {
-                ratings.push_back(jump.getSimulationData().getFlightRating());
+                ratings.push_back(jump.getSimulationDataReference().getFlightRating());
                 flightRatingLineSeries->append(i, ratings.last());
                 i++;
             }
@@ -318,9 +328,9 @@ void JumperStatsWindow::updateChartCompetitionByJumpData(const QPointF &point, b
             if(type == JudgesPoints)
                 ui->label_chartStat->setText(QString::number(jumpData->getJudgesPoints()) + tr(" pkt"));
             else if(type == TakeoffRating)
-                ui->label_chartStat->setText(QString::number(jumpData->getSimulationData().getTakeoffRating()));
+                ui->label_chartStat->setText(QString::number(jumpData->getSimulationDataReference().getTakeoffRating()));
             else if(type == FlightRating)
-                ui->label_chartStat->setText(QString::number(jumpData->getSimulationData().getFlightRating()));
+                ui->label_chartStat->setText(QString::number(jumpData->getSimulationDataReference().getFlightRating()));
 
             QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size());
             ui->label_hillFlag->setPixmap(pixmap);
@@ -351,6 +361,16 @@ void JumperStatsWindow::updateChartCompetitionByJumpDataForTakeoffRating(const Q
 void JumperStatsWindow::updateChartCompetitionByJumpDataForFlightRating(const QPointF &point, bool state)
 {
     updateChartCompetitionByJumpData(point, state, FlightRating);
+}
+
+HillTypesCheckBoxesWidget *JumperStatsWindow::getHillTypesCheckBoxes() const
+{
+    return hillTypesCheckBoxes;
+}
+
+void JumperStatsWindow::setHillTypesCheckBoxes(HillTypesCheckBoxesWidget *newHillTypesCheckBoxes)
+{
+    hillTypesCheckBoxes = newHillTypesCheckBoxes;
 }
 
 ClassificationsCheckBoxesWidget *JumperStatsWindow::getClassificationsCheckBoxes() const

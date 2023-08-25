@@ -36,7 +36,10 @@ public:
 
     QVector<int> getJumpersPositions(const QVector<Jumper *> *jumpers) const;
     void sortJumpersByResults(QVector<Jumper *> & jumpers);
-    static QHash<Jumper *, int> getResultsWithPositionsForClassificationArchiveResults(QHash<Jumper *, double> results);
+    static QHash<Jumper *, int> getResultsWithJumpersPositionsForClassificationArchiveResults(QHash<Jumper *, double> results);
+    static QHash<QString, int> getResultsWithTeamsPositionsForClassificationArchiveResults(QHash<QString, double> results);
+    static QVector<QString> getTeamsCodesByIndividualResults(CompetitionResults * results);
+    static QVector<Jumper *> getJumpersByTeamResults(CompetitionResults * results);
 
 public:
     QVector<CompetitionSingleResult> getResults() const;

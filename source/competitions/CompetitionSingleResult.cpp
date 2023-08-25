@@ -53,7 +53,7 @@ QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult resul
     return resultObject;
 }
 
-QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleResults(QVector<CompetitionInfo *> &competitions, Jumper *jumper, QSet<int> serieTypes, QVector<Classification *> classifications, bool skipClassifications)
+QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleResults(QVector<CompetitionInfo *> &competitions, Jumper *jumper, QSet<int> serieTypes, QSet<int> hillTypes, QVector<Classification *> classifications, bool skipClassifications)
 {
     QVector<CompetitionSingleResult *> singleResults;
     for(auto & comp : competitions)
@@ -70,7 +70,7 @@ QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleRes
         }
         if(skipClassifications == true)
             ok = true;
-        if(serieTypes.contains(comp->getSerieType())&& ok)
+        if(serieTypes.contains(comp->getSerieType()) && hillTypes.contains(comp->getHill()->getHillType()) && ok)
         {
             if(comp->getResultsReference().getResultOfIndividualJumper(jumper) != nullptr)
             {
@@ -82,12 +82,12 @@ QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleRes
     return singleResults;
 }
 
-QHash<Jumper *, QVector<CompetitionSingleResult *> > CompetitionSingleResult::getJumpersFilteredSingleResults(QVector<Jumper *> &jumpers, QVector<CompetitionInfo *> &competitions, QSet<int> serieTypes, QVector<Classification *> classifications, bool skipClassifications)
+QHash<Jumper *, QVector<CompetitionSingleResult *> > CompetitionSingleResult::getJumpersFilteredSingleResults(QVector<Jumper *> &jumpers, QVector<CompetitionInfo *> &competitions, QSet<int> serieTypes,QSet<int> hillTypes,  QVector<Classification *> classifications, bool skipClassifications)
 {
     QHash<Jumper *, QVector<CompetitionSingleResult *>> toReturn;
     for(auto & jumper : jumpers)
     {
-        toReturn.insert(jumper, CompetitionSingleResult::getFilteredSingleResults(competitions, jumper, serieTypes, classifications, skipClassifications));
+        toReturn.insert(jumper, CompetitionSingleResult::getFilteredSingleResults(competitions, jumper, serieTypes, hillTypes, classifications, skipClassifications));
     }
     return toReturn;
 }

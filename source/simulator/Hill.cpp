@@ -241,6 +241,22 @@ double Hill::calculateBestFlightHeightLevel(Hill *hill)
     return level;
 }
 
+int Hill::getHillType()
+{
+    if(HSPoint < 50)
+        return Hill::Small;
+    else if(HSPoint < 85)
+        return Hill::Average;
+    else if(HSPoint < 110)
+        return Hill::Normal;
+    else if(HSPoint < 150)
+        return Hill::Large;
+    else if(HSPoint < 186)
+        return Hill::Big;
+    else
+        return Hill::Flying;
+}
+
 double Hill::getPointsForKPoint() const
 {
     return pointsForKPoint;

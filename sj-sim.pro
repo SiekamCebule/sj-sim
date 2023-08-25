@@ -62,9 +62,11 @@ SOURCES += \
     source/UI/Seasons/Stats/ApperanceInClassificationWindow.cpp \
     source/UI/Seasons/Stats/FilteringWidgets/ClassificationsCheckBoxesWidget.cpp \
     source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.cpp \
+    source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.cpp \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.cpp \
     source/UI/Seasons/Stats/JumperStatsWindow.cpp \
     source/UI/Seasons/Stats/Models/SimulationRatingTableModel.cpp \
+    source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp \
     source/UI/Seasons/Stats/SimulationRatingsWindow.cpp \
     source/UI/SingleJumps/SingleJumpsConfigWindow.cpp \
     source/UI/AppSettings/AppSettingsWindow.cpp \
@@ -178,9 +180,11 @@ HEADERS += \
     source/UI/Seasons/Stats/ApperanceInClassificationWindow.h \
     source/UI/Seasons/Stats/FilteringWidgets/ClassificationsCheckBoxesWidget.h \
     source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.h \
+    source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.h \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.h \
     source/UI/Seasons/Stats/JumperStatsWindow.h \
     source/UI/Seasons/Stats/Models/SimulationRatingTableModel.h \
+    source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.h \
     source/UI/Seasons/Stats/SimulationRatingsWindow.h \
     source/UI/SingleJumps/SingleJumpsConfigWindow.h \
     source/UI/AppSettings/AppSettingsWindow.h \
@@ -274,6 +278,7 @@ FORMS += \
     source/UI/Seasons/Stats/ApperanceInClassificationWindow.ui \
     source/UI/Seasons/Stats/FilteringWidgets/ClassificationsCheckBoxesWidget.ui \
     source/UI/Seasons/Stats/FilteringWidgets/CompetitionsRangeComboBoxesWidget.ui \
+    source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.ui \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.ui \
     source/UI/Seasons/Stats/JumperStatsWindow.ui \
     source/UI/Seasons/Stats/SimulationRatingsWindow.ui \

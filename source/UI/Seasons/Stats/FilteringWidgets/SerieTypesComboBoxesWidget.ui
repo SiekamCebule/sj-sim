@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>184</width>
-    <height>44</height>
+    <width>182</width>
+    <height>42</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,6 +31,11 @@
    </property>
    <item row="0" column="0">
     <widget class="QCheckBox" name="checkBox_competitions">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background: transparent; color: black;</string>
      </property>
@@ -44,6 +49,11 @@
    </item>
    <item row="0" column="1">
     <widget class="QCheckBox" name="checkBox_trialRounds">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background: transparent; color: black;</string>
      </property>
@@ -57,6 +67,11 @@
    </item>
    <item row="1" column="0">
     <widget class="QCheckBox" name="checkBox_qualifications">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background: transparent; color: black;</string>
      </property>
@@ -70,6 +85,11 @@
    </item>
    <item row="1" column="1">
     <widget class="QCheckBox" name="checkBox_trainings">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background: transparent; color: black;</string>
      </property>

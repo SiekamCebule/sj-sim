@@ -511,6 +511,7 @@ void CompetitionManagerWindow::autoSimulateRound()
         setupSimulator();
         simulator.simulateJump();
         JumpData jump = simulator.getJumpData();
+        jump.setCompetition(manager->getCompetitionInfo());
         if(type == CompetitionRules::Individual){
             indManager->getResults()->addJump(indManager->getActualJumper(), jump);
         }
@@ -612,6 +613,7 @@ void CompetitionManagerWindow::autoSimulateCompetition()
         setupSimulator();
         simulator.simulateJump();
         JumpData jump = simulator.getJumpData();
+        jump.setCompetition(manager->getCompetitionInfo());
         if(type == CompetitionRules::Individual){
             indManager->getResults()->addJump(indManager->getActualJumper(), jump);
         }
@@ -744,6 +746,7 @@ void CompetitionManagerWindow::autoSimulateGroup()
             setupSimulator();
             simulator.simulateJump();
             JumpData jump = simulator.getJumpData();
+            jump.setCompetition(manager->getCompetitionInfo());
             tmManager->getResults()->addJump(tmManager->getActualTeam(), jump);
             tmManager->getResults()->getResultOfTeam(tmManager->getActualTeam())->updateTeamJumpersResults();
 
@@ -813,6 +816,7 @@ void CompetitionManagerWindow::autoSimulateJumps()
             setupSimulator();
             simulator.simulateJump();
             JumpData jump = simulator.getJumpData();
+            jump.setCompetition(manager->getCompetitionInfo());
             if(type == CompetitionRules::Individual){
                 indManager->getResults()->addJump(indManager->getActualJumper(), jump);
             }
@@ -1078,6 +1082,7 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     qDebug()<<WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()<< "AVG0.5";
     simulator.simulateJump();
     JumpData jump = simulator.getJumpData();
+    jump.setCompetition(manager->getCompetitionInfo());
     if(type == CompetitionRules::Individual){
         indManager->getResults()->addJump(indManager->getActualJumper(), jump);
     }

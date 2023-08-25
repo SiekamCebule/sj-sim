@@ -25,14 +25,13 @@ void ApperanceInClassificationWindow::fillWindow()
 {
     if(jumper != nullptr)
     {
-        ui->label_jumperNameAndSurname->show();
         ui->label_jumperNameAndSurname->setText(jumper->getNameAndSurname());
         ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower()))
                                       .scaled(ui->label_flag->size()));
     }
     else if(teamCode != "")
     {
-        ui->label_jumperNameAndSurname->hide();
+        ui->label_jumperNameAndSurname->setText(teamCode);
         ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(teamCode.toLower()))
                                       .scaled(ui->label_flag->size()));
     }
@@ -76,12 +75,6 @@ void ApperanceInClassificationWindow::fillChart()
         series->append(i, position);
         i++;
     }
-    chart->addSeries(series);
-    chart->createDefaultAxes();
-    chart->axes(Qt::Vertical).first()->setReverse(true);
-    chart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
-    chartView->setChart(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
 
     int bestPos = 100000000;
     int worstPos = 1;
@@ -102,6 +95,14 @@ void ApperanceInClassificationWindow::fillChart()
     ui->label_worstPos->setText(QString::number(worstPos));
     ui->label_averagePos->setText(QString::number(avgPos));
     ui->label_standardDeviation->setText(QString::number(standardDeviation));
+
+    chart->addSeries(series);
+    chart->createDefaultAxes();
+    chart->axes(Qt::Vertical).first()->setReverse(true);
+    chart->axes(Qt::Vertical).first()->setRange(1, worstPos);
+    chart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
+    chartView->setChart(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
 }
 
 void ApperanceInClassificationWindow::updateChartCompetition(const QPointF &point, bool state)
@@ -135,6 +136,18 @@ void ApperanceInClassificationWindow::updateChartCompetition(const QPointF &poin
                 string += tr(" (Kwalifikacje)");
                 break;
             }
+            switch(competition->getRulesPointer()->getCompetitionType())
+            {
+            case CompetitionRules::Individual:
+                string += tr(" (Ind.)");
+                break;
+            case CompetitionRules::Team:
+                string += tr(" (Druż.)");
+                break;
+            default:
+                break;
+            }
+
             ui->label_chartStat->setText(QString::number(positions[int(point.x()) - 1]) + tr(" miejsce"));
             ui->label_chartCompetition->setText(string);
             QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size());

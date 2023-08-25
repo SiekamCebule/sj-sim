@@ -288,8 +288,13 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json, SeasonData
     comp.setHill(static_cast<Hill *>(objectsManager->getObjectByID(json.value("hill-id").toString().toULong())));
     comp.setResults(CompetitionResults::getFromJson(json.value("results").toObject(), objectsManager));
     objectsManager->addObject(&comp.getResultsReference());
-    for(auto & sr : comp.getResultsReference().getResultsReference())
+    for(auto & sr : comp.getResultsReference().getResultsReference()){
         sr.setCompetition(&comp);
+        for(auto & j : sr.getJumpsReference()){
+            j.setCompetition(sr.getCompetition());
+            j.setSingleResult(&sr);
+        }
+    }
     comp.getResultsReference().setCompetition(&comp);
     comp.setRules(CompetitionRules::getFromJson(json.value("rules").toObject()));
     comp.setSerieType(json.value("serie-type").toInt());

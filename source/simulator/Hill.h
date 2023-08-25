@@ -16,6 +16,15 @@ class Hill : public ClassWithID, public ClassWithCharacteristics
 public:
     Hill(const QString &name = "", const QString &countryCode = "", double KPoint = 0, double HSPoint = 0, double pointsForMeter = 0, double pointsForKPoint = 0, double pointsForFrontWind = 0, double pointsForBackWind = 0, double pointsForGate = 0, double takeoffEffect = 0, double flightEffect = 0, double realHS = 0, bool autoPointsForKPoint = false, bool autoPointsForMeter = false, bool autoPointsForBackWind = false);
 
+    enum HillType{
+        Small,
+        Average,
+        Normal,
+        Large,
+        Big,
+        Flying
+    };
+
 private:
     QString name;
     QString countryCode;
@@ -50,6 +59,7 @@ public:
     static double calculateBestTakeoffHeightLevel(Hill * hill);
     static double calculateBestFlightHeightLevel(Hill * hill);
 
+    int getHillType();
     double getKAndRealHSDifference();
 
     double getLandingChanceChangeByHillProfile(double distance, short landingType);

@@ -30,7 +30,7 @@ void ClassificationsCheckBoxesWidget::setupCheckBoxes()
     {
         if(classification->getClassificationType() == Classification::Individual){
             QCheckBox * checkBox = new QCheckBox(classification->getName(), this);
-            checkBox->setFont(QFont("Ubuntu", 7));
+            checkBox->setFont(QFont("Ubuntu", 6));
             connect(checkBox, &QCheckBox::stateChanged, this, &ClassificationsCheckBoxesWidget::changed);
             ui->gridLayout->addWidget(checkBox, row, column);
             checkBoxes.push_back(checkBox);

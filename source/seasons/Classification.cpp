@@ -180,7 +180,112 @@ QJsonObject Classification::getJsonObject(Classification * classification)
 
 QHash<QString, QHash<CompetitionInfo *, int> > Classification::constructTeamsArchiveResults(Season *season)
 {
+    QHash<QString, QHash<CompetitionInfo *, int>> results;
+    QHash<QString, double> tempResultsToSort;
 
+    for(auto & seasonCompetition : season->getCalendarReference().getCompetitionsReference())
+    {
+        if(seasonCompetition->getPlayed() == true)
+        {
+            if(seasonCompetition->getClassificationsReference().contains(this) == true)
+            {
+                QHash<QString, int> poss;
+                QSet<QString> remainingTeams;
+                if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+                {
+                    QVector<QString> teams = CompetitionResults::getTeamsCodesByIndividualResults(&seasonCompetition->getResultsReference());
+                    for(auto & teamCode : teams)
+                    {
+                        double teamResultPoints = 0;
+                        for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                        {
+                            if(singleResult.getJumper()->getCountryCode() == teamCode){
+                                if(this->punctationType == Classification::PointsForPlaces)
+                                    teamResultPoints += this->altPointsForPlaces.value(singleResult.getPosition());
+                                else
+                                    teamResultPoints += singleResult.getPointsSum();
+                            }
+                        }
+                        tempResultsToSort[teamCode] = tempResultsToSort.value(teamCode) + teamResultPoints;
+                        remainingTeams.insert(teamCode);
+                    }
+                    poss = CompetitionResults::getResultsWithTeamsPositionsForClassificationArchiveResults(tempResultsToSort);
+
+                    for(auto & teamCode : teams)
+                    {
+                        for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                        {
+                            if(teamCode == singleResult.getJumper()->getCountryCode()){
+                                QHash<CompetitionInfo *, int> resultsMap;
+                                if(results.contains(teamCode))
+                                {
+                                    resultsMap = results.value(teamCode);
+                                }
+                                else
+                                {
+                                    resultsMap = QHash<CompetitionInfo *, int>();
+                                }
+                                resultsMap.insert(seasonCompetition, poss.value(teamCode));
+
+                                results[teamCode] = resultsMap;
+                                if(remainingTeams.contains(teamCode))
+                                    remainingTeams.remove(teamCode);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                    {
+                        double teamResultPoints = 0;
+                        if(this->punctationType == Classification::PointsForPlaces)
+                            teamResultPoints += this->pointsForPlaces.value(singleResult.getPosition());
+                        else
+                            teamResultPoints += singleResult.getPointsSum();
+                        tempResultsToSort[singleResult.getTeam()->getCountryCode()] = tempResultsToSort.value(singleResult.getTeam()->getCountryCode()) + teamResultPoints;
+                        remainingTeams.insert(singleResult.getTeam()->getCountryCode());
+                    }
+                    poss = CompetitionResults::getResultsWithTeamsPositionsForClassificationArchiveResults(tempResultsToSort);
+                    for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                    {
+                        QHash<CompetitionInfo *, int> resultsMap;
+                        if(results.contains(singleResult.getTeam()->getCountryCode()))
+                        {
+                            resultsMap = results.value(singleResult.getTeam()->getCountryCode());
+                        }
+                        else
+                        {
+                            resultsMap = QHash<CompetitionInfo *, int>();
+                        }
+                        resultsMap.insert(seasonCompetition, poss.value(singleResult.getTeam()->getCountryCode()));
+
+                        results[singleResult.getTeam()->getCountryCode()] = resultsMap;
+                        if(remainingTeams.contains(singleResult.getTeam()->getCountryCode()))
+                            remainingTeams.remove(singleResult.getTeam()->getCountryCode());
+                    }
+                }
+                //After else
+                for(auto & remainingTeam : remainingTeams)
+                {
+                    QHash<CompetitionInfo *, int> resultsMap;
+                    if(results.contains(remainingTeam))
+                    {
+                        resultsMap = results.value(remainingTeam);
+                    }
+                    else
+                    {
+                        resultsMap = QHash<CompetitionInfo *, int>();
+                    }
+                    resultsMap.insert(seasonCompetition, poss.value(remainingTeam));
+                    results[remainingTeam] = resultsMap;
+                }
+            }
+        }
+        else break;
+    }
+
+    return results;
 }
 
 QHash<Jumper *, QHash<CompetitionInfo *, int>> Classification::constructJumpersArchiveResults(Season *season)
@@ -194,30 +299,82 @@ QHash<Jumper *, QHash<CompetitionInfo *, int>> Classification::constructJumpersA
         {
             if(seasonCompetition->getClassificationsReference().contains(this) == true)
             {
+                QHash<Jumper *, int> poss;
                 QSet<Jumper *> remainingJumpers;
-                for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
                 {
-                    tempResultsToSort[singleResult.getJumper()] = tempResultsToSort.value(singleResult.getJumper()) + singleResult.getPointsSum();
-                    remainingJumpers.insert(singleResult.getJumper());
-                }
-                QHash<Jumper *, int> poss = CompetitionResults::getResultsWithPositionsForClassificationArchiveResults(tempResultsToSort);
-                for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
-                {
-                    QHash<CompetitionInfo *, int> resultsMap;
-                    if(results.contains(singleResult.getJumper()))
-                    {
-                        resultsMap = results.value(singleResult.getJumper());
+                    QVector<Jumper *> jumpers = CompetitionResults::getJumpersByTeamResults(&seasonCompetition->getResultsReference());
+                    for(auto & jumper : jumpers){
+                        double jumperResultPoints = 0;
+                        for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                        {
+                            if(singleResult.getTeam()->getCountryCode() == jumper->getCountryCode())
+                            {
+                                if(this->punctationType == Classification::PointsForPlaces)
+                                    jumperResultPoints += this->altPointsForPlaces.value(singleResult.getPosition());
+                                else
+                                    jumperResultPoints += singleResult.getTeamJumperResult(jumper)->getPointsSum();
+                            }
+                        }
+                        tempResultsToSort[jumper] = tempResultsToSort.value(jumper) + jumperResultPoints;
+                        remainingJumpers.insert(jumper);
                     }
-                    else
+                    poss = CompetitionResults::getResultsWithJumpersPositionsForClassificationArchiveResults(tempResultsToSort);
+                    for(auto & jumper : jumpers)
                     {
-                        resultsMap = QHash<CompetitionInfo *, int>();
-                    }
-                    resultsMap.insert(seasonCompetition, poss.value(singleResult.getJumper()));
+                        for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                        {
+                            if(jumper->getCountryCode() == singleResult.getTeam()->getCountryCode()){
+                                QHash<CompetitionInfo *, int> resultsMap;
+                                if(results.contains(jumper))
+                                {
+                                    resultsMap = results.value(jumper);
+                                }
+                                else
+                                {
+                                    resultsMap = QHash<CompetitionInfo *, int>();
+                                }
+                                resultsMap.insert(seasonCompetition, poss.value(jumper));
 
-                    results[singleResult.getJumper()] = resultsMap;
-                    if(remainingJumpers.contains(singleResult.getJumper()))
-                        remainingJumpers.remove(singleResult.getJumper());
+                                results[jumper] = resultsMap;
+                                if(remainingJumpers.contains(jumper))
+                                    remainingJumpers.remove(jumper);
+                            }
+                        }
+                    }
                 }
+                else{
+                    for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                    {
+                        double jumperResultPoints = 0;
+                        if(this->punctationType == Classification::PointsForPlaces)
+                            jumperResultPoints += this->pointsForPlaces.value(singleResult.getPosition());
+                        else
+                            jumperResultPoints += singleResult.getPointsSum();
+
+                        tempResultsToSort[singleResult.getJumper()] = tempResultsToSort.value(singleResult.getJumper()) + jumperResultPoints;
+                        remainingJumpers.insert(singleResult.getJumper());
+                    }
+                    poss = CompetitionResults::getResultsWithJumpersPositionsForClassificationArchiveResults(tempResultsToSort);
+                    for(auto & singleResult : seasonCompetition->getResultsReference().getResultsReference())
+                    {
+                        QHash<CompetitionInfo *, int> resultsMap;
+                        if(results.contains(singleResult.getJumper()))
+                        {
+                            resultsMap = results.value(singleResult.getJumper());
+                        }
+                        else
+                        {
+                            resultsMap = QHash<CompetitionInfo *, int>();
+                        }
+                        resultsMap.insert(seasonCompetition, poss.value(singleResult.getJumper()));
+
+                        results[singleResult.getJumper()] = resultsMap;
+                        if(remainingJumpers.contains(singleResult.getJumper()))
+                            remainingJumpers.remove(singleResult.getJumper());
+                    }
+                }
+                //After else
                 for(auto & remainingJumper : remainingJumpers)
                 {
                     QHash<CompetitionInfo *, int> resultsMap;

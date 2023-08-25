@@ -1,6 +1,8 @@
 #include "JumpData.h"
 #include "JumpSimulator.h"
 #include "wind-generation/WindsGenerator.h"
+#include "../competitions/CompetitionInfo.h"
+#include "../competitions/CompetitionSingleResult.h"
 
 #include <QDebug>
 #include <QJsonDocument>
@@ -18,6 +20,26 @@ JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
 {
     DSQ = false;
     DNS = false;
+}
+
+CompetitionSingleResult *JumpData::getSingleResult() const
+{
+    return singleResult;
+}
+
+void JumpData::setSingleResult(CompetitionSingleResult *newSingleResult)
+{
+    singleResult = newSingleResult;
+}
+
+CompetitionInfo *JumpData::getCompetition() const
+{
+    return competition;
+}
+
+void JumpData::setCompetition(CompetitionInfo *newCompetition)
+{
+    competition = newCompetition;
 }
 
 double JumpData::getJumperForm() const
@@ -95,7 +117,7 @@ void JumpData::setWinds(const QVector<Wind> &newWinds)
     winds = newWinds;
 }
 
-JumpSimulationData JumpData::getSimulationData() const
+JumpSimulationData & JumpData::getSimulationDataReference()
 {
     return simulationData;
 }
@@ -150,7 +172,7 @@ void JumpData::reset()
     simulationData.reset();
 }
 
-QJsonObject JumpData::getJsonObject(const JumpData &jumpData)
+QJsonObject JumpData::getJsonObject(JumpData jumpData)
 {
     QJsonObject object;
     object.insert("id", QString::number(jumpData.getID()));
@@ -176,11 +198,11 @@ QJsonObject JumpData::getJsonObject(const JumpData &jumpData)
     }
     object.insert("judges", judgesArray);
     QJsonObject simulationDataObject;
-    simulationDataObject.insert("takeoff-rating", jumpData.getSimulationData().getTakeoffRating());
-    simulationDataObject.insert("flight-rating", jumpData.getSimulationData().getFlightRating());
-    simulationDataObject.insert("judges-rating", jumpData.getSimulationData().getJudgesRating());
-    simulationDataObject.insert("dsq-probability", jumpData.getSimulationData().getDSQProbability());
-    simulationDataObject.insert("inrun-snow", jumpData.getSimulationData().getInrunSnow());
+    simulationDataObject.insert("takeoff-rating", jumpData.getSimulationDataReference().getTakeoffRating());
+    simulationDataObject.insert("flight-rating", jumpData.getSimulationDataReference().getFlightRating());
+    simulationDataObject.insert("judges-rating", jumpData.getSimulationDataReference().getJudgesRating());
+    simulationDataObject.insert("dsq-probability", jumpData.getSimulationDataReference().getDSQProbability());
+    simulationDataObject.insert("inrun-snow", jumpData.getSimulationDataReference().getInrunSnow());
     object.insert("simulation-data", simulationDataObject);
     QJsonArray windsArray;
     int i=0;

@@ -134,7 +134,7 @@ void CompetitionResults::sortJumpersByResults(QVector<Jumper *> &jumpers)
     jumpers = temp;
 }
 
-QHash<Jumper *, int> CompetitionResults::getResultsWithPositionsForClassificationArchiveResults(QHash<Jumper *, double> results)
+QHash<Jumper *, int> CompetitionResults::getResultsWithJumpersPositionsForClassificationArchiveResults(QHash<Jumper *, double> results)
 {
     QList<QPair<Jumper *, double>> list;
     for (auto it = results.begin(); it != results.end(); ++it)
@@ -186,6 +186,84 @@ QHash<Jumper *, int> CompetitionResults::getResultsWithPositionsForClassificatio
         ii++;
     }
     return toReturn;
+}
+
+QHash<QString, int> CompetitionResults::getResultsWithTeamsPositionsForClassificationArchiveResults(QHash<QString, double> results)
+{
+    QList<QPair<QString, double>> list;
+    for (auto it = results.begin(); it != results.end(); ++it)
+    {
+        list.append(qMakePair(it.key(), it.value()));
+    }
+
+    // Sortowanie listy według wartości za pomocą funkcji lambda
+    std::sort(list.begin(), list.end(), [] (const QPair<QString, double> &a, const QPair<QString, double> &b) {
+        return a.second > b.second;
+    });
+
+    QVector<int> positions;
+    double previousResultPoints = 0;
+    int actualPosition = 1;
+    int add = 1;
+    int i=0;
+    for(auto & pair : list)
+    {
+        int pos = 0;
+        if(i == 0)
+        {
+            positions.push_back(1);
+            previousResultPoints = pair.second;
+            i++;
+            continue;
+        }
+        if(previousResultPoints == pair.second)
+        {
+            pos = actualPosition;
+            add == 1;
+        }
+        else{
+            actualPosition += add;
+            add = 1;
+            pos = actualPosition;
+        }
+
+        previousResultPoints = pair.second;
+        i++;
+        positions.push_back(pos);
+    }
+
+    QHash<QString, int> toReturn;
+    int ii=0;
+    for(auto & pos : positions)
+    {
+        toReturn.insert(list[ii].first, pos);
+        ii++;
+    }
+    return toReturn;
+}
+
+QVector<QString> CompetitionResults::getTeamsCodesByIndividualResults(CompetitionResults *results)
+{
+    QVector<QString> codes;
+    for(auto & res : results->getResultsReference())
+    {
+        if(codes.contains(res.getJumper()->getCountryCode()) == false)
+            codes.push_back(res.getJumper()->getCountryCode());
+    }
+    return codes;
+}
+
+QVector<Jumper *> CompetitionResults::getJumpersByTeamResults(CompetitionResults *results)
+{
+    QVector<Jumper *> jumpers;
+    for(auto & res : results->getResultsReference())
+    {
+        for(auto & jumperResult : res.getTeamJumpersResultsReference()){
+            if(jumpers.contains(jumperResult.getJumper()) == false)
+                jumpers.push_back(jumperResult.getJumper());
+        }
+    }
+    return jumpers;
 }
 
 QVector<CompetitionSingleResult> CompetitionResults::getResults() const
@@ -243,7 +321,8 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
     }
     if(result == nullptr){
         results.push_back(CompetitionSingleResult(competition, jumper, CompetitionSingleResult::IndividualResult));
-        result = &results[results.count() - 1];
+        jump.setSingleResult(&results.last());
+        result = &results.last();
     }
     int index = jumpNumber;
     if(jumpNumber == -1 || jumpNumber >= result->getJumpsReference().count())
@@ -252,6 +331,7 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
         if(jumpNumber < 0)
             index = 0;
 
+        jump.setSingleResult(result);
         result->getJumpsReference().insert(index, jump);
     }
     result->updatePointsSum();
@@ -268,7 +348,8 @@ void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
     }
     if(result == nullptr){
         results.push_back(CompetitionSingleResult(competition, team, CompetitionSingleResult::TeamResult));
-        result = &results[results.count() - 1];
+        jump.setSingleResult(&results.last());
+        result = &results.last();
     }
     int index = jumpNumber;
     if(jumpNumber == -1 || jumpNumber >= result->getJumpsReference().count())
@@ -277,6 +358,7 @@ void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
         if(jumpNumber < 0)
             index = 0;
 
+        jump.setSingleResult(result);
         result->getJumpsReference().insert(index, jump);
     }
     result->updatePointsSum();
@@ -291,6 +373,7 @@ void CompetitionResults::addJump(CompetitionSingleResult *result, JumpData &jump
         if(jumpNumber < 0)
             index = 0;
 
+        jump.setSingleResult(result);
         result->getJumpsReference().insert(index, jump);
     }
     result->updatePointsSum();
