@@ -221,24 +221,22 @@ double Hill::calculatePointsForBackWindBy50PercentsOfFrontWind(double pointsForF
 
 double Hill::calculateBestTakeoffHeightLevel(Hill *hill)
 {
-    double level = 1.075;
-    if((hill->getTakeoffEffect() / (hill->getFlightEffect() / 1.00)) > 1)
-        level += (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.85));
+    if(hill->getTakeoffEffect() > hill->getFlightEffect())
+        return (hill->getTakeoffEffect() / hill->getFlightEffect()) / 1;
     else
-        level += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
+        return -(hill->getFlightEffect() / hill->getTakeoffEffect()) / 1;
 
-    return level;
+    return 0;
 }
 
 double Hill::calculateBestFlightHeightLevel(Hill *hill)
 {
-    double level = 0.7;
-    if((hill->getTakeoffEffect() / (hill->getFlightEffect() / 1.00)) > 1)
-        level += (hill->getTakeoffEffect() / (hill->getFlightEffect() / 0.85));
+    if(hill->getTakeoffEffect() > hill->getFlightEffect())
+        return (hill->getTakeoffEffect() / hill->getFlightEffect()) / 0.6;
     else
-        level += -(hill->getFlightEffect() / (hill->getTakeoffEffect() / 0.85));
+        return -(hill->getFlightEffect() / hill->getTakeoffEffect()) / 0.6;
 
-    return level;
+    return 0;
 }
 
 int Hill::getHillType()

@@ -1131,6 +1131,12 @@ background-color: rgb(255, 255, 240);
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
+               <property name="minimum">
+                <number>-1000</number>
+               </property>
+               <property name="maximum">
+                <number>1000</number>
+               </property>
               </widget>
              </item>
              <item>

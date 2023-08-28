@@ -106,27 +106,27 @@ QVector<Wind> WindsGenerator::generateWinds()
         if(level > 0)
             backProb *= level;
         else if(level < 0)
-            backProb /= level;
+            backProb /= -level;
         level = settings->getLevelOfCharacteristic("back-side-wind-probability");
         if(level > 0)
             backSideProb *= level;
         else if(level < 0)
-            backSideProb /= level;
+            backSideProb /= -level;
         level = settings->getLevelOfCharacteristic("side-wind-probability");
         if(level > 0)
             sideProb *= level;
         else if(level < 0)
-            sideProb /= level;
+            sideProb /= -level;
         level = settings->getLevelOfCharacteristic("front-side-wind-probability");
         if(level > 0)
             frontSideProb *= level;
         else if(level < 0)
-            frontSideProb /= level;
+            frontSideProb /= -level;
         level = settings->getLevelOfCharacteristic("front-wind-probability");
         if(level > 0)
             frontProb *= level;
         else if(level < 0)
-            frontProb /= level;
+            frontProb /= -level;
 
 
         if(settings->getWindDirectionInstability() == 0){

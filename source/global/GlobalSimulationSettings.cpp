@@ -18,6 +18,16 @@ GlobalSimulationSettings::GlobalSimulationSettings()
     simulationRandomMultiplier = 0;
 }
 
+bool GlobalSimulationSettings::getAutoAdjustHillEffects() const
+{
+    return autoAdjustHillEffects;
+}
+
+void GlobalSimulationSettings::setAutoAdjustHillEffects(bool newAutoAdjustHillEffects)
+{
+    autoAdjustHillEffects = newAutoAdjustHillEffects;
+}
+
 void GlobalSimulationSettings::setSimulationRandomMultiplier(double newSimulationRandomMultiplier)
 {
     simulationRandomMultiplier = newSimulationRandomMultiplier;
@@ -46,11 +56,6 @@ int GlobalSimulationSettings::getBaseDsqProbability() const
 void GlobalSimulationSettings::setBaseDsqProbability(int newBaseDsqProbability)
 {
     baseDsqProbability = newBaseDsqProbability;
-}
-
-void GlobalSimulationSettings::updateSimulationRandomMultiplier()
-{
-    simulationRandomMultiplier = double((double(maxSkills) * 1) / double(60));
 }
 
 GlobalSimulationSettings *GlobalSimulationSettings::get()
@@ -92,7 +97,8 @@ bool GlobalSimulationSettings::loadFromFile()
     }
     this->setMaxSkills(value.toObject().value("max-skills").toInt());
     this->setBaseDsqProbability(value.toObject().value("base-dsq-probability").toDouble());
-    updateSimulationRandomMultiplier();
+    this->setSimulationRandomMultiplier(value.toObject().value("simulation-random-multiplier").toDouble(1));
+    this->setAutoAdjustHillEffects(value.toObject().value("auto-adjust-hill-effects").toBool(false));
 
     return true;
 }
@@ -111,7 +117,9 @@ bool GlobalSimulationSettings::writeToFile()
     QJsonObject mainObject;
     QJsonObject settingsObject;
     settingsObject.insert("max-skills", getMaxSkills());
+    settingsObject.insert("simulation-random-multiplier", getSimulationRandomMultiplier());
     settingsObject.insert("base-dsq-probability", getBaseDsqProbability());
+    settingsObject.insert("auto-adjust-hill-effects", getAutoAdjustHillEffects());
     mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);
     file.resize(0);

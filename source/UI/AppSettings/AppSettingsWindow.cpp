@@ -26,6 +26,8 @@ AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
 
     ui->spinBox_skillsRange->setValue(GlobalSimulationSettings::get()->getMaxSkills());
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
+    ui->doubleSpinBox_randomMultiplier->setValue(GlobalSimulationSettings::get()->getSimulationRandomMultiplier());
+    ui->checkBox_autoAdjustHillEffects->setChecked(GlobalSimulationSettings::get()->getAutoAdjustHillEffects());
 }
 
 AppSettingsWindow::~AppSettingsWindow()
@@ -45,6 +47,10 @@ void AppSettingsWindow::setupLanguagesComboBox()
 void AppSettingsWindow::on_pushButton_defaultSettings_clicked()
 {
     ui->comboBox_language->setCurrentIndex(0);
+    ui->spinBox_dsqProbability->setValue(150);
+    ui->spinBox_skillsRange->setValue(100);
+    ui->doubleSpinBox_randomMultiplier->setValue(1);
+    ui->checkBox_autoAdjustHillEffects->setChecked(false);
 }
 
 MainWindow *AppSettingsWindow::getMainWindowParent() const
@@ -59,7 +65,6 @@ void AppSettingsWindow::setMainWindowParent(MainWindow *newMainWindowParent)
 
 void AppSettingsWindow::closeEvent(QCloseEvent *event)
 {
-    GlobalSimulationSettings::get()->updateSimulationRandomMultiplier();
     GlobalSimulationSettings::get()->writeToFile();
     event->accept();
 }
@@ -106,7 +111,7 @@ void AppSettingsWindow::on_pushButton_repairDatabase_clicked()
                       + db->getEditableCompetitionRules().count() + db->getEditableGlobalSimulationSaves().count() + 1);
     dialog.setMinimumDuration(0);
     dialog.setValue(0);
-    dialog.setWindowTitle(QObject::tr("Naprawia bazy danych"));
+    dialog.setWindowTitle(QObject::tr("Naprawa bazy danych"));
     //dialog.setLabelText(QString(QObject::tr("Postęp naprawy bazy danych: %1 z %2")).arg(QString::number(dialog.value())).arg(QString::number(dialog.maximum())));
     dialog.setModal(true);
     dialog.setWindowModality(Qt::WindowModal);
@@ -187,7 +192,7 @@ void AppSettingsWindow::on_pushButton_repairDatabase_2_clicked()
     dialog.setMaximum(db->getEditableGlobalSimulationSaves().count() * 11);
     dialog.setMinimumDuration(0);
     dialog.setValue(0);
-    dialog.setWindowTitle(QObject::tr("Naprawia zapisów symulacji "));
+    dialog.setWindowTitle(QObject::tr("Naprawa zapisów symulacji "));
     //dialog.setLabelText(QString(QObject::tr("Postęp naprawiania zapisów symulacji: %1 z %2")).arg(QString::number(dialog.value())).arg(QString::number(dialog.maximum())));
     dialog.setWindowModality(Qt::WindowModal);
 
@@ -214,5 +219,19 @@ void AppSettingsWindow::on_pushButton_repairDatabase_2_clicked()
         QCoreApplication::processEvents();
     }
     QMessageBox::information(this, tr("Naprawiono zapisy symulacji"), tr("Naprawiono zapisy symulacji. Aby zmiana weszła w życie wejdź jeszcze raz do programu aby ponownie wczytać zapisy symulacji."), QMessageBox::Ok);
+}
+
+
+void AppSettingsWindow::on_doubleSpinBox_randomMultiplier_valueChanged(double arg1)
+{
+    GlobalSimulationSettings::get()->setSimulationRandomMultiplier(arg1);
+}
+
+void AppSettingsWindow::on_checkBox_autoAdjustHillEffects_stateChanged(int arg1)
+{
+    if(arg1 == 0)
+         GlobalSimulationSettings::get()->setAutoAdjustHillEffects(false);
+    else if(arg1 == 2)
+        GlobalSimulationSettings::get()->setAutoAdjustHillEffects(true);
 }
 

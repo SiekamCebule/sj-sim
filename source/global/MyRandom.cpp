@@ -131,5 +131,11 @@ double MyRandom::normalDistributionRandom(double base, double deviation)
 double MyRandom::lognormalDistributionRandom(double base, double deviation)
 {
     std::lognormal_distribution<double> distribution(base, deviation);
-     return distribution(generator);
+    return distribution(generator);
+}
+
+double MyRandom::gammaDistributionRandom(double scale, double shape)
+{
+    std::gamma_distribution<double> distribution(scale, shape);
+    return distribution(generator);
 }

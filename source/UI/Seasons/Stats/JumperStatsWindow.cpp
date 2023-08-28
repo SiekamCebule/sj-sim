@@ -63,6 +63,12 @@ void JumperStatsWindow::fillWindow()
 void JumperStatsWindow::fillJumperApperancesChart()
 {
     jumperApperancesLineSeries->clear();
+    delete jumperApperancesLineSeries;
+    jumperApperancesChart->removeAllSeries();
+    jumperApperancesLineSeries = new QLineSeries(this);
+    jumperApperancesLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(jumperApperancesLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForJumperApperances);
+
     int bestPosition = 100000000;
     int worstPosition = 1;
     double averagePosition = 0;
@@ -85,13 +91,13 @@ void JumperStatsWindow::fillJumperApperancesChart()
     standardDev = roundDoubleToTwoPlaces(standardDev);
     averagePosition = roundDoubleToTwoPlaces(averagePosition);
 
-    jumperApperancesLineSeries->setMarkerSize(20);
     jumperApperancesChart->addSeries(jumperApperancesLineSeries);
     jumperApperancesChart->createDefaultAxes();
     jumperApperancesChart->axes(Qt::Vertical).first()->setReverse(true);
     jumperApperancesChart->axes(Qt::Vertical).first()->setRange(1, worstPosition);
     jumperApperancesChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
-    judgesPointsChart->zoomReset();
+    jumperApperancesChart->zoom(1);
+    jumperApperancesChart->setAnimationOptions(QChart::SeriesAnimations);
     jumperApperancesChartView->setChart(jumperApperancesChart);
     jumperApperancesChartView->setRenderHint(QPainter::Antialiasing);
 
@@ -104,6 +110,11 @@ void JumperStatsWindow::fillJumperApperancesChart()
 void JumperStatsWindow::fillJudgesPointsChart()
 {
     judgesPointsLineSeries->clear();
+    judgesPointsChart->removeAllSeries();
+    judgesPointsLineSeries = new QLineSeries(this);
+    judgesPointsLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(judgesPointsLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForJudges);
+
     QVector<double> judgesPoints;
     double worst = 60;
     int i = 1;
@@ -119,12 +130,13 @@ void JumperStatsWindow::fillJudgesPointsChart()
                     worst = jump.getJudgesPoints();
             }
         }
-    }
+    }  
     judgesPointsChart->addSeries(judgesPointsLineSeries);
     judgesPointsChart->createDefaultAxes();
-    judgesPointsChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
     judgesPointsChart->axes(Qt::Vertical).first()->setRange(worst, 60);
-    judgesPointsChart->zoomReset();
+    judgesPointsChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
+    judgesPointsChart->zoom(1);
+    judgesPointsChart->setAnimationOptions(QChart::SeriesAnimations);
     judgesPointsChartView->setChart(judgesPointsChart);
     judgesPointsChartView->setRenderHint(QPainter::Antialiasing);
 }
@@ -132,6 +144,11 @@ void JumperStatsWindow::fillJudgesPointsChart()
 void JumperStatsWindow::fillJumperFormChart()
 {
     jumperFormLineSeries->clear();
+    jumperFormChart->removeAllSeries();
+    jumperFormLineSeries = new QLineSeries(this);
+    jumperFormLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(jumperFormLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForForm);
+
     QVector<double> forms;
     double worst;
     int i = 1;
@@ -146,7 +163,8 @@ void JumperStatsWindow::fillJumperFormChart()
     jumperFormChart->addSeries(jumperFormLineSeries);
     jumperFormChart->createDefaultAxes();
     jumperFormChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
-    jumperFormChart->zoomReset();
+    jumperFormChart->zoom(1);
+    jumperFormChart->setAnimationOptions(QChart::SeriesAnimations);
     jumperFormChartView->setChart(jumperFormChart);
     jumperFormChartView->setRenderHint(QPainter::Antialiasing);
 }
@@ -154,6 +172,10 @@ void JumperStatsWindow::fillJumperFormChart()
 void JumperStatsWindow::fillTakeoffRatingChart()
 {
     takeoffRatingLineSeries->clear();
+    takeoffRatingChart->removeAllSeries();
+    takeoffRatingLineSeries = new QLineSeries(this);
+    takeoffRatingLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(jumperApperancesLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForTakeoffRating);
     QVector<double> ratings;
     int i = 1;
     for(auto & singleResult : singleResults)
@@ -171,7 +193,8 @@ void JumperStatsWindow::fillTakeoffRatingChart()
     takeoffRatingChart->addSeries(takeoffRatingLineSeries);
     takeoffRatingChart->createDefaultAxes();
     takeoffRatingChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
-    takeoffRatingChart->zoomReset();
+    takeoffRatingChart->zoom(1);
+    takeoffRatingChart->setAnimationOptions(QChart::SeriesAnimations);
     takeoffRatingChartView->setChart(takeoffRatingChart);
     takeoffRatingChartView->setRenderHint(QPainter::Antialiasing);
 }
@@ -179,6 +202,11 @@ void JumperStatsWindow::fillTakeoffRatingChart()
 void JumperStatsWindow::fillFlightRatingChart()
 {
     flightRatingLineSeries->clear();
+    flightRatingChart->removeAllSeries();
+    flightRatingLineSeries = new QLineSeries(this);
+    flightRatingLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
+    connect(flightRatingLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForFlightRating);
+
     QVector<double> ratings;
     int i = 1;
     for(auto & singleResult : singleResults)
@@ -196,7 +224,8 @@ void JumperStatsWindow::fillFlightRatingChart()
     flightRatingChart->addSeries(flightRatingLineSeries);
     flightRatingChart->createDefaultAxes();
     flightRatingChart->axes(Qt::Horizontal).first()->setLabelsVisible(false);
-    flightRatingChart->zoomReset();
+    flightRatingChart->zoom(1);
+    flightRatingChart->setAnimationOptions(QChart::SeriesAnimations);
     flightRatingChartView->setChart(flightRatingChart);
     flightRatingChartView->setRenderHint(QPainter::Antialiasing);
 }

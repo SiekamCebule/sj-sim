@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>422</width>
-    <height>415</height>
+    <width>430</width>
+    <height>417</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -673,7 +673,7 @@ border-radius: 3px;
             <bool>false</bool>
            </property>
            <property name="maximum">
-            <double>20.000000000000000</double>
+            <double>100.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -723,57 +723,6 @@ color: rgb(0, 0, 0);
          </property>
          <property name="indent">
           <number>-1</number>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_form">
-         <property name="minimumSize">
-          <size>
-           <width>225</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>225</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>13</pointsize>
-          </font>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::ClickFocus</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QWidget{
-	background-color: rgb(222, 221, 218);
-	color: rgb(60, 60, 60);
-	border: 2px solid rgb(65, 0, 0);
-	border-radius: 6px;
-}
-
-QDoubleSpinBox::up-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-		background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}
-QDoubleSpinBox::down-button{
-border: 1px solid rgb(33, 42, 0);
-border-radius: 3px;
-	background-color: rgb(129, 175, 117);
-	color: rgb(0, 59, 23);
-}</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="maximum">
-          <double>1000000.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -867,10 +816,10 @@ border-radius: 3px;
             <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
            </property>
            <property name="minimum">
-            <double>-5.000000000000000</double>
+            <double>-10.000000000000000</double>
            </property>
            <property name="maximum">
-            <double>5.000000000000000</double>
+            <double>10.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -895,6 +844,76 @@ border-radius: 3px;
            </property>
            <property name="margin">
             <number>2</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="7" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_form">
+           <property name="minimumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>225</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::ClickFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 6px;
+}
+
+QDoubleSpinBox::up-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+		background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}
+QDoubleSpinBox::down-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+	background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="maximum">
+            <double>1000000.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_11">
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(100, 100, 100);</string>
+           </property>
+           <property name="text">
+            <string>/ 100</string>
            </property>
           </widget>
          </item>

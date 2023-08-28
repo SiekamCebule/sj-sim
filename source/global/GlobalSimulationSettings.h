@@ -12,6 +12,7 @@ private:
 private:
     int maxSkills;
     double simulationRandomMultiplier;
+    bool autoAdjustHillEffects;
     int baseDsqProbability;
 
 public:
@@ -23,11 +24,12 @@ public:
 
     int getBaseDsqProbability() const;
     void setBaseDsqProbability(int newBaseDsqProbability);
-    void updateSimulationRandomMultiplier();
     int getMaxSkills() const;
     void setMaxSkills(int newMaxSkills);
     double getSimulationRandomMultiplier() const;
     void setSimulationRandomMultiplier(double newSimulationRandomMultiplier);
+    bool getAutoAdjustHillEffects() const;
+    void setAutoAdjustHillEffects(bool newAutoAdjustHillEffects);
 };
 
 #endif // GLOBALSIMULATIONSETTINGS_H

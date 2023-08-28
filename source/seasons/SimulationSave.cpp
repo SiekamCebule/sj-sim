@@ -120,7 +120,7 @@ bool SimulationSave::saveToFile(QString dir)
         return false;
     }
     file.resize(0);
-    file.write(document.toJson(QJsonDocument::Indented));
+    file.write(document.toJson(QJsonDocument::Compact));
     file.close();
     return true;
 }

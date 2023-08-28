@@ -40,6 +40,10 @@ private slots:
 
     void on_pushButton_repairDatabase_2_clicked();
 
+    void on_doubleSpinBox_randomMultiplier_valueChanged(double arg1);
+
+    void on_checkBox_autoAdjustHillEffects_stateChanged(int arg1);
+
 private:
     Ui::AppSettingsWindow *ui;
 

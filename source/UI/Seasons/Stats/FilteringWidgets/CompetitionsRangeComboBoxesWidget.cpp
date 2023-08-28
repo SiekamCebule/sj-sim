@@ -85,7 +85,7 @@ CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
         {
             if(index >= season.getCalendarReference().getCompetitionsReference().count())
             {
-                index -= season.getCalendarReference().getCompetitionsReference().count() - 1;
+                index -= season.getCalendarReference().getCompetitionsReference().count();
                 continue;
             }
             else
@@ -96,6 +96,9 @@ CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
         }
     }
     return nullptr;
+
+    //sezon1 ma 68
+    //index 67
 }
 
 QVector<Season> *CompetitionsRangeComboBoxesWidget::getSeasonsList() const
