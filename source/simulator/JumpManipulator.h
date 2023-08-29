@@ -13,7 +13,7 @@ public:
 
 private:
     QPair<double, double> distanceRange; //min, max
-    QPair<double, double> landingInstabilityRange;
+    QPair<double, double> landingRatingRange;
     QPair<double, double> inrunSnowRange;
     QPair<double, double> takeoffRatingRange;
     QPair<double, double> flightRatingRange;
@@ -22,7 +22,7 @@ private:
     bool averagedWindRangeEnabled;
 
     double distanceBonus;
-    double landingInstabilityBonus;
+    double landingRatingBonus;
     double inrunSnowBonus;
     double takeoffRatingBonus;
     double flightRatingBonus;
@@ -38,8 +38,6 @@ private:
 public:
     QPair<double, double> getDistanceRange() const;
     void setDistanceRange(const QPair<double, double> &newDistanceRange);
-    QPair<double, double> getLandingInstabilityRange() const;
-    void setLandingInstabilityRange(const QPair<double, double> &newLandingInstabilityRange);
     QPair<double, double> getTakeoffRatingRange() const;
     void setTakeoffRatingRange(const QPair<double, double> &newTakeoffRatingRange);
     QPair<double, double> getFlightRatingRange() const;
@@ -50,8 +48,6 @@ public:
     void setAveragedWindRange(const QPair<double, double> &newAveragedWindRange);
     double getDistanceBonus() const;
     void setDistanceBonus(double newDistanceBonus);
-    double getLandingInstabilityBonus() const;
-    void setLandingInstabilityBonus(double newLandingInstabilityBonus);
     double getTakeoffRatingBonus() const;
     void setTakeoffRatingBonus(double newTakeoffRatingBonus);
     double getFlightRatingBonus() const;
@@ -74,6 +70,10 @@ public:
     void setInrunSnowRange(const QPair<double, double> &newInrunSnowRange);
     double getInrunSnowBonus() const;
     void setInrunSnowBonus(double newInrunSnowBonus);
+    QPair<double, double> getLandingRatingRange() const;
+    void setLandingRatingRange(const QPair<double, double> &newLandingRatingRange);
+    double getLandingRatingBonus() const;
+    void setLandingRatingBonus(double newLandingRatingBonus);
 };
 
 #endif // JUMPMANIPULATOR_H

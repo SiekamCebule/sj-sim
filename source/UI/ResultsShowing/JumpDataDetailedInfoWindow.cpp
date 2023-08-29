@@ -54,7 +54,7 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
         ui->label_takeoffRating->setText(QString::number(jumpData->getSimulationDataReference().getTakeoffRating()));
         ui->label_flightRating->setText(QString::number(jumpData->getSimulationDataReference().getFlightRating()));
         ui->label_judgesRating->setText(QString::number(jumpData->getSimulationDataReference().getJudgesRating()));
-        ui->label_landingInstability->setText(QString::number(jumpData->getLanding().getImbalance()));
+        ui->label_landingInstability->setText(QString::number(jumpData->getLanding().getRating()));
 
         if(jumpData->getHasCoachGate()){
             ui->label_beats95HSPercents->show();

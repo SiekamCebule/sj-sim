@@ -2,11 +2,31 @@
 
 JumpManipulator::JumpManipulator()
 {
-    distanceRange = landingInstabilityRange = inrunSnowRange = takeoffRatingRange = flightRatingRange = judgesRatingRange = averagedWindRange = inrunSnowRange = QPair<double, double>(0, -1);
-    distanceBonus = landingInstabilityBonus = inrunSnowBonus = takeoffRatingBonus = flightRatingBonus = judgesRatingBonus = averagedWindBonus = 0;
+    distanceRange = landingRatingRange = inrunSnowRange = takeoffRatingRange = flightRatingRange = judgesRatingRange = averagedWindRange = inrunSnowRange = QPair<double, double>(0, -1);
+    distanceBonus = landingRatingBonus = inrunSnowBonus = takeoffRatingBonus = flightRatingBonus = judgesRatingBonus = averagedWindBonus = 0;
     averagedWindRangeEnabled = false;
     exactLandingType = exactDSQProbability = -1;
     exactJudges.fill(-1, 5);
+}
+
+double JumpManipulator::getLandingRatingBonus() const
+{
+    return landingRatingBonus;
+}
+
+void JumpManipulator::setLandingRatingBonus(double newLandingRatingBonus)
+{
+    landingRatingBonus = newLandingRatingBonus;
+}
+
+QPair<double, double> JumpManipulator::getLandingRatingRange() const
+{
+    return landingRatingRange;
+}
+
+void JumpManipulator::setLandingRatingRange(const QPair<double, double> &newLandingRatingRange)
+{
+    landingRatingRange = newLandingRatingRange;
 }
 
 double JumpManipulator::getInrunSnowBonus() const
@@ -119,16 +139,6 @@ void JumpManipulator::setTakeoffRatingBonus(double newTakeoffRatingBonus)
     takeoffRatingBonus = newTakeoffRatingBonus;
 }
 
-double JumpManipulator::getLandingInstabilityBonus() const
-{
-    return landingInstabilityBonus;
-}
-
-void JumpManipulator::setLandingInstabilityBonus(double newLandingInstabilityBonus)
-{
-    landingInstabilityBonus = newLandingInstabilityBonus;
-}
-
 double JumpManipulator::getDistanceBonus() const
 {
     return distanceBonus;
@@ -177,16 +187,6 @@ QPair<double, double> JumpManipulator::getTakeoffRatingRange() const
 void JumpManipulator::setTakeoffRatingRange(const QPair<double, double> &newTakeoffRatingRange)
 {
     takeoffRatingRange = newTakeoffRatingRange;
-}
-
-QPair<double, double> JumpManipulator::getLandingInstabilityRange() const
-{
-    return landingInstabilityRange;
-}
-
-void JumpManipulator::setLandingInstabilityRange(const QPair<double, double> &newLandingInstabilityRange)
-{
-    landingInstabilityRange = newLandingInstabilityRange;
 }
 
 QPair<double, double> JumpManipulator::getDistanceRange() const

@@ -672,6 +672,8 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
 
             if(type == CompetitionRules::Individual){
                 static_cast<IndividualCompetitionManager *>(qualificationsManager)->getRoundsJumpersReference().push_back(competitionJumpers);
+                qualsInfo.getRoundsKOGroupsReference().push_back(QVector<KOGroup>());
+                static_cast<IndividualCompetitionManager *>(qualificationsManager)->getRoundsKOGroupsReference().push_back(&qualsInfo.getRoundsKOGroupsReference().last());
                 //if(competitionRulesEditor->getRoundsFromInput().at(0).getKO() == true)
                   //  static_cast<IndividualCompetitionManager *>(qualificationsManager)->getRoundsKOGroupsReference().push_back(competitionGroups);
             }
@@ -703,6 +705,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
                 RoundInfo(0, false),
                 RoundInfo(qualificationsManager->getCompetitionRules()->getRounds().at(0).getCount(), qualificationsManager->getCompetitionRules()->getRounds().at(0).getSortStartList())
             };
+            qualsRounds.last().setKO(false);
             qualificationsManager->getCompetitionRules()->setRounds(qualsRounds);
 
             CompetitionManagerWindow * qualsWindow = new CompetitionManagerWindow(qualificationsManager, this);
@@ -738,6 +741,8 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         if(qualsInfo.getResultsReference().getResultsReference().count() > 0){
             if(type == CompetitionRules::Individual){
                 static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(static_cast<IndividualCompetitionManager *>(qualificationsManager)->getFilteredJumpersForNextRound());
+                info.getRoundsKOGroupsReference().push_back(QVector<KOGroup>());
+                static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&info.getRoundsKOGroupsReference().last());
             }
             else if(type == CompetitionRules::Team){
                 static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(static_cast<TeamCompetitionManager *>(qualificationsManager)->getFilteredTeamsForNextRound());

@@ -3,8 +3,18 @@
 #include <QObject>
 
 Landing::Landing(short type, double imbalance) : type(type),
-    imbalance(imbalance)
+    rating(rating)
 {}
+
+double Landing::getRating() const
+{
+    return rating;
+}
+
+void Landing::setRating(double newRating)
+{
+    rating = newRating;
+}
 
 QString Landing::getTextLandingType() const
 {
@@ -26,16 +36,6 @@ short Landing::getType() const
 void Landing::setType(short newType)
 {
     type = newType;
-}
-
-double Landing::getImbalance() const
-{
-    return imbalance;
-}
-
-void Landing::setImbalance(double newImbalance)
-{
-    imbalance = newImbalance;
 }
 
 QString Landing::getShortLandingTypeTextInfo(short type)

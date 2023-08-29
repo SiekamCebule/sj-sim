@@ -185,7 +185,7 @@ QJsonObject JumpData::getJsonObject(JumpData jumpData)
     object.insert("total-compensation", jumpData.getTotalCompensation());
     object.insert("judges-points", jumpData.getJudgesPoints());
     object.insert("landing-type", jumpData.getLanding().getType());
-    object.insert("landing-imbalance", jumpData.getLanding().getImbalance());
+    object.insert("landing-imbalance", jumpData.getLanding().getRating());
     object.insert("dsq", jumpData.getDSQ());
     object.insert("dns", jumpData.getDNS());
     object.insert("has-coach-gate", jumpData.getHasCoachGate());

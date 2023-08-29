@@ -105,10 +105,10 @@ void JumpSimulator::simulateJump()
     if(jumpData.getDistance() < 0) jumpData.distance = 0;
     generateLanding();
     generateJudges();
+    jumpData.setDistance(roundDoubleToHalf(jumpData.getDistance()));
 
     calculateCompensations();
     calculatePoints();
-    jumpData.setDistance(roundDoubleToHalf(jumpData.getDistance()));
 }
 
 void JumpSimulator::generateTakeoffRating()
@@ -205,7 +205,7 @@ void JumpSimulator::generateWindEffects()
     {
         if(wind.getDirection() == Wind::Back)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 8);
+            change = wind.getStrength() * (getWindSegmentDistance() / 9);
             change *= 1.00 - (((simulationData->getFlightRating() - 60) * multiplier) / 275);
             switch(jumperSkills->getFlightStyle())
             {
@@ -218,7 +218,7 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::BackSide)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 14.08);
+            change = wind.getStrength() * (getWindSegmentDistance() / 15.5);
             change *= 1.00 - (((simulationData->getFlightRating() - 60) * multiplier) / 440);
             switch(jumperSkills->getFlightStyle())
             {
@@ -231,7 +231,7 @@ void JumpSimulator::generateWindEffects()
         }
         else if(wind.getDirection() == Wind::Side)
         {
-            change = wind.getStrength() * (getWindSegmentDistance() / 29.65);
+            change = wind.getStrength() * (getWindSegmentDistance() / 31.85);
             change *= 1.00 - (((simulationData->getFlightRating() - 60) * multiplier) / 600);
             switch(jumperSkills->getFlightStyle())
             {
@@ -253,7 +253,7 @@ void JumpSimulator::generateWindEffects()
             case JumperSkills::WideVStyle: change *= 1.01; break;
             case JumperSkills::HStyle: change *= 1.04; break;
             }
-            change /= 1 - (jumperSkills->getLevelOfCharacteristic("flight-height") / 36);
+            change /= 1 - (jumperSkills->getLevelOfCharacteristic("flight-height") / 39);
         }
         else if(wind.getDirection() == Wind::Front)
         {
@@ -266,7 +266,7 @@ void JumpSimulator::generateWindEffects()
             case JumperSkills::WideVStyle: change *= 1.00; break;
             case JumperSkills::HStyle: change *= 1.05; break;
             }
-            change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 17);
+            change /= 1 + (jumperSkills->getLevelOfCharacteristic("flight-height") / 19.1);
         }
         if(i != getWinds().count()){
             qDebug()<<"distance: "<<jumpData.getDistance()<<",  (i + 1) * getWindSegmentDistance(): "<<(i + 1) * getWindSegmentDistance();
@@ -369,35 +369,38 @@ void JumpSimulator::generateLanding()
     if(manipulator->getExactLandingType() > (-1))
         jumpData.landing.setType(manipulator->getExactLandingType());
 
-    double landingImbalance = MyRandom::lognormalDistributionRandom((0.5 - (jumperSkills->getLandingStyle() / 20)), (0.585 + hill->getLandingImbalanceChangeByHillProfile(jumpData.distance) - jumperSkills->getLandingStyle() / 50));
+    double landingRating = MyRandom::lognormalDistributionRandom((0.2 - ((jumperSkills->getLandingStyle() - 10) / 12)), (0.5 + hill->getLandingImbalanceChangeByHillProfile(jumpData.distance)));
 
-    jumpData.landing.setImbalance(landingImbalance + manipulator->getLandingInstabilityBonus());
-    if(jumpData.landing.getImbalance() < manipulator->getLandingInstabilityRange().first)
-        jumpData.landing.setImbalance(manipulator->getLandingInstabilityRange().first);
-    else if(jumpData.landing.getImbalance() > manipulator->getLandingInstabilityRange().second && manipulator->getLandingInstabilityRange().second > (-1))
-        jumpData.landing.setImbalance(manipulator->getLandingInstabilityRange().second);
-
+    if(landingRating < 0)
+        landingRating = 0;
+    else if(landingRating > 5)
+        landingRating = 5;
+    jumpData.landing.setRating(landingRating + manipulator->getLandingRatingBonus());
+    if(jumpData.landing.getRating() < manipulator->getLandingRatingRange().first)
+        jumpData.landing.setRating(manipulator->getLandingRatingRange().first);
+    else if(jumpData.landing.getRating() > manipulator->getLandingRatingRange().second && manipulator->getLandingRatingRange().second > (-1))
+        jumpData.landing.setRating(manipulator->getLandingRatingRange().second);
 }
 
 void JumpSimulator::generateJudges()
 {
     if(competitionRules->getHasJudgesPoints() == true){
-        //double bothLegsLevel = jumperSkills->getLevelOfCharacteristic("both-legs-landing-tendence");
-        simulationData->judgesRating = 18.35;
-        simulationData->judgesRating -= jumpData.landing.getImbalance() / 1.8;
-        simulationData->judgesRating += ((jumpData.distance - hill->getKPoint()) / (hill->getKAndRealHSDifference())) / 1.135;
+        simulationData->judgesRating = 18.5;
+        simulationData->judgesRating -= jumpData.landing.getRating() / 1.7;
+        simulationData->judgesRating += ((jumpData.distance - hill->getKPoint()) / (hill->getKAndRealHSDifference())) / 1;
         switch(jumpData.landing.getType())
         {
         case Landing::TelemarkLanding:
+            simulationData->judgesRating -= MyRandom::randomDouble(-0.3, 0.3);
             break;
         case Landing::BothLegsLanding:
-            simulationData->judgesRating -= MyRandom::randomDouble(1.8, 2.1);
+            simulationData->judgesRating -= MyRandom::randomDouble(1.75, 2.3);
             break;
         case Landing::SupportLanding:
-            simulationData->judgesRating -= MyRandom::randomDouble(5, 5.6);
+            simulationData->judgesRating -= MyRandom::randomDouble(5.5, 6.6);
             break;
         case Landing::Fall:
-            simulationData->judgesRating -= MyRandom::randomDouble(7, 7.8);
+            simulationData->judgesRating -= MyRandom::randomDouble(7.5, 9);
             break;
         }
 
@@ -441,11 +444,10 @@ void JumpSimulator::generateJudges()
                 jg -= random;
             else if(randomType == 1)
                 jg += random;
-            else qDebug()<<"BŁĄD randomType przy lądowaniu ";
 
             jg = double(roundDoubleToHalf(jg));
             if(jg > 20) jg = 20;
-            else if(jg < 0.5) jg = 0.5;
+            else if(jg < 0) jg = 0;
         }
     }
     else{
@@ -668,8 +670,8 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
     {
     case JumpSimulator::TakeoffRating:
     {
-        double scale = 1.28 - (skills->getLevelOfCharacteristic("takeoff-height") / 22) - (skills->getJumpsEquality() / 8); //1.0
-        double shape = 2.48; //2.5
+        double scale = 1.32 - (skills->getLevelOfCharacteristic("takeoff-height") / 22) - (skills->getJumpsEquality() / 8); //1.0
+        double shape = 2.65; //2.5
         double mainRandom = MyRandom::gammaDistributionRandom(scale, shape);
         qDebug()<<"Takeoff Main Random: "<<mainRandom;
 
@@ -702,8 +704,8 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
     }
     case JumpSimulator::FlightRating:
     {
-        double scale = 1.4 - (skills->getLevelOfCharacteristic("flight-height") / 19.25) - (skills->getJumpsEquality() / 7.8); //1.0
-        double shape = 2.6; //2.5
+        double scale = 1.42 - (skills->getLevelOfCharacteristic("flight-height") / 19.25) - (skills->getJumpsEquality() / 7.8); //1.0
+        double shape = 2.775; //2.5
         double mainRandom = MyRandom::gammaDistributionRandom(scale, shape);
         qDebug()<<"Flight Main Random: "<<mainRandom;
 
@@ -746,147 +748,263 @@ double JumpSimulator::getLandingChance(short landingType, double distance, Hill 
     switch(landingType){
     case Landing::TelemarkLanding:
         if(distance < realHS * 0.96) //128.5 dla HS134
-            chance = 99.5;
+            chance = 99.8;
+        else if(distance < realHS * 0.965) //129 dla HS134
+            chance = 99.65;
         else if(distance < realHS * 0.97) //130 dla HS134
-            chance = 98.9;
+            chance = 99.1;
+        else if(distance < realHS * 0.975) //130.5 dla HS134
+            chance = 98.65;
         else if(distance < realHS * 0.98) //131.5 dla HS134
-            chance = 98.3;
+            chance = 98.35;
+        else if(distance < realHS * 0.985) //132 dla HS134
+            chance = 98.2;
         else if(distance < realHS * 0.99) //132.5 dla HS134
-            chance = 97.5;
+            chance = 97.6;
+        else if(distance < realHS * 0.995) //132.5 dla HS134
+            chance = 97.2;
         else if(distance < realHS * 1.00) //134 dla HS134
-            chance = 96;
+            chance = 96.15;
+        else if(distance < realHS * 1.005) //134 dla HS134
+            chance = 94.65;
         else if(distance < realHS * 1.01) //135.5 dla HS134
-            chance = 89.5;
+            chance = 91;
+        else if(distance < realHS * 1.015) //135.5 dla HS134
+            chance = 87;
         else if(distance < realHS * 1.02) //136.5 dla HS134
-            chance = 78;
+            chance = 81;
+        else if(distance < realHS * 1.025) //136.5 dla HS134
+            chance = 76;
         else if(distance < realHS * 1.03) //138 dla HS134
-            chance = 59;
+            chance = 70;
+        else if(distance < realHS * 1.035) //138 dla HS134
+            chance = 62.5;
         else if(distance < realHS * 1.04) //139.5 dla HS134
-            chance = 38;
+            chance = 52;
+        else if(distance < realHS * 1.045) //139.5 dla HS134
+            chance = 40;
         else if(distance < realHS * 1.05) //141 dla HS134
-            chance = 21.5;
+            chance = 25;
+        else if(distance < realHS * 1.055) //141 dla HS134
+            chance = 14;
         else if(distance < realHS * 1.06) //142 dla HS134
-            chance = 10;
+            chance = 8;
+        else if(distance < realHS * 1.065) //142 dla HS134
+            chance = 6;
         else if(distance < realHS * 1.07) //143.5 dla HS134
             chance = 3;
+        else if(distance < realHS * 1.075) //143.5 dla HS134
+            chance = 2;
         else if(distance < realHS * 1.08) //145 dla HS134
+            chance = 1;
+        else if(distance < realHS * 1.085) //145 dla HS134
             chance = 0.5;
         else if(distance < realHS * 1.09) //146 dla HS134
-            chance = 0.1;
+            chance = 0.25;
         else //147.5 i więcej dla HS134
             chance = 0.025;
         break;
     case Landing::BothLegsLanding:
         if(distance < realHS * 0.96) //128.5 dla HS134
-            chance = 0.35;
+            chance = 0.1;
+        else if(distance < realHS * 0.965) //129 dla HS134
+            chance = 0.16;
         else if(distance < realHS * 0.97) //130 dla HS134
-            chance = 0.75;
+            chance = 0.3;
+        else if(distance < realHS * 0.975) //130.5 dla HS134
+            chance = 0.5;
         else if(distance < realHS * 0.98) //131.5 dla HS134
-            chance = 1.5;
+            chance = 0.7;
+        else if(distance < realHS * 0.985) //132 dla HS134
+            chance = 1.1;
         else if(distance < realHS * 0.99) //132.5 dla HS134
-            chance = 3.8;
+            chance = 1.5;
+        else if(distance < realHS * 0.995) //132.5 dla HS134
+            chance = 2.1;
         else if(distance < realHS * 1.00) //134 dla HS134
-            chance = 8;
+            chance = 3;
+        else if(distance < realHS * 1.005) //134 dla HS134
+            chance = 5;
         else if(distance < realHS * 1.01) //135.5 dla HS134
-            chance = 16;
+            chance = 8;
+        else if(distance < realHS * 1.015) //135.5 dla HS134
+            chance = 12;
         else if(distance < realHS * 1.02) //136.5 dla HS134
-            chance = 30;
+            chance = 16;
+        else if(distance < realHS * 1.025) //136.5 dla HS134
+            chance = 21;
         else if(distance < realHS * 1.03) //138 dla HS134
-            chance = 65;
+            chance = 26.5;
+        else if(distance < realHS * 1.035) //138 dla HS134
+            chance = 34.5;
         else if(distance < realHS * 1.04) //139.5 dla HS134
-            chance = 90;
+            chance = 45;
+        else if(distance < realHS * 1.045) //139.5 dla HS134
+            chance = 57;
         else if(distance < realHS * 1.05) //141 dla HS134
-            chance = 130;
+            chance = 71;
+        else if(distance < realHS * 1.055) //141 dla HS134
+            chance = 85.5;
         else if(distance < realHS * 1.06) //142 dla HS134
-            chance = 200;
+            chance = 104;
+        else if(distance < realHS * 1.065) //142 dla HS134
+            chance = 130;
         else if(distance < realHS * 1.07) //143.5 dla HS134
-            chance = 250;
+            chance = 165;
+        else if(distance < realHS * 1.075) //143.5 dla HS134
+            chance = 190;
         else if(distance < realHS * 1.08) //145 dla HS134
-            chance = 300;
+            chance = 249;
+        else if(distance < realHS * 1.085) //145 dla HS134
+            chance = 295;
         else if(distance < realHS * 1.09) //146 dla HS134
             chance = 360;
         else //147.5 i więcej dla HS134
-            chance = 440;
+            chance = 500;
         break;
     case Landing::Fall:
         if(distance < realHS * 0.96) //128.5 dla HS134
-            chance = 0.02;
+            chance = 0.013;
+        else if(distance < realHS * 0.965) //129 dla HS134
+            chance = 0.019;
         else if(distance < realHS * 0.97) //130 dla HS134
-            chance = 0.035;
+            chance = 0.03;
+        else if(distance < realHS * 0.975) //130.5 dla HS134
+            chance = 0.04;
         else if(distance < realHS * 0.98) //131.5 dla HS134
-            chance = 0.069;
+            chance = 0.05;
+        else if(distance < realHS * 0.985) //132 dla HS134
+            chance = 0.065;
         else if(distance < realHS * 0.99) //132.5 dla HS134
+            chance = 0.085;
+        else if(distance < realHS * 0.995) //132.5 dla HS134
             chance = 0.11;
         else if(distance < realHS * 1.00) //134 dla HS134
-            chance = 0.15;
+            chance = 0.13;
+        else if(distance < realHS * 1.005) //134 dla HS134
+            chance = 0.16;
         else if(distance < realHS * 1.01) //135.5 dla HS134
-            chance = 0.25;
+            chance = 0.20;
+        else if(distance < realHS * 1.015) //135.5 dla HS134
+            chance = 0.3;
         else if(distance < realHS * 1.02) //136.5 dla HS134
-            chance = 0.9;
+            chance = 0.45;
+        else if(distance < realHS * 1.025) //136.5 dla HS134
+            chance = 0.68;
         else if(distance < realHS * 1.03) //138 dla HS134
-            chance = 3;
+            chance = 1.25;
+        else if(distance < realHS * 1.035) //138 dla HS134
+            chance = 2;
         else if(distance < realHS * 1.04) //139.5 dla HS134
-            chance = 7;
+            chance = 3.5;
+        else if(distance < realHS * 1.045) //139.5 dla HS134
+            chance = 5.65;
         else if(distance < realHS * 1.05) //141 dla HS134
-            chance = 17;
+            chance = 8.5;
+        else if(distance < realHS * 1.055) //141 dla HS134
+            chance = 15;
         else if(distance < realHS * 1.06) //142 dla HS134
-            chance = 36;
+            chance = 25;
+        else if(distance < realHS * 1.065) //142 dla HS134
+            chance = 48;
         else if(distance < realHS * 1.07) //143.5 dla HS134
-            chance = 90;
+            chance = 80;
+        else if(distance < realHS * 1.075) //143.5 dla HS134
+            chance = 140;
         else if(distance < realHS * 1.08) //145 dla HS134
-            chance = 270;
+            chance = 230;
+        else if(distance < realHS * 1.085) //145 dla HS134
+            chance = 360;
         else if(distance < realHS * 1.09) //146 dla HS134
-            chance = 500;
-        else if(distance < realHS * 1.10) //147.5 dla HS134
-            chance = 900;
-        else if(distance < realHS * 1.11) //148.5 dla HS134
-            chance = 1800;
-        else if(distance < realHS * 1.12) //150 dla HS134
-            chance = 3900;
-        else if(distance < realHS * 1.13) //151.5 dla HS134
+            chance = 490;
+        else if(distance < realHS * 1.095) //146 dla HS134
+            chance = 600;
+        else if(distance < realHS * 1.10) //146 dla HS134
+            chance = 850;
+        else if(distance < realHS * 1.105) //146 dla HS134
+            chance = 1200;
+        else if(distance < realHS * 1.11) //146 dla HS134
+            chance = 1730;
+        else if(distance < realHS * 1.12) //146 dla HS134
+            chance = 2300;
+        else if(distance < realHS * 1.125) //146 dla HS134
+            chance = 4500;
+        else if(distance < realHS * 1.13) //146 dla HS134
             chance = 8000;
-        else  //152.5 i więcej dla HS134
-            chance = 16500;
+        else //147.5 i więcej dla HS134
+            chance = 16000;
         break;
     case Landing::SupportLanding:
         if(distance < realHS * 0.96) //128.5 dla HS134
-            chance = 0.005;
+            chance = 0.003;
+        else if(distance < realHS * 0.965) //129 dla HS134
+            chance = 0.006;
         else if(distance < realHS * 0.97) //130 dla HS134
-            chance = 0.018;
+            chance = 0.01;
+        else if(distance < realHS * 0.975) //130.5 dla HS134
+            chance = 0.015;
         else if(distance < realHS * 0.98) //131.5 dla HS134
-            chance = 0.036;
+            chance = 0.0215;
+        else if(distance < realHS * 0.985) //132 dla HS134
+            chance = 0.035;
         else if(distance < realHS * 0.99) //132.5 dla HS134
-            chance = 0.09;
+            chance = 0.048;
+        else if(distance < realHS * 0.995) //132.5 dla HS134
+            chance = 0.08;
         else if(distance < realHS * 1.00) //134 dla HS134
-            chance = 0.3;
+            chance = 0.15;
+        else if(distance < realHS * 1.005) //134 dla HS134
+            chance = 0.185;
         else if(distance < realHS * 1.01) //135.5 dla HS134
-            chance = 0.8;
+            chance = 0.25;
+        else if(distance < realHS * 1.015) //135.5 dla HS134
+            chance = 0.35;
         else if(distance < realHS * 1.02) //136.5 dla HS134
-            chance = 2;
+            chance = 0.51;
+        else if(distance < realHS * 1.025) //136.5 dla HS134
+            chance = 0.8;
         else if(distance < realHS * 1.03) //138 dla HS134
-            chance = 4;
+            chance = 1.3;
+        else if(distance < realHS * 1.035) //138 dla HS134
+            chance = 2.8;
         else if(distance < realHS * 1.04) //139.5 dla HS134
-            chance = 7;
+            chance = 4.9;
+        else if(distance < realHS * 1.045) //139.5 dla HS134
+            chance = 6.7;
         else if(distance < realHS * 1.05) //141 dla HS134
-            chance = 15;
+            chance = 8.25;
+        else if(distance < realHS * 1.055) //141 dla HS134
+            chance = 12;
         else if(distance < realHS * 1.06) //142 dla HS134
-            chance = 32;
+            chance = 17;
+        else if(distance < realHS * 1.065) //142 dla HS134
+            chance = 25;
         else if(distance < realHS * 1.07) //143.5 dla HS134
-            chance = 60;
+            chance = 31.5;
+        else if(distance < realHS * 1.075) //143.5 dla HS134
+            chance = 40;
         else if(distance < realHS * 1.08) //145 dla HS134
-            chance = 70;
+            chance = 50;
+        else if(distance < realHS * 1.085) //145 dla HS134
+            chance = 60;
         else if(distance < realHS * 1.09) //146 dla HS134
-            chance = 82.5;
-        else if(distance < realHS * 1.10) //147.5 dla HS134
+            chance = 70;
+        /*else if(distance < realHS * 1.095) //146 dla HS134
+            chance = 600;
+        else if(distance < realHS * 1.10) //146 dla HS134
+            chance = 850;
+        else if(distance < realHS * 1.105) //146 dla HS134
+            chance = 1200;
+        else if(distance < realHS * 1.11) //146 dla HS134
+            chance = 1730;
+        else if(distance < realHS * 1.12) //146 dla HS134
+            chance = 2300;
+        else if(distance < realHS * 1.125) //146 dla HS134
+            chance = 4500;
+        else if(distance < realHS * 1.13) //146 dla HS134
+            chance = 8000;*/
+        else //147.5 i więcej dla HS134
             chance = 100;
-        else if(distance < realHS * 1.11) //148.5 dla HS134
-            chance = 110;
-        else if(distance < realHS * 1.12) //150 dla HS134
-            chance = 125;
-        else if(distance < realHS * 1.13) //151.5 dla HS134
-            chance = 148;
-        else  //152.5 i więcej dla HS134
-            chance = 175;
         break;
     }
 
@@ -897,16 +1015,10 @@ double JumpSimulator::getLandingChance(short landingType, double distance, Hill 
 
     //Umiejętność lądowania
     if(landingType == Landing::Fall){
-        chance /= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("landing-skill") / 7.5));
+        chance /= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("landing-skill") / 6.5));
     }
     else if(landingType == Landing::SupportLanding){
-        chance /= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("landing-skill") / 14));
-    }
-    else if(landingType == Landing::BothLegsLanding){
-        chance /= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("landing-skill") / 17));
-    }
-    else if(landingType == Landing::TelemarkLanding){
-        chance *= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("landing-skill") / 10));
+        chance /= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("landing-skill") / 9));
     }
 
     return chance;

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>591</width>
-    <height>505</height>
+    <height>511</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -775,7 +775,7 @@ border-radius: 3px;
           </font>
          </property>
          <property name="text">
-          <string>Zachwianie lądowania</string>
+          <string>Ocena lądowania</string>
          </property>
         </widget>
        </item>
