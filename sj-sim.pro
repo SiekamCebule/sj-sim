@@ -39,6 +39,8 @@ SOURCES += \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.cpp \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.cpp \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
+    source/UI/FormGenerator/JumperFormGeneratorsSettingsTableModel.cpp \
+    source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp \
     source/UI/JumpManipulation/JumpManipulatorConfigWindow.cpp \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp \
     source/UI/Competition/CompetitionConfigWindow.cpp \
@@ -88,6 +90,9 @@ SOURCES += \
     source/competitions/KOSystem/KOGroup.cpp \
     source/competitions/RoundInfo.cpp \
     source/competitions/StartListCompetitorStatus.cpp \
+    source/form-generator/JumperFormGenerator.cpp \
+    source/form-generator/JumperFormGeneratorSettings.cpp \
+    source/form-generator/JumperFormTendence.cpp \
     source/global/CountryFlagsManager.cpp \
     source/global/GlobalAppSettings.cpp \
     source/global/GlobalDatabase.cpp \
@@ -157,6 +162,8 @@ HEADERS += \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.h \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.h \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
+    source/UI/FormGenerator/JumperFormGeneratorsSettingsTableModel.h \
+    source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.h \
     source/UI/JumpManipulation/JumpManipulatorConfigWindow.h \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.h \
     source/UI/Competition/CompetitionConfigWindow.h \
@@ -207,6 +214,9 @@ HEADERS += \
     source/competitions/KOSystem/KOGroup.h \
     source/competitions/RoundInfo.h \
     source/competitions/StartListCompetitorStatus.h \
+    source/form-generator/JumperFormGenerator.h \
+    source/form-generator/JumperFormGeneratorSettings.h \
+    source/form-generator/JumperFormTendence.h \
     source/global/CountryFlagsManager.h \
     source/global/GlobalAppSettings.h \
     source/global/GlobalDatabase.h \
@@ -260,6 +270,7 @@ FORMS += \
     source/UI/EditorWidgets/TeamsEditing/TeamEditorWidget.ui \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui \
+    source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui \
     source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui \
     source/UI/Competition/CompetitionConfigWindow.ui \

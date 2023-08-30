@@ -3,16 +3,17 @@
 #include "../../global/GlobalAppSettings.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../../utilities/functions.h"
+#include "../../competitions/CompetitionManagers/IndividualCompetitionManager.h"
+#include "../../competitions/CompetitionManagers/TeamCompetitionManager.h"
 #include "../Competition/CompetitionConfigWindow.h"
 #include "../Competition/CompetitionManagerWindow.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
-#include "../../competitions/CompetitionManagers/IndividualCompetitionManager.h"
-#include "../../competitions/CompetitionManagers/TeamCompetitionManager.h"
 #include "../ResultsShowing/JumpDataDetailedInfoWindow.h"
 #include "../Competition/JumperCompetitionResultsWidget.h"
 #include "../Competition/Results/ResultsTableModel.h"
 #include "../Competition/Results/TeamResultsTreeModel.h"
+#include "../FormGenerator/JumpersFormGeneratorConfigWindow.h"
 #include "Stats/JumperStatsWindow.h"
 #include "Stats/ApperanceInClassificationWindow.h"
 #include "Stats/SimulationRatingsWindow.h"
@@ -739,3 +740,24 @@ void SimulationSaveManagerWindow::on_pushButton_clicked()
 
     }
 }
+
+void SimulationSaveManagerWindow::on_pushButton_formGenerator_clicked()
+{
+    JumpersFormGeneratorConfigWindow window(this);
+    window.getTableModel()->setGeneratorsSettings(JumperFormGeneratorSettings::constructJumperFormGeneratorsSettingsVector(simulationSave->getJumpersReference()));
+    window.updateTable();
+    window.on_doubleSpinBox_tendenceVariability_editingFinished();
+    window.on_doubleSpinBox_tendBonus_editingFinished();
+    window.on_doubleSpinBox_tendAlignment_editingFinished();
+    window.on_doubleSpinBox_minTend_editingFinished();
+    window.on_doubleSpinBox_maxTend_editingFinished();
+    window.on_doubleSpinBox_tendVariability_editingFinished();
+    window.on_doubleSpinBox_formBonus_editingFinished();
+    window.on_doubleSpinBox_minForm_editingFinished();
+    window.on_doubleSpinBox_maxForm_editingFinished();
+    if(window.exec() == QDialog::Accepted)
+    {
+
+    }
+}
+

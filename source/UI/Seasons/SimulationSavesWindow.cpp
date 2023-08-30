@@ -92,6 +92,7 @@ void SimulationSavesWindow::on_pushButton_OK_clicked()
 {
     if(ui->listView_simulationSaves->selectionModel()->selectedRows().count() > 0){
         SimulationSaveManagerWindow * manager = new SimulationSaveManagerWindow(GlobalDatabase::get()->getEditableGlobalSimulationSaves()[ui->listView_simulationSaves->selectionModel()->selectedRows().first().row()], this);
+        manager->getSimulationSave()->fixJumpersFormTendences();
         manager->getSimulationSave()->updateNextCompetitionIndex();
         if(manager->getSimulationSave()->getNextCompetition() == nullptr)
             manager->setupNextSeasonConfigButton();

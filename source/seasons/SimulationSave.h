@@ -9,6 +9,7 @@
 #include "Season.h"
 #include "../utilities/ClassWithID.h"
 #include "../global/SeasonDatabaseObjectsManager.h"
+#include "../form-generator/JumperFormTendence.h"
 
 class SimulationSave : public ClassWithID
 {
@@ -21,10 +22,10 @@ public:
 
     bool saveToFile(QString dir = "");
     bool loadFromFile(QString fileName, QString dir = "");
-
     void updateNextCompetitionIndex();
-
     void repairDatabase();
+    void fixJumpersFormTendences();
+    JumperFormTendence * getJumperTendence(Jumper * jumper);
 
 private:
     QString name;
@@ -33,6 +34,7 @@ private:
     QVector<Jumper *> jumpers;
     QVector<Hill *> hills;
     QVector<CompetitionRules> competitionRules;
+    QVector<JumperFormTendence> jumpersFormTendences;
 
     CompetitionInfo * nextCompetition;
     int nextCompetitionIndex;
@@ -57,6 +59,9 @@ public:
     void setNextCompetitionIndex(int newNextCompetitionIndex);
     CompetitionInfo *getNextCompetition() const;
     void setNextCompetition(CompetitionInfo *newNextCompetition);
+    QVector<JumperFormTendence> getJumpersFormTendences() const;
+    QVector<JumperFormTendence> & getJumpersFormTendencesReference();
+    void setJumpersFormTendences(const QVector<JumperFormTendence> &newJumpersFormTendences);
 };
 
 #endif // SIMULATIONSAVE_H
