@@ -175,7 +175,7 @@ void JumperStatsWindow::fillTakeoffRatingChart()
     takeoffRatingChart->removeAllSeries();
     takeoffRatingLineSeries = new QLineSeries(this);
     takeoffRatingLineSeries->setPen(QPen(QBrush(QColor(qRgb(77, 179, 230))), 3.5));
-    connect(jumperApperancesLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForTakeoffRating);
+    connect(takeoffRatingLineSeries, &QLineSeries::hovered, this, &JumperStatsWindow::updateChartCompetitionByJumpDataForTakeoffRating);
     QVector<double> ratings;
     int i = 1;
     for(auto & singleResult : singleResults)
@@ -228,6 +228,11 @@ void JumperStatsWindow::fillFlightRatingChart()
     flightRatingChart->setAnimationOptions(QChart::SeriesAnimations);
     flightRatingChartView->setChart(flightRatingChart);
     flightRatingChartView->setRenderHint(QPainter::Antialiasing);
+}
+
+QCheckBox *JumperStatsWindow::getShowFormCheckBox()
+{
+    return ui->checkBox;
 }
 
 void JumperStatsWindow::updateChartCompetitionBySingleResult(const QPointF &point, bool state, int type)

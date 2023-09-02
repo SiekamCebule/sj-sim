@@ -35,8 +35,6 @@ public:
     void setMinTendence(double newMinTendence);
     double getMaxTendence() const;
     void setMaxTendence(double newMaxTendence);
-    double getTendenceAlignmentMultiplier() const;
-    void setTendenceAlignmentMultiplier(double newTendenceAlignmentMultiplier);
     double getFormVariability() const;
     void setFormVariability(double newFormVariability);
     double getFormBonus() const;
@@ -47,6 +45,8 @@ public:
     void setMaxForm(double newMaxForm);
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
+    double getTendenceAlignmentMultiplier() const;
+    void setTendenceAlignmentMultiplier(double newTendenceAlignmentMultiplier);
 };
 
 #endif // JUMPERFORMGENERATORSETTINGS_H

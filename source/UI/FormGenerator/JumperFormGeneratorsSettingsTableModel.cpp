@@ -107,27 +107,27 @@ QVariant JumperFormGeneratorsSettingsTableModel::data(const QModelIndex &index, 
         if(index.column() == 5)
         {
             double multi = generatorsSettings[index.row()].getTendenceAlignmentMultiplier();
-            if(multi <= (-4))
+            if(multi <= (-8))
                 return QColor(qRgb(255, 194, 100));
-            else if(multi <= (-3))
+            else if(multi <= (-6))
                 return QColor(qRgb(235, 191, 61));
-            else if(multi <= (-2))
+            else if(multi <= (-4))
                 return QColor(qRgb(199, 168, 76));
-            else if(multi <= (-1))
+            else if(multi <= (-2))
                 return QColor(qRgb(179, 155, 84));
             else if(multi < (0))
                 return QColor(qRgb(143, 126, 77));
             else if(multi == 0)
                 return QColor(qRgb(64, 64, 64));
-            else if(multi <= (1))
-                return QColor(qRgb(68, 97, 55));
             else if(multi <= (2))
-                return QColor(qRgb(94, 140, 73));
-            else if(multi <= (3))
-                return QColor(qRgb(103, 181, 67));
+                return QColor(qRgb(68, 97, 55));
             else if(multi <= (4))
+                return QColor(qRgb(94, 140, 73));
+            else if(multi <= (6))
+                return QColor(qRgb(103, 181, 67));
+            else if(multi <= (8))
                 return QColor(qRgb(102, 204, 55));
-            else if(multi <= (5))
+            else if(multi <= (10))
                 return QColor(qRgb(90, 240, 22));
 
         }
@@ -205,7 +205,7 @@ bool JumperFormGeneratorsSettingsTableModel::setData(const QModelIndex &index, c
         switch(index.column())
         {
         case 1:
-            if(value.toDouble() < 0 || value.toDouble() > 10)
+            if(value.toDouble() < 0 || value.toDouble() > 20)
                 return false;
             generatorsSettings[index.row()].setTendenceVariability(value.toDouble());
             break;
@@ -225,12 +225,12 @@ bool JumperFormGeneratorsSettingsTableModel::setData(const QModelIndex &index, c
             generatorsSettings[index.row()].setMaxTendence(value.toDouble());
             break;
         case 5:
-            if(value.toDouble() < -5 || value.toDouble() > 5)
+            if(value.toDouble() < -10 || value.toDouble() > 10)
                 return false;
             generatorsSettings[index.row()].setTendenceAlignmentMultiplier(value.toDouble());
             break;
         case 6:
-            if(value.toDouble() < 0 || value.toDouble() > 10)
+            if(value.toDouble() < 0 || value.toDouble() > 20)
                 return false;
             generatorsSettings[index.row()].setFormVariability(value.toDouble());
             break;

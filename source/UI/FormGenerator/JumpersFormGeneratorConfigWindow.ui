@@ -111,7 +111,7 @@ color: rgb(26, 95, 180);
               </font>
              </property>
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Zmienność tendencji&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Ogólny parametr mówiący o tym, jak bardzo może się zmienić tendencja. Od 0 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Zmienność tendencji&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Ogólny parametr mówiący o tym, jak bardzo może się zmienić tendencja. Od 0 do 20 (chociaż teorytycznie od 0 do 10, a wartości powyżej 10 są zarezerwowane do ekstremalnych przypadków jak zmiana formy między długim okresem czasu, np. na nowy sezon).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(140, 73, 5);</string>
@@ -139,7 +139,7 @@ color: rgb(26, 95, 180);
               <double>0.000000000000000</double>
              </property>
              <property name="maximum">
-              <double>10.000000000000000</double>
+              <double>20.000000000000000</double>
              </property>
              <property name="singleStep">
               <double>1.000000000000000</double>
@@ -248,8 +248,14 @@ color: rgb(26, 95, 180);
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
+             <property name="minimum">
+              <double>-10.000000000000000</double>
+             </property>
              <property name="maximum">
               <double>10.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>-10.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -284,15 +290,18 @@ color: rgb(26, 95, 180);
               <set>Qt::AlignCenter</set>
              </property>
              <property name="minimum">
-              <double>-5.000000000000000</double>
+              <double>0.000000000000000</double>
              </property>
              <property name="maximum">
-              <double>5.000000000000000</double>
+              <double>10.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>1.000000000000000</double>
              </property>
             </widget>
            </item>
            <item row="5" column="1">
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_tendVariability">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_formVariability">
              <property name="font">
               <font>
                <family>Quicksand</family>
@@ -303,7 +312,7 @@ color: rgb(26, 95, 180);
               <set>Qt::AlignCenter</set>
              </property>
              <property name="maximum">
-              <double>10.000000000000000</double>
+              <double>20.000000000000000</double>
              </property>
              <property name="value">
               <double>5.000000000000000</double>
@@ -339,13 +348,13 @@ color: rgb(26, 95, 180);
               </font>
              </property>
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Wyrównanie tendencji&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Jeżeli wartość jest powyżej 1, wzrasta szansa na naturalne odwrócenie tendencji, tzn. w przeciwnym kierunku do aktualnej (Np. ze wzrostowej na spadkową).   Od -5 do 5.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Wyrównanie tendencji&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Jeżeli wartość jest powyżej 1, wzrasta szansa na naturalne odwrócenie tendencji, tzn. w przeciwnym kierunku do aktualnej (Np. ze wzrostowej na spadkową). Jeżeli jest poniżej 0, wzrasta szansa na umocnienie tendencji zawodnika (wzrostowa tendencja ma szansę być bardziej wzrostową). Od 0 do 10 (Dziesięć to bardzo dużo, więc należy używać tego parametru z rozwagą)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(140, 73, 5);</string>
              </property>
              <property name="text">
-              <string>Wyrównanie tendencji</string>
+              <string>Wyrównanie tendencji (mnożnik)</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -385,7 +394,7 @@ color: rgb(26, 95, 180);
               </font>
              </property>
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Zmienność formy&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Ogólny parametr mówiący o tym, jak bardzo może się zmienić forma na podstawie aktualnej tendencji. Od 0 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Zmienność formy&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Ogólny parametr mówiący o tym, jak bardzo może się zmienić forma na podstawie aktualnej tendencji. Od 0 do 20 (teorytycznie od 0 do 10, ale wartości powyżej 10 są zarezerwowane do ekstrmalnych przypadków takich jak zmiana formy po długim okresie czasu).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(48, 5, 112);</string>
@@ -670,10 +679,18 @@ background-color: rgb(172, 219, 157);
       <font>
        <family>Quicksand Medium</family>
        <pointsize>25</pointsize>
+       <bold>false</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(184, 255, 228);</string>
+      <string notr="true">QPushButton{
+background-color: rgb(166, 131, 164);
+border: 3px solid rgb(61, 23, 58);
+border-radius: 10px;
+}
+QPushButton:hover{
+background-color: rgb(186, 151, 184);
+}</string>
      </property>
      <property name="text">
       <string>Wygeneruj formę zawodników</string>
@@ -693,7 +710,7 @@ background-color: rgb(172, 219, 157);
   <tabstop>doubleSpinBox_tendAlignment</tabstop>
   <tabstop>doubleSpinBox_maxTend</tabstop>
   <tabstop>tableView</tabstop>
-  <tabstop>doubleSpinBox_tendVariability</tabstop>
+  <tabstop>doubleSpinBox_formVariability</tabstop>
   <tabstop>doubleSpinBox_formBonus</tabstop>
   <tabstop>doubleSpinBox_minForm</tabstop>
   <tabstop>doubleSpinBox_maxForm</tabstop>

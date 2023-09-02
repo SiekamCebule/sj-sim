@@ -6,6 +6,7 @@
 #include "../competitions/CompetitionRules.h"
 #include "../seasons/SimulationSave.h"
 #include "../seasons/SeasonCalendarPreset.h"
+#include "../form-generator/JumperFormGeneratorSettingsPreset.h"
 #include "PointsForPlacesPreset.h"
 
 #include <QVector>
@@ -24,6 +25,7 @@ private:
     QVector<SimulationSave *> globalSimulationSaves;
     QVector<PointsForPlacesPreset> globalPointsForPlacesPresets;
     QVector<SeasonCalendarPreset> globalCalendarPresets;
+    QVector<JumperFormGeneratorSettingsPreset> formGeneratorPresets;
 
     bool loadedSimulationSaves;
 
@@ -42,6 +44,7 @@ public:
     bool loadSimulationSaves(bool progressDialog = false);
     bool loadPointsForPlacesPresets();
     bool loadCalendarPresets();
+    bool loadFormGeneratorPresets();
 
     bool writeJumpers();
     bool writeHills();
@@ -49,6 +52,7 @@ public:
     bool writeSimulationSaves();
     bool writePointsForPlacesPresets();
     bool writeCalendarPresets();
+    bool writeFormGeneratorPresets();
 
     void setupJumpersFlags();
     void setupHillsFlags();
@@ -73,6 +77,9 @@ public:
     void setGlobalCalendarPresets(const QVector<SeasonCalendarPreset> &newGlobalCalendarPresets);
     bool getLoadedSimulationSaves() const;
     void setLoadedSimulationSaves(bool newLoadedSimulationSaves);
+    QVector<JumperFormGeneratorSettingsPreset> getFormGeneratorPresets() const;
+    QVector<JumperFormGeneratorSettingsPreset> & getEditableFormGeneratorPresets();
+    void setFormGeneratorPresets(const QVector<JumperFormGeneratorSettingsPreset> &newFormGeneratorPresets);
 };
 
 #endif // GLOBALDATABASE_H

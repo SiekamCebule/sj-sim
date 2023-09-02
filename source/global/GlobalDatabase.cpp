@@ -37,6 +37,21 @@ GlobalDatabase::~GlobalDatabase()
     delete m_globalDatabase;
 }
 
+QVector<JumperFormGeneratorSettingsPreset> GlobalDatabase::getFormGeneratorPresets() const
+{
+    return formGeneratorPresets;
+}
+
+QVector<JumperFormGeneratorSettingsPreset> &GlobalDatabase::getEditableFormGeneratorPresets()
+{
+    return formGeneratorPresets;
+}
+
+void GlobalDatabase::setFormGeneratorPresets(const QVector<JumperFormGeneratorSettingsPreset> &newFormGeneratorPresets)
+{
+    formGeneratorPresets = newFormGeneratorPresets;
+}
+
 bool GlobalDatabase::getLoadedSimulationSaves() const
 {
     return loadedSimulationSaves;
@@ -152,12 +167,12 @@ void GlobalDatabase::removeJumper(int index)
 bool GlobalDatabase::loadFromJson()
 {
     globalObjectsManager.clear();
-    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadPointsForPlacesPresets() && loadCalendarPresets());
+    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadPointsForPlacesPresets() && loadCalendarPresets() && loadFormGeneratorPresets());
 }
 
 bool GlobalDatabase::writeToJson()
 {
-    return (writeJumpers() && writeHills() && writeCompetitionsRules() && writeSimulationSaves() && writePointsForPlacesPresets() && writeCalendarPresets());
+    return (writeJumpers() && writeHills() && writeCompetitionsRules() && writeSimulationSaves() && writePointsForPlacesPresets() && writeCalendarPresets() && writeFormGeneratorPresets());
 }
 
 bool GlobalDatabase::loadJumpers()
@@ -310,6 +325,36 @@ bool GlobalDatabase::loadCalendarPresets()
     return ok;
 }
 
+bool GlobalDatabase::loadFormGeneratorPresets()
+{
+    QDir dir(QCoreApplication::applicationDirPath());
+    if(dir.exists("userData") == false && QSysInfo::productType() == "windows")
+        dir.cdUp();
+    dir.setPath(dir.path() + "/userData/GlobalDatabase/formGeneratorPresets");
+    dir.setNameFilters(QStringList() << "*.json");
+
+    QStringList fileNames = dir.entryList();
+
+    bool ok = true;
+    for(auto & fileName : fileNames){
+        globalObjectsManager.clear();
+        QFile file("userData/GlobalDatabase/formGeneratorPresets/" + fileName);
+        if(!file.open(QFile::ReadOnly | QFile::Text))
+        {
+            QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z presetem generatora formy", "Nie udało się otworzyć pliku userData/GlobalDatabase/formGeneratorPresets/" + fileName +"\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+            message.setModal(true);
+            message.exec();
+            ok = false;
+        }
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        QJsonObject object = doc.object().value("jumper-form-generator-settings-preset").toObject();
+        JumperFormGeneratorSettingsPreset p = JumperFormGeneratorSettingsPreset::getFromJson(object, &globalObjectsManager);
+        formGeneratorPresets.push_back(p);
+        file.close();
+    }
+    return ok;
+}
+
 bool GlobalDatabase::writeJumpers()
 {
     QJsonDocument document;
@@ -437,7 +482,17 @@ bool GlobalDatabase::writeCalendarPresets()
             ok = false;
     }
     return ok;
+}
 
+bool GlobalDatabase::writeFormGeneratorPresets()
+{
+    bool ok = true;
+    for(auto & preset : formGeneratorPresets)
+    {
+        if(preset.saveToFile("userData/GlobalDatabase/formGeneratorPresets/") == false)
+            ok = false;
+    }
+    return ok;
 }
 
 void GlobalDatabase::setupJumpersFlags()

@@ -43,7 +43,7 @@ int MyRandom::randomInt(int min, int max)
     QVector<int> results;
     for(int i=0; i<1000; i++)
     {
-        int result = QRandomGenerator::global()->bounded(min, max);
+        int result = QRandomGenerator::global()->bounded(min, max + 1);
         results.push_back(result);
     }
     return results[QRandomGenerator::global()->bounded(0, results.size() - 1)];
@@ -138,4 +138,25 @@ double MyRandom::gammaDistributionRandom(double scale, double shape)
 {
     std::gamma_distribution<double> distribution(scale, shape);
     return distribution(generator);
+}
+
+double MyRandom::normalDistributionRandomHalf(double base, double deviation, short half)
+{
+    while(true)
+    {
+        double random = normalDistributionRandom(base, deviation);
+        if(half == Positive)
+        {
+            if(random >= 0)
+                return random;
+        }
+        else if(half == Negative)
+        {
+            if(random < 0)
+                return random;
+        }
+        else
+            continue;
+    }
+    return 1000;
 }

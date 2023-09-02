@@ -78,6 +78,8 @@ private slots:
     void on_pushButton_jumperStats_clicked();
     void on_pushButton_clicked();
     void on_pushButton_formGenerator_clicked();
+    void on_checkBox_showForm_stateChanged(int arg1);
+    void on_checkBox_compactSaveFile_stateChanged(int arg1);
 };
 
 #endif // SIMULATIONSAVEMANAGERWINDOW_H

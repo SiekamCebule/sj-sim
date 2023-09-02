@@ -21,6 +21,7 @@ public:
     void setSettings(const JumperFormGeneratorSettings &newSettings);
     JumperFormTendence *getTendence() const;
     void setTendence(JumperFormTendence *newTendence);
+    Jumper *getJumper() const;
 };
 
 #endif // JUMPERFORMGENERATOR_H

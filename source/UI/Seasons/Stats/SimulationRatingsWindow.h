@@ -2,6 +2,7 @@
 #define SIMULATIONRATINGSWINDOW_H
 
 #include <QDialog>
+#include <QCheckBox>
 #include "FilteringWidgets/ClassificationsCheckBoxesWidget.h"
 #include "FilteringWidgets/CompetitionsRangeComboBoxesWidget.h"
 #include "FilteringWidgets/SerieTypesComboBoxesWidget.h"
@@ -24,6 +25,8 @@ public:
 
     void fillWindow();
     void setupConnections();
+
+    QCheckBox * getShowFormCheckBox();
 
 private:
     Ui::SimulationRatingsWindow *ui;

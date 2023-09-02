@@ -84,6 +84,13 @@ void JumperEditorWidget::removeSubmitButton()
     delete ui->pushButton_submit;
 }
 
+void JumperEditorWidget::setShowForm(bool ok)
+{
+    ui->doubleSpinBox_form->setHidden(!ok);
+    ui->label_form->setHidden(!ok);
+    ui->label_formRange->setHidden(!ok);
+}
+
 Jumper *JumperEditorWidget::getJumper() const
 {
     return jumper;

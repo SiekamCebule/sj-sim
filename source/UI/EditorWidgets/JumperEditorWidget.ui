@@ -695,7 +695,7 @@ border-radius: 3px;
         </layout>
        </item>
        <item row="7" column="0">
-        <widget class="QLabel" name="label_9">
+        <widget class="QLabel" name="label_form">
          <property name="font">
           <font>
            <family>Quicksand Medium</family>
@@ -903,7 +903,7 @@ border-radius: 3px;
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_11">
+          <widget class="QLabel" name="label_formRange">
            <property name="font">
             <font>
              <pointsize>12</pointsize>

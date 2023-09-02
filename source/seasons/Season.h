@@ -8,7 +8,6 @@
 #include <QJsonValue>
 #include "SeasonCalendar.h"
 #include "Classification.h"
-#include "SeasonSettings.h"
 #include "../global/SeasonDatabaseObjectsManager.h"
 
 extern SeasonDatabaseObjectsManager seasonObjectsManager;
@@ -23,16 +22,12 @@ public:
 
 private:
     SeasonCalendar calendar;
-    SeasonSettings settings;
     int seasonNumber;
 
 public:
     SeasonCalendar getCalendar() const;
     SeasonCalendar & getCalendarReference();
     void setCalendar(const SeasonCalendar &newCalendar);
-    SeasonSettings getSettings() const;
-    SeasonSettings & getSettingsReference();
-    void setSettings(const SeasonSettings &newSettings);
     int getSeasonNumber() const;
     void setSeasonNumber(int newSeasonNumber);
 };

@@ -497,6 +497,11 @@ void SimulationRatingsWindow::setupConnections()
     connect(hillTypesCheckBoxes, &HillTypesCheckBoxesWidget::changed, this, &SimulationRatingsWindow::fillWindow);
 }
 
+QCheckBox *SimulationRatingsWindow::getShowFormCheckBox()
+{
+    return ui->checkBox_showHidden;
+}
+
 HillTypesCheckBoxesWidget *SimulationRatingsWindow::getHillTypesCheckBoxes() const
 {
     return hillTypesCheckBoxes;

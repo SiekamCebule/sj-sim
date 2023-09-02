@@ -92,6 +92,7 @@ SOURCES += \
     source/competitions/StartListCompetitorStatus.cpp \
     source/form-generator/JumperFormGenerator.cpp \
     source/form-generator/JumperFormGeneratorSettings.cpp \
+    source/form-generator/JumperFormGeneratorSettingsPreset.cpp \
     source/form-generator/JumperFormTendence.cpp \
     source/global/CountryFlagsManager.cpp \
     source/global/GlobalAppSettings.cpp \
@@ -107,7 +108,6 @@ SOURCES += \
     source/seasons/Season.cpp \
     source/seasons/SeasonCalendar.cpp \
     source/seasons/SeasonCalendarPreset.cpp \
-    source/seasons/SeasonSettings.cpp \
     source/seasons/SimulationSave.cpp \
     source/seasons/Classification.cpp \
     source/simulator/Characteristic.cpp \
@@ -216,6 +216,7 @@ HEADERS += \
     source/competitions/StartListCompetitorStatus.h \
     source/form-generator/JumperFormGenerator.h \
     source/form-generator/JumperFormGeneratorSettings.h \
+    source/form-generator/JumperFormGeneratorSettingsPreset.h \
     source/form-generator/JumperFormTendence.h \
     source/global/CountryFlagsManager.h \
     source/global/GlobalAppSettings.h \
@@ -229,7 +230,6 @@ HEADERS += \
     source/seasons/Season.h \
     source/seasons/SeasonCalendar.h \
     source/seasons/SeasonCalendarPreset.h \
-    source/seasons/SeasonSettings.h \
     source/seasons/SimulationSave.h \
     source/seasons/Classification.h \
     source/simulator/Characteristic.h \

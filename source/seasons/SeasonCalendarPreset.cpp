@@ -112,7 +112,7 @@ QVector<SeasonCalendarPreset> SeasonCalendarPreset::getVectorFromJson(QByteArray
     QJsonDocument document = QJsonDocument::fromJson(json, &error);
     if(error.error != QJsonParseError::NoError)
     {
-        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu presetów kalendarzy za miejsca", "Nie udało się wczytać presetów z pliku userData/GlobalDatabase/globalCalendarPresets.json\nTreść błędu: " + error.errorString(),  QMessageBox::StandardButton::Ok);
+        QMessageBox message(QMessageBox::Icon::Critical, "Błąd przy wczytytywaniu presetów kalendarzy", "Treść błędu: " + error.errorString(),  QMessageBox::StandardButton::Ok);
         message.setModal(true);
         message.exec();
         return presets;
@@ -143,7 +143,7 @@ bool SeasonCalendarPreset::saveToFile(QString dir)
     QFile file(dir + getName() + ".json");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zapisem symulacji " + getName(), "Nie udało się otworzyć pliku " + dir + getName() + ".json" + "\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z presetem kalendarza " + getName(), "Nie udało się otworzyć pliku " + dir + getName() + ".json" + "\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
         message.setModal(true);
         message.exec();
         return false;

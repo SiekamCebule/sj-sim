@@ -39,6 +39,10 @@ private:
     CompetitionInfo * nextCompetition;
     int nextCompetitionIndex;
 
+    //SETTINGS
+    bool showForm;
+    bool saveFileSizeReduce;
+
 public:
     QString getName() const;
     void setName(const QString &newName);
@@ -62,6 +66,10 @@ public:
     QVector<JumperFormTendence> getJumpersFormTendences() const;
     QVector<JumperFormTendence> & getJumpersFormTendencesReference();
     void setJumpersFormTendences(const QVector<JumperFormTendence> &newJumpersFormTendences);
+    bool getShowForm() const;
+    void setShowForm(bool newShowForm);
+    bool getSaveFileSizeReduce() const;
+    void setSaveFileSizeReduce(bool newSaveFileSizeReduce);
 };
 
 #endif // SIMULATIONSAVE_H

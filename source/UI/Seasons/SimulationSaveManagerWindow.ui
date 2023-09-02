@@ -221,7 +221,7 @@ background-color: rgb(249, 255, 241);
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="10,0,0">
+      <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="0,0,0">
        <item>
         <widget class="QToolBox" name="toolBox">
          <property name="sizePolicy">
@@ -237,15 +237,15 @@ background-color: rgb(249, 255, 241);
           </font>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>6</number>
          </property>
          <widget class="QWidget" name="page_jumpers">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>675</height>
+            <width>671</width>
+            <height>642</height>
            </rect>
           </property>
           <attribute name="label">
@@ -319,8 +319,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>675</height>
+            <width>671</width>
+            <height>642</height>
            </rect>
           </property>
           <attribute name="label">
@@ -357,8 +357,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>675</height>
+            <width>671</width>
+            <height>642</height>
            </rect>
           </property>
           <attribute name="label">
@@ -395,8 +395,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>675</height>
+            <width>671</width>
+            <height>642</height>
            </rect>
           </property>
           <attribute name="label">
@@ -413,8 +413,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>675</height>
+            <width>671</width>
+            <height>642</height>
            </rect>
           </property>
           <attribute name="label">
@@ -451,8 +451,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>675</height>
+            <width>671</width>
+            <height>642</height>
            </rect>
           </property>
           <attribute name="label">
@@ -502,8 +502,8 @@ background-color: rgb(255, 223, 189);
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>827</width>
-                <height>567</height>
+                <width>653</width>
+                <height>534</height>
                </rect>
               </property>
               <attribute name="label">
@@ -523,6 +523,50 @@ background-color: rgb(255, 223, 189);
               </layout>
              </widget>
             </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_saveSettings">
+          <attribute name="label">
+           <string>Ustawienia zapisu symulacji</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_15">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_14">
+             <item>
+              <widget class="QCheckBox" name="checkBox_showForm">
+               <property name="text">
+                <string>Pokaż formę zawodników</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_compactSaveFile">
+               <property name="text">
+                <string>Zmniejsz rozmiar zapisu kosztem czytelności pliku</string>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>563</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>

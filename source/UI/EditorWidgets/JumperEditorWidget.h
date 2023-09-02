@@ -20,6 +20,7 @@ public:
     void resetJumperInputs();
     void fillJumperInputs();
     void removeSubmitButton();
+    void setShowForm(bool ok);
 
     Jumper getJumperFromWidgetInput() const;
 

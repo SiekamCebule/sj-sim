@@ -6,6 +6,7 @@
 #include <QLineSeries>
 #include <QChartView>
 #include <QLabel>
+#include <QCheckBox>
 #include <QSpacerItem>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -42,6 +43,8 @@ public:
     void fillJumperFormChart();
     void fillTakeoffRatingChart();
     void fillFlightRatingChart();
+
+    QCheckBox * getShowFormCheckBox();
 
 private slots:
     void updateChartCompetitionBySingleResult(const QPointF & point, bool state, int type);

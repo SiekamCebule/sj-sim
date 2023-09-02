@@ -12,7 +12,6 @@ QJsonObject Season::getJsonObject(Season &season)
     obj.insert("id", QString::number(season.getID()));
     obj.insert("season-number", season.getSeasonNumber());
     obj.insert("calendar", SeasonCalendar::getJsonObject(season.getCalendarReference()));
-    obj.insert("settings", SeasonSettings::getJsonObject(season.getSettingsReference()));
 
     return obj;
 }
@@ -23,7 +22,6 @@ Season Season::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objec
     season.setID(obj.value("id").toString().toULong());
     season.setSeasonNumber(obj.value("season-number").toInt());
     season.setCalendar(SeasonCalendar::getFromJson(obj.value("calendar").toObject(), objectsManager));
-    season.setSettings(SeasonSettings::getFromJson(obj.value("settings").toObject()));
 
     return season;
 }
@@ -39,21 +37,6 @@ int Season::getSeasonNumber() const
 void Season::setSeasonNumber(int newSeasonNumber)
 {
     seasonNumber = newSeasonNumber;
-}
-
-SeasonSettings Season::getSettings() const
-{
-    return settings;
-}
-
-SeasonSettings &Season::getSettingsReference()
-{
-    return settings;
-}
-
-void Season::setSettings(const SeasonSettings &newSettings)
-{
-    settings = newSettings;
 }
 
 SeasonCalendar Season::getCalendar() const

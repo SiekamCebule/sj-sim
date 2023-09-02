@@ -7,9 +7,12 @@ JumperFormGeneratorSettings::JumperFormGeneratorSettings()
 
 void JumperFormGeneratorSettings::reset()
 {
-    tendenceVariability = tendenceBonus = minTendence = tendenceAlignmentMultiplier = formVariability = formBonus = minForm = 0;
+    tendenceVariability = tendenceBonus = tendenceAlignmentMultiplier = formVariability = formBonus = 0;
+    minTendence = -10;
+    minForm = 0;
     maxTendence = 10;
     maxForm = 100;
+    jumper = nullptr;
 }
 
 QVector<JumperFormGeneratorSettings> JumperFormGeneratorSettings::constructJumperFormGeneratorsSettingsVector(QVector<Jumper *> &jumpers)
@@ -22,6 +25,16 @@ QVector<JumperFormGeneratorSettings> JumperFormGeneratorSettings::constructJumpe
         toReturn.push_back(settings);
     }
     return toReturn;
+}
+
+double JumperFormGeneratorSettings::getTendenceAlignmentMultiplier() const
+{
+    return tendenceAlignmentMultiplier;
+}
+
+void JumperFormGeneratorSettings::setTendenceAlignmentMultiplier(double newTendenceAlignmentMultiplier)
+{
+    tendenceAlignmentMultiplier = newTendenceAlignmentMultiplier;
 }
 
 Jumper *JumperFormGeneratorSettings::getJumper() const
@@ -72,16 +85,6 @@ double JumperFormGeneratorSettings::getMaxTendence() const
 void JumperFormGeneratorSettings::setMaxTendence(double newMaxTendence)
 {
     maxTendence = newMaxTendence;
-}
-
-double JumperFormGeneratorSettings::getTendenceAlignmentMultiplier() const
-{
-    return tendenceAlignmentMultiplier;
-}
-
-void JumperFormGeneratorSettings::setTendenceAlignmentMultiplier(double newTendenceAlignmentMultiplier)
-{
-    tendenceAlignmentMultiplier = newTendenceAlignmentMultiplier;
 }
 
 double JumperFormGeneratorSettings::getFormVariability() const

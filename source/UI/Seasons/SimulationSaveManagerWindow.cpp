@@ -38,7 +38,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     ui->toolBox_2->setCurrentIndex(0);
     ui->label_saveName->setText(simulationSave->getName());
     ui->label_seasonNumber->setText(QString::number(simulationSave->getActualSeason()->getSeasonNumber()));
-     ui->comboBox_archiveSeason->setCurrentIndex(0);
+    ui->comboBox_archiveSeason->setCurrentIndex(0);
 
     connect(ui->toolBox, &QToolBox::currentChanged, this, [this](){
         if(ui->toolBox->currentIndex() == 0 || ui->toolBox->currentIndex() == 1)
@@ -64,6 +64,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
         jumperEditor->show();
         jumperEditor->setJumper(simulationSave->getJumpersReference()[index.row()]);
         jumperEditor->fillJumperInputs();
+        jumperEditor->setShowForm(simulationSave->getShowForm());
     });
     connect(jumperEditor, &JumperEditorWidget::submitted, this, [this](){
         int idx = jumpersListView->getLastDoubleClickedIndex();
@@ -719,6 +720,7 @@ void SimulationSaveManagerWindow::on_pushButton_jumperStats_clicked()
         statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
         statsWindow.fillWindow();
         statsWindow.setupConnections();
+        statsWindow.getShowFormCheckBox()->setChecked(simulationSave->getShowForm());
         if(statsWindow.exec() == QDialog::Accepted)
         {
 
@@ -733,8 +735,9 @@ void SimulationSaveManagerWindow::on_pushButton_clicked()
     statsWindow.getRangeComboBoxes()->setupComboBoxes();
     statsWindow.getClassificationsCheckBoxes()->setClassificationsList(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
     statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
-    statsWindow.fillWindow();
+    statsWindow.fillWindow();   
     statsWindow.setupConnections();
+    statsWindow.getShowFormCheckBox()->setChecked(simulationSave->getShowForm());
     if(statsWindow.exec() == QDialog::Accepted)
     {
 
@@ -745,6 +748,7 @@ void SimulationSaveManagerWindow::on_pushButton_formGenerator_clicked()
 {
     JumpersFormGeneratorConfigWindow window(this);
     window.getTableModel()->setGeneratorsSettings(JumperFormGeneratorSettings::constructJumperFormGeneratorsSettingsVector(simulationSave->getJumpersReference()));
+    window.setSave(simulationSave);
     window.updateTable();
     window.on_doubleSpinBox_tendenceVariability_editingFinished();
     window.on_doubleSpinBox_tendBonus_editingFinished();
@@ -759,5 +763,17 @@ void SimulationSaveManagerWindow::on_pushButton_formGenerator_clicked()
     {
 
     }
+}
+
+
+void SimulationSaveManagerWindow::on_checkBox_showForm_stateChanged(int arg1)
+{
+    simulationSave->setShowForm(arg1);
+}
+
+
+void SimulationSaveManagerWindow::on_checkBox_compactSaveFile_stateChanged(int arg1)
+{
+    simulationSave->setSaveFileSizeReduce(arg1);
 }
 
