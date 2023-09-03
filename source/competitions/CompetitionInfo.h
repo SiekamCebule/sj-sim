@@ -57,7 +57,7 @@ private:
 
 public:
     static QJsonObject getJsonObject(CompetitionInfo &competition);
-    static CompetitionInfo getFromJson(const QJsonObject & json, SeasonDatabaseObjectsManager *objectsManager);
+    static CompetitionInfo getFromJson(const QJsonObject & json, DatabaseObjectsManager *objectsManager);
 
 public:
     Hill *getHill() const;

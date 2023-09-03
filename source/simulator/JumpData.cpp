@@ -12,8 +12,6 @@
 #include <QJsonArray>
 #include <QMessageBox>
 
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
-
 JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill),
     ClassWithID()
@@ -223,7 +221,7 @@ QJsonObject JumpData::getJsonObject(JumpData jumpData)
     return object;
 }
 
-JumpData JumpData::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
+JumpData JumpData::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
 {
     JumpData jump;
     jump.setID(obj.value("id").toString().toULong());

@@ -1,5 +1,4 @@
 #include "JumperFormTendence.h"
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
 JumperFormTendence::JumperFormTendence(Jumper *jumper, double tendence) : jumper(jumper), tendence(tendence)
 {
@@ -25,7 +24,7 @@ QJsonObject JumperFormTendence::getJsonObject(JumperFormTendence &tendence)
     return object;
 }
 
-JumperFormTendence JumperFormTendence::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
+JumperFormTendence JumperFormTendence::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
 {
     JumperFormTendence tendence;
     tendence.setJumper(static_cast<Jumper *>(objectsManager->getObjectByID(obj.value("jumper-id").toString().toULong())));

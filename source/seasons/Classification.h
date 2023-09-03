@@ -35,7 +35,7 @@ public:
 
     static QVector<Classification *> getSpecificTypeClassifications(QVector<Classification *> classifications, int type);
 
-    static Classification *getFromJson(QJsonObject obj);
+    static Classification *getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager);
     static QJsonObject getJsonObject(Classification *classification);
 
     QHash<Jumper *, QHash<CompetitionInfo *, int> > constructJumpersArchiveResults(Season * season);

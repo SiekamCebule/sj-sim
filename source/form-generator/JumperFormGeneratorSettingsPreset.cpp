@@ -7,8 +7,6 @@
 #include <QJsonArray>
 #include <QMessageBox>
 
-extern SeasonDatabaseObjectsManager globalObjectsManager;
-
 JumperFormGeneratorSettingsPreset::JumperFormGeneratorSettingsPreset(JumperFormGeneratorSettings settings) : settings(settings)
 {
 
@@ -34,7 +32,7 @@ QJsonObject JumperFormGeneratorSettingsPreset::getJsonObject(JumperFormGenerator
     return object;
 }
 
-JumperFormGeneratorSettingsPreset JumperFormGeneratorSettingsPreset::getFromJson(QJsonObject json, SeasonDatabaseObjectsManager *objectsManager)
+JumperFormGeneratorSettingsPreset JumperFormGeneratorSettingsPreset::getFromJson(QJsonObject json)
 {
     JumperFormGeneratorSettingsPreset preset;
     preset.setName(json.value("name").toString());
@@ -77,7 +75,7 @@ QVector<JumperFormGeneratorSettingsPreset> JumperFormGeneratorSettingsPreset::ge
     QJsonArray array = value.toArray();
     for(const auto & val : array)
     {
-        presets.push_back(JumperFormGeneratorSettingsPreset::getFromJson(val.toObject(), &globalObjectsManager));
+        presets.push_back(JumperFormGeneratorSettingsPreset::getFromJson(val.toObject()));
     }
     return presets;
 }

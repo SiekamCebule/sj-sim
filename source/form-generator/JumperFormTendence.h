@@ -3,7 +3,7 @@
 
 #include <QJsonObject>
 #include "../simulator/Jumper.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 
 class JumperFormTendence
 {
@@ -19,7 +19,7 @@ public:
 
     int getTendenceType();
     static QJsonObject getJsonObject(JumperFormTendence & tendence);
-    static JumperFormTendence getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager);
+    static JumperFormTendence getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager);
 
 private:
     Jumper * jumper;

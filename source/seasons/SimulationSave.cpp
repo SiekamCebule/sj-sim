@@ -1,6 +1,7 @@
 #include "SimulationSave.h"
 #include <QFile>
 #include "../global/IDGenerator.h"
+#include <QtConcurrent>
 
 extern IDGenerator globalIDGenerator;
 
@@ -25,32 +26,40 @@ SimulationSave::~SimulationSave()
     }
 }
 
-SimulationSave * SimulationSave::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
+SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
 {
     SimulationSave * save = new SimulationSave();
     save->setID(obj.value("id").toString().toULong());
     save->setName(obj.value("name").toString());
 
-    QJsonArray jumpersArray = obj.value("jumpers").toArray();
-    for(auto val : jumpersArray){
-        //qDebug()<<val;
-        Jumper * jumper = new Jumper(Jumper::getFromJson(val.toObject()));
-        save->getJumpersReference().push_back(jumper);
-    }
+    QJsonArray array = obj.value("jumpers").toArray();
+    QVector<QJsonValue> values;
+    for(auto val : qAsConst(array))
+        values.push_back(val);
+    QFuture<Jumper *> jumpersFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+        return new Jumper(Jumper::getFromJson(value.toObject()));
+    });
+    save->setJumpers(jumpersFuture.results().toVector());
     objectsManager->fill(&save->getJumpersReference());
 
-    QJsonArray hillsArray = obj.value("hills").toArray();
-    for(auto val : hillsArray){
-        Hill * hill = new Hill(Hill::getFromJson(val.toObject()));
-        save->getHillsReference().push_back(hill);
-    }
+    array = obj.value("hills").toArray();
+    values.clear();
+    for(auto val : qAsConst(array))
+        values.push_back(val);
+    QFuture<Hill *> hillsFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+        return new Hill(Hill::getFromJson(value.toObject()));
+    });
+    save->setHills(hillsFuture.results().toVector());
     objectsManager->fill(&save->getHillsReference());
 
-    QJsonArray rulesArray = obj.value("rules").toArray();
-    for(auto val : rulesArray){
-        CompetitionRules rules = CompetitionRules::getFromJson(val.toObject());
-        save->getCompetitionRulesReference().push_back(rules);
-    }
+    array = obj.value("rules").toArray();
+    values.clear();
+    for(auto val : qAsConst(array))
+        values.push_back(val);
+    QFuture<CompetitionRules> rulesFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+        return CompetitionRules::getFromJson(value.toObject());
+    });
+    save->setCompetitionRules(rulesFuture.results().toVector());
     objectsManager->fill(&save->getCompetitionRulesReference());
 
     QJsonArray seasonsArray = obj.value("seasons").toArray();
@@ -60,11 +69,14 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, SeasonDatabaseObje
     }
     objectsManager->fill(&save->getSeasonsReference());
 
-    QJsonArray tendencesArray = obj.value("jumpers-form-tendences").toArray();
-    for(auto val : tendencesArray){
-        JumperFormTendence tendence = JumperFormTendence::getFromJson(val.toObject(), objectsManager);
-        save->getJumpersFormTendencesReference().push_back(tendence);
-    }
+    array = obj.value("jumpers-form-tendences").toArray();
+    values.clear();
+    for(auto val : qAsConst(array))
+        values.push_back(val);
+    QFuture<JumperFormTendence> tendencesFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+        return JumperFormTendence::getFromJson(value.toObject(), objectsManager);
+    });
+    save->setJumpersFormTendences(tendencesFuture.results().toVector());
 
     save->setActualSeason(static_cast<Season *>(objectsManager->getObjectByID(obj.value("actual-season-id").toString().toULong())));
     save->setNextCompetitionIndex(obj.value("next-competition-index").toInt());
@@ -144,6 +156,23 @@ bool SimulationSave::saveToFile(QString dir)
         file.write(document.toJson(QJsonDocument::Indented));
     file.close();
     return true;
+}
+
+SimulationSave *SimulationSave::loadFromFile(QString fileName)
+{
+    DatabaseObjectsManager objectsManager;
+        QFile file("simulationSaves/" + fileName);
+        if(!file.open(QFile::ReadOnly | QFile::Text))
+        {
+            QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zapisem symulacji", "Nie udało się otworzyć pliku simulationSaves/" + fileName +"\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+            message.setModal(true);
+            message.exec();
+        }
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        file.close();
+        QJsonObject object = doc.object().value("simulation-save").toObject();
+        SimulationSave * s = SimulationSave::getFromJson(object, &objectsManager);
+        return s;
 }
 
 void SimulationSave::updateNextCompetitionIndex()

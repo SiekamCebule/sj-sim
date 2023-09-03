@@ -1,13 +1,13 @@
-#include "Classification.h"
+ #include "Classification.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QMap>
 #include <QJsonValue>
 #include "../seasons/Season.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 #include "../global/MyRandom.h"
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
+#include <QtConcurrent>
 
 Classification::Classification(QString name) : name(name),
     ClassWithID()
@@ -117,7 +117,7 @@ void Classification::setAltPointsForPlaces(const QMap<int, double> &newAltPoints
     altPointsForPlaces = newAltPointsForPlaces;
 }
 
-Classification * Classification::getFromJson(QJsonObject obj)
+Classification * Classification::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
 {
     Classification * classification = new Classification();
     classification->setID(obj.value("id").toString().toULong());
@@ -138,12 +138,19 @@ Classification * Classification::getFromJson(QJsonObject obj)
     }
 
     QJsonArray resultsArray = obj.value("results").toArray();
+    QVector<QJsonValue> values;
     for(auto val : resultsArray)
-    {
-        classification->getResultsReference().push_back(new ClassificationSingleResult(ClassificationSingleResult::getFromJson(val.toObject())));
-        classification->getResultsReference().last()->setClassification(classification);
-    }
-    seasonObjectsManager.fill(&classification->getResultsReference());
+        values.push_back(val);
+
+    QFuture<ClassificationSingleResult *> future = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+        return new ClassificationSingleResult(ClassificationSingleResult::getFromJson(value.toObject(), objectsManager));
+    });
+    //QVector<CompetitionSingleResult *> res = future.results().toVector();
+    classification->setResults(future.results().toVector());
+    for(auto & res : classification->getResultsReference())
+        res->setClassification(classification);
+
+    objectsManager->fill(&classification->getResultsReference());
 
     return classification;
 }

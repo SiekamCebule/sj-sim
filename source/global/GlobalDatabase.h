@@ -11,6 +11,7 @@
 
 #include <QVector>
 #include <QStringList>
+#include <QtConcurrent>
 
 class GlobalDatabase
 {

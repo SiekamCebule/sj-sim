@@ -100,10 +100,10 @@ void AppSettingsWindow::on_spinBox_skillsRange_valueChanged(int arg1)
 void AppSettingsWindow::on_pushButton_repairDatabase_clicked()
 {
     GlobalDatabase * db = GlobalDatabase::get();
-    if(db->getLoadedSimulationSaves() == false){
+    /*if(db->getLoadedSimulationSaves() == false){
         db->loadSimulationSaves(true);
         db->setLoadedSimulationSaves(true);
-    }
+    }*/
     QProgressDialog dialog;
     dialog.setStyleSheet("QProgressDialog{background-color: white; color: black;}");
     dialog.setMinimum(0);
@@ -142,14 +142,48 @@ void AppSettingsWindow::on_pushButton_repairDatabase_clicked()
         dialog.setValue(dialog.value() + 1);
         QCoreApplication::processEvents();
     }
-    for(auto & save : db->getEditableGlobalSimulationSaves()){
+    for(auto & calendarPreset : db->getEditableGlobalCalendarPresets())
+    {
+            for(auto & competition : calendarPreset.getCalendarReference().getCompetitionsReference())
+            {
+                if(values.contains(competition->getID()))
+                    competition->generateID();
+                else competition->regenerateID();
+
+                if(values.contains(competition->getResultsReference().getID()))
+                    competition->getResultsReference().generateID();
+                else competition->getResultsReference().regenerateID();
+
+                for(auto & groups : competition->getRoundsKOGroupsReference())
+                {
+                    for(auto & group : groups){
+                        if(values.contains(group.getID()))
+                            group.generateID();
+                        else group.regenerateID();
+                    }
+                }
+                for(auto & team : competition->getTeamsReference())
+                {
+                    if(values.contains(team.getID()))
+                        team.generateID();
+                    else team.regenerateID();
+                }
+            }
+            for(auto & classification : calendarPreset.getCalendarReference().getClassificationsReference())
+            {
+                if(values.contains(classification->getID()))
+                    classification->generateID();
+                else classification->regenerateID();
+            }
+    }
+    /*for(auto & save : db->getEditableGlobalSimulationSaves()){
         if(values.contains(save->getID()))
             save->generateID();
         else save->regenerateID();
         values.insert(save->getID());
         dialog.setValue(dialog.value() + 1);
         QCoreApplication::processEvents();
-    }
+    }*/
 
     db->writeToJson();
     dialog.setValue(dialog.value() + 1);

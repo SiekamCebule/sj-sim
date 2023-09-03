@@ -8,7 +8,7 @@
 #include <QJsonValue>
 #include "Season.h"
 #include "../utilities/ClassWithID.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 #include "../form-generator/JumperFormTendence.h"
 
 class SimulationSave : public ClassWithID
@@ -17,11 +17,11 @@ public:
     SimulationSave();
     ~SimulationSave();
 
-    static SimulationSave *getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager *objectsManager);
+    static SimulationSave *getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
     static QJsonObject getJsonObject(SimulationSave & save);
 
     bool saveToFile(QString dir = "");
-    bool loadFromFile(QString fileName, QString dir = "");
+    static SimulationSave *loadFromFile(QString fileName);
     void updateNextCompetitionIndex();
     void repairDatabase();
     void fixJumpersFormTendences();

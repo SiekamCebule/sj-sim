@@ -13,7 +13,7 @@
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QByteArray>
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 
 class CompetitionInfo;
 
@@ -31,7 +31,7 @@ public:
     CompetitionResults constructRoundsResults(QVector<RoundInfo> *roundsInfos, QVector<int> rounds);
     void updateRoundsJumps();
 
-    static CompetitionResults getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager *objectsManager);
+    static CompetitionResults getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
     static QJsonObject getJsonObject(CompetitionResults & results);
 
     QVector<int> getJumpersPositions(const QVector<Jumper *> *jumpers) const;

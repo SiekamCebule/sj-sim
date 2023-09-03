@@ -1,4 +1,4 @@
-QT       += core gui charts
+QT       += core gui charts concurrent
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -95,12 +95,12 @@ SOURCES += \
     source/form-generator/JumperFormGeneratorSettingsPreset.cpp \
     source/form-generator/JumperFormTendence.cpp \
     source/global/CountryFlagsManager.cpp \
+    source/global/DatabaseObjectsManager.cpp \
     source/global/GlobalAppSettings.cpp \
     source/global/GlobalDatabase.cpp \
     source/global/GlobalSimulationSettings.cpp \
     source/global/GlobalTranslators.cpp \
     source/global/PointsForPlacesPreset.cpp \
-    source/global/SeasonDatabaseObjectsManager.cpp \
     source/global/TreeItem.cpp \
     source/main.cpp \
     source/UI/mainwindow.cpp \
@@ -219,12 +219,12 @@ HEADERS += \
     source/form-generator/JumperFormGeneratorSettingsPreset.h \
     source/form-generator/JumperFormTendence.h \
     source/global/CountryFlagsManager.h \
+    source/global/DatabaseObjectsManager.h \
     source/global/GlobalAppSettings.h \
     source/global/GlobalDatabase.h \
     source/global/GlobalSimulationSettings.h \
     source/global/GlobalTranslators.h \
     source/global/PointsForPlacesPreset.h \
-    source/global/SeasonDatabaseObjectsManager.h \
     source/global/TreeItem.h \
     source/seasons/ClassificationSingleResult.h \
     source/seasons/Season.h \

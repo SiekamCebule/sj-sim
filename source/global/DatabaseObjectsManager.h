@@ -1,13 +1,13 @@
-#ifndef SEASONDATABASEOBJECTSMANAGER_H
-#define SEASONDATABASEOBJECTSMANAGER_H
+#ifndef DATABASEOBJECTSMANAGER_H
+#define DATABASEOBJECTSMANAGER_H
 
 #include <QMap>
 #include "../utilities/ClassWithID.h"
 
-class SeasonDatabaseObjectsManager
+class DatabaseObjectsManager
 {
 public:
-    SeasonDatabaseObjectsManager();
+    DatabaseObjectsManager();
 
 private:
     QMap<ulong, ClassWithID *> objects;
@@ -33,4 +33,4 @@ public:
     QMap<ulong, ClassWithID *> getObjects() const;
 };
 
-#endif // SEASONDATABASEOBJECTSMANAGER_H
+#endif // DATABASEOBJECTSMANAGER_H

@@ -6,6 +6,7 @@ IDGenerator globalIDGenerator;
 
 IDGenerator::IDGenerator() : lastID(0)
 {
+    freezed = false;
 }
 
 bool IDGenerator::hasValue(ulong value)
@@ -15,31 +16,39 @@ bool IDGenerator::hasValue(ulong value)
 
 ulong IDGenerator::generateNewID()
 {
-    int i=1;
-    while(values.contains(i))
-    {
-        i++;
+    if(freezed == false){
+        int i=1;
+        while(values.contains(i))
+        {
+            i++;
+        }
+        values.insert(i);
+        lastID = i;
+        return i;
     }
-    values.insert(i);
-    lastID = i;
-    return i;
+    return 0;
 }
 
 bool IDGenerator::removeID(ulong ID)
 {
-    if(!values.contains(ID))
-        return false;
-    else
-    {
-        values.remove(ID);
-        return true;
+    if(freezed == false){
+        if(!values.contains(ID))
+            return false;
+        else
+        {
+            values.remove(ID);
+            return true;
+        }
     }
+    return false;
 }
 
 void IDGenerator::addExistingID(ulong ID)
 {
-    if(hasValue(ID) == false)
-        values.insert(ID);
+    if(freezed == false){
+        if(hasValue(ID) == false)
+            values.insert(ID);
+    }
 }
 
 ulong IDGenerator::getLastID() const
@@ -55,4 +64,14 @@ QSet<ulong> IDGenerator::getValues() const
 void IDGenerator::reset()
 {
     values.clear();
+}
+
+bool IDGenerator::getFreezed() const
+{
+    return freezed;
+}
+
+void IDGenerator::setFreezed(bool newFreezed)
+{
+    freezed = newFreezed;
 }

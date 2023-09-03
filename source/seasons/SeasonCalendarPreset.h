@@ -7,7 +7,7 @@
 #include <QJsonDocument>
 #include <QString>
 #include "SeasonCalendar.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 
 class SeasonCalendarPreset
 {
@@ -16,7 +16,7 @@ public:
     ~SeasonCalendarPreset();
 
     static QJsonObject getJsonObject(SeasonCalendarPreset preset);
-    static SeasonCalendarPreset getFromJson(QJsonObject json, SeasonDatabaseObjectsManager *objectsManager);
+    static SeasonCalendarPreset getFromJson(QJsonObject json, DatabaseObjectsManager *objectsManager);
     static QVector<SeasonCalendarPreset> getVectorFromJson(QByteArray json);
 
     bool saveToFile(QString dir = "");

@@ -5,8 +5,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-extern SeasonDatabaseObjectsManager globalObjectsManager;
-
 SeasonCalendarPreset::SeasonCalendarPreset(SeasonCalendar *seasonCalendar)
 {
     if(seasonCalendar != nullptr)
@@ -89,7 +87,7 @@ QJsonObject SeasonCalendarPreset::getJsonObject(SeasonCalendarPreset preset)
     return object;
 }
 
-SeasonCalendarPreset SeasonCalendarPreset::getFromJson(QJsonObject json, SeasonDatabaseObjectsManager * objectsManager)
+SeasonCalendarPreset SeasonCalendarPreset::getFromJson(QJsonObject json, DatabaseObjectsManager * objectsManager)
 {
     SeasonCalendarPreset preset;
     preset.setName(json.value("name").toString());
@@ -129,7 +127,9 @@ QVector<SeasonCalendarPreset> SeasonCalendarPreset::getVectorFromJson(QByteArray
     QJsonArray array = value.toArray();
     for(const auto & val : array)
     {
-        presets.push_back(SeasonCalendarPreset::getFromJson(val.toObject(), &globalObjectsManager));
+        DatabaseObjectsManager * manager = new DatabaseObjectsManager();
+        presets.push_back(SeasonCalendarPreset::getFromJson(val.toObject(), manager));
+        delete manager;
     }
     return presets;
 }

@@ -8,7 +8,7 @@
 #include "../global/GlobalDatabase.h"
 #include "../global/GlobalAppSettings.h"
 #include "../global/GlobalSimulationSettings.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 
 #include "../single-jumps/SingleJumpsManager.h"
 

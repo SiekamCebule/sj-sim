@@ -115,12 +115,12 @@ void JumpSimulator::generateTakeoffRating()
 {
     double multiplier = GlobalSimulationSettings::get()->getMaxSkills() / 100;
 
-    double ratingMultiplier = 0.86 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
+    double ratingMultiplier = 0.863 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
     simulationData->takeoffRating = jumperSkills->getTakeoffTechnique() * ratingMultiplier;
 
     simulationData->takeoffRating += ((jumperSkills->getLevelOfCharacteristic("takeoff-power") * 2 * multiplier) * (1 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect")));
 
-    ratingMultiplier = 0.14 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
+    ratingMultiplier = 0.137 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     simulationData->takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 2 * multiplier;
@@ -140,10 +140,10 @@ void JumpSimulator::generateFlightRating()
 {
     double multiplier = GlobalSimulationSettings::get()->getMaxSkills() / 100;
 
-    double ratingMultiplier = 0.85 + 0.11 * hill->getLevelOfCharacteristic("flight-technique-effect");
+    double ratingMultiplier = 0.853 + 0.11 * hill->getLevelOfCharacteristic("flight-technique-effect");
     simulationData->flightRating = jumperSkills->getFlightTechnique() * ratingMultiplier;
 
-    ratingMultiplier = 0.15 + 0.1 * hill->getLevelOfCharacteristic("flight-form-effect");
+    ratingMultiplier = 0.147 + 0.1 * hill->getLevelOfCharacteristic("flight-form-effect");
     simulationData->flightRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->flightRating -= std::abs(Hill::calculateBestFlightHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 2.7 * multiplier);
@@ -677,7 +677,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 4.10 - (skills->getLevelOfCharacteristic("takeoff-height") / 7);
+        dev = 3.95 - (skills->getLevelOfCharacteristic("takeoff-height") / 7);
         if(MyRandom::randomInt(0, 1) == 0)
         {
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Positive);
@@ -702,7 +702,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 5.02;
         double random = 0;
-        dev = 4.15 - (skills->getLevelOfCharacteristic("flight-height") / 7);
+        dev = 4.05 - (skills->getLevelOfCharacteristic("flight-height") / 7);
         switch(skills->getFlightStyle())
         {
         case JumperSkills::VStyle:

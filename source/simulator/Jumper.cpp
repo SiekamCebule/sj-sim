@@ -132,7 +132,7 @@ void Jumper::setFlagPixmap(const QPixmap &newFlagPixmap)
 
 void Jumper::updateCountryFlagPixmap()
 {
-    setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(getCountryCode())));
+    flagPixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(countryCode));
 }
 
 JumperSkills Jumper::getJumperSkills() const

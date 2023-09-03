@@ -2,9 +2,9 @@
 
 #include "CompetitionInfo.h"
 #include "CompetitionSingleResult.h"
+#include <QtConcurrent>
 
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
-
+extern IDGenerator globalIDGenerator;
 
 CompetitionResults::CompetitionResults() :
     ClassWithID()
@@ -53,15 +53,26 @@ CompetitionResults CompetitionResults::constructRoundsResults(QVector<RoundInfo>
     return results;
 }
 
-CompetitionResults CompetitionResults::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
+CompetitionResults CompetitionResults::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
 {
     CompetitionResults results;
     results.setID(obj.value("id").toString().toULong());
 
     QJsonArray resultsArray = obj.value("results").toArray();
+    QVector<QJsonValue> values;
+    for(auto val : resultsArray)
+        values.push_back(val);
+
+    QFuture<CompetitionSingleResult> future = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+        return CompetitionSingleResult::getFromJson(value.toObject(), objectsManager);
+    });
+    //QVector<CompetitionSingleResult *> res = future.results().toVector();
+    results.setResults(future.results().toVector());
+
+    /*QJsonArray resultsArray = obj.value("results").toArray();
     for(auto res : resultsArray){
         results.getResultsReference().push_back(CompetitionSingleResult::getFromJson(res.toObject(), objectsManager));
-    }
+    }*/
     objectsManager->fill(&results.getResultsReference());
 
     return results;

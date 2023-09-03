@@ -1,7 +1,6 @@
 #include "CompetitionSingleResult.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 #include "CompetitionInfo.h"
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
 CompetitionSingleResult::CompetitionSingleResult(CompetitionInfo *competition, Jumper *jumper, int type) : type(type), jumper(jumper), team(nullptr), competition(competition),
     ClassWithID()
@@ -11,7 +10,7 @@ CompetitionSingleResult::CompetitionSingleResult(CompetitionInfo *competition, T
     ClassWithID()
 {}
 
-CompetitionSingleResult CompetitionSingleResult::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
+CompetitionSingleResult CompetitionSingleResult::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
 {
     CompetitionSingleResult result(nullptr);
     result.setID(obj.value("id").toString().toULong());
@@ -51,6 +50,11 @@ QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult resul
     resultObject.insert("jumps", jumpsArray);
 
     return resultObject;
+}
+
+CompetitionSingleResult CompetitionSingleResult::getFromJsonValue(QJsonValue val, DatabaseObjectsManager *objectsManager)
+{
+    return CompetitionSingleResult::getFromJson(val.toObject(), objectsManager);
 }
 
 QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleResults(QVector<CompetitionInfo *> &competitions, Jumper *jumper, QSet<int> serieTypes, QSet<int> hillTypes, QVector<Classification *> classifications, bool skipClassifications)

@@ -145,7 +145,7 @@ QJsonObject Team::getJsonObject(Team &team)
     return object;
 }
 
-Team Team::getFromJson(QJsonObject json, SeasonDatabaseObjectsManager * objectsManager)
+Team Team::getFromJson(QJsonObject json, DatabaseObjectsManager * objectsManager)
 {
     Team team;
     team.setID(json.value("id").toString().toULong());

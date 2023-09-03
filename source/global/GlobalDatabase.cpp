@@ -16,8 +16,7 @@
 #include "../global/CountryFlagsManager.h"
 
 GlobalDatabase* GlobalDatabase::m_globalDatabase = nullptr;
-SeasonDatabaseObjectsManager globalObjectsManager;
-SeasonDatabaseObjectsManager calendarPresetsObjectsManager;
+extern IDGenerator globalIDGenerator;
 
 GlobalDatabase::GlobalDatabase()
 {
@@ -166,7 +165,6 @@ void GlobalDatabase::removeJumper(int index)
 
 bool GlobalDatabase::loadFromJson()
 {
-    globalObjectsManager.clear();
     return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadPointsForPlacesPresets() && loadCalendarPresets() && loadFormGeneratorPresets());
 }
 
@@ -189,7 +187,6 @@ bool GlobalDatabase::loadJumpers()
     QJsonObject obj = doc.object();
     QJsonArray jumpersArray = obj.value("jumpers");*/
     globalJumpers = Jumper::getVectorFromJson(file.readAll());
-    globalObjectsManager.fill(&globalJumpers);
     file.close();
     return true;
 }
@@ -205,7 +202,6 @@ bool GlobalDatabase::loadHills()
         return false;
     }
     globalHills = Hill::getVectorFromJson(file.readAll());
-    globalObjectsManager.fill(&globalHills);
     file.close();
     return true;
 }
@@ -221,7 +217,6 @@ bool GlobalDatabase::loadCompetitionsRules()
         return false;
     }
     globalCompetitionsRules = CompetitionRules::getCompetitionRulesVectorFromJson(file.readAll());
-    globalObjectsManager.fill(&globalCompetitionsRules);
     file.close();
     return true;
 }
@@ -250,9 +245,8 @@ bool GlobalDatabase::loadSimulationSaves(bool progressDialog)
     dialog.setWindowModality(Qt::WindowModal);
 
     bool ok = true;
-    for(auto & fileName : fileNames){
-        SeasonDatabaseObjectsManager * sdom = &seasonObjectsManager;
-        seasonObjectsManager.clear();
+    /*for(auto & fileName : fileNames){
+        DatabaseObjectsManager objectsManager;
         QFile file("simulationSaves/" + fileName);
         if(!file.open(QFile::ReadOnly | QFile::Text))
         {
@@ -261,22 +255,20 @@ bool GlobalDatabase::loadSimulationSaves(bool progressDialog)
             message.exec();
             ok = false;
         }
-        dialog.setValue(dialog.value() + 1);
-        QCoreApplication::processEvents();
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
-        dialog.setValue(dialog.value() + 1);
-        QCoreApplication::processEvents();
         QJsonObject object = doc.object().value("simulation-save").toObject();
-        dialog.setValue(dialog.value() + 1);
-        QCoreApplication::processEvents();
-        SimulationSave * s = SimulationSave::getFromJson(object, &seasonObjectsManager);
-        dialog.setValue(dialog.value() + 1);
-        QCoreApplication::processEvents();
+        SimulationSave * s = SimulationSave::getFromJson(object, &objectsManager);
         globalSimulationSaves.push_back(s);
-        dialog.setValue(dialog.value() + 1);
-        QCoreApplication::processEvents();
         file.close();
-    }
+    }*/
+
+    globalIDGenerator.setFreezed(true);
+    QFuture<SimulationSave *> future = QtConcurrent::mapped(fileNames, SimulationSave::loadFromFile);
+
+    // Czekamy na zakończenie zadania i pobieramy wyniki do listy persons
+    future.waitForFinished();
+    globalSimulationSaves = future.results();
+    globalIDGenerator.setFreezed(false);
     return ok;
 }
 
@@ -307,7 +299,6 @@ bool GlobalDatabase::loadCalendarPresets()
 
     bool ok = true;
     for(auto & fileName : fileNames){
-        globalObjectsManager.clear();
         QFile file("userData/GlobalDatabase/calendarPresets/" + fileName);
         if(!file.open(QFile::ReadOnly | QFile::Text))
         {
@@ -318,7 +309,10 @@ bool GlobalDatabase::loadCalendarPresets()
         }
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         QJsonObject object = doc.object().value("calendar-preset").toObject();
-        SeasonCalendarPreset p = SeasonCalendarPreset::getFromJson(object, &globalObjectsManager);
+
+        DatabaseObjectsManager * manager = new DatabaseObjectsManager();
+        SeasonCalendarPreset p = SeasonCalendarPreset::getFromJson(object, manager);
+        delete manager;
         globalCalendarPresets.push_back(p);
         file.close();
     }
@@ -337,7 +331,6 @@ bool GlobalDatabase::loadFormGeneratorPresets()
 
     bool ok = true;
     for(auto & fileName : fileNames){
-        globalObjectsManager.clear();
         QFile file("userData/GlobalDatabase/formGeneratorPresets/" + fileName);
         if(!file.open(QFile::ReadOnly | QFile::Text))
         {
@@ -348,7 +341,7 @@ bool GlobalDatabase::loadFormGeneratorPresets()
         }
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         QJsonObject object = doc.object().value("jumper-form-generator-settings-preset").toObject();
-        JumperFormGeneratorSettingsPreset p = JumperFormGeneratorSettingsPreset::getFromJson(object, &globalObjectsManager);
+        JumperFormGeneratorSettingsPreset p = JumperFormGeneratorSettingsPreset::getFromJson(object);
         formGeneratorPresets.push_back(p);
         file.close();
     }

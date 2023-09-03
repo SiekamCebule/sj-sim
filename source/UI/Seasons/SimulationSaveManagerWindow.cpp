@@ -25,8 +25,6 @@
 #include <QTableView>
 #include <QTreeView>
 
-extern SeasonDatabaseObjectsManager globalObjectsManager;
-
 SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SimulationSaveManagerWindow),

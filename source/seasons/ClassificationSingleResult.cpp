@@ -1,9 +1,7 @@
 #include "ClassificationSingleResult.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 #include "../seasons/Classification.h"
 #include "../competitions/CompetitionInfo.h"
-
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
 ClassificationSingleResult::ClassificationSingleResult(Classification *classification, Jumper * jumper) : jumper(jumper), position(0), pointsSum(0), classification(classification)
 {
@@ -169,14 +167,12 @@ QJsonObject ClassificationSingleResult::getJsonObject(ClassificationSingleResult
     return object;
 }
 
-ClassificationSingleResult ClassificationSingleResult::getFromJson(QJsonObject json)
+ClassificationSingleResult ClassificationSingleResult::getFromJson(QJsonObject json, DatabaseObjectsManager *objectsManager)
 {
-    QMap<ulong, ClassWithID *> ids = seasonObjectsManager.getObjects();
-    ids.begin();
     ClassificationSingleResult result(nullptr);
     result.setID(json.value("id").toString().toULong());
-    result.setClassification(static_cast<Classification *>(seasonObjectsManager.getObjectByID(json.value("classification-id").toString().toULong())));
-    result.setJumper(static_cast<Jumper *>(seasonObjectsManager.getObjectByID(json.value("jumper-id").toString().toULong())));
+    result.setClassification(static_cast<Classification *>(objectsManager->getObjectByID(json.value("classification-id").toString().toULong())));
+    result.setJumper(static_cast<Jumper *>(objectsManager->getObjectByID(json.value("jumper-id").toString().toULong())));
     result.setTeamCode(json.value("team-code").toString());
 
     result.setPointsSum(json.value("points-sum").toDouble());

@@ -17,7 +17,7 @@ class Classification;
 class CompetitionSingleResult : public ClassWithID
 {
 public:
-    CompetitionSingleResult(CompetitionInfo * competition, Jumper * jumper = nullptr, int type = 0);
+    CompetitionSingleResult(CompetitionInfo * competition = nullptr, Jumper * jumper = nullptr, int type = 0);
     CompetitionSingleResult(CompetitionInfo *competition, Team * team, int type = 0);
     inline bool operator<(const CompetitionSingleResult & second) {return pointsSum < second.getPointsSum();}
     //inline bool operator>(const CompetitionSingleResult & second) {return pointsSum > second.getPointsSum();}
@@ -26,8 +26,9 @@ public:
         TeamResult
     };
 
-    static CompetitionSingleResult getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager *objectsManager);
+    static CompetitionSingleResult getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
     static QJsonObject getJsonObject(CompetitionSingleResult result);
+    static CompetitionSingleResult getFromJsonValue(QJsonValue val, DatabaseObjectsManager *objectsManager);
 
     static QVector<CompetitionSingleResult *> getFilteredSingleResults(QVector<CompetitionInfo *> & competitions, Jumper * jumper, QSet<int> serieTypes, QSet<int> hillTypes,
                                                                        QVector<Classification *> classifications, bool skipClassifications);

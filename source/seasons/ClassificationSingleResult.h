@@ -20,7 +20,7 @@ public:
     void updatePointsSum();
 
     static QJsonObject getJsonObject(ClassificationSingleResult & result);
-    static ClassificationSingleResult getFromJson(QJsonObject json);
+    static ClassificationSingleResult getFromJson(QJsonObject json, DatabaseObjectsManager * objectsManager);
 
 private:
     Classification * classification;

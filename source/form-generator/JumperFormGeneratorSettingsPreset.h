@@ -3,7 +3,7 @@
 
 #include <QString>
 #include "JumperFormGeneratorSettings.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 
 class JumperFormGeneratorSettingsPreset
 {
@@ -11,7 +11,7 @@ public:
     JumperFormGeneratorSettingsPreset(JumperFormGeneratorSettings settings = JumperFormGeneratorSettings());
 
     static QJsonObject getJsonObject(JumperFormGeneratorSettingsPreset preset);
-    static JumperFormGeneratorSettingsPreset getFromJson(QJsonObject json, SeasonDatabaseObjectsManager *objectsManager);
+    static JumperFormGeneratorSettingsPreset getFromJson(QJsonObject json);
     static QVector<JumperFormGeneratorSettingsPreset> getVectorFromJson(QByteArray json);
 
     bool saveToFile(QString dir = "");

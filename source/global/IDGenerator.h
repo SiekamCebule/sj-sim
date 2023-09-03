@@ -18,9 +18,13 @@ public:
     QSet<ulong> getValues() const;
     void reset();
 
+    bool getFreezed() const;
+    void setFreezed(bool newFreezed);
+
 private:
     QSet<ulong> values;
     ulong lastID;
+    bool freezed;
 };
 
 #endif // IDGENERATOR_H

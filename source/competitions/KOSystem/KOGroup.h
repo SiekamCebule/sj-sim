@@ -24,7 +24,7 @@ public:
     };
 
     static QJsonObject getJsonObject(KOGroup &group);
-    static KOGroup getFromJson(const QJsonObject & json, SeasonDatabaseObjectsManager *objectsManager);
+    static KOGroup getFromJson(const QJsonObject & json, DatabaseObjectsManager *objectsManager);
 
     static QVector<KOGroup> constructKOGroups(RoundInfo * roundInfo, QVector<Jumper *> * jumpers, int selectionType, CompetitionInfo *competition);
     static QVector<Jumper *> getJumpersFromGroups(QVector<KOGroup> * groups);

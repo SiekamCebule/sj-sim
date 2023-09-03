@@ -1,11 +1,9 @@
 #include "KOGroup.h"
 #include "../CompetitionInfo.h"
 #include "../RoundInfo.h"
-#include "../../global/SeasonDatabaseObjectsManager.h"
+#include "../../global/DatabaseObjectsManager.h"
 #include "../../global/MyRandom.h"
 #include "../../utilities/functions.h"
-
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
 KOGroup::KOGroup()
 {
@@ -25,7 +23,7 @@ QJsonObject KOGroup::getJsonObject(KOGroup &group)
     return object;
 }
 
-KOGroup KOGroup::getFromJson(const QJsonObject &json, SeasonDatabaseObjectsManager * objectsManager)
+KOGroup KOGroup::getFromJson(const QJsonObject &json, DatabaseObjectsManager * objectsManager)
 {
     KOGroup group;
     group.setID(json.value("id").toString().toULong());

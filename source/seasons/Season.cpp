@@ -16,7 +16,7 @@ QJsonObject Season::getJsonObject(Season &season)
     return obj;
 }
 
-Season Season::getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager * objectsManager)
+Season Season::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
 {
     Season season;
     season.setID(obj.value("id").toString().toULong());

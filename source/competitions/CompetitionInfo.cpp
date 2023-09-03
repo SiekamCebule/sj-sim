@@ -1,7 +1,7 @@
 #include "CompetitionInfo.h"
 
 #include "../simulator/Hill.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 #include "CompetitionRules.h"
 #include "CompetitionResults.h"
 #include "../seasons/Season.h"
@@ -19,7 +19,7 @@
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QByteArray>
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
+extern DatabaseObjectsManager seasonObjectsManager;
 
 CompetitionInfo::CompetitionInfo(Hill *hill) : hill(hill),
     ClassWithID()
@@ -268,7 +268,7 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     return object;
 }
 
-CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json, SeasonDatabaseObjectsManager * objectsManager)
+CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json, DatabaseObjectsManager * objectsManager)
 {
     CompetitionInfo comp;
     QJsonArray teamsArray = json.value("teams").toArray();

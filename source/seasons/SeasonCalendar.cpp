@@ -1,12 +1,10 @@
 #include "SeasonCalendar.h"
 #include "../utilities/functions.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
+#include "../global/DatabaseObjectsManager.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
-
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
 
 SeasonCalendar::SeasonCalendar()
 {
@@ -96,42 +94,46 @@ void SeasonCalendar::updateCompetitionsQualifyingCompetitions()
     }
 }
 
-SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json, SeasonDatabaseObjectsManager * objectsManager)
+SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json, DatabaseObjectsManager * objectsManager)
 {
     SeasonCalendar calendar;
 
     QJsonArray classificationsArray = json.value("classifications").toArray();
     for(auto val : classificationsArray){
-        calendar.getClassificationsReference().push_back(Classification::getFromJson(val.toObject()));
+         calendar.getClassificationsReference().push_back(Classification::getFromJson(val.toObject(), objectsManager));
     }
-    objectsManager->fill(&calendar.getClassificationsReference());
+    if(objectsManager != nullptr)
+        objectsManager->fill(&calendar.getClassificationsReference());
 
     QJsonArray competitionsArray = json.value("competitions").toArray();
     for(auto val : competitionsArray){
         CompetitionInfo * c = new CompetitionInfo(CompetitionInfo::getFromJson(val.toObject(), objectsManager));
         calendar.getCompetitionsReference().push_back(c);
-        objectsManager->addObject(c);
+        if(objectsManager != nullptr)
+            objectsManager->addObject(c);
     }
     calendar.updateCompetitionsQualifyingCompetitions();
 
-    for(auto val : classificationsArray){
-        Classification * classification = static_cast<Classification *>(objectsManager->getObjectByID(val.toObject().value("id").toString().toULong()));
-        for(auto & singleResult : classification->getResultsReference())
-        {
-            singleResult->setClassification(classification);
-            QJsonArray singleResultsArray = val.toObject().value("results").toArray();
-            for(auto jsonRes : singleResultsArray)
+    if(objectsManager != nullptr){
+        for(auto val : classificationsArray){
+            Classification * classification = static_cast<Classification *>(objectsManager->getObjectByID(val.toObject().value("id").toString().toULong()));
+            for(auto & singleResult : classification->getResultsReference())
             {
-                if(jsonRes.toObject().value("id").toString().toULong() == singleResult->getID())
+                singleResult->setClassification(classification);
+                QJsonArray singleResultsArray = val.toObject().value("results").toArray();
+                for(auto jsonRes : singleResultsArray)
                 {
-                    QJsonArray compsIds = jsonRes.toObject().value("competitions-results-ids").toArray();
-                    for(auto id : compsIds)
-                        singleResult->getCompetitionsResultsReference().push_back(static_cast<CompetitionResults *>(objectsManager->getObjectByID(id.toString().toULong())));
+                    if(jsonRes.toObject().value("id").toString().toULong() == singleResult->getID())
+                    {
+                        QJsonArray compsIds = jsonRes.toObject().value("competitions-results-ids").toArray();
+                        for(auto id : compsIds)
+                            singleResult->getCompetitionsResultsReference().push_back(static_cast<CompetitionResults *>(objectsManager->getObjectByID(id.toString().toULong())));
+                    }
                 }
+                singleResult->updateSingleResults();
             }
-            singleResult->updateSingleResults();
+            classification->sortInDescendingOrder();
         }
-        classification->sortInDescendingOrder();
     }
 
     return calendar;

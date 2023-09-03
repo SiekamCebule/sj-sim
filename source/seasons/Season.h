@@ -8,9 +8,7 @@
 #include <QJsonValue>
 #include "SeasonCalendar.h"
 #include "Classification.h"
-#include "../global/SeasonDatabaseObjectsManager.h"
-
-extern SeasonDatabaseObjectsManager seasonObjectsManager;
+#include "../global/DatabaseObjectsManager.h"
 
 class Season : public ClassWithID
 {
@@ -18,7 +16,7 @@ public:
     Season();
 
     static QJsonObject getJsonObject(Season & season);
-    static Season getFromJson(QJsonObject obj, SeasonDatabaseObjectsManager *objectsManager);
+    static Season getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
 
 private:
     SeasonCalendar calendar;
