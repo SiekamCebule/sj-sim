@@ -182,7 +182,7 @@ color: rgb(26, 95, 180);
               </font>
              </property>
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Minimalna tendencja&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tendencja nie będzie wyższa niż ta wartość. Od 0 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Maksymalna tendencja&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tendencja nie będzie wyższa niż ta wartość. Od 0 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(140, 73, 5);</string>
