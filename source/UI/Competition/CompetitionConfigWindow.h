@@ -131,6 +131,7 @@ private slots:
     void on_comboBox_classification_activated(int index);
     void on_pushButton_defaultStartListOrder_clicked();
     void on_comboBox_competition_activated(int index);
+    void on_pushButton_jumpersLists_clicked();
 };
 
 #endif // COMPETITIONCONFIGWINDOW_H

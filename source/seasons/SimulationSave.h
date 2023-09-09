@@ -10,6 +10,7 @@
 #include "../utilities/ClassWithID.h"
 #include "../global/DatabaseObjectsManager.h"
 #include "../form-generator/JumperFormTendence.h"
+#include "../seasons/SaveJumpersList.h"
 
 class SimulationSave : public ClassWithID
 {
@@ -35,6 +36,7 @@ private:
     QVector<Hill *> hills;
     QVector<CompetitionRules> competitionRules;
     QVector<JumperFormTendence> jumpersFormTendences;
+    QVector<SaveJumpersList> jumpersLists;
 
     CompetitionInfo * nextCompetition;
     int nextCompetitionIndex;
@@ -70,6 +72,9 @@ public:
     void setShowForm(bool newShowForm);
     bool getSaveFileSizeReduce() const;
     void setSaveFileSizeReduce(bool newSaveFileSizeReduce);
+    QVector<SaveJumpersList> getJumpersLists() const;
+    QVector<SaveJumpersList> & getJumpersListsReference();
+    void setJumpersLists(const QVector<SaveJumpersList> &newJumpersLists);
 };
 
 #endif // SIMULATIONSAVE_H

@@ -21,6 +21,7 @@ DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, bool
     competitionRules = nullptr;
     classifications = nullptr;
     pointsForPlacesPresets = nullptr;
+    jumpersLists = nullptr;
     listModel = nullptr;
 
     insertAction = new QAction(this);
@@ -87,6 +88,9 @@ void DatabaseItemsListView::setupListModel()
     case PointsForPlacesPresetsItems:
         listModel = new PointsForPlacesPresetsListModel(this->pointsForPlacesPresets);
         break;
+    case JumpersListsItems:
+        listModel = new JumpersListsListModel(this->jumpersLists);
+        break;
     }
     listModel->setParent(this);
     ui->listView->setModel(listModel);
@@ -113,6 +117,21 @@ void DatabaseItemsListView::hideInstructions()
 void DatabaseItemsListView::showInstructions()
 {
     ui->textEdit_shortcuts->show();
+}
+
+void DatabaseItemsListView::setRemoveKeySequence(QKeySequence sequence)
+{
+    removeAction->setShortcut(sequence);
+}
+
+QVector<SaveJumpersList> *DatabaseItemsListView::getJumpersLists() const
+{
+    return jumpersLists;
+}
+
+void DatabaseItemsListView::setJumpersLists(QVector<SaveJumpersList> *newJumpersLists)
+{
+    jumpersLists = newJumpersLists;
 }
 
 bool DatabaseItemsListView::getShowItemsNumbers() const
@@ -212,6 +231,7 @@ QAbstractListModel *DatabaseItemsListView::getListModel()
 
 void DatabaseItemsListView::onInsertActionTriggered()
 {
+     QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
     if(allowInserting == true){
         int count = 0;
         switch(type){
@@ -242,9 +262,11 @@ void DatabaseItemsListView::onInsertActionTriggered()
         case PointsForPlacesPresetsItems:{
             count = pointsForPlacesPresets->count();
         }
+        case JumpersListsItems:{
+            count = jumpersLists->count();
+        }
         default: break;
         }
-        QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
         int rowToInsert = 0;
         if(count == 0)
             rowToInsert = 0;
@@ -304,17 +326,27 @@ void DatabaseItemsListView::onInsertActionTriggered()
                 emit model->dataChanged(model->index(rowToInsert), model->index(model->rowCount() - 1));
                 break;
             }
+            case JumpersListsItems:{
+                JumpersListsListModel * model = dynamic_cast<JumpersListsListModel *>(listModel);
+                model->insertRows(rowToInsert, 1);
+                model->getJumpersLists()->insert(rowToInsert, 1, SaveJumpersList("Jumpers List"));
+                emit model->dataChanged(model->index(rowToInsert), model->index(model->rowCount() - 1));
+                break;
+            }
             default: break;
             }
-            emit insert();
         }
     }
+    QVector<int> rs;
+    for(auto & r : rows)
+        rs.push_back(r.row());
+    emit insert(rs);
 }
 
 void DatabaseItemsListView::onRemoveActionTriggered()
 {
+    QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
     if(allowRemoving == true){
-        QVector<QModelIndex> rows = ui->listView->selectionModel()->selectedRows();
         if(rows.size() > 0){
             int firstRow = rows.first().row();
             switch(type){
@@ -389,11 +421,25 @@ void DatabaseItemsListView::onRemoveActionTriggered()
                 emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
                 break;
             }
+            case JumpersListsItems:
+            {
+                JumpersListsListModel * model = dynamic_cast<JumpersListsListModel *>(listModel);
+                while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                    int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                    model->removeRows(rowToRemove, 1);
+                    model->getJumpersLists()->remove(rowToRemove, 1);
+                }
+                emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
+                break;
+            }
             default: break;
             }
         }
-        emit remove();
     }
+    QVector<int> rs;
+    for(auto & r : rows)
+        rs.push_back(r.row());
+    emit remove(rs);
 }
 
 void DatabaseItemsListView::onUpActionTriggered()
@@ -479,6 +525,15 @@ void DatabaseItemsListView::onUpActionTriggered()
                     ui->listView->setCurrentIndex(model->index(index.row() - 1));
                 for(auto & index : rows)
                     model->getPresetsVectorPointer()->swapItemsAt(index.row(), index.row() - 1);
+                emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
+                break;
+            }
+            case JumpersListsItems:{
+                JumpersListsListModel * model = dynamic_cast<JumpersListsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(model->index(index.row() - 1));
+                for(auto & index : rows)
+                    model->getJumpersLists()->swapItemsAt(index.row(), index.row() - 1);
                 emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
                 break;
             }
@@ -576,6 +631,15 @@ void DatabaseItemsListView::onDownActionTriggered()
                     ui->listView->setCurrentIndex(model->index(index.row() + 1));
                 for(auto & index : rows)
                     model->getPresetsVectorPointer()->swapItemsAt(index.row(), index.row() + 1);
+                emit model->dataChanged(model->index(lastRow), model->index(0));
+                break;
+            }
+            case JumpersListsItems:{
+                JumpersListsListModel * model = dynamic_cast<JumpersListsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(model->index(index.row() + 1));
+                for(auto & index : rows)
+                    model->getJumpersLists()->swapItemsAt(index.row(), index.row() + 1);
                 emit model->dataChanged(model->index(lastRow), model->index(0));
                 break;
             }

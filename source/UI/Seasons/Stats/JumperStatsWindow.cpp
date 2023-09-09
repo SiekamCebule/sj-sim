@@ -80,7 +80,7 @@ void JumperStatsWindow::fillJumperApperancesChart()
 
         if(result->getPosition() < bestPosition)
             bestPosition = result->getPosition();
-        else if(result->getPosition() > worstPosition)
+        if(result->getPosition() > worstPosition)
             worstPosition = result->getPosition();
         averagePosition += result->getPosition();
         positions.push_back(result->getPosition());

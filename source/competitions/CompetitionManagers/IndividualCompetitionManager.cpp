@@ -160,7 +160,7 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersForNextRound(b
     return jumpers;
 }
 
-QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersAfterQualifications(CompetitionInfo *competition, QVector<Jumper *> & jumpers)
+QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersAfterQualifications(CompetitionInfo *competition, QVector<Jumper *> jumpers)
 {
     CompetitionResults * results = &competition->getAdvancementCompetition()->getResultsReference();
 
@@ -201,6 +201,8 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersAfterQualifica
                     toReturn.push_back(jumper);
         }
     }
+    qDebug()<<"TORETURN";
+    qDebug()<<toReturn;
     return toReturn;
 }
 

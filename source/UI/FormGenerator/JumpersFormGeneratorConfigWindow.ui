@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1425</width>
-    <height>939</height>
+    <height>973</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <string notr="true">background-color: rgb(245, 245, 245);
 color: rgb(0, 0, 0);</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_title">
      <item>
@@ -669,7 +669,27 @@ background-color: rgb(172, 219, 157);
       </layout>
      </item>
      <item>
-      <widget class="QTableView" name="tableView"/>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QTableView" name="tableView"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Ctrl+D aby usunąć z listy zawodnika. Ctrl+Alt+D aby usunąć wszystkich zawodników poza zaznaczonym. Użyj Ctrl aby wybierać wielu zawodników na raz</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -709,7 +729,6 @@ background-color: rgb(186, 151, 184);
   <tabstop>doubleSpinBox_minTend</tabstop>
   <tabstop>doubleSpinBox_tendAlignment</tabstop>
   <tabstop>doubleSpinBox_maxTend</tabstop>
-  <tabstop>tableView</tabstop>
   <tabstop>doubleSpinBox_formVariability</tabstop>
   <tabstop>doubleSpinBox_formBonus</tabstop>
   <tabstop>doubleSpinBox_minForm</tabstop>

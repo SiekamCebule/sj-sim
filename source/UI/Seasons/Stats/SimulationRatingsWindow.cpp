@@ -1,6 +1,8 @@
 #include "SimulationRatingsWindow.h"
 #include "ui_SimulationRatingsWindow.h"
 #include "../../../utilities/functions.h"
+#include "../../../global/PointsForPlacesPreset.h"
+#include "../../../global/GlobalDatabase.h"
 #include <QSortFilterProxyModel>
 
 SimulationRatingsWindow::SimulationRatingsWindow(SimulationSave * save, QWidget *parent) :
@@ -59,6 +61,9 @@ SimulationRatingsWindow::SimulationRatingsWindow(SimulationSave * save, QWidget 
     worstFlightModel = new SimulationRecordsTableModel(save, this);
     ui->tableView_worstFlight->setModel(worstFlightModel);
 
+    generalClassificationModel = new GeneralClassificationTableModel(this);
+    ui->tableView_generalClassification->setModel(generalClassificationModel);
+
     connect(ui->tabWidget, &QTabWidget::currentChanged, this, [this](int index){
         if(index == 0)
         {
@@ -103,6 +108,14 @@ SimulationRatingsWindow::SimulationRatingsWindow(SimulationSave * save, QWidget 
         }
     });
     emit ui->checkBox_showHidden->stateChanged(0);
+
+    int i=1;
+    for(auto & preset : GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets()){
+        ui->comboBox_preset->addItem(QString::number(i) + ". " + preset.getName());
+        i++;
+    }
+
+    connect(ui->comboBox_preset, &QComboBox::currentIndexChanged, this, &SimulationRatingsWindow::fillWindow);
 }
 
 SimulationRatingsWindow::~SimulationRatingsWindow()
@@ -344,13 +357,13 @@ void SimulationRatingsWindow::fillWindow()
                     double val = jump.getDistance();
                     if(bestDistanceRecords.size() < recordsMaxSize)
                         bestDistanceRecords.push_back(qMakePair(&jump, val));
-                    else if(val > bestDistanceRecords.last().second)
+                    if(val > bestDistanceRecords.last().second)
                         bestDistanceRecords[bestDistanceRecords.count() - 1] = qMakePair(&jump, val);
                     std::sort(bestDistanceRecords.begin(), bestDistanceRecords.end(), &descendingCompForRecords);
                     //najgorsze
                     if(worstDistanceRecords.size() < recordsMaxSize)
                         worstDistanceRecords.push_back(qMakePair(&jump, val));
-                    else if(val < worstDistanceRecords.last().second)
+                    if(val < worstDistanceRecords.last().second)
                         worstDistanceRecords[worstDistanceRecords.count() - 1] = qMakePair(&jump, val);
                     std::sort(worstDistanceRecords.begin(), worstDistanceRecords.end(), &ascendingCompForRecords);
 
@@ -359,13 +372,13 @@ void SimulationRatingsWindow::fillWindow()
                     val = jump.getPoints();
                     if(bestPointsRecords.size() < recordsMaxSize)
                         bestPointsRecords.push_back(qMakePair(&jump, val));
-                    else if(val > bestPointsRecords.last().second)
+                    if(val > bestPointsRecords.last().second)
                         bestPointsRecords[bestPointsRecords.count() - 1] = qMakePair(&jump, val);
                     std::sort(bestPointsRecords.begin(), bestPointsRecords.end(), &descendingCompForRecords);
                     //najgorsze
                     if(worstPointsRecords.size() < recordsMaxSize)
                         worstPointsRecords.push_back(qMakePair(&jump, val));
-                    else if(val < worstPointsRecords.last().second)
+                    if(val < worstPointsRecords.last().second)
                         worstPointsRecords[worstPointsRecords.count() - 1] = qMakePair(&jump, val);
                     std::sort(worstPointsRecords.begin(), worstPointsRecords.end(), &ascendingCompForRecords);
 
@@ -376,13 +389,13 @@ void SimulationRatingsWindow::fillWindow()
                         val = jump.getJudgesPoints();
                         if(bestJudgesRecords.size() < recordsMaxSize)
                             bestJudgesRecords.push_back(qMakePair(&jump, val));
-                        else if(val > bestJudgesRecords.last().second)
+                        if(val > bestJudgesRecords.last().second)
                             bestJudgesRecords[bestJudgesRecords.count() - 1] = qMakePair(&jump, val);
                         std::sort(bestJudgesRecords.begin(), bestJudgesRecords.end(), &descendingCompForRecords);
                         //najgorsze
                         if(worstJudgesRecords.size() < recordsMaxSize)
                             worstJudgesRecords.push_back(qMakePair(&jump, val));
-                        else if(val < worstJudgesRecords.last().second)
+                        if(val < worstJudgesRecords.last().second)
                             worstJudgesRecords[worstJudgesRecords.count() - 1] = qMakePair(&jump, val);
                         std::sort(worstJudgesRecords.begin(), worstJudgesRecords.end(), &ascendingCompForRecords);
                     }
@@ -392,13 +405,13 @@ void SimulationRatingsWindow::fillWindow()
                     val = jump.getAveragedWind();
                     if(bestWindRecords.size() < recordsMaxSize)
                         bestWindRecords.push_back(qMakePair(&jump, val));
-                    else if(val > bestWindRecords.last().second)
+                    if(val > bestWindRecords.last().second)
                         bestWindRecords[bestWindRecords.count() - 1] = qMakePair(&jump, val);
                     std::sort(bestWindRecords.begin(), bestWindRecords.end(), &descendingCompForRecords);
                     //najgorsze
                     if(worstWindRecords.size() < recordsMaxSize)
                         worstWindRecords.push_back(qMakePair(&jump, val));
-                    else if(val < worstWindRecords.last().second)
+                    if(val < worstWindRecords.last().second)
                         worstWindRecords[worstWindRecords.count() - 1] = qMakePair(&jump, val);
                     std::sort(worstWindRecords.begin(), worstWindRecords.end(), &ascendingCompForRecords);
 
@@ -407,13 +420,13 @@ void SimulationRatingsWindow::fillWindow()
                     val = jump.getSimulationDataReference().getTakeoffRating();
                     if(bestTakeoffRecords.size() < recordsMaxSize)
                         bestTakeoffRecords.push_back(qMakePair(&jump, val));
-                    else if(val > bestTakeoffRecords.last().second)
+                    if(val > bestTakeoffRecords.last().second)
                         bestTakeoffRecords[bestTakeoffRecords.count() - 1] = qMakePair(&jump, val);
                     std::sort(bestTakeoffRecords.begin(), bestTakeoffRecords.end(), &descendingCompForRecords);
                     //najgorsze
                     if(worstTakeoffRecords.size() < recordsMaxSize)
                         worstTakeoffRecords.push_back(qMakePair(&jump, val));
-                    else if(val < worstTakeoffRecords.last().second)
+                    if(val < worstTakeoffRecords.last().second)
                         worstTakeoffRecords[worstTakeoffRecords.count() - 1] = qMakePair(&jump, val);
                     std::sort(worstTakeoffRecords.begin(), worstTakeoffRecords.end(), &ascendingCompForRecords);
 
@@ -422,13 +435,13 @@ void SimulationRatingsWindow::fillWindow()
                     val = jump.getSimulationDataReference().getFlightRating();
                     if(bestFlightRecords.size() < recordsMaxSize)
                         bestFlightRecords.push_back(qMakePair(&jump, val));
-                    else if(val > bestFlightRecords.last().second)
+                    if(val > bestFlightRecords.last().second)
                         bestFlightRecords[bestFlightRecords.count() - 1] = qMakePair(&jump, val);
                     std::sort(bestFlightRecords.begin(), bestFlightRecords.end(), &descendingCompForRecords);
                     //najgorsze
                     if(worstFlightRecords.size() < recordsMaxSize)
                         worstFlightRecords.push_back(qMakePair(&jump, val));
-                    else if(val < worstFlightRecords.last().second)
+                    if(val < worstFlightRecords.last().second)
                         worstFlightRecords[worstFlightRecords.count() - 1] = qMakePair(&jump, val);
                     std::sort(worstFlightRecords.begin(), worstFlightRecords.end(), &ascendingCompForRecords);
                 }
@@ -487,6 +500,188 @@ void SimulationRatingsWindow::fillWindow()
     ui->tableView_worstFlight->setModel(nullptr);
     ui->tableView_worstFlight->setModel(worstFlightModel);
     ui->tableView_worstFlight->resizeColumnsToContents();
+
+    //-------Fakty-------//
+    //Rozegrane konkursy
+    int jumpsCount = 0;
+    int jumpsK = 0;
+    int jumpsHS = 0;
+    double averageDistance = 0;
+    QHash<Jumper *, int> winsStat;
+    QHash<Jumper *, int> podiumsStat;
+    QSet<CompetitionInfo *> comps;
+    int telemarks = 0;
+    int bothLegs = 0;
+    int support = 0;
+    int fall = 0;
+    CompetitionInfo * mostDifferenceBetweenWinnerCompetition = nullptr;
+    CompetitionInfo * worstDifferenceBetweenWinnerCompetition = nullptr;
+    double mostDifferenceBetweenWinner = 0;
+    double worstDifferenceBetweenWinner = 100000000000;
+    CompetitionInfo * mostDifferenceBetween10Competition = nullptr;
+    CompetitionInfo * worstDifferenceBetween10Competition = nullptr;
+    double mostDifferenceBetween10 = 0;
+    double worstDifferenceBetween10 = 100000000000;
+    double averageJudges = 0;
+    int judgesCount = 0;
+    double averageWind = 0;
+    for(auto & key : jumpersSingleResults.keys())
+    {
+        for(auto & res : jumpersSingleResults.value(key))
+        {
+            if(res->getPosition() == 1)
+                winsStat[res->getJumper()] += 1;
+            if(res->getPosition() <= 3)
+                podiumsStat[res->getJumper()] += 1;
+            for(auto & jump : res->getJumpsReference())
+            {
+                if(jump.getDSQ() == false)
+                {
+                    if(jump.getDistance() >= jump.getHill()->getKPoint())
+                        jumpsK += 1;
+                    if(jump.getDistance() >= jump.getHill()->getHSPoint())
+                        jumpsHS += 1;
+                    jumpsCount += 1;
+                    averageDistance += jump.getDistance();
+                    if(res->getCompetition()->getRulesPointer()->getHasJudgesPoints())
+                    {
+                        for(auto & jg : jump.getJudges())
+                        {
+                            averageJudges += jg;
+                            judgesCount += 1;
+                        }
+                    }
+                    averageWind += jump.getAveragedWind();
+                    switch(jump.getLanding().getType())
+                    {
+                    case Landing::TelemarkLanding:
+                        telemarks++;
+                        break;
+                    case Landing::BothLegsLanding:
+                        bothLegs++;
+                        break;
+                    case Landing::SupportLanding:
+                        support++;
+                        break;
+                    case Landing::Fall:
+                        fall++;
+                        break;
+                    }
+                }
+            }
+            if(res->getCompetition()->getCancelled() == false)
+                comps.insert(res->getCompetition());
+        }
+    }
+    averageDistance /= jumpsCount;
+    averageJudges /= judgesCount;
+    averageWind /= jumpsCount;
+    QString text = QString::number(comps.size()) + " (";
+    int seriesCount = 0;
+    for(auto & comp : comps)
+    {
+        CompetitionResults * results = &comp->getResultsReference();
+        if(results->getResultsReference().count() >= 2)
+        {
+            double diff = results->getResultsReference().first().getPointsSum() - results->getResultsReference()[1].getPointsSum();
+            if(diff > mostDifferenceBetweenWinner){
+                mostDifferenceBetweenWinner = diff;
+                mostDifferenceBetweenWinnerCompetition = comp;
+            }
+            if(diff < worstDifferenceBetweenWinner){
+                worstDifferenceBetweenWinner = diff;
+                worstDifferenceBetweenWinnerCompetition = comp;
+            }
+        }
+        if(results->getResultsReference().count() >= 10)
+        {
+            double diff = results->getResultsReference().first().getPointsSum() - results->getResultsReference()[9].getPointsSum();
+            if(diff > mostDifferenceBetween10){
+                mostDifferenceBetween10 = diff;
+                mostDifferenceBetween10Competition = comp;
+            }
+            if(diff < worstDifferenceBetween10){
+                worstDifferenceBetween10 = diff;
+                worstDifferenceBetween10Competition = comp;
+            }
+        }
+        seriesCount += comp->getRulesPointer()->getRoundsReference().count();
+    }
+    text += QString::number(seriesCount) + tr(" serii)");
+    ui->label_playedCompetitions->setText(text);
+
+    ui->label_jumpsCount->setText(QString::number(jumpsCount));
+    ui->label_kpointjumps->setText(QString::number(jumpsK) + " (" + QString::number(double(jumpsK) / double(jumpsCount) * 100)+ "%)");
+    ui->label_hsjumps->setText(QString::number(jumpsHS) + " (" + QString::number(double(jumpsHS) / double(jumpsCount) * 100) + "%)");
+    ui->label_saveavgdist->setText(QString::number(averageDistance) + "m");
+
+    QList wins = winsStat.values();
+    std::sort(wins.begin(), wins.end(), std::greater<int>());
+    ui->label_wins->setText(QString::number(wins.first()));
+ui->label_winsJumper->setText(winsStat.key(wins.first())->getNameAndSurname() + " (" + winsStat.key(wins.first())->getCountryCode() + ")");
+
+    QList podiums = podiumsStat.values();
+    std::sort(podiums.begin(), podiums.end(), std::greater<int>());
+    ui->label_podiums->setText(QString::number(podiums.first()));
+ui->label_podiumsJumper->setText(podiumsStat.key(podiums.first())->getNameAndSurname() + " (" + podiumsStat.key(podiums.first())->getCountryCode() + ")");
+
+    ui->label_telemarks->setText(QString::number(telemarks) + " (" + QString::number(double(telemarks) / double(jumpsCount) * 100) + "%)");
+    ui->label_bothLegs->setText(QString::number(bothLegs) + " (" + QString::number(double(bothLegs) / double(jumpsCount) * 100) + "%)");
+    ui->label_support->setText(QString::number(support) + " (" + QString::number(double(support) / double(jumpsCount) * 100) + "%)");
+    ui->label_fall->setText(QString::number(fall) + " (" + QString::number(double(fall) / double(jumpsCount) * 100) + "%)");
+
+    ui->label_biggerWin->setText(QString::number(mostDifferenceBetweenWinner) + tr("pkt"));
+    for(auto & season : save->getSeasonsReference())
+    {
+        Hill * hill = mostDifferenceBetweenWinnerCompetition->getHill();
+        ui->label_biggerWinJumper->setText("   " + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getCalendarReference().getCompetitionsReference().indexOf(mostDifferenceBetweenWinnerCompetition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
+    }
+    ui->label_smallestWin->setText(QString::number(worstDifferenceBetweenWinner) + tr("pkt"));
+    for(auto & season : save->getSeasonsReference())
+    {
+        Hill * hill = worstDifferenceBetweenWinnerCompetition->getHill();
+        ui->label_smallestWinJumper->setText("   " + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getCalendarReference().getCompetitionsReference().indexOf(worstDifferenceBetweenWinnerCompetition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
+    }
+
+    ui->label_10Largestdifference->setText(QString::number(mostDifferenceBetween10) + tr("pkt"));
+    for(auto & season : save->getSeasonsReference())
+    {
+        Hill * hill = mostDifferenceBetween10Competition->getHill();
+        ui->label_10Largestdifference->setText(QString::number(mostDifferenceBetween10) + tr("pkt   ") + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getCalendarReference().getCompetitionsReference().indexOf(mostDifferenceBetween10Competition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
+    }
+    ui->label_10smallestDifference->setText(QString::number(worstDifferenceBetween10) + tr("pkt"));
+    for(auto & season : save->getSeasonsReference())
+    {
+        Hill * hill = worstDifferenceBetween10Competition->getHill();
+        ui->label_10smallestDifference->setText(QString::number(worstDifferenceBetween10) + tr("pkt   ") + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getCalendarReference().getCompetitionsReference().indexOf(worstDifferenceBetween10Competition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
+    }
+    ui->label_saveAvgJudges->setText(QString::number(averageJudges) + tr("pkt"));
+    ui->label_saveAvgWind->setText(QString::number(averageWind) + tr("m/s"));
+
+    QHash<Jumper *, double> generalClassification;
+    QMap<int, double> pointsForPlaces = GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets()[ui->comboBox_preset->currentIndex()].getPointsForPlacesReference();
+
+    for(auto & jumper : jumpersSingleResults.keys()){
+        for(auto & result : jumpersSingleResults.value(jumper)){
+            generalClassification[result->getJumper()] = generalClassification.value(result->getJumper()) + pointsForPlaces.value(result->getPosition());
+        }
+    }
+    QVector<QPair<Jumper *, double>> vector;
+    /*QHashIterator<Jumper *, double> it(generalClassification);
+    while (it.hasNext())
+    {
+        qDebug()<<it.key()<<" k";
+        vector.append(qMakePair(it.key(), it.value()));
+    }*/
+    for (auto [key, value] : generalClassification.asKeyValueRange()) {
+        // Wypisujemy klucz i wartość na konsolę
+        qDebug() << key << value;
+        vector.append(qMakePair(key, value));
+    }
+    std::sort(vector.begin(), vector.end(), rankingComp);
+    generalClassificationModel->setResults(vector);
+    ui->tableView_generalClassification->setModel(nullptr);
+    ui->tableView_generalClassification->setModel(generalClassificationModel);
 }
 
 void SimulationRatingsWindow::setupConnections()
@@ -500,6 +695,16 @@ void SimulationRatingsWindow::setupConnections()
 QCheckBox *SimulationRatingsWindow::getShowFormCheckBox()
 {
     return ui->checkBox_showHidden;
+}
+
+GeneralClassificationTableModel *SimulationRatingsWindow::getGeneralClassificationModel() const
+{
+    return generalClassificationModel;
+}
+
+void SimulationRatingsWindow::setGeneralClassificationModel(GeneralClassificationTableModel *newGeneralClassificationModel)
+{
+    generalClassificationModel = newGeneralClassificationModel;
 }
 
 HillTypesCheckBoxesWidget *SimulationRatingsWindow::getHillTypesCheckBoxes() const

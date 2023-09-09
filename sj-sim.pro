@@ -23,12 +23,16 @@ SOURCES += \
     source/UI/DatabaseEditor/ListModels/CompetitionRulesListModel.cpp \
     source/UI/DatabaseEditor/ListModels/HillsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/JumpersListModel.cpp \
+    source/UI/DatabaseEditor/ListModels/JumpersListsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/PointsForPlacesPresetsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/SeasonHillsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/SeasonJumpersListModel.cpp \
     source/UI/EditorWidgets/ClassificationEditorWidget.cpp \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.cpp \
+    source/UI/EditorWidgets/EditStartListWithJumpersListsWindow.cpp \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.cpp \
+    source/UI/EditorWidgets/JumpersListEditorWindow.cpp \
+    source/UI/EditorWidgets/JumpersListsListItemWidget.cpp \
     source/UI/EditorWidgets/KOSystem/KOGroupEditorWidget.cpp \
     source/UI/EditorWidgets/KOSystem/KOGroupInfoWidget.cpp \
     source/UI/EditorWidgets/KOSystem/KOGroupsListView.cpp \
@@ -67,6 +71,7 @@ SOURCES += \
     source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.cpp \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.cpp \
     source/UI/Seasons/Stats/JumperStatsWindow.cpp \
+    source/UI/Seasons/Stats/Models/GeneralClassificationTableModel.cpp \
     source/UI/Seasons/Stats/Models/SimulationRatingTableModel.cpp \
     source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.cpp \
     source/UI/Seasons/Stats/SimulationRatingsWindow.cpp \
@@ -105,6 +110,7 @@ SOURCES += \
     source/main.cpp \
     source/UI/mainwindow.cpp \
     source/seasons/ClassificationSingleResult.cpp \
+    source/seasons/SaveJumpersList.cpp \
     source/seasons/Season.cpp \
     source/seasons/SeasonCalendar.cpp \
     source/seasons/SeasonCalendarPreset.cpp \
@@ -146,12 +152,16 @@ HEADERS += \
     source/UI/DatabaseEditor/ListModels/CompetitionRulesListModel.h \
     source/UI/DatabaseEditor/ListModels/HillsListModel.h \
     source/UI/DatabaseEditor/ListModels/JumpersListModel.h \
+    source/UI/DatabaseEditor/ListModels/JumpersListsListModel.h \
     source/UI/DatabaseEditor/ListModels/PointsForPlacesPresetsListModel.h \
     source/UI/DatabaseEditor/ListModels/SeasonHillsListModel.h \
     source/UI/DatabaseEditor/ListModels/SeasonJumpersListModel.h \
     source/UI/EditorWidgets/ClassificationEditorWidget.h \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.h \
+    source/UI/EditorWidgets/EditStartListWithJumpersListsWindow.h \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h \
+    source/UI/EditorWidgets/JumpersListEditorWindow.h \
+    source/UI/EditorWidgets/JumpersListsListItemWidget.h \
     source/UI/EditorWidgets/KOSystem/KOGroupEditorWidget.h \
     source/UI/EditorWidgets/KOSystem/KOGroupInfoWidget.h \
     source/UI/EditorWidgets/KOSystem/KOGroupsListView.h \
@@ -190,6 +200,7 @@ HEADERS += \
     source/UI/Seasons/Stats/FilteringWidgets/HillTypesCheckBoxesWidget.h \
     source/UI/Seasons/Stats/FilteringWidgets/SerieTypesComboBoxesWidget.h \
     source/UI/Seasons/Stats/JumperStatsWindow.h \
+    source/UI/Seasons/Stats/Models/GeneralClassificationTableModel.h \
     source/UI/Seasons/Stats/Models/SimulationRatingTableModel.h \
     source/UI/Seasons/Stats/Models/SimulationRecordsTableModel.h \
     source/UI/Seasons/Stats/SimulationRatingsWindow.h \
@@ -227,6 +238,7 @@ HEADERS += \
     source/global/PointsForPlacesPreset.h \
     source/global/TreeItem.h \
     source/seasons/ClassificationSingleResult.h \
+    source/seasons/SaveJumpersList.h \
     source/seasons/Season.h \
     source/seasons/SeasonCalendar.h \
     source/seasons/SeasonCalendarPreset.h \
@@ -261,7 +273,10 @@ FORMS += \
     source/UI/DatabaseEditor/DatabaseItemsListView.ui \
     source/UI/EditorWidgets/ClassificationEditorWidget.ui \
     source/UI/EditorWidgets/CompetitionRulesEditorWidget.ui \
+    source/UI/EditorWidgets/EditStartListWithJumpersListsWindow.ui \
     source/UI/EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.ui \
+    source/UI/EditorWidgets/JumpersListEditorWindow.ui \
+    source/UI/EditorWidgets/JumpersListsListItemWidget.ui \
     source/UI/EditorWidgets/KOSystem/KOGroupEditorWidget.ui \
     source/UI/EditorWidgets/KOSystem/KOGroupInfoWidgetui \
     source/UI/EditorWidgets/KOSystem/KOGroupsListView.ui \

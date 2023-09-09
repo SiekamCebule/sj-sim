@@ -9,6 +9,7 @@
 #include "FilteringWidgets/HillTypesCheckBoxesWidget.h"
 #include "Models/SimulationRatingTableModel.h"
 #include "Models/SimulationRecordsTableModel.h"
+#include "Models/GeneralClassificationTableModel.h"
 #include "../../../seasons/SimulationSave.h"
 
 namespace Ui {
@@ -59,12 +60,16 @@ private:
     SimulationRecordsTableModel * worstTakeoffModel;
     SimulationRecordsTableModel * bestFlightModel;
     SimulationRecordsTableModel * worstFlightModel;
+    //General classification models
+    GeneralClassificationTableModel * generalClassificationModel;
 
 public:
     ClassificationsCheckBoxesWidget *getClassificationsCheckBoxes() const;
     CompetitionsRangeComboBoxesWidget *getRangeComboBoxes() const;
     SerieTypesComboBoxesWidget *getSerieTypesCheckBoxes() const;
     HillTypesCheckBoxesWidget *getHillTypesCheckBoxes() const;
+    GeneralClassificationTableModel *getGeneralClassificationModel() const;
+    void setGeneralClassificationModel(GeneralClassificationTableModel *newGeneralClassificationModel);
 };
 
 #endif // SIMULATIONRATINGSWINDOW_H

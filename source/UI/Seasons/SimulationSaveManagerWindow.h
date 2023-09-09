@@ -64,6 +64,8 @@ private:
     ClassificationsArchiveListModel * classificationsArchiveModel;
     ClassificationResultsTableView * archiveClassificationResults;
 
+    DatabaseItemsListView * jumpersListsListView;
+
     void whenClassificationsComboBoxIndexChanged(int index);
 
 public:

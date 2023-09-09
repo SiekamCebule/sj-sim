@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1405</width>
-    <height>953</height>
+    <height>992</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -237,7 +237,7 @@ background-color: rgb(249, 255, 241);
           </font>
          </property>
          <property name="currentIndex">
-          <number>6</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="page_jumpers">
           <property name="geometry">
@@ -245,7 +245,7 @@ background-color: rgb(249, 255, 241);
             <x>0</x>
             <y>0</y>
             <width>671</width>
-            <height>642</height>
+            <height>648</height>
            </rect>
           </property>
           <attribute name="label">
@@ -320,7 +320,7 @@ background-color: rgb(255, 223, 189);
             <x>0</x>
             <y>0</y>
             <width>671</width>
-            <height>642</height>
+            <height>648</height>
            </rect>
           </property>
           <attribute name="label">
@@ -358,7 +358,7 @@ background-color: rgb(255, 223, 189);
             <x>0</x>
             <y>0</y>
             <width>671</width>
-            <height>642</height>
+            <height>648</height>
            </rect>
           </property>
           <attribute name="label">
@@ -396,7 +396,7 @@ background-color: rgb(255, 223, 189);
             <x>0</x>
             <y>0</y>
             <width>671</width>
-            <height>642</height>
+            <height>648</height>
            </rect>
           </property>
           <attribute name="label">
@@ -414,7 +414,7 @@ background-color: rgb(255, 223, 189);
             <x>0</x>
             <y>0</y>
             <width>671</width>
-            <height>642</height>
+            <height>648</height>
            </rect>
           </property>
           <attribute name="label">
@@ -446,13 +446,23 @@ background-color: rgb(255, 223, 189);
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="page_jumpersLists">
+          <attribute name="label">
+           <string>Listy zawodników</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_16">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_jumpersListsListView"/>
+           </item>
+          </layout>
+         </widget>
          <widget class="QWidget" name="page">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
             <width>671</width>
-            <height>642</height>
+            <height>648</height>
            </rect>
           </property>
           <attribute name="label">
@@ -503,7 +513,7 @@ background-color: rgb(255, 223, 189);
                 <x>0</x>
                 <y>0</y>
                 <width>653</width>
-                <height>534</height>
+                <height>540</height>
                </rect>
               </property>
               <attribute name="label">
@@ -527,6 +537,14 @@ background-color: rgb(255, 223, 189);
           </layout>
          </widget>
          <widget class="QWidget" name="page_saveSettings">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>671</width>
+            <height>648</height>
+           </rect>
+          </property>
           <attribute name="label">
            <string>Ustawienia zapisu symulacji</string>
           </attribute>

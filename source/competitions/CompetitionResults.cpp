@@ -277,6 +277,17 @@ QVector<Jumper *> CompetitionResults::getJumpersByTeamResults(CompetitionResults
     return jumpers;
 }
 
+void CompetitionResults::fixSingleResultsJumps()
+{
+    for(auto & result : this->results)
+    {
+        for(auto & jump : result.getJumpsReference())
+        {
+            jump.setSingleResult(&result);
+        }
+    }
+}
+
 QVector<CompetitionSingleResult> CompetitionResults::getResults() const
 {
     return results;

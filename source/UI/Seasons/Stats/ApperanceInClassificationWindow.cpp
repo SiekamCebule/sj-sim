@@ -46,6 +46,7 @@ void ApperanceInClassificationWindow::setupChart()
     chart->legend()->hide();
     chart->setTitle(tr("Miejsca w klasyfikacji"));
     chart->setTitleFont(QFont("Quicksand Medium", 15, 1, false));
+    chart->setAnimationOptions(QChart::SeriesAnimations);
     chartView = new QChartView(this);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setRubberBand(QChartView::HorizontalRubberBand);
@@ -83,7 +84,7 @@ void ApperanceInClassificationWindow::fillChart()
     {
         if(pos < bestPos)
             bestPos = pos;
-        else if(pos > worstPos)
+        if(pos > worstPos)
             worstPos = pos;
         avgPos += pos;
     }

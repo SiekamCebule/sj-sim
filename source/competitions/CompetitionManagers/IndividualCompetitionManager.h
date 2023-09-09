@@ -22,7 +22,7 @@ public:
     void updateCompetitorsAdvanceStatuses();
 
     QVector<Jumper *> getFilteredJumpersForNextRound(bool checkKO = false);
-    static QVector<Jumper *> getFilteredJumpersAfterQualifications(CompetitionInfo *competition, QVector<Jumper *> &jumpers);
+    static QVector<Jumper *> getFilteredJumpersAfterQualifications(CompetitionInfo *competition, QVector<Jumper *> jumpers);
     static QVector<Jumper *> getFilteredJumpersByClassification(CompetitionInfo *competition, Classification * classification, QVector<Jumper *> & jumpers);
 
     QVector<KOGroup> getFilteredGroupsForNextRound();

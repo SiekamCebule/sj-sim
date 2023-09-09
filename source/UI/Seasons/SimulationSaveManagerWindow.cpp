@@ -9,6 +9,7 @@
 #include "../Competition/CompetitionManagerWindow.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
+#include "../EditorWidgets/JumpersListEditorWindow.h"
 #include "../ResultsShowing/JumpDataDetailedInfoWindow.h"
 #include "../Competition/JumperCompetitionResultsWidget.h"
 #include "../Competition/Results/ResultsTableModel.h"
@@ -117,6 +118,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
 
     //-----//
 
+    simulationSave->getActualSeason()->getCalendarReference().fixCompetitionsHills(&simulationSave->getHillsReference(), simulationSave->getHillsReference().first());
     calendarTableModel = new CalendarEditorTableModel(&simulationSave->getActualSeason()->getCalendarReference(), &simulationSave->getHillsReference(), &simulationSave->getCompetitionRulesReference(), simulationSave->getNextCompetitionIndex(), this);
     calendarEditor = new CalendarEditorWidget(calendarTableModel, &simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
     ui->verticalLayout_calendar->addWidget(calendarEditor);
@@ -129,7 +131,6 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     ui->verticalLayout_classificationEditor->addWidget(classificationEditor);
 
     classificationsListView = new DatabaseItemsListView(DatabaseItemsListView::ClassificationItems, true, false, false, this);
-    classificationsListView->setInsertLast(true);
     classificationsListView->setClassifications(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
     classificationsListView->setupListModel();
     classificationsListView->selectOnlyFirstRow();
@@ -213,6 +214,32 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
 
     connect(classificationResultsTableView->getTableView(), &QTableView::doubleClicked, this, &SimulationSaveManagerWindow::showClassificationApperanceWindowAfterListClick);
     connect(archiveClassificationResults->getTableView(), &QTableView::doubleClicked, this, &SimulationSaveManagerWindow::showClassificationApperanceWindowAfterListClick);
+
+    jumpersListsListView = new DatabaseItemsListView(DatabaseItemsListView::JumpersListsItems, true, true, true, this);
+    jumpersListsListView->setJumpersLists(&simulationSave->getJumpersListsReference());
+    jumpersListsListView->setupListModel();
+    jumpersListsListView->selectOnlyFirstRow();
+    ui->verticalLayout_jumpersListsListView->addWidget(jumpersListsListView);
+    connect(jumpersListsListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex & index){
+        SaveJumpersList * list = &simulationSave->getJumpersListsReference()[index.row()];
+        JumpersListEditorWindow * editor = new JumpersListEditorWindow(this, list->getName());
+        editor->setAllJumpers(simulationSave->getJumpersReference());
+        editor->setSelectedJumpers(list->getJumpersReference());
+        editor->updateUnselectedJumpers();
+        editor->getSelectedJumpersListView()->setSeasonJumpers(&editor->getSelectedJumpersReference());
+        editor->getSelectedJumpersListView()->setupListModel();
+        editor->getSelectedJumpersListView()->hideInstructions();
+        editor->getUnselectedJumpersListView()->setSeasonJumpers(&editor->getUnselectedJumpersReference());
+        editor->getUnselectedJumpersListView()->setupListModel();
+        editor->getUnselectedJumpersListView()->hideInstructions();
+
+        if(editor->exec() == QDialog::Accepted)
+        {
+            list->setJumpers(editor->getSelectedJumpers());
+            list->setName(editor->getNameFromLineEdit());
+            emit jumpersListsListView->getListModel()->dataChanged(jumpersListsListView->getListModel()->index(0), jumpersListsListView->getListModel()->index(jumpersListsListView->getListModel()->rowCount() - 1));
+        }
+    });
 }
 
 void SimulationSaveManagerWindow::showClassificationApperanceWindowAfterListClick(const QModelIndex &index)
@@ -567,6 +594,12 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
                 {
                     emit ui->comboBox_classifications->currentIndexChanged(ui->comboBox_classifications->currentIndex());
                 }
+
+                for(auto & season : simulationSave->getSeasonsReference())
+                    for(auto & comp : season.getCalendarReference().getCompetitionsReference())
+                    {
+                        comp->getResultsReference().fixSingleResultsJumps();
+                    }
 
                 simulationSave->updateNextCompetitionIndex();
                 fillNextCompetitionInformations();

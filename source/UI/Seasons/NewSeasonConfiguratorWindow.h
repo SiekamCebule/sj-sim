@@ -38,10 +38,12 @@ private:
     QVector<Jumper *> jumpers;
     QVector<Hill *> hills;
     QVector<CompetitionRules> competitionsRules;
+    QVector<SaveJumpersList> jumpersLists;
 
     DatabaseItemsListView * jumpersListView;
     DatabaseItemsListView * hillsListView;
     DatabaseItemsListView * rulesListView;
+    DatabaseItemsListView * jumpersListsListView;
 
     JumperEditorWidget * jumperEditor;
     HillEditorWidget * hillEditor;
@@ -81,6 +83,11 @@ public:
     QToolBox * getToolBox();
     bool getNextSeason() const;
     void setNextSeason(bool newNextSeason);
+    DatabaseItemsListView *getJumpersListsListView() const;
+    void setJumpersListsListView(DatabaseItemsListView *newJumpersListsListView);
+    QVector<SaveJumpersList> getJumpersLists() const;
+    QVector<SaveJumpersList> & getJumpersListsReference();
+    void setJumpersLists(const QVector<SaveJumpersList> &newJumpersLists);
 };
 
 #endif // NEWSEASONCONFIGURATORWINDOW_H

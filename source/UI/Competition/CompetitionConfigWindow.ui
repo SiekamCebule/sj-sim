@@ -69,7 +69,7 @@ color: rgb(26, 95, 180);
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_startList" stretch="0,0,0,0">
+      <layout class="QVBoxLayout" name="verticalLayout_startList" stretch="0,0,0,0,0">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
@@ -174,7 +174,8 @@ color: rgb(26, 95, 180);
 border: 1px solid rgb(0, 59, 23);
 border-radius: 6px;
 color: rgb(0, 0, 0);
-background-color: rgb(220, 236, 255)
+background-color: rgb(220, 236, 255);
+padding: 2px;
 }
 QPushButton:hover{
 background-color: rgb(240, 255, 255);
@@ -182,6 +183,37 @@ background-color: rgb(240, 255, 255);
          </property>
          <property name="text">
           <string>Domyślna kolejność</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_jumpersLists">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+color: rgb(0, 0, 0);
+background-color: rgb(225, 185, 255);
+padding: 2px;
+}
+QPushButton:hover{
+background-color: rgb(241, 200, 255);
+}</string>
+         </property>
+         <property name="text">
+          <string>Listy zawodników</string>
          </property>
         </widget>
        </item>

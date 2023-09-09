@@ -88,7 +88,7 @@ color: rgb(26, 95, 180);
 background-color: rgb(253, 253, 253);</string>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>5</number>
        </property>
        <property name="tabSpacing">
         <number>6</number>
@@ -99,7 +99,7 @@ background-color: rgb(253, 253, 253);</string>
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>699</height>
+          <height>666</height>
          </rect>
         </property>
         <attribute name="label">
@@ -153,7 +153,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>646</height>
+          <height>666</height>
          </rect>
         </property>
         <attribute name="label">
@@ -216,7 +216,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>646</height>
+          <height>666</height>
          </rect>
         </property>
         <attribute name="label">
@@ -254,7 +254,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>646</height>
+          <height>666</height>
          </rect>
         </property>
         <attribute name="label">
@@ -290,7 +290,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>646</height>
+          <height>666</height>
          </rect>
         </property>
         <attribute name="label">
@@ -322,13 +322,23 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="page">
+        <attribute name="label">
+         <string>Listy zawodników</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_10">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_jumpersLists"/>
+         </item>
+        </layout>
+       </widget>
        <widget class="QWidget" name="page_settings">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>646</height>
+          <height>666</height>
          </rect>
         </property>
         <attribute name="label">

@@ -41,6 +41,8 @@ public:
     static QVector<QString> getTeamsCodesByIndividualResults(CompetitionResults * results);
     static QVector<Jumper *> getJumpersByTeamResults(CompetitionResults * results);
 
+    void fixSingleResultsJumps();
+
 public:
     QVector<CompetitionSingleResult> getResults() const;
     QVector<CompetitionSingleResult> & getResultsReference();

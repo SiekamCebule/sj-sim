@@ -5,6 +5,7 @@
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/CompetitionRulesEditorWidget.h"
 #include "../EditorWidgets/TeamsEditing/TeamEditorWidget.h"
+#include "../EditorWidgets/EditStartListWithJumpersListsWindow.h"
 #include "../../global/GlobalDatabase.h"
 #include "../../global/GlobalSimulationSettings.h"
 #include "../../global/CountryFlagsManager.h"
@@ -31,6 +32,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
     simulationSave(save)
 {
     ui->setupUi(this);
+    ui->pushButton_jumpersLists->hide();
     if(simulationSave != nullptr)
         seasonCompetition = simulationSave->getNextCompetition();
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
@@ -135,12 +137,14 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
     if(getType() == SeasonCompetition)
     {
         if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual){
-            jumpersListView->show();
-            teamsTreeView->hide();
+            jumpersListView->setHidden(false);
+            teamsTreeView->setHidden(true);
+            ui->pushButton_jumpersLists->show();
         }
         else if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team){
-            jumpersListView->hide();
-            teamsTreeView->show();
+            jumpersListView->setHidden(true);
+            teamsTreeView->setHidden(false);
+            ui->pushButton_jumpersLists->hide();
         }
 
         ui->pushButton_loadJumpers->hide();
@@ -219,10 +223,15 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
         if(competitionRulesEditor->getCompetitionTypeFromInput() == CompetitionRules::Individual){
             jumpersListView->setHidden(false);
             teamsTreeView->setHidden(true);
+            if(seasonCompetition != nullptr)
+                ui->pushButton_jumpersLists->show();
+            else
+                ui->pushButton_jumpersLists->hide();
         }
         else if(competitionRulesEditor->getCompetitionTypeFromInput() == CompetitionRules::Team){
             jumpersListView->setHidden(true);
             teamsTreeView->setHidden(false);
+            ui->pushButton_jumpersLists->hide();
         }
     });
 
@@ -907,6 +916,37 @@ void CompetitionConfigWindow::on_pushButton_defaultStartListOrder_clicked()
                 KOGroupsList->fillListLayout();
             }
         emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(0, 0), jumpersListView->getListModel()->index(jumpersListView->getListModel()->rowCount() - 1));
+    }
+}
+
+
+void CompetitionConfigWindow::on_pushButton_jumpersLists_clicked()
+{
+    EditStartListWithJumpersListsWindow * window = new EditStartListWithJumpersListsWindow(this);
+    window->setLists(&simulationSave->getJumpersListsReference());
+    window->setupWidgets();
+    if(window->exec() == QDialog::Accepted)
+    {
+        for(auto & status : window->constructJumpersListsStatuses())
+        {
+            if(status.second == JumpersListsListItemWidget::Select)
+            {
+                for(auto & jumper : status.first->getJumpersReference())
+                {
+                    if(seasonCompetitionJumpers.contains(jumper) == false)
+                        seasonCompetitionJumpers.push_back(jumper);
+                }
+            }
+            else if(status.second == JumpersListsListItemWidget::Unselect)
+            {
+                for(auto & jumper : status.first->getJumpersReference())
+                {
+                    if(seasonCompetitionJumpers.contains(jumper) == true)
+                        MyFunctions::removeFromVector(seasonCompetitionJumpers, jumper);
+                }
+            }
+        }
+        jumpersListView->setupListModel();
     }
 }
 

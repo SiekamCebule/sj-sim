@@ -18,6 +18,7 @@
 #include "ListModels/PointsForPlacesPresetsListModel.h"
 #include "ListModels/SeasonJumpersListModel.h"
 #include "ListModels/SeasonHillsListModel.h"
+#include "ListModels/JumpersListsListModel.h"
 
 namespace Ui {
 class DatabaseItemsListView;
@@ -38,7 +39,8 @@ public:
         HillItems,
         CompetitionRulesItems,
         ClassificationItems,
-        PointsForPlacesPresetsItems
+        PointsForPlacesPresetsItems,
+        JumpersListsItems
     };
 
     void setupListModel();
@@ -47,13 +49,15 @@ public:
     void hideInstructions();
     void showInstructions();
 
+    void setRemoveKeySequence(QKeySequence sequence);
+
 signals:
     void listViewDoubleClicked(const QModelIndex &index);
     void listViewClicked(const QModelIndex &index);
     void up();
     void down();
-    void insert();
-    void remove();
+    void insert(QVector<int> insertedRows);
+    void remove(QVector<int> removedRows);
 
 private:
     Ui::DatabaseItemsListView *ui;
@@ -66,6 +70,7 @@ private:
     QVector<CompetitionRules> * competitionRules;
     QVector<Classification *> * classifications;
     QVector<PointsForPlacesPreset> * pointsForPlacesPresets;
+    QVector<SaveJumpersList> * jumpersLists;
 
     QAbstractListModel * listModel;
 
@@ -118,6 +123,8 @@ public:
     void setSeasonHills(QVector<Hill *> *newSeasonHills);
     bool getShowItemsNumbers() const;
     void setShowItemsNumbers(bool newShowItemsNumbers);
+    QVector<SaveJumpersList> *getJumpersLists() const;
+    void setJumpersLists(QVector<SaveJumpersList> *newJumpersLists);
 };
 
 #endif // DATABASEITEMSLISTVIEW_H

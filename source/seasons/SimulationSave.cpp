@@ -78,6 +78,15 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
     });
     save->setJumpersFormTendences(tendencesFuture.results().toVector());
 
+    array = obj.value("jumpers-lists").toArray();
+    values.clear();
+    for(auto & val : qAsConst(array))
+        values.push_back(val);
+    QFuture<SaveJumpersList> listsFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+        return SaveJumpersList::getFromJson(value.toObject(), objectsManager);
+    });
+    save->setJumpersLists(listsFuture.results());
+
     save->setActualSeason(static_cast<Season *>(objectsManager->getObjectByID(obj.value("actual-season-id").toString().toULong())));
     save->setNextCompetitionIndex(obj.value("next-competition-index").toInt());
     save->setNextCompetition(save->getActualSeason()->getCalendarReference().getCompetitionsReference()[save->getNextCompetitionIndex()]);
@@ -123,6 +132,12 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
         tendencesArray.push_back(JumperFormTendence::getJsonObject(tendence));
     }
     object.insert("jumpers-form-tendences", tendencesArray);
+
+    QJsonArray listsArray;
+    for(auto & list : save.getJumpersListsReference()){
+        listsArray.push_back(SaveJumpersList::getJsonObject(list));
+    }
+    object.insert("jumpers-lists", listsArray);
 
     object.insert("actual-season-id", QString::number(save.getActualSeason()->getID()));
     object.insert("next-competition-index", save.getNextCompetitionIndex());
@@ -212,6 +227,8 @@ void SimulationSave::repairDatabase()
             }
             for(auto & team : competition->getTeamsReference())
                 objects.push_back(&team);
+            for(auto & result : competition->getResultsReference().getResultsReference())
+                objects.push_back(&result);
         }
         for(auto & classification : season.getCalendarReference().getClassificationsReference())
         {
@@ -251,6 +268,21 @@ JumperFormTendence *SimulationSave::getJumperTendence(Jumper *jumper)
         if(formTendence.getJumper() == jumper)
             return &formTendence;
     return nullptr;
+}
+
+QVector<SaveJumpersList> SimulationSave::getJumpersLists() const
+{
+    return jumpersLists;
+}
+
+QVector<SaveJumpersList> &SimulationSave::getJumpersListsReference()
+{
+    return jumpersLists;
+}
+
+void SimulationSave::setJumpersLists(const QVector<SaveJumpersList> &newJumpersLists)
+{
+    jumpersLists = newJumpersLists;
 }
 
 bool SimulationSave::getSaveFileSizeReduce() const
