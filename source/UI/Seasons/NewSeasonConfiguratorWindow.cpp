@@ -101,12 +101,6 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(bool nextSeason, QWidge
         }
     });
 
-    jumpersListsListView = new DatabaseItemsListView(DatabaseItemsListView::JumpersListsItems, true, true, true, this);
-    jumpersListsListView->setJumpersLists(&jumpersLists);
-    jumpersListsListView->setupListModel();
-    jumpersListsListView->selectOnlyFirstRow();
-    ui->verticalLayout_jumpersLists->addWidget(jumpersListsListView);
-
     calendarTableModel = new CalendarEditorTableModel(&calendar, &hills, &GlobalDatabase::get()->getEditableCompetitionRules(), 0, this);
     calendarEditor = new CalendarEditorWidget(calendarTableModel, &calendar.getClassificationsReference(), this);
     ui->verticalLayout_calendarEditor->addWidget(calendarEditor);
@@ -367,31 +361,6 @@ void NewSeasonConfiguratorWindow::on_pushButton_loadCalendarPreset_clicked()
         classificationsListView->getListModel()->insertRows(0, calendar.getClassificationsReference().count());
         classificationsListView->getListView()->reset();
     }
-}
-
-QVector<SaveJumpersList> NewSeasonConfiguratorWindow::getJumpersLists() const
-{
-    return jumpersLists;
-}
-
-QVector<SaveJumpersList> &NewSeasonConfiguratorWindow::getJumpersListsReference()
-{
-    return jumpersLists;
-}
-
-void NewSeasonConfiguratorWindow::setJumpersLists(const QVector<SaveJumpersList> &newJumpersLists)
-{
-    jumpersLists = newJumpersLists;
-}
-
-DatabaseItemsListView *NewSeasonConfiguratorWindow::getJumpersListsListView() const
-{
-    return jumpersListsListView;
-}
-
-void NewSeasonConfiguratorWindow::setJumpersListsListView(DatabaseItemsListView *newJumpersListsListView)
-{
-    jumpersListsListView = newJumpersListsListView;
 }
 
 bool NewSeasonConfiguratorWindow::getNextSeason() const

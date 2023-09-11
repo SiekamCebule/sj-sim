@@ -216,13 +216,14 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     connect(archiveClassificationResults->getTableView(), &QTableView::doubleClicked, this, &SimulationSaveManagerWindow::showClassificationApperanceWindowAfterListClick);
 
     jumpersListsListView = new DatabaseItemsListView(DatabaseItemsListView::JumpersListsItems, true, true, true, this);
+    jumpersListsListView->setMinimumWidth(600);
     jumpersListsListView->setJumpersLists(&simulationSave->getJumpersListsReference());
     jumpersListsListView->setupListModel();
     jumpersListsListView->selectOnlyFirstRow();
     ui->verticalLayout_jumpersListsListView->addWidget(jumpersListsListView);
     connect(jumpersListsListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex & index){
         SaveJumpersList * list = &simulationSave->getJumpersListsReference()[index.row()];
-        JumpersListEditorWindow * editor = new JumpersListEditorWindow(this, list->getName());
+        JumpersListEditorWindow * editor = new JumpersListEditorWindow(this, list->getName(), list->getIsDefault());
         editor->setAllJumpers(simulationSave->getJumpersReference());
         editor->setSelectedJumpers(list->getJumpersReference());
         editor->updateUnselectedJumpers();
@@ -237,6 +238,8 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
         {
             list->setJumpers(editor->getSelectedJumpers());
             list->setName(editor->getNameFromLineEdit());
+            list->setIsDefault(editor->getIsDefaultFromCheckBox());
+            jumpersListsListView->setupListModel();
             emit jumpersListsListView->getListModel()->dataChanged(jumpersListsListView->getListModel()->index(0), jumpersListsListView->getListModel()->index(jumpersListsListView->getListModel()->rowCount() - 1));
         }
     });
@@ -766,6 +769,7 @@ void SimulationSaveManagerWindow::on_pushButton_clicked()
     statsWindow.getRangeComboBoxes()->setupComboBoxes();
     statsWindow.getClassificationsCheckBoxes()->setClassificationsList(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
     statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
+    statsWindow.setFilteredJumpers(simulationSave->getJumpersReference());
     statsWindow.fillWindow();   
     statsWindow.setupConnections();
     statsWindow.getShowFormCheckBox()->setChecked(simulationSave->getShowForm());

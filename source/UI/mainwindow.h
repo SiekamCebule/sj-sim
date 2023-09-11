@@ -36,6 +36,8 @@ private slots:
 
     void on_pushButton_season_clicked();
 
+    void on_pushButton_help_clicked();
+
 private:
     Ui::MainWindow *ui;
 

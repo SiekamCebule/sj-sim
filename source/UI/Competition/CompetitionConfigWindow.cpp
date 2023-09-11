@@ -120,6 +120,15 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
             {
                 seasonCompetitionJumpers.push_back(jp);
             }
+            for(auto & list : simulationSave->getJumpersListsReference())
+            {
+                if(list.getIsDefault() == false)
+                {
+                    for(auto & jp : list.getJumpersReference()){
+                        MyFunctions::removeFromVector(seasonCompetitionJumpers, jp);
+                    }
+                }
+            }
         }
         jumpersListView->setSeasonJumpers(&seasonCompetitionJumpers);
     }

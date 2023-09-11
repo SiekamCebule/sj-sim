@@ -37,6 +37,7 @@ private:
     CompetitionsRangeComboBoxesWidget * rangeComboBoxes;
     SerieTypesComboBoxesWidget * serieTypesCheckBoxes;
     HillTypesCheckBoxesWidget * hillTypesCheckBoxes;
+    QVector<Jumper *> filteredJumpers;
 
     QHash<Jumper *, QVector<CompetitionSingleResult *>> jumpersSingleResults;
 
@@ -70,6 +71,11 @@ public:
     HillTypesCheckBoxesWidget *getHillTypesCheckBoxes() const;
     GeneralClassificationTableModel *getGeneralClassificationModel() const;
     void setGeneralClassificationModel(GeneralClassificationTableModel *newGeneralClassificationModel);
+    QVector<Jumper *> getFilteredJumpers() const;
+    void setFilteredJumpers(const QVector<Jumper *> &newFilteredJumpers);
+
+private slots:
+    void on_pushButton_jumpersLists_clicked();
 };
 
 #endif // SIMULATIONRATINGSWINDOW_H

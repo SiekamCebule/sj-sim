@@ -45,6 +45,7 @@ SOURCES += \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.cpp \
     source/UI/FormGenerator/JumperFormGeneratorsSettingsTableModel.cpp \
     source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp \
+    source/UI/HelpWindow.cpp \
     source/UI/JumpManipulation/JumpManipulatorConfigWindow.cpp \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp \
     source/UI/Competition/CompetitionConfigWindow.cpp \
@@ -174,6 +175,7 @@ HEADERS += \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.h \
     source/UI/FormGenerator/JumperFormGeneratorsSettingsTableModel.h \
     source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.h \
+    source/UI/HelpWindow.h \
     source/UI/JumpManipulation/JumpManipulatorConfigWindow.h \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.h \
     source/UI/Competition/CompetitionConfigWindow.h \
@@ -286,6 +288,7 @@ FORMS += \
     source/UI/EditorWidgets/WindsGeneratorSettingsEditorWidget.ui \
     source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui \
     source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui \
+    source/UI/HelpWindow.ui \
     source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui \
     source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui \
     source/UI/Competition/CompetitionConfigWindow.ui \

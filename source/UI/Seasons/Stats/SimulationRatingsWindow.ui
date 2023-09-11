@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1796</width>
+    <width>1816</width>
     <height>936</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0">
      <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
@@ -160,6 +160,37 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_jumpersLists">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+color: rgb(0, 0, 0);
+background-color: rgb(225, 185, 255);
+padding: 2px;
+}
+QPushButton:hover{
+background-color: rgb(241, 200, 255);
+}</string>
+       </property>
+       <property name="text">
+        <string>Listy zawodników</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QCheckBox" name="checkBox_showHidden">
@@ -420,7 +451,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1754</width>
+            <width>1762</width>
             <height>826</height>
            </rect>
           </property>

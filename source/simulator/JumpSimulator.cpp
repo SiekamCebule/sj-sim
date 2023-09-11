@@ -59,7 +59,11 @@ bool JumpSimulator::generateDSQ()
         int probability = 0;
         if(manipulator->getExactDSQProbability() > (-1))
             probability = manipulator->getExactDSQProbability();
-        else probability = getDSQBaseProbability() / (1 + (jumperSkills->getLevelOfCharacteristic("dsq-probability") / 7));
+        else {
+            probability = getDSQBaseProbability() / (1 + (jumperSkills->getLevelOfCharacteristic("dsq-probability") / 7));
+            if(getDSQBaseProbability() == false)
+                return false;
+        }
 
         int random = MyRandom::randomInt(0, probability + 1);
         if(random == probability)
@@ -115,12 +119,12 @@ void JumpSimulator::generateTakeoffRating()
 {
     double multiplier = GlobalSimulationSettings::get()->getMaxSkills() / 100;
 
-    double ratingMultiplier = 0.8575 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
+    double ratingMultiplier = 0.8485 + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
     simulationData->takeoffRating = jumperSkills->getTakeoffTechnique() * ratingMultiplier;
 
     simulationData->takeoffRating += ((jumperSkills->getLevelOfCharacteristic("takeoff-power") * 2 * multiplier) * (1 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect")));
 
-    ratingMultiplier = 0.1425 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
+    ratingMultiplier = 0.1515 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     simulationData->takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("takeoff-height")) * 1.75 * multiplier;
@@ -140,10 +144,10 @@ void JumpSimulator::generateFlightRating()
 {
     double multiplier = GlobalSimulationSettings::get()->getMaxSkills() / 100;
 
-    double ratingMultiplier = 0.845 + 0.11 * hill->getLevelOfCharacteristic("flight-technique-effect");
+    double ratingMultiplier = 0.8265 + 0.11 * hill->getLevelOfCharacteristic("flight-technique-effect");
     simulationData->flightRating = jumperSkills->getFlightTechnique() * ratingMultiplier;
 
-    ratingMultiplier = 0.155 + 0.1 * hill->getLevelOfCharacteristic("flight-form-effect");
+    ratingMultiplier = 0.1735 + 0.1 * hill->getLevelOfCharacteristic("flight-form-effect");
     simulationData->flightRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->flightRating -= std::abs(Hill::calculateBestFlightHeightLevel(hill) - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 2.25 * multiplier);
@@ -369,7 +373,7 @@ void JumpSimulator::generateLanding()
     if(manipulator->getExactLandingType() > (-1))
         jumpData.landing.setType(manipulator->getExactLandingType());
 
-    double landingRating = MyRandom::lognormalDistributionRandom((0.2 - ((jumperSkills->getLandingStyle() - 10) / 12)), (0.4 + hill->getLandingImbalanceChangeByHillProfile(jumpData.distance)));
+    double landingRating = MyRandom::lognormalDistributionRandom((0.55 - ((jumperSkills->getLandingStyle() - 10) / 8.5)), (0.585 + hill->getLandingImbalanceChangeByHillProfile(jumpData.distance)));
 
     if(landingRating < 0)
         landingRating = 0;
@@ -385,22 +389,22 @@ void JumpSimulator::generateLanding()
 void JumpSimulator::generateJudges()
 {
     if(competitionRules->getHasJudgesPoints() == true){
-        simulationData->judgesRating = 18.3;
-        simulationData->judgesRating -= jumpData.landing.getRating() / 2;
-        simulationData->judgesRating += ((jumpData.distance - hill->getKPoint()) / (hill->getKAndRealHSDifference())) / 1.1;
+        simulationData->judgesRating = 18.40;
+        simulationData->judgesRating -= jumpData.landing.getRating() / 1.75;
+        simulationData->judgesRating += ((jumpData.distance - hill->getKPoint()) / (hill->getKAndRealHSDifference())) / 1.2;
         switch(jumpData.landing.getType())
         {
         case Landing::TelemarkLanding:
-            simulationData->judgesRating -= MyRandom::normalDistributionRandom(0, 0.11);
+            simulationData->judgesRating -= MyRandom::normalDistributionRandom(0, 0.15875);
             break;
         case Landing::BothLegsLanding:
-            simulationData->judgesRating -= MyRandom::normalDistributionRandom(2.15, 0.2);
+            simulationData->judgesRating -= MyRandom::normalDistributionRandom(2.15, 0.23);
             break;
         case Landing::SupportLanding:
-            simulationData->judgesRating -= MyRandom::normalDistributionRandom(6.15, 0.32);
+            simulationData->judgesRating -= MyRandom::normalDistributionRandom(6.15, 0.48);
             break;
         case Landing::Fall:
-            simulationData->judgesRating -= MyRandom::normalDistributionRandom(8, 0.27);
+            simulationData->judgesRating -= MyRandom::normalDistributionRandom(8, 0.43);
             break;
         }
 
@@ -428,16 +432,16 @@ void JumpSimulator::generateJudges()
             switch(jumpData.landing.getType())
             {
             case Landing::TelemarkLanding:
-                random = MyRandom::randomDouble(-0.5, 0.5);
+                random = MyRandom::normalDistributionRandom(0, 0.15875);
                 break;
             case Landing::BothLegsLanding:
-                random = MyRandom::randomDouble(-0.64, 0.64);
+                random = MyRandom::normalDistributionRandom(2.15, 0.23);
                 break;
             case Landing::SupportLanding:
-                random = MyRandom::randomDouble(-0.78, 0.78);
+                random = MyRandom::normalDistributionRandom(6.15, 0.48);
                 break;
             case Landing::Fall:
-                random = MyRandom::randomDouble(-0.72, 0.72);
+                random = MyRandom::normalDistributionRandom(8, 0.43);
                 break;
             }
             if(randomType == 0)
@@ -677,8 +681,8 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 4.10 - (skills->getLevelOfCharacteristic("takeoff-height") / 7);
-        double devAddition = -((dev + double((double(skills->getJumpsEquality()) / 2))) / dev) - 1;
+        dev = 4.195 - (skills->getLevelOfCharacteristic("takeoff-height") / 8.2);
+        double devAddition = -((dev + double((double(skills->getJumpsEquality()) / 1.55))) / dev) - 1;
         qDebug()<<"devAddition: "<<devAddition;
         if(MyRandom::randomDouble(0, 1 + devAddition) <= 0.5)
         {
@@ -686,7 +690,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         }
         else
         {
-            dev += (skills->getJumpsEquality() / 2);
+            dev += (skills->getJumpsEquality() / 1.55);
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Negative);
         }
 
@@ -704,7 +708,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 4.13 - (skills->getLevelOfCharacteristic("flight-height") / 7);
+        dev = 4.195 - (skills->getLevelOfCharacteristic("flight-height") / 8.2);
         switch(skills->getFlightStyle())
         {
         case JumperSkills::VStyle:
@@ -715,19 +719,19 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
             break;
         case JumperSkills::WideVStyle:
             dev += 0.05;
-            break;
+              break;
         case JumperSkills::HStyle:
             dev += 0.15;
             break;
         }
-        double devAddition = -((dev + double((double(skills->getJumpsEquality()) / 2))) / dev) - 1;
+        double devAddition = -((dev + double((double(skills->getJumpsEquality()) / 1.55))) / dev) - 1;
         if(MyRandom::randomDouble(0, 1 + devAddition) <= 0.5)
         {
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Positive);
         }
         else
         {
-            dev += (skills->getJumpsEquality() / 2);
+            dev += (skills->getJumpsEquality() / 1.55);
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Negative);
         }
 
@@ -1015,10 +1019,10 @@ double JumpSimulator::getLandingChance(short landingType, double distance, Hill 
 
     //Umiejętność lądowania
     if(landingType == Landing::Fall){
-        chance /= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("landing-skill") / 6.5));
+        chance /= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("landing-skill") / 4.5));
     }
     else if(landingType == Landing::SupportLanding){
-        chance /= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("landing-skill") / 9));
+        chance /= (1 + (jumper->getJumperSkills().getLevelOfCharacteristic("landing-skill") / 6));
     }
 
     return chance;

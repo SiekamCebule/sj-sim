@@ -15,10 +15,11 @@ class JumpersListEditorWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit JumpersListEditorWindow(QWidget *parent = nullptr, QString name = "");
+    explicit JumpersListEditorWindow(QWidget *parent = nullptr, QString name = "", bool isDefault = false);
     ~JumpersListEditorWindow();
 
     QString getNameFromLineEdit();
+    bool getIsDefaultFromCheckBox();
     void updateUnselectedJumpers();
 
 signals:

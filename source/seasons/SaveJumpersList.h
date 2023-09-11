@@ -18,12 +18,15 @@ public:
 private:
     QVector<Jumper *> jumpers;
     QString name;
+    bool isDefault;
 public:
     QVector<Jumper *> getJumpers() const;
     QVector<Jumper *> & getJumpersReference();
     void setJumpers(const QVector<Jumper *> &newJumpers);
     QString getName() const;
     void setName(const QString &newName);
+    bool getIsDefault() const;
+    void setIsDefault(bool newIsDefault);
 };
 
 #endif // SAVEJUMPERSLIST_H

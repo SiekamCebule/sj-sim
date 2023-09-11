@@ -590,68 +590,68 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Inrun snow generator settings</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="151"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="160"/>
         <source>Konfiguracja konkursu</source>
         <translation>Competition configuration</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="197"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="206"/>
         <source>Przeprowadzenie kwalifikacji</source>
         <translation>Qualifications</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="303"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="312"/>
         <source>Dobierz grupy</source>
         <translation>Select groups</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="304"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="313"/>
         <source>Klasycznie</source>
         <translation>Classical</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="305"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="314"/>
         <source>Klasycznie (Dla dużych grup)</source>
         <translation>Classical (For larger groups)</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="306"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="315"/>
         <source>Losowo (Z podziałem na koszyki)</source>
         <translation>Random (by baskets)</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="307"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="316"/>
         <source>Losowo</source>
         <translation>Random</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="444"/>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="469"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="453"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="478"/>
         <source>BRAK</source>
         <translation>NONE</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="486"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="495"/>
         <source>Istniejące zasady konkursu</source>
         <translation>Existing competition rules</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="496"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="505"/>
         <source>Zasady konkursu</source>
         <translation>Competitions rules</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="819"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="828"/>
         <source>Wybierz plik z zawodnikami</source>
         <translation>Select file with jumpers</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="824"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="833"/>
         <source>Nie można otworzyć pliku z zawodnikami</source>
         <translation>Can&apos;t open file with jumpers</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="824"/>
+        <location filename="../source/UI/Competition/CompetitionConfigWindow.cpp" line="833"/>
         <source>Nie udało się otworzyć wybranego pliku
 Upewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia</source>
         <translation>Failed to open the selected file
@@ -1388,6 +1388,295 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../source/UI/Seasons/Stats/Models/GeneralClassificationTableModel.cpp" line="22"/>
         <source>Punkty</source>
         <translation>Points</translation>
+    </message>
+</context>
+<context>
+    <name>HelpWindow</name>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="14"/>
+        <location filename="../source/UI/HelpWindow.ui" line="47"/>
+        <source>Pomoc</source>
+        <translation type="unfinished">Help</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="82"/>
+        <source>O symulatorze</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="94"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;Welcome file&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Quicksand Medium&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;o-symulatorze&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;O&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt; symulatorze&lt;/span&gt;&lt;/h1&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Sj.Sim to darmowy program starający się odzwierciedlić przebieg prawdziwych zawodów skoków narciarskich w postaci symulacji na podstawie umiejętności zawodnika i innych parametrów takich jak skocznia, warunki pogodowe i losowość.&lt;/span&gt;&lt;/p&gt;
+&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;co-znajdziesz-w-sj.sim&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;C&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;o znajdziesz w Sj.Sim?&lt;/span&gt;&lt;/h1&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Program zawiera 5 głównych funkcji:&lt;/span&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Tryb “Symuluj sezon”&lt;/span&gt;. Możesz symulować dowolny sezon (lub wiele sezonów) skoków narciarskich z udziałem wybranych zawodników i na wybranym kalendarzu zawodów. Oprócz tego możesz konfigurować wiele innych rzeczy (możesz stworzyć wiele dowolnych klasyfikacji). Wszystko jest tutaj na twoich zasadach. Jedną z największych funkcji trybu symulacji sezonu jest generator formy zawodników, dzięki któremu możesz prawie automatycznie zmieniać formę zawodników na przestrzeni konkursów przez co poziom zawodników będzie zmienny do samego końca.&lt;/li&gt;
+&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Tryb pojedynczego konkursu&lt;/span&gt;. Jeśli nie chcesz symulować od razu całego sezonu bo np. chcesz coś przetestować, skorzystaj z tego trybu umożliwiającego szybkie rozegranie dowolnego konkursu. Konkurs będzie działać tak jak w trybie symulacji sezonu.&lt;/li&gt;
+&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Tryb pojedynczych skoków&lt;/span&gt;. Jest to nietypowa forma symulacji skoków polegająca na oddaniu określonej ilości skoków przez danego zawodnika na wybranej skoczni. Oprócz tego możesz ustalić warunki wietrzne i inne czynniki, a następnie zostanie wyświetlona tabela ze wszystkimi wynikami zawodnika razem z kilkoma wykresami dotyczącymi jego skoków. Tryb ten może być wykorzystywany w ekstremalnych sytuacjach np. podczas testowania symulacji na próbce 1000 skoków zawodnika.&lt;/li&gt;
+&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Edytor bazy danych&lt;/span&gt;. Ważne narzędzie służące do edycji globalnej bazy danych (między innymi zawodników czy skoczni).&lt;/li&gt;
+&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Pomoc&lt;/span&gt;. Jest to okno w którym właśnie się znajdujesz. Znajdziesz tu informacje na temat każdej rzeczy znajdującej się w symulatorze. Zaglądaj tu, jeśli czegoś nie wiesz.&lt;/li&gt;&lt;/ul&gt;
+&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;od-czego-zacząć&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;O&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;d czego zacząć?&lt;/span&gt;&lt;/h1&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Na początku możesz przeczytać rozdziały tej instrukcji które cię interesują. Możesz też skorzystać z paczki zawodników dostępnej od razu do pobrania i przesymulować konkursy z jej wykorzystaniem.&lt;br /&gt;Możesz też zacząć symulować sezon używając dostępnych presetów kalendarza i używając przy okazji generatora formy dla polepszenia wrażeń.&lt;br /&gt;Próbuj odkrywać jak najwięcej nowych funkcji. Kiedy poczujesz się pewniej, możesz spróbować swoich sił w tworzeniu własnych zawodników, skoczni, kalendarzy i innych rzeczy. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="120"/>
+        <source>Symulacja skoków</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="132"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;2. Elementy bazy danych&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Quicksand Medium&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;symulacja-skoku&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;S&lt;/span&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;ymulacja skoku&lt;/span&gt;&lt;/h1&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;ogólne-wyjaśnienie-symulacji-skoku&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;O&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;gólne wyjaśnienie symulacji skoku&lt;/span&gt;&lt;/h2&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ogólny wzór na odległość zawodnika wygląda następująco:&lt;br /&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Odległość&lt;/span&gt; = &lt;span style=&quot; font-family:&apos;Courier New&apos;;&quot;&gt;(OW*WW) + (OL*WL) + WIND + GATE + MANIP + SNOW&lt;/span&gt;&lt;br /&gt;OW = Ocena wybicia (Zawodnik)&lt;br /&gt;WW = Wpływ wybicia (Skocznia)&lt;br /&gt;OL = Ocena lotu (Zawodnik)&lt;br /&gt;WL = Wpływ lotu (Skocznia)&lt;br /&gt;WIND = Metry odjęte lub dodane na podstawie wiatru przy skoku&lt;br /&gt;GATE = Metry za belkę&lt;br /&gt;MANIP = Metry dodane lub odjęte poprzez manipulację skoku (bonus lub zakres odległości)&lt;br /&gt;SNOW = Metry odjęte za śnieg na najeździe&lt;br /&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Ocena wybicia&lt;/span&gt; = &lt;span style=&quot; font-family:&apos;Courier New&apos;;&quot;&gt;(TW*0.8485) + (F*0.1515) + RANDOM - CHAR&lt;/span&gt;&lt;br /&gt;TW = Technika wybicia zawodnika&lt;br /&gt;F = Forma zawodnika&lt;br /&gt;RANDOM = Losowość oceny wybicia&lt;br /&gt;CHAR = Odjęcie z tytułu cech charakterystycznych (Wysokość wybicia. Np. czym większa skocznia tym większe minusy za wysokie wybicie)&lt;br /&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Ocena lotu&lt;/span&gt; = &lt;span style=&quot; font-family:&apos;Courier New&apos;;&quot;&gt;(TL*0.8265) + (F*0.1735) + RANDOM - CHAR + STYLE&lt;/span&gt;&lt;br /&gt;TL = Technika lotu zawodnika&lt;br /&gt;CHAR = Odjęcie z tytułu cech charakterystycznych (Wysokość lotu. Np. czym mniejsza skocznia tym większe minusy za niski lot)&lt;br /&gt;STYLE = Bonus lub odjęcie na podstawie stylu lotu. Czym szerszy styl, tym bonus jest większy (należy pamiętać o tym, że szeroki styl lotu ma np. duże minusy przy wietrze tylnym gdzie lepszy jest np. Styl V)&lt;/p&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;co-składa-się-na-losowość-skoku&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;C&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;o składa się na losowość skoku?&lt;/span&gt;&lt;/h2&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Generator losowości korzysta z “normalnego rozkładu prawdopodobieństwa” (&lt;a href=&quot;https://pl.wikipedia.org/wiki/Rozk%C5%82ad_normalny&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#8ab4f8;&quot;&gt;Wikipedia&lt;/span&gt;&lt;/a&gt;) gdzie mamy dwa parametry. Parametry wyglądają inaczej w zależności od tego czy losujemy do wybicia, czy do lotu:&lt;/p&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;wybicie&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;W&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;ybicie&lt;/span&gt;&lt;/h3&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Średnia losowości&lt;/span&gt; = 0&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Odchylenie standardowe losowości&lt;/span&gt; = 4.14 - (Wysokość wybicia / 8.2) - (Równość skoków / 1.55)&lt;/li&gt;&lt;/ul&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;lot&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;L&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;ot&lt;/span&gt;&lt;/h3&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Średnia losowości&lt;/span&gt; = 0&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Odchylenie standardowe losowości&lt;/span&gt; = 4.18 - (Wysokość lotu / 8.2) - (Równość skoków / 1.55) + (Bonus za styl lotu)&lt;br /&gt;Istnieje 50% szans że losowanie będzie ujemne i 50% że będzie one dodatnie. Jeżeli losowość jest dodatnia, nie bierzemy pod uwagę parametru równości skoków. Bonus za styl lotu w odchyleniu standardowym losowości zwiększa się im szerszy jest lot zawodnika, czyli czym lot jest szerszy tym jest bardziej podatny na losowość).&lt;br /&gt;Jeśli chcesz skorzystać z generatora losowości który jest używany w symulatorze, zajrzyj &lt;a href=&quot;https://keisan.casio.com/exec/system/1180573188&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#8ab4f8;&quot;&gt;tutaj&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;&lt;/ul&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;lądowanie&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;L&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;ądowanie&lt;/span&gt;&lt;/h2&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wyróżniamy cztery rodzaje lądowania:&lt;/p&gt;
+&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Telemark&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Lądowanie na dwie nogi&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Podpórka&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Upadek&lt;/li&gt;&lt;/ol&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;W zależności od odległości, zmieniają się szanse na poszczególne rodzaje lądowań. Oprócz tego istnieje taki parametr jak &lt;span style=&quot; font-weight:700;&quot;&gt;Ocena lądowania&lt;/span&gt;, oznaczająca jak bardzo stabilne lądowanie jest. Mylące może być to, że mniejsza ocena lądowania oznacza że jest one stabilniejsze. 0 oznacza idealne lądowanie. Maksymalna wartość to 5.&lt;br /&gt;Na szanse lądowania na dwie nogi wpływa cecha charakterystyczna zawodnika - “Tendencja lądowania na dwie nogi” (im wyższy poziom tej cechy, tym większa szansa na obunożne lądowanie). Jest też druga cecha, czyli “Umiejętność lądowania”. Czym wyższa wartość, tym mniejsza szansa na upadki i podparte lądowania.&lt;/p&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;noty-za-styl&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;N&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;oty za styl&lt;/span&gt;&lt;/h2&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Na oceny od sędziów wpływ mają następujące czynniki:&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ocena lądowania (w zdecydowanym stopniu)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Odległość (czym dalsza odległość, tym naturalnie lepsze noty)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Losowość (Dla każdego rodzaju lądowania losowość jest trochę inna, np. dla podpórki rozbieżność not jest większa niż przy telemarku)&lt;/li&gt;&lt;/ul&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;mechanizm-zapobiegania-bardzo-dalekim-skokom&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;M&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;echanizm “zapobiegania bardzo dalekim skokom”&lt;/span&gt;&lt;/h2&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;W symulatorze istnieje pewien mechanizm który po obliczeniu odległości sprawdza, czy dany skok nie jest zbyt daleki (tak daleki, że aż nierealistycznie daleki).&lt;br /&gt;Głównie chodzi o to, że poza punktem HS trudniej jest skoczyć daleko (przyrost odległości jest mniejszy przez płaskość zeskoku za tym punktem). Np. jeżeli ktoś skoczy 7 metrów za punktem HS, możliwe że jego odległość skróci się ze 149 metrów do 147, tak samo jak dzieje się w rzeczywistości kiedy zawodnik skraca swój skok.&lt;br /&gt;Oczywiście takie rozwiązanie ma też swoje wady w postaci dziwnych odległości kiedy zawodnicy będą skakać bardzo, bardzo daleko.&lt;/p&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;co-ma-wpływ-na-bonusy-z-tytułu-wiatru&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;C&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;o ma wpływ na bonusy z tytułu wiatru?&lt;/span&gt;&lt;/h2&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pewne atrybuty zawodnika modyfikują wpływ wiatru tak, że go zwiększają lub zmniejszają:&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Styl lotu. Czym szerszy, tym wpływ wiatru jest większy (bonus za wiatr przedni jest większy, a odjęcie za wiatr tylni jest mniejsze).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ocena lotu. Czym większa ocena lotu, tym większe bonusy za wiatr pomagający i mniejsze minusy za wiatr przeszkadzający.&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wysokość lotu (Czym niższy lot, tym większy wpływ wiatru przedniego i tylnego. Jeżeli zawodnik skacze wysoko to ma mniejsze bonusy za wiatr przedni ale też mniejsze minusy za wiatr tylni) &lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="181"/>
+        <source>Rozgrywanie konkursu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="193"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;4. Tryb symulacji sezonów&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Quicksand Medium&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;tryb-symulacji-sezonów&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;T&lt;/span&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;ryb symulacji sezonów&lt;/span&gt;&lt;/h1&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;co-znajdę-w-tym-trybie&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;C&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;o znajdę w tym trybie?&lt;/span&gt;&lt;/h2&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jak sama nazwa wskazuje, mamy do czynienia z symulowaniem całych sezonów. Głównie jest to układanie kalendarza i rozgrywanie po kolei zaplanowanych konkursów. Jednak jest to największy tryb w całym symulatorze i ma wiele ciekawych funkcji takich jak:&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Statystyki zapisu symulacji&lt;/span&gt; (Łącznie 36 rankingów i rekordów, w tym “klasyfikacja ogólna” czyli klasyfikacja biorąca pod uwagę wszystkie przefiltrowane konkursy, coś jak WRL)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Statystyki zawodnika w zapisie symulacji&lt;/span&gt; (5 interesujących wykresów i 5 statystyk)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Filtrowanie dwóch powyższych statystyk&lt;/span&gt; (5 różnych filtrów)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Statystyki zawodnika w klasyfikacji&lt;/span&gt; (Historia jego miejsc w klasyfikacji. Wykres i 5 statystyk)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Możliwość edytowania na bieżąco każdego elementu bazy danych&lt;/span&gt;(każdego zawodnika, każdą skocznię, zasady konkursów, kalendarz, klasyfikacje).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Funkcja list zawodników&lt;/span&gt; (Np. można zrobić listę zawodników z danego kraju. Jeśli ustawi się listę jako domyślną, zawodnicy z niej będą automatycznie dodawani do listy startowej).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Archiwum wyników&lt;/span&gt; (zawiera wyniki każdego konkursu w każdym sezonie, jak i stan każdej klasyfikacji.)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Ustawienia zapisu symulacji&lt;/span&gt; (Np. funkcja ukrycia formy zawodników dla zwiększenia realizmu)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Generator formy&lt;/span&gt; (Jedna z najważniejszych funkcji, czyli narzędzie służące do pół-automatycznej zmiany formy zawodników między konkursami na wzór rzeczywistości)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Naprawa zapisu symulacji&lt;/span&gt; (Jest to “magiczny przycisk” który być może naprawi niektóre błędy z zapisem symulacji, ale nie wszystkie).&lt;/li&gt;&lt;/ul&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;tworzenie-kalendarza&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;T&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;worzenie kalendarza&lt;/span&gt;&lt;/h2&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;skróty-klawiszowe-w-edytorze-kalendarzy&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;S&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;króty klawiszowe w edytorze kalendarzy&lt;/span&gt;&lt;/h3&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ctrl+A: Dodanie konkursu&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ctrl+D: Usunięcie konkursu&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ctrl+&amp;lt;Strzałka w górę&amp;gt;: Przesunięcie konkursu w górę&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ctrl+&amp;lt;Strzałka w dół&amp;gt;: Przesunięcie konkursu w dół&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ctrl+Alt+A: Zduplikowanie konkursu (Od 0.9.8)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ctrl+E: Edycja parametru konkursu&lt;/li&gt;&lt;/ul&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;parametry-konkursu-w-kalendarzu&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;P&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;arametry konkursu w kalendarzu&lt;/span&gt;&lt;/h3&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;W edytorze kalendarzy widnieje tabela przedstawiająca wszystkie konkursy. W każdej kolumnie znajdują się informacje o każdym z nich:&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Skocznia&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Rodzaj konkursu&lt;/span&gt; (Indywidualny/Drużynowy. Można zmienić ręcznie, choć ustawia się to automatycznie po wybraniu zasad konkursu)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Rodzaj serii&lt;/span&gt; (Kwalifikacje/Konkurs. Ma to głównie walory estetyczne)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Seria próbna&lt;/span&gt; (Tak/Nie. Trzeba wybrać też zasady tej serii próbnej!!!)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Treningi&lt;/span&gt; (Ile ich ma być. Trzeba wybrać też zasady treningów!!!)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Zasady konkursu&lt;/span&gt; (Bardzo ważna rzecz do ustawienia)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Klasyfikacje&lt;/span&gt; (Lista klasyfikacji, do których zalicza się dany konkurs)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Awans (konkurs)&lt;/span&gt; (Oznacza to na podstawie którego konkursu mają kwalifikować się zawodnicy. Zostawić puste jeżeli kwalifikacji nie było)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Awans (klasyfikacja)&lt;/span&gt; (Oznacza na podstawie jakiej klasyfikacji mają się kwalifikować zawodnicy. Jeżeli aktywne są kwalifikacje konkursowe, to nie da się wybrać na raz kwalifikacji poprzez klasyfikację)&lt;/li&gt;&lt;/ul&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;presety-kalendarzy&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;P&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;resety kalendarzy&lt;/span&gt;&lt;/h3&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Preset kalendarza to duża oszczędność czasu. W presecie tym znajdują się informacje na temat kalendarza i skoczni w nim się znajdujących. Zapisany preset możemy zapisać w dowolnym momencie i wczytać przy tworzeniu nowego sezonu. Należy pamiętać o tym że preset zapamiętuje skocznie na podstawie ich nazwy i punktu HS. Dzieję się tak dlatego, że każdy zapis symulacji ma inną bazę danych. Jeżeli przy wczytywaniu presetu nie będzie zapisanej skoczni o określonej nazwie i punkcie HS, do konkursu zostanie przypisana pierwsza skocznia na liście.&lt;/p&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;generator-formy-zawodników&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;G&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;enerator formy zawodników&lt;/span&gt;&lt;/h2&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jak już wspomniano wcześniej, jest to narzędzie dzięki któremu możemy w realistyczny sposób spowodować zmianę formy określonych zawodników. Typowym zastosowaniem jest zmiana formy co weekend zawodów, po pojedynczych konkursach lub nawet po całym sezonie kiedy potrzebna jest gruntowna zmiana formy zawodników.&lt;br /&gt;Po lewej stronie okna konfiguracji generatora formy mamy rozpisane siedem parametrów. Jeśli któryś zmienimy, zostanie to zmienione dla każdego zawodnika.&lt;br /&gt;Za to jeżeli chcemy zmienić jakiś parametr tylko jednemu zawodnikowi, wystarczy że klikniemy dwukrotnie w jakieś miejsce w tabeli i wpiszemy chcianą przez nas liczbę.&lt;/p&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;wyjaśnienie-działania-systemu-formy-zawodników-i-ich-tendencji&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;W&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;yjaśnienie działania systemu formy zawodników i ich tendencji&lt;/span&gt;&lt;/h3&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Każdy zawodnik ma określoną formę i tendencję tej formy. Forma wynosi od 0 do 100, a tendencja od -10 do 10. Tendencja formy określa jak bardzo wzrostowy lub spadkowy jest trend zmiany tej formy. Np. Tendencja o sile 7 jest mocno wzrostowa i trudno ją zmienić na spadkową.&lt;br /&gt;Czym tendencja jest silniejsza, tym wolniej następuje jej ewentualny wzrost i jest większa szansa na ewentualne odwrócenie w drugą stronę. Czym tendencja jest silniejsza, tym silniejsza jest też zmiana formy zawodnika. Czym forma zawodnika jest bardziej skrajna, tym mniejsze bonusy bądź minusy on dostaje. Np. przy formie 80 ewentualny wzrost formy będzie mało znaczący, a ewentualny spadek będzie dość poważnym zagrożeniem w walce o utrzymanie dobrej dyspozycji zawodnika.&lt;/p&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;parametry-generatora-formy&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;P&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;arametry generatora formy&lt;/span&gt;&lt;/h3&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Generator dziewięć następujących parametrów generatora formy:&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Zmienność tendencji&lt;/span&gt; (Wysoka zmienność zwiększa ewentualne zmiany tendencji)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Bonus tendencji&lt;/span&gt; (Zwyczajny bonus. Np. odejmujemy jakiemuś zawodnikowi -2 z tendencji)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Minimalna tendencja&lt;/span&gt; (Tendencja na pewno nie spadnie poniżej podanego pułapu)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Maksymalna tendencja&lt;/span&gt; (Tendencja na pewno nie będzie wyższa niż ta wartość)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Współczynnik wyrównania tendencji&lt;/span&gt; (Jest to dzielnik przez który dzielimy tendencję. Należy parametr rozumieć w ten sposób, że jeżeli wyrównanie tendencji jest większe niż 1, to każdą tendencję zbliżamy do środka. Np. tendencja 8 wyrównuje się do poziomu 6. Jeżeli wyrównanie tendencji wynosi np. 0.8 czyli jest mniejsze od 1, “zachęcamy” tendencję do tego aby jeszcze bardziej się umocniła. Np. z tendencji -5 zrobi się -6.25)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Zmienność formy&lt;/span&gt; (Czyli jak bardzo ma się zmienić forma na podstawie tendencji. Jeżeli tendencja jest silna, ale zmienność mała to forma i tak znacząco się nie zmieni)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Bonus do formy&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Minimalna forma&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Maksymalna forma&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;presety-ustawień-generatora-formy&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;P&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;resety ustawień generatora formy&lt;/span&gt;&lt;/h3&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tak jak w przypadku presetów kalendarza, presety ustawień generatora formy zostały dodane po to aby zaoszczędzić czas na generowaniu formy z użyciem tych samych parametrów.&lt;br /&gt;Preset generatora formy zawiera wszystkie siedem parametrów generatora, lecz nie zapisuje on informacji na temat ustawień dla poszczególnych zawodników, a tylko te parametry które znajdują się po lewej stronie okna konfiguracji generatora i są ustawiane dla wszystkich zawodników. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="262"/>
+        <source>Tworzenie zawodników i skoczni</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="274"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;5. Tworzenie zawodników i skoczni&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Quicksand Medium&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;tworzenie-zawodników-i-skoczni&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;T&lt;/span&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;worzenie zawodników i skoczni&lt;/span&gt;&lt;/h1&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;tworzenie-zawodników&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;T&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;worzenie zawodników&lt;/span&gt;&lt;/h2&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;technika-wybicia-i-technika-lotu&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;T&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;echnika wybicia i technika lotu&lt;/span&gt;&lt;/h3&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Istnieje pewien wzór z którego mogą korzystać użytkownicy symulatora, którzy chcą stworzyć własnych zawodników. &lt;span style=&quot; font-weight:700;&quot;&gt;“Puchar”&lt;/span&gt; to w tej sytuacji słowo opisujące najlepszy turniej lub kategorię zawodów w symulacji użytkownika (Być może w symulacji mamy np. 3 różne rangi zawodów). Poniżej zostanie przedstawiony wzór na to, jak określić umiejętności zawodnika.(Pamiętajmy o tym że jakiś zawodnik może mieć np. świetną technikę wybicia ale trochę słabiej radzi sobie w powietrzu)&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;95-100:&lt;/span&gt; Kosmiczny poziom zawodnika względem “pucharu” (poziom praktycznie niewystępujący)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;90-95:&lt;/span&gt; Wybitny poziom względem “pucharu” (Najlepsi z najlepszych)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;85-90:&lt;/span&gt; Bardzo dobry poziom jak na “puchar” (Ścisła czołówka)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;80-85:&lt;/span&gt; Szeroka czołówka “pucharu” (Zawodnicy którzy przy dobrej formie mogą włączyć się do walki o wysokie cele)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;75-80:&lt;/span&gt; Niezła przeciętność względem “pucharu” (Osiąganie głównie poprawnych wyników z potencjałem na regularne dobre występy)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;70-75:&lt;/span&gt; Przeciętniacy “pucharu” (Zawodnicy nie odgrywający wielkich ról, ale przypominający o sobie co jakiś czas) (Zawodnicy którzy prawdopodobnie będą wiodącymi postaciami “drugiej ligi”)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;65-70:&lt;/span&gt; Outsiderzy względem “Pucharu” (Prawdopodobnie dobrzy zawodnicy “drugiej ligi”)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;60-65:&lt;/span&gt; Średniacy “drugiej ligi” (Zawodnicy dobrze znani fanom “drugiej ligi” aczkolwiek nie włączający się zbyt często do walki o najwyższe miejsca)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;55-60:&lt;/span&gt; Słabsi zawodnicy “drugiej ligi” (Zawodnicy skaczący bez większych sukcesów w “drugiej lidze” i bez większych perspektyw na awans do “pucharu”)&lt;br /&gt;Słowo “Puchar” zastąp nazwą twojego najlepszego pucharu, np. “Wielki puchar Azji” albo “Turniej czterech smażonych kotletów”.&lt;br /&gt;Słowo “Druga liga” zastąp nazwą twojej drugiej najlepszej kategorii zawodów, np. “Srebrny turniej” albo uznaj zawodników z drugiej ligi jako kogoś kto ma umiejętności wyraźnie poniżej wymaganych do startów w “pucharze”.&lt;/li&gt;&lt;/ul&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;styl-lądowania&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;S&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;tyl lądowania&lt;/span&gt;&lt;/h3&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;14-15&lt;/span&gt;: Wybitni styliści&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;13-14&lt;/span&gt;: Bardzo dobrzy styliści&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;12-13&lt;/span&gt;: Nieźli styliści&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;11-12&lt;/span&gt;: Poprawni styliści&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;10-11&lt;/span&gt;: Przeciętni styliści&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;9-10&lt;/span&gt;: Niezachwycający styliści&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;8-9&lt;/span&gt;: Nienajlepsi styliści&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;7-8&lt;/span&gt;: Kiepscy styliści&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;7 w dół&lt;/span&gt;: Fatalni styliści&lt;/li&gt;&lt;/ul&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;forma&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;F&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;orma&lt;/span&gt;&lt;/h3&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;90-100:&lt;/span&gt; Niesamowita forma, występująca bardzo rzadko, dająca wyniki ogromnie ponad stan&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;80-90:&lt;/span&gt; Świetna forma, która daje szanse na wyniki wyraźnie ponad stan&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;70-80:&lt;/span&gt; Bardzo dobra forma, pokazująca prawdziwy potenciał zawodnika&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;60-70:&lt;/span&gt; Dobra forma, dająca szanse na naprawdę dobre wyniki&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;50-60:&lt;/span&gt; Forma powyżej średniej, daje przyzwoite wyniki jak na danego zawodnika&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;40-50:&lt;/span&gt; Forma poniżej średniej, dająca przeciętne wyniki jak na danego zawodnika&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;30-40:&lt;/span&gt; Stosunkowo słaba forma, dająca pole do poprawy&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;20-30:&lt;/span&gt; Słaba forma. Zawodnik z tą formą ma jeszcze duże rezerwy w swoich skokach&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;10-20:&lt;/span&gt; Kiepska forma. Zawodnik skacze wyraźnie poniżej swoich umiejętności&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;0-10:&lt;/span&gt; Głęboki kryzys zawodnika. Forma kompletnie nie odzwierciedlająca potencjału zawodnika.&lt;/li&gt;&lt;/ul&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;tworzenie-skoczni&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;T&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;worzenie skoczni&lt;/span&gt;&lt;/h2&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aby stworzyć skocznie musimy wprowadzić następujące parametry:&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Nazwa&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Kod kraju&lt;/span&gt; (3 literowy kod ISO)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Punkt K&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Punkt HS&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic;&quot;&gt;Punkty za punkt K&lt;/span&gt; &lt;span style=&quot; font-style:italic;&quot;&gt;(Można ustawić automatycznie)&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic;&quot;&gt;Punkty za metr&lt;/span&gt; &lt;span style=&quot; font-style:italic;&quot;&gt;(Można ustawić automatycznie)&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Punkty za belkę&lt;/span&gt; (Można wziąć z tej strony: &lt;a href=&quot;https://www.fis-ski.com/DB/ski-jumping/homologations.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#8ab4f8;&quot;&gt;Homologations (fis-ski.com)&lt;/span&gt;&lt;/a&gt;)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Punkty za wiatr przedni&lt;/span&gt; (Również z tej strony)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic;&quot;&gt;Punkty za wiatr tylni&lt;/span&gt; &lt;span style=&quot; font-style:italic;&quot;&gt;(Również z tej strony) (Można ustawić automatycznie)&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Wpływ wybicia&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Wpływ lotu&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic;&quot;&gt;Cechy charakterystyczne&lt;/span&gt; &lt;span style=&quot; font-style:italic;&quot;&gt;(Opcjonalne. Np. bezpieczeństwo skoków za punktem HS albo wpływ techniki lotu na skok)&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;dopasowanie-wpływu-wybicia-i-wpływu-lotu&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;opasowanie wpływu wybicia i wpływu lotu&lt;/span&gt;&lt;/h3&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Najbardziej polecane jest dopasowywanie obu tych parametrów według takiego sposobu, że obliczamy ich sumę w zależności od punktu K i rozdzielamy według tego jak bardzo “lotna” jest skocznia (Jeżeli skocznia jest lotna, to więcej damy wpływu lotu niż wybicia).&lt;br /&gt;Dla skoczni K120 można użyć sumy 0.78 i rozdzielić ją na oba parametry. Dla większości skoczni K120 będzie to coś w stylu 0.33 dla wpływu wybicia i 0.45 dla wpływu lotu (Są wyjątki, np. bardziej “lotne” skocznie). &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="342"/>
+        <source>Ustawienia symulatora</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="354"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;6. Ustawienia symulatora&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Quicksand Medium&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;ustawienia-symulatora&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;U&lt;/span&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;stawienia symulatora&lt;/span&gt;&lt;/h1&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;wyjaśnienie-poszczególnych-ustawień&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;W&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;yjaśnienie poszczególnych ustawień&lt;/span&gt;&lt;/h2&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Język programu&lt;/span&gt; (Polski lub angielski. Angielskie tłumaczenia mogą zawierać błędy)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Bazowe prawdopodobieństwo dyskwalifikacji&lt;/span&gt; (Ta wartość będzie dla ułatwienia domyślnie ustawiana jako prawdopodobieństwo dyskwalifikacji w konkursie lub w trybie pojedynczych skoków).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Zakres umiejętności&lt;/span&gt; (Jeżeli ktoś chce, może sobie zmienić zakres umiejętności np. na od 0 do 50. Jeżeli zmniejszymy o połowę zakres umiejętności, to losowość również automatycznie zmniejszy się o losowość tak samo jak inne rzeczy w symulacji aby dopasować się do nowego zakresu).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Mnożnik losowości&lt;/span&gt; (Losowość skoku jest mnożona przez tą wartość. Jeżeli mnożnik wynosi 0.5, a przez losowość zawodnik skoczy 4 metry krócej, to losowość zmniejszy się do zaledwie dwóch metrów).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Automatycznie dopasowuj wpływy na skoczni do aktualnego zakresu umiejętności&lt;/span&gt; (Jeżeli wpływ wybicia na skoczni wynosi np. 0.72, a aktualny zakres jest zwiększony dwukrotnie (do 200) to przy symulacji skoków wpływ wybicia i lotu na skoczni zostanie zmieniony np, dwukrotnie. Nie zmienia to bezpośrednio wpływów na skoczni w edytorze, ale mnoży je podczas symulacji).&lt;/li&gt;&lt;/ul&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;pozostałe-funkcje&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;P&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;ozostałe funkcje&lt;/span&gt;&lt;/h2&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Napraw zapisy symulacji&amp;quot;&lt;/span&gt; (Funkcja dzięki której niektóre błędy związane z zapisami symulacji mogą zostać naprawione)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Napraw bazę danych&amp;quot;&lt;/span&gt; (Funkcja która być może naprawi niektóre błędy związane z globalną bazą danych)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Skróć nazwiska zawodników&amp;quot;&lt;/span&gt; (Dzięki tej funkcji można skrócić wszystkie nazwiska zawodników do jednej litery. Np. Adam Nowak = Adam N. Należy pamiętać że taka zmiana jest nieodwracalna).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Przywróć domyślne&amp;quot;&lt;/span&gt; (Przywraca wszystkie ustawienia do stanu początkowego) &lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="382"/>
+        <source>FAQ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="394"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;7. FAQ&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Quicksand Medium&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;często-zadawane-pytania-faq&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;C&lt;/span&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;zęsto zadawane pytania (FAQ)&lt;/span&gt;&lt;/h1&gt;
+&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Program crashuje się kiedy chcę rozpocząć konkurs. Co robić?&lt;/span&gt; 
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Prawdopodobnie skocznia lub zasady konkursu nie zostały wybrane.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Program crashuje się w trakcie wejścia do zapisu symulacji. Co mam zrobić?&lt;/span&gt; 
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jeśli program daje radę wczytać zapisy symulacji (czyli da się wejść w okno z listą zapisów) to być może wystarczy wejść w ustawienia i kliknąć “Napraw zapisy symulacji”. Jeśli to nie pomoże, skontaktuj się ze mną na poniżej podanym serwerze Discord, chociaż w niektórych przypadkach zapis symulacji jest nie do odratowania.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Mam pomysł na nową funkcję lub chcę zgłosić błąd. Gdzie to zrobić?&lt;/span&gt; 
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Możesz zrobić to na oficjalnym serwerze Discord: &lt;a href=&quot;https://discord.gg/Un5jQ6STNX&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#8ab4f8;&quot;&gt;https://discord.gg/Un5jQ6STNX&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Chcę pomóc z istniejącymi tłumaczeniami, lub stworzyć własne. Gdzie mogę się zgłosić?&lt;/span&gt; 
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;&quot;&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Również za pośrednictwem serwera Discord. &lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2223,10 +2512,6 @@ ukryte wykresy</source>
     <name>JumpersFormGeneratorConfigWindow</name>
     <message>
         <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="51"/>
         <source>Konfiguracja generatora formy</source>
         <translation>Form generator config</translation>
@@ -2492,7 +2777,12 @@ After completing these 3 steps, all players are ready for an interesting fight i
         <translation>Unselected jumpers</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumpersListEditorWindow.ui" line="141"/>
+        <location filename="../source/UI/EditorWidgets/JumpersListEditorWindow.ui" line="125"/>
+        <source>Domyślnie dodawaj tych zawodników do listy startowej</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/EditorWidgets/JumpersListEditorWindow.ui" line="161"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2529,7 +2819,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:14pt;&quot;&gt;Ctrl+D for  aby przenieść ich na drugą listę (czyli wybrać do listy albo z niej usunąć)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/JumpersListEditorWindow.ui" line="201"/>
+        <location filename="../source/UI/EditorWidgets/JumpersListEditorWindow.ui" line="221"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -2845,12 +3135,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Classifications</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.ui" line="327"/>
         <source>Listy zawodników</source>
-        <translation>Jumpers lists</translation>
+        <translation type="vanished">Jumpers lists</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.ui" line="345"/>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.ui" line="335"/>
         <source>Ustawienia</source>
         <translation>Settings</translation>
     </message>
@@ -2875,7 +3164,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation type="vanished">Trainings</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.ui" line="403"/>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.ui" line="393"/>
         <source>Utwórz sezon</source>
         <translation>Create season</translation>
     </message>
@@ -2883,12 +3172,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
 <context>
     <name>NewSeasonConfiguratorWindow</name>
     <message>
-        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.cpp" line="159"/>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.cpp" line="153"/>
         <source>Edytor kalendarzy</source>
         <translation>Calendar editor</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.cpp" line="160"/>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.cpp" line="154"/>
         <source>Aby dodać konkurs do kalendarza użyj &quot;Ctrl + A&quot;. Żeby usunąć zawody użyj &quot;Ctrl + D&quot;.
  Aby przesuwać konkursy, użyj Ctrl i strzałek na klawiaturze.
 Aby edytować informacje o konkursie zaznacz w tabeli wiersze informacji o konkursie które chcesz edytować (Wszystkie w tej samej kolumnie) i naciśnij &quot;Ctrl + E&quot;.
@@ -2899,17 +3188,17 @@ To edit the competition informations, select the rows of competition information
 You can edit several competitions at once (The only exception is the &quot;Advancement (Competition)&quot; column, where only one row can be selected.</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.cpp" line="162"/>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.cpp" line="156"/>
         <source>Nie pokazuj ponownie</source>
         <translation>Don&apos;t show again</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.cpp" line="268"/>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.cpp" line="262"/>
         <source>Wybierz preset kalendarza</source>
         <translation>Select calendar preset</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.cpp" line="268"/>
+        <location filename="../source/UI/Seasons/NewSeasonConfiguratorWindow.cpp" line="262"/>
         <source>Wybierz z listy preset kalendarza który chcesz wczytać</source>
         <translation>Select the calendar preset you want to load from the list</translation>
     </message>
@@ -3294,7 +3583,7 @@ You can edit several competitions at once (The only exception is the &quot;Advan
         <translation type="vanished">Database repair</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="634"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="637"/>
         <source>Naprawia zapisów symulacji </source>
         <translation>Simulation saves repair</translation>
     </message>
@@ -3608,324 +3897,329 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Records count: </translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="167"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="191"/>
+        <source>Listy zawodników</source>
+        <translation type="unfinished">Jumpers lists</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="198"/>
         <source>Pokaż ukryte tabele</source>
         <translation>Show hidden tables</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="180"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="211"/>
         <source>Rankingi</source>
         <translation>Rankings</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="203"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="234"/>
         <source>Średnia ocena lotu</source>
         <translation>Average takeoff rating</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="240"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="271"/>
         <source>Średnia pozycja</source>
         <translation>Average position</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="274"/>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1513"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="305"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1544"/>
         <source>Średnie noty za styl</source>
         <translation>Average judges</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="311"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="342"/>
         <source>Średnia ocena wybicia</source>
         <translation>Average takeoff rating</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="348"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="379"/>
         <source>Średnia odległość</source>
         <translation>Average distance</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="385"/>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1543"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="416"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1574"/>
         <source>Średni wiatr</source>
         <translation>Average wind</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="410"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="441"/>
         <source>Rekordy</source>
         <translation>Records</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="441"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="472"/>
         <source>Odległość</source>
         <translation>Distance</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="469"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="500"/>
         <source>Najlepsza</source>
         <translation>Best</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="500"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="531"/>
         <source>Najgorsza</source>
         <translation>Worst</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="527"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="558"/>
         <source>Punkty od sędziów</source>
         <translation>Judges points</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="555"/>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="641"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="586"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="672"/>
         <source>Najwięcej</source>
         <translation>Most</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="586"/>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="672"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="617"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="703"/>
         <source>Najmniej</source>
         <translation>Least</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="613"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="644"/>
         <source>Punkty za skok</source>
         <translation>Points for jump</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="699"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="730"/>
         <source>Uśredniony wiatr</source>
         <translation>Averaged wind</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="727"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="758"/>
         <source>Najlepszy</source>
         <translation>Best</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="758"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="789"/>
         <source>Najgorszy</source>
         <translation>Worst</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="785"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="816"/>
         <source>Ocena lotu</source>
         <translation>Flight rating</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="813"/>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="899"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="844"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="930"/>
         <source>Największa</source>
         <translation>Most</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="844"/>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="930"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="875"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="961"/>
         <source>Najmniejsza</source>
         <translation>Least</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="871"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="902"/>
         <source>Ocena wybicia</source>
         <translation>Takeoff rating</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="956"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="987"/>
         <source>Fakty</source>
         <translation>Facts</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="979"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1010"/>
         <source>Rozegrane konkursy</source>
         <translation>Played competitions</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="992"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1023"/>
         <source>126 (210 serii)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1009"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1040"/>
         <source>Ilość skoków w zapisie</source>
         <translation>Jumps count</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1022"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1053"/>
         <source>7666</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1039"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1070"/>
         <source>Skoki za punkt K</source>
         <translation>Jumps above k point</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1052"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1083"/>
         <source>5475 (64.76%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1069"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1100"/>
         <source>Skoki za punkt HS</source>
         <translation>Jumps above hs point</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1082"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1113"/>
         <source>43 (0.0187%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1099"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1130"/>
         <source>Średnia odległość zapisu</source>
         <translation>Average distance</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1112"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1143"/>
         <source>119.47m</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1129"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1160"/>
         <source>Zwycięstwa</source>
         <translation>Wins</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1144"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1175"/>
         <source>14</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1160"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1191"/>
         <source>Halvor EG (NOR)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1179"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1210"/>
         <source>Miejsca na podium</source>
         <translation>Podiums</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1194"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1225"/>
         <source>23</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1210"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1241"/>
         <source>Stefan K (AUT)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1229"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1260"/>
         <source>Ilość telemarków</source>
         <translation>Telemarks</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1242"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1273"/>
         <source>7311 (98.708%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1259"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1290"/>
         <source>Ilość lądowań na dwie nogi</source>
         <translation>Both legs landings</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1272"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1303"/>
         <source>240 (1.456%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1289"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1320"/>
         <source>Ilość podpartych lądowań</source>
         <translation>Support landings</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1302"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1333"/>
         <source>8 (0.00544%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1319"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1350"/>
         <source>Ilość upadków</source>
         <translation>Falls</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1332"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1363"/>
         <source>17 (0.0114%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1349"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1380"/>
         <source>Zwycięstwo z największą
 przewagą</source>
         <translation>Bigger win</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1365"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1396"/>
         <source>14.6pkt (2024/76: Lilehammer HS140 - 1. Trening)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1381"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1412"/>
         <source>Markus E (DEU)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1400"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1431"/>
         <source>Zwycięstwo z najmniejszą
 przewagą</source>
         <translation>Smallest win</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1416"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1447"/>
         <source>0.2pkt (2026/1: Wisła HS134 - 1. Trening)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1432"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1463"/>
         <source>Andreas W (DEU)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1451"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1482"/>
         <source>Największa różnica między
 1 a 10 zawodnikiem</source>
         <translation>Biggest difference
 between TOP10</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1465"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1496"/>
         <source>33pkt (2024/124: Vikersund HS240 - Konkurs)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1482"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1513"/>
         <source>Najmniejsza różnica między
 1 a 10 zawodnikiem</source>
         <translation>Smallest difference
 between TOP10</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1496"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1527"/>
         <source>5.7pkt (2022/100: Rasnov HS97 - Kwalifikacje)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1526"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1557"/>
         <source>17.98pkt</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1556"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1587"/>
         <source>-0.11</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1584"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1615"/>
         <source>Klasyfikacja ogólna</source>
         <translation>General classification</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1611"/>
+        <location filename="../source/UI/Seasons/Stats/SimulationRatingsWindow.ui" line="1642"/>
         <source>Preset punktów za miejsca</source>
         <translation>Points for places preset</translation>
     </message>
@@ -4200,7 +4494,7 @@ between TOP10</translation>
     </message>
     <message>
         <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="829"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="417"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="420"/>
         <source>Konfiguruj konkurs</source>
         <translation>Configure the competition</translation>
     </message>
@@ -4221,87 +4515,87 @@ Możesz ją tylko całkowicie usunąć</source>
 You can only remove it completely</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="297"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="300"/>
         <source>Edycja zawodników i skoczni</source>
         <translation>Jumpers and hills editing</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="298"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="301"/>
         <source>BARDZO WAŻNE: Zawodników i skoczni które dodano, nie można już później usunąć. Bądź ostrożny podczas dodawania!</source>
         <translation>VERY IMPORTANT: Jumpers and hills that have been added can no longer be removed. Be careful when adding!</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="299"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="302"/>
         <source>Nie pokazuj ponownie</source>
         <translation>Don&apos;t show again</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="335"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="338"/>
         <source>Konkurs</source>
         <translation>Competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="338"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="341"/>
         <source>Kwalifikacje</source>
         <translation>Qualifications</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="341"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="344"/>
         <source>Seria próbna</source>
         <translation>Trial round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="358"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="361"/>
         <source>Trening </source>
         <translation>Training</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="396"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="399"/>
         <source>Konfiguruj nowy sezon</source>
         <translation>Configure next season</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="611"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="614"/>
         <source>Koniec sezonu</source>
         <translation>Season end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="611"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="614"/>
         <source>Sezon dobiegł końca! Aby skonfigurować kolejny sezon, wciśnij odpowiedni przycisk w oknie.</source>
         <translation>The season has come to an end! To set up the next season, press the appropriate button in the window.</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="622"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="625"/>
         <source>Zapis do pliku</source>
         <translation>Writing to file</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="622"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="625"/>
         <source>Pomyślnie zapisano aktualny zapis symulacji do pliku</source>
         <translation>Successfully saved the current simulation save to file</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="659"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="662"/>
         <source>Naprawa bazy danych</source>
         <translation>Database repair</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="659"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="662"/>
         <source>Naprawiono bazę danych tego zapisu symulacji i zapisano do pliku.</source>
         <translation>The database of this simulation save was repaired and saved to a file.</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="682"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="685"/>
         <source>Wyniki konkursu</source>
         <translation>Competition results</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="740"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="743"/>
         <source>Statystyki skoczka</source>
         <translation>Jumper stats</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="740"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="743"/>
         <source>Najpierw zaznacz jakiegoś zawodnika!</source>
         <translation>First, mark some player!</translation>
     </message>

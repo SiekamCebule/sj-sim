@@ -110,6 +110,26 @@ border: none;
     </layout>
    </item>
    <item>
+    <widget class="QCheckBox" name="checkBox_default">
+     <property name="font">
+      <font>
+       <family>Quicksand SemiBold</family>
+       <pointsize>10</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(105, 46, 0);</string>
+     </property>
+     <property name="text">
+      <string>Domyślnie dodawaj tych zawodników do listy startowej</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QTextEdit" name="textEdit_shortcuts">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">

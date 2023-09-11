@@ -22,6 +22,8 @@
 #include "EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "Seasons/SimulationSavesWindow.h"
 
+#include "HelpWindow.h"
+
 #include <QDebug>
 #include <QCloseEvent>
 #include <QVector>
@@ -29,7 +31,7 @@
 #include <random>
 
 extern IDGenerator globalIDGenerator;
-const QString appVersion = "0.9.6";
+const QString appVersion = "0.9.7";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -160,5 +162,13 @@ void MainWindow::on_pushButton_season_clicked()
     if(savesWindow.exec() == QDialog::Accepted){
 
     }
+}
+
+
+void MainWindow::on_pushButton_help_clicked()
+{
+    HelpWindow * helpWindow = new HelpWindow();
+    helpWindow->setAttribute(Qt::WA_DeleteOnClose);
+    helpWindow->show();
 }
 

@@ -552,7 +552,7 @@ color: rgb(32, 120, 252);
               <item>
                <widget class="QPushButton" name="pushButton_help">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="minimumSize">
                  <size>
@@ -772,7 +772,7 @@ background-color: rgb(255, 255, 251);
      <x>0</x>
      <y>0</y>
      <width>806</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

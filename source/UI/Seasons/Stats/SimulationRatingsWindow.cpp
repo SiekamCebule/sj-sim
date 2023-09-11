@@ -3,7 +3,7 @@
 #include "../../../utilities/functions.h"
 #include "../../../global/PointsForPlacesPreset.h"
 #include "../../../global/GlobalDatabase.h"
-#include <QSortFilterProxyModel>
+#include "../../EditorWidgets/EditStartListWithJumpersListsWindow.h"
 
 SimulationRatingsWindow::SimulationRatingsWindow(SimulationSave * save, QWidget *parent) :
     QDialog(parent),
@@ -158,7 +158,7 @@ void SimulationRatingsWindow::fillWindow()
 {
     QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList()),
                                                                                             rangeComboBoxes->getCompetition(1), rangeComboBoxes->getCompetition(2));
-    jumpersSingleResults = CompetitionSingleResult::getJumpersFilteredSingleResults(save->getJumpersReference(), competitions,
+    jumpersSingleResults = CompetitionSingleResult::getJumpersFilteredSingleResults(filteredJumpers, competitions,
                                                                                     serieTypesCheckBoxes->getSerieTypes(), hillTypesCheckBoxes->getHillTypesSet(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked());
 
     //Średnia pozycja
@@ -697,6 +697,16 @@ QCheckBox *SimulationRatingsWindow::getShowFormCheckBox()
     return ui->checkBox_showHidden;
 }
 
+QVector<Jumper *> SimulationRatingsWindow::getFilteredJumpers() const
+{
+    return filteredJumpers;
+}
+
+void SimulationRatingsWindow::setFilteredJumpers(const QVector<Jumper *> &newFilteredJumpers)
+{
+    filteredJumpers = newFilteredJumpers;
+}
+
 GeneralClassificationTableModel *SimulationRatingsWindow::getGeneralClassificationModel() const
 {
     return generalClassificationModel;
@@ -726,3 +736,39 @@ ClassificationsCheckBoxesWidget *SimulationRatingsWindow::getClassificationsChec
 {
     return classificationsCheckBoxes;
 }
+
+void SimulationRatingsWindow::on_pushButton_jumpersLists_clicked()
+{
+    EditStartListWithJumpersListsWindow * window = new EditStartListWithJumpersListsWindow(this);
+    window->setLists(&save->getJumpersListsReference());
+    window->setupWidgets();
+    if(window->exec() == QDialog::Accepted)
+    {
+        filteredJumpers = save->getJumpers();
+        for(auto & status : window->constructJumpersListsStatuses())
+        {
+            if(status.second == JumpersListsListItemWidget::Select)
+            {
+                for(auto & jumper : status.first->getJumpersReference())
+                {
+                    if(filteredJumpers.contains(jumper) == false)
+                    {
+                        filteredJumpers.push_back(jumper);
+                    }
+                }
+            }
+            else if(status.second == JumpersListsListItemWidget::Unselect)
+            {
+                for(auto & jumper : status.first->getJumpersReference())
+                {
+                    if(filteredJumpers.contains(jumper) == true)
+                    {
+                        MyFunctions::removeFromVector(filteredJumpers, jumper);
+                    }
+                }
+            }
+        }
+        fillWindow();
+    }
+}
+

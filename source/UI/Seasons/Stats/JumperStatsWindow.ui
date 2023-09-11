@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1048</width>
+    <width>1122</width>
     <height>844</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(240, 240, 240); color: black;</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_12">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0">
      <item>
@@ -567,7 +567,7 @@ ukryte wykresy</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1006</width>
+            <width>1080</width>
             <height>672</height>
            </rect>
           </property>

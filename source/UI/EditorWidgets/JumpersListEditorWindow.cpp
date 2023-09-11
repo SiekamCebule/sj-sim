@@ -2,12 +2,13 @@
 #include "ui_JumpersListEditorWindow.h"
 #include "../../utilities/functions.h"
 
-JumpersListEditorWindow::JumpersListEditorWindow(QWidget *parent, QString name) :
+JumpersListEditorWindow::JumpersListEditorWindow(QWidget *parent, QString name, bool isDefault) :
     QDialog(parent),
     ui(new Ui::JumpersListEditorWindow)
 {
     ui->setupUi(this);
     ui->lineEdit->setText(name);
+    ui->checkBox_default->setChecked(isDefault);
 
     selectedJumpersListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonJumpersItems, false, false, true);
     selectedJumpersListView->setSeasonJumpers(&selectedJumpers);
@@ -63,6 +64,11 @@ JumpersListEditorWindow::~JumpersListEditorWindow()
 QString JumpersListEditorWindow::getNameFromLineEdit()
 {
     return ui->lineEdit->text();
+}
+
+bool JumpersListEditorWindow::getIsDefaultFromCheckBox()
+{
+    return ui->checkBox_default->isChecked();
 }
 
 void JumpersListEditorWindow::updateUnselectedJumpers()

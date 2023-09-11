@@ -3,13 +3,14 @@
 
 SaveJumpersList::SaveJumpersList(QString name) : name(name)
 {
-
+    isDefault = false;
 }
 
 QJsonObject SaveJumpersList::getJsonObject(SaveJumpersList &jumpersList)
 {
     QJsonObject object;
     object.insert("name", jumpersList.getName());
+    object.insert("is-default", jumpersList.getIsDefault());
     QJsonArray jumpersArray;
     for(auto & jumper : jumpersList.getJumpersReference())
     {
@@ -24,6 +25,7 @@ SaveJumpersList SaveJumpersList::getFromJson(QJsonObject object, DatabaseObjects
 {
     SaveJumpersList jumpersList;
     jumpersList.setName(object.value("name").toString());
+    jumpersList.setIsDefault(object.value("is-default").toBool());
     QJsonArray jumpersArray = object.value("jumpers-ids").toArray();
     for(auto jumperID : jumpersArray)
     {
@@ -31,6 +33,16 @@ SaveJumpersList SaveJumpersList::getFromJson(QJsonObject object, DatabaseObjects
     }
 
     return jumpersList;
+}
+
+bool SaveJumpersList::getIsDefault() const
+{
+    return isDefault;
+}
+
+void SaveJumpersList::setIsDefault(bool newIsDefault)
+{
+    isDefault = newIsDefault;
 }
 
 QVector<Jumper *> SaveJumpersList::getJumpers() const

@@ -1297,6 +1297,14 @@ void CompetitionManagerWindow::on_pushButton_coachGate_clicked()
         ui->spinBox_actualGate->setValue(manager->getActualCoachGate());
         manager->setActualGate(manager->getActualGate() + howMany);
     }
+    else if(howMany == 0 && ok)
+    {
+        manager->setCoachGateForNextJumper(false);
+        updateToAdvanceDistanceLabel();
+        updateToBeatDistanceLabel();
+
+        ui->spinBox_actualGate->setValue(manager->getActualGate());
+    }
 }
 
 QVector<Wind> CompetitionManagerWindow::getActualWinds() const

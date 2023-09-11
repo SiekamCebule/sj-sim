@@ -529,4 +529,3 @@ void JumperStatsWindow::on_checkBox_stateChanged(int arg1)
         flightRatingChartView->show();
     }
 }
-

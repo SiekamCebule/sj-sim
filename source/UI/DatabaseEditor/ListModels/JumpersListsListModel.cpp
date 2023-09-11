@@ -28,10 +28,21 @@ QVariant JumpersListsListModel::data(const QModelIndex &index, int role) const
         return jumpersLists->at(index.row()).getName() + " (" + QString::number(jumpersLists->at(index.row()).getJumpers().count()) + tr(" zawodników)");
     }
     else if(role == Qt::FontRole){
-        return QFont("Quicksand Medium", 11, 600);
+        QFont font("Quicksand Medium", 11, 600);
+        if(jumpersLists->at(index.row()).getIsDefault())
+            font.setBold(true);
+        return font;
     }
     else if(role == Qt::BackgroundRole){
-        return QColor(qRgb(253, 253, 253));
+        return QColor("white");
+        if(jumpersLists->at(index.row()).getIsDefault())
+        {
+            return QColor(qRgb(22, 77, 250));
+        }
+        else
+        {
+            return QColor(qRgb(11, 5, 210));
+        }
     }
     else if(role == Qt::ForegroundRole){
         return QColor(qRgb(30, 30, 30));
