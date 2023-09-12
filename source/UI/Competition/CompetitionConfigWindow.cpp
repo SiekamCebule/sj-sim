@@ -938,7 +938,7 @@ void CompetitionConfigWindow::on_pushButton_jumpersLists_clicked()
     {
         for(auto & status : window->constructJumpersListsStatuses())
         {
-            if(status.second == JumpersListsListItemWidget::Select)
+            if(status.second == JumpersListsListItemWidget::Select && seasonCompetition->getAdvancementCompetition() == nullptr && seasonCompetition->getAdvancementClassification() == nullptr)
             {
                 for(auto & jumper : status.first->getJumpersReference())
                 {
