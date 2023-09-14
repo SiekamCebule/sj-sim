@@ -56,6 +56,7 @@ private:
 
 public:
     void reset();
+    void setupForNextJumper();
 
     static QJsonObject getJsonObject(JumpData jumpData);
     static JumpData getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);

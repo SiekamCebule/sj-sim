@@ -31,7 +31,7 @@
 #include <random>
 
 extern IDGenerator globalIDGenerator;
-const QString appVersion = "0.9.7";
+const QString appVersion = "0.9.8";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

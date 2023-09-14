@@ -96,6 +96,27 @@ QHash<Jumper *, QVector<CompetitionSingleResult *> > CompetitionSingleResult::ge
     return toReturn;
 }
 
+QString CompetitionSingleResult::getCsvResultsObject()
+{
+    QString s;
+    s += QString::number(position)+";";
+    s += jumper->getNameAndSurname()+";";
+    s += jumper->getCountryCode()+";";
+    s += QString::number(pointsSum)+";";
+    for(auto & round : competition->getRulesPointer()->getRoundsReference())
+    {
+        int i=0;
+        s += QString::number(jumps[i].getDistance())+";";
+        s += QString::number(jumps[i].getGate())+";";
+        s += QString::number(jumps[i].getAveragedWind())+";";
+        s += QString::number(jumps[i].getTotalCompensation())+";";
+        s += QString::number(jumps[i].getJudgesPoints())+";";
+        s += QString::number(jumps[i].getPoints())+"";
+        i++;
+    }
+    return s;
+}
+
 CompetitionInfo *CompetitionSingleResult::getCompetition() const
 {
     return competition;

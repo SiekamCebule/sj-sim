@@ -69,7 +69,7 @@ color: rgb(26, 95, 180);
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_startList" stretch="0,0,0,0,0">
+      <layout class="QVBoxLayout" name="verticalLayout_startList" stretch="0,0,0,0,0,0,0">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
@@ -183,6 +183,56 @@ background-color: rgb(240, 255, 255);
          </property>
          <property name="text">
           <string>Domyślna kolejność</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_sortStartListRandomly">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+color: rgb(0, 0, 0);
+background-color: rgb(242, 255, 244);
+padding: 2px;
+}
+QPushButton:hover{
+background-color: rgb(255, 255, 255);
+}</string>
+         </property>
+         <property name="text">
+          <string>Losowa kolejność</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_sortStartListByCountries">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+color: rgb(0, 0, 0);
+background-color: rgb(251, 255, 222);
+padding: 2px;
+}
+QPushButton:hover{
+background-color: rgb(255, 255, 248);
+}</string>
+         </property>
+         <property name="text">
+          <string>Kolejność według krajów</string>
          </property>
         </widget>
        </item>
@@ -450,6 +500,16 @@ startowa</string>
         </layout>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_autoGate">
+         <property name="styleSheet">
+          <string notr="true">color:black;</string>
+         </property>
+         <property name="text">
+          <string>Ustaw automatycznie</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QVBoxLayout" name="verticalLayout_9">
          <item>
           <spacer name="verticalSpacer_3">
@@ -543,6 +603,33 @@ startowa</string>
             </widget>
            </item>
           </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="label_6">
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: black;</string>
+           </property>
+           <property name="text">
+            <string>Plik zapisu CSV</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit">
+           <property name="placeholderText">
+            <string>Zostaw pustę aby nie zapisywać</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

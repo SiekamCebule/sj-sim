@@ -16,7 +16,6 @@ ClassificationResultsTableModel::~ClassificationResultsTableModel()
 
 QVariant ClassificationResultsTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    qDebug()<<"headerData";
     switch(section)
     {
     case 0:
@@ -36,18 +35,14 @@ QVariant ClassificationResultsTableModel::headerData(int section, Qt::Orientatio
 
 int ClassificationResultsTableModel::rowCount(const QModelIndex &parent) const
 {
-    qDebug()<<"rowCount";
     if (parent.isValid())
         return 0;
 
     return classification->getResultsReference().count();
-    //qDebug()<<"a";
-    //qDebug()<<"c";
 }
 
 int ClassificationResultsTableModel::columnCount(const QModelIndex &parent) const
 {
-    qDebug()<<"columnCount";
     if (parent.isValid())
         return 0;
 
@@ -56,7 +51,6 @@ int ClassificationResultsTableModel::columnCount(const QModelIndex &parent) cons
 
 QVariant ClassificationResultsTableModel::data(const QModelIndex &index, int role) const
 {
-    qDebug()<<"data";
     if (!index.isValid())
         return QVariant();
 

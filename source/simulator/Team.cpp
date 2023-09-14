@@ -106,7 +106,17 @@ QVector<Jumper *> Team::getJumpersFilteredByCountryCode(QVector<Jumper> &jumpers
         if(jumper.getCountryCode().toUpper() == countryCode.toUpper())
             vector.push_back(&jumper);
     }
-    qDebug()<<"size: "<<vector.size();
+    return vector;
+}
+
+QVector<Jumper *> Team::getJumpersFilteredByCountryCode(QVector<Jumper *> &jumpers, const QString &countryCode)
+{
+    QVector<Jumper *> vector;
+    for(auto & jumper : jumpers)
+    {
+        if(jumper->getCountryCode().toUpper() == countryCode.toUpper())
+            vector.push_back(jumper);
+    }
     return vector;
 }
 

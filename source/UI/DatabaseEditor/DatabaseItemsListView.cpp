@@ -261,9 +261,11 @@ void DatabaseItemsListView::onInsertActionTriggered()
         }
         case PointsForPlacesPresetsItems:{
             count = pointsForPlacesPresets->count();
+            break;
         }
         case JumpersListsItems:{
             count = jumpersLists->count();
+            break;
         }
         default: break;
         }

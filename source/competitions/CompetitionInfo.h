@@ -28,7 +28,8 @@ public:
     };
 
     void updateQualifyingCompetitions(SeasonCalendar * calendar);
-    bool saveToFile(QString dir, QString name);
+    bool saveToJsonFile(QString dir, QString name);
+    bool saveToCsvFile(QString dir, QString name);
 
     static QVector<CompetitionInfo *> getSpecificTypeCompetitions(QVector<CompetitionInfo *> competitions, int type);
     static QVector<CompetitionInfo *> getCompetitionsByStartAndEnd(QVector<CompetitionInfo *> competitions, CompetitionInfo * start, CompetitionInfo * end);

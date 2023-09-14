@@ -56,7 +56,7 @@ void CompetitionInfo::updateQualifyingCompetitions(SeasonCalendar *calendar)
     }
 }
 
-bool CompetitionInfo::saveToFile(QString dir, QString name)
+bool CompetitionInfo::saveToJsonFile(QString dir, QString name)
 {
     QDir d(dir);
     if(!d.exists())
@@ -77,6 +77,43 @@ bool CompetitionInfo::saveToFile(QString dir, QString name)
 
     file.resize(0);
     file.write(document.toJson());
+    file.close();
+    return true;
+}
+
+bool CompetitionInfo::saveToCsvFile(QString dir, QString name)
+{
+    QDir d(dir);
+    if(!d.exists())
+        d.mkpath(".");
+    QFile file(dir + name);
+    if(!file.open(QFile::WriteOnly | QFile::Text))
+    {
+        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku ", "Nie udało się otworzyć pliku " + dir + name+ "\nUpewnij się, że istnieją odpowiednie foldery lub aplikacja ma odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
+       qDebug()<<file.errorString();
+ message.setModal(true);
+        message.exec();
+        return false;
+    }
+    QTextStream stream(&file);
+
+    stream << QObject::tr("Poz.") <<";"<< QObject::tr("Zawodnik") <<";"<< QObject::tr("Kraj") <<";"<< QObject::tr("Nota łączna")<<";";
+    int i=1;
+    for(auto & round : rules.getRoundsReference())
+    {
+        stream << QObject::tr("Odległość ") + QString::number(i) <<";";
+        stream << QObject::tr("Belka ") + QString::number(i) <<";";
+        stream << QObject::tr("Wiatr ") + QString::number(i) <<";";
+        stream << QObject::tr("Rekompensata ") + QString::number(i) <<";";
+        stream << QObject::tr("Punkty od sędziów ") + QString::number(i) <<";";
+        stream << QObject::tr("Nota ") + QString::number(i) <<";";
+        i++;
+    }
+    stream<<"\n";
+    for(auto & res : results.getResultsReference())
+    {
+        stream << res.getCsvResultsObject() << "\n";
+    }
     file.close();
     return true;
 }

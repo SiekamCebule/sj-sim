@@ -245,22 +245,6 @@ bool GlobalDatabase::loadSimulationSaves(bool progressDialog)
     dialog.setWindowModality(Qt::WindowModal);
 
     bool ok = true;
-    /*for(auto & fileName : fileNames){
-        DatabaseObjectsManager objectsManager;
-        QFile file("simulationSaves/" + fileName);
-        if(!file.open(QFile::ReadOnly | QFile::Text))
-        {
-            QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zapisem symulacji", "Nie udało się otworzyć pliku simulationSaves/" + fileName +"\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
-            message.setModal(true);
-            message.exec();
-            ok = false;
-        }
-        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
-        QJsonObject object = doc.object().value("simulation-save").toObject();
-        SimulationSave * s = SimulationSave::getFromJson(object, &objectsManager);
-        globalSimulationSaves.push_back(s);
-        file.close();
-    }*/
 
     globalIDGenerator.setFreezed(true);
     QFuture<SimulationSave *> future = QtConcurrent::mapped(fileNames, SimulationSave::loadFromFile);
@@ -274,17 +258,24 @@ bool GlobalDatabase::loadSimulationSaves(bool progressDialog)
 
 bool GlobalDatabase::loadPointsForPlacesPresets()
 {
-    QFile file("userData/GlobalDatabase/globalPointsForPlacesPresets.json");
-    if(!file.open(QFile::ReadOnly | QFile::Text))
-    {
-        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z presetami punktów za miejsca", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalPointsForPlacesPresets.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
-        message.setModal(true);
-        message.exec();
-        return false;
-    }
-    globalPointsForPlacesPresets = PointsForPlacesPreset::getPointsForPlacesPresetsVectorFromJson(file.readAll());
-    file.close();
-    return true;
+    globalPointsForPlacesPresets.clear();
+
+    QDir dir(QCoreApplication::applicationDirPath());
+    if(dir.exists("userData") == false && QSysInfo::productType() == "windows")
+        dir.cdUp();
+    dir.setPath(dir.path() + "/userData/GlobalDatabase/pointsForPlacesPresets");
+    dir.setNameFilters(QStringList() << "*.json");
+    QStringList fileNames = dir.entryList();
+
+    bool ok = true;
+
+    globalIDGenerator.setFreezed(true);
+    QFuture<PointsForPlacesPreset> future = QtConcurrent::mapped(fileNames, PointsForPlacesPreset::loadFromJson);
+
+    future.waitForFinished();
+    globalPointsForPlacesPresets = future.results();
+    globalIDGenerator.setFreezed(false);
+    return ok;
 }
 
 bool GlobalDatabase::loadCalendarPresets()
@@ -441,29 +432,13 @@ bool GlobalDatabase::writeSimulationSaves()
 
 bool GlobalDatabase::writePointsForPlacesPresets()
 {
-    QJsonDocument document;
-    QJsonObject mainObject;
-    QJsonArray array;
-
+    bool ok = true;
     for(auto & preset : globalPointsForPlacesPresets)
     {
-        array.push_back(QJsonValue(PointsForPlacesPreset::getPointsForPlacesPresetJsonObject(preset)));
+        if(preset.saveToFile("pointsForPlacesPresets/") == false)
+            ok = false;
     }
-    mainObject.insert("pointsForPlacesPresets", array);
-    document.setObject(mainObject);
-
-    QFile file("userData/GlobalDatabase/globalPointsForPlacesPresets.json");
-    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z presetami punktów za miejsca", "Nie udało się otworzyć pliku userData/GlobalDatabase/globalPointsForPlacesPresets.json\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
-        message.setModal(true);
-        message.exec();
-        return false;
-    }
-    file.resize(0);
-    file.write(document.toJson(QJsonDocument::Indented));
-    file.close();
-    return true;
+    return ok;
 }
 
 bool GlobalDatabase::writeCalendarPresets()

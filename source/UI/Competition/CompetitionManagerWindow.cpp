@@ -130,6 +130,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
         }
         else{
             manager->setActualGate(ui->spinBox_actualGate->value());
+            manager->updateLast10Judges();
             manager->updateToBeatLineDistance();
             updateToAdvanceDistanceLabel();
             updateToBeatDistanceLabel();
@@ -534,6 +535,7 @@ void CompetitionManagerWindow::autoSimulateRound()
         StartListCompetitorStatus::getStatusOfJumper(manager->getActualJumper(), manager->getStartListStatusesReference())->setQualifiedBy95HSRule(ok);
         manager->updateLastQualifiedResult();
         manager->updateLeaderResult();
+        manager->updateLast10Judges();
         manager->updateToAdvanceLineDistance();
         manager->updateToBeatLineDistance();
         if(KOManager != nullptr)
@@ -588,6 +590,7 @@ void CompetitionManagerWindow::autoSimulateRound()
         teamResultsTreeView->expandToDepth(0);
     }
 
+    manager->updateLast10Judges();
     updateToBeatDistanceLabel();
     updateToAdvanceDistanceLabel();
     updatePointsToTheLeaderLabel();
@@ -636,6 +639,7 @@ void CompetitionManagerWindow::autoSimulateCompetition()
         StartListCompetitorStatus::getStatusOfJumper(manager->getActualJumper(), manager->getStartListStatusesReference())->setQualifiedBy95HSRule(ok);
         manager->updateLastQualifiedResult();
         manager->updateLeaderResult();
+        manager->updateLast10Judges();
         manager->updateToAdvanceLineDistance();
         manager->updateToBeatLineDistance();
         if(KOManager != nullptr)
@@ -725,6 +729,7 @@ void CompetitionManagerWindow::autoSimulateCompetition()
         teamResultsTreeView->expandToDepth(0);
     }//teams sie psuje kiedy jest ostatnia seria
 
+    manager->updateLast10Judges();
     updateToBeatDistanceLabel();
     updateToAdvanceDistanceLabel();
     updatePointsToTheLeaderLabel();
@@ -764,6 +769,7 @@ void CompetitionManagerWindow::autoSimulateGroup()
             StartListCompetitorStatus::getStatusOfJumper(manager->getActualJumper(), manager->getStartListStatusesReference())->setQualifiedBy95HSRule(ok);
             manager->updateLastQualifiedResult();
             manager->updateLeaderResult();
+            manager->updateLast10Judges();
             manager->updateToAdvanceLineDistance();
             manager->updateToBeatLineDistance();
             manager->updateCompetitorsAdvanceStatuses();
@@ -783,6 +789,7 @@ void CompetitionManagerWindow::autoSimulateGroup()
         teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
         teamResultsTreeView->expandToDepth(0);
 
+        manager->updateLast10Judges();
         updateToBeatDistanceLabel();
         updateToAdvanceDistanceLabel();
         updatePointsToTheLeaderLabel();
@@ -839,6 +846,7 @@ void CompetitionManagerWindow::autoSimulateJumps()
             StartListCompetitorStatus::getStatusOfJumper(manager->getActualJumper(), manager->getStartListStatusesReference())->setQualifiedBy95HSRule(ok);
             manager->updateLastQualifiedResult();
             manager->updateLeaderResult();
+            manager->updateLast10Judges();
             manager->updateToAdvanceLineDistance();
             manager->updateToBeatLineDistance();
             if(KOManager != nullptr)
@@ -931,6 +939,7 @@ void CompetitionManagerWindow::autoSimulateJumps()
             teamResultsTreeView->expandToDepth(0);
         }//teams sie psuje kiedy jest ostatnia seria
 
+        manager->updateLast10Judges();
         updateToBeatDistanceLabel();
         updateToAdvanceDistanceLabel();
         updatePointsToTheLeaderLabel();
@@ -1077,9 +1086,7 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
 {
     IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(manager);
     TeamCompetitionManager * tmManager = dynamic_cast<TeamCompetitionManager *>(manager);
-    qDebug()<<WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()<< "AVG0";
     setupSimulator();
-    qDebug()<<WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()<< "AVG0.5";
     simulator.simulateJump();
     JumpData jump = simulator.getJumpData();
     jump.setCompetition(manager->getCompetitionInfo());
@@ -1106,6 +1113,7 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     StartListCompetitorStatus::getStatusOfJumper(manager->getActualJumper(), manager->getStartListStatusesReference())->setQualifiedBy95HSRule(ok);
     manager->updateLastQualifiedResult();
     manager->updateLeaderResult();
+    manager->updateLast10Judges();
     updateToAdvanceDistanceLabel();
     updateToBeatDistanceLabel();
     if(KOManager != nullptr)
@@ -1170,6 +1178,7 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     updateAvgWindLabel();
     manager->updateLastQualifiedResult();
     manager->updateLeaderResult();
+    manager->updateLast10Judges();
     updateToBeatDistanceLabel();
     updateToAdvanceDistanceLabel();
     updatePointsToTheLeaderLabel();
@@ -1206,6 +1215,7 @@ void CompetitionManagerWindow::on_pushButton_generateNewWinds_clicked()
     setActualWinds(windsGenerator.generateWinds());
     if(manager->getActualStartListIndex() > 0){
         manager->updateLeaderResult();
+        manager->updateLast10Judges();
         updateToBeatDistanceLabel();
         updateToAdvanceDistanceLabel();
     }
@@ -1291,6 +1301,7 @@ void CompetitionManagerWindow::on_pushButton_coachGate_clicked()
     if(howMany > 0 && ok){
         manager->setCoachGateForNextJumper(true);
         manager->setActualCoachGate(manager->getActualGate() - howMany);
+        manager->updateLast10Judges();
         updateToAdvanceDistanceLabel();
         updateToBeatDistanceLabel();
 
@@ -1300,6 +1311,7 @@ void CompetitionManagerWindow::on_pushButton_coachGate_clicked()
     else if(howMany == 0 && ok)
     {
         manager->setCoachGateForNextJumper(false);
+        manager->updateLast10Judges();
         updateToAdvanceDistanceLabel();
         updateToBeatDistanceLabel();
 

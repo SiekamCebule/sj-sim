@@ -276,6 +276,11 @@ void TeamCompetitionManager::setStartListOrderByCompetitionResults(QVector<Team>
     }
 }
 
+void TeamCompetitionManager::setStartListOrderRandomly(QVector<Team> &teams)
+{
+    std::random_shuffle(teams.begin(), teams.end());
+}
+
 bool TeamCompetitionManager::checkCompetitionEnd()
 {
     return (checkGroupEnd() && checkRoundEnd() && (actualRound == competitionRules->getRoundsReference().count() || actualRound == competitionInfo->getExceptionalRoundsCount()));

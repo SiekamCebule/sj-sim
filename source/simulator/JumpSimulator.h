@@ -40,6 +40,7 @@ public:
 
     void resetTemporaryParameters();
     void updateJumperSkills();
+    void setupForNextJump();
 
 private:
     enum RandomParameters{

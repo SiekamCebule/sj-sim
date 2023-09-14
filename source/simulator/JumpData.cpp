@@ -170,6 +170,18 @@ void JumpData::reset()
     simulationData.reset();
 }
 
+void JumpData::setupForNextJumper()
+{
+    distance = points = gateCompensation = windCompensation = totalCompensation = judgesPoints = 0;
+    landing = Landing();
+    judges.clear();
+    judges.fill(0, 5);
+    winds.clear();
+    averagedWind = 0;
+    DSQ = false;
+    simulationData.reset();
+}
+
 QJsonObject JumpData::getJsonObject(JumpData jumpData)
 {
     QJsonObject object;

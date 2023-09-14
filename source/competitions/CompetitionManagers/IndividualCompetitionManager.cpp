@@ -297,6 +297,24 @@ void IndividualCompetitionManager::setStartListOrderByDefault(QVector<Jumper *> 
     startList = tempJumpers;
 }
 
+void IndividualCompetitionManager::setStartListOrderRandomly(QVector<Jumper *> &startList)
+{
+    std::random_shuffle(startList.begin(), startList.end());
+}
+
+void IndividualCompetitionManager::setStartListOrderByCountries(QVector<QString> countries, QVector<Jumper *> &startList)
+{
+    QVector<Jumper *> tempJumpers;
+    for(auto & country : countries)
+    {
+        for(auto & j : Team::getJumpersFilteredByCountryCode(startList, country))
+        {
+            tempJumpers.push_back(j);
+        }
+    }
+    startList = tempJumpers;
+}
+
 QVector<QVector<KOGroup> *> IndividualCompetitionManager::getRoundsKOGroups() const
 {
     return roundsKOGroups;

@@ -55,7 +55,7 @@ private slots:
     void upActionTriggered();
     void downActionTriggered();
     void editActionTriggered();
-    //void duplicateActionTriggered();
+    void duplicateActionTriggered();
 
     void on_pushButton_saveCalendarPreset_clicked();
 

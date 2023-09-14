@@ -53,9 +53,9 @@ CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVec
     connect(action_edit, &QAction::triggered, this, &CalendarEditorWidget::editActionTriggered);
 
     action_duplicate = new QAction(this);
-    action_duplicate->setShortcut(Qt::CTRL | Qt::Key_Shift | Qt::Key_A);
+    action_duplicate->setShortcut(Qt::CTRL | Qt::ALT| Qt::Key_A);
     this->addAction(action_duplicate);
-    //connect(action_duplicate, &QAction::triggered, this, &CalendarEditorWidget::duplicateActionTriggered);
+    connect(action_duplicate, &QAction::triggered, this, &CalendarEditorWidget::duplicateActionTriggered);
 
     defaultHill = calendarModel->getHillsList()->first();
 
@@ -167,7 +167,7 @@ void CalendarEditorWidget::updateActualCompetitionByID()
 
 void CalendarEditorWidget::debugCalendar()
 {
-    int i=1;
+    int i=0;
     for(auto & comp : calendar->getCompetitionsReference()){
         QString string = QString::number(i);
         string += ". " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()) + " -> ";
@@ -596,6 +596,71 @@ void CalendarEditorWidget::editActionTriggered()
         }
         }
         ui->tableView->resizeColumnsToContents();
+    }
+    emit changed();
+}
+
+void CalendarEditorWidget::duplicateActionTriggered()
+{
+    int insertIndex = 0;
+    if(ui->tableView->selectionModel()->selectedIndexes().count() > 0)
+        insertIndex = ui->tableView->selectionModel()->selectedIndexes().at(0).row() + 0;
+    else if(calendarModel->rowCount() > 0)
+        insertIndex = calendarModel->rowCount() - 1;
+    else
+        insertIndex = 0;
+
+    int insertIndexInCalendar=0;
+    int i=0;
+    for(auto & comp : calendar->getCompetitionsReference())
+    {
+        if(i == insertIndex + 1){
+            break;
+        }
+        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition)
+            i++;
+        insertIndexInCalendar++;
+    }
+    if(insertIndexInCalendar >= calendarModel->getDontModifyBefore()){
+        qDebug()<<"INSIDX "<<insertIndexInCalendar;
+        insertIndexInCalendar -= 1;
+        CompetitionInfo * existing = calendar->getCompetitionsReference()[insertIndexInCalendar];
+        debugCalendar();
+        calendarModel->insertRow(insertIndex);
+        CompetitionInfo * comp = new CompetitionInfo(existing->getHill());
+        comp->generateID();
+        comp->setSerieType(existing->getSerieType());
+        comp->setRules(existing->getRules());
+        comp->setClassifications(existing->getClassifications());
+        comp->setAdvancementCompetition(existing->getAdvancementCompetition());
+        comp->setAdvancementClassification(existing->getAdvancementClassification());
+        for(auto & tr : existing->getTrainingsReference())
+        {
+            CompetitionInfo * training = new CompetitionInfo();
+            training->setHill(tr->getHill());
+            training->setRules(tr->getRules());
+            training->setSerieType(CompetitionInfo::Training);
+            comp->getTrainingsReference().push_back(training);
+            calendar->getCompetitionsReference().insert(insertIndexInCalendar, training);
+            //insertIndexInCalendar += 1;
+        }
+        if(existing->getTrialRound() != nullptr){
+        CompetitionInfo * trial = new CompetitionInfo();
+        trial->setHill(existing->getHill());
+        trial->setRules(existing->getTrialRound()->getRules());
+        trial->setSerieType(CompetitionInfo::TrialRound);
+        comp->setTrialRound(trial);
+        calendar->getCompetitionsReference().insert(insertIndexInCalendar, trial);
+        //insertIndexInCalendar += 1;
+        }
+        calendar->getCompetitionsReference().insert(insertIndexInCalendar, comp);
+        debugCalendar();
+
+        ui->tableView->clearSelection();
+        ui->tableView->selectionModel()->select(calendarModel->index(insertIndex + 1, 0), QItemSelectionModel::Select);
+        emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
+        ui->tableView->resizeColumnsToContents();
+        updateActualCompetitionByID();
     }
     emit changed();
 }

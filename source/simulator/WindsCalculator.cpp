@@ -32,7 +32,6 @@ Wind WindsCalculator::getAveragedWind(const QVector<Wind> & winds, short type)
         }
         i++;
     }
-    qDebug()<<"no: "<<windAvg;
     windAvg /= 100;
     windAvg = roundDoubleToTwoPlaces(windAvg);
 

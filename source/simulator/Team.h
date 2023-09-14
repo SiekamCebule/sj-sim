@@ -16,6 +16,7 @@ public:
     static QVector<Team> constructTeamsVectorByJumpersList(const QVector<Jumper> & jumpers, int minCount);
     static QVector<Team> constructTeamsVectorByJumpersList(const QVector<Jumper *> & jumpers, int minCount);
     static QVector<Jumper *> getJumpersFilteredByCountryCode(QVector<Jumper> &jumpers, const QString & countryCode);
+    static QVector<Jumper *> getJumpersFilteredByCountryCode(QVector<Jumper *> &jumpers, const QString &countryCode);
     static void cutTeamJumpers(Team * team, int jumpersCount);
     static Team * getTeamByCountryCode(QVector<Team> * teams, QString countryCode);
 

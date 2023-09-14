@@ -43,6 +43,7 @@ public:
     int getJumpersCountInTeam() const;
     int getStartingGateFromInput() const;
     int getBaseDSQProbability() const;
+    QString getCSVFileName() const;
     WindsGeneratorSettingsEditorWidget * getWindGeneratorSettingsWidget();
     InrunSnowGeneratorSettingsEditorWidget * getInrunSnowGeneratorSettingsWidget();
 
@@ -132,6 +133,9 @@ private slots:
     void on_pushButton_defaultStartListOrder_clicked();
     void on_comboBox_competition_activated(int index);
     void on_pushButton_jumpersLists_clicked();
+    void on_pushButton_autoGate_clicked();
+    void on_pushButton_sortStartListRandomly_clicked();
+    void on_pushButton_sortStartListByCountries_clicked();
 };
 
 #endif // COMPETITIONCONFIGWINDOW_H

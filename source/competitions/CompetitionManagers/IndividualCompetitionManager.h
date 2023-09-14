@@ -30,6 +30,8 @@ public:
     static void setStartListOrderByClassification(QVector<Jumper *> &jumpers, Classification * classification);
     static void setStartListOrderByCompetitionResults(QVector<Jumper *> &jumpers, CompetitionInfo * competition);
     static void setStartListOrderByDefault(QVector<Jumper *> * jumpersList, QVector<Jumper *> & startList);
+    static void setStartListOrderRandomly(QVector<Jumper *> & startList);
+    static void setStartListOrderByCountries(QVector<QString> countries, QVector<Jumper *> & startList);
 
 private:
     QVector<QVector<Jumper *>> roundsJumpers;

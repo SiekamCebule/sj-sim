@@ -40,11 +40,6 @@ QVariant SeasonJumpersListModel::data(const QModelIndex &index, int role) const
         return string;
     }
     else if(role == Qt::DecorationRole){
-        qDebug()<<"index.ro: "<<index.row();
-        qDebug()<<"cnt: "<<seasonJumpers->count();
-        qDebug()<<"jumper "<<seasonJumpers->at(index.row());
-        qDebug()<<"id "<<seasonJumpers->at(index.row())->getID();
-        qDebug()<<"cd "<<seasonJumpers->at(index.row())->getCountryCode();
          return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(seasonJumpers->at(index.row())->getCountryCode().toLower())));
     }
     else if(role == Qt::FontRole){

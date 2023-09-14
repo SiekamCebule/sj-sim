@@ -25,6 +25,7 @@ public:
     void updateLeaderResult();
     void updateLastQualifiedResult();
     void updateActualCompetitorPointsToTheLeader();
+    void updateLast10Judges();
 
     int getFirstUnfinishedStartListStatus();
     bool isAllJumpsAreFinished();
@@ -52,6 +53,7 @@ protected:
     int actualGate;
     int actualRound; //liczone od 1.
     QVector<Wind> * actualWinds;
+    double last10Judges;
 
     double toBeatLineDistance;
     double toAdvanceLineDistance;
@@ -120,6 +122,8 @@ public:
     void setStartListStatuses(const QVector<StartListCompetitorStatus> &newStartListStatuses);
     int getAltQualifiersLimit() const;
     void setAltQualifiersLimit(int newAltQualifiersLimit);
+    double getLast10Judges() const;
+    void setLast10Judges(double newLast10Judges);
 };
 
 #endif // ABSTRACTCOMPETITIONMANAGER_H

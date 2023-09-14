@@ -36,6 +36,8 @@ public:
     static QHash<Jumper *, QVector<CompetitionSingleResult *>> getJumpersFilteredSingleResults(QVector<Jumper *> & jumpers, QVector<CompetitionInfo *> & competitions, QSet<int> serieTypes, QSet<int> hillTypes,
                                                                        QVector<Classification *> classifications, bool skipClassifications);
 
+    QString getCsvResultsObject();
+
 protected:
     CompetitionInfo * competition;
     QVector<JumpData> jumps;

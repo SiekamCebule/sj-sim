@@ -431,6 +431,11 @@ int CompetitionConfigWindow::getBaseDSQProbability() const
     return ui->spinBox_dsqProbability->value();
 }
 
+QString CompetitionConfigWindow::getCSVFileName() const
+{
+    return ui->lineEdit->text();
+}
+
 WindsGeneratorSettingsEditorWidget *CompetitionConfigWindow::getWindGeneratorSettingsWidget()
 {
     return windsGeneratorSettingsEditor;
@@ -807,10 +812,18 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         QDate date = QDate::currentDate();
         QTime time = QTime::currentTime();
         QString dateString = QString::number(date.day()) + "-" + QString::number(date.month()) + "-" + QString::number(date.year()) + " " + QString::number(time.hour()) + "-" + QString::number(time.minute()) + "-" + QString::number(time.second());
-        info.saveToFile("results/single-competitions/", info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString +".json");
+        info.saveToJsonFile("results/single-competitions/json", info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString +".json");
         if(qualificationsManager != nullptr){
             qualsInfo.setPlayed(true);
-            qualsInfo.saveToFile(QString("results/single-competitions/"), info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString + " (Q).json");
+            qualsInfo.saveToJsonFile(QString("results/single-competitions/json"), info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString + " (Q).json");
+        }
+
+        if(getCSVFileName() != ""){
+        info.saveToCsvFile("results/single-competitions/csv/", getCSVFileName() + ".csv");
+        if(qualificationsManager != nullptr){
+            qualsInfo.setPlayed(true);
+            qualsInfo.saveToCsvFile("results/single-competitions/csv/", getCSVFileName() + " (Q)"+".csv");
+        }
         }
 
         delete info.getHill();
@@ -912,6 +925,86 @@ void CompetitionConfigWindow::on_comboBox_classification_activated(int index)
     }
 }
 
+void CompetitionConfigWindow::on_pushButton_sortStartListRandomly_clicked()
+{
+    int compType = 0;
+    if(type == CompetitionConfigWindow::SeasonCompetition)
+        compType = seasonCompetition->getRulesPointer()->getCompetitionType();
+    else
+        compType = competitionRulesEditor->getCompetitionRulesFromWidgetInputs().getCompetitionType();
+    if(compType == CompetitionRules::Individual){
+        if(type == CompetitionConfigWindow::SeasonCompetition)
+            IndividualCompetitionManager::setStartListOrderRandomly(seasonCompetitionJumpers);
+        else
+            IndividualCompetitionManager::setStartListOrderRandomly(competitionJumpers);
+    }
+    else
+    {
+        TeamCompetitionManager::setStartListOrderRandomly(competitionTeams);
+    }
+    emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(0, 0), jumpersListView->getListModel()->index(jumpersListView->getListModel()->rowCount() - 1));
+
+    delete teamsSquadsModel;
+    int count = 0;
+    if(type == CompetitionConfigWindow::SeasonCompetition)
+        count = seasonCompetition->getRulesPointer()->getJumpersInTeamCount();
+    else count = competitionRulesEditor->getJumpersCountInTeam();
+    teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, count);
+    teamsSquadsModel->setupTreeItems();
+    teamsTreeView->setModel(teamsSquadsModel);
+    teamsTreeView->getTreeView()->expandToDepth(0);
+}
+
+void CompetitionConfigWindow::on_pushButton_sortStartListByCountries_clicked()
+{
+    QVector<QString> countries;
+    int compType = 0;
+    if(type == CompetitionConfigWindow::SeasonCompetition)
+        compType = seasonCompetition->getRulesPointer()->getCompetitionType();
+    else
+        compType = competitionRulesEditor->getCompetitionRulesFromWidgetInputs().getCompetitionType();
+    if(compType == CompetitionRules::Individual)
+    {
+        if(type == CompetitionConfigWindow::SeasonCompetition){
+            for(auto & jp : seasonCompetitionJumpers)
+                if(countries.contains(jp->getCountryCode()) == false)
+                    countries.push_back(jp->getCountryCode());
+
+            IndividualCompetitionManager::setStartListOrderByCountries(countries, seasonCompetitionJumpers);
+            if(seasonCompetition->getRulesPointer()->getRoundsReference()[0].getKO() == true){
+                seasonCompetitionGroups = KOGroup::constructKOGroups(&seasonCompetition->getRulesPointer()->getRoundsReference()[0], &seasonCompetitionJumpers, comboBox_groupsSelectionType->currentIndex() - 1, seasonCompetition);
+                KOGroupsList->setKOGroups(&seasonCompetitionGroups);
+                KOGroupsList->fillListLayout();
+            }
+        }
+        else
+        {
+            for(auto & jp : competitionJumpers)
+                if(countries.contains(jp->getCountryCode()) == false)
+                    countries.push_back(jp->getCountryCode());
+
+            IndividualCompetitionManager::setStartListOrderByCountries(countries, competitionJumpers);
+            RoundInfo ri = competitionRulesEditor->getRoundsFromInput().at(0);
+            if(ri.getKO() == true){
+                competitionGroups = KOGroup::constructKOGroups(&ri, &competitionJumpers, comboBox_groupsSelectionType->currentIndex() - 1, nullptr);
+                KOGroupsList->setKOGroups(&competitionGroups);
+                KOGroupsList->fillListLayout();
+            }
+        }
+
+    emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(0, 0), jumpersListView->getListModel()->index(jumpersListView->getListModel()->rowCount() - 1));
+
+    delete teamsSquadsModel;
+    int count = 0;
+    if(type == CompetitionConfigWindow::SeasonCompetition)
+        count = seasonCompetition->getRulesPointer()->getJumpersInTeamCount();
+    else count = competitionRulesEditor->getJumpersCountInTeam();
+    teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, count);
+    teamsSquadsModel->setupTreeItems();
+    teamsTreeView->setModel(teamsSquadsModel);
+    teamsTreeView->getTreeView()->expandToDepth(0);
+    }
+}
 
 void CompetitionConfigWindow::on_pushButton_defaultStartListOrder_clicked()
 {
@@ -959,3 +1052,60 @@ void CompetitionConfigWindow::on_pushButton_jumpersLists_clicked()
     }
 }
 
+
+void CompetitionConfigWindow::on_pushButton_autoGate_clicked()
+{
+    Jumper * bestJumper = nullptr;
+    double best = 0;
+    QVector<Jumper *> jumpers;
+    if(type == CompetitionConfigWindow::SeasonCompetition)
+        jumpers = seasonCompetitionJumpers;
+    else
+        jumpers = competitionJumpers;
+
+    for(auto & jumper : jumpers)
+    {
+        double val = jumper->getJumperSkillsPointer()->getTakeoffTechnique() * 0.8225 + jumper->getJumperSkillsPointer()->getFlightTechnique() * 0.81 + jumper->getJumperSkillsPointer()->getForm() * 0.3675;
+        if(val > best){
+            bestJumper = jumper;
+            best = val;
+        }
+    }
+    int gate = -10;
+    JumpSimulator simulator;
+    simulator.setJumper(bestJumper);
+    simulator.setManipulator(new JumpManipulator());
+    if(type == CompetitionConfigWindow::SeasonCompetition){
+        simulator.setCompetitionRules(seasonCompetition->getRulesPointer());
+        simulator.setHill(seasonCompetition->getHill());
+    }
+    else{
+        simulator.setCompetitionRules(new CompetitionRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs()));
+        simulator.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
+    }
+    WindsGenerator windsGenerator;
+    windsGenerator.setGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
+    while(true)
+    {
+        simulator.setGate(gate);
+        simulator.setCompetitionStartGate(gate);
+        simulator.setInrunSnow(inrunSnowGeneratorSettingsEditor->getBase() - abs(inrunSnowGeneratorSettingsEditor->getDeviation()));
+        int HSPointJumps = 0;
+        for(int i=0; i<10; i++)
+        {
+            simulator.setWinds(windsGenerator.generateWinds());
+            simulator.simulateJump();
+            double dist = simulator.getJumpData().getDistance();
+            if(dist >= simulator.getHill()->getHSPoint())
+                HSPointJumps++;
+            simulator.setupForNextJump();
+        }
+        if(HSPointJumps == 0)
+        {
+            gate ++;
+        }
+        else break;
+        //if(HSPointJumps <= 5)
+    }
+    ui->spinBox_startGate->setValue(gate);
+ }

@@ -13,7 +13,7 @@ void JumperFormGenerator::generateJumperFormTendence()
 
     double base = 0;
 
-    double deviation = 6.2 + ((settings.getTendenceVariability() - 5) / 1.24);//1.666666666666667);
+    double deviation = 5 + ((settings.getTendenceVariability() - 5) / 1);//1.666666666666667);
 
     double random = 0;
     if(settings.getTendenceVariability() > 0)
@@ -61,11 +61,11 @@ void JumperFormGenerator::generateJumperForm()
     double oldForm = jumper->getJumperSkillsPointer()->getForm();
     double formChange = 0;
 
-    formChange += tendence->getTendence() * 1.8;
+    formChange += tendence->getTendence() * 2.2;
     formChange *= 1 + ((settings.getFormVariability() - 5) / 5);
 
     double distanceFromAverage = abs(oldForm - 50);
-    double divider = 1 + (distanceFromAverage / 8);
+    double divider = 1 + (distanceFromAverage / 6.85);
     if(((oldForm + (formChange / divider)) > 50 && (formChange / divider) > 0) || ((oldForm + (formChange / divider)) < 50 && (formChange / divider) < 0))
         formChange /= divider;
     /*else

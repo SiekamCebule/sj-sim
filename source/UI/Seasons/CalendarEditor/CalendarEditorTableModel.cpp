@@ -56,7 +56,6 @@ int CalendarEditorTableModel::rowCount(const QModelIndex &parent) const
         if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition)
             count++;
     }
-    qDebug()<<"CCCCCCCCCOUNT CTTT :   "<<count;
     return count;
 }
 
@@ -73,10 +72,7 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
     if (!index.isValid())
         return QVariant();
 
-    qDebug()<<"INDEX ROW : "<<index.row();
-
     CompetitionInfo * competition = SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), index.row());
-    qDebug()<<"competition: "<<competition<<" ("<<competition->getHill()->getName()<<") "<<calendar->getCompetitionsReference().indexOf(competition);
 
     if(role == Qt::DisplayRole){
         if(competition != nullptr){

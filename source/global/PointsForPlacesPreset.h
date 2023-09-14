@@ -19,8 +19,11 @@ public:
     QMap<int, double> & getPointsForPlacesReference();
     void setPointsForPlaces(const QMap<int, double> &newPointsForPlaces);
 public:
-    static QJsonObject getPointsForPlacesPresetJsonObject(PointsForPlacesPreset & preset);
+    static QJsonObject getJsonObject(PointsForPlacesPreset & preset);
     static QVector<PointsForPlacesPreset> getPointsForPlacesPresetsVectorFromJson(const QByteArray & bytes);
+    static PointsForPlacesPreset getFromJson(QJsonObject json);
+    bool saveToFile(QString dir);
+    static PointsForPlacesPreset loadFromJson(QString fileName);
 };
 
 #endif // POINTSFORPLACESPRESET_H

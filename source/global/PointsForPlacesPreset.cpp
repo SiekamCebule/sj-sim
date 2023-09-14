@@ -8,6 +8,8 @@
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QByteArray>
+#include <QFile>
+#include "DatabaseObjectsManager.h"
 
 PointsForPlacesPreset::PointsForPlacesPreset(QString name) : name(name)
 {
@@ -29,7 +31,7 @@ void PointsForPlacesPreset::setPointsForPlaces(const QMap<int, double> &newPoint
     pointsForPlaces = newPointsForPlaces;
 }
 
-QJsonObject PointsForPlacesPreset::getPointsForPlacesPresetJsonObject(PointsForPlacesPreset &preset)
+QJsonObject PointsForPlacesPreset::getJsonObject(PointsForPlacesPreset &preset)
 {
     QJsonObject object;
     object.insert("name", preset.getName());
@@ -65,18 +67,47 @@ QVector<PointsForPlacesPreset> PointsForPlacesPreset::getPointsForPlacesPresetsV
     }
     QJsonArray array = value.toArray();
     for(const auto & val : array){
-        QJsonObject obj = val.toObject();
-        PointsForPlacesPreset preset;
-        preset.setName(obj.value("name").toString());
-        QJsonArray pointsForPlacesArray = obj.value("pointsForPlaces").toArray();
-        int i=1;
-        for(const auto & val : pointsForPlacesArray){
-            preset.getPointsForPlacesReference().insert(i, val.toInt());
-            i++;
-        }
-        presets.push_back(preset);
+        presets.push_back(PointsForPlacesPreset::getFromJson(val.toObject()));
     }
     return presets;
+}
+
+PointsForPlacesPreset PointsForPlacesPreset::getFromJson(QJsonObject json)
+{
+    PointsForPlacesPreset preset;
+    preset.setName(json.value("name").toString());
+    QJsonArray pointsForPlacesArray = json.value("pointsForPlaces").toArray();
+    int i=1;
+    for(const auto & val : pointsForPlacesArray){
+        preset.getPointsForPlacesReference().insert(i, val.toInt());
+        i++;
+    }
+    return preset;
+}
+
+bool PointsForPlacesPreset::saveToFile(QString dir)
+{
+    QJsonDocument document;
+    QJsonObject mainObject;
+    mainObject.insert("pointsForPlacesPresets", PointsForPlacesPreset::getJsonObject(*this));
+    document.setObject(mainObject);
+    QFile file(dir + getName() + ".json");
+    file.open(QFile::WriteOnly | QFile::Text);
+    file.resize(0);
+    file.write(document.toJson(QJsonDocument::Indented));
+    file.close();
+    return true;
+}
+
+PointsForPlacesPreset PointsForPlacesPreset::loadFromJson(QString fileName)
+{
+    QFile file("userData/GlobalDatabase/pointsForPlacesPresets/" + fileName);
+    file.open(QFile::ReadOnly | QFile::Text);
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    file.close();
+    QJsonObject object = doc.object().value("points-for-places-preset").toObject();
+    PointsForPlacesPreset p = PointsForPlacesPreset::getFromJson(object);
+    return p;
 }
 
 QString PointsForPlacesPreset::getName() const

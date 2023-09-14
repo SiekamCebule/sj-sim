@@ -29,6 +29,7 @@ public:
 
     static void setStartListOrderByClassification(QVector<Team> &teams, Classification * classification);
     static void setStartListOrderByCompetitionResults(QVector<Team>& teams, CompetitionInfo * competition);
+    static void setStartListOrderRandomly(QVector<Team> &teams);
 
 private:
     int actualGroup;

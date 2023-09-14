@@ -58,7 +58,7 @@ void AbstractCompetitionManager::updateToBeatLineDistance()
     toBeatLineDistance -= hill->getPointsForKPoint();
     if(competitionRules->getHasJudgesPoints())
     {
-        toBeatLineDistance -= 54;
+        toBeatLineDistance -= last10Judges;
     }
     if(competitionRules->getHasGateCompensations())
         toBeatLineDistance -= gateCompensation;
@@ -118,7 +118,7 @@ void AbstractCompetitionManager::updateToAdvanceLineDistance()
         toAdvanceLineDistance -= hill->getPointsForKPoint();
         if(competitionRules->getHasJudgesPoints())
         {
-            toAdvanceLineDistance -= 54;
+            toAdvanceLineDistance -= last10Judges;
         }
         if(competitionRules->getHasGateCompensations())
             toAdvanceLineDistance -= gateCompensation;
@@ -235,10 +235,6 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
     bool isLastQualifiedPositionValid = lastQualifiedPosition > 0 && lastQualifiedPosition <= results->getResultsReference().count();
     bool isActualRoundGoodOne = actualRound < competitionRules->getRounds().count();
     bool isActualRoundGoodSecond = altQualifiersLimit > 0 && actualRound == competitionRules->getRounds().count();
-    qDebug()<<"lastQualifiedPosition: "<<lastQualifiedPosition;
-    qDebug()<<"isLastQualifiedPositionValid: "<<isLastQualifiedPositionValid;
-    qDebug()<<"isActualRoundGoodOne: "<<isActualRoundGoodOne;
-    qDebug()<<"isActualRoundGoodSecond: "<<isActualRoundGoodSecond;
     if(isLastQualifiedPositionValid && (isActualRoundGoodOne || isActualRoundGoodSecond)){
         lastQualifiedResult = results->getResultByIndex(lastQualifiedPosition - 1);
         if(getType() == CompetitionRules::Individual)
@@ -253,7 +249,6 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
     }
     else
         lastQualifiedResult = nullptr;
-    qDebug()<<"lastQualifiedResult: "<<lastQualifiedResult;
 }
 
 void AbstractCompetitionManager::updateActualCompetitorPointsToTheLeader()
@@ -271,6 +266,29 @@ void AbstractCompetitionManager::updateActualCompetitorPointsToTheLeader()
         double actualLeaderPointsWithoutActualRound = leaderResult->getPointsSum() - leaderResult->getJumps().at(leaderResult->getJumps().count() - 1).getPoints();
         actualCompetitorPointsToTheLeader = roundDoubleToOnePlace(actualJumperPoints - actualLeaderPointsWithoutActualRound);
     }
+}
+
+void AbstractCompetitionManager::updateLast10Judges()
+{
+    last10Judges = 0;
+    int i=actualStartListIndex;
+    int howMany = 0;
+    while(true)
+    {
+        if(startListStatuses.count() > actualStartListIndex)
+        {
+            if(startListStatuses[i].getJumpStatus() == StartListCompetitorStatus::Finished)
+            {
+                last10Judges += results->getResultOfIndividualJumper(startListStatuses[i].getJumper())->getJumpsReference().last().getJudgesPoints();
+                howMany++;
+            }
+            i--;
+            if(i == -1 || startListStatuses[i].getJumpStatus() == StartListCompetitorStatus::Unfinished)
+                break;
+        }
+    }
+    last10Judges /= double(howMany);
+    qDebug()<<"last 10 judges average : "<<last10Judges;
 }
 
 int AbstractCompetitionManager::getFirstUnfinishedStartListStatus()
@@ -298,6 +316,16 @@ void AbstractCompetitionManager::setActualJumperToNextUnfinished()
 {
     setActualStartListIndex(getFirstUnfinishedStartListStatus());
     setActualJumper(startListStatuses[getFirstUnfinishedStartListStatus()].getJumper());
+}
+
+double AbstractCompetitionManager::getLast10Judges() const
+{
+    return last10Judges;
+}
+
+void AbstractCompetitionManager::setLast10Judges(double newLast10Judges)
+{
+    last10Judges = newLast10Judges;
 }
 
 int AbstractCompetitionManager::getAltQualifiersLimit() const
