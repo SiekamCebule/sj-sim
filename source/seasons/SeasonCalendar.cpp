@@ -116,13 +116,7 @@ SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json, DatabaseObjectsMana
 
     if(objectsManager != nullptr){
         for(auto val : classificationsArray){
-            qDebug()<<"id: "<<val.toObject().value("id").toString().toULong();
-            if(val.isObject() == false)
-                qDebug()<<"VAL IS NOT OBJECT";
             Classification * classification = static_cast<Classification *>(objectsManager->getObjectByID(val.toObject().value("id").toString().toULong()));
-            qDebug()<<"clas "<<classification;
-            qDebug()<<"clasres "<<classification->getResultsReference();
-            qDebug()<<classification->getResultsReference().count();
             for(auto & singleResult : classification->getResultsReference())
             {
                 singleResult->setClassification(classification);
