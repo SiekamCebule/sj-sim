@@ -58,6 +58,7 @@ public:
     static double calculatePointsForBackWindBy50PercentsOfFrontWind(double pointsForFrontWind);
     static double calculateBestTakeoffHeightLevel(Hill * hill);
     static double calculateBestFlightHeightLevel(Hill * hill);
+    static QVector<Hill*> getHillsListByCountryCode(QVector<Hill> & hills, QString countryCode);
 
     int getHillType();
     double getKAndRealHSDifference();

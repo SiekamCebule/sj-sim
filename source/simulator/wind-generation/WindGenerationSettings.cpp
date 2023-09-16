@@ -6,6 +6,15 @@ WindGenerationSettings::WindGenerationSettings(short baseDirection, double windD
     windStrengthInstability(windStrengthInstability)
 {}
 
+double WindGenerationSettings::getBaseDirection() const
+{
+    return baseDirection;
+}
+
+void WindGenerationSettings::setBaseDirection(double newBaseDirection)
+{
+    baseDirection = newBaseDirection;
+}
 
 double WindGenerationSettings::getWindStrengthInstability() const
 {
@@ -35,14 +44,4 @@ double WindGenerationSettings::getWindDirectionInstability() const
 void WindGenerationSettings::setWindDirectionInstability(double newWindDirectionInstability)
 {
     windDirectionInstability = newWindDirectionInstability;
-}
-
-short WindGenerationSettings::getBaseDirection() const
-{
-    return baseDirection;
-}
-
-void WindGenerationSettings::setBaseDirection(short newBaseDirection)
-{
-    baseDirection = newBaseDirection;
 }

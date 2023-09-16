@@ -55,6 +55,8 @@ private slots:
     void onCompetitionRulesListViewDoubleClicked(const QModelIndex &index);
     void onPointsForPlacesPresetsListViewDoubleClicked(const QModelIndex &index);
 
+    void on_pushButton_sortByCountries_clicked();
+
 private:
     QVector<Jumper> tempGlobalJumpers;
     QVector<Hill> tempGlobalHills;

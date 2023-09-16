@@ -239,6 +239,17 @@ double Hill::calculateBestFlightHeightLevel(Hill *hill)
     return 0;
 }
 
+QVector<Hill *> Hill::getHillsListByCountryCode(QVector<Hill> &hills, QString countryCode)
+{
+    QVector<Hill *> toReturn;
+    for(auto & hill : hills)
+    {
+        if(hill.getCountryCode() == countryCode)
+            toReturn.push_back(&hill);
+    }
+    return toReturn;
+}
+
 int Hill::getHillType()
 {
     if(HSPoint < 50)

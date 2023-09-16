@@ -2,6 +2,7 @@
 #include "ui_JumpWindInfoWidgetItem.h"
 
 #include "../../simulator/wind-generation/WindsGenerator.h"
+#include "../../utilities/functions.h"
 #include <QPixmap>
 
 JumpWindInfoWidgetItem::JumpWindInfoWidgetItem(Wind *wind, int sector, double KPoint, QWidget *parent) :
@@ -28,6 +29,7 @@ void JumpWindInfoWidgetItem::fillWidget()
             text += "-" + QString::number(WindsGenerator::getRangeOfWindSector(getSector() + 1, getKPoint()).second) + "m)";
         else text += " do końca)";
         ui->label_windRange->setText(text);
+        ui->label_degrees->setText(QString::number(round(wind->getDirection())) + "°");
         double speed = wind->getStrength();
         ui->label_windSpeed->setText(QString().setNum(speed, 'g', 2) + " m/s");
 
@@ -77,7 +79,12 @@ void JumpWindInfoWidgetItem::fillWidget()
         }
 
 
-        switch(wind->getDirection())
+        QPixmap pixmap("://img/arrow-up1.png");
+        QTransform transform;
+        transform.rotate(wind->getDirection());
+        pixmap = pixmap.transformed(transform).scaled(ui->label_windDirectionIcon->size());
+        ui->label_windDirectionIcon->setPixmap(pixmap);
+        /*switch(wind->getDirection())
         {
         case 0: //Null
             break;
@@ -96,7 +103,7 @@ void JumpWindInfoWidgetItem::fillWidget()
         case 5:
             ui->label_windDirectionIcon->setPixmap(QPixmap("://img/arrow-up1.png").scaled(ui->label_windDirectionIcon->size()));
             break;
-        }
+        }*/
     }
     else{
         qDebug()<<"Wind is nullptr!";

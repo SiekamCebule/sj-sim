@@ -28,6 +28,7 @@ AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
     ui->doubleSpinBox_randomMultiplier->setValue(GlobalSimulationSettings::get()->getSimulationRandomMultiplier());
     ui->checkBox_autoAdjustHillEffects->setChecked(GlobalSimulationSettings::get()->getAutoAdjustHillEffects());
+    ui->doubleSpinBox->setValue(GlobalSimulationSettings::get()->getHillsEffectsMultiplier());
 }
 
 AppSettingsWindow::~AppSettingsWindow()
@@ -51,6 +52,7 @@ void AppSettingsWindow::on_pushButton_defaultSettings_clicked()
     ui->spinBox_skillsRange->setValue(100);
     ui->doubleSpinBox_randomMultiplier->setValue(1);
     ui->checkBox_autoAdjustHillEffects->setChecked(false);
+    ui->doubleSpinBox->setValue(1);
 }
 
 MainWindow *AppSettingsWindow::getMainWindowParent() const
@@ -267,5 +269,11 @@ void AppSettingsWindow::on_checkBox_autoAdjustHillEffects_stateChanged(int arg1)
          GlobalSimulationSettings::get()->setAutoAdjustHillEffects(false);
     else if(arg1 == 2)
         GlobalSimulationSettings::get()->setAutoAdjustHillEffects(true);
+}
+
+
+void AppSettingsWindow::on_doubleSpinBox_valueChanged(double arg1)
+{
+    GlobalSimulationSettings::get()->setHillsEffectsMultiplier(arg1);
 }
 

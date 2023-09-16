@@ -812,10 +812,10 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         QDate date = QDate::currentDate();
         QTime time = QTime::currentTime();
         QString dateString = QString::number(date.day()) + "-" + QString::number(date.month()) + "-" + QString::number(date.year()) + " " + QString::number(time.hour()) + "-" + QString::number(time.minute()) + "-" + QString::number(time.second());
-        info.saveToJsonFile("results/single-competitions/json", info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString +".json");
+        info.saveToJsonFile("results/single-competitions/json/", info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString +".json");
         if(qualificationsManager != nullptr){
             qualsInfo.setPlayed(true);
-            qualsInfo.saveToJsonFile(QString("results/single-competitions/json"), info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString + " (Q).json");
+            qualsInfo.saveToJsonFile(QString("results/single-competitions/json/"), info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString + " (Q).json");
         }
 
         if(getCSVFileName() != ""){
@@ -984,11 +984,13 @@ void CompetitionConfigWindow::on_pushButton_sortStartListByCountries_clicked()
                     countries.push_back(jp->getCountryCode());
 
             IndividualCompetitionManager::setStartListOrderByCountries(countries, competitionJumpers);
+            if(competitionRulesEditor->getRoundsFromInput().count() > 0){
             RoundInfo ri = competitionRulesEditor->getRoundsFromInput().at(0);
             if(ri.getKO() == true){
                 competitionGroups = KOGroup::constructKOGroups(&ri, &competitionJumpers, comboBox_groupsSelectionType->currentIndex() - 1, nullptr);
                 KOGroupsList->setKOGroups(&competitionGroups);
                 KOGroupsList->fillListLayout();
+            }
             }
         }
 

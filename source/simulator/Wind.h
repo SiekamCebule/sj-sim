@@ -8,11 +8,7 @@ class QString;
 class Wind : public ClassWithID
 {
 public:
-
-    Wind(short direction = Null, double value = 0);
-    Wind(double value);
-    enum Direction{
-        Null,
+    enum DirectionType{
         Back,
         BackSide,
         Side,
@@ -20,18 +16,23 @@ public:
         Front
     };
 
+    Wind(short direction = 0, double value = 0);
+    Wind(double value);
+
+    static QString getStyleSheetForAveragedWind(double avgWind);
+    static double getAbsForFrontWindDistance(double wind);
+    short getDirectionType() const;
+
 private:
-    short direction;
+    double direction;
     double strength;
 
 public:
-    short getDirection() const;
-    void setDirection(short newDirection);
     double getStrengthToAveragedWind() const;
-    static QString getStringWindDirection(short direction, bool windPrefix);
-    static QString getStyleSheetForAveragedWind(double avgWind);
     double getStrength() const;
     void setStrength(double newStrength);
+    double getDirection() const;
+    void setDirection(double newDirection);
 };
 
 #endif // WIND_H

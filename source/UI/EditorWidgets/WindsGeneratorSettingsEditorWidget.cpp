@@ -173,13 +173,11 @@ QVector<WindGenerationSettings> WindsGeneratorSettingsEditorWidget::getWindsGene
 QVector<Wind> WindsGeneratorSettingsEditorWidget::getExactWindsFromInputs()
 {
     QVector<Wind> vector;
-    qDebug()<<"settc: "<<settingsCount;
 
     for(int i=0; i < settingsCount; i++){
         WindsGeneratorSettingsWidgetInputItem * item = dynamic_cast<WindsGeneratorSettingsWidgetInputItem *>(ui->toolBox->widget(i));
         Wind wind;
         wind.setDirection(item->getBaseWindDirectionFromInput());
-        qDebug()<<wind.getDirection();
         wind.setStrength(item->getBaseWindStrengthFromInput());
         vector.push_back(wind);
     }

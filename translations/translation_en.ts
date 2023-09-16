@@ -38,66 +38,71 @@
         <translation>Random multiplier</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="271"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="276"/>
+        <source>Mnożnik efektu wybicia skoczni</source>
+        <translation>Hills effects multiplier</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="317"/>
         <source>Automatycznie dopasuj wpływy na skoczni
 do aktualnego zakresu umiejętności</source>
         <translation>Automatically adjust hill effects by actual skills range</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="302"/>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="336"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="348"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="382"/>
         <source>Od nowa przypisuje ID dla każdego obiektu w globalnej bazie danych.
 Użyteczne kiedy chcemy przenieść bazę danych z wczesnych wersji.</source>
         <translation>Reassigns the ID for each object in the global database.
 Useful when you want to transfer a database from early versions.</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="346"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="392"/>
         <source>Napraw bazę danych</source>
         <translation>Repair database</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="378"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="424"/>
         <source>Skróć nazwiska zawodników</source>
         <translation>Shorten jumpers surnames</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="312"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="358"/>
         <source>Napraw zapisy symulacji</source>
         <translation>Fix simulation saves</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="453"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="499"/>
         <source>Przywróć domyślne</source>
         <translation>Restore default</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="191"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="193"/>
         <source>Naprawa bazy danych</source>
         <translation>Database repair</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="191"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="193"/>
         <source>Naprawiono bazę danych</source>
         <translation>Repaired the database</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="211"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="213"/>
         <source>Nazwiska zawodników</source>
         <translation>Jumpers surnames</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="211"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="213"/>
         <source>Pomyślnie skrócono nazwiska zawodników</source>
         <translation>Successfully shortened names of jumpers</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="255"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="257"/>
         <source>Naprawiono zapisy symulacji</source>
         <translation>Fixes simulation saves</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="255"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="257"/>
         <source>Naprawiono zapisy symulacji. Aby zmiana weszła w życie wejdź jeszcze raz do programu aby ponownie wczytać zapisy symulacji.</source>
         <translation>Simulation saves have been fixed. For the change to take effect enter the program again to reload the simulation saves.</translation>
     </message>
@@ -825,54 +830,65 @@ Make sure that the file exists there or has the appropriate permissions</transla
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="703"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="620"/>
+        <source>Poziom śniegu/deszczu: </source>
+        <translation>Snow/Rain level: </translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="655"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="269"/>
+        <source>Bardzo wysoki</source>
+        <translation>Very high</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="777"/>
         <source>Skok</source>
         <translation>Jump</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="779"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="853"/>
         <source>Manipuluj</source>
         <translation>Manipulate</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="888"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="962"/>
         <source>Wygeneruj
 nowy wiatr</source>
         <translation>Generate
 new wind</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="965"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1039"/>
         <source>Ustawienia
 generatora</source>
         <translation>Generator
 settings</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1042"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1116"/>
         <source>Śnieg na torach
  najazdowych</source>
         <translation>Inrun snow</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1111"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1185"/>
         <source>Belka</source>
         <translation>Gate</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1162"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1236"/>
         <source>Obniż na
 życzenie trenera</source>
         <translation>Lower gate
 by coach</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1245"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1319"/>
         <source>Lista startowa</source>
         <translation>Startlist</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1336"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.ui" line="1410"/>
         <source>Przejdź do 2 serii</source>
         <translation></translation>
     </message>
@@ -881,12 +897,12 @@ by coach</translation>
         <translation type="vanished">Competition management</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="140"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="142"/>
         <source>Odwołaj konkurs</source>
         <translation>Cancel competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="141"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="143"/>
         <source>Odwołaj aktualną rundę</source>
         <translation>Cancel actual round</translation>
     </message>
@@ -895,166 +911,216 @@ by coach</translation>
         <translation type="vanished">Auto-simulate round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="232"/>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="266"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="303"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="337"/>
         <source>Zakończenie </source>
         <translation>End of </translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="266"/>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="356"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="337"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="427"/>
         <source> serii</source>
         <translation> round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="267"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="338"/>
         <source>Aby przejść do następnej serii, wciśnij przycisk na dole okna konkursu</source>
         <translation>To go to the next round, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="245"/>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="356"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="316"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="427"/>
         <source>Przejdź do </source>
         <translation>Go to </translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="148"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="150"/>
         <source>Auto-symulacja konkursu</source>
         <translation>Auto-simulate competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="149"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="151"/>
         <source>Auto-symulacja serii</source>
         <translation>Auto-simulate round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="150"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="152"/>
         <source>Auto-symulacja skoków</source>
         <translation>Auto-simulate jumps</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="153"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="155"/>
         <source>Auto-symulacja grupy</source>
         <translation>Auto-simulate group</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="232"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="224"/>
+        <source>Brak</source>
+        <translation>None</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="229"/>
+        <source>Bardzo niski</source>
+        <translation>Very low</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="234"/>
+        <source>Niski</source>
+        <translation>Low</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="239"/>
+        <source>Dosyć niski</source>
+        <translation>Quite low</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="244"/>
+        <source>Poniżej średniej</source>
+        <translation>Below average</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="249"/>
+        <source>Średni</source>
+        <translation>Medium</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="254"/>
+        <source>Powyżej średniej</source>
+        <translation>Above average</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="259"/>
+        <source>Dość wysoki</source>
+        <translation>Quite high</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="264"/>
+        <source>Wysoki</source>
+        <translation>High</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="274"/>
+        <source>Ekstremalny</source>
+        <translation>Extreme</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="303"/>
         <source> grupy zawodników</source>
         <translation> jumpers groups</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="233"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="304"/>
         <source>Aby przejść do następnej grupy zawodników, wciśnij przycisk na dole okna konkursu</source>
         <translation>To go to the next group, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="245"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="316"/>
         <source> grupy</source>
         <translation> groups</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="308"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="379"/>
         <source>Dobór grup</source>
         <translation>Groups selection</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="308"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="379"/>
         <source>Klasyczne</source>
         <translation>Classical</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="308"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="379"/>
         <source>Dla dużych grup</source>
         <translation>For larger groups</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="308"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="379"/>
         <source>Losowe (Z podziałem na koszyki)</source>
         <translation>Random (by baskets)</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="308"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="379"/>
         <source>Losowe</source>
         <translation>Random</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="418"/>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="458"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="489"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="529"/>
         <source>Zakończenie kwalifikacji</source>
         <translation>Qualifications end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="419"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="490"/>
         <source>Aby przejść do konkursu, wciśnij przycisk na dole okna konkursu</source>
         <translation>To go to the competition, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="429"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="500"/>
         <source>Przejdź do konkursu</source>
         <translation>Go to competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="453"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="524"/>
         <source>Zakończenie konkursu</source>
         <translation>Competition end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="454"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="525"/>
         <source>Aby zakończyć konkurs, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the competition, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="459"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="530"/>
         <source>Aby zakończyć kwalifikacje, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the qualifications, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="463"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="534"/>
         <source>Zakończenie serii próbnej</source>
         <translation>Trial round end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="464"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="535"/>
         <source>Aby zakończyć serię próbną, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the trial round, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="468"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="539"/>
         <source>Zakończenie treningu</source>
         <translation>Training end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="469"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="540"/>
         <source>Aby zakończyć trening, wciśnij przycisk na dole okna konkursu</source>
         <translation>To end the training, press the button at the bottom of the competition window</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="483"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="554"/>
         <source>Zakończ konkurs</source>
         <translation>Finish competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="486"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="557"/>
         <source>Zakończ kwalifikacje</source>
         <translation>Finish qualifications</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="489"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="560"/>
         <source>Zakończ serię próbną</source>
         <translation>Finish trial round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="492"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="563"/>
         <source>Zakończ trening</source>
         <translation>Finish training</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="818"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="895"/>
         <source>Symulacja kilku skoków</source>
         <translation>Few jumps simulation</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="818"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="895"/>
         <source>Ilość skoków</source>
         <translation>Jumps count</translation>
     </message>
@@ -1338,6 +1404,11 @@ Are you sure?</translation>
         <location filename="../source/UI/DatabaseEditor/DatabaseEditorWindow.ui" line="220"/>
         <source>Presety punktów za miejsca</source>
         <translation>Points for places presets</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/DatabaseEditor/DatabaseEditorWindow.ui" line="243"/>
+        <source>Posortuj według krajów</source>
+        <translation>Sort by countries</translation>
     </message>
     <message>
         <source>Skocznie </source>
@@ -1686,6 +1757,52 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic;&quot;&gt;Characteristics&lt;/span&gt; &lt;span style=&quot; font-style:italic;&quot;&gt;(Optional. E.g., the safety of jumping past the HS point or the effect of flight technique on jumping)&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
 &lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;dopasowanie-wpływu-wybicia-i-wpływu-lotu&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Matching the effect of takeoff and effect of flight&lt;/span&gt;&lt;/h3&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The most recommended way to adjust the two parameters is to calculate their sum according to the K-point and distribute according to how &quot;volatile&quot; the hill is (If the hill is volatile, we will give more to the impact of the flight than the bump).&lt;br /&gt;For K120 hills, you can use a sum of 0.78 and split it between the two parameters. For most K120 hills it will be something like 0.33 for the impact of the bump and 0.45 for the impact of the flight (There are exceptions, such as more &quot;volatile&quot; hills).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/HelpWindow.ui" line="354"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;6. Ustawienia symulatora&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Quicksand Medium&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;ustawienia-symulatora&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;U&lt;/span&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;stawienia symulatora&lt;/span&gt;&lt;/h1&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;wyjaśnienie-poszczególnych-ustawień&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;W&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;yjaśnienie poszczególnych ustawień&lt;/span&gt;&lt;/h2&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Język programu&lt;/span&gt; (Polski lub angielski. Angielskie tłumaczenia mogą zawierać błędy)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Bazowe prawdopodobieństwo dyskwalifikacji&lt;/span&gt; (Ta wartość będzie dla ułatwienia domyślnie ustawiana jako prawdopodobieństwo dyskwalifikacji w konkursie lub w trybie pojedynczych skoków).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Zakres umiejętności&lt;/span&gt; (Jeżeli ktoś chce, może sobie zmienić zakres umiejętności np. na od 0 do 50. Jeżeli zmniejszymy o połowę zakres umiejętności, to losowość również automatycznie zmniejszy się o losowość tak samo jak inne rzeczy w symulacji aby dopasować się do nowego zakresu).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Mnożnik losowości&lt;/span&gt; (Losowość skoku jest mnożona przez tą wartość. Jeżeli mnożnik wynosi 0.5, a przez losowość zawodnik skoczy 4 metry krócej, to losowość zmniejszy się do zaledwie dwóch metrów).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Automatycznie dopasowuj wpływy na skoczni do aktualnego zakresu umiejętności&lt;/span&gt; (Jeżeli wpływ wybicia na skoczni wynosi np. 0.72, a aktualny zakres jest zwiększony dwukrotnie (do 200) to przy symulacji skoków wpływ wybicia i lotu na skoczni zostanie zmieniony np, dwukrotnie. Nie zmienia to bezpośrednio wpływów na skoczni w edytorze, ale mnoży je podczas symulacji).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Mnożnik wpływów skoczni&lt;/span&gt; (Przed każdym skokiem wpływ wybicia i lotu skoczni jest mnożony przez tą wartość. Głównym zastosowaniem tego jest zwiększenie różnic między zawodniakami)&lt;/li&gt;&lt;/ul&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;pozostałe-funkcje&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;P&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;ozostałe funkcje&lt;/span&gt;&lt;/h2&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Napraw zapisy symulacji&amp;quot;&lt;/span&gt; (Funkcja dzięki której niektóre błędy związane z zapisami symulacji mogą zostać naprawione)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Napraw bazę danych&amp;quot;&lt;/span&gt; (Funkcja która być może naprawi niektóre błędy związane z globalną bazą danych)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Skróć nazwiska zawodników&amp;quot;&lt;/span&gt; (Dzięki tej funkcji można skrócić wszystkie nazwiska zawodników do jednej litery. Np. Adam Nowak = Adam N. Należy pamiętać że taka zmiana jest nieodwracalna).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Przywróć domyślne&amp;quot;&lt;/span&gt; (Przywraca wszystkie ustawienia do stanu początkowego) &lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;6. Ustawienia symulatora&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Quicksand Medium&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;h1 style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;ustawienia-symulatora&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;U&lt;/span&gt;&lt;span style=&quot; font-size:xx-large; font-weight:700;&quot;&gt;stawienia symulatora&lt;/span&gt;&lt;/h1&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;wyjaśnienie-poszczególnych-ustawień&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;W&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;yjaśnienie poszczególnych ustawień&lt;/span&gt;&lt;/h2&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Język programu&lt;/span&gt; (Polski lub angielski. Angielskie tłumaczenia mogą zawierać błędy)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Bazowe prawdopodobieństwo dyskwalifikacji&lt;/span&gt; (Ta wartość będzie dla ułatwienia domyślnie ustawiana jako prawdopodobieństwo dyskwalifikacji w konkursie lub w trybie pojedynczych skoków).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Zakres umiejętności&lt;/span&gt; (Jeżeli ktoś chce, może sobie zmienić zakres umiejętności np. na od 0 do 50. Jeżeli zmniejszymy o połowę zakres umiejętności, to losowość również automatycznie zmniejszy się o losowość tak samo jak inne rzeczy w symulacji aby dopasować się do nowego zakresu).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Mnożnik losowości&lt;/span&gt; (Losowość skoku jest mnożona przez tą wartość. Jeżeli mnożnik wynosi 0.5, a przez losowość zawodnik skoczy 4 metry krócej, to losowość zmniejszy się do zaledwie dwóch metrów).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Automatycznie dopasowuj wpływy na skoczni do aktualnego zakresu umiejętności&lt;/span&gt; (Jeżeli wpływ wybicia na skoczni wynosi np. 0.72, a aktualny zakres jest zwiększony dwukrotnie (do 200) to przy symulacji skoków wpływ wybicia i lotu na skoczni zostanie zmieniony np, dwukrotnie. Nie zmienia to bezpośrednio wpływów na skoczni w edytorze, ale mnoży je podczas symulacji).&lt;/li&gt;&lt;/ul&gt;
+&lt;h2 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a name=&quot;pozostałe-funkcje&quot;&gt;&lt;/a&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;P&lt;/span&gt;&lt;span style=&quot; font-size:x-large; font-weight:700;&quot;&gt;ozostałe funkcje&lt;/span&gt;&lt;/h2&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Napraw zapisy symulacji&amp;quot;&lt;/span&gt; (Funkcja dzięki której niektóre błędy związane z zapisami symulacji mogą zostać naprawione)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Napraw bazę danych&amp;quot;&lt;/span&gt; (Funkcja która być może naprawi niektóre błędy związane z globalną bazą danych)&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Skróć nazwiska zawodników&amp;quot;&lt;/span&gt; (Dzięki tej funkcji można skrócić wszystkie nazwiska zawodników do jednej litery. Np. Adam Nowak = Adam N. Należy pamiętać że taka zmiana jest nieodwracalna).&lt;/li&gt;
+&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Przywróć domyślne&amp;quot;&lt;/span&gt; (Przywraca wszystkie ustawienia do stanu początkowego) &lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2164,7 +2281,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Simulator settings</translation>
     </message>
     <message>
-        <location filename="../source/UI/HelpWindow.ui" line="354"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;6. Ustawienia symulatora&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2186,7 +2302,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Napraw bazę danych&amp;quot;&lt;/span&gt; (Funkcja która być może naprawi niektóre błędy związane z globalną bazą danych)&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Skróć nazwiska zawodników&amp;quot;&lt;/span&gt; (Dzięki tej funkcji można skrócić wszystkie nazwiska zawodników do jednej litery. Np. Adam Nowak = Adam N. Należy pamiętać że taka zmiana jest nieodwracalna).&lt;/li&gt;
 &lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Przywróć domyślne&amp;quot;&lt;/span&gt; (Przywraca wszystkie ustawienia do stanu początkowego) &lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;6. Ustawienia symulatora&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
@@ -2209,12 +2325,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;&amp;quot;Restore to default&amp;quot;&lt;/span&gt;(Restores all settings to the initial state).&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/HelpWindow.ui" line="382"/>
+        <location filename="../source/UI/HelpWindow.ui" line="383"/>
         <source>FAQ</source>
         <translation>FAQ</translation>
     </message>
     <message>
-        <location filename="../source/UI/HelpWindow.ui" line="394"/>
+        <location filename="../source/UI/HelpWindow.ui" line="395"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;title&gt;7. FAQ&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2754,7 +2870,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpWindInfoWidgetItem.cpp" line="25"/>
+        <location filename="../source/UI/ResultsShowing/JumpWindInfoWidgetItem.ui" line="205"/>
+        <source>222°</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/ResultsShowing/JumpWindInfoWidgetItem.cpp" line="26"/>
         <source>Sektor nr </source>
         <translation>Sector no </translation>
     </message>
@@ -4139,22 +4260,22 @@ You can edit several competitions at once (The only exception is the &quot;Advan
         <translation>Front wind chance</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="40"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="41"/>
         <source>Polski</source>
         <translation>Polish</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="41"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="42"/>
         <source>Angielski</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="114"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="116"/>
         <source>Naprawa bazy danych</source>
         <translation>Database repair</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="229"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="231"/>
         <source>Naprawa zapisów symulacji </source>
         <translation>Simulation saves repair </translation>
     </message>
@@ -4213,29 +4334,24 @@ You can edit several competitions at once (The only exception is the &quot;Advan
         <translation>F</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Wind.cpp" line="31"/>
         <source>tylni</source>
-        <translation>back</translation>
+        <translation type="vanished">back</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Wind.cpp" line="32"/>
         <source>tylno-boczny</source>
-        <translation>side-back</translation>
+        <translation type="vanished">side-back</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Wind.cpp" line="33"/>
         <source>boczny</source>
-        <translation>side</translation>
+        <translation type="vanished">side</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Wind.cpp" line="34"/>
         <source>przednio-boczny</source>
-        <translation>front-side</translation>
+        <translation type="vanished">front-side</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Wind.cpp" line="35"/>
         <source>przedni</source>
-        <translation>front</translation>
+        <translation type="vanished">front</translation>
     </message>
     <message>
         <location filename="../source/single-jumps/SingleJumpsManager.cpp" line="55"/>
@@ -5911,43 +6027,44 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Wind direction change:</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="140"/>
+        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="224"/>
+        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="324"/>
+        <source>°</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="346"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;IMG&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
         <source>Tylni</source>
-        <translation>Back</translation>
+        <translation type="vanished">Back</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="145"/>
         <source>Tylnio-boczny</source>
-        <translation>Side-back</translation>
+        <translation type="vanished">Side-back</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="150"/>
         <source>Boczny</source>
-        <translation>Side</translation>
+        <translation type="vanished">Side</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="155"/>
         <source>Przednio-boczny</source>
-        <translation>Front-side</translation>
+        <translation type="vanished">Front-side</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="160"/>
         <source>Przedni</source>
-        <translation>Front</translation>
+        <translation type="vanished">Front</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="215"/>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="318"/>
+        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="171"/>
+        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="277"/>
         <source>m/s</source>
         <translation>m/s</translation>
     </message>
     <message>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="268"/>
-        <source>/ 5</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="373"/>
+        <location filename="../source/UI/EditorWidgets/WindsGeneratorSettingsWidgetInputItem.ui" line="398"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>

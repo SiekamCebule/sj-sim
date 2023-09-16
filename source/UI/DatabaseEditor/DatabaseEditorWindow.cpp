@@ -309,3 +309,40 @@ void DatabaseEditorWindow::setJumpersListModel(JumpersListModel *newJumpersListM
 {
     jumpersListModel = newJumpersListModel;
 }
+
+void DatabaseEditorWindow::on_pushButton_sortByCountries_clicked()
+{
+    if(ui->tabWidget_main->currentWidget() == ui->tab_jumpers)
+    {
+        QVector<Jumper> temp;
+        QVector<QString> countries;
+        for(auto & jumper : GlobalDatabase::get()->getEditableGlobalJumpers())
+            if(countries.contains(jumper.getCountryCode()) == false)
+                countries.push_back(jumper.getCountryCode());
+        for(auto & country : countries)
+        {
+            for(auto & jumper : Team::getJumpersFilteredByCountryCode(GlobalDatabase::get()->getEditableGlobalJumpers(), country))
+                temp.push_back(*jumper);
+        }
+        GlobalDatabase::get()->setGlobalJumpers(temp);
+        jumpersListView->setJumpers(&GlobalDatabase::get()->getEditableGlobalJumpers());
+        jumpersListView->setupListModel();
+    }
+    else if(ui->tabWidget_main->currentWidget() == ui->tab_hills)
+    {
+        QVector<Hill> temp;
+        QVector<QString> countries;
+        for(auto & hill : GlobalDatabase::get()->getEditableGlobalHills())
+            if(countries.contains(hill.getCountryCode()) == false)
+                countries.push_back(hill.getCountryCode());
+        for(auto & country : countries)
+        {
+            for(auto & hill : Hill::getHillsListByCountryCode(GlobalDatabase::get()->getEditableGlobalHills(), country))
+                temp.push_back(*hill);
+        }
+        GlobalDatabase::get()->setGlobalHills(temp);
+        hillsListView->setHills(&GlobalDatabase::get()->getEditableGlobalHills());
+        hillsListView->setupListModel();
+    }
+}
+

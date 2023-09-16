@@ -30,6 +30,8 @@ public:
     void updateToAdvanceDistanceLabel();
     void updatePointsToTheLeaderLabel();
     void updateAvgWindLabel();
+    void updateActualInrunSnow();
+    void updateActualInrunSnowLevelLabel();
 
     void disableCompetitionManagementButtons();
     void enableCompetitionManagementButtons();
@@ -75,6 +77,7 @@ private:
     WindsGenerator windsGenerator;
 
     InrunSnowGenerator inrunSnowGenerator;
+    double actualInrunSnow;
 
     JumpSimulator simulator;
     void setupSimulator();

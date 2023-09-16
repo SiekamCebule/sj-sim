@@ -44,6 +44,8 @@ private slots:
 
     void on_checkBox_autoAdjustHillEffects_stateChanged(int arg1);
 
+    void on_doubleSpinBox_valueChanged(double arg1);
+
 private:
     Ui::AppSettingsWindow *ui;
 

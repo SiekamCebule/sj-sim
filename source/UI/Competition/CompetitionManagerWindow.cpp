@@ -3,6 +3,7 @@
 #include "../../competitions/CompetitionManagers/IndividualCompetitionManager.h"
 #include "../../competitions/CompetitionManagers/TeamCompetitionManager.h"
 #include "../../global/CountryFlagsManager.h"
+#include "../../global/MyRandom.h"
 #include "../../utilities/functions.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
@@ -112,6 +113,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     windsGenerator.setGenerationSettings(manager->getWindGenerationSettingsReference());
     setActualWinds(windsGenerator.generateWinds());
     updateAvgWindLabel();
+    updateActualInrunSnowLevelLabel();
 
     ui->label_pointsBehindLeader->setText("");
 
@@ -203,6 +205,75 @@ void CompetitionManagerWindow::updateAvgWindLabel()
     else if(wind < 0)
         ui->label->setStyleSheet("color: rgb(145, 35, 28);");
     else ui->label->setStyleSheet("color: rgb(50, 50, 50);");
+}
+
+void CompetitionManagerWindow::updateActualInrunSnow()
+{
+    actualInrunSnow += MyRandom::normalDistributionRandom(0, inrunSnowGenerator.getInrunSnowDeviation() / 10);
+    qDebug()<<"actt";
+    if(actualInrunSnow < 0)
+        actualInrunSnow = 0;
+    else if(actualInrunSnow > 10)
+        actualInrunSnow = 10;
+}
+
+void CompetitionManagerWindow::updateActualInrunSnowLevelLabel()
+{
+    if(actualInrunSnow == 0)
+    {
+        ui->label_snowLevel->setText(tr("Brak"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(145, 145, 145);");
+    }
+    else if(actualInrunSnow <= 1)
+    {
+        ui->label_snowLevel->setText(tr("Bardzo niski"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(109, 184, 101);");
+    }
+    else if(actualInrunSnow <= 2.15)
+    {
+        ui->label_snowLevel->setText(tr("Niski"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(135, 179, 114);");
+    }
+    else if(actualInrunSnow <= 3.3)
+    {
+        ui->label_snowLevel->setText(tr("Dosyć niski"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(147, 173, 120);");
+    }
+    else if(actualInrunSnow <= 4.6)
+    {
+        ui->label_snowLevel->setText(tr("Poniżej średniej"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(168, 184, 132);");
+    }
+    else if(actualInrunSnow <= 5.4)
+    {
+        ui->label_snowLevel->setText(tr("Średni"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(212, 209, 133);");
+    }
+    else if(actualInrunSnow <= 6.4)
+    {
+        ui->label_snowLevel->setText(tr("Powyżej średniej"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(232, 217, 142);");
+    }
+    else if(actualInrunSnow <= 7.2)
+    {
+        ui->label_snowLevel->setText(tr("Dość wysoki"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(227, 185, 129);");
+    }
+    else if(actualInrunSnow <= 8.1)
+    {
+        ui->label_snowLevel->setText(tr("Wysoki"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(222, 160, 115);");
+    }
+    else if(actualInrunSnow <= 9.2)
+    {
+        ui->label_snowLevel->setText(tr("Bardzo wysoki"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(209, 113, 98);");
+    }
+    else if(actualInrunSnow <= 10)
+    {
+        ui->label_snowLevel->setText(tr("Ekstremalny"));
+        ui->label_snowLevel->setStyleSheet("color: rgb(173, 55, 55);");
+    }
 }
 
 void CompetitionManagerWindow::disableCompetitionManagementButtons()
@@ -549,6 +620,7 @@ void CompetitionManagerWindow::autoSimulateRound()
             teamResultsTreeModel->setTeams(&dynamic_cast<TeamCompetitionManager *>(manager)->getRoundsTeamsReference()[0]);
 
         setActualWinds(windsGenerator.generateWinds());
+        updateActualInrunSnow();
         if(manager->isAllJumpsAreFinished() == false)
             manager->setActualJumperToNextUnfinished();
         if(type == CompetitionRules::Team && (tmManager->getActualGroup() != tmManager->getCompetitionRules()->getJumpersInTeamCount())){
@@ -595,6 +667,7 @@ void CompetitionManagerWindow::autoSimulateRound()
     updateToAdvanceDistanceLabel();
     updatePointsToTheLeaderLabel();
     ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
+    updateActualInrunSnowLevelLabel();
 
     manager->updateCompetitorsAdvanceStatuses();
 
@@ -651,6 +724,7 @@ void CompetitionManagerWindow::autoSimulateCompetition()
         manager->updateCompetitorsAdvanceStatuses();
 
         setActualWinds(windsGenerator.generateWinds());
+        updateActualInrunSnow();
 
         if(manager->isAllJumpsAreFinished() == false)
             manager->setActualJumperToNextUnfinished();
@@ -734,6 +808,7 @@ void CompetitionManagerWindow::autoSimulateCompetition()
     updateToAdvanceDistanceLabel();
     updatePointsToTheLeaderLabel();
     ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
+    updateActualInrunSnowLevelLabel();
 
     manager->updateCompetitorsAdvanceStatuses();
 
@@ -775,6 +850,7 @@ void CompetitionManagerWindow::autoSimulateGroup()
             manager->updateCompetitorsAdvanceStatuses();
 
             setActualWinds(windsGenerator.generateWinds());
+            updateActualInrunSnow();
             if(manager->isAllJumpsAreFinished() == false)
                 manager->setActualJumperToNextUnfinished();
         }
@@ -794,6 +870,7 @@ void CompetitionManagerWindow::autoSimulateGroup()
         updateToAdvanceDistanceLabel();
         updatePointsToTheLeaderLabel();
         ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
+        updateActualInrunSnowLevelLabel();
 
         manager->updateCompetitorsAdvanceStatuses();
 
@@ -858,6 +935,7 @@ void CompetitionManagerWindow::autoSimulateJumps()
             manager->updateCompetitorsAdvanceStatuses();
 
             setActualWinds(windsGenerator.generateWinds());
+            updateActualInrunSnow();
 
             if(manager->isAllJumpsAreFinished() == false)
                 manager->setActualJumperToNextUnfinished();
@@ -944,6 +1022,7 @@ void CompetitionManagerWindow::autoSimulateJumps()
         updateToAdvanceDistanceLabel();
         updatePointsToTheLeaderLabel();
         ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
+        updateActualInrunSnowLevelLabel();
 
         manager->updateCompetitorsAdvanceStatuses();
 
@@ -982,6 +1061,8 @@ InrunSnowGenerator CompetitionManagerWindow::getInrunSnowGenerator() const
 void CompetitionManagerWindow::setInrunSnowGenerator(const InrunSnowGenerator &newInrunSnowGenerator)
 {
     inrunSnowGenerator = newInrunSnowGenerator;
+    actualInrunSnow = inrunSnowGenerator.getBaseInrunSnow();
+    updateActualInrunSnowLevelLabel();
 }
 
 void CompetitionManagerWindow::cancelCompetition()
@@ -1079,7 +1160,8 @@ void CompetitionManagerWindow::setupSimulator()
     simulator.setCompetitionRules(manager->getCompetitionRules());
     simulator.setDSQBaseProbability(manager->getBaseDSQProbability());
     simulator.setWinds(actualWinds);
-    simulator.setInrunSnow(inrunSnowGenerator.generateInrunSnow());
+    updateActualInrunSnow();
+    simulator.setInrunSnow(actualInrunSnow);
 }
 
 void CompetitionManagerWindow::on_pushButton_jump_clicked()
@@ -1168,21 +1250,20 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     manager->setCoachGateForNextJumper(false);
     manager->setActualCoachGate(0);
     ui->spinBox_actualGate->setValue(manager->getActualGate());
-    qDebug()<<WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()<< "AVG1";
     if(manager->isAllJumpsAreFinished() == false)
         manager->setActualJumperToNextUnfinished();
     setActualWinds(windsGenerator.generateWinds());
+    updateActualInrunSnow();
     currentInputJumpManipulator = JumpManipulator();
-    qDebug()<<WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()<< "AVG2";
 
     updateAvgWindLabel();
+    updateActualInrunSnowLevelLabel();
     manager->updateLastQualifiedResult();
     manager->updateLeaderResult();
     manager->updateLast10Judges();
     updateToBeatDistanceLabel();
     updateToAdvanceDistanceLabel();
     updatePointsToTheLeaderLabel();
-    qDebug()<<WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()<< "AVG3";
 
     if(manager->checkCompetitionEnd()){
         setupGoToNextButtonForCompetitionEnd();
@@ -1272,6 +1353,7 @@ void CompetitionManagerWindow::on_pushButton_inrunSnowGeneratorSettings_clicked(
     if(dialog->exec() == QDialog::Accepted){
         inrunSnowGenerator.setBaseInrunSnow(editor->getBase());
         inrunSnowGenerator.setInrunSnowDeviation(editor->getDeviation());
+        actualInrunSnow = editor->getBase();
 
         delete editor;
         delete dialog;
@@ -1288,8 +1370,9 @@ void CompetitionManagerWindow::on_pushButton_manipulateJump_clicked()
         JumpManipulator manipulator = window->getJumpManipulatorFromInputs();
         currentInputJumpManipulator = (manipulator);
         if(manipulator.getExactWinds().size() > 0)
-            setActualWinds(manipulator.getExactWinds());
+            setActualWinds(manipulator.getExactWinds());      
         updateAvgWindLabel();
+        updateActualInrunSnowLevelLabel();
     }
 }
 

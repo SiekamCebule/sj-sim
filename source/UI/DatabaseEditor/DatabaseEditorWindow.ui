@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>803</width>
-    <height>861</height>
+    <width>811</width>
+    <height>910</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,7 +22,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(241, 241, 241);</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,100">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,100,0">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_title">
      <item>
@@ -225,6 +225,23 @@ QTabBar::tab:selected{
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_sortByCountries">
+     <property name="font">
+      <font>
+       <family>Quicksand Medium</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:black;
+background-color: rgb(207, 255, 252);</string>
+     </property>
+     <property name="text">
+      <string>Posortuj według krajów</string>
+     </property>
     </widget>
    </item>
   </layout>

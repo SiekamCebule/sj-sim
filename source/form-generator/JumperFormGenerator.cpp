@@ -13,7 +13,7 @@ void JumperFormGenerator::generateJumperFormTendence()
 
     double base = 0;
 
-    double deviation = 5 + ((settings.getTendenceVariability() - 5) / 1);//1.666666666666667);
+    double deviation = 3.25 + ((settings.getTendenceVariability() - 5) / 1.53846);//1.666666666666667);
 
     double random = 0;
     if(settings.getTendenceVariability() > 0)
@@ -21,16 +21,12 @@ void JumperFormGenerator::generateJumperFormTendence()
     else
         random = 0;
 
-    double divider = 1 + (abs(oldTendence + random - 0) / 4);
+    double divider = 1 + (abs(oldTendence + random - 0) / 2);
     qDebug()<<"divider: "<<divider;
     if(oldTendence + (random / divider) > 0 && (random > 0))
         random /= divider;
     else if(oldTendence + (random / divider) < 0 && (random < 0))
         random /= divider;
-    /*else if(oldTendence + (random * divider) > 0 && (random < 0))
-        random *= (divider / 1);
-    else if(oldTendence + (random * divider) < 0 && (random > 0))
-        random *= (divider / 1);*/
 
     newTendence = oldTendence + random;
 
@@ -53,7 +49,7 @@ void JumperFormGenerator::generateJumperFormTendence()
         newTendence = settings.getMinTendence();
 
     tendence->setTendence(newTendence);
-    //qDebug()<<jumper->getNameAndSurname()<<": "<<oldTendence<<" --> "<<newTendence<<" (Tendencja)";
+    qDebug()<<jumper->getNameAndSurname()<<": "<<oldTendence<<" --> "<<newTendence<<" (Tendencja)";
 }
 
 void JumperFormGenerator::generateJumperForm()
@@ -61,11 +57,11 @@ void JumperFormGenerator::generateJumperForm()
     double oldForm = jumper->getJumperSkillsPointer()->getForm();
     double formChange = 0;
 
-    formChange += tendence->getTendence() * 2.2;
+    formChange += tendence->getTendence() * 2;
     formChange *= 1 + ((settings.getFormVariability() - 5) / 5);
 
     double distanceFromAverage = abs(oldForm - 50);
-    double divider = 1 + (distanceFromAverage / 6.85);
+    double divider = 1 + (distanceFromAverage / 4.65);
     if(((oldForm + (formChange / divider)) > 50 && (formChange / divider) > 0) || ((oldForm + (formChange / divider)) < 50 && (formChange / divider) < 0))
         formChange /= divider;
     /*else
@@ -79,7 +75,7 @@ void JumperFormGenerator::generateJumperForm()
         newForm = settings.getMinForm();
 
     jumper->getJumperSkillsPointer()->setForm(newForm);
-    qDebug()<<jumper->getNameAndSurname()<<": "<<oldForm<<" --> "<<newForm<<" (Forma na bazie tendencji " + QString::number(tendence->getTendence()) + ")";
+    qDebug()<<jumper->getNameAndSurname()<<": "<<oldForm<<" --> "<<newForm;//<<" (Forma na bazie tendencji " + QString::number(tendence->getTendence()) + ")";
 }
 
 Jumper *JumperFormGenerator::getJumper() const

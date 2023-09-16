@@ -34,6 +34,8 @@ signals:
 private slots:
     void on_pushButton_submit_clicked();
 
+    void on_doubleSpinBox_baseWindDirection_valueChanged(double arg1);
+
 private:
     Ui::WindsGeneratorSettingsWidgetInputItem *ui;
 

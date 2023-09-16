@@ -1,5 +1,6 @@
 #include "WindsGeneratorSettingsWidgetInputItem.h"
 #include "ui_WindsGeneratorSettingsWidgetInputItem.h"
+#include <QTransform>
 
 WindsGeneratorSettingsWidgetInputItem::WindsGeneratorSettingsWidgetInputItem(QWidget *parent) :
     QWidget(parent),
@@ -11,11 +12,13 @@ WindsGeneratorSettingsWidgetInputItem::WindsGeneratorSettingsWidgetInputItem(QWi
     characteristicsEditor = new CharacteristicsEditor(Characteristic::ParentType::WindsGeneratorSettings);
     ui->verticalLayout_characteristicsEditor->insertWidget(0, characteristicsEditor);
 
-    ui->comboBox_baseWindDirection->setItemIcon(0, QIcon("://img/arrow-down.png"));
+    /*ui->comboBox_baseWindDirection->setItemIcon(0, QIcon("://img/arrow-down.png"));
     ui->comboBox_baseWindDirection->setItemIcon(1, QIcon("://img/back-side.png"));
     ui->comboBox_baseWindDirection->setItemIcon(2, QIcon("://img/horizontal.png"));
     ui->comboBox_baseWindDirection->setItemIcon(3, QIcon("://img/front-side.png"));
-    ui->comboBox_baseWindDirection->setItemIcon(4, QIcon("://img/arrow-up1.png"));
+    ui->comboBox_baseWindDirection->setItemIcon(4, QIcon("://img/arrow-up1.png"));*/
+
+    emit ui->doubleSpinBox_baseWindDirection->valueChanged(0);
 
     disconnect(ui->pushButton_submit, &QPushButton::clicked, this, &WindsGeneratorSettingsWidgetInputItem::on_pushButton_submit_clicked);
 }
@@ -44,7 +47,7 @@ double WindsGeneratorSettingsWidgetInputItem::getWindStrengthChangeFromInput()
 
 short WindsGeneratorSettingsWidgetInputItem::getBaseWindDirectionFromInput()
 {
-    return ui->comboBox_baseWindDirection->currentIndex() + 1;
+    return ui->doubleSpinBox_baseWindDirection->value();
 }
 
 double WindsGeneratorSettingsWidgetInputItem::getWindDirectionChangeFromInput()
@@ -68,9 +71,7 @@ void WindsGeneratorSettingsWidgetInputItem::fillInputs()
 {
     ui->doubleSpinBox_baseWindStrength->setValue(settings->getBaseWindStrength());
     ui->doubleSpinBox_windStrengthChange->setValue(settings->getWindStrengthInstability());
-    if(settings->getBaseDirection() > 0)
-        ui->comboBox_baseWindDirection->setCurrentIndex(settings->getBaseDirection() - 1);
-    else ui->comboBox_baseWindDirection->setCurrentIndex(0);
+    ui->doubleSpinBox_baseWindDirection->setValue(settings->getBaseDirection());
     ui->doubleSpinBox_windDirectionChange->setValue(settings->getWindDirectionInstability());
     characteristicsEditor->setCharacteristics(settings->getCharacteristics());
 }
@@ -85,17 +86,18 @@ void WindsGeneratorSettingsWidgetInputItem::fillInputsToExactWindEditor()
     delete ui->label_directionChange;
     ui->formLayout_main->removeWidget(ui->doubleSpinBox_windDirectionChange);
     delete ui->doubleSpinBox_windDirectionChange;
-    ui->formLayout_main->removeWidget(ui->label_5);
-    delete ui->label_5;
     ui->formLayout_main->removeWidget(ui->label_strengthChangeMS);
     delete ui->label_strengthChangeMS;
     ui->verticalLayout_characteristicsEditor->removeWidget(characteristicsEditor);
     delete characteristicsEditor;
+    ui->formLayout_main->removeWidget(ui->label_stopnie1);
+    delete ui->label_stopnie1;
+    ui->formLayout_main->removeWidget(ui->label_stopnie2);
+    delete ui->label_stopnie2;
+
 
     ui->doubleSpinBox_baseWindStrength->setValue(settings->getBaseWindStrength());
-    if(settings->getBaseDirection() > 0)
-        ui->comboBox_baseWindDirection->setCurrentIndex(settings->getBaseDirection() - 1);
-
+    ui->doubleSpinBox_baseWindDirection->setValue(settings->getBaseDirection());
 }
 
 void WindsGeneratorSettingsWidgetInputItem::on_pushButton_submit_clicked()
@@ -116,5 +118,15 @@ WindGenerationSettings *WindsGeneratorSettingsWidgetInputItem::getSettings() con
 void WindsGeneratorSettingsWidgetInputItem::setSettings(WindGenerationSettings *newSettings)
 {
     settings = newSettings;
+}
+
+
+void WindsGeneratorSettingsWidgetInputItem::on_doubleSpinBox_baseWindDirection_valueChanged(double arg1)
+{
+    QPixmap pixmap("://img/arrow-up1.png");
+    QTransform transform;
+    transform.rotate(arg1);
+    pixmap = pixmap.transformed(transform).scaled(ui->label_windDirectionImg->size());
+    ui->label_windDirectionImg->setPixmap(pixmap);
 }
 

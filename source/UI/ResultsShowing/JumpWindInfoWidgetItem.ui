@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>303</width>
+    <width>330</width>
     <height>26</height>
    </rect>
   </property>
@@ -182,6 +182,27 @@
        </property>
        <property name="text">
         <string>IMG</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_degrees">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>Quicksand Medium</family>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: black</string>
+       </property>
+       <property name="text">
+        <string>222°</string>
        </property>
       </widget>
      </item>

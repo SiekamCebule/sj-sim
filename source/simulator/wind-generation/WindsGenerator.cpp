@@ -46,8 +46,26 @@ QVector<Wind> WindsGenerator::generateWinds()
                 random = MyRandom::normalDistributionRandom(base, deviation);
             windStrength += random;
         }
+        double windDirection = settings->getBaseDirection();
+        if(settings->getWindDirectionInstability() > 0){
+            double base = 0;
+            double deviation = settings->getWindDirectionInstability() / 5.2;
 
-        short windDirection = Wind::Null;
+            double random = 0;
+            if(deviation > 0)
+                random = MyRandom::normalDistributionRandom(base, deviation);
+            windDirection = settings->getBaseDirection() + random;
+            if(windDirection < 0)
+            {
+                windDirection = 360 - (-windDirection);
+            }
+            if(windDirection > 360)
+            {
+                windDirection -= (int(windDirection / 360)) * 360;
+            }
+        }
+
+        /*short windDirection = Wind::Back;
 
         double backProb = 250;
         double backSideProb = 250;
@@ -59,8 +77,6 @@ QVector<Wind> WindsGenerator::generateWinds()
 
         switch(settings->getBaseDirection())
         {
-        case Wind::Null:
-            break;
         case Wind::Back:
             backSideProb *= 2.55;
             sideProb *= 0.55;
@@ -154,18 +170,14 @@ QVector<Wind> WindsGenerator::generateWinds()
 
 
             wind.setDirection(windDirection);
-        }
+        }*/
 
         if(windStrength < 0)
             windStrength = (-windStrength);
         wind.setStrength(windStrength);
+        wind.setDirection(windDirection);
 
         winds.push_back(wind);
-
-        /*for(const auto & wind : winds)
-    {
-        qDebug()<<"Wiatru "<<wind.getStringDirection(false)<<", o prędkości "<<wind.getValue()<<"m/s";
-    }*/
     }
     return winds;
 }

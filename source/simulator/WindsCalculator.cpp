@@ -15,19 +15,21 @@ Wind WindsCalculator::getAveragedWind(const QVector<Wind> & winds, short type)
     for(const auto & wind : winds)
     {
         if(type == Original){
-            if(wind.getDirection() == Wind::Front || wind.getDirection() == Wind::FrontSide)
+            if(wind.getDirectionType() == Wind::Front || wind.getDirectionType() == Wind::FrontSide){
                 windAvg += wind.getStrength() * percent;
-            else if(wind.getDirection() == Wind::Back || wind.getDirection() == Wind::BackSide)
+            }
+            else if(wind.getDirectionType() == Wind::Back || wind.getDirectionType() == Wind::BackSide){
                 windAvg -= wind.getStrength() * percent;
+            }
         }
         else{
-            if(wind.getDirection() == Wind::Front)
+            if(wind.getDirectionType() == Wind::Front)
                 windAvg += wind.getStrength() * percent;
-            else if(wind.getDirection() == Wind::FrontSide)
+            else if(wind.getDirectionType() == Wind::FrontSide)
                 windAvg += wind.getStrength() * 0.5 * percent;
-            else if(wind.getDirection() == Wind::BackSide)
+            else if(wind.getDirectionType() == Wind::BackSide)
                 windAvg -= wind.getStrength() * 0.5 * percent;
-            else if(wind.getDirection() == Wind::Back)
+            else if(wind.getDirectionType() == Wind::Back)
                 windAvg -= wind.getStrength() * percent;
         }
         i++;
@@ -42,9 +44,9 @@ double WindsCalculator::getWindCompensation(Wind avgWind, Hill *hill)
 {
     double compensation = 0;
 
-    if(avgWind.getDirection() == Wind::Back)
+    if(avgWind.getDirectionType() == Wind::Back)
         compensation = (avgWind.getStrength() * hill->getPointsForBackWind());
-    else if(avgWind.getDirection() == Wind::Front)
+    else if(avgWind.getDirectionType() == Wind::Front)
         compensation = (-(avgWind.getStrength() * hill->getPointsForFrontWind()));
 
     compensation = (roundDoubleToOnePlace(compensation));

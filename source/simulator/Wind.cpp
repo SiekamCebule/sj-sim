@@ -5,42 +5,10 @@
 #include <QObject>
 #include "../global/GlobalAppSettings.h"
 
-short Wind::getDirection() const
-{
-    return direction;
-}
-
-void Wind::setDirection(short newDirection)
-{
-    direction = newDirection;
-}
-
 double Wind::getStrengthToAveragedWind() const
 {
-    if(getDirection() == Front) return getStrength();
-    else if(getDirection() == Back) return -getStrength();
-    else return 0;
-}
-
-QString Wind::getStringWindDirection(short direction, bool windPrefix)
-{
-    QString text;
-    switch(direction)
-    {
-    case Null: return "NULL";
-    case Back: text = QObject::tr("tylni"); break;
-    case BackSide: text = QObject::tr("tylno-boczny"); break;
-    case Side: text = QObject::tr("boczny"); break;
-    case FrontSide: text = QObject::tr("przednio-boczny"); break;
-    case Front: text = QObject::tr("przedni"); break;
-    }
-    if(GlobalAppSettings::get()->getLanguageID() == GlobalAppSettings::Polish){
-        if(windPrefix == true)
-            text.insert(0, "Wiatr ");
-        else text.replace(0, 1, text[0].toUpper());
-    }
-
-    return text;
+    if(getDirectionType() == Wind::Front || getDirectionType() == Wind::FrontSide) return getStrength();
+    else return -getStrength();
 }
 
 QString Wind::getStyleSheetForAveragedWind(double avgWind)
@@ -54,6 +22,29 @@ QString Wind::getStyleSheetForAveragedWind(double avgWind)
     return "QLabel{color: yellow;}";
 }
 
+double Wind::getAbsForFrontWindDistance(double wind)
+{
+    if(wind <= 90)
+        return abs(0 - wind);
+    else if(wind >= 270)
+        return abs(360 - wind);
+    return 0;
+}
+
+short Wind::getDirectionType() const
+{
+    if(direction <= 32 || direction >= 328)
+        return Front;
+    else if(direction <= 70 || direction >= 290)
+        return FrontSide;
+    else if(direction <= 110 || direction >= 250)
+        return Side;
+    else if(direction <= 147 || direction >= 213)
+        return BackSide;
+    else
+        return Back;
+}
+
 Wind::Wind(short direction, double value) : direction(direction),
     strength(value),
     ClassWithID()
@@ -61,14 +52,24 @@ Wind::Wind(short direction, double value) : direction(direction),
 
 Wind::Wind(double value) : strength(value)
 {
-    if(value == 0)
-        direction = Null;
-    else if(value > 0)
-        direction = Front;
-    else{
-        direction = Back;
-        this->strength = -(this->strength);
-    }
+    if(value > 0)
+        direction = 0;
+    else if(value < 0)
+        direction = 180;
+    else
+        direction = 90;
+    if(strength < 0)
+        strength = -strength;
+}
+
+double Wind::getDirection() const
+{
+    return direction;
+}
+
+void Wind::setDirection(double newDirection)
+{
+    direction = newDirection;
 }
 
 double Wind::getStrength() const
