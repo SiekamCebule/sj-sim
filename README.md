@@ -1,6 +1,6 @@
-# sj-sim
-Symulator skoków narciarskich z interfejsem graficznym stworzonym w QT.
-Ski jumping results simulator with GUI created in QT.
+# Sj.Sim
+Zaawansowany program symulujący wyniki skoków narciarskich z interfejsem graficznym stworzonym w QT.
+Advanced ski jumping results simulator with GUI created in QT.
 
 # Opcje w menu głównym
 - **Symuluj sezon** - tryb, w którym tworzy się kalendarz, symulując po koleji konkursy dla różnych klasyfikacji mając po drodze wiele funkcji zwiększających realistykę (system automatycznego generowania formy skoczków, wykresy, statystyki, manipulowanie wynikami, zmiana bazy danych w trakcie sezonu)
