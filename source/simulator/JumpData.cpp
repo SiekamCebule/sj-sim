@@ -273,7 +273,7 @@ JumpData JumpData::getFromJson(QJsonObject obj, DatabaseObjectsManager * objects
     {
         QJsonObject windObject = wind.toObject();
         Wind w;
-        w.setDirection(windObject.value("direction").toInt());
+        w.setDirection(windObject.value("direction").toDouble());
         w.setStrength(windObject.value("strength").toDouble());
         winds.push_back(w);
         i++;

@@ -11,6 +11,8 @@ class WindGenerationSettings : public ClassWithCharacteristics
 {
 public:
     WindGenerationSettings(short baseDirection = 0, double windDirectionInstability = 0, double baseWindStrength = 0, double windStrengthInstability = 0);
+    static QVector<WindGenerationSettings> getRandomSettings(double lotability = (-1));
+    static void randomizeSettings(QVector<WindGenerationSettings> * settings, double lotability = (-1), double prefferedDirection = (-1));
 private:
     double baseDirection;
     double windDirectionInstability;

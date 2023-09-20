@@ -38,24 +38,48 @@ DatabaseEditorWindow::DatabaseEditorWindow(QWidget *parent) :
     tempGlobalPointsForPlacesPresets = GlobalDatabase::get()->getGlobalPointsForPlacesPresets();
 
     jumperEditor = new JumperEditorWidget;
-    ui->tab_jumpers->layout()->addWidget(jumperEditor);
     jumperEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     jumperEditor->hide();
+    jumperEditorScrollArea = new QScrollArea(this);
+    jumperEditorScrollArea->setStyleSheet("QScrollArea{background: transparent; border: none;}");
+    jumperEditorScrollArea->setWidget(jumperEditor);
+    jumperEditorScrollArea->setLayout(new QVBoxLayout(this));
+        jumperEditorScrollArea->layout()->setContentsMargins(0, 0, 0, 0);
+    jumperEditorScrollArea->layout()->addWidget(jumperEditor);
+    ui->tab_jumpers->layout()->addWidget(jumperEditorScrollArea);
 
     hillEditor = new HillEditorWidget();
-    ui->tab_hills->layout()->addWidget(hillEditor);
     hillEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     hillEditor->hide();
+    hillEditorScrollArea = new QScrollArea(this);
+    hillEditorScrollArea->setStyleSheet("QScrollArea{background: transparent; border: none;}");
+    hillEditorScrollArea->setWidget(hillEditor);
+    hillEditorScrollArea->setLayout(new QVBoxLayout(this));
+        hillEditorScrollArea->layout()->setContentsMargins(0, 0, 0, 0);
+    hillEditorScrollArea->layout()->addWidget(hillEditor);
+    ui->tab_hills->layout()->addWidget(hillEditorScrollArea);
 
     competitionRulesEditor = new CompetitionRulesEditorWidget();
-    ui->tab_competitionRules->layout()->addWidget(competitionRulesEditor);
     competitionRulesEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     competitionRulesEditor->hide();
+    rulesEditorScrollArea = new QScrollArea(this);
+    rulesEditorScrollArea->setStyleSheet("QScrollArea{background: transparent; border: none;}");
+    rulesEditorScrollArea->setWidget(competitionRulesEditor);
+    rulesEditorScrollArea->setLayout(new QVBoxLayout(this));
+        rulesEditorScrollArea->layout()->setContentsMargins(0, 0, 0, 0);
+    rulesEditorScrollArea->layout()->addWidget(competitionRulesEditor);
+    ui->tab_competitionRules->layout()->addWidget(rulesEditorScrollArea);
 
     pointsForPlacesPresetEditor = new PointsForPlacesPresetEditorWidget();
-    ui->tab_pointsForPlacesPresets->layout()->addWidget(pointsForPlacesPresetEditor);
     pointsForPlacesPresetEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     pointsForPlacesPresetEditor->hide();
+    pointsForPlacesEditorScrollArea = new QScrollArea(this);
+    pointsForPlacesEditorScrollArea->setStyleSheet("QScrollArea{background: transparent; border: none;}");
+    pointsForPlacesEditorScrollArea->setWidget(pointsForPlacesPresetEditor);
+    pointsForPlacesEditorScrollArea->setLayout(new QVBoxLayout(this));
+    pointsForPlacesEditorScrollArea->layout()->setContentsMargins(0, 0, 0, 0);
+    pointsForPlacesEditorScrollArea->layout()->addWidget(pointsForPlacesPresetEditor);
+    ui->tab_pointsForPlacesPresets->layout()->addWidget(pointsForPlacesEditorScrollArea);
 
     jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::JumperItems, true, true, true, this);
     jumpersListView->setJumpers(&GlobalDatabase::get()->getEditableGlobalJumpers());

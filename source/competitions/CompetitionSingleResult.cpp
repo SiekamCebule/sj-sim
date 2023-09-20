@@ -111,7 +111,8 @@ QString CompetitionSingleResult::getCsvResultsObject()
         s += QString::number(jumps[i].getAveragedWind())+";";
         s += QString::number(jumps[i].getTotalCompensation())+";";
         s += QString::number(jumps[i].getJudgesPoints())+";";
-        s += QString::number(jumps[i].getPoints())+"";
+        s += QString::number(jumps[i].getPoints())+";";
+        s.replace(".", ",");
         i++;
     }
     return s;

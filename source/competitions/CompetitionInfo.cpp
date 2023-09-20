@@ -97,15 +97,15 @@ bool CompetitionInfo::saveToCsvFile(QString dir, QString name)
     }
     QTextStream stream(&file);
 
-    stream << QObject::tr("Poz.") <<";"<< QObject::tr("Zawodnik") <<";"<< QObject::tr("Kraj") <<";"<< QObject::tr("Nota łączna")<<";";
+    stream << QObject::tr("Poz.") <<";"<< QObject::tr("Zawodnik") <<";"<< QObject::tr("Kraj") <<";"<< QObject::tr("Nota laczna")<<";";
     int i=1;
     for(auto & round : rules.getRoundsReference())
     {
-        stream << QObject::tr("Odległość ") + QString::number(i) <<";";
+        stream << QObject::tr("Odleglosc ") + QString::number(i) <<";";
         stream << QObject::tr("Belka ") + QString::number(i) <<";";
         stream << QObject::tr("Wiatr ") + QString::number(i) <<";";
         stream << QObject::tr("Rekompensata ") + QString::number(i) <<";";
-        stream << QObject::tr("Punkty od sędziów ") + QString::number(i) <<";";
+        stream << QObject::tr("Od sedziow ") + QString::number(i) <<";";
         stream << QObject::tr("Nota ") + QString::number(i) <<";";
         i++;
     }

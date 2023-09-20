@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>368</width>
-    <height>424</height>
+    <height>438</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -251,6 +251,9 @@ color: rgb(13, 13, 13);</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+         <property name="decimals">
+          <number>4</number>
          </property>
          <property name="singleStep">
           <double>0.100000000000000</double>

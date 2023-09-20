@@ -88,6 +88,8 @@ private:
 
     QComboBox * comboBox_groupsSelectionType;
 
+    QPushButton * push_button_randomWind;
+
 public:
     short getType() const;
     void setType(short newType);

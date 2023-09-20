@@ -20,6 +20,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(bool nextSeason, QWidge
     actualRulesIndex(0)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::Window);
     ui->toolBox->setCurrentIndex(0);
     for(auto & globalJumper : GlobalDatabase::get()->getEditableGlobalJumpers())
         jumpers.push_back(new Jumper(globalJumper));

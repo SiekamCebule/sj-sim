@@ -14,6 +14,7 @@
 #include "../../competitions/CompetitionResults.h"
 #include "../../utilities/functions.h"
 #include "CompetitionManagerWindow.h"
+#include  "RandomWindConfigWindow.h"
 
 #include <QSizePolicy>
 #include <QStringListModel>
@@ -54,6 +55,18 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
     ui->toolBox->raise();
     ui->label_title->raise();
     ui->toolBox->addItem(windsGeneratorSettingsEditor, tr("Ustawienia generatora wiatru"));
+    push_button_randomWind = new QPushButton(tr("Losowe ustawienia generatora wiatru"));
+push_button_randomWind->setParent(this);
+    push_button_randomWind->setStyleSheet("QPushButton{\nborder: 2px solid rgb(0, 59, 23);\nborder-radius: 6px;\ncolor: rgb(0, 0, 0);\nbackground-color: rgb(160, 182, 217);\npadding: 2px;\n}\nQPushButton:hover{\nbackground-color: rgb(138, 157, 189);\n}");
+    windsGeneratorSettingsEditor->layout()->addWidget(push_button_randomWind);
+    connect(push_button_randomWind, &QPushButton::clicked, this, [this](){
+        RandomWindConfigWindow window;
+        if(window.exec() == QDialog::Accepted){
+            WindGenerationSettings::randomizeSettings(windsGeneratorSettingsEditor->getWindGenerationSettings(), window.getLotability(), window.getDirection());
+            windsGeneratorSettingsEditor->fillSettingsInputs();
+       }
+    });
+
     ui->toolBox->addItem(inrunSnowGeneratorSettingsEditor, tr("Ustawienia generatora śniegu na najeździe"));
     setupCompetitionRulesToolBoxItem();
 
@@ -188,6 +201,10 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
                 competitionTeams = Team::constructTeamsVectorByJumpersList(seasonCompetitionJumpers, seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
                 if(seasonCompetition->getAdvancementClassification() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
                     competitionTeams = TeamCompetitionManager::getFilteredTeamsByClassification(seasonCompetition, seasonCompetition->getAdvancementClassification(), competitionTeams);
+            }
+            if(seasonCompetition->getTrialRound() != nullptr)
+            {
+                competitionTeams = seasonCompetition->getTrialRound()->getTeamsReference();
             }
 
             teamsSquadsModel->setupTreeItems();
@@ -370,21 +387,38 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
     }
     connect(competitionRulesEditor, &CompetitionRulesEditorWidget::KORoundChanged, this, [this](){
         if(competitionRulesEditor->getRoundsFromInput().count() > 0){
-            if(competitionRulesEditor->getRoundsFromInput().at(0).getKO() == true)
-            {
+            if (competitionRulesEditor->getRoundsFromInput().at(0).getKO() == true
+                && checkBox_singleCompetitionQualifications->isChecked() == false) {
                 jumpersListView->hide();
                 teamsTreeView->hide();
                 KOGroupsList->show();
                 comboBox_groupsSelectionType->show();
                 KOGroupsList->fillListLayout();
-            }
-            else{
+            } else {
                 KOGroupsList->hide();
                 comboBox_groupsSelectionType->hide();
                 emit competitionRulesEditor->competitionTypeChanged();
             }
         }
     });
+    if(type == SingleCompetition){
+    connect(checkBox_singleCompetitionQualifications, &QCheckBox::stateChanged, this, [this, type]() {     
+        if (competitionRulesEditor->getRoundsFromInput().count() > 0) {
+            if (competitionRulesEditor->getRoundsFromInput().at(0).getKO() == true
+                && checkBox_singleCompetitionQualifications->isChecked() == false) {
+                jumpersListView->hide();
+                teamsTreeView->hide();
+                KOGroupsList->show();
+                comboBox_groupsSelectionType->show();
+                KOGroupsList->fillListLayout();
+            } else {
+                KOGroupsList->hide();
+                comboBox_groupsSelectionType->hide();
+                emit competitionRulesEditor->competitionTypeChanged();
+            }
+        }
+        });
+    }
     if(getType() == SingleCompetition)
         emit competitionRulesEditor->KORoundChanged();
 
@@ -763,9 +797,34 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             return;
         if(qualsInfo.getResultsReference().getResultsReference().count() > 0){
             if(type == CompetitionRules::Individual){
-                static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(static_cast<IndividualCompetitionManager *>(qualificationsManager)->getFilteredJumpersForNextRound());
+                if (competitionRulesEditor->getRoundsFromInput().at(0).getKO() == true) {
+                    RoundInfo rinf = competitionRulesEditor->getRoundsFromInput().at(0);
+
+                    bool sortStartList = qualificationsManager->getCompetitionRules()
+                                             ->getRoundsReference()[1]
+                                             .getSortStartList();
+                    qualificationsManager->getCompetitionRules()->getRoundsReference()[1].setSortStartList(true);
+                    qualificationsManager->getCompetitionRules()->getRoundsReference()[0].setSortStartList(true);
+                    QVector<Jumper *> jumpers = static_cast<IndividualCompetitionManager *>(qualificationsManager)->getFilteredJumpersForNextRound();
+                    qualificationsManager->getCompetitionRules()->getRoundsReference()[1].setSortStartList(sortStartList);
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(jumpers);
+
+                    info.getRoundsKOGroupsReference().push_back(KOGroup::constructKOGroups(&rinf, &static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().last(), rinf.getKoGroupsSelectionType(), competitionManager->getCompetitionInfo()));
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().last() = KOGroup::getJumpersFromGroups(&info.getRoundsKOGroupsReference().last());
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&info.getRoundsKOGroupsReference().last());
+                }
+                else
+                {
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(static_cast<IndividualCompetitionManager *>(qualificationsManager)->getFilteredJumpersForNextRound());
+                    info.getRoundsKOGroupsReference().push_back(QVector<KOGroup>());
+                    static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&info.getRoundsKOGroupsReference().last());
+                }
+
+
+
+                /*static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().push_back(static_cast<IndividualCompetitionManager *>(qualificationsManager)->getFilteredJumpersForNextRound());
                 info.getRoundsKOGroupsReference().push_back(QVector<KOGroup>());
-                static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&info.getRoundsKOGroupsReference().last());
+                static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&info.getRoundsKOGroupsReference().last());*/
             }
             else if(type == CompetitionRules::Team){
                 static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(static_cast<TeamCompetitionManager *>(qualificationsManager)->getFilteredTeamsForNextRound());

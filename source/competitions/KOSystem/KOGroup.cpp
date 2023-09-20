@@ -37,6 +37,8 @@ KOGroup KOGroup::getFromJson(const QJsonObject &json, DatabaseObjectsManager * o
 
 QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper *> *jumpers, int selectionType, CompetitionInfo * competition)
 {
+    if (selectionType == 4)
+        selectionType = 3;
     QVector<KOGroup> groups;
     switch(selectionType)
     {
@@ -174,8 +176,7 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
         }
         break;
     }
-    case KOGroup::Random:
-    {
+    case KOGroup::Random: {
         int groupsCount = jumpers->count() / roundInfo->getCountInKOGroup();
         for(int i=0; i<groupsCount; i++)
         {

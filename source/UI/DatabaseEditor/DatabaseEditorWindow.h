@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QVector>
 #include <QEvent>
+#include <QScrollArea>
 
 class QCloseEvent;
 
@@ -79,6 +80,11 @@ private:
     HillEditorWidget * hillEditor;
     CompetitionRulesEditorWidget * competitionRulesEditor;
     PointsForPlacesPresetEditorWidget * pointsForPlacesPresetEditor;
+
+    QScrollArea * jumperEditorScrollArea;
+    QScrollArea * hillEditorScrollArea;
+    QScrollArea * rulesEditorScrollArea;
+    QScrollArea * pointsForPlacesEditorScrollArea;
 
     short actualElementType;
     int actualElementIndex;

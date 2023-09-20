@@ -12,6 +12,7 @@ CONFIG += c++17
 SOURCES += \
     source/UI/Competition/CompetitionManagerWindow.cpp \
     source/UI/Competition/JumperCompetitionResultsWidget.cpp \
+    source/UI/Competition/RandomWindConfigWindow.cpp \
     source/UI/Competition/Results/KOGroupResultsTableModel.cpp \
     source/UI/Competition/Results/ResultsTableModel.cpp \
     source/UI/Competition/Results/TeamResultsTreeModel.cpp \
@@ -142,6 +143,7 @@ SOURCES += \
 HEADERS += \
     source/UI/Competition/CompetitionManagerWindow.h \
     source/UI/Competition/JumperCompetitionResultsWidget.h \
+    source/UI/Competition/RandomWindConfigWindow.h \
     source/UI/Competition/Results/KOGroupResultsTableModel.h \
     source/UI/Competition/Results/ResultsTableModel.h \
     source/UI/Competition/Results/TeamResultsTreeModel.h \
@@ -271,6 +273,7 @@ HEADERS += \
 FORMS += \
     source/UI/Competition/CompetitionManagerWindow.ui \
     source/UI/Competition/JumperCompetitionResultsWidget.ui \
+    source/UI/Competition/RandomWindConfigWindow.ui \
     source/UI/Competition/TeamsSquadsTreeView.ui \
     source/UI/DatabaseEditor/DatabaseItemsListView.ui \
     source/UI/EditorWidgets/ClassificationEditorWidget.ui \

@@ -279,7 +279,23 @@ void AbstractCompetitionManager::updateLast10Judges()
         {
             if(startListStatuses[i].getJumpStatus() == StartListCompetitorStatus::Finished)
             {
-                last10Judges += results->getResultOfIndividualJumper(startListStatuses[i].getJumper())->getJumpsReference().last().getJudgesPoints();
+                if (competitionInfo->getRulesPointer()->getCompetitionType()
+                    == CompetitionRules::Individual)
+                    last10Judges += results
+                                        ->getResultOfIndividualJumper(
+                                            startListStatuses[i].getJumper())
+                                        ->getJumpsReference()
+                                        .last()
+                                        .getJudgesPoints();
+                else
+                    last10Judges += results
+                                        ->getResultOfTeam(Team::getTeamByCountryCode(
+                                            &competitionInfo->getTeamsReference(),
+                                            startListStatuses[i].getJumper()->getCountryCode()))
+                                        ->getTeamJumperResult(startListStatuses[i].getJumper())
+                                        ->getJumpsReference()
+                                        .last()
+                                        .getJudgesPoints();
                 howMany++;
             }
             i--;
