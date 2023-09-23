@@ -711,10 +711,10 @@ void SimulationRatingsWindow::setFilteredJumpers(const QVector<Jumper *> &newFil
 void SimulationRatingsWindow::saveRankingCsv(QString fileName, short rankingType)
 {
     QFile file(fileName);
-    file.open(QFile::WriteOnly | QFile::Text);
+    file.open(QFile::ReadWrite | QFile::Text);
     file.resize(0);
-    QTextStream stream(&file);
-    stream << tr("Pozycja") << ";" << tr("Zawodnik") << ";" << tr("Wartosc") << ";" << "\n";
+    QString stream;
+    stream = tr("Pozycja") + ";" + tr("Zawodnik") + ";" + tr("Wartosc") + ";" + "\n";
     QVector<QPair<Jumper *, double>> * ranking;
     switch(rankingType)
     {
@@ -740,10 +740,10 @@ void SimulationRatingsWindow::saveRankingCsv(QString fileName, short rankingType
     int pos = 1;
     for(auto & pair : *ranking)
     {
-        stream << QString::number(pos) << ";" << pair.first->getNameAndSurname() << " (" << pair.first->getCountryCode() + ")" << ";" << QString::number(pair.second) << "\n";
+        stream += QString::number(pos) + ";" + pair.first->getNameAndSurname() + " (" + pair.first->getCountryCode() + ")" + ";" + QString::number(pair.second) + "\n";
         pos++;
     }
-    QString string = file.readAll().replace(".", ",");
+    QString string = stream.replace(".", ",");
     file.resize(0);
     file.write(string.toUtf8());
     file.close();
@@ -752,10 +752,10 @@ void SimulationRatingsWindow::saveRankingCsv(QString fileName, short rankingType
 void SimulationRatingsWindow::saveRecordsCsv(QString fileName, short recordType, bool best)
 {
     QFile file(fileName);
-    file.open(QFile::WriteOnly | QFile::Text);
+    file.open(QFile::ReadWrite | QFile::Text);
     file.resize(0);
-    QTextStream stream(&file);
-    stream << tr("Pozycja") << ";" << tr("Zawodnik") << ";" << tr("Wartosc") << ";" << tr("Konkurs") << "\n";
+    QString stream;
+    stream = tr("Pozycja") + ";" + tr("Zawodnik") + ";" + tr("Wartosc") + ";" + tr("Konkurs") + "\n";
     QVector<QPair<JumpData *, double>> * records;
     switch(recordType)
     {
@@ -795,9 +795,9 @@ void SimulationRatingsWindow::saveRecordsCsv(QString fileName, short recordType,
         QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getCalendarReference().getCompetitionsReference().indexOf(comp) + 1)
                          + " " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()) + tr(" (Runda ")
                          + QString::number(MyFunctions::getIndexOfItemInVector(pair.first->getSingleResult()->getJumpsReference(), pair.first) + 1) + ") " + " (" + comp->getShortSerieTypeText() + ")";
-        stream << QString::number(pos) << ";" << pair.first->getJumper()->getNameAndSurname() << " (" << pair.first->getJumper()->getCountryCode() + ")" <<";" << QString::number(pair.second) << ";" << string << "\n";
+        stream += QString::number(pos) + ";" + pair.first->getJumper()->getNameAndSurname() + " (" + pair.first->getJumper()->getCountryCode() + ")" +";" + QString::number(pair.second) + ";" + string + "\n";
     }
-    QString string = file.readAll().replace(".", ",");
+    QString string = stream.replace(".", ",");
     file.resize(0);
     file.write(string.toUtf8());
     file.close();
@@ -806,17 +806,17 @@ void SimulationRatingsWindow::saveRecordsCsv(QString fileName, short recordType,
 void SimulationRatingsWindow::saveGeneralClassificationCsv(QString fileName)
 {
     QFile file(fileName);
-    file.open(QFile::WriteOnly | QFile::Text);
+    file.open(QFile::ReadWrite | QFile::Text);
     file.resize(0);
-    QTextStream stream(&file);
-    stream << tr("Pozycja") << ";" << tr("Zawodnik") << ";" << tr("Punkty") << "\n";
+    QString stream;
+    stream = tr("Pozycja") + ";" + tr("Zawodnik") + ";" + tr("Punkty") + "\n";
     QVector<QPair<Jumper *, double>> * results = &generalClassificationModel->getResultsReference();
     int pos = 1;
     for(auto & pair : *results)
     {
-        stream << QString::number(pos) << ";" << pair.first->getNameAndSurname() << " (" << pair.first->getCountryCode() + ")" <<";" << QString::number(pair.second) << "\n";
+        stream += QString::number(pos) + ";" + pair.first->getNameAndSurname() + " (" + pair.first->getCountryCode() + ")" +";" + QString::number(pair.second) + "\n";
     }
-    QString string = file.readAll().replace(".", ",");
+    QString string = stream.replace(".", ",");
     file.resize(0);
     file.write(string.toUtf8());
     file.close();

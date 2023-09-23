@@ -57,11 +57,11 @@ void JumperFormGenerator::generateJumperForm()
     double oldForm = jumper->getJumperSkillsPointer()->getForm();
     double formChange = 0;
 
-    formChange += tendence->getTendence() * 3.5;
+    formChange += tendence->getTendence() * 3.65;
     formChange *= 1 + ((settings.getFormVariability() - 5) / 5);
 
     double distanceFromAverage = abs(oldForm - 50);
-    double divider = 1 + (distanceFromAverage / 3);
+    double divider = 1 + (distanceFromAverage / 3.4);
     if(((oldForm + (formChange / divider)) > 50 && (formChange / divider) > 0) || ((oldForm + (formChange / divider)) < 50 && (formChange / divider) < 0))
         formChange /= divider;
     /*else
