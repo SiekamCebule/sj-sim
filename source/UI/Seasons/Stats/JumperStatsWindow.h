@@ -104,10 +104,13 @@ public:
     void setClassificationsCheckBoxes(ClassificationsCheckBoxesWidget *newClassificationsCheckBoxes);   
     HillTypesCheckBoxesWidget *getHillTypesCheckBoxes() const;
     void setHillTypesCheckBoxes(HillTypesCheckBoxesWidget *newHillTypesCheckBoxes);
+public:
+    void saveJumperChartCsv(QString fileName, short chartType);
 
 private slots:
     void on_horizontalScrollBar_jumperStatsChartScrollBar_valueChanged(int value);
     void on_checkBox_stateChanged(int arg1);
+    void on_pushButton_csvExport_clicked();
 };
 
 #endif // JUMPERSTATSWINDOW_H

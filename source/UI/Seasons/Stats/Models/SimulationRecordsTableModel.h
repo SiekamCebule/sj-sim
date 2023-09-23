@@ -32,6 +32,7 @@ public:
     SimulationSave *getSave() const;
     void setSave(SimulationSave *newSave);
     QVector<QPair<JumpData *, double> > getRecords() const;
+    QVector<QPair<JumpData *, double> > & getRecordsReference();
     void setRecords(const QVector<QPair<JumpData *, double> > &newRecords);
 };
 

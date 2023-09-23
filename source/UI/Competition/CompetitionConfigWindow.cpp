@@ -120,11 +120,28 @@ push_button_randomWind->setParent(this);
         if((comp->getAdvancementCompetition() != nullptr) && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual){
             if(comp->getAdvancementCompetition()->getCancelled() == false)
                 seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersAfterQualifications(comp, simulationSave->getJumpersReference());
-            else
+            else{
                 for(auto & jp : simulationSave->getJumpersReference())
                 {
                     seasonCompetitionJumpers.push_back(jp);
                 }
+                for(auto & list : simulationSave->getJumpersListsReference())
+                {
+                    if(list.getIsDefault() == false)
+                    {
+                        for(auto & jp : list.getJumpersReference()){
+                            MyFunctions::removeFromVector(seasonCompetitionJumpers, jp);
+                        }
+                    }
+                    else
+                    {
+                        for(auto & jp : list.getJumpersReference()){
+                            if(seasonCompetitionJumpers.contains(jp) == false)
+                                seasonCompetitionJumpers.push_back(jp);
+                        }
+                    }
+                }
+            }
         }
         else if(seasonCompetition->getAdvancementClassification() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
             seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersByClassification(seasonCompetition, seasonCompetition->getAdvancementClassification(), simulationSave->getJumpersReference());
@@ -139,6 +156,13 @@ push_button_randomWind->setParent(this);
                 {
                     for(auto & jp : list.getJumpersReference()){
                         MyFunctions::removeFromVector(seasonCompetitionJumpers, jp);
+                    }
+                }
+                else
+                {
+                    for(auto & jp : list.getJumpersReference()){
+                        if(seasonCompetitionJumpers.contains(jp) == false)
+                            seasonCompetitionJumpers.push_back(jp);
                     }
                 }
             }
@@ -202,7 +226,7 @@ push_button_randomWind->setParent(this);
                 if(seasonCompetition->getAdvancementClassification() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
                     competitionTeams = TeamCompetitionManager::getFilteredTeamsByClassification(seasonCompetition, seasonCompetition->getAdvancementClassification(), competitionTeams);
             }
-            if(seasonCompetition->getTrialRound() != nullptr)
+            if(seasonCompetition->getTrialRound() != nullptr && seasonCompetition->getTrialRound()->getCancelled() == false)
             {
                 competitionTeams = seasonCompetition->getTrialRound()->getTeamsReference();
             }
@@ -426,8 +450,6 @@ push_button_randomWind->setParent(this);
         if(index > 0)
         {
             index--;
-            bool singleCompetitionCondition = false;
-            bool seasonCompetitionCondition = false;
             if(getType() == SingleCompetition)
             {
                 if(index != KOGroup::Classic || (index == KOGroup::Classic || (competitionRulesEditor->getRoundsFromInput().at(0).getCountInKOGroup() == 2)))
@@ -1090,6 +1112,7 @@ void CompetitionConfigWindow::on_pushButton_jumpersLists_clicked()
     window->setupWidgets();
     if(window->exec() == QDialog::Accepted)
     {
+        QSet<Jumper *> addedJumpers;
         for(auto & status : window->constructJumpersListsStatuses())
         {
             if(status.second == JumpersListsListItemWidget::Select && seasonCompetition->getAdvancementCompetition() == nullptr && seasonCompetition->getAdvancementClassification() == nullptr)
@@ -1098,17 +1121,20 @@ void CompetitionConfigWindow::on_pushButton_jumpersLists_clicked()
                 {
                     if(seasonCompetitionJumpers.contains(jumper) == false)
                         seasonCompetitionJumpers.push_back(jumper);
+                    addedJumpers.insert(jumper);
                 }
             }
             else if(status.second == JumpersListsListItemWidget::Unselect)
             {
                 for(auto & jumper : status.first->getJumpersReference())
                 {
-                    if(seasonCompetitionJumpers.contains(jumper) == true)
+                    if(seasonCompetitionJumpers.contains(jumper) == true && addedJumpers.contains(jumper) == false)
                         MyFunctions::removeFromVector(seasonCompetitionJumpers, jumper);
                 }
             }
         }
+        if((seasonCompetition->getAdvancementCompetition() != nullptr && seasonCompetition->getAdvancementCompetition()->getCancelled() == false) || seasonCompetition->getAdvancementClassification() != nullptr)
+            seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersAfterQualifications(seasonCompetition, seasonCompetitionJumpers);
         jumpersListView->setupListModel();
     }
 }

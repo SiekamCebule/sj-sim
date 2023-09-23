@@ -55,9 +55,6 @@ QVariant SimulationRecordsTableModel::data(const QModelIndex &index, int role) c
         else if(index.column() == 3)
         {
             JumpData * jump = records[index.row()].first;
-            qDebug()<<"JUMP DATA: "<<jump;
-            qDebug()<<"JUMP DATA SINGLE RESULT: "<<jump->getSingleResult();
-            qDebug()<<"JUMP DATA SINGLE RESULT COUNT: "<<jump->getSingleResult()->getJumpsReference().count();
             CompetitionInfo * comp = jump->getCompetition();
             Season * season = nullptr;
             for(auto & s : save->getSeasonsReference())
@@ -123,6 +120,11 @@ QVariant SimulationRecordsTableModel::data(const QModelIndex &index, int role) c
 }
 
 QVector<QPair<JumpData *, double> > SimulationRecordsTableModel::getRecords() const
+{
+    return records;
+}
+
+QVector<QPair<JumpData *, double> > &SimulationRecordsTableModel::getRecordsReference()
 {
     return records;
 }

@@ -201,8 +201,6 @@ QVector<Jumper *> IndividualCompetitionManager::getFilteredJumpersAfterQualifica
                     toReturn.push_back(jumper);
         }
     }
-    qDebug()<<"TORETURN";
-    qDebug()<<toReturn;
     return toReturn;
 }
 

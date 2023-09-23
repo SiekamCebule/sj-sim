@@ -2,6 +2,9 @@
 #include "ui_JumperStatsWindow.h"
 #include "../../../global/CountryFlagsManager.h"
 #include "../../../utilities/functions.h"
+#include <QInputDialog>
+#include <QDir>
+#include <QFile>
 
 JumperStatsWindow::JumperStatsWindow(QWidget *parent) :
     QDialog(parent),
@@ -26,6 +29,7 @@ JumperStatsWindow::JumperStatsWindow(QWidget *parent) :
     layout_flightRatingChart = new QVBoxLayout();
     ui->verticalLayout_charts->layout()->addItem(layout_flightRatingChart);*/
 
+    ui->pushButton_csvExport->hide();
     setupCharts();
     emit ui->checkBox->stateChanged(0);
 }
@@ -297,7 +301,7 @@ void JumperStatsWindow::updateChartCompetitionByJumpData(const QPointF &point, b
 {
     if(state)
     {
-        if((point.x() + 0.4 > int(point.x()) && point.x() - 0.4 < int(point.x())) && (point.y() + 0.4 > point.y() && point.y() - 0.4 < point.y()))
+        if((point.x() + 0.2 > int(point.x()) && point.x() - 0.2 < int(point.x())) && (point.y() + 0.2 > point.y() && point.y() - 0.2 < point.y()))
         {
             int jumpDataIndex = point.x();
             int remaining = jumpDataIndex;
@@ -529,3 +533,63 @@ void JumperStatsWindow::on_checkBox_stateChanged(int arg1)
         flightRatingChartView->show();
     }
 }
+
+void JumperStatsWindow::saveJumperChartCsv(QString fileName, short chartType)
+{
+    QFile file(fileName);
+    file.open(QFile::WriteOnly | QFile::Text);
+    file.resize(0);
+    QTextStream stream(&file);
+    stream << tr("Numer") << ";" << tr("Pozycja") << ";" << tr("Konkurs") << ";" << "\n";
+    QLineSeries * series = nullptr;
+    switch(chartType)
+    {
+    case Positions:
+        series = jumperApperancesLineSeries;
+        break;
+    case JudgesPoints:
+        series = judgesPointsLineSeries;
+        break;
+    case Form:
+        series = jumperFormLineSeries;
+        break;
+    case TakeoffRating:
+        series = takeoffRatingLineSeries;
+        break;
+    case FlightRating:
+        series = flightRatingLineSeries;
+        break;
+    }
+    if(chartType == Positions){
+        for(auto & point : series->points())
+        {
+
+        }
+    }
+    else
+    {
+        for(auto & point : series->points())
+        {
+
+        }
+    }
+}
+
+void JumperStatsWindow::on_pushButton_csvExport_clicked()
+{
+    bool ok;
+    QString folderName = QInputDialog::getText(this, tr("Nazwa folderu"), tr("Podaj nazwę jaką ma mieć folder z zapisanymi statystykami skoczka"), QLineEdit::Normal, "", &ok);
+    if(ok == true)
+    {
+        QDir d("stats/jumpers-stats/" + folderName + "/charts");
+        if(!d.exists())
+            d.mkpath(".");
+        QString text = "stats/jumpers-stats/" + folderName + "/charts/";
+        saveJumperChartCsv(text + "apperances.csv", Positions);
+        saveJumperChartCsv(text + "judges.csv", JudgesPoints);
+        saveJumperChartCsv(text + "form.csv", Form);
+        saveJumperChartCsv(text + "takeoff-rating.csv", TakeoffRating);
+        saveJumperChartCsv(text + "flight-rating.csv", FlightRating);
+    }
+}
+

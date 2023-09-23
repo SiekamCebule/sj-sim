@@ -162,6 +162,23 @@ QVector<CompetitionInfo *> CompetitionInfo::mergeSeasonsCompetitions(QVector<Sea
     return competitions;
 }
 
+QString CompetitionInfo::getShortSerieTypeText()
+{
+    switch(serieType)
+    {
+    case Competition:
+        return "C";
+    case Qualifications:
+        return "Q";
+    case TrialRound:
+        return "Tri";
+    case Training:
+        return "Trn";
+    default:
+        return "X";
+    }
+}
+
 QVector<QVector<KOGroup> > CompetitionInfo::getRoundsKOGroups() const
 {
     return roundsKOGroups;

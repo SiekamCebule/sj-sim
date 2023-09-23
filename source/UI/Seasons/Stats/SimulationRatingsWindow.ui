@@ -18,7 +18,22 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
+     <item>
+      <widget class="QPushButton" name="pushButton_csvExport">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(229, 217, 255);</string>
+       </property>
+       <property name="text">
+        <string>Eksport CSV</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
@@ -451,7 +466,7 @@ background-color: rgb(241, 200, 255);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1762</width>
+            <width>1774</width>
             <height>826</height>
            </rect>
           </property>

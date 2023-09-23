@@ -73,9 +73,31 @@ public:
     void setGeneralClassificationModel(GeneralClassificationTableModel *newGeneralClassificationModel);
     QVector<Jumper *> getFilteredJumpers() const;
     void setFilteredJumpers(const QVector<Jumper *> &newFilteredJumpers);
+public:
+    void saveRankingCsv(QString fileName, short rankingType);
+    void saveRecordsCsv(QString fileName, short recordType, bool best);
+    void saveGeneralClassificationCsv(QString fileName);
+private:
+    enum RankingType{
+        AveragePosition,
+        AverageJudges,
+        AverageWind,
+        AverageTakeoffRating,
+        AverageTakeoffFlight,
+        AverageDistance
+    };
+    enum RecordType{
+        Distance,
+        Points,
+        Judges,
+        Wind,
+        TakeoffRating,
+        FlightRating
+    };
 
 private slots:
     void on_pushButton_jumpersLists_clicked();
+    void on_pushButton_csvExport_clicked();
 };
 
 #endif // SIMULATIONRATINGSWINDOW_H

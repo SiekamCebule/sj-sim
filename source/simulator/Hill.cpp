@@ -377,17 +377,27 @@ double Hill::getLandingChanceChangeByHillProfile(double distance, short landingT
 
 double Hill::getLandingImbalanceChangeByHillProfile(double distance)
 {
-    /// czym większa wartość zwracana, tym teorytycznie mniejsze zachwianie przy lądowaniu (a raczej mniejsza szansa na wyższe zachwianie)
-    if(distance <= getKPoint())
-        return 0.01;
-    else if(distance < getKPoint() + getKAndRealHSDifference() * 0.5)
-        return 0.05;
-    else if(distance <= getRealHS())
-        return 0.1;
-    else if(distance <= getRealHS() * 1.12)
-        return 0.2;
+    double chance = 0;
+    if (distance < realHS * 0.96) //128.5 dla HS134
+        chance = 0.07;
+    else if (distance < realHS * 0.98) //131.5 dla HS134
+        chance = 0.13;
+    else if (distance < realHS * 1.00) //134 dla HS134
+        chance = 0.28;
+    else if (distance < realHS * 1.015) //135.5 dla HS134
+        chance = 0.45;
+    else if (distance < realHS * 1.03) //138 dla HS134
+        chance = 0.7;
+    else if (distance < realHS * 1.05) //141 dla HS134
+        chance = 1.1;
+    else if (distance < realHS * 1.065) //142 dla HS134
+        chance = 1.5;
+    else if (distance < realHS * 1.08) //145 dla HS134
+        chance = 2.25;
     else
-        return 0.4;
+        chance = 3;
+
+    return chance;
 }
 
 QString Hill::getName() const

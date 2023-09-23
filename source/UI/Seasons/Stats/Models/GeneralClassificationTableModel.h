@@ -26,6 +26,7 @@ private:
     QVector<QPair<Jumper *, double>> results;
 public:
     QVector<QPair<Jumper *, double> > getResults() const;
+    QVector<QPair<Jumper *, double> > & getResultsReference();
     void setResults(const QVector<QPair<Jumper *, double> > &newResults);
 };
 

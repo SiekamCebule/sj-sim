@@ -117,6 +117,11 @@ QVector<QPair<Jumper *, double> > SimulationRatingTableModel::getRanking() const
     return ranking;
 }
 
+QVector<QPair<Jumper *, double> > &SimulationRatingTableModel::getRankingReference()
+{
+    return ranking;
+}
+
 void SimulationRatingTableModel::setRanking(const QVector<QPair<Jumper *, double> > &newRanking)
 {
     ranking = newRanking;

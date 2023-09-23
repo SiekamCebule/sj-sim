@@ -103,9 +103,9 @@ QString CompetitionSingleResult::getCsvResultsObject()
     s += jumper->getNameAndSurname()+";";
     s += jumper->getCountryCode()+";";
     s += QString::number(pointsSum)+";";
+    int i=0;
     for(auto & round : competition->getRulesPointer()->getRoundsReference())
     {
-        int i=0;
         s += QString::number(jumps[i].getDistance())+";";
         s += QString::number(jumps[i].getGate())+";";
         s += QString::number(jumps[i].getAveragedWind())+";";

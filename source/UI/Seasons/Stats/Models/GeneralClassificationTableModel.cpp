@@ -98,6 +98,11 @@ QVector<QPair<Jumper *, double> > GeneralClassificationTableModel::getResults() 
     return results;
 }
 
+QVector<QPair<Jumper *, double> > &GeneralClassificationTableModel::getResultsReference()
+{
+    return results;
+}
+
 void GeneralClassificationTableModel::setResults(const QVector<QPair<Jumper *, double> > &newResults)
 {
     results = newResults;

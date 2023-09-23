@@ -4,6 +4,7 @@
 #include "../../../global/PointsForPlacesPreset.h"
 #include "../../../global/GlobalDatabase.h"
 #include "../../EditorWidgets/EditStartListWithJumpersListsWindow.h"
+#include <QInputDialog>
 
 SimulationRatingsWindow::SimulationRatingsWindow(SimulationSave * save, QWidget *parent) :
     QDialog(parent),
@@ -707,6 +708,120 @@ void SimulationRatingsWindow::setFilteredJumpers(const QVector<Jumper *> &newFil
     filteredJumpers = newFilteredJumpers;
 }
 
+void SimulationRatingsWindow::saveRankingCsv(QString fileName, short rankingType)
+{
+    QFile file(fileName);
+    file.open(QFile::WriteOnly | QFile::Text);
+    file.resize(0);
+    QTextStream stream(&file);
+    stream << tr("Pozycja") << ";" << tr("Zawodnik") << ";" << tr("Wartosc") << ";" << "\n";
+    QVector<QPair<Jumper *, double>> * ranking;
+    switch(rankingType)
+    {
+    case AveragePosition:
+        ranking = &averagePositionModel->getRankingReference();
+        break;
+    case AverageJudges:
+        ranking = &averageJudgesModel->getRankingReference();
+        break;
+    case AverageWind:
+        ranking = &averageWindModel->getRankingReference();
+        break;
+    case AverageTakeoffRating:
+        ranking = &averageTakeoffRatingModel->getRankingReference();
+        break;
+    case AverageTakeoffFlight:
+        ranking = &averageFlightRatingModel->getRankingReference();
+        break;
+    case AverageDistance:
+        ranking = &averageDistanceModel->getRankingReference();
+        break;
+    }
+    int pos = 1;
+    for(auto & pair : *ranking)
+    {
+        stream << QString::number(pos) << ";" << pair.first->getNameAndSurname() << " (" << pair.first->getCountryCode() + ")" << ";" << QString::number(pair.second) << "\n";
+        pos++;
+    }
+    QString string = file.readAll().replace(".", ",");
+    file.resize(0);
+    file.write(string.toUtf8());
+    file.close();
+}
+
+void SimulationRatingsWindow::saveRecordsCsv(QString fileName, short recordType, bool best)
+{
+    QFile file(fileName);
+    file.open(QFile::WriteOnly | QFile::Text);
+    file.resize(0);
+    QTextStream stream(&file);
+    stream << tr("Pozycja") << ";" << tr("Zawodnik") << ";" << tr("Wartosc") << ";" << tr("Konkurs") << "\n";
+    QVector<QPair<JumpData *, double>> * records;
+    switch(recordType)
+    {
+    case Distance:
+        if(best) records = &bestDistanceModel->getRecordsReference();
+        else records = &worstDistanceModel->getRecordsReference();
+        break;
+    case Points:
+        if(best) records = &bestPointsModel->getRecordsReference();
+        else records = &worstPointsModel->getRecordsReference();
+        break;
+    case Judges:
+        if(best) records = &bestJudgesModel->getRecordsReference();
+        else records = &worstJudgesModel->getRecordsReference();
+        break;
+    case Wind:
+        if(best) records = &bestWindModel->getRecordsReference();
+        else records = &worstWindModel->getRecordsReference();
+        break;
+    case TakeoffRating:
+        if(best) records = &bestTakeoffModel->getRecordsReference();
+        else records = &worstTakeoffModel->getRecordsReference();
+        break;
+    case FlightRating:
+        if(best) records = &bestFlightModel->getRecordsReference();
+        else records = &worstFlightModel->getRecordsReference();
+        break;
+    }
+    int pos = 1;
+    for(auto & pair : *records)
+    {
+        CompetitionInfo * comp = pair.first->getCompetition();
+        Season * season = nullptr;
+        for(auto & s : save->getSeasonsReference())
+            if(s.getCalendarReference().getCompetitionsReference().contains(comp))
+                season = &s;
+        QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getCalendarReference().getCompetitionsReference().indexOf(comp) + 1)
+                         + " " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()) + tr(" (Runda ")
+                         + QString::number(MyFunctions::getIndexOfItemInVector(pair.first->getSingleResult()->getJumpsReference(), pair.first) + 1) + ") " + " (" + comp->getShortSerieTypeText() + ")";
+        stream << QString::number(pos) << ";" << pair.first->getJumper()->getNameAndSurname() << " (" << pair.first->getJumper()->getCountryCode() + ")" <<";" << QString::number(pair.second) << ";" << string << "\n";
+    }
+    QString string = file.readAll().replace(".", ",");
+    file.resize(0);
+    file.write(string.toUtf8());
+    file.close();
+}
+
+void SimulationRatingsWindow::saveGeneralClassificationCsv(QString fileName)
+{
+    QFile file(fileName);
+    file.open(QFile::WriteOnly | QFile::Text);
+    file.resize(0);
+    QTextStream stream(&file);
+    stream << tr("Pozycja") << ";" << tr("Zawodnik") << ";" << tr("Punkty") << "\n";
+    QVector<QPair<Jumper *, double>> * results = &generalClassificationModel->getResultsReference();
+    int pos = 1;
+    for(auto & pair : *results)
+    {
+        stream << QString::number(pos) << ";" << pair.first->getNameAndSurname() << " (" << pair.first->getCountryCode() + ")" <<";" << QString::number(pair.second) << "\n";
+    }
+    QString string = file.readAll().replace(".", ",");
+    file.resize(0);
+    file.write(string.toUtf8());
+    file.close();
+}
+
 GeneralClassificationTableModel *SimulationRatingsWindow::getGeneralClassificationModel() const
 {
     return generalClassificationModel;
@@ -769,6 +884,49 @@ void SimulationRatingsWindow::on_pushButton_jumpersLists_clicked()
             }
         }
         fillWindow();
+    }
+}
+
+
+void SimulationRatingsWindow::on_pushButton_csvExport_clicked()
+{
+    bool ok;
+    QString folderName = QInputDialog::getText(this, tr("Nazwa folderu"), tr("Podaj nazwę jaką ma mieć folder z zapisanymi statystykami zapisu"), QLineEdit::Normal, "", &ok);
+    if(ok == true)
+    {
+        QDir d("stats/simulation-saves-stats/" + folderName + "/rankings");
+        if(!d.exists())
+            d.mkpath(".");
+        QString text = "stats/simulation-saves-stats/" + folderName + "/rankings/";
+        saveRankingCsv(text + "average-position.csv", AveragePosition);
+        saveRankingCsv(text + "average-judges.csv", AverageJudges);
+        saveRankingCsv(text + "average-wind.csv", AverageWind);
+        saveRankingCsv(text + "average-takeoff-rating.csv", AverageTakeoffRating);
+        saveRankingCsv(text + "average-flight-rating.csv", AverageTakeoffFlight);
+        saveRankingCsv(text + "average-distance.csv", AverageDistance);
+
+        d = QDir("stats/simulation-saves-stats/" + folderName + "/records");
+        if(!d.exists())
+            d.mkpath(".");
+        text = "stats/simulation-saves-stats/" + folderName + "/records/";
+        saveRecordsCsv(text + "best-distance.csv", Distance, true);
+        saveRecordsCsv(text + "worst-distance.csv", Distance, false);
+        saveRecordsCsv(text + "best-points.csv", Points, true);
+        saveRecordsCsv(text + "worst-points.csv", Points, false);
+        saveRecordsCsv(text + "best-judges.csv", Judges, true);
+        saveRecordsCsv(text + "worst-judges.csv", Judges, false);
+        saveRecordsCsv(text + "best-wind.csv", Wind, true);
+        saveRecordsCsv(text + "worst-wind.csv", Wind, false);
+        saveRecordsCsv(text + "best-takeoff-rating.csv", TakeoffRating, true);
+        saveRecordsCsv(text + "worst-takeoff-rating.csv", TakeoffRating, false);
+        saveRecordsCsv(text + "best-flight-rating.csv", FlightRating, true);
+        saveRecordsCsv(text + "worst-flight-rating.csv", FlightRating, false);
+
+        d = QDir("stats/simulation-saves-stats/" + folderName + "/others");
+        if(!d.exists())
+            d.mkpath(".");
+        text = "stats/simulation-saves-stats/" + folderName + "/others/";
+        saveGeneralClassificationCsv(text + "general-classification.csv");
     }
 }
 

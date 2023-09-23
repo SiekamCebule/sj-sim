@@ -25,6 +25,7 @@ private:
     bool greenRedColors;
 public:
     QVector<QPair<Jumper *, double> > getRanking() const;
+    QVector<QPair<Jumper *, double> > & getRankingReference();
     void setRanking(const QVector<QPair<Jumper *, double> > &newRanking);
     bool getGreenRedColors() const;
     void setGreenRedColors(bool newGreenRedColors);
