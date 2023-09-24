@@ -57,7 +57,7 @@ CompetitionSingleResult CompetitionSingleResult::getFromJsonValue(QJsonValue val
     return CompetitionSingleResult::getFromJson(val.toObject(), objectsManager);
 }
 
-QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleResults(QVector<CompetitionInfo *> &competitions, Jumper *jumper, QSet<int> serieTypes, QSet<int> hillTypes, QVector<Classification *> classifications, bool skipClassifications)
+QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleResults(QVector<CompetitionInfo *> &competitions, Jumper *jumper, QSet<int> serieTypes, QSet<int> hillTypes, QVector<Classification *> classifications, bool skipClassifications, Hill * specificHill)
 {
     QVector<CompetitionSingleResult *> singleResults;
     for(auto & comp : competitions)
@@ -74,7 +74,14 @@ QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleRes
         }
         if(skipClassifications == true)
             ok = true;
-        if(serieTypes.contains(comp->getSerieType()) && hillTypes.contains(comp->getHill()->getHillType()) && ok)
+
+        bool hillOk = true;
+        if(specificHill == nullptr)
+            hillOk = true;
+        else if(comp->getHill() != specificHill)
+            hillOk = false;
+
+        if(serieTypes.contains(comp->getSerieType()) && hillTypes.contains(comp->getHill()->getHillType()) && ok && hillOk)
         {
             if(comp->getResultsReference().getResultOfIndividualJumper(jumper) != nullptr)
             {
@@ -86,12 +93,12 @@ QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleRes
     return singleResults;
 }
 
-QHash<Jumper *, QVector<CompetitionSingleResult *> > CompetitionSingleResult::getJumpersFilteredSingleResults(QVector<Jumper *> &jumpers, QVector<CompetitionInfo *> &competitions, QSet<int> serieTypes,QSet<int> hillTypes,  QVector<Classification *> classifications, bool skipClassifications)
+QHash<Jumper *, QVector<CompetitionSingleResult *> > CompetitionSingleResult::getJumpersFilteredSingleResults(QVector<Jumper *> &jumpers, QVector<CompetitionInfo *> &competitions, QSet<int> serieTypes,QSet<int> hillTypes,  QVector<Classification *> classifications, bool skipClassifications, Hill * specificHill)
 {
     QHash<Jumper *, QVector<CompetitionSingleResult *>> toReturn;
     for(auto & jumper : jumpers)
     {
-        toReturn.insert(jumper, CompetitionSingleResult::getFilteredSingleResults(competitions, jumper, serieTypes, hillTypes, classifications, skipClassifications));
+        toReturn.insert(jumper, CompetitionSingleResult::getFilteredSingleResults(competitions, jumper, serieTypes, hillTypes, classifications, skipClassifications, specificHill));
     }
     return toReturn;
 }
@@ -103,17 +110,15 @@ QString CompetitionSingleResult::getCsvResultsObject()
     s += jumper->getNameAndSurname()+";";
     s += jumper->getCountryCode()+";";
     s += QString::number(pointsSum)+";";
-    int i=0;
-    for(auto & round : competition->getRulesPointer()->getRoundsReference())
+    for(auto & jump : jumps)
     {
-        s += QString::number(jumps[i].getDistance())+";";
-        s += QString::number(jumps[i].getGate())+";";
-        s += QString::number(jumps[i].getAveragedWind())+";";
-        s += QString::number(jumps[i].getTotalCompensation())+";";
-        s += QString::number(jumps[i].getJudgesPoints())+";";
-        s += QString::number(jumps[i].getPoints())+";";
+        s += QString::number(jump.getDistance())+";";
+        s += QString::number(jump.getGate())+";";
+        s += QString::number(jump.getAveragedWind())+";";
+        s += QString::number(jump.getTotalCompensation())+";";
+        s += QString::number(jump.getJudgesPoints())+";";
+        s += QString::number(jump.getPoints())+";";
         s.replace(".", ",");
-        i++;
     }
     return s;
 }

@@ -14,6 +14,7 @@ private:
     double simulationRandomMultiplier;
     double hillsEffectsMultiplier;
     bool autoAdjustHillEffects;
+    bool updateGlobalDatabaseRecords;
     int baseDsqProbability;
 
 public:
@@ -33,6 +34,8 @@ public:
     void setAutoAdjustHillEffects(bool newAutoAdjustHillEffects);
     double getHillsEffectsMultiplier() const;
     void setHillsEffectsMultiplier(double newHillsEffectsMultiplier);
+    bool getUpdateGlobalDatabaseRecords() const;
+    void setUpdateGlobalDatabaseRecords(bool newUpdateGlobalDatabaseRecords);
 };
 
 #endif // GLOBALSIMULATIONSETTINGS_H

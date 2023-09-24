@@ -787,7 +787,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
             qualsRounds.last().setKO(false);
             qualificationsManager->getCompetitionRules()->setRounds(qualsRounds);
 
-            CompetitionManagerWindow * qualsWindow = new CompetitionManagerWindow(qualificationsManager, this);
+            CompetitionManagerWindow * qualsWindow = new CompetitionManagerWindow(qualificationsManager, this, true);
             qualsWindow->setInrunSnowGenerator(InrunSnowGenerator(inrunSnowGeneratorSettingsEditor->getBase(), inrunSnowGeneratorSettingsEditor->getDeviation()));
             connect(qualsWindow->getManager(), &AbstractCompetitionManager::competitionEnd, qualsWindow, [qualsWindow](){
                 qualsWindow->showMessageBoxForQualificationsEnd();
@@ -881,30 +881,40 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         competitionManager->setActualStartListIndex(0);
         competitionManager->getRoundsStartingGatesReference().push_back(competitionManager->getActualGate());
 
-        CompetitionManagerWindow * window = new CompetitionManagerWindow(competitionManager, this);
+        CompetitionManagerWindow * window = new CompetitionManagerWindow(competitionManager, this, true);
         window->setInrunSnowGenerator(InrunSnowGenerator(inrunSnowGeneratorSettingsEditor->getBase(), inrunSnowGeneratorSettingsEditor->getDeviation()));
         if(window->exec() == QDialog::Accepted)
         {
             this->setModal(true);
         }
         competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers, competitionRulesEditor->getJumpersCountInTeam());
-        info.setPlayed(true);
-
-        QDate date = QDate::currentDate();
-        QTime time = QTime::currentTime();
-        QString dateString = QString::number(date.day()) + "-" + QString::number(date.month()) + "-" + QString::number(date.year()) + " " + QString::number(time.hour()) + "-" + QString::number(time.minute()) + "-" + QString::number(time.second());
-        info.saveToJsonFile("results/single-competitions/json/", info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString +".json");
-        if(qualificationsManager != nullptr){
-            qualsInfo.setPlayed(true);
-            qualsInfo.saveToJsonFile(QString("results/single-competitions/json/"), info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint()) + " " + dateString + " (Q).json");
-        }
 
         if(getCSVFileName() != ""){
-        info.saveToCsvFile("results/single-competitions/csv/", getCSVFileName() + ".csv");
-        if(qualificationsManager != nullptr){
-            qualsInfo.setPlayed(true);
-            qualsInfo.saveToCsvFile("results/single-competitions/csv/", getCSVFileName() + " (Q)"+".csv");
+            info.setPlayed(true);
+            info.saveToCsvFile("results/single-competitions/csv/", getCSVFileName() + ".csv");
+            if(qualificationsManager != nullptr){
+                qualsInfo.setPlayed(true);
+                qualsInfo.saveToCsvFile("results/single-competitions/csv/", getCSVFileName() + " (Q)"+".csv");
         }
+        }
+
+        Hill * hill = nullptr;
+        if(ui->comboBox_existingHill->currentIndex() > 0)
+            hill = &GlobalDatabase::get()->getEditableGlobalHills()[ui->comboBox_existingHill->currentIndex() - 1];
+        if(hill != nullptr && GlobalSimulationSettings::get()->getUpdateGlobalDatabaseRecords() == true){
+            if(qualsInfo.getHill()->getRecord() > hill->getRecord())
+            hill->setRecord(qualsInfo.getHill()->getRecord());
+            if(info.getHill()->getRecord() > hill->getRecord())
+                hill->setRecord(info.getHill()->getRecord());
+        }
+        if(GlobalSimulationSettings::get()->getUpdateGlobalDatabaseRecords() == true)
+        {
+            for(auto & jumper : competitionJumpers)
+            {
+                Jumper * globalJumper = MyFunctions::getVectorItemByID(GlobalDatabase::get()->getEditableGlobalJumpers(), jumper->getID());
+                if(jumper->getPersonalBest() > globalJumper->getPersonalBest())
+                    globalJumper->setPersonalBest(jumper->getPersonalBest());
+            }
         }
 
         delete info.getHill();
@@ -1162,6 +1172,7 @@ void CompetitionConfigWindow::on_pushButton_autoGate_clicked()
     JumpSimulator simulator;
     simulator.setJumper(bestJumper);
     simulator.setManipulator(new JumpManipulator());
+    simulator.setDSQBaseProbability(ui->spinBox_dsqProbability->value());
     if(type == CompetitionConfigWindow::SeasonCompetition){
         simulator.setCompetitionRules(seasonCompetition->getRulesPointer());
         simulator.setHill(seasonCompetition->getHill());

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>368</width>
-    <height>438</height>
+    <width>404</width>
+    <height>540</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
 	background-color: rgb(255, 255, 255);
 }</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -322,6 +322,23 @@ do aktualnego zakresu umiejętności</string>
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_globalDatabaseRecords">
+       <property name="font">
+        <font>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: black;</string>
+       </property>
+       <property name="text">
+        <string>Aktualizuj rekordy zawodników i skoczni z
+globalnej bazy danych</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -399,34 +416,69 @@ Użyteczne kiedy chcemy przenieść bazę danych z wczesnych wersji.</string>
       </layout>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_cutSurnames">
-       <property name="minimumSize">
-        <size>
-         <width>180</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>180</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton{
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QPushButton" name="pushButton_cutSurnames">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>180</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
 	background-color: rgb(188, 255, 222);
 	color: rgb(0, 0, 0);
 }</string>
-       </property>
-       <property name="text">
-        <string>Skróć nazwiska zawodników</string>
-       </property>
-      </widget>
+         </property>
+         <property name="text">
+          <string>Skróć nazwiska zawodników</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_autoImages">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>180</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	background-color: rgb(188, 255, 222);
+	color: rgb(0, 0, 0);
+}</string>
+         </property>
+         <property name="text">
+          <string>Automatycznie przypisz
+zdjęcia zawodnikom</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

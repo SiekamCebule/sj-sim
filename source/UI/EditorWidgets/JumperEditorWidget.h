@@ -34,8 +34,9 @@ signals:
 
 private slots:
     void on_lineEdit_countryCode_textChanged(const QString &arg1);
-
     void on_pushButton_submit_clicked();
+
+    void on_lineEdit_img_textChanged(const QString &arg1);
 
 private:
     Ui::JumperEditorWidget *ui;

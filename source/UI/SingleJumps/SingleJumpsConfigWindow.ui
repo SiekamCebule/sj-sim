@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1189</width>
-    <height>773</height>
+    <height>794</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -93,7 +93,7 @@ color: rgb(26, 95, 180);
       <widget class="QToolBox" name="toolBox">
        <property name="font">
         <font>
-         <pointsize>17</pointsize>
+         <pointsize>13</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -109,8 +109,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>745</width>
-          <height>586</height>
+          <width>757</width>
+          <height>619</height>
          </rect>
         </property>
         <attribute name="label">
@@ -128,7 +128,7 @@ color: rgb(26, 95, 180);
                  <property name="font">
                   <font>
                    <family>Quicksand Medium</family>
-                   <pointsize>12</pointsize>
+                   <pointsize>11</pointsize>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -173,8 +173,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>745</width>
-          <height>586</height>
+          <width>757</width>
+          <height>619</height>
          </rect>
         </property>
         <attribute name="label">
@@ -192,7 +192,7 @@ color: rgb(26, 95, 180);
                  <property name="font">
                   <font>
                    <family>Quicksand Medium</family>
-                   <pointsize>12</pointsize>
+                   <pointsize>11</pointsize>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -237,8 +237,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>745</width>
-          <height>586</height>
+          <width>757</width>
+          <height>619</height>
          </rect>
         </property>
         <attribute name="label">
@@ -283,7 +283,7 @@ color: rgb(26, 95, 180);
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>14</pointsize>
+             <pointsize>12</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -308,7 +308,7 @@ color: rgb(26, 95, 180);
            </property>
            <property name="font">
             <font>
-             <pointsize>18</pointsize>
+             <pointsize>14</pointsize>
              <bold>false</bold>
             </font>
            </property>
@@ -351,8 +351,8 @@ color: rgb(26, 95, 180);
          </property>
          <property name="font">
           <font>
-           <family>Quicksand Medium</family>
-           <pointsize>11</pointsize>
+           <family>Quicksand</family>
+           <pointsize>10</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -392,8 +392,8 @@ height: 30px;
            </property>
            <property name="font">
             <font>
-             <family>Quicksand Medium</family>
-             <pointsize>11</pointsize>
+             <family>Quicksand</family>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -489,8 +489,8 @@ height: 30px;
            </property>
            <property name="font">
             <font>
-             <family>Quicksand Medium</family>
-             <pointsize>11</pointsize>
+             <family>Quicksand</family>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -544,8 +544,8 @@ QLineEdit::placeholder{color: rgb(135, 135, 135);
            </property>
            <property name="font">
             <font>
-             <family>Quicksand Medium</family>
-             <pointsize>11</pointsize>
+             <family>Quicksand</family>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -606,8 +606,8 @@ QLineEdit::placeholder{color: rgb(135, 135, 135);
              </property>
              <property name="font">
               <font>
-               <family>Quicksand Medium</family>
-               <pointsize>11</pointsize>
+               <family>Quicksand</family>
+               <pointsize>10</pointsize>
                <bold>true</bold>
               </font>
              </property>
@@ -638,7 +638,7 @@ QLineEdit::placeholder{color: rgb(135, 135, 135);
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>9</pointsize>
               </font>
              </property>
              <property name="toolTip">
@@ -682,8 +682,8 @@ QLineEdit::placeholder{color: rgb(135, 135, 135);
            </property>
            <property name="font">
             <font>
-             <family>Quicksand Medium</family>
-             <pointsize>11</pointsize>
+             <family>Quicksand</family>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -714,7 +714,7 @@ QLineEdit::placeholder{color: rgb(135, 135, 135);
            </property>
            <property name="font">
             <font>
-             <pointsize>10</pointsize>
+             <pointsize>9</pointsize>
             </font>
            </property>
            <property name="toolTip">
@@ -752,8 +752,8 @@ QLineEdit::placeholder{color: rgb(135, 135, 135);
            </property>
            <property name="font">
             <font>
-             <family>Quicksand Medium</family>
-             <pointsize>11</pointsize>
+             <family>Quicksand</family>
+             <pointsize>9</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -791,8 +791,8 @@ height: 30px;
            </property>
            <property name="font">
             <font>
-             <family>Quicksand Medium</family>
-             <pointsize>11</pointsize>
+             <family>Quicksand</family>
+             <pointsize>9</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -830,8 +830,8 @@ height: 30px;
            </property>
            <property name="font">
             <font>
-             <family>Quicksand Medium</family>
-             <pointsize>11</pointsize>
+             <family>Quicksand</family>
+             <pointsize>10</pointsize>
              <bold>true</bold>
             </font>
            </property>
@@ -856,7 +856,7 @@ height: 30px;
            </property>
            <property name="font">
             <font>
-             <pointsize>18</pointsize>
+             <pointsize>14</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -905,7 +905,7 @@ height: 30px;
          <property name="font">
           <font>
            <family>Quicksand Medium</family>
-           <pointsize>23</pointsize>
+           <pointsize>21</pointsize>
           </font>
          </property>
          <property name="focusPolicy">

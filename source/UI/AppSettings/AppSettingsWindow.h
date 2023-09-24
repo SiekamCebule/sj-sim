@@ -46,6 +46,10 @@ private slots:
 
     void on_doubleSpinBox_valueChanged(double arg1);
 
+    void on_pushButton_autoImages_clicked();
+
+    void on_checkBox_globalDatabaseRecords_stateChanged(int arg1);
+
 private:
     Ui::AppSettingsWindow *ui;
 

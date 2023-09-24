@@ -31,10 +31,10 @@ public:
     static CompetitionSingleResult getFromJsonValue(QJsonValue val, DatabaseObjectsManager *objectsManager);
 
     static QVector<CompetitionSingleResult *> getFilteredSingleResults(QVector<CompetitionInfo *> & competitions, Jumper * jumper, QSet<int> serieTypes, QSet<int> hillTypes,
-                                                                       QVector<Classification *> classifications, bool skipClassifications);
+                                                                       QVector<Classification *> classifications, bool skipClassifications, Hill *specificHill);
 
     static QHash<Jumper *, QVector<CompetitionSingleResult *>> getJumpersFilteredSingleResults(QVector<Jumper *> & jumpers, QVector<CompetitionInfo *> & competitions, QSet<int> serieTypes, QSet<int> hillTypes,
-                                                                       QVector<Classification *> classifications, bool skipClassifications);
+                                                                       QVector<Classification *> classifications, bool skipClassifications, Hill *specificHill);
 
     QString getCsvResultsObject();
 

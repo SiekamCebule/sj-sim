@@ -4,6 +4,8 @@
 #include "../../competitions/CompetitionManagers/TeamCompetitionManager.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../../global/MyRandom.h"
+#include "../../global/GlobalDatabase.h"
+#include "../../global/GlobalSimulationSettings.h"
 #include "../../utilities/functions.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
@@ -13,12 +15,15 @@
 #include <QComboBox>
 #include <QMessageBox>
 #include <QStringListModel>
+#include <QPropertyAnimation>
+#include <QGraphicsItem>
 
-CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *manager, QWidget *parent) :
+CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *manager, QWidget *parent, bool singleCompetition) :
     QDialog(parent),
     ui(new Ui::CompetitionManagerWindow),
     manager(manager),
-    KOManager(nullptr)
+    KOManager(nullptr),
+    singleCompetition(singleCompetition)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
@@ -63,11 +68,26 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
 
     ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
     ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+    ui->label_nextJumperIMG->setPixmap(this->manager->getActualJumper()->getImagePixmap().scaled(ui->label_nextJumperIMG->size()));
+    ui->label_personalBest->setText(QString::number(manager->getActualJumper()->getPersonalBest(), 'f', 1));
+
+    if(this->manager->getCompetitionInfo()->getHill()->getHillType() == Hill::Flying){
+        ui->label_personalBestTitle->show();
+        ui->label_personalBest->show();
+    }
+    else
+    {
+        ui->label_personalBestTitle->hide();
+        ui->label_personalBest->hide();
+    }
+    ui->label_record->setText(tr("Rekord: ") + QString::number(manager->getCompetitionInfo()->getHill()->getRecord(), 'f', 1));
 
     connect(this->manager, &AbstractCompetitionManager::actualJumperChanged, this, [this](){
         if(this->manager->getActualStartListIndex() < this->manager->getStartListStatusesReference().count()){
             ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
             ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+            ui->label_nextJumperIMG->setPixmap(this->manager->getActualJumper()->getImagePixmap().scaled(ui->label_nextJumperIMG->size()));
+            ui->label_personalBest->setText(QString::number(this->manager->getActualJumper()->getPersonalBest(), 'f', 1));
         }
     });
 
@@ -670,6 +690,7 @@ void CompetitionManagerWindow::autoSimulateRound()
     updateActualInrunSnowLevelLabel();
 
     manager->updateCompetitorsAdvanceStatuses();
+    checkRecordsByResults(manager->getResults());
 
     if(manager->checkCompetitionEnd() == true){
         setupGoToNextButtonForCompetitionEnd();
@@ -811,6 +832,7 @@ void CompetitionManagerWindow::autoSimulateCompetition()
     updateActualInrunSnowLevelLabel();
 
     manager->updateCompetitorsAdvanceStatuses();
+    checkRecordsByResults(manager->getResults());
 
     if(manager->checkCompetitionEnd() == true){
         setupGoToNextButtonForCompetitionEnd();
@@ -873,6 +895,7 @@ void CompetitionManagerWindow::autoSimulateGroup()
         updateActualInrunSnowLevelLabel();
 
         manager->updateCompetitorsAdvanceStatuses();
+        checkRecordsByResults(manager->getResults());
 
         if(manager->checkCompetitionEnd() == true){
             setupGoToNextButtonForCompetitionEnd();
@@ -908,6 +931,8 @@ void CompetitionManagerWindow::autoSimulateJumps()
                 tmManager->getResults()->addJump(tmManager->getActualTeam(), jump);
                 tmManager->getResults()->getResultOfTeam(tmManager->getActualTeam())->updateTeamJumpersResults();
             }
+
+            checkRecords(jump);
 
             int status = StartListCompetitorStatus::Finished;
             if(jump.getDSQ())
@@ -1031,6 +1056,78 @@ void CompetitionManagerWindow::autoSimulateJumps()
             showMessageBoxForCompetitionEnd();
         }
     }
+}
+
+void CompetitionManagerWindow::checkRecords(JumpData &jump, bool multipleRecords)
+{
+    if(jump.getCompetition()->getRulesPointer()->getHillRecordBreaking() == true){
+        if(roundDoubleToHalf(jump.getDistance()) == roundDoubleToHalf(jump.getHill()->getRecord()) && multipleRecords == false)
+        {
+            QMessageBox::information(this, "Wyrównanie rekordu skoczni", tr("%1 wyrównał rekord skoczni %2, wynoszący %3m").arg(jump.getJumper()->getTextInfo()).arg(jump.getHill()->getHillText()).arg(QString::number(jump.getHill()->getRecord(), 'f', 1)), QMessageBox::Ok);
+        }
+        else if(roundDoubleToHalf(jump.getDistance()) > roundDoubleToHalf(jump.getHill()->getRecord()))
+        {
+            QMessageBox::information(this, "Nowy rekord skoczni", tr("Po skoku na odległość %1m, %2 ustanowił nowy rekord skoczni %3 (wcześniej %4m).").arg(QString::number(jump.getDistance(), 'f', 1)).arg(jump.getJumper()->getTextInfo()).arg(jump.getHill()->getHillText()).arg(QString::number(jump.getHill()->getRecord(), 'f', 1)), QMessageBox::Ok);
+
+            if(singleCompetition){
+                if(GlobalSimulationSettings::get()->getUpdateGlobalDatabaseRecords() == true)
+                    jump.getHill()->setRecord(jump.getDistance());
+            }
+            else{
+                    jump.getHill()->setRecord(jump.getDistance());
+            }
+            ui->label_record->setText(tr("Rekord: ") + QString::number(jump.getHill()->getRecord(), 'f', 1));
+    }
+    }
+
+    if(jump.getHill()->getHillType() == Hill::Flying){
+    if(roundDoubleToHalf(jump.getDistance()) == roundDoubleToHalf(jump.getJumper()->getPersonalBest()) && multipleRecords == false)
+    {
+        QMessageBox::information(this, "Wyrównanie rekordu życiowego", tr("%1 wyrównał swój własny rekord życiowy, skacząc %2m").arg(jump.getJumper()->getTextInfo()).arg(QString::number(jump.getDistance(), 'f', 1)), QMessageBox::Ok);
+    }
+    else if(roundDoubleToHalf(jump.getDistance()) > roundDoubleToHalf(jump.getJumper()->getPersonalBest()))
+    {
+        QMessageBox::information(this, "Pobicie rekordu życiowego", tr("%1 pobił swój własny rekord życiowy, skacząc %2m (poprzedni rekord: %3m)").arg(jump.getJumper()->getTextInfo()).arg(QString::number(jump.getDistance(), 'f', 1)).arg(QString::number(jump.getJumper()->getPersonalBest(), 'f', 1)), QMessageBox::Ok);
+
+       qDebug()<<"singleCompetition: "<<singleCompetition;
+       qDebug()<<"GlobalSimulationSettings::get()->getUpdateGlobalDatabaseRecords(): "<<GlobalSimulationSettings::get()->getUpdateGlobalDatabaseRecords();
+       if(singleCompetition){
+            if(GlobalSimulationSettings::get()->getUpdateGlobalDatabaseRecords() == true)
+                    jump.getJumper()->setPersonalBest(jump.getDistance());
+       }
+       else
+            jump.getJumper()->setPersonalBest(jump.getDistance());
+    }
+    }
+}
+
+void CompetitionManagerWindow::checkRecordsByResults(CompetitionResults *results)
+{
+    Hill * hill = manager->getCompetitionInfo()->getHill();
+    for(auto & result : results->getResultsReference())
+    {
+    for(auto & jump : result.getJumpsReference())
+    {
+       checkRecords(jump, true);
+    }
+    for(auto & res : result.getTeamJumpersResultsReference())
+    {
+       for(auto & jump : res.getJumpsReference())
+       {
+         checkRecords(jump, true);
+       }
+    }
+    }
+}
+
+bool CompetitionManagerWindow::getSingleCompetition() const
+{
+    return singleCompetition;
+}
+
+void CompetitionManagerWindow::setSingleCompetition(bool newSingleCompetition)
+{
+    singleCompetition = newSingleCompetition;
 }
 
 KORoundManager *CompetitionManagerWindow::getKOManager() const
@@ -1180,7 +1277,6 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
         tmManager->getResults()->getResultOfTeam(tmManager->getActualTeam())->updateTeamJumpersResults();
     }
 
-
     int status = StartListCompetitorStatus::Finished;
     if(jump.getDSQ())
         status = StartListCompetitorStatus::Dsq;
@@ -1264,6 +1360,8 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     updateToBeatDistanceLabel();
     updateToAdvanceDistanceLabel();
     updatePointsToTheLeaderLabel();
+
+    checkRecords(jump);
 
     if(manager->checkCompetitionEnd()){
         setupGoToNextButtonForCompetitionEnd();

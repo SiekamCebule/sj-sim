@@ -3,6 +3,7 @@
 #include "../../../utilities/functions.h"
 #include "../../../global/PointsForPlacesPreset.h"
 #include "../../../global/GlobalDatabase.h"
+#include "../../../global/CountryFlagsManager.h"
 #include "../../EditorWidgets/EditStartListWithJumpersListsWindow.h"
 #include <QInputDialog>
 
@@ -159,8 +160,12 @@ void SimulationRatingsWindow::fillWindow()
 {
     QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList()),
                                                                                             rangeComboBoxes->getCompetition(1), rangeComboBoxes->getCompetition(2));
+    Hill * specificHill = nullptr;
+    if(ui->comboBox_hillFilter->currentIndex() > 0)
+        specificHill = save->getHillsReference()[ui->comboBox_hillFilter->currentIndex() - 1];
+
     jumpersSingleResults = CompetitionSingleResult::getJumpersFilteredSingleResults(filteredJumpers, competitions,
-                                                                                    serieTypesCheckBoxes->getSerieTypes(), hillTypesCheckBoxes->getHillTypesSet(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked());
+                                                                                    serieTypesCheckBoxes->getSerieTypes(), hillTypesCheckBoxes->getHillTypesSet(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked(), specificHill);
 
     //Średnia pozycja
     QVector<QPair<Jumper *, double>> avgPositionsRanking;
@@ -683,6 +688,18 @@ ui->label_podiumsJumper->setText(podiumsStat.key(podiums.first())->getNameAndSur
     generalClassificationModel->setResults(vector);
     ui->tableView_generalClassification->setModel(nullptr);
     ui->tableView_generalClassification->setModel(generalClassificationModel);
+}
+
+void SimulationRatingsWindow::setupComboBox()
+{
+    disconnect(ui->comboBox_hillFilter, &QComboBox::currentIndexChanged, this, &SimulationRatingsWindow::fillWindow);
+    ui->comboBox_hillFilter->clear();
+    ui->comboBox_hillFilter->addItem(tr("BRAK"));
+    for(auto & hill : save->getHillsReference())
+    {
+        ui->comboBox_hillFilter->addItem(QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower()))), hill->getHillText());
+    }
+    connect(ui->comboBox_hillFilter, &QComboBox::currentIndexChanged, this, &SimulationRatingsWindow::fillWindow);
 }
 
 void SimulationRatingsWindow::setupConnections()

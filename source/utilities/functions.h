@@ -61,6 +61,16 @@ public:
     }
 
     template<typename T>
+    static T * getVectorItemByID(QVector<T> & vector, int ID)
+    {
+        for(auto & it : vector){
+            if(it.getID() == ID)
+                return &it;
+        }
+        return nullptr;
+    }
+
+    template<typename T>
     static void removeFromVector(QVector<T*> & vector, T * item)
     {
         int i=0;

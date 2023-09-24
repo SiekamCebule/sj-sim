@@ -12,9 +12,19 @@
 CompetitionRules::CompetitionRules(const QString & name) : name(name),
     ClassWithID()
 {
-    has95HSRule = hasWindCompensations = hasGateCompensations = hasJudgesPoints = hasDsq = false;
+    has95HSRule = hasWindCompensations = hasGateCompensations = hasJudgesPoints = hasDsq = hillRecordBreaking = false;
     competitionType = jumpersInTeamCount = windAverageCalculatingType = 0;
     windCompensationDistanceEffect = 1;
+}
+
+bool CompetitionRules::getHillRecordBreaking() const
+{
+    return hillRecordBreaking;
+}
+
+void CompetitionRules::setHillRecordBreaking(bool newHillRecordBreaking)
+{
+    hillRecordBreaking = newHillRecordBreaking;
 }
 
 short CompetitionRules::getWindCompensationDistanceEffect() const
@@ -81,6 +91,7 @@ QJsonObject CompetitionRules::getJsonObject(const CompetitionRules &competitionR
     object.insert("competition-type", competitionRules.getCompetitionType());
     object.insert("wind-compensation-distance-effect", competitionRules.getWindCompensationDistanceEffect());
     object.insert("wind-average-calculating-type", competitionRules.getWindAverageCalculatingType());
+    object.insert("hill-record-breaking", competitionRules.getHillRecordBreaking());
 
     QJsonArray roundsArray;
     for(auto & round : competitionRules.getRounds()){
@@ -143,6 +154,7 @@ CompetitionRules CompetitionRules::getFromJson(const QJsonObject &obj)
     rules.setCompetitionType(obj.value("competition-type").toInt());
     rules.setWindCompensationDistanceEffect(obj.value("wind-compensation-distance-effect").toInt());
     rules.setWindAverageCalculatingType(obj.value("wind-average-calculating-type").toInt());
+    rules.setHillRecordBreaking(obj.value("hill-record-breaking").toBool(true));
 
     QJsonArray roundsArray = obj.value("rounds").toArray();
     for(const auto & round : roundsArray)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>430</width>
-    <height>417</height>
+    <width>367</width>
+    <height>573</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,20 +19,23 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>3</number>
+     </property>
      <item>
       <layout class="QFormLayout" name="formLayout_jumperInfo">
        <property name="horizontalSpacing">
-        <number>12</number>
+        <number>6</number>
        </property>
        <property name="verticalSpacing">
-        <number>10</number>
+        <number>6</number>
        </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label_">
          <property name="font">
           <font>
-           <family>Quicksand Medium</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -63,19 +66,19 @@ color: rgb(0, 0, 0);
         <widget class="QLineEdit" name="lineEdit_name">
          <property name="minimumSize">
           <size>
-           <width>225</width>
-           <height>25</height>
+           <width>180</width>
+           <height>23</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>225</width>
-           <height>25</height>
+           <width>180</width>
+           <height>23</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <pointsize>13</pointsize>
+           <pointsize>11</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -111,8 +114,8 @@ border-radius: 3px;
         <widget class="QLabel" name="label_2">
          <property name="font">
           <font>
-           <family>Quicksand Medium</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -143,19 +146,19 @@ color: rgb(0, 0, 0);
         <widget class="QLineEdit" name="lineEdit_surname">
          <property name="minimumSize">
           <size>
-           <width>225</width>
-           <height>25</height>
+           <width>180</width>
+           <height>23</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>225</width>
-           <height>25</height>
+           <width>180</width>
+           <height>23</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <pointsize>13</pointsize>
+           <pointsize>11</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -191,8 +194,8 @@ border-radius: 3px;
         <widget class="QLabel" name="label_3">
          <property name="font">
           <font>
-           <family>Quicksand Medium</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -282,9 +285,12 @@ border-radius: 3px;
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Maximum</enum>
+           </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
+             <width>25</width>
              <height>20</height>
             </size>
            </property>
@@ -315,14 +321,27 @@ color: black;
            </property>
           </widget>
          </item>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
         </layout>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_5">
          <property name="font">
           <font>
-           <family>Quicksand Medium</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -353,19 +372,19 @@ color: rgb(0, 0, 0);
         <widget class="QDoubleSpinBox" name="doubleSpinBox_takeoffTechnique">
          <property name="minimumSize">
           <size>
-           <width>225</width>
-           <height>25</height>
+           <width>160</width>
+           <height>23</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>225</width>
-           <height>25</height>
+           <width>160</width>
+           <height>23</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <pointsize>13</pointsize>
+           <pointsize>11</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -404,8 +423,8 @@ border-radius: 3px;
         <widget class="QLabel" name="label_6">
          <property name="font">
           <font>
-           <family>Quicksand Medium</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -436,19 +455,19 @@ color: rgb(0, 0, 0);
         <widget class="QDoubleSpinBox" name="doubleSpinBox_flightTechnique">
          <property name="minimumSize">
           <size>
-           <width>225</width>
-           <height>25</height>
+           <width>160</width>
+           <height>23</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>225</width>
-           <height>25</height>
+           <width>160</width>
+           <height>23</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <pointsize>13</pointsize>
+           <pointsize>11</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -487,8 +506,8 @@ border-radius: 3px;
         <widget class="QLabel" name="label_7">
          <property name="font">
           <font>
-           <family>Quicksand Medium</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -519,19 +538,19 @@ color: rgb(0, 0, 0);
         <widget class="QComboBox" name="comboBox_flightStyle">
          <property name="minimumSize">
           <size>
-           <width>225</width>
-           <height>25</height>
+           <width>160</width>
+           <height>23</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>225</width>
-           <height>25</height>
+           <width>160</width>
+           <height>23</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <pointsize>13</pointsize>
+           <pointsize>11</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -587,8 +606,8 @@ border-radius: 3px;
         <widget class="QLabel" name="label_8">
          <property name="font">
           <font>
-           <family>Quicksand Medium</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -621,19 +640,19 @@ color: rgb(0, 0, 0);
           <widget class="QDoubleSpinBox" name="doubleSpinBox_landingStyle">
            <property name="minimumSize">
             <size>
-             <width>225</width>
-             <height>25</height>
+             <width>160</width>
+             <height>23</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>225</width>
-             <height>25</height>
+             <width>160</width>
+             <height>23</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="focusPolicy">
@@ -698,8 +717,8 @@ border-radius: 3px;
         <widget class="QLabel" name="label_form">
          <property name="font">
           <font>
-           <family>Quicksand Medium</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -730,8 +749,8 @@ color: rgb(0, 0, 0);
         <widget class="QLabel" name="label_10">
          <property name="font">
           <font>
-           <family>Quicksand Medium</family>
-           <pointsize>10</pointsize>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
@@ -770,19 +789,19 @@ color: rgb(0, 0, 0);
            </property>
            <property name="minimumSize">
             <size>
-             <width>212</width>
-             <height>25</height>
+             <width>160</width>
+             <height>23</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>212</width>
-             <height>25</height>
+             <width>160</width>
+             <height>23</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -824,6 +843,22 @@ border-radius: 3px;
           </widget>
          </item>
          <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Maximum</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>24</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QLabel" name="label_12">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -847,6 +882,19 @@ border-radius: 3px;
            </property>
           </widget>
          </item>
+         <item>
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
         </layout>
        </item>
        <item row="7" column="1">
@@ -855,19 +903,19 @@ border-radius: 3px;
           <widget class="QDoubleSpinBox" name="doubleSpinBox_form">
            <property name="minimumSize">
             <size>
-             <width>225</width>
-             <height>25</height>
+             <width>160</width>
+             <height>23</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>225</width>
-             <height>25</height>
+             <width>160</width>
+             <height>23</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>13</pointsize>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="focusPolicy">
@@ -919,6 +967,221 @@ border-radius: 3px;
          </item>
         </layout>
        </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_imgText">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: black;</string>
+         </property>
+         <property name="text">
+          <string>Zdjęcie zawodnika</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="margin">
+          <number>3</number>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_personalBest">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>9</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: black;</string>
+         </property>
+         <property name="text">
+          <string>Rekord życiowy</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="margin">
+          <number>3</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="lineEdit_img">
+         <property name="minimumSize">
+          <size>
+           <width>225</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>225</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::ClickFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 6px;
+}
+
+QDoubleSpinBox::up-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+		background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}
+QDoubleSpinBox::down-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+	background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>image-name.png</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_personalBest">
+           <property name="minimumSize">
+            <size>
+             <width>160</width>
+             <height>23</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>160</width>
+             <height>23</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::ClickFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 6px;
+}
+
+QDoubleSpinBox::up-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+		background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}
+QDoubleSpinBox::down-button{
+border: 1px solid rgb(33, 42, 0);
+border-radius: 3px;
+	background-color: rgb(129, 175, 117);
+	color: rgb(0, 59, 23);
+}</string>
+           </property>
+           <property name="wrapping">
+            <bool>false</bool>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="showGroupSeparator" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <double>1000000.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>0.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Maximum</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>24</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_meterDecoration">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(100, 100, 100);
+background: transparent;</string>
+           </property>
+           <property name="text">
+            <string>m</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
       </layout>
      </item>
     </layout>
@@ -926,7 +1189,10 @@ border-radius: 3px;
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <spacer name="horizontalSpacer_3">
+      <layout class="QVBoxLayout" name="verticalLayout_characteristicsEditor"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -939,10 +1205,38 @@ border-radius: 3px;
       </spacer>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_characteristicsEditor"/>
+      <widget class="QLabel" name="label_imgPreview">
+       <property name="minimumSize">
+        <size>
+         <width>117</width>
+         <height>157</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>117</width>
+         <height>157</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI Semilight</family>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:black;</string>
+       </property>
+       <property name="text">
+        <string>IMG</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_4">
+      <spacer name="horizontalSpacer_5">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

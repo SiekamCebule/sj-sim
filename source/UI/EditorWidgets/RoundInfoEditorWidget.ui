@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>422</width>
-    <height>261</height>
+    <width>389</width>
+    <height>220</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -28,8 +28,19 @@
      <property name="formAlignment">
       <set>Qt::AlignCenter</set>
      </property>
+     <property name="horizontalSpacing">
+      <number>6</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>2</number>
+     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Ilość uczestników</string>
        </property>
@@ -39,7 +50,7 @@
       <widget class="QSpinBox" name="spinBox_count">
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <pointsize>9</pointsize>
         </font>
        </property>
        <property name="alignment">
@@ -55,6 +66,11 @@
      </item>
      <item row="1" column="1">
       <widget class="QCheckBox" name="checkBox_sortStartList">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Sortowanie
 listy startowej</string>
@@ -66,6 +82,11 @@ listy startowej</string>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_sortingGroups">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Sortowanie zawodników po grupach</string>
        </property>
@@ -73,6 +94,11 @@ listy startowej</string>
      </item>
      <item row="2" column="1">
       <widget class="QComboBox" name="comboBox_sortingAfterGroups">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">QWidget{
 	background-color: rgb(222, 221, 218);
@@ -105,6 +131,11 @@ listy startowej</string>
      </item>
      <item row="3" column="1">
       <widget class="QCheckBox" name="checkBox_KORound">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Runda K.O</string>
        </property>
@@ -115,6 +146,11 @@ listy startowej</string>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="label_KOCount">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Ilość zawodników w grupie KO</string>
        </property>
@@ -124,7 +160,7 @@ listy startowej</string>
       <widget class="QSpinBox" name="spinBox_KOGroupCount">
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>9</pointsize>
         </font>
        </property>
        <property name="alignment">
@@ -140,6 +176,11 @@ listy startowej</string>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="label_KOAdvanceCount">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Awansujący z grupy KO</string>
        </property>
@@ -149,7 +190,7 @@ listy startowej</string>
       <widget class="QSpinBox" name="spinBox_AdvancingFromKOGroup">
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>9</pointsize>
         </font>
        </property>
        <property name="alignment">
@@ -165,6 +206,11 @@ listy startowej</string>
      </item>
      <item row="6" column="0">
       <widget class="QLabel" name="label_KOGroupsSelectionType">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Dobór grup KO</string>
        </property>
@@ -185,6 +231,11 @@ listy startowej</string>
            <width>16777215</width>
            <height>22</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
          </property>
          <property name="styleSheet">
           <string notr="true">QWidget{

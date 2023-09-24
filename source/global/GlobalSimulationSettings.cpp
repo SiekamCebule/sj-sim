@@ -18,6 +18,16 @@ GlobalSimulationSettings::GlobalSimulationSettings()
     simulationRandomMultiplier = 0;
 }
 
+bool GlobalSimulationSettings::getUpdateGlobalDatabaseRecords() const
+{
+    return updateGlobalDatabaseRecords;
+}
+
+void GlobalSimulationSettings::setUpdateGlobalDatabaseRecords(bool newUpdateGlobalDatabaseRecords)
+{
+    updateGlobalDatabaseRecords = newUpdateGlobalDatabaseRecords;
+}
+
 double GlobalSimulationSettings::getHillsEffectsMultiplier() const
 {
     return hillsEffectsMultiplier;
@@ -110,6 +120,7 @@ bool GlobalSimulationSettings::loadFromFile()
     this->setSimulationRandomMultiplier(value.toObject().value("simulation-random-multiplier").toDouble(1));
     this->setAutoAdjustHillEffects(value.toObject().value("auto-adjust-hill-effects").toBool(false));
     this->setHillsEffectsMultiplier(value.toObject().value("hills-effects-multiplier").toDouble(1));
+    this->setUpdateGlobalDatabaseRecords(value.toObject().value("update-global-database-records").toBool(false));
 
     return true;
 }
@@ -132,6 +143,7 @@ bool GlobalSimulationSettings::writeToFile()
     settingsObject.insert("base-dsq-probability", getBaseDsqProbability());
     settingsObject.insert("auto-adjust-hill-effects", getAutoAdjustHillEffects());
     settingsObject.insert("hills-effects-multiplier", getHillsEffectsMultiplier());
+    settingsObject.insert("update-global-database-records", getUpdateGlobalDatabaseRecords());
     mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);
     file.resize(0);

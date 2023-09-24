@@ -69,6 +69,15 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
             switch(type){
             case CompetitionRules::Individual:{
                 results->sortInDescendingOrder();
+                if(manager->getActualRound() == manager->getCompetitionRules()->getRoundsReference().count()){
+                    if(index.row() + 1 + StartListCompetitorStatus::remainingJumpers(*startListStatuses) == 3)
+                        return QColor(qRgb(255, 232, 215));
+                    else if(index.row() + 1 + StartListCompetitorStatus::remainingJumpers(*startListStatuses) == 2)
+                        return QColor(qRgb(232, 232, 232));
+                    else if(index.row() + 1 + StartListCompetitorStatus::remainingJumpers(*startListStatuses) == 1)
+                        return QColor(qRgb(255, 247, 205));
+                }
+
                 if(StartListCompetitorStatus::getStatusOfJumper(results->getResultsReference().at(index.row()).getJumper(), *startListStatuses) == nullptr){
                     return QColor(qRgb(255, 255, 255));
                 }
@@ -90,7 +99,15 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
             }
         }
         else
+        {
+            if(index.row() == 2)
+                return QColor(qRgb(255, 232, 215));
+            else if(index.row() == 1)
+                return QColor(qRgb(232, 232, 232));
+            else if(index.row() == 0)
+                return QColor(qRgb(255, 247, 205));
             return QColor(qRgb(253, 253, 249));
+        }
     }
     else if(role == Qt::DecorationRole){
         switch(index.column()){

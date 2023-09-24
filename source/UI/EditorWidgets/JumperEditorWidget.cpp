@@ -33,6 +33,8 @@ void JumperEditorWidget::resetJumperInputs()
     ui->lineEdit_surname->setText("");
     ui->lineEdit_countryCode->setText("");
     ui->label_countryFlag->setPixmap(QPixmap());
+    ui->lineEdit_img->clear();
+    ui->doubleSpinBox_personalBest->setValue(0);
     ui->doubleSpinBox_takeoffTechnique->setValue(0);
     ui->doubleSpinBox_flightTechnique->setValue(0);
     ui->comboBox_flightStyle->setCurrentIndex(0);
@@ -52,6 +54,9 @@ void JumperEditorWidget::fillJumperInputs()
     ui->lineEdit_surname->setText(jumper->getSurname());
     ui->lineEdit_countryCode->setText(jumper->getCountryCode());
     ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_countryFlag->size()));
+    ui->lineEdit_img->setText(jumper->getImageName());
+    ui->doubleSpinBox_personalBest->setValue(jumper->getPersonalBest());
+
     ui->doubleSpinBox_takeoffTechnique->setValue(jumper->getJumperSkills().getTakeoffTechnique());
     ui->doubleSpinBox_flightTechnique->setValue(jumper->getJumperSkills().getFlightTechnique());
     ui->comboBox_flightStyle->setCurrentIndex(jumper->getJumperSkills().getFlightStyle());
@@ -59,6 +64,8 @@ void JumperEditorWidget::fillJumperInputs()
     ui->doubleSpinBox_form->setValue(jumper->getJumperSkills().getForm());
     ui->doubleSpinBox_jumpsEquality->setValue(jumper->getJumperSkills().getJumpsEquality());
     characteristicsEditor->setCharacteristics(jumper->getJumperSkills().getCharacteristics());
+
+    emit ui->lineEdit_img->textChanged(jumper->getImageName());
 }
 Jumper JumperEditorWidget::getJumperFromWidgetInput() const
 {
@@ -67,6 +74,8 @@ Jumper JumperEditorWidget::getJumperFromWidgetInput() const
     jumper.setSurname(ui->lineEdit_surname->text());
     jumper.setCountryCode(ui->lineEdit_countryCode->text());
     jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
+    jumper.setImageName(ui->lineEdit_img->text());
+    jumper.setPersonalBest(ui->doubleSpinBox_personalBest->value());
     jumper.getJumperSkillsPointer()->setTakeoffTechnique(ui->doubleSpinBox_takeoffTechnique->value());
     jumper.getJumperSkillsPointer()->setFlightTechnique(ui->doubleSpinBox_flightTechnique->value());
     jumper.getJumperSkillsPointer()->setFlightStyle(ui->comboBox_flightStyle->currentIndex());
@@ -122,3 +131,9 @@ void JumperEditorWidget::on_pushButton_submit_clicked()
     emit submitted();
 }
 
+void JumperEditorWidget::on_lineEdit_img_textChanged(const QString &arg1)
+{
+    QPixmap pixmap("jumpersImages/" + arg1);
+    pixmap = pixmap.scaled(ui->label_imgPreview->size());
+    ui->label_imgPreview->setPixmap(pixmap);
+}

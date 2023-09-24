@@ -65,48 +65,41 @@ void HillEditorWidget::resetHillInputs()
 
     ui->doubleSpinBox_takeoffEffect->setValue(0);
     ui->doubleSpinBox_flightEffect->setValue(0);
+
+    ui->doubleSpinBox_record->setValue(0);
 }
 
 void HillEditorWidget::fillHillInputs()
 {
-    qDebug()<<hill->getFlightEffect();
     if(hill == nullptr)
     {
         qDebug()<<"Hill is nullptr!";
         return;
     }
-    qDebug()<<hill->getFlightEffect();
     ui->lineEdit_name->setText(hill->getName());
-    qDebug()<<hill->getFlightEffect();
 
     ui->lineEdit_countryCode->setText(hill->getCountryCode());
     ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_countryFlag->size()));
-    qDebug()<<hill->getFlightEffect();
 
     ui->doubleSpinBox_KPoint->setValue(hill->getKPoint());
     ui->doubleSpinBox_HSPoint->setValue(hill->getHSPoint());
 
     ui->doubleSpinBox_pointsForKPoint->setValue(hill->getPointsForKPoint());
     ui->checkBox_autoPointsForKPoint->setChecked(hill->getAutoPointsForKPoint());
-    qDebug()<<hill->getFlightEffect();
 
     ui->doubleSpinBox_pointsForMeter->setValue(hill->getPointsForMeter());
     ui->checkBox_autoPointsForMeter->setChecked(hill->getAutoPointsForMeter());
 
     ui->doubleSpinBox_gatePoints->setValue(hill->getPointsForGate());
     ui->doubleSpinBox_frontWindPoints->setValue(hill->getPointsForFrontWind());
-    qDebug()<<hill->getFlightEffect();
 
     ui->doubleSpinBox_backWindPoints->setValue(hill->getPointsForBackWind());
     ui->checkBox_autoBackWindPoints->setChecked(hill->getAutoPointsForBackWind());
 
-    qDebug()<<hill->getFlightEffect();
-
     ui->doubleSpinBox_takeoffEffect->setValue(hill->getTakeoffEffect());
-    qDebug()<<hill->getFlightEffect();
-
     ui->doubleSpinBox_flightEffect->setValue(hill->getFlightEffect());
-    qDebug()<<hill->getFlightEffect();
+
+    ui->doubleSpinBox_record->setValue(hill->getRecord());
 
     characteristicsEditor->setCharacteristics(hill->getCharacteristics());
 }
@@ -140,6 +133,7 @@ Hill HillEditorWidget::getHillFromWidgetInput() const
 
     hill.setTakeoffEffect(ui->doubleSpinBox_takeoffEffect->value());
     hill.setFlightEffect(ui->doubleSpinBox_flightEffect->value());
+    hill.setRecord(ui->doubleSpinBox_record->value());
     hill.setCharacteristics(characteristicsEditor->getCharacteristics());
     return hill;
 }

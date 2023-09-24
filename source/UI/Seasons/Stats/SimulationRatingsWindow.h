@@ -25,6 +25,7 @@ public:
     ~SimulationRatingsWindow();
 
     void fillWindow();
+    void setupComboBox();
     void setupConnections();
 
     QCheckBox * getShowFormCheckBox();

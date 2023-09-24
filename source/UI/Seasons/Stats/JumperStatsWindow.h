@@ -14,6 +14,7 @@
 #include "FilteringWidgets/SerieTypesComboBoxesWidget.h"
 #include "FilteringWidgets/ClassificationsCheckBoxesWidget.h"
 #include "FilteringWidgets/HillTypesCheckBoxesWidget.h"
+#include "../../../seasons/SimulationSave.h"
 
 namespace Ui {
 class JumperStatsWindow;
@@ -36,6 +37,7 @@ public:
     };
 
     void setupConnections();
+    void setupComboBox();
     void fillWindow();
 
     void fillJumperApperancesChart();
@@ -65,6 +67,7 @@ private:
 
     Jumper * jumper;
     QVector<CompetitionSingleResult *> singleResults;
+    SimulationSave * save;
 
     //Jumper apperances
     QChart * jumperApperancesChart;
@@ -106,6 +109,9 @@ public:
     void setHillTypesCheckBoxes(HillTypesCheckBoxesWidget *newHillTypesCheckBoxes);
 public:
     void saveJumperChartCsv(QString fileName, short chartType);
+
+    SimulationSave *getSave() const;
+    void setSave(SimulationSave *newSave);
 
 private slots:
     void on_horizontalScrollBar_jumperStatsChartScrollBar_valueChanged(int value);

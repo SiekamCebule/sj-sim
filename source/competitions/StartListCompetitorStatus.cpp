@@ -24,6 +24,17 @@ StartListCompetitorStatus *StartListCompetitorStatus::getStatusOfJumper(Jumper *
     return nullptr;
 }
 
+int StartListCompetitorStatus::remainingJumpers(const QVector<StartListCompetitorStatus> &statuses)
+{
+    int count = 0;
+    for(auto & status : statuses)
+    {
+        if(status.getJumpStatus() == Unfinished)
+            count++;
+    }
+    return count;
+}
+
 Jumper *StartListCompetitorStatus::getJumper() const
 {
     return jumper;

@@ -15,10 +15,15 @@ public:
     Jumper(const QString &name = "", const QString &surname = "", const QString &countryCode = "", const JumperSkills & skills = JumperSkills());
     ~Jumper();
 
+    QPixmap getImagePixmap();
+    QString getTextInfo();
+
 private:
     QString name, surname;
     QString countryCode;
     QPixmap flagPixmap;
+    QString imageName;
+    double personalBest;
 
     JumperSkills jumperSkills;
 public:
@@ -39,6 +44,10 @@ public:
     void setJumperSkills(const JumperSkills &newJumperSkills);
     QPixmap getFlagPixmap() const;
     void setFlagPixmap(const QPixmap &newFlagPixmap);
+    double getPersonalBest() const;
+    void setPersonalBest(double newPersonalBest);
+    QString getImageName() const;
+    void setImageName(const QString &newImageName);
 
     void updateCountryFlagPixmap();
 };

@@ -26,6 +26,36 @@ Jumper::~Jumper()
 {
 }
 
+QPixmap Jumper::getImagePixmap()
+{
+    return QPixmap("jumpersImages/" + imageName);
+}
+
+QString Jumper::getTextInfo()
+{
+    return getNameAndSurname() + " (" + countryCode + ")";
+}
+
+QString Jumper::getImageName() const
+{
+    return imageName;
+}
+
+void Jumper::setImageName(const QString &newImageName)
+{
+    imageName = newImageName;
+}
+
+double Jumper::getPersonalBest() const
+{
+    return personalBest;
+}
+
+void Jumper::setPersonalBest(double newPersonalBest)
+{
+    personalBest = newPersonalBest;
+}
+
 QJsonObject Jumper::getJsonObject(const Jumper & jumper)
 {
     QJsonObject object;
@@ -33,7 +63,9 @@ QJsonObject Jumper::getJsonObject(const Jumper & jumper)
     object.insert("name", jumper.getName());
     object.insert("surname", jumper.getSurname());
     object.insert("country-code", jumper.getCountryCode().toUpper());
-    //object.insert("takeoff-power", jumper.getJumperSkills().getTakeoffPower());
+    object.insert("image-name", jumper.getImageName());
+    object.insert("personal-best", jumper.getPersonalBest());
+
     object.insert("takeoff-technique", jumper.getJumperSkills().getTakeoffTechnique());
     object.insert("flight-technique", jumper.getJumperSkills().getFlightTechnique());
     object.insert("flight-style", jumper.getJumperSkills().getFlightStyle());
@@ -62,6 +94,8 @@ Jumper Jumper::getFromJson(QJsonObject obj)
     jumper.setName(obj.value("name").toString());
     jumper.setSurname(obj.value("surname").toString());
     jumper.setCountryCode(obj.value("country-code").toString());
+    jumper.setImageName(obj.value("image-name").toString());
+    jumper.setPersonalBest(obj.value("personal-best").toDouble());
 
     jumper.getJumperSkillsPointer()->setTakeoffTechnique(obj.value("takeoff-technique").toDouble());
     jumper.getJumperSkillsPointer()->setFlightTechnique(obj.value("flight-technique").toDouble());

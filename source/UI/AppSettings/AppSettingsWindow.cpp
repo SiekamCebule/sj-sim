@@ -29,6 +29,7 @@ AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
     ui->doubleSpinBox_randomMultiplier->setValue(GlobalSimulationSettings::get()->getSimulationRandomMultiplier());
     ui->checkBox_autoAdjustHillEffects->setChecked(GlobalSimulationSettings::get()->getAutoAdjustHillEffects());
     ui->doubleSpinBox->setValue(GlobalSimulationSettings::get()->getHillsEffectsMultiplier());
+    ui->checkBox_globalDatabaseRecords->setChecked(GlobalSimulationSettings::get()->getUpdateGlobalDatabaseRecords());
 }
 
 AppSettingsWindow::~AppSettingsWindow()
@@ -53,6 +54,7 @@ void AppSettingsWindow::on_pushButton_defaultSettings_clicked()
     ui->doubleSpinBox_randomMultiplier->setValue(1);
     ui->checkBox_autoAdjustHillEffects->setChecked(false);
     ui->doubleSpinBox->setValue(1);
+    ui->checkBox_globalDatabaseRecords->setChecked(false);
 }
 
 MainWindow *AppSettingsWindow::getMainWindowParent() const
@@ -271,9 +273,25 @@ void AppSettingsWindow::on_checkBox_autoAdjustHillEffects_stateChanged(int arg1)
         GlobalSimulationSettings::get()->setAutoAdjustHillEffects(true);
 }
 
-
 void AppSettingsWindow::on_doubleSpinBox_valueChanged(double arg1)
 {
     GlobalSimulationSettings::get()->setHillsEffectsMultiplier(arg1);
+}
+
+void AppSettingsWindow::on_pushButton_autoImages_clicked()
+{
+    for(auto & jumper : GlobalDatabase::get()->getEditableGlobalJumpers())
+    {
+        jumper.setImageName(jumper.getCountryCode() + "_" + jumper.getNameAndSurname().simplified().replace(" ", ""));
+    }
+    QMessageBox::information(this, tr("Pomyślnie przypisano zdjęcia zawodnikom"), tr("Przypisano zawodnikom nazwy zdjęć według wzoru: <Kod kraju>_<Imie><Nazwisko> (np. POL_AdamN)."), QMessageBox::Ok);
+}
+
+void AppSettingsWindow::on_checkBox_globalDatabaseRecords_stateChanged(int arg1)
+{
+    if(arg1 == 0)
+        GlobalSimulationSettings::get()->setUpdateGlobalDatabaseRecords(false);
+    else
+        GlobalSimulationSettings::get()->setUpdateGlobalDatabaseRecords(true);
 }
 

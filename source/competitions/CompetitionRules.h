@@ -27,16 +27,21 @@ public:
 
 private:
     QString name;
+    short competitionType;
     QVector<RoundInfo> rounds;
+
     bool has95HSRule;
     bool hasWindCompensations;
     bool hasGateCompensations;
     bool hasJudgesPoints;
     bool hasDsq;
-    short competitionType;
+
     int jumpersInTeamCount;
+
     short windAverageCalculatingType;
     short windCompensationDistanceEffect;
+
+    bool hillRecordBreaking;
 
 public:
     static QJsonObject getJsonObject(const CompetitionRules &competitionRule);
@@ -66,6 +71,8 @@ public:
     void setWindAverageCalculatingType(short newWindAverageCalculatingType);
     short getWindCompensationDistanceEffect() const;
     void setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect);
+    bool getHillRecordBreaking() const;
+    void setHillRecordBreaking(bool newHillRecordBreaking);
 };
 
 #endif // COMPETITIONRULES_H

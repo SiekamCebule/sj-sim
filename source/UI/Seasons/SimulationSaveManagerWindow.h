@@ -35,7 +35,7 @@ public:
     void setupNextSeasonConfigButton();
     void configNextSeason();
 
-    void showClassificationApperanceWindowAfterListClick(const QModelIndex & index);
+    void showClassificationApperanceWindowAfterListClick(const QModelIndex & index, Classification *classification);
 
 private:
     Ui::SimulationSaveManagerWindow *ui;

@@ -47,15 +47,31 @@ void JumperStatsWindow::setupConnections()
     connect(hillTypesCheckBoxes, &HillTypesCheckBoxesWidget::changed, this, &JumperStatsWindow::fillWindow);
 }
 
+void JumperStatsWindow::setupComboBox()
+{
+    disconnect(ui->comboBox_hillFilter, &QComboBox::currentIndexChanged, this, &JumperStatsWindow::fillWindow);
+    ui->comboBox_hillFilter->clear();
+    ui->comboBox_hillFilter->addItem(tr("BRAK"));
+    for(auto & hill : save->getHillsReference())
+    {
+        ui->comboBox_hillFilter->addItem(QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower()))), hill->getHillText());
+    }
+    connect(ui->comboBox_hillFilter, &QComboBox::currentIndexChanged, this, &JumperStatsWindow::fillWindow);
+}
+
 void JumperStatsWindow::fillWindow()
 {
     ui->label_jumperNameAndSurname->setText(jumper->getNameAndSurname());
     ui->label_jumperFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_jumperFlag->size()));
 
+    Hill * specificHill = nullptr;
+    if(ui->comboBox_hillFilter->currentIndex() > 0)
+        specificHill = save->getHillsReference()[ui->comboBox_hillFilter->currentIndex() - 1];
+
     QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList()),
                                                                                             rangeComboBoxes->getCompetition(1), rangeComboBoxes->getCompetition(2));
     singleResults = CompetitionSingleResult::getFilteredSingleResults(competitions, jumper,
-        serieTypesCheckBoxes->getSerieTypes(), hillTypesCheckBoxes->getHillTypesSet(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked());
+        serieTypesCheckBoxes->getSerieTypes(), hillTypesCheckBoxes->getHillTypesSet(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked(), specificHill);
 
     fillJumperApperancesChart();
     fillJudgesPointsChart();
@@ -406,6 +422,16 @@ void JumperStatsWindow::updateChartCompetitionByJumpDataForFlightRating(const QP
     updateChartCompetitionByJumpData(point, state, FlightRating);
 }
 
+SimulationSave *JumperStatsWindow::getSave() const
+{
+    return save;
+}
+
+void JumperStatsWindow::setSave(SimulationSave *newSave)
+{
+    save = newSave;
+}
+
 HillTypesCheckBoxesWidget *JumperStatsWindow::getHillTypesCheckBoxes() const
 {
     return hillTypesCheckBoxes;
@@ -592,4 +618,3 @@ void JumperStatsWindow::on_pushButton_csvExport_clicked()
         saveJumperChartCsv(text + "flight-rating.csv", FlightRating);
     }
 }
-

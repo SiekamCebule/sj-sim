@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>386</width>
-    <height>642</height>
+    <width>334</width>
+    <height>705</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -30,8 +30,8 @@ color: black;</string>
       <widget class="QLabel" name="label">
        <property name="font">
         <font>
-         <family>Quicksand Medium</family>
-         <pointsize>10</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -44,19 +44,19 @@ color: black;</string>
       <widget class="QLineEdit" name="lineEdit_name">
        <property name="minimumSize">
         <size>
-         <width>250</width>
+         <width>208</width>
          <height>21</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>208</width>
          <height>21</height>
         </size>
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>9</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -73,8 +73,8 @@ color: black;</string>
       <widget class="QLabel" name="label_6">
        <property name="font">
         <font>
-         <family>Quicksand Medium</family>
-         <pointsize>10</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -87,19 +87,19 @@ color: black;</string>
       <widget class="QComboBox" name="comboBox_competitionType">
        <property name="minimumSize">
         <size>
-         <width>250</width>
+         <width>208</width>
          <height>21</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>208</width>
          <height>21</height>
         </size>
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>9</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -126,8 +126,8 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_windCompensation">
        <property name="font">
         <font>
-         <family>Quicksand Medium</family>
-         <pointsize>10</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -143,8 +143,8 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_gateCompensation">
        <property name="font">
         <font>
-         <family>Quicksand Medium</family>
-         <pointsize>10</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -160,8 +160,8 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_judgesPoints">
        <property name="font">
         <font>
-         <family>Quicksand Medium</family>
-         <pointsize>10</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -177,8 +177,8 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_95HsRule">
        <property name="font">
         <font>
-         <family>Quicksand Medium</family>
-         <pointsize>10</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -194,8 +194,8 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_dsq">
        <property name="font">
         <font>
-         <family>Quicksand Medium</family>
-         <pointsize>10</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -207,11 +207,12 @@ color: black;</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="label_jumpersInTeam">
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -221,68 +222,23 @@ w drużynie</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="1">
       <widget class="QSpinBox" name="spinBox_jumpersInTeamCount">
        <property name="minimumSize">
         <size>
-         <width>250</width>
+         <width>208</width>
          <height>21</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>208</width>
          <height>21</height>
         </size>
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QWidget{
-	background-color: rgb(222, 221, 218);
-	color: rgb(60, 60, 60);
-	border: 2px solid rgb(65, 0, 0);
-	border-radius: 7px;
-}</string>
-       </property>
-       <property name="maximum">
-        <number>1000000000</number>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="label_7">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Ilość rund</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
-      <widget class="QSpinBox" name="spinBox_roundsCount">
-       <property name="minimumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>250</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
+         <pointsize>9</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -299,6 +255,52 @@ w drużynie</string>
       </widget>
      </item>
      <item row="9" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ilość rund</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QSpinBox" name="spinBox_roundsCount">
+       <property name="minimumSize">
+        <size>
+         <width>208</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>208</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 7px;
+}</string>
+       </property>
+       <property name="maximum">
+        <number>1000000000</number>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0">
       <widget class="QLabel" name="label_3">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -308,8 +310,8 @@ w drużynie</string>
        </property>
        <property name="font">
         <font>
-         <family>Ubuntu</family>
-         <pointsize>10</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -328,7 +330,7 @@ w drużynie</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="1">
+     <item row="10" column="1">
       <widget class="QComboBox" name="comboBox_windCompensationDistanceEffect">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -338,19 +340,19 @@ w drużynie</string>
        </property>
        <property name="minimumSize">
         <size>
-         <width>250</width>
+         <width>208</width>
          <height>21</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>208</width>
          <height>21</height>
         </size>
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>9</pointsize>
         </font>
        </property>
        <property name="toolTip">
@@ -387,7 +389,7 @@ w drużynie</string>
        </item>
       </widget>
      </item>
-     <item row="10" column="0">
+     <item row="11" column="0">
       <widget class="QLabel" name="label_2">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -397,8 +399,8 @@ w drużynie</string>
        </property>
        <property name="font">
         <font>
-         <family>Ubuntu</family>
-         <pointsize>10</pointsize>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -417,7 +419,7 @@ w drużynie</string>
        </property>
       </widget>
      </item>
-     <item row="10" column="1">
+     <item row="11" column="1">
       <widget class="QComboBox" name="comboBox_windAverageCalculatingType">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -427,19 +429,19 @@ w drużynie</string>
        </property>
        <property name="minimumSize">
         <size>
-         <width>250</width>
+         <width>208</width>
          <height>21</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>208</width>
          <height>21</height>
         </size>
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>9</pointsize>
         </font>
        </property>
        <property name="toolTip">
@@ -466,6 +468,23 @@ w drużynie</string>
          <string>Ulepszone (Zmniejszony wpływ bocznego wiatru na wysokość rekompensaty)</string>
         </property>
        </item>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QCheckBox" name="checkBox_hillRecordBreaking">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Rekordy skoczni</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -503,8 +522,8 @@ width: 5px;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>366</width>
-        <height>238</height>
+        <width>314</width>
+        <height>272</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -530,8 +549,8 @@ width: 5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>348</width>
-            <height>154</height>
+            <width>296</width>
+            <height>188</height>
            </rect>
           </property>
           <attribute name="label">
@@ -543,8 +562,8 @@ width: 5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>348</width>
-            <height>154</height>
+            <width>296</width>
+            <height>190</height>
            </rect>
           </property>
           <attribute name="label">

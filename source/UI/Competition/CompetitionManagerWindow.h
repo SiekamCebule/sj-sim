@@ -23,7 +23,7 @@ class CompetitionManagerWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit CompetitionManagerWindow(AbstractCompetitionManager * manager = nullptr,  QWidget *parent = nullptr);
+    explicit CompetitionManagerWindow(AbstractCompetitionManager * manager = nullptr,  QWidget *parent = nullptr, bool singleCompetition = false);
     ~CompetitionManagerWindow();
 
     void updateToBeatDistanceLabel();
@@ -55,6 +55,9 @@ public:
     void autoSimulateGroup(); // tylko druzynowe
     void autoSimulateJumps();
 
+    void checkRecords(JumpData &jump, bool multipleRecords = false);
+    void checkRecordsByResults(CompetitionResults * results);
+
 signals:
     void nextRoundButtonClicked();
 
@@ -62,6 +65,7 @@ private:
     Ui::CompetitionManagerWindow *ui;
     AbstractCompetitionManager * manager;
     short type;
+    bool singleCompetition;
     StartListModel * startListModel;
     ResultsTableModel * resultsTableModel;
 
@@ -119,6 +123,9 @@ public:
 
     KORoundManager *getKOManager() const;
     void setKOManager(KORoundManager *newKOManager);
+
+    bool getSingleCompetition() const;
+    void setSingleCompetition(bool newSingleCompetition);
 
 private slots:
     void on_pushButton_jump_clicked();

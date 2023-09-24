@@ -212,8 +212,12 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     archiveClassificationResults = new ClassificationResultsTableView(false, nullptr, this);
     ui->verticalLayout_archiveClassificationResults->addWidget(archiveClassificationResults);
 
-    connect(classificationResultsTableView->getTableView(), &QTableView::doubleClicked, this, &SimulationSaveManagerWindow::showClassificationApperanceWindowAfterListClick);
-    connect(archiveClassificationResults->getTableView(), &QTableView::doubleClicked, this, &SimulationSaveManagerWindow::showClassificationApperanceWindowAfterListClick);
+    connect(classificationResultsTableView->getTableView(), &QTableView::doubleClicked, this, [this](const QModelIndex & index){
+        showClassificationApperanceWindowAfterListClick(index, classificationResultsTableView->getClassification());
+    });
+    connect(archiveClassificationResults->getTableView(), &QTableView::doubleClicked, this, [this](const QModelIndex & index){
+        showClassificationApperanceWindowAfterListClick(index, archiveClassificationResults->getClassification());
+    });
 
     jumpersListsListView = new DatabaseItemsListView(DatabaseItemsListView::JumpersListsItems, true, true, true, this);
     jumpersListsListView->setMinimumWidth(600);
@@ -245,18 +249,17 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     });
 }
 
-void SimulationSaveManagerWindow::showClassificationApperanceWindowAfterListClick(const QModelIndex &index)
+void SimulationSaveManagerWindow::showClassificationApperanceWindowAfterListClick(const QModelIndex &index, Classification * classification)
 {
     if(index.column() == 1)
     {
-         Classification * classification = classificationResultsTableView->getClassification();
          ApperanceInClassificationWindow * window = new ApperanceInClassificationWindow(this);
          if(classification->getClassificationType() == Classification::Individual){
-             Jumper * jumper = classificationResultsTableView->getClassification()->getResultByIndex(index.row())->getJumper();
+             Jumper * jumper = classification->getResultByIndex(index.row())->getJumper();
              window->setJumper(jumper);
          }
          else{
-             QString teamCode = classificationResultsTableView->getClassification()->getResultByIndex(index.row())->getTeamCode();
+             QString teamCode = classification->getResultByIndex(index.row())->getTeamCode();
              window->setTeamCode(teamCode);
          }
          window->setClassification(classification);
@@ -749,6 +752,8 @@ void SimulationSaveManagerWindow::on_pushButton_jumperStats_clicked()
         int index = jumpersListView->getListView()->selectionModel()->selectedRows().first().row();
         Jumper * jumper = simulationSave->getJumpersReference()[index];
         JumperStatsWindow statsWindow;
+        statsWindow.setSave(simulationSave);
+        statsWindow.setupComboBox();
         statsWindow.setJumper(jumper);
         statsWindow.getRangeComboBoxes()->setSeasonsList(&simulationSave->getSeasonsReference());
         statsWindow.getRangeComboBoxes()->setupComboBoxes();
@@ -772,6 +777,7 @@ void SimulationSaveManagerWindow::on_pushButton_clicked()
     statsWindow.getClassificationsCheckBoxes()->setClassificationsList(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
     statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
     statsWindow.setFilteredJumpers(simulationSave->getJumpersReference());
+    statsWindow.setupComboBox();
     statsWindow.fillWindow();   
     statsWindow.setupConnections();
     statsWindow.getShowFormCheckBox()->setChecked(simulationSave->getShowForm());

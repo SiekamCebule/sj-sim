@@ -22,7 +22,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(236, 236, 236);</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_8">
+  <layout class="QVBoxLayout" name="verticalLayout_10">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_actionsButtons">
      <item>
@@ -81,47 +81,21 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0,0,0">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0,0,0,0,0,0">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
+          <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0">
            <property name="sizeConstraint">
             <enum>QLayout::SetMaximumSize</enum>
            </property>
-           <item>
-            <spacer name="verticalSpacer_8">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_hillInfo">
              <property name="sizeConstraint">
               <enum>QLayout::SetMaximumSize</enum>
              </property>
              <item>
-              <spacer name="horizontalSpacer_18">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QLabel" name="label_hillNameAndHSPoint">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -140,7 +114,7 @@
                </property>
                <property name="font">
                 <font>
-                 <family>Quicksand [PfEd]</family>
+                 <family>Quicksand Medium</family>
                  <pointsize>11</pointsize>
                  <bold>true</bold>
                 </font>
@@ -187,20 +161,22 @@
                </property>
               </widget>
              </item>
-             <item>
-              <spacer name="horizontalSpacer_16">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
             </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_record">
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: blakc;</string>
+             </property>
+             <property name="text">
+              <string>Rekord: 145.0m</string>
+             </property>
+            </widget>
            </item>
            <item>
             <spacer name="verticalSpacer_7">
@@ -218,16 +194,68 @@
           </layout>
          </item>
          <item>
+          <spacer name="horizontalSpacer_16">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_18">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <widget class="QLabel" name="label_nextJumperIMG">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>175</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>175</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>IMG</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_19">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
            <property name="sizeType">
-            <enum>QSizePolicy::Minimum</enum>
+            <enum>QSizePolicy::Maximum</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>50</width>
+             <width>70</width>
              <height>20</height>
             </size>
            </property>
@@ -239,7 +267,7 @@
             <number>3</number>
            </property>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
              <item>
               <widget class="QLabel" name="label_nextJumper">
                <property name="sizePolicy">
@@ -262,7 +290,7 @@
                </property>
                <property name="font">
                 <font>
-                 <family>Quicksand [PfEd]</family>
+                 <family>Quicksand Medium</family>
                  <pointsize>15</pointsize>
                  <bold>true</bold>
                 </font>
@@ -276,85 +304,89 @@
               </widget>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout">
+              <layout class="QVBoxLayout" name="verticalLayout_9" stretch="1">
                <item>
-                <widget class="QLabel" name="label_nameAndSurname">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>200</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>200</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Quicksand [PfEd]</family>
-                   <pointsize>14</pointsize>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(48, 48, 48);</string>
-                 </property>
-                 <property name="text">
-                  <string>Name Surname</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_flag">
-                 <property name="minimumSize">
-                  <size>
-                   <width>40</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>40</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_pointsBehindLeader">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Quicksand [PfEd]</family>
-                   <pointsize>13</pointsize>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(148, 148, 148);</string>
-                 </property>
-                 <property name="text">
-                  <string>-7.6pkt</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                 <item>
+                  <widget class="QLabel" name="label_nameAndSurname">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>200</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Quicksand Medium</family>
+                     <pointsize>14</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(48, 48, 48);</string>
+                   </property>
+                   <property name="text">
+                    <string>Name Surname</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_flag">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_pointsBehindLeader">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Quicksand Medium</family>
+                     <pointsize>13</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(148, 148, 148);</string>
+                   </property>
+                   <property name="text">
+                    <string>-7.6pkt</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -365,6 +397,78 @@
              <property name="spacing">
               <number>2</number>
              </property>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_15">
+               <item>
+                <widget class="QLabel" name="label_personalBestTitle">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Quicksand Medium</family>
+                   <pointsize>13</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">coloR: black;</string>
+                 </property>
+                 <property name="text">
+                  <string>Rekord życiowy zawodnika:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_25">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_personalBest">
+                 <property name="font">
+                  <font>
+                   <family>Quicksand Medium</family>
+                   <pointsize>15</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(36, 52, 94);</string>
+                 </property>
+                 <property name="text">
+                  <string>239.0m</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_26">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Maximum</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>100</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_6">
                <item>
@@ -377,8 +481,9 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
+                   <family>Quicksand Medium</family>
                    <pointsize>13</pointsize>
+                   <bold>false</bold>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -412,9 +517,9 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Quicksand Light [PfEd]</family>
-                   <pointsize>18</pointsize>
-                   <bold>true</bold>
+                   <family>Quicksand Medium</family>
+                   <pointsize>17</pointsize>
+                   <bold>false</bold>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -455,8 +560,9 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
+                   <family>Quicksand Medium</family>
                    <pointsize>12</pointsize>
+                   <bold>false</bold>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -532,8 +638,9 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
+                   <family>Quicksand Medium</family>
                    <pointsize>11</pointsize>
+                   <bold>false</bold>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -568,7 +675,7 @@
                  <property name="font">
                   <font>
                    <family>Quicksand Medium</family>
-                   <pointsize>15</pointsize>
+                   <pointsize>14</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -609,8 +716,9 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
+                   <family>Quicksand Medium</family>
                    <pointsize>11</pointsize>
+                   <bold>false</bold>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -645,7 +753,7 @@
                  <property name="font">
                   <font>
                    <family>Quicksand Medium</family>
-                   <pointsize>14</pointsize>
+                   <pointsize>12</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">

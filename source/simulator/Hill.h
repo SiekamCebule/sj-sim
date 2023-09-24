@@ -25,12 +25,15 @@ public:
         Flying
     };
 
+    QString getHillText();
+
 private:
     QString name;
     QString countryCode;
 
     double KPoint;
     double HSPoint; // Jeśli nie ma cechy charakterystycznej, to HSPoint == realHS
+    double record;
 
     double pointsForMeter;
     double pointsForKPoint;
@@ -101,6 +104,8 @@ public:
     void setAutoPointsForMeter(bool newAutoPointsForMeter);
     bool getAutoPointsForBackWind() const;
     void setAutoPointsForBackWind(bool newAutoPointsForBackWind);
+    double getRecord() const;
+    void setRecord(double newRecord);
 };
 
 #endif // HILL_H

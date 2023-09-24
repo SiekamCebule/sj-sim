@@ -38,6 +38,7 @@ public:
     void setQualifiedBy95HSRule(bool newQualifiedBy95HSRule);
 
     static StartListCompetitorStatus *getStatusOfJumper(Jumper * jumper, QVector<StartListCompetitorStatus> &statuses);
+    static int remainingJumpers(const QVector<StartListCompetitorStatus> &statuses);
 };
 
 #endif // STARTLISTCOMPETITORSTATUS_H
