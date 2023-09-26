@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1325</width>
-    <height>822</height>
+    <height>891</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -268,7 +268,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>521</height>
+          <height>541</height>
          </rect>
         </property>
         <attribute name="label">
@@ -290,7 +290,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>535</height>
+          <height>541</height>
          </rect>
         </property>
         <attribute name="label">
@@ -308,7 +308,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>535</height>
+          <height>541</height>
          </rect>
         </property>
         <attribute name="label">
@@ -326,7 +326,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>535</height>
+          <height>541</height>
          </rect>
         </property>
         <attribute name="label">
@@ -344,7 +344,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>535</height>
+          <height>541</height>
          </rect>
         </property>
         <attribute name="label">
@@ -362,7 +362,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>535</height>
+          <height>541</height>
          </rect>
         </property>
         <attribute name="label">
@@ -377,6 +377,26 @@ color: rgb(26, 95, 180);
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_sortTable">
+     <property name="font">
+      <font>
+       <family>Quicksand</family>
+       <pointsize>20</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: black;
+color: rgb(221, 231, 219);
+background-color: rgb(33, 33, 65);
+</string>
+     </property>
+     <property name="text">
+      <string>Posortuj tabelę</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

@@ -41,6 +41,7 @@ private:
     QVector<Jumper *> filteredJumpers;
 
     QHash<Jumper *, QVector<CompetitionSingleResult *>> jumpersSingleResults;
+    QHash<QString, QVector<CompetitionSingleResult *>> teamsSingleResults;
 
     //Averages models:
     SimulationRatingTableModel * averagePositionModel;
@@ -99,6 +100,9 @@ private:
 private slots:
     void on_pushButton_jumpersLists_clicked();
     void on_pushButton_csvExport_clicked();
+    void on_checkBox_generalClassificationTeam_stateChanged(int arg1);
+    void on_checkBox_generalClassificationCompPoints_stateChanged(int arg1);
+    void on_checkBox_indResToTeam_stateChanged(int arg1);
 };
 
 #endif // SIMULATIONRATINGSWINDOW_H

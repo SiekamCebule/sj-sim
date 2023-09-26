@@ -18,6 +18,7 @@ public:
     ~JumpDataDetailedInfoWindow();
 
     void fillJumpInformations();
+    void showOrHideByAppSettings();
 
     void removeJumperInfoTitle();
     void removeSimulationInformationsLayouts();

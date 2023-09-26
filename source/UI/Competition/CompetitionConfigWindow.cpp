@@ -1198,12 +1198,11 @@ void CompetitionConfigWindow::on_pushButton_autoGate_clicked()
                 HSPointJumps++;
             simulator.setupForNextJump();
         }
-        if(HSPointJumps == 0)
+        if(HSPointJumps <= 1)
         {
             gate ++;
         }
         else break;
-        //if(HSPointJumps <= 5)
     }
     ui->spinBox_startGate->setValue(gate);
  }

@@ -17,7 +17,12 @@ QVariant GeneralClassificationTableModel::headerData(int section, Qt::Orientatio
         case 0:
             return tr("Miejsce");
         case 1:
-            return tr("Zawodnik");
+        {
+            if(type == Ind)
+                return tr("Zawodnik");
+            else
+                return tr("Drużyna");
+        }
         case 2:
             return tr("Punkty");
         }
@@ -30,7 +35,10 @@ int GeneralClassificationTableModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return results.count();
+    if(type == Ind)
+        return indResults.count();
+    else
+        return teamResults.count();
 }
 
 int GeneralClassificationTableModel::columnCount(const QModelIndex &parent) const
@@ -53,16 +61,27 @@ QVariant GeneralClassificationTableModel::data(const QModelIndex &index, int rol
         case 0:
             return index.row() + 1;
         case 1:
-            return results[index.row()].first->getNameAndSurname();
+        {
+            if(type == Ind)
+                return indResults[index.row()].first->getNameAndSurname();
+            else
+                return teamResults[index.row()].first;
+        }
         case 2:
-            return results[index.row()].second;
+            if(type == Ind)
+                return indResults[index.row()].second;
+            else
+                return teamResults[index.row()].second;
         }
     }
     else if(role == Qt::DecorationRole)
     {
         if(index.column() == 1)
         {
-            return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results[index.row()].first->getCountryCode().toLower())));
+            if(type == Ind)
+                return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(indResults[index.row()].first->getCountryCode().toLower())));
+            else
+                return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(teamResults[index.row()].first.toLower())));
         }
     }
     else if(role == Qt::FontRole)
@@ -93,17 +112,42 @@ QVariant GeneralClassificationTableModel::data(const QModelIndex &index, int rol
     return QVariant();
 }
 
-QVector<QPair<Jumper *, double> > GeneralClassificationTableModel::getResults() const
+QVector<QPair<QString, double> > GeneralClassificationTableModel::getTeamResults() const
 {
-    return results;
+    return teamResults;
 }
 
-QVector<QPair<Jumper *, double> > &GeneralClassificationTableModel::getResultsReference()
+QVector<QPair<QString, double> > &GeneralClassificationTableModel::getTeamResultsReference()
 {
-    return results;
+    return teamResults;
 }
 
-void GeneralClassificationTableModel::setResults(const QVector<QPair<Jumper *, double> > &newResults)
+void GeneralClassificationTableModel::setTeamResults(const QVector<QPair<QString, double> > &newTeamResults)
 {
-    results = newResults;
+    teamResults = newTeamResults;
+}
+
+int GeneralClassificationTableModel::getType() const
+{
+    return type;
+}
+
+void GeneralClassificationTableModel::setType(int newType)
+{
+    type = newType;
+}
+
+QVector<QPair<Jumper *, double> > GeneralClassificationTableModel::getIndResults() const
+{
+    return indResults;
+}
+
+QVector<QPair<Jumper *, double> > &GeneralClassificationTableModel::getIndResultsReference()
+{
+    return indResults;
+}
+
+void GeneralClassificationTableModel::setIndResults(const QVector<QPair<Jumper *, double> > &newResults)
+{
+    indResults = newResults;
 }

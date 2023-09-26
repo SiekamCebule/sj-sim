@@ -132,6 +132,65 @@ QVector<int> CompetitionResults::getJumpersPositions(const QVector<Jumper *> * j
     return positions;
 }
 
+QHash<Jumper *, int> CompetitionResults::getHashWithJumpersPositions(const QVector<Jumper *> * jumpers, int round) const
+{
+    QHash<Jumper *, int> hash;
+    CompetitionResults results = *this;
+    results.getResultsReference().detach();
+    for(auto & res : results.getResultsReference())
+    {
+        if(round > (-1))
+        {
+            if(res.getJumpsReference().count() > round)
+                res.getJumpsReference().remove(round, res.getJumpsReference().count() - round);
+            res.updateTeamJumpersResults();
+            res.updatePointsSum();
+        }
+    }
+    results.sortInDescendingOrder();
+    /*
+    * Skok 1
+    * Skok 2
+    * Skok 3
+    * Skok 4
+
+    * Runda 2 czyli usuwamy index 2 i 3
+    */
+
+    double previousResultPoints = 0;
+    int actualPosition = 1;
+    int add = 1;
+    int i=0;
+    for(auto & result : results.getResultsReference()){
+        if(jumpers->contains(result.getJumper())){
+            int pos = 0;
+            if(i==0){
+                hash.insert(result.getJumper(), 1);
+                previousResultPoints = result.getPointsSum();
+                i++;
+                continue;
+            }
+
+            if(previousResultPoints == result.getPointsSum())
+            {
+                pos = actualPosition;
+                add += 1;
+            }
+            else{
+                actualPosition += add;
+                add = 1;
+                pos = actualPosition;
+            }
+
+            previousResultPoints = result.getPointsSum();
+            i++;
+            hash.insert(result.getJumper(), pos);
+        }
+    }
+
+    return hash;
+}
+
 void CompetitionResults::sortJumpersByResults(QVector<Jumper *> &jumpers)
 {
     QVector<Jumper *> temp;

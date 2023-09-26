@@ -59,6 +59,7 @@ private slots:
     void on_pushButton_generate_clicked();
     void onRemoveFromTable(bool alternative);
     void on_doubleSpinBox_formVariability_editingFinished();
+    void on_pushButton_jumpersLists_clicked();
 };
 
 #endif // JUMPERSFORMGENERATORCONFIGWINDOW_H

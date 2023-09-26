@@ -395,37 +395,37 @@ void JumpSimulator::generateLanding()
 void JumpSimulator::generateJudges()
 {
     if (competitionRules->getHasJudgesPoints() == true) {
-        simulationData->judgesRating = 18;
-        simulationData->judgesRating -= jumpData.landing.getRating() / 1.6;
-        simulationData->judgesRating += ((jumpData.distance - hill->getKPoint())
+        double judgesRating = 18;
+        judgesRating -= jumpData.landing.getRating() / 1.6;
+        judgesRating += ((jumpData.distance - hill->getKPoint())
                                          / (hill->getKAndRealHSDifference()))
                                         / 1.08;
         switch (jumpData.landing.getType()) {
         case Landing::TelemarkLanding:
-            simulationData->judgesRating -= MyRandom::normalDistributionRandom(0, 0.15875);
+            judgesRating -= MyRandom::normalDistributionRandom(0, 0.15875);
             break;
         case Landing::BothLegsLanding:
-            simulationData->judgesRating -= MyRandom::normalDistributionRandom(2.15, 0.23);
+            judgesRating -= MyRandom::normalDistributionRandom(2.15, 0.23);
             break;
         case Landing::SupportLanding:
-            simulationData->judgesRating -= MyRandom::normalDistributionRandom(6.15, 0.48);
+            judgesRating -= MyRandom::normalDistributionRandom(6.15, 0.48);
             break;
         case Landing::Fall:
-            simulationData->judgesRating -= MyRandom::normalDistributionRandom(8, 0.43);
+            judgesRating -= MyRandom::normalDistributionRandom(8, 0.43);
             break;
         }
 
-        simulationData->judgesRating += manipulator->getJudgesRatingBonus();
-        if (simulationData->judgesRating < manipulator->getJudgesRatingRange().first)
-            simulationData->judgesRating = manipulator->getJudgesRatingRange().first;
-        else if (simulationData->judgesRating > manipulator->getJudgesRatingRange().second
+        judgesRating += manipulator->getJudgesRatingBonus();
+        if (judgesRating < manipulator->getJudgesRatingRange().first)
+            judgesRating = manipulator->getJudgesRatingRange().first;
+        else if (judgesRating > manipulator->getJudgesRatingRange().second
                  && manipulator->getJudgesRatingRange().second > (-1))
-            simulationData->judgesRating = manipulator->getJudgesRatingRange().second;
+            judgesRating = manipulator->getJudgesRatingRange().second;
 
-        if (simulationData->judgesRating > 20)
-            simulationData->judgesRating = 20;
-        else if (simulationData->judgesRating < 1)
-            simulationData->judgesRating = 1;
+        if (judgesRating > 20)
+            judgesRating = 20;
+        else if (judgesRating < 1)
+            judgesRating = 1;
 
         if (jumpData.judges.size() != 5)
             jumpData.judges.fill(0, 5);
@@ -434,7 +434,7 @@ void JumpSimulator::generateJudges()
             short randomType = MyRandom::randomInt(0, 1);
             double random = 0;
 
-            jg = simulationData->judgesRating;
+            jg = judgesRating;
 
             switch (jumpData.landing.getType()) {
             case Landing::TelemarkLanding:
@@ -462,7 +462,6 @@ void JumpSimulator::generateJudges()
                 jg = 0;
         }
     } else {
-        simulationData->setJudgesRating(0);
         jumpData.judges.fill(0, 5);
     }
     int i = 0;
@@ -703,14 +702,15 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double dev = 0;
         double random = 0;
         dev = 4.30;
-        double devAddition = -((dev + double((double(skills->getJumpsEquality()) / 1.4))) / dev)
-                             - 1;
-        qDebug() << "devAddition: " << devAddition;
-        if (MyRandom::randomDouble(0, 1 + devAddition) <= 0.5) {
+        double newDev = dev - double((double(skills->getJumpsEquality()) / 1.2)) - skills->getLevelOfCharacteristic("takeoff-height") / 6;
+        double addition = -((dev / newDev) - 1);
+        qDebug() << "addition: " << addition;
+        if (MyRandom::randomDouble(0, 1 + addition) <= 0.5) {
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Positive);
         } else {
-            dev += (skills->getJumpsEquality() / 1.4);
-            dev -= (skills->getLevelOfCharacteristic("takeoff-height") / 7);
+            dev -= (skills->getJumpsEquality() / 1.2);
+            dev -= (skills->getLevelOfCharacteristic("takeoff-height") / 6);
+            qDebug()<<"devt: "<<dev;
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Negative);
         }
 
@@ -742,13 +742,15 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
             dev += 0.15;
             break;
         }
-        double devAddition = -((dev + double((double(skills->getJumpsEquality()) / 1.4))) / dev)
-                             - 1;
-        if (MyRandom::randomDouble(0, 1 + devAddition) <= 0.5) {
+        double newDev = dev - double((double(skills->getJumpsEquality()) / 1.2)) - skills->getLevelOfCharacteristic("flight-height") / 6;
+        double addition = -((dev / newDev) - 1);
+        qDebug() << "addition: " << addition;
+        if (MyRandom::randomDouble(0, 1 + addition) <= 0.5) {
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Positive);
         } else {
-            dev += (skills->getJumpsEquality() / 1.4);
-            dev -= (skills->getLevelOfCharacteristic("flight-height") / 7);
+            dev -= (skills->getJumpsEquality() / 1.2);
+            dev -= (skills->getLevelOfCharacteristic("flight-height") / 6);
+            qDebug()<<"devf: "<<dev;
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Negative);
         }
 

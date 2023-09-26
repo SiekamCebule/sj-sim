@@ -143,6 +143,11 @@ bool rankingComp(const QPair<Jumper *, double> p1, const QPair<Jumper *, double>
     return p1.second > p2.second;
 }
 
+bool rankingCompForTeams(const QPair<QString, double> p1, const QPair<QString, double> p2)
+{
+    return p1.second > p2.second;
+}
+
 bool descendingCompForRecords(const QPair<JumpData *, double> p1, const QPair<JumpData *, double> p2)
 {
     if(p1.second == p2.second)
@@ -623,13 +628,27 @@ void SimulationRatingsWindow::fillWindow()
 
     QList wins = winsStat.values();
     std::sort(wins.begin(), wins.end(), std::greater<int>());
-    ui->label_wins->setText(QString::number(wins.first()));
-ui->label_winsJumper->setText(winsStat.key(wins.first())->getNameAndSurname() + " (" + winsStat.key(wins.first())->getCountryCode() + ")");
+    if(wins.count() > 0){
+        ui->label_wins->setText(QString::number(wins.first()));
+        ui->label_winsJumper->setText(winsStat.key(wins.first())->getNameAndSurname() + " (" + winsStat.key(wins.first())->getCountryCode() + ")");
+    }
+    else
+    {
+        ui->label_wins->setText(tr("Brak"));
+        ui->label_winsJumper->setText("");
+    }
 
     QList podiums = podiumsStat.values();
     std::sort(podiums.begin(), podiums.end(), std::greater<int>());
-    ui->label_podiums->setText(QString::number(podiums.first()));
-ui->label_podiumsJumper->setText(podiumsStat.key(podiums.first())->getNameAndSurname() + " (" + podiumsStat.key(podiums.first())->getCountryCode() + ")");
+    if(podiums.count() > 0){
+        ui->label_podiums->setText(QString::number(podiums.first()));
+        ui->label_podiumsJumper->setText(podiumsStat.key(podiums.first())->getNameAndSurname() + " (" + podiumsStat.key(podiums.first())->getCountryCode() + ")");
+    }
+    else
+    {
+        ui->label_podiums->setText(tr("Brak"));
+        ui->label_podiumsJumper->setText("");
+    }
 
     ui->label_telemarks->setText(QString::number(telemarks) + " (" + QString::number(double(telemarks) / double(jumpsCount) * 100) + "%)");
     ui->label_bothLegs->setText(QString::number(bothLegs) + " (" + QString::number(double(bothLegs) / double(jumpsCount) * 100) + "%)");
@@ -664,30 +683,72 @@ ui->label_podiumsJumper->setText(podiumsStat.key(podiums.first())->getNameAndSur
     ui->label_saveAvgJudges->setText(QString::number(averageJudges) + tr("pkt"));
     ui->label_saveAvgWind->setText(QString::number(averageWind) + tr("m/s"));
 
-    QHash<Jumper *, double> generalClassification;
-    QMap<int, double> pointsForPlaces = GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets()[ui->comboBox_preset->currentIndex()].getPointsForPlacesReference();
 
-    for(auto & jumper : jumpersSingleResults.keys()){
-        for(auto & result : jumpersSingleResults.value(jumper)){
-            generalClassification[result->getJumper()] = generalClassification.value(result->getJumper()) + pointsForPlaces.value(result->getPosition());
-        }
-    }
-    QVector<QPair<Jumper *, double>> vector;
-    /*QHashIterator<Jumper *, double> it(generalClassification);
-    while (it.hasNext())
+    QMap<int, double> pointsForPlaces = GlobalDatabase::get()->getEditableGlobalPointsForPlacesPresets()[ui->comboBox_preset->currentIndex()].getPointsForPlacesReference();
+    if(ui->checkBox_generalClassificationTeam->isChecked() == false)//Indywidualne
     {
-        qDebug()<<it.key()<<" k";
-        vector.append(qMakePair(it.key(), it.value()));
-    }*/
-    for (auto [key, value] : generalClassification.asKeyValueRange()) {
-        // Wypisujemy klucz i wartość na konsolę
-        qDebug() << key << value;
-        vector.append(qMakePair(key, value));
+        QHash<Jumper *, double> indGeneralClassification;
+        for(auto & jumper : jumpersSingleResults.keys()){
+            for(auto & result : jumpersSingleResults.value(jumper)){
+                if(ui->checkBox_generalClassificationCompPoints->isChecked())
+                    indGeneralClassification[result->getJumper()] = indGeneralClassification.value(result->getJumper()) + result->getPointsSum();
+                else
+                    indGeneralClassification[result->getJumper()] = indGeneralClassification.value(result->getJumper()) + pointsForPlaces.value(result->getPosition());
+            }
+        }
+        QVector<QPair<Jumper *, double>> indVector;
+        for (auto [key, value] : indGeneralClassification.asKeyValueRange()) {
+            indVector.append(qMakePair(key, value));
+        }
+        std::sort(indVector.begin(), indVector.end(), rankingComp);
+        generalClassificationModel->setIndResults(indVector);
+        generalClassificationModel->setType(GeneralClassificationTableModel::Ind);
+        ui->tableView_generalClassification->setModel(nullptr);
+        ui->tableView_generalClassification->setModel(generalClassificationModel);
     }
-    std::sort(vector.begin(), vector.end(), rankingComp);
-    generalClassificationModel->setResults(vector);
-    ui->tableView_generalClassification->setModel(nullptr);
-    ui->tableView_generalClassification->setModel(generalClassificationModel);
+    else
+    {
+        QVector<QString> filteredTeams;
+        for(auto & jp : filteredJumpers)
+            if(filteredTeams.contains(jp->getCountryCode()) == false)
+                filteredTeams.push_back(jp->getCountryCode());
+        teamsSingleResults = CompetitionSingleResult::getTeamsFilteredSingleResults(filteredTeams, competitions,
+                                                                                    serieTypesCheckBoxes->getSerieTypes(), hillTypesCheckBoxes->getHillTypesSet(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked(), specificHill);
+
+        QHash<QString, double> teamGeneralClassification;
+        for(auto & team : teamsSingleResults.keys()){
+            for(auto & result : teamsSingleResults.value(team)){
+                if(ui->checkBox_generalClassificationCompPoints->isChecked())
+                    teamGeneralClassification[result->getTeam()->getCountryCode()] = teamGeneralClassification.value(result->getTeam()->getCountryCode()) + result->getPointsSum();
+                else
+                    teamGeneralClassification[result->getTeam()->getCountryCode()] = teamGeneralClassification.value(result->getTeam()->getCountryCode()) + pointsForPlaces.value(result->getPosition());
+            }
+        }
+        if(ui->checkBox_indResToTeam->isChecked())
+        {
+            for(auto & jumper : jumpersSingleResults.keys()){
+                for(auto & result : jumpersSingleResults.value(jumper)){
+                    if(ui->checkBox_generalClassificationCompPoints->isChecked())
+                        teamGeneralClassification[result->getJumper()->getCountryCode()] = teamGeneralClassification.value(result->getJumper()->getCountryCode()) + result->getPointsSum();
+                    else
+                        teamGeneralClassification[result->getJumper()->getCountryCode()] = teamGeneralClassification.value(result->getJumper()->getCountryCode()) + pointsForPlaces.value(result->getPosition());
+                }
+            }
+        }
+        QVector<QPair<QString, double>> teamVector;
+        for (auto [key, value] : teamGeneralClassification.asKeyValueRange()) {
+            teamVector.append(qMakePair(key, value));
+        }
+        std::sort(teamVector.begin(), teamVector.end(), rankingCompForTeams);
+        generalClassificationModel->setTeamResults(teamVector);
+        generalClassificationModel->setType(GeneralClassificationTableModel::Tm);
+        ui->tableView_generalClassification->setModel(nullptr);
+        ui->tableView_generalClassification->setModel(generalClassificationModel);
+    }
+
+
+
+
 }
 
 void SimulationRatingsWindow::setupComboBox()
@@ -826,17 +887,19 @@ void SimulationRatingsWindow::saveGeneralClassificationCsv(QString fileName)
     file.open(QFile::ReadWrite | QFile::Text);
     file.resize(0);
     QString stream;
-    stream = tr("Pozycja") + ";" + tr("Zawodnik") + ";" + tr("Punkty") + "\n";
-    QVector<QPair<Jumper *, double>> * results = &generalClassificationModel->getResultsReference();
-    int pos = 1;
-    for(auto & pair : *results)
-    {
-        stream += QString::number(pos) + ";" + pair.first->getNameAndSurname() + " (" + pair.first->getCountryCode() + ")" +";" + QString::number(pair.second) + "\n";
+    if(ui->checkBox_generalClassificationTeam->isChecked() == false){
+        stream = tr("Pozycja") + ";" + tr("Drużyna") + ";" + tr("Punkty") + "\n";
+        QVector<QPair<Jumper *, double>> * results = &generalClassificationModel->getIndResultsReference();
+        int pos = 1;
+        for(auto & pair : *results)
+        {
+            stream += QString::number(pos) + ";" + pair.first->getNameAndSurname() + " (" + pair.first->getCountryCode() + ")" +";" + QString::number(pair.second) + "\n";
+        }
+        QString string = stream.replace(".", ",");
+        file.resize(0);
+        file.write(string.toUtf8());
+        file.close();
     }
-    QString string = stream.replace(".", ",");
-    file.resize(0);
-    file.write(string.toUtf8());
-    file.close();
 }
 
 GeneralClassificationTableModel *SimulationRatingsWindow::getGeneralClassificationModel() const
@@ -876,7 +939,9 @@ void SimulationRatingsWindow::on_pushButton_jumpersLists_clicked()
     window->setupWidgets();
     if(window->exec() == QDialog::Accepted)
     {
+        QSet<Jumper *> addedJumpers;
         filteredJumpers = save->getJumpers();
+        filteredJumpers.detach();
         for(auto & status : window->constructJumpersListsStatuses())
         {
             if(status.second == JumpersListsListItemWidget::Select)
@@ -887,13 +952,14 @@ void SimulationRatingsWindow::on_pushButton_jumpersLists_clicked()
                     {
                         filteredJumpers.push_back(jumper);
                     }
+                    addedJumpers.insert(jumper);
                 }
             }
             else if(status.second == JumpersListsListItemWidget::Unselect)
             {
                 for(auto & jumper : status.first->getJumpersReference())
                 {
-                    if(filteredJumpers.contains(jumper) == true)
+                    if(filteredJumpers.contains(jumper) == true && addedJumpers.contains(jumper) == false)
                     {
                         MyFunctions::removeFromVector(filteredJumpers, jumper);
                     }
@@ -945,5 +1011,22 @@ void SimulationRatingsWindow::on_pushButton_csvExport_clicked()
         text = "stats/simulation-saves-stats/" + folderName + "/others/";
         saveGeneralClassificationCsv(text + "general-classification.csv");
     }
+}
+
+
+void SimulationRatingsWindow::on_checkBox_generalClassificationTeam_stateChanged(int arg1)
+{
+    fillWindow();
+}
+
+void SimulationRatingsWindow::on_checkBox_generalClassificationCompPoints_stateChanged(int arg1)
+{
+    fillWindow();
+}
+
+
+void SimulationRatingsWindow::on_checkBox_indResToTeam_stateChanged(int arg1)
+{
+    fillWindow();
 }
 

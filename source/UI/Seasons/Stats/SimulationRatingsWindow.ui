@@ -238,7 +238,7 @@ background-color: rgb(241, 200, 255);
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab_rankings">
       <attribute name="title">
@@ -1669,6 +1669,8 @@ przewagą</string>
               <widget class="QLabel" name="label_preset">
                <property name="font">
                 <font>
+                 <family>Quicksand</family>
+                 <pointsize>11</pointsize>
                  <bold>true</bold>
                 </font>
                </property>
@@ -1685,6 +1687,48 @@ przewagą</string>
               </widget>
              </item>
             </layout>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_generalClassificationTeam">
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>11</pointsize>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Klasyfikacja drużynowa</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_generalClassificationCompPoints">
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>11</pointsize>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Wliczaj punkty z konkursów</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_indResToTeam">
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Wliczaj indywidualne wyniki zawodnika
+do klasyfikacji drużynowej</string>
+             </property>
+            </widget>
            </item>
            <item>
             <spacer name="verticalSpacer">

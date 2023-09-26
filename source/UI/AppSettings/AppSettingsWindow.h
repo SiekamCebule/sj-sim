@@ -50,6 +50,8 @@ private slots:
 
     void on_checkBox_globalDatabaseRecords_stateChanged(int arg1);
 
+    void on_pushButton_jumpInfoChoice_clicked();
+
 private:
     Ui::AppSettingsWindow *ui;
 

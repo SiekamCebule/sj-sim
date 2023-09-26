@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QPair>
 #include "../../../../simulator/Jumper.h"
+#include "../../../../simulator/Team.h"
 
 class GeneralClassificationTableModel : public QAbstractTableModel
 {
@@ -12,6 +13,11 @@ class GeneralClassificationTableModel : public QAbstractTableModel
 
 public:
     explicit GeneralClassificationTableModel(QObject *parent = nullptr);
+
+    enum Type{
+        Ind,
+        Tm
+    };
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -23,11 +29,18 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 private:
-    QVector<QPair<Jumper *, double>> results;
+    QVector<QPair<Jumper *, double>> indResults;
+    QVector<QPair<QString, double>> teamResults;
+    int type;
 public:
-    QVector<QPair<Jumper *, double> > getResults() const;
-    QVector<QPair<Jumper *, double> > & getResultsReference();
-    void setResults(const QVector<QPair<Jumper *, double> > &newResults);
+    QVector<QPair<Jumper *, double> > getIndResults() const;
+    QVector<QPair<Jumper *, double> > & getIndResultsReference();
+    void setIndResults(const QVector<QPair<Jumper *, double> > &newResults);
+    int getType() const;
+    void setType(int newType);
+    QVector<QPair<QString, double> > getTeamResults() const;
+    QVector<QPair<QString, double> > & getTeamResultsReference();
+    void setTeamResults(const QVector<QPair<QString, double> > &newTeamResults);
 };
 
 #endif // GENERALCLASSIFICATIONTABLEMODEL_H

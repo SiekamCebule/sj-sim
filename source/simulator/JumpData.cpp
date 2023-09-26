@@ -210,7 +210,6 @@ QJsonObject JumpData::getJsonObject(JumpData jumpData)
     QJsonObject simulationDataObject;
     simulationDataObject.insert("takeoff-rating", jumpData.getSimulationDataReference().getTakeoffRating());
     simulationDataObject.insert("flight-rating", jumpData.getSimulationDataReference().getFlightRating());
-    simulationDataObject.insert("judges-rating", jumpData.getSimulationDataReference().getJudgesRating());
     simulationDataObject.insert("dsq-probability", jumpData.getSimulationDataReference().getDSQProbability());
     simulationDataObject.insert("inrun-snow", jumpData.getSimulationDataReference().getInrunSnow());
     object.insert("simulation-data", simulationDataObject);
@@ -262,7 +261,6 @@ JumpData JumpData::getFromJson(QJsonObject obj, DatabaseObjectsManager * objects
     JumpSimulationData simulationData;
     simulationData.setTakeoffRating(simulationDataObject.value("takeoff-rating").toDouble());
     simulationData.setFlightRating(simulationDataObject.value("flight-rating").toDouble());
-    simulationData.setJudgesRating(simulationDataObject.value("judges-rating").toDouble());
     simulationData.setDSQProbability(simulationDataObject.value("dsq-probability").toInt());
     simulationData.setInrunSnow(simulationDataObject.value("inrun-snow").toDouble());
     jump.setSimulationData(simulationData);

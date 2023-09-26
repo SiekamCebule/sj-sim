@@ -35,11 +35,14 @@ public:
     static QJsonObject getJsonObject(CompetitionResults & results);
 
     QVector<int> getJumpersPositions(const QVector<Jumper *> *jumpers) const;
+    QHash<Jumper *, int> getHashWithJumpersPositions(const QVector<Jumper *> *jumpers, int round = -1) const;
     void sortJumpersByResults(QVector<Jumper *> & jumpers);
     static QHash<Jumper *, int> getResultsWithJumpersPositionsForClassificationArchiveResults(QHash<Jumper *, double> results);
     static QHash<QString, int> getResultsWithTeamsPositionsForClassificationArchiveResults(QHash<QString, double> results);
     static QVector<QString> getTeamsCodesByIndividualResults(CompetitionResults * results);
     static QVector<Jumper *> getJumpersByTeamResults(CompetitionResults * results);
+
+    QHash<Jumper *, int> getPositionsByRound(int round);
 
     void fixSingleResultsJumps();
 

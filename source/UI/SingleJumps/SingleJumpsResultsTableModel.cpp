@@ -48,7 +48,6 @@ int SingleJumpsResultsTableModel::columnCount(const QModelIndex &parent) const
 
 QVariant SingleJumpsResultsTableModel::data(const QModelIndex &index, int role) const
 {
-    qDebug()<<"COL :   "<<index.column();
     if (!index.isValid())
         return QVariant();
 

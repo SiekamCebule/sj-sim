@@ -1,6 +1,7 @@
 #include "SingleJumpsResultsWindow.h"
 #include "ui_SingleJumpsResultsWindow.h"
 
+#include "SingleJumpsResultsTableSortDialog.h"
 #include "../ResultsShowing/JumpDataDetailedInfoWindow.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../../global/IDGenerator.h"
@@ -60,6 +61,10 @@ void SingleJumpsResultsWindow::fillHillInfo()
 
 void SingleJumpsResultsWindow::fillDistancesChart()
 {
+    if(ui->verticalLayout_distanceStatistics->count() > 0){
+        ui->verticalLayout_distanceStatistics->removeWidget(ui->verticalLayout_distanceStatistics->itemAt(0)->widget());
+    }
+
     QChart * distancesChart = new QChart;
     distancesChart->legend()->hide();
     distancesChart->addSeries(getSplineSeriesForDistancesChart());
@@ -76,6 +81,9 @@ void SingleJumpsResultsWindow::fillDistancesChart()
 
 void SingleJumpsResultsWindow::fillPointsChart()
 {
+    if(ui->verticalLayout_pointsStatistics->count() > 0){
+        ui->verticalLayout_pointsStatistics->removeWidget(ui->verticalLayout_pointsStatistics->itemAt(0)->widget());
+    }
 
     QChart * pointsChart = new QChart;
     pointsChart->legend()->hide();
@@ -93,6 +101,10 @@ void SingleJumpsResultsWindow::fillPointsChart()
 
 void SingleJumpsResultsWindow::fillJudgesChart()
 {
+    if(ui->verticalLayout_judgesStatistics->count() > 0){
+        ui->verticalLayout_judgesStatistics->removeWidget(ui->verticalLayout_judgesStatistics->itemAt(0)->widget());
+    }
+
     QChart * judgesChart = new QChart();
     judgesChart->legend()->hide();
     judgesChart->addSeries(getSplineSeriesForJudgesChart());
@@ -109,6 +121,10 @@ void SingleJumpsResultsWindow::fillJudgesChart()
 
 void SingleJumpsResultsWindow::fillLandingsChart()
 {
+    if(ui->verticalLayout_landingsStatistics->count() > 0){
+        ui->verticalLayout_landingsStatistics->removeWidget(ui->verticalLayout_landingsStatistics->itemAt(0)->widget());
+    }
+
     QChart * landingsChart = new QChart();
     landingsChart->addSeries(getBarSeriesForLandingsChar());
     landingsChart->setTitle("Rozkład rodzajów lądowania zawodnika");
@@ -124,6 +140,10 @@ void SingleJumpsResultsWindow::fillLandingsChart()
 
 void SingleJumpsResultsWindow::fillWindsChart()
 {
+    if(ui->verticalLayout_windStatistics->count() > 0){
+        ui->verticalLayout_windStatistics->removeWidget(ui->verticalLayout_windStatistics->itemAt(0)->widget());
+    }
+
     QChart * windsChart = new QChart();
     windsChart->addSeries(getSplineSeriesForWindsChart());
     windsChart->setTitle("Rozkład siły wiatru przy skokach");
@@ -135,6 +155,17 @@ void SingleJumpsResultsWindow::fillWindsChart()
     windsChartView->setRenderHint(QPainter::Antialiasing);
 
     ui->verticalLayout_windStatistics->addWidget(windsChartView);
+}
+
+void SingleJumpsResultsWindow::fillWindow()
+{
+    fillJumperInfo();
+    fillHillInfo();
+    fillDistancesChart();
+    fillPointsChart();
+    fillJudgesChart();
+    fillLandingsChart();
+    fillWindsChart();
 }
 
 SingleJumpsManager *SingleJumpsResultsWindow::getManager() const
@@ -365,5 +396,68 @@ void SingleJumpsResultsWindow::on_tableView_doubleClicked(const QModelIndex &ind
      if(jumpInfoWidget->isHidden())
          jumpInfoWidget->show();
      jumpInfoWidget->fillJumpInformations();
+}
+
+
+void SingleJumpsResultsWindow::on_pushButton_sortTable_clicked()
+{
+     SingleJumpsResultsTableSortDialog * dialog = new SingleJumpsResultsTableSortDialog();
+     if(dialog->exec() == QDialog::Accepted)
+     {
+         switch(dialog->sortBy())
+         {
+         case SingleJumpsResultsTableSortDialog::Distance:
+         {
+            std::sort(manager->getJumpsReference().begin(), manager->getJumpsReference().end(), [this, dialog](const JumpData & j1, const JumpData & j2){
+                if(j1.getDistance() == j2.getDistance())
+                    return j1.getID() > j2.getID();
+                if(dialog->sortType() == SingleJumpsResultsTableSortDialog::Descending)
+                    return j1.getDistance() > j2.getDistance();
+                else
+                    return j1.getDistance() < j2.getDistance();
+            });
+            break;
+         }
+         case SingleJumpsResultsTableSortDialog::Points:
+         {
+            std::sort(manager->getJumpsReference().begin(), manager->getJumpsReference().end(), [this, dialog](const JumpData & j1, const JumpData & j2){
+                if(j1.getDistance() == j2.getDistance())
+                    return j1.getID() > j2.getID();
+                if(dialog->sortType() == SingleJumpsResultsTableSortDialog::Descending)
+                    return j1.getPoints() > j2.getPoints();
+                else
+                    return j1.getPoints() < j2.getPoints();
+            });
+            break;
+         }
+         case SingleJumpsResultsTableSortDialog::Wind:
+         {
+            std::sort(manager->getJumpsReference().begin(), manager->getJumpsReference().end(), [this, dialog](const JumpData & j1, const JumpData & j2){
+                if(j1.getDistance() == j2.getDistance())
+                    return j1.getID() > j2.getID();
+                if(dialog->sortType() == SingleJumpsResultsTableSortDialog::Descending)
+                    return j1.getAveragedWind() > j2.getAveragedWind();
+                else
+                    return j1.getAveragedWind() < j2.getAveragedWind();
+            });
+            break;
+         }
+         case SingleJumpsResultsTableSortDialog::Judges:
+         {
+            std::sort(manager->getJumpsReference().begin(), manager->getJumpsReference().end(), [this, dialog](const JumpData & j1, const JumpData & j2){
+                if(j1.getDistance() == j2.getDistance())
+                    return j1.getID() > j2.getID();
+                if(dialog->sortType() == SingleJumpsResultsTableSortDialog::Descending)
+                    return j1.getJudgesPoints() > j2.getJudgesPoints();
+                else
+                    return j1.getJudgesPoints() < j2.getJudgesPoints();
+            });
+            break;
+         }
+         }
+         fillWindow();
+         ui->tableView->setModel(nullptr);
+         ui->tableView->setModel(model);
+     }
 }
 

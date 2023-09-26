@@ -1,6 +1,8 @@
 #ifndef GLOBALAPPSETTINGS_H
 #define GLOBALAPPSETTINGS_H
 
+#include "JumpDataInfoChoice.h"
+
 class QString;
 
 class GlobalAppSettings
@@ -17,6 +19,7 @@ private:
     short languageID;
     bool showCalendarEditorHelp;
     bool showSeasonJumpersAndHillsHelp;
+    JumpDataInfoChoice jumpDataInfoChoice;
 
 public:
     short getLanguageID() const;
@@ -33,6 +36,9 @@ public:
     void setShowCalendarEditorHelp(bool newShowCalendarEditorHelp);
     bool getShowSeasonJumpersAndHillsHelp() const;
     void setShowSeasonJumpersAndHillsHelp(bool newShowSeasonJumpersAndHillsHelp);
+    JumpDataInfoChoice getJumpDataInfoChoice() const;
+    JumpDataInfoChoice & getJumpDataInfoChoiceReference();
+    void setJumpDataInfoChoice(const JumpDataInfoChoice &newJumpDataInfoChoice);
 };
 
 #endif // GLOBALAPPSETTINGS_H

@@ -103,6 +103,54 @@ QHash<Jumper *, QVector<CompetitionSingleResult *> > CompetitionSingleResult::ge
     return toReturn;
 }
 
+QHash<QString, QVector<CompetitionSingleResult *> > CompetitionSingleResult::getTeamsFilteredSingleResults(QVector<QString> &teams, QVector<CompetitionInfo *> &competitions, QSet<int> serieTypes, QSet<int> hillTypes, QVector<Classification *> classifications, bool skipClassifications, Hill *specificHill)
+{
+    QHash<QString, QVector<CompetitionSingleResult *>> toReturn;
+    for(auto & team : teams)
+    {
+        toReturn.insert(team, CompetitionSingleResult::getFilteredSingleResultsForTeam(competitions, team, serieTypes, hillTypes, classifications, skipClassifications, specificHill));
+    }
+    return toReturn;
+}
+
+QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleResultsForTeam(QVector<CompetitionInfo *> &competitions, QString countryCode, QSet<int> serieTypes, QSet<int> hillTypes, QVector<Classification *> classifications, bool skipClassifications, Hill *specificHill)
+{
+    QVector<CompetitionSingleResult *> singleResults;
+    for(auto & comp : competitions)
+    {
+        if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+            continue;
+        bool ok = false;
+        for(auto & compCls : comp->getClassificationsReference()){
+            for(auto & cls : classifications){
+                if(compCls->getName() == cls->getName())
+                {
+                    ok = true;
+                    break;
+                }
+            }
+        }
+        if(skipClassifications == true)
+            ok = true;
+
+        bool hillOk = true;
+        if(specificHill == nullptr)
+            hillOk = true;
+        else if(comp->getHill() != specificHill)
+            hillOk = false;
+
+        if(serieTypes.contains(comp->getSerieType()) && hillTypes.contains(comp->getHill()->getHillType()) && ok && hillOk)
+        {
+            if(comp->getResultsReference().getResultOfTeam(Team::getTeamByCountryCode(&comp->getTeamsReference(), countryCode)) != nullptr)
+            {
+                singleResults.push_back(comp->getResultsReference().getResultOfTeam(Team::getTeamByCountryCode(&comp->getTeamsReference(), countryCode)));
+                continue;
+            }
+        }
+    }
+    return singleResults;
+}
+
 QString CompetitionSingleResult::getCsvResultsObject()
 {
     QString s;

@@ -10,6 +10,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    source/UI/AppSettings/JumpDataInfoChoiceDialog.cpp \
     source/UI/Competition/CompetitionManagerWindow.cpp \
     source/UI/Competition/JumperCompetitionResultsWidget.cpp \
     source/UI/Competition/RandomWindConfigWindow.cpp \
@@ -85,6 +86,7 @@ SOURCES += \
     source/UI/EditorWidgets/HillEditorWidget.cpp \
     source/UI/EditorWidgets/JumperEditorWidget.cpp \
     source/UI/SingleJumps/SingleJumpsResultsTableModel.cpp \
+    source/UI/SingleJumps/SingleJumpsResultsTableSortDialog.cpp \
     source/UI/SingleJumps/SingleJumpsResultsWindow.cpp \
     source/competitions/AbstractCompetitionManager.cpp \
     source/competitions/CompetitionInfo.cpp \
@@ -107,6 +109,7 @@ SOURCES += \
     source/global/GlobalDatabase.cpp \
     source/global/GlobalSimulationSettings.cpp \
     source/global/GlobalTranslators.cpp \
+    source/global/JumpDataInfoChoice.cpp \
     source/global/PointsForPlacesPreset.cpp \
     source/global/TreeItem.cpp \
     source/main.cpp \
@@ -141,6 +144,7 @@ SOURCES += \
     source/utilities/functions.cpp
 
 HEADERS += \
+    source/UI/AppSettings/JumpDataInfoChoiceDialog.h \
     source/UI/Competition/CompetitionManagerWindow.h \
     source/UI/Competition/JumperCompetitionResultsWidget.h \
     source/UI/Competition/RandomWindConfigWindow.h \
@@ -216,6 +220,7 @@ HEADERS += \
     source/UI/EditorWidgets/HillEditorWidget.h \
     source/UI/EditorWidgets/JumperEditorWidget.h \
     source/UI/SingleJumps/SingleJumpsResultsTableModel.h \
+    source/UI/SingleJumps/SingleJumpsResultsTableSortDialog.h \
     source/UI/SingleJumps/SingleJumpsResultsWindow.h \
     source/UI/mainwindow.h \
     source/competitions/AbstractCompetitionManager.h \
@@ -239,6 +244,7 @@ HEADERS += \
     source/global/GlobalDatabase.h \
     source/global/GlobalSimulationSettings.h \
     source/global/GlobalTranslators.h \
+    source/global/JumpDataInfoChoice.h \
     source/global/PointsForPlacesPreset.h \
     source/global/TreeItem.h \
     source/seasons/ClassificationSingleResult.h \
@@ -271,6 +277,7 @@ HEADERS += \
     source/utilities/functions.h
 
 FORMS += \
+    source/UI/AppSettings/JumpDataInfoChoiceDialog.ui \
     source/UI/Competition/CompetitionManagerWindow.ui \
     source/UI/Competition/JumperCompetitionResultsWidget.ui \
     source/UI/Competition/RandomWindConfigWindow.ui \
@@ -321,6 +328,7 @@ FORMS += \
     source/UI/EditorWidgets/Dialogs/CharacteristicInputDialog.ui \
     source/UI/EditorWidgets/HillEditorWidget.ui \
     source/UI/EditorWidgets/JumperEditorWidget.ui \
+    source/UI/SingleJumps/SingleJumpsResultsTableSortDialog.ui \
     source/UI/SingleJumps/SingleJumpsResultsWindow.ui \
     source/UI/mainwindow.ui
 

@@ -31,6 +31,8 @@ public:
     void fillLandingsChart();
     void fillWindsChart();
 
+    void fillWindow();
+
     void installShortcuts();
 
     SingleJumpsManager *getManager() const;
@@ -49,6 +51,8 @@ public:
 
 private slots:
     void on_tableView_doubleClicked(const QModelIndex &index);
+
+    void on_pushButton_sortTable_clicked();
 
 private:
     Ui::SingleJumpsResultsWindow *ui;

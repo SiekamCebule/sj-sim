@@ -3,6 +3,7 @@
 
 #include "../ResultsShowing/JumpDataDetailedInfoWindow.h"
 #include "../../global/CountryFlagsManager.h"
+#include "../../global/GlobalAppSettings.h"
 
 JumperCompetitionResultsWidget::JumperCompetitionResultsWidget(QWidget *parent) :
     QWidget(parent),
@@ -30,12 +31,18 @@ void JumperCompetitionResultsWidget::fillWidget()
         ui->label_actualPosition->setText("(" + QString::number(jumperResult->getPosition()) + tr(" miejsce)"));
     else ui->label_actualPosition->hide();
 
+    if(GlobalAppSettings::get()->getJumpDataInfoChoiceReference().getPositionAfterJump() == true)
+    {
+        ui->label_actualPosition->show();
+    }
+    else
+        ui->label_actualPosition->hide();
+
     ui->tabWidget_jumps->clear();
     int i = 0;
     for(auto & jump : jumperResult->getJumpsReference()){
         JumpDataDetailedInfoWindow * jumpInfo = new JumpDataDetailedInfoWindow(&jump, this);
         jumpInfo->fillJumpInformations();
-        jumpInfo->removeSimulationInformationsLayouts();
         jumpInfo->removeJumperInfoTitle();
         jumpInfo->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         ui->tabWidget_jumps->addTab(jumpInfo, tr("Seria ") + QString::number(i + 1));

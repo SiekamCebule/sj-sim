@@ -82,12 +82,24 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     }
     ui->label_record->setText(tr("Rekord: ") + QString::number(manager->getCompetitionInfo()->getHill()->getRecord(), 'f', 1));
 
+    ui->label_lastRoundPosition->hide();
     connect(this->manager, &AbstractCompetitionManager::actualJumperChanged, this, [this](){
         if(this->manager->getActualStartListIndex() < this->manager->getStartListStatusesReference().count()){
             ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
             ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
             ui->label_nextJumperIMG->setPixmap(this->manager->getActualJumper()->getImagePixmap().scaled(ui->label_nextJumperIMG->size()));
             ui->label_personalBest->setText(QString::number(this->manager->getActualJumper()->getPersonalBest(), 'f', 1));
+
+            if(type == CompetitionRules::Individual && this->manager->getActualRound() > 1){
+                int positionInLastRound = this->manager->getResults()->getHashWithJumpersPositions(&static_cast<IndividualCompetitionManager*>(this->manager)->getActualRoundJumpersReference(), this->manager->getActualRound() - 1).value(this->manager->getActualJumper());
+                ui->label_lastRoundPosition->setText("(" + QString::number(positionInLastRound) + tr(" w poprzedniej rundzie)"));
+                ui->label_lastRoundPosition->show();
+            }
+            else
+            {
+                ui->label_lastRoundPosition->hide();
+            }
+
         }
     });
 

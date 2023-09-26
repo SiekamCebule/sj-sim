@@ -689,6 +689,38 @@ background-color: rgb(172, 219, 157);
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_jumpersLists">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>15</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+color: rgb(0, 0, 0);
+background-color: ;
+	background-color: rgb(243, 255, 202);
+padding: 4px;
+}
+QPushButton:hover{
+background-color: rgb(255, 255, 229);
+}</string>
+         </property>
+         <property name="text">
+          <string>Listy zawodników</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>

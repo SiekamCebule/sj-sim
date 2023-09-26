@@ -13,6 +13,7 @@
 #include "../../global/GlobalSimulationSettings.h"
 #include "../../global/GlobalDatabase.h"
 #include "../../global/IDGenerator.h"
+#include "JumpDataInfoChoiceDialog.h"
 
 extern IDGenerator globalIDGenerator;
 
@@ -293,5 +294,17 @@ void AppSettingsWindow::on_checkBox_globalDatabaseRecords_stateChanged(int arg1)
         GlobalSimulationSettings::get()->setUpdateGlobalDatabaseRecords(false);
     else
         GlobalSimulationSettings::get()->setUpdateGlobalDatabaseRecords(true);
+}
+
+
+void AppSettingsWindow::on_pushButton_jumpInfoChoice_clicked()
+{
+    JumpDataInfoChoiceDialog * dialog = new JumpDataInfoChoiceDialog(this);
+    dialog->setChoice(&GlobalAppSettings::get()->getJumpDataInfoChoiceReference());
+    dialog->fillInputs();
+    if(dialog->exec() == QDialog::Accepted)
+    {
+        GlobalAppSettings::get()->setJumpDataInfoChoice(dialog->getChoiceFromInputs());
+    }
 }
 

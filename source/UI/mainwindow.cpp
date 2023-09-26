@@ -81,13 +81,7 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         manager.simulate();
 
         SingleJumpsResultsWindow resultsWindow(&manager);
-        resultsWindow.fillJumperInfo();
-        resultsWindow.fillHillInfo();
-        resultsWindow.fillDistancesChart();
-        resultsWindow.fillPointsChart();
-        resultsWindow.fillJudgesChart();
-        resultsWindow.fillLandingsChart();
-        resultsWindow.fillWindsChart();
+        resultsWindow.fillWindow();
         resultsWindow.installShortcuts();
         if(resultsWindow.exec() == QDialog::Rejected)
         {

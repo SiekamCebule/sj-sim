@@ -3,6 +3,7 @@
 #include "../../form-generator/JumperFormGenerator.h"
 #include "../../global/GlobalDatabase.h"
 #include "../../utilities/functions.h"
+#include "../EditorWidgets/EditStartListWithJumpersListsWindow.h"
 #include <QMessageBox>
 #include <QInputDialog>
 
@@ -314,5 +315,69 @@ void JumpersFormGeneratorConfigWindow::on_doubleSpinBox_formVariability_editingF
         settings.setFormVariability(value);
     }
     updateTable();
+}
+
+bool settingsVectorContainsByJumper(const QVector<JumperFormGeneratorSettings> & settings, Jumper * jumper)
+{
+    for(auto & s : settings)
+    {
+        if(s.getJumper() == jumper)
+            return true;
+    }
+    return false;
+}
+void settingsVectorRemoveByJumper(QVector<JumperFormGeneratorSettings> & settings, Jumper * jumper)
+{
+    int i=0;
+    for(auto & setts : settings)
+    {
+        if(setts.getJumper() == jumper)
+        {
+            settings.remove(i);
+            return;
+        }
+        i++;
+    }
+}
+
+void JumpersFormGeneratorConfigWindow::on_pushButton_jumpersLists_clicked()
+{
+    EditStartListWithJumpersListsWindow * window = new EditStartListWithJumpersListsWindow(this);
+    window->setLists(&save->getJumpersListsReference());
+    window->setupWidgets();
+    if(window->exec() == QDialog::Accepted)
+    {
+        QSet<Jumper *> addedJumpers;
+        QVector<JumperFormGeneratorSettings> settings = tableModel->getGeneratorsSettingsReference();
+        settings.detach();
+        for(auto & status : window->constructJumpersListsStatuses())
+        {
+            if(status.second == JumpersListsListItemWidget::Select)
+            {
+                for(auto & jumper : status.first->getJumpersReference())
+                {
+                    if(settingsVectorContainsByJumper(settings, jumper) == false)
+                    {
+                        JumperFormGeneratorSettings setts;
+                        setts.setJumper(jumper);
+                        settings.push_back(setts);
+                    }
+                    addedJumpers.insert(jumper);
+                }
+            }
+            else if(status.second == JumpersListsListItemWidget::Unselect)
+            {
+                for(auto & jumper : status.first->getJumpersReference())
+                {
+                    if(settingsVectorContainsByJumper(settings, jumper) == true && addedJumpers.contains(jumper) == false)
+                    {
+                        settingsVectorRemoveByJumper(settings, jumper);
+                    }
+                }
+            }
+        }
+        tableModel->setGeneratorsSettings(settings);
+        updateTable();
+    }
 }
 

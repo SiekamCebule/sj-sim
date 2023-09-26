@@ -2,6 +2,7 @@
 #include "ui_JumpDataDetailedInfoWindow.h"
 
 #include "../../global/CountryFlagsManager.h"
+#include "../../global/GlobalAppSettings.h"
 #include "../../utilities/functions.h"
 
 JumpDataDetailedInfoWindow::JumpDataDetailedInfoWindow(JumpData *jumpData, QWidget *parent) :
@@ -53,8 +54,8 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
 
         ui->label_takeoffRating->setText(QString::number(jumpData->getSimulationDataReference().getTakeoffRating()));
         ui->label_flightRating->setText(QString::number(jumpData->getSimulationDataReference().getFlightRating()));
-        ui->label_judgesRating->setText(QString::number(jumpData->getSimulationDataReference().getJudgesRating()));
-        ui->label_landingInstability->setText(QString::number(jumpData->getLanding().getRating()));
+        ui->label_landingRating->setText(QString::number(jumpData->getLanding().getRating()));
+        ui->label_snowRain->setText(QString::number(jumpData->getSimulationDataReference().getInrunSnow()));
 
         if(jumpData->getHasCoachGate()){
             ui->label_beats95HSPercents->show();
@@ -75,8 +76,81 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
         windInfoWidget->setWinds(jumpData->getWindsPointer());
         windInfoWidget->setKPoint(jumpData->getHill()->getKPoint());
         windInfoWidget->fillItemsLayout();
+
+        showOrHideByAppSettings();
+
+        if(jumpData->getCompetition() != nullptr){
+        if(jumpData->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+        {
+            double round = MyFunctions::getIndexOfItemInVector(jumpData->getCompetition()->getResultsReference().getResultOfIndividualJumper(jumpData->getJumper())->getJumpsReference(), jumpData) + 1;
+            double points = jumpData->getPoints();
+            double position = 1;
+            CompetitionResults results = jumpData->getCompetition()->getResultsReference();
+            results.getResultsReference().detach();
+            for(auto & res : results.getResultsReference())
+            {
+                if(res.getJumpsReference().count() > round)
+                    res.getJumpsReference().remove(round, res.getJumpsReference().count() - round);
+                res.updatePointsSum();
+            }
+            results.sortInDescendingOrder();
+
+            for(auto & res : results.getResultsReference())
+            {
+                    if(res.getJumpsReference()[round - 1].getPoints() > points)
+                        position++;
+            }
+            ui->label_positionInRound->setText(QString::number(position));
+        }
+        else
+        {
+            ui->label_positionInRoundTitle->hide();
+            ui->label_positionInRoundTitle->hide();
+        }
+        }
+        else
+        {
+            ui->label_positionInRoundTitle->hide();
+            ui->label_positionInRoundTitle->hide();
+        }
     }
     else qDebug()<<"jumpData is nullptr!";
+}
+
+void JumpDataDetailedInfoWindow::showOrHideByAppSettings()
+{
+    JumpDataInfoChoice * c = &GlobalAppSettings::get()->getJumpDataInfoChoiceReference();
+    ui->label_distanceTitle->setHidden(!c->getDistance());
+    ui->label_distance->setHidden(!c->getDistance());
+    ui->label_pointsTitle->setHidden(!c->getPoints());
+    ui->label_points->setHidden(!c->getPoints());
+    ui->label_gateTitle->setHidden(!c->getGate());
+    ui->label_gate->setHidden(!c->getGate());
+    ui->label_averageWindTitle->setHidden(!c->getAveragedWind());
+    ui->label_averageWind->setHidden(!c->getAveragedWind());
+    ui->label_gatePointsTitle->setHidden(!c->getGateCompensation());
+    ui->label_gatePoints->setHidden(!c->getGateCompensation());
+    ui->label_windCompensationTitle->setHidden(!c->getWindCompensation());
+    ui->label_windPoints->setHidden(!c->getWindCompensation());
+    ui->label_totalCompensationTitle->setHidden(!c->getTotalCompensation());
+    ui->label_totalCompensation->setHidden(!c->getTotalCompensation());
+    ui->label_judgesTItle->setHidden(!c->getJudges());
+    ui->label_judges->setHidden(!c->getJudges());
+    ui->label_judgesPointsTitle->setHidden(!c->getJudgesPoints());
+    ui->label_judgesPoints->setHidden(!c->getJudgesPoints());
+    ui->label_landingTypeTitle->setHidden(!c->getLandingType());
+    ui->label_landingType->setHidden(!c->getLandingType());
+    windInfoWidget->setHidden(!c->getSpecificWind());
+    ui->label_takeoffRatingTitle->setHidden(!c->getTakeoffRating());
+    ui->label_takeoffRating->setHidden(!c->getTakeoffRating());
+    ui->label_flightRatingTitle->setHidden(!c->getFlightRating());
+    ui->label_flightRating->setHidden(!c->getFlightRating());
+    ui->label_landingRatingTitle->setHidden(!c->getLandingRating());
+    ui->label_landingRating->setHidden(!c->getLandingRating());
+    ui->label_snowRainTitle->setHidden(!c->getInrunSnow());
+    ui->label_snowRain->setHidden(!c->getInrunSnow());
+    ui->label_positionInRoundTitle->setHidden(!c->getJumpPositionInRound());
+    ui->label_positionInRound->setHidden(!c->getJumpPositionInRound());
 }
 
 void JumpDataDetailedInfoWindow::removeJumperInfoTitle()
@@ -99,27 +173,6 @@ void JumpDataDetailedInfoWindow::removeJumperInfoTitle()
         }
     }
     delete ui->horizontalLayout_jumperInfoTitle;
-}
-
-void JumpDataDetailedInfoWindow::removeSimulationInformationsLayouts()
-{
-    if (ui->formLayout_simulationRating) {
-        while(ui->formLayout_simulationRating->count() > 0){
-            QLayoutItem *item = ui->formLayout_simulationRating->takeAt(0);
-            delete item->widget();
-            delete item;
-        }
-    }
-    delete ui->formLayout_simulationRating;
-
-    if (ui->formLayout_weatherInfos) {
-        while(ui->formLayout_weatherInfos->count() > 0){
-            QLayoutItem *item = ui->formLayout_weatherInfos->takeAt(0);
-            delete item->widget();
-            delete item;
-        }
-    }
-    delete ui->formLayout_weatherInfos;
 }
 
 void JumpDataDetailedInfoWindow::removeWindsInfoLayout()

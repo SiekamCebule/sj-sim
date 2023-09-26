@@ -22,6 +22,21 @@ GlobalAppSettings *GlobalAppSettings::get()
     return m_globalAppSettings;
 }
 
+JumpDataInfoChoice GlobalAppSettings::getJumpDataInfoChoice() const
+{
+    return jumpDataInfoChoice;
+}
+
+JumpDataInfoChoice &GlobalAppSettings::getJumpDataInfoChoiceReference()
+{
+    return jumpDataInfoChoice;
+}
+
+void GlobalAppSettings::setJumpDataInfoChoice(const JumpDataInfoChoice &newJumpDataInfoChoice)
+{
+    jumpDataInfoChoice = newJumpDataInfoChoice;
+}
+
 bool GlobalAppSettings::getShowSeasonJumpersAndHillsHelp() const
 {
     return showSeasonJumpersAndHillsHelp;
@@ -84,6 +99,7 @@ bool GlobalAppSettings::loadFromJson()
     setLanguageID(value.toObject().value("language-id").toInt());
     setShowCalendarEditorHelp(value.toObject().value("show-calendar-editor-help").toBool(true));
     setShowSeasonJumpersAndHillsHelp(value.toObject().value("show-season-jumpers-and-hills-help").toBool(true));
+    setJumpDataInfoChoice(JumpDataInfoChoice::getFromJson(value.toObject().value("jump-data-info-choice").toObject()));
 
     return true;
 }
@@ -104,6 +120,7 @@ bool GlobalAppSettings::writeToJson()
     settingsObject.insert("language-id", getLanguageID());
     settingsObject.insert("show-calendar-editor-help", getShowCalendarEditorHelp());
     settingsObject.insert("show-season-jumpers-and-hills-help", getShowSeasonJumpersAndHillsHelp());
+    settingsObject.insert("jump-data-info-choice", JumpDataInfoChoice::getJsonObject(jumpDataInfoChoice));
 
     mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);
