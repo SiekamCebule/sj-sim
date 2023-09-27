@@ -21,7 +21,7 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
-    ui->lineEdit_resultsFileName->setAlignment(Qt::AlignHCenter);
+    ui->lineEdit_csvFile->setAlignment(Qt::AlignHCenter);
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
 
     jumperEditor = new JumperEditorWidget;
@@ -108,14 +108,9 @@ bool SingleJumpsConfigWindow::getChangeableWindFromInput()
     return ui->checkBox_changeableWind->isChecked();
 }
 
-short SingleJumpsConfigWindow::getResultsFormatFromInput()
-{
-    return ui->comboBox_fileFormat->currentIndex();
-}
-
 QString SingleJumpsConfigWindow::getResultsFileName()
 {
-    return ui->lineEdit_resultsFileName->text();
+    return ui->lineEdit_csvFile->text();
 }
 
 short SingleJumpsConfigWindow::getWindAverageCalculatingType()
@@ -146,6 +141,11 @@ bool SingleJumpsConfigWindow::getHasJudgesFromInput()
 bool SingleJumpsConfigWindow::getHasWindCompensationFromInput()
 {
     return ui->checkBox_hasWindCompensation->isChecked();
+}
+
+double SingleJumpsConfigWindow::importance()
+{
+    return ui->doubleSpinBox_jumpsImportance->value();
 }
 
 HillEditorWidget *SingleJumpsConfigWindow::getHillEditor() const

@@ -62,11 +62,11 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         manager.setJumpsCount(singleJumpsConfig.getJumpsCountFromInput());
         manager.setChangeableWind(singleJumpsConfig.getChangeableWindFromInput());
         manager.setResultsFileName(singleJumpsConfig.getResultsFileName());
-        manager.setResultsFormat(singleJumpsConfig.getResultsFormatFromInput());
         manager.setGate(singleJumpsConfig.getGateFromInput());
         manager.setJumper(singleJumpsConfig.getJumperEditor()->getJumperFromWidgetInput());
         manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
         manager.setWindsGeneratorSettings(singleJumpsConfig.getWindsGeneratorSettingsEditor()->getWindsGenerationSettingsFromInputs());
+        manager.getRules().setJumpsImportance(singleJumpsConfig.importance());
         if(singleJumpsConfig.getDSQProbabilityFromInput() > (-1)){
             manager.getRules().setHasDsq(true);
             manager.setDSQProbability(singleJumpsConfig.getDSQProbabilityFromInput());
@@ -86,7 +86,7 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         if(resultsWindow.exec() == QDialog::Rejected)
         {
             if(manager.getResultsFileName().isNull() == false){
-                manager.saveResultsToFile(SingleJumpsManager::Json);
+                manager.saveResultsCsv(manager.getResultsFileName());
             }
         }
     }

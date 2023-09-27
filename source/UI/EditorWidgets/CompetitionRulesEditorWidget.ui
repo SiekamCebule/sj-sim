@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>334</width>
-    <height>705</height>
+    <height>723</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -487,6 +487,30 @@ w drużynie</string>
        </property>
       </widget>
      </item>
+     <item row="12" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ważność skoków</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_jumpsImportance">
+       <property name="styleSheet">
+        <string notr="true">QWidget{
+	background-color: rgb(222, 221, 218);
+	color: rgb(60, 60, 60);
+	border: 2px solid rgb(65, 0, 0);
+	border-radius: 7px;
+}</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -523,7 +547,7 @@ width: 5px;
         <x>0</x>
         <y>0</y>
         <width>314</width>
-        <height>272</height>
+        <height>262</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -550,7 +574,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>296</width>
-            <height>188</height>
+            <height>178</height>
            </rect>
           </property>
           <attribute name="label">
@@ -563,7 +587,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>296</width>
-            <height>190</height>
+            <height>160</height>
            </rect>
           </property>
           <attribute name="label">

@@ -31,6 +31,7 @@ private:
     bool hasCoachGate;
     int coachGate;
     double inrunSnow;
+    double jumpsImportance;
 
     CompetitionRules * competitionRules;
 
@@ -48,7 +49,7 @@ private:
         FlightRating,
         LandingInstability
     };
-    static double getRandomForJumpSimulation(short parameter, Jumper * jumper);
+    static double getRandomForJumpSimulation(short parameter, Jumper * jumper, double jumpsImportance);
     static double getLandingChance(short landingType, double distance, Hill * hill, Jumper *jumper);
     static bool isJumperBeat95HSPercents(double distance, double HSPoint);
 
@@ -113,6 +114,8 @@ public:
     void setSimulationData(JumpSimulationData *newSimulationData);
     double getInrunSnow() const;
     void setInrunSnow(double newInrunSnow);
+    double getJumpsImportance() const;
+    void setJumpsImportance(double newJumpsImportance);
 };
 
 #endif // JUMPSIMULATOR_H

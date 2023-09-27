@@ -21,7 +21,7 @@ public:
         Json,
         Csv
     };
-    bool saveResultsToFile(short fileFormat = Json);
+    void saveResultsCsv(QString fileName);
 
 private:
     Jumper jumper;
@@ -38,6 +38,7 @@ private:
     short windCompensationDistanceEffect;
     int gate;
     int DSQProbability;
+    double importance;
 
     CompetitionRules rules;
 
@@ -65,12 +66,12 @@ public:
     void setWindAverageCalculatingType(short newWindAverageCalculatingType);
     short getWindCompensationDistanceEffect() const;
     void setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect);
-    short getResultsFormat() const;
-    void setResultsFormat(short newResultsFormat);
     int getDSQProbability() const;
     void setDSQProbability(int newDSQProbability);
     CompetitionRules & getRules();
     void setRules(const CompetitionRules &newRules);
+    double getImportance() const;
+    void setImportance(double newImportance);
 };
 
 #endif // SINGLEJUMPSMANAGER_H

@@ -33,6 +33,7 @@ public:
     short getCompetitionTypeFromInput();
     short getWindCompensationDistanceEffectFromInput();
     short getWindAverageCalculatingTypeFromInput();
+    double getJumpsImportanceFromInput();
 
     CompetitionRules getCompetitionRulesFromWidgetInputs();
 

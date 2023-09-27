@@ -34,6 +34,7 @@ void SingleJumpsManager::simulate()
     jumpSimulator.setDSQBaseProbability(getDSQProbability());
     jumpSimulator.setCompetitionRules(&rules);
     jumpSimulator.setManipulator(new JumpManipulator());
+    jumpSimulator.setJumpsImportance(rules.getJumpsImportance());
 
     double min = 0, max = 100000, avg = 0;
 
@@ -75,46 +76,39 @@ void SingleJumpsManager::simulate()
     delete jumpSimulator.getManipulator();
 }
 
-bool SingleJumpsManager::saveResultsToFile(short fileFormat)
+void SingleJumpsManager::saveResultsCsv(QString fileName)
 {
-    switch(fileFormat)
+    QDir dir(QDir::currentPath());
+    dir.mkpath("results/single-jumps");
+    QFile file("results/single-jumps/" + fileName);
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    file.resize(0);
+    QTextStream stream(&file);
+    stream << QObject::tr("Lp.") << ";" << QObject::tr("Odleglosc") << ";" << QObject::tr("Belka")  << ";" << QObject::tr("Usredniony wiatr") << ";" << QObject::tr("Punkty za wiatr") << ";" << QObject::tr("Punkty za styl") << ";" << QObject::tr("Nota laczna") << "\n";
+    int i = 0;
+    for(auto & jump : jumps)
     {
-    case Json:{
-        if(getResultsFileName().isEmpty()) setResultsFileName("filee");
-        QDir dir(QDir::currentPath());
-        dir.mkpath("results/single-jumps");
-        QFile file("results/single-jumps/" + getResultsFileName() + ".json");
-        file.resize(0);
-        if(!(file.open(QIODevice::ReadWrite | QIODevice::Text)))
-        {
-            QMessageBox message(QMessageBox::Icon::Critical, QObject::tr("Nie można zapisać wyników"), QObject::tr("Nie udało się otworzyć pliku results/single-jumps/<podana nazwa pliku>\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia"),  QMessageBox::StandardButton::Ok);
-            message.setModal(true);
-            message.exec();
-            return false;
-        }
-        QJsonDocument document;
-        QJsonObject mainObject;
-        mainObject.insert("jumper", Jumper::getJsonObject(jumper));
-        QJsonArray array;
-        for(auto & jump : getJumpsReference())
-        {
-            array.push_back(JumpData::getJsonObject(jump));
-            array.push_back(QJsonObject());
-        }
-        mainObject.insert("jumps", array);
-        document.setObject(mainObject);
-        QByteArray bytes = document.toJson(QJsonDocument::Indented);
-        file.write(bytes);
-        file.close();
-
-        break;
+        QString string = QString::number(i+1)+";";
+        string += QString::number(jump.getDistance())+";";
+        string += QString::number(jump.getGate())+";";
+        string += QString::number(jump.getAveragedWind())+";";
+        string += QString::number(jump.getTotalCompensation())+";";
+        string += QString::number(jump.getJudgesPoints())+";";
+        string += QString::number(jump.getPoints())+";";
+        stream << string.replace(".", ",") << "\n";
+        i++;
     }
+    file.close();
+}
 
-    case Csv:
-        break;
-    }
+double SingleJumpsManager::getImportance() const
+{
+    return importance;
+}
 
-    return true;
+void SingleJumpsManager::setImportance(double newImportance)
+{
+    importance = newImportance;
 }
 
 CompetitionRules& SingleJumpsManager::getRules()
@@ -135,16 +129,6 @@ int SingleJumpsManager::getDSQProbability() const
 void SingleJumpsManager::setDSQProbability(int newDSQProbability)
 {
     DSQProbability = newDSQProbability;
-}
-
-short SingleJumpsManager::getResultsFormat() const
-{
-    return resultsFormat;
-}
-
-void SingleJumpsManager::setResultsFormat(short newResultsFormat)
-{
-    resultsFormat = newResultsFormat;
 }
 
 Jumper SingleJumpsManager::getJumper() const

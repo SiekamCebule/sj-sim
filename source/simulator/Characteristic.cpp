@@ -46,6 +46,10 @@ QStringList Characteristic::characteristicTypesForSpecificParent(short parentTyp
         characteristicTypes.push_back("landing-skill");
         characteristicTypes.push_back("both-legs-landing-tendence");
         characteristicTypes.push_back("dsq-probability");
+        characteristicTypes.push_back("less-important-jumps");
+        characteristicTypes.push_back("more-important-jumps");
+        characteristicTypes.push_back("front-wind-use");
+        characteristicTypes.push_back("back-wind-protection");
         break;
     case Hill:
         characteristicTypes.push_back("real-hs-point");
@@ -92,6 +96,14 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
             return QObject::tr("Zwiększona tendencja do lądowania na dwie nogi");
         else if(characteristic.getType() == "dsq-probability")
             return QObject::tr("Zwiększone prawdopodobieństwo dyskwalifikacji");
+        else if(characteristic.getType() == "less-important-jumps")
+            return QObject::tr("Skacze dobrze w mało ważnych seriach");
+        else if(characteristic.getType() == "more-important-jumps")
+            return QObject::tr("Skacze dobrze w ważnych seriach");
+        else if(characteristic.getType() == "front-wind-use")
+            return QObject::tr("Dobrze wykorzystuje wiatr pod narty");
+        else if(characteristic.getType() == "back-wind-protection")
+            return QObject::tr("Jest odporny na wiatr tylny");
 
         /// Hill
         else if(characteristic.getType() == "real-hs-point")
@@ -138,6 +150,14 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
             return QObject::tr("Zmniejszona tendencja do lądowania na dwie nogi");
         else if(characteristic.getType() == "dsq-probability")
             return QObject::tr("Zmniejszone prawdopodobieństwo dyskwalifikacji");
+        else if(characteristic.getType() == "less-important-jumps")
+            return QObject::tr("Skacze słabo w mało ważnych seriach");
+        else if(characteristic.getType() == "more-important-jumps")
+            return QObject::tr("Skacze słabo w ważnych seriach");
+        else if(characteristic.getType() == "front-wind-use")
+            return QObject::tr("Słabo wykorzystuje wiatr pod narty");
+        else if(characteristic.getType() == "back-wind-protection")
+            return QObject::tr("Jest słabo odporny na wiatr tylny");
 
         /// Hill
         else if(characteristic.getType() == "real-hs-point")
@@ -184,6 +204,14 @@ QString Characteristic::getTypeToDisplay(const Characteristic &characteristic)
             return QObject::tr("Tendencja do lądowania na dwie nogi");
         else if(characteristic.getType() == "dsq-probability")
             return QObject::tr("Prawdopodobieństwo dyskwalifikacji");
+        else if(characteristic.getType() == "less-important-jumps")
+            return QObject::tr("Skoki w mało ważnych seriach");
+        else if(characteristic.getType() == "more-important-jumps")
+            return QObject::tr("Skoki w ważnych seriach");
+        else if(characteristic.getType() == "front-wind-use")
+            return QObject::tr("Umiejętność wykorzystania wiatru pod narty");
+        else if(characteristic.getType() == "back-wind-protection")
+            return QObject::tr("Odporność na wiatr tylny");
 
         /// Hill
         else if(characteristic.getType() == "real-hs-point")
@@ -230,6 +258,5 @@ int Characteristic::getAdditionToCharacteristicComboBoxIndexToGetCharacteristic(
     {
         addition += getCharacteristicsForParentTypeCount(i);
     }
-    qDebug()<<"addition: "<<addition;
     return addition;
 }

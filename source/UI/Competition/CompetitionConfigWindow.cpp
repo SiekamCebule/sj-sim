@@ -1181,6 +1181,7 @@ void CompetitionConfigWindow::on_pushButton_autoGate_clicked()
         simulator.setCompetitionRules(new CompetitionRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs()));
         simulator.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
     }
+    simulator.setJumpsImportance(simulator.getCompetitionRules()->getJumpsImportance());
     WindsGenerator windsGenerator;
     windsGenerator.setGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
     while(true)

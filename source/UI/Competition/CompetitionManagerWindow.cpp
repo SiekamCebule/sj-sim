@@ -103,6 +103,17 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
         }
     });
 
+    if(singleCompetition == false){
+        virtualClassificationTableView = new ClassificationResultsTableView(false, nullptr, this);
+        virtualClassificationTableView->getTableView()->setFixedSize(250, 172);
+        setupVirtualClassificationComboBox();
+        ui->verticalLayout_virtualClassificationListView->addWidget(virtualClassificationTableView);
+        emit ui->comboBox_virtualClassification->currentIndexChanged(ui->comboBox_virtualClassification->currentIndex());
+    }
+    else
+    {
+        ui->comboBox_virtualClassification->hide();
+    }
 
     ui->listView_startList->setModel(startListModel);
 
@@ -204,6 +215,10 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
 CompetitionManagerWindow::~CompetitionManagerWindow()
 {
     delete ui;
+    for(auto & virtualClassification : virtualClassifications)
+    {
+        delete virtualClassification;
+    }
 }
 
 void CompetitionManagerWindow::updateToBeatDistanceLabel()
@@ -451,6 +466,16 @@ QVector<KOGroup> CompetitionManagerWindow::getManualKOGroupsFromDialogInputs()
 
     }
     return groups;
+}
+
+void CompetitionManagerWindow::setupVirtualClassificationComboBox()
+{
+    ui->comboBox_virtualClassification->clear();
+    ui->comboBox_virtualClassification->addItem(tr("Wybierz klasyfikację"));
+    for(auto & cls : manager->getCompetitionInfo()->getClassificationsReference())
+    {
+        ui->comboBox_virtualClassification->addItem(cls->getName());
+    }
 }
 
 void CompetitionManagerWindow::setupGoToNextButtonForNextRound()
@@ -703,6 +728,7 @@ void CompetitionManagerWindow::autoSimulateRound()
 
     manager->updateCompetitorsAdvanceStatuses();
     checkRecordsByResults(manager->getResults());
+    emit ui->comboBox_virtualClassification->currentIndexChanged(ui->comboBox_virtualClassification->currentIndex());
 
     if(manager->checkCompetitionEnd() == true){
         setupGoToNextButtonForCompetitionEnd();
@@ -842,6 +868,7 @@ void CompetitionManagerWindow::autoSimulateCompetition()
     updatePointsToTheLeaderLabel();
     ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
     updateActualInrunSnowLevelLabel();
+    emit ui->comboBox_virtualClassification->currentIndexChanged(ui->comboBox_virtualClassification->currentIndex());
 
     manager->updateCompetitorsAdvanceStatuses();
     checkRecordsByResults(manager->getResults());
@@ -908,6 +935,7 @@ void CompetitionManagerWindow::autoSimulateGroup()
 
         manager->updateCompetitorsAdvanceStatuses();
         checkRecordsByResults(manager->getResults());
+        emit ui->comboBox_virtualClassification->currentIndexChanged(ui->comboBox_virtualClassification->currentIndex());
 
         if(manager->checkCompetitionEnd() == true){
             setupGoToNextButtonForCompetitionEnd();
@@ -1060,6 +1088,7 @@ void CompetitionManagerWindow::autoSimulateJumps()
         updatePointsToTheLeaderLabel();
         ui->label_actualAvgWind->setText(QString::number(WindsCalculator::getAveragedWind(actualWinds, manager->getCompetitionRules()->getWindAverageCalculatingType()).getStrengthToAveragedWind()) + " m/s");
         updateActualInrunSnowLevelLabel();
+        emit ui->comboBox_virtualClassification->currentIndexChanged(ui->comboBox_virtualClassification->currentIndex());
 
         manager->updateCompetitorsAdvanceStatuses();
 
@@ -1271,6 +1300,7 @@ void CompetitionManagerWindow::setupSimulator()
     simulator.setWinds(actualWinds);
     updateActualInrunSnow();
     simulator.setInrunSnow(actualInrunSnow);
+    simulator.setJumpsImportance(manager->getCompetitionRules()->getJumpsImportance());
 }
 
 void CompetitionManagerWindow::on_pushButton_jump_clicked()
@@ -1374,6 +1404,7 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     updatePointsToTheLeaderLabel();
 
     checkRecords(jump);
+    emit ui->comboBox_virtualClassification->currentIndexChanged(ui->comboBox_virtualClassification->currentIndex());
 
     if(manager->checkCompetitionEnd()){
         setupGoToNextButtonForCompetitionEnd();
@@ -1527,3 +1558,35 @@ void CompetitionManagerWindow::setActualWinds(const QVector<Wind> &newActualWind
     actualWinds = newActualWinds;
     manager->setActualWinds(&actualWinds);
 }
+
+void CompetitionManagerWindow::on_comboBox_virtualClassification_currentIndexChanged(int index)
+{
+    if(singleCompetition == false){
+    if(index > 0 && singleCompetition == false)
+    {
+        index--;
+        Classification * classification = new Classification(*manager->getCompetitionInfo()->getClassificationsReference()[index]);
+        classification->getResultsReference().detach();
+        for(auto & singleRes : classification->getResultsReference())
+        {
+            if(singleRes->getCompetitionsResultsReference().contains(&this->manager->getCompetitionInfo()->getResultsReference()) == false)
+                singleRes->getCompetitionsResultsReference().push_back(&this->manager->getCompetitionInfo()->getResultsReference());
+            singleRes->updateSingleResults();
+            singleRes->updatePointsSum();
+        }
+        classification->sortInDescendingOrder();
+        virtualClassificationTableView->setClassification(classification);
+        virtualClassificationTableView->fillTable();
+
+        virtualClassifications.push_back(classification);
+    }
+    else
+    {
+        Classification * classification = new Classification("Ok");
+        virtualClassificationTableView->setClassification(classification);
+        virtualClassificationTableView->fillTable();
+        virtualClassifications.push_back(classification);
+    }
+    }
+}
+

@@ -49,6 +49,7 @@ public:
     int getDSQProbabilityFromInput();
     bool getHasJudgesFromInput();
     bool getHasWindCompensationFromInput();
+    double importance();
 };
 
 #endif // SINGLEJUMPSCONFIGWINDOW_H

@@ -221,7 +221,7 @@ background-color: rgb(249, 255, 241);
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="0,0,0">
+      <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="1,0,0">
        <item>
         <widget class="QToolBox" name="toolBox">
          <property name="sizePolicy">
@@ -244,7 +244,7 @@ background-color: rgb(249, 255, 241);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>671</width>
+            <width>845</width>
             <height>648</height>
            </rect>
           </property>
@@ -319,7 +319,7 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>671</width>
+            <width>845</width>
             <height>648</height>
            </rect>
           </property>
@@ -357,7 +357,7 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>671</width>
+            <width>845</width>
             <height>648</height>
            </rect>
           </property>
@@ -395,7 +395,7 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>671</width>
+            <width>845</width>
             <height>648</height>
            </rect>
           </property>
@@ -413,7 +413,7 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>671</width>
+            <width>845</width>
             <height>648</height>
            </rect>
           </property>
@@ -447,6 +447,14 @@ background-color: rgb(255, 223, 189);
           </layout>
          </widget>
          <widget class="QWidget" name="page_jumpersLists">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>845</width>
+            <height>648</height>
+           </rect>
+          </property>
           <attribute name="label">
            <string>Listy zawodników</string>
           </attribute>
@@ -461,7 +469,7 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>671</width>
+            <width>845</width>
             <height>648</height>
            </rect>
           </property>
@@ -494,7 +502,7 @@ background-color: rgb(255, 223, 189);
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>88</width>
+                <width>98</width>
                 <height>88</height>
                </rect>
               </property>
@@ -512,7 +520,7 @@ background-color: rgb(255, 223, 189);
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>653</width>
+                <width>827</width>
                 <height>540</height>
                </rect>
               </property>
@@ -541,7 +549,7 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>671</width>
+            <width>845</width>
             <height>648</height>
            </rect>
           </property>

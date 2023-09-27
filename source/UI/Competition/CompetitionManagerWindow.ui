@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1678</width>
-    <height>990</height>
+    <height>1041</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -83,7 +83,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0,0,0,0,0,0">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0">
+          <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,0">
            <property name="sizeConstraint">
             <enum>QLayout::SetMaximumSize</enum>
            </property>
@@ -192,6 +192,36 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_12">
+             <item>
+              <widget class="QComboBox" name="comboBox_virtualClassification">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: black;</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>TCS</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PŚ</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_virtualClassificationListView"/>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>

@@ -13,6 +13,7 @@
 #include "../../competitions/AbstractCompetitionManager.h"
 #include "../../simulator/JumpManipulator.h"
 #include "../../simulator/InrunSnowGenerator.h"
+#include "../Seasons/Classifications/ClassificationResultsTableView.h"
 
 namespace Ui {
 class CompetitionManagerWindow;
@@ -103,6 +104,9 @@ private:
     QAction * action_autoSimulateJumps;
 
     QVector<KOGroup> getManualKOGroupsFromDialogInputs();
+    void setupVirtualClassificationComboBox();
+    QVector<Classification *> virtualClassifications;
+    ClassificationResultsTableView * virtualClassificationTableView;
 
 public:
     AbstractCompetitionManager *getManager() const;
@@ -135,6 +139,7 @@ private slots:
     void on_pushButton_manipulateJump_clicked();
     void on_pushButton_coachGate_clicked();
     void on_pushButton_inrunSnowGeneratorSettings_clicked();
+    void on_comboBox_virtualClassification_currentIndexChanged(int index);
 };
 
 #endif // COMPETITIONMANAGERWINDOW_H

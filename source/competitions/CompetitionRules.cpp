@@ -17,6 +17,16 @@ CompetitionRules::CompetitionRules(const QString & name) : name(name),
     windCompensationDistanceEffect = 1;
 }
 
+double CompetitionRules::getJumpsImportance() const
+{
+    return jumpsImportance;
+}
+
+void CompetitionRules::setJumpsImportance(double newJumpsImportance)
+{
+    jumpsImportance = newJumpsImportance;
+}
+
 bool CompetitionRules::getHillRecordBreaking() const
 {
     return hillRecordBreaking;
@@ -92,6 +102,7 @@ QJsonObject CompetitionRules::getJsonObject(const CompetitionRules &competitionR
     object.insert("wind-compensation-distance-effect", competitionRules.getWindCompensationDistanceEffect());
     object.insert("wind-average-calculating-type", competitionRules.getWindAverageCalculatingType());
     object.insert("hill-record-breaking", competitionRules.getHillRecordBreaking());
+    object.insert("jumps-importance", competitionRules.getJumpsImportance());
 
     QJsonArray roundsArray;
     for(auto & round : competitionRules.getRounds()){
@@ -155,6 +166,7 @@ CompetitionRules CompetitionRules::getFromJson(const QJsonObject &obj)
     rules.setWindCompensationDistanceEffect(obj.value("wind-compensation-distance-effect").toInt());
     rules.setWindAverageCalculatingType(obj.value("wind-average-calculating-type").toInt());
     rules.setHillRecordBreaking(obj.value("hill-record-breaking").toBool(true));
+    rules.setJumpsImportance(obj.value("jumps-importance").toDouble(5));
 
     QJsonArray roundsArray = obj.value("rounds").toArray();
     for(const auto & round : roundsArray)
