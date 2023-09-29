@@ -18,6 +18,7 @@ public:
     explicit CompetitionsRangeComboBoxesWidget(QWidget *parent = nullptr);
     ~CompetitionsRangeComboBoxesWidget();
 
+    void setupConnections();
     void setupComboBoxes();
     CompetitionInfo * getCompetition(int which);
 

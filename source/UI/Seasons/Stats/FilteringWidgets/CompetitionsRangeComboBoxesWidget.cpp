@@ -8,14 +8,17 @@ CompetitionsRangeComboBoxesWidget::CompetitionsRangeComboBoxesWidget(QWidget *pa
     ui(new Ui::CompetitionsRangeComboBoxesWidget)
 {
     ui->setupUi(this);
-
-    connect(ui->comboBox_firstCompetition, &QComboBox::currentIndexChanged, this, &CompetitionsRangeComboBoxesWidget::changed);
-    connect(ui->comboBox_secondCompetition, &QComboBox::currentIndexChanged, this, &CompetitionsRangeComboBoxesWidget::changed);
 }
 
 CompetitionsRangeComboBoxesWidget::~CompetitionsRangeComboBoxesWidget()
 {
     delete ui;
+}
+
+void CompetitionsRangeComboBoxesWidget::setupConnections()
+{
+    connect(ui->comboBox_firstCompetition, &QComboBox::currentIndexChanged, this, &CompetitionsRangeComboBoxesWidget::changed);
+    connect(ui->comboBox_secondCompetition, &QComboBox::currentIndexChanged, this, &CompetitionsRangeComboBoxesWidget::changed);
 }
 
 void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
@@ -65,40 +68,53 @@ void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
     ui->comboBox_secondCompetition->setCurrentIndex(ui->comboBox_secondCompetition->count() - 1);
 }
 
+/*
+ * Sezon 2023 (0)
+ * K1 (1)
+ * K2 (2)
+ * Sezon 2024 (3)
+ * K1 (4)
+ * K2 (5)
+ * Sezon 2025 (6)
+ * K1 (7)
+ * K2 (8)
+*/
 CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
 {
+    qDebug()<<which;
     int index = 0;
     switch(which)
     {
     case 1:
-        index = ui->comboBox_firstCompetition->currentIndex() - 1;
+        index = ui->comboBox_firstCompetition->currentIndex();
         break;
     case 2:
-        index = ui->comboBox_secondCompetition->currentIndex() - 1;
+        index = ui->comboBox_secondCompetition->currentIndex();
         break;
     }
     if(index == -1)
         index = 0;
+    int i=0;
     if(index >= 0){
         //Teraz odejmijmy index za każdy sezon
         for(auto & season : *seasonsList)
         {
-            if(index >= season.getCalendarReference().getCompetitionsReference().count())
+            if(index > season.getCalendarReference().getCompetitionsReference().count())
             {
                 index -= season.getCalendarReference().getCompetitionsReference().count();
+                index -= 1;
+                i++;
                 continue;
             }
             else
             {
-                qDebug()<<season.getCalendarReference().getCompetitionsReference()[index]->getHill()->getName();
+                if(index > 0)
+                    index--;
                 return season.getCalendarReference().getCompetitionsReference()[index];
             }
         }
     }
     return nullptr;
-
-    //sezon1 ma 68
-    //index 67
 }
 
 QVector<Season> *CompetitionsRangeComboBoxesWidget::getSeasonsList() const

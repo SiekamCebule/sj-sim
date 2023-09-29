@@ -238,7 +238,7 @@ background-color: rgb(241, 200, 255);
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_rankings">
       <attribute name="title">
@@ -485,8 +485,8 @@ background-color: rgb(241, 200, 255);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1774</width>
-            <height>826</height>
+            <width>380</width>
+            <height>437</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_28">

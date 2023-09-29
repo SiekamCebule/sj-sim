@@ -137,6 +137,9 @@ QVector<CompetitionInfo *> CompetitionInfo::getSpecificTypeCompetitions(QVector<
 
 QVector<CompetitionInfo *> CompetitionInfo::getCompetitionsByStartAndEnd(QVector<CompetitionInfo *> competitions, CompetitionInfo *start, CompetitionInfo *end)
 {
+    qDebug()<<start->getHill()->getName()<<", "<<start;
+    qDebug()<<end;
+    qDebug()<<end->getHill()->getName()<<", "<<end;
     qDebug()<<"indexof start: "<<competitions.indexOf(start);
     qDebug()<<"indexof end: "<<competitions.indexOf(end);
     competitions.remove(0, competitions.indexOf(start));

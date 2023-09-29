@@ -501,6 +501,24 @@ w drużynie</string>
      </item>
      <item row="12" column="1">
       <widget class="QDoubleSpinBox" name="doubleSpinBox_jumpsImportance">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>208</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>208</width>
+         <height>21</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">QWidget{
 	background-color: rgb(222, 221, 218);
@@ -547,7 +565,7 @@ width: 5px;
         <x>0</x>
         <y>0</y>
         <width>314</width>
-        <height>262</height>
+        <height>263</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -574,7 +592,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>296</width>
-            <height>178</height>
+            <height>179</height>
            </rect>
           </property>
           <attribute name="label">
@@ -587,7 +605,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>296</width>
-            <height>160</height>
+            <height>179</height>
            </rect>
           </property>
           <attribute name="label">

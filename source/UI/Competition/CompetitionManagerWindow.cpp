@@ -1101,7 +1101,7 @@ void CompetitionManagerWindow::autoSimulateJumps()
 
 void CompetitionManagerWindow::checkRecords(JumpData &jump, bool multipleRecords)
 {
-    if(jump.getCompetition()->getRulesPointer()->getHillRecordBreaking() == true){
+    if(jump.getCompetition()->getRulesPointer()->getHillRecordBreaking() == true && (jump.getLanding().getType() == Landing::TelemarkLanding || jump.getLanding().getType() == Landing::BothLegsLanding)){
         if(roundDoubleToHalf(jump.getDistance()) == roundDoubleToHalf(jump.getHill()->getRecord()) && multipleRecords == false)
         {
             QMessageBox::information(this, "Wyrównanie rekordu skoczni", tr("%1 wyrównał rekord skoczni %2, wynoszący %3m").arg(jump.getJumper()->getTextInfo()).arg(jump.getHill()->getHillText()).arg(QString::number(jump.getHill()->getRecord(), 'f', 1)), QMessageBox::Ok);
@@ -1121,7 +1121,7 @@ void CompetitionManagerWindow::checkRecords(JumpData &jump, bool multipleRecords
     }
     }
 
-    if(jump.getHill()->getHillType() == Hill::Flying){
+    if(jump.getHill()->getHillType() == Hill::Flying && (jump.getLanding().getType() == Landing::TelemarkLanding || jump.getLanding().getType() == Landing::BothLegsLanding)){
     if(roundDoubleToHalf(jump.getDistance()) == roundDoubleToHalf(jump.getJumper()->getPersonalBest()) && multipleRecords == false)
     {
         QMessageBox::information(this, "Wyrównanie rekordu życiowego", tr("%1 wyrównał swój własny rekord życiowy, skacząc %2m").arg(jump.getJumper()->getTextInfo()).arg(QString::number(jump.getDistance(), 'f', 1)), QMessageBox::Ok);

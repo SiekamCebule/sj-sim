@@ -757,6 +757,7 @@ void SimulationSaveManagerWindow::on_pushButton_jumperStats_clicked()
         statsWindow.setJumper(jumper);
         statsWindow.getRangeComboBoxes()->setSeasonsList(&simulationSave->getSeasonsReference());
         statsWindow.getRangeComboBoxes()->setupComboBoxes();
+        statsWindow.getRangeComboBoxes()->setupConnections();
         statsWindow.getClassificationsCheckBoxes()->setClassificationsList(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
         statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
         statsWindow.fillWindow();
@@ -774,6 +775,7 @@ void SimulationSaveManagerWindow::on_pushButton_clicked()
     SimulationRatingsWindow statsWindow(simulationSave, this);
     statsWindow.getRangeComboBoxes()->setSeasonsList(&simulationSave->getSeasonsReference());
     statsWindow.getRangeComboBoxes()->setupComboBoxes();
+    statsWindow.getRangeComboBoxes()->setupConnections();
     statsWindow.getClassificationsCheckBoxes()->setClassificationsList(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
     statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
     statsWindow.setFilteredJumpers(simulationSave->getJumpersReference());

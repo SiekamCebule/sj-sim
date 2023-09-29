@@ -709,16 +709,19 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 4.30;
-        double newDev = dev - double((double(skills->getJumpsEquality()) / 1.4)) - (skills->getLevelOfCharacteristic("takeoff-height") / 6) - ((jumpsImportance - 5) / 3.75);
-        double addition = -((dev / newDev) - 1);
+        dev = 5.7;
+        double newDev = dev;
+        newDev -= (double(skills->getJumpsEquality()) / 2.3);
+        newDev -= (skills->getLevelOfCharacteristic("takeoff-height") / 6);
+        newDev -= ((skills->getForm() - 50) / 100);
+        newDev -= ((jumpsImportance - 5) / 3.4);
+
+        double addition = ((dev / newDev) - 1);
         qDebug() << "addition: " << addition;
         if (MyRandom::randomDouble(0, 1 + addition) <= 0.5) {
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Positive);
         } else {
-            dev -= (skills->getJumpsEquality() / 1.4);
-            dev -= (skills->getLevelOfCharacteristic("takeoff-height") / 6);
-            dev -= ((jumpsImportance - 5) / 3.75);
+            dev = newDev;
             qDebug()<<"devt: "<<dev;
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Negative);
         }
@@ -732,31 +735,38 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 4.30;
+        dev = 5.7;
         switch (skills->getFlightStyle()) {
         case JumperSkills::VStyle:
-            dev -= 0.2;
+            dev -= 0.23;
             break;
         case JumperSkills::ModernVStyle:
-            dev -= 0.1;
+            dev -= 0.115;
             break;
         case JumperSkills::WideVStyle:
-            dev += 0.1;
+            dev += 0.115;
             break;
         case JumperSkills::HStyle:
-            dev += 0.2;
+            dev += 0.23;
             break;
         }
-        double newDev = dev - double((double(skills->getJumpsEquality()) / 1.4)) - (skills->getLevelOfCharacteristic("flight-height") / 6) - ((jumpsImportance - 5) / 3.75);
-        //newDev -= (((jumpsImportance - 5) / 3.75) * ((jumpsImportance - 10) * skills->getLevelOfCharacteristic("more-important-jumps")));
-        double addition = -((dev / newDev) - 1);
+        double newDev = dev;
+        qDebug()<<"dev: "<<newDev;
+        newDev -= (double(skills->getJumpsEquality()) / 2.3);
+        qDebug()<<"dev after equality: "<<newDev;
+        newDev -= (skills->getLevelOfCharacteristic("flight-height") / 6);
+        qDebug()<<"dev after flight height: "<<newDev;
+        newDev -= ((skills->getForm() - 50) / 100);
+        qDebug()<<"dev after form"<<newDev;
+        newDev -= ((jumpsImportance - 5) / 3.4);
+        qDebug()<<"dev after jumps jumps importance"<<newDev;
+
+        double addition = ((dev / newDev) - 1);
         qDebug() << "addition: " << addition;
         if (MyRandom::randomDouble(0, 1 + addition) <= 0.5) {
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Positive);
         } else {
-            dev -= (skills->getJumpsEquality() / 1.4);
-            dev -= (skills->getLevelOfCharacteristic("flight-height") / 6);
-            dev -= ((jumpsImportance - 5) / 3.75);
+            dev = newDev;
             qDebug()<<"devf: "<<dev;
             random = MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Negative);
         }
