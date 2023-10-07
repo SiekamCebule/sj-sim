@@ -237,7 +237,7 @@ background-color: rgb(249, 255, 241);
           </font>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>7</number>
          </property>
          <widget class="QWidget" name="page_jumpers">
           <property name="geometry">
@@ -502,7 +502,7 @@ background-color: rgb(255, 223, 189);
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
+                <width>88</width>
                 <height>88</height>
                </rect>
               </property>
@@ -566,6 +566,13 @@ background-color: rgb(255, 223, 189);
                </property>
                <property name="checked">
                 <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_showTendence">
+               <property name="text">
+                <string>Pokaż tendencję formy zawodników</string>
                </property>
               </widget>
              </item>

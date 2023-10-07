@@ -92,6 +92,7 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
     save->setNextCompetition(save->getActualSeason()->getCalendarReference().getCompetitionsReference()[save->getNextCompetitionIndex()]);
 
     save->setShowForm(obj.value("show-form").toBool(true));
+    save->setShowTendence(obj.value("show-tendence").toBool(true));
     save->setSaveFileSizeReduce(obj.value("save-file-size-reduce").toBool(false));
 
     return save;
@@ -143,6 +144,7 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
     object.insert("next-competition-index", save.getNextCompetitionIndex());
 
     object.insert("show-form", save.getShowForm());
+    object.insert("show-tendence", save.getShowTendence());
     object.insert("save-file-size-reduce", save.getSaveFileSizeReduce());
 
     return object;
@@ -268,6 +270,16 @@ JumperFormTendence *SimulationSave::getJumperTendence(Jumper *jumper)
         if(formTendence.getJumper() == jumper)
             return &formTendence;
     return nullptr;
+}
+
+bool SimulationSave::getShowTendence() const
+{
+    return showTendence;
+}
+
+void SimulationSave::setShowTendence(bool newShowTendence)
+{
+    showTendence = newShowTendence;
 }
 
 QVector<SaveJumpersList> SimulationSave::getJumpersLists() const

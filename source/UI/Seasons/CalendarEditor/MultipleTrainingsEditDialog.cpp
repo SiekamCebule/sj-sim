@@ -1,5 +1,6 @@
 #include "MultipleTrainingsEditDialog.h"
 #include "ui_MultipleTrainingsEditDialog.h"
+#include "../../../global/GlobalDatabase.h"
 #include <QComboBox>
 #include <QLabel>
 
@@ -8,6 +9,10 @@ MultipleTrainingsEditDialog::MultipleTrainingsEditDialog(QWidget *parent) :
     ui(new Ui::MultipleTrainingsEditDialog)
 {
     ui->setupUi(this);
+
+    for(auto & preset : GlobalDatabase::get()->getJumpsImportancePresetsReference()){
+        ui->comboBox_importancePreset->addItem(preset.getName() + " (" + QString::number(preset.getJumpsImportance(), 'f', 2) +")");
+    }
 }
 
 MultipleTrainingsEditDialog::~MultipleTrainingsEditDialog()
@@ -23,6 +28,11 @@ int MultipleTrainingsEditDialog::getTrainingsCount()
 CompetitionRules MultipleTrainingsEditDialog::getTrainingsRules()
 {
     return trainingsRules;
+}
+
+double MultipleTrainingsEditDialog::getJumpsImportance()
+{
+    return ui->doubleSpinBox_importance->value();
 }
 
 void MultipleTrainingsEditDialog::on_pushButton_trainingsRules_clicked()
@@ -91,6 +101,11 @@ void MultipleTrainingsEditDialog::setCount(int count)
     ui->spinBox_trainingsCount->setValue(count);
 }
 
+void MultipleTrainingsEditDialog::setImp(double imp)
+{
+    ui->doubleSpinBox_importance->setValue(imp);
+}
+
 QVector<CompetitionRules> *MultipleTrainingsEditDialog::getRulesList() const
 {
     return rulesList;
@@ -99,5 +114,19 @@ QVector<CompetitionRules> *MultipleTrainingsEditDialog::getRulesList() const
 void MultipleTrainingsEditDialog::setRulesList(QVector<CompetitionRules> *newRulesList)
 {
     rulesList = newRulesList;
+}
+
+
+void MultipleTrainingsEditDialog::on_comboBox_importancePreset_currentIndexChanged(int index)
+{
+    if(index > 0)
+    {
+        index--;
+        ui->doubleSpinBox_importance->setValue(GlobalDatabase::get()->getJumpsImportancePresetsReference()[index].getJumpsImportance());
+    }
+    else
+    {
+        ui->doubleSpinBox_importance->setValue(5);
+    }
 }
 

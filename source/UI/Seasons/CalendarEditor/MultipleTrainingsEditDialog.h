@@ -18,6 +18,7 @@ public:
 
     int getTrainingsCount();
     CompetitionRules getTrainingsRules();
+    double getJumpsImportance();
 
 signals:
     void submitted();
@@ -25,6 +26,8 @@ signals:
 private slots:
     void on_pushButton_trainingsRules_clicked();
     void on_pushButton_submit_clicked();
+
+    void on_comboBox_importancePreset_currentIndexChanged(int index);
 
 private:
     Ui::MultipleTrainingsEditDialog *ui;
@@ -36,6 +39,7 @@ public:
     void setRulesList(QVector<CompetitionRules> *newRulesList);
     void setTrainingsRules(const CompetitionRules &newTrainingsRules);
     void setCount(int count);
+    void setImp(double imp);
 };
 
 #endif // MULTIPLETRAININGSEDITDIALOG_H

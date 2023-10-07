@@ -89,7 +89,7 @@ bool PointsForPlacesPreset::saveToFile(QString dir)
 {
     QJsonDocument document;
     QJsonObject mainObject;
-    mainObject.insert("pointsForPlacesPresets", PointsForPlacesPreset::getJsonObject(*this));
+    mainObject.insert("points-for-places-preset", PointsForPlacesPreset::getJsonObject(*this));
     document.setObject(mainObject);
     QFile file(dir + getName() + ".json");
     file.open(QFile::WriteOnly | QFile::Text);

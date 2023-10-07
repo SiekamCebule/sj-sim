@@ -61,10 +61,9 @@ void CompetitionRulesEditorWidget::resetInputs()
     ui->checkBox_dsq->setChecked(true);
     ui->spinBox_jumpersInTeamCount->setValue(0);
     ui->comboBox_competitionType->setCurrentIndex(CompetitionRules::Individual);
-    ui->comboBox_windAverageCalculatingType->setCurrentIndex(0);
+    ui->comboBox_windAverageCalculatingType->setCurrentIndex(2);
     ui->comboBox_windCompensationDistanceEffect->setCurrentIndex(1);
     ui->checkBox_hillRecordBreaking->setChecked(true);
-    ui->doubleSpinBox_jumpsImportance->clear();
 }
 
 void CompetitionRulesEditorWidget::fillCompetitionRulesInputs()
@@ -222,11 +221,6 @@ short CompetitionRulesEditorWidget::getWindCompensationDistanceEffectFromInput()
 short CompetitionRulesEditorWidget::getWindAverageCalculatingTypeFromInput()
 {
     return ui->comboBox_windAverageCalculatingType->currentIndex();
-}
-
-double CompetitionRulesEditorWidget::getJumpsImportanceFromInput()
-{
-    return ui->doubleSpinBox_jumpsImportance->value();
 }
 
 CompetitionRules CompetitionRulesEditorWidget::getCompetitionRulesFromWidgetInputs()

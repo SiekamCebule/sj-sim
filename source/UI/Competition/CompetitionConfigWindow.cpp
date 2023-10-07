@@ -14,7 +14,7 @@
 #include "../../competitions/CompetitionResults.h"
 #include "../../utilities/functions.h"
 #include "CompetitionManagerWindow.h"
-#include  "RandomWindConfigWindow.h"
+#include "RandomWindConfigWindow.h"
 
 #include <QSizePolicy>
 #include <QStringListModel>
@@ -25,6 +25,7 @@
 #include <QKeyCombination>
 #include <QKeySequence>
 #include <QMessageBox>
+#include <QInputDialog>
 
 CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, SimulationSave *save) :
     QDialog(parent),
@@ -161,7 +162,7 @@ push_button_randomWind->setParent(this);
             }
         }
         else if(seasonCompetition->getAdvancementClassification() != nullptr && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
-            seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersByClassification(seasonCompetition, seasonCompetition->getAdvancementClassification(), simulationSave->getJumpersReference());
+            seasonCompetitionJumpers = IndividualCompetitionManager::getFilteredJumpersByClassification(comp, comp->getAdvancementClassification(), simulationSave->getJumpersReference());
         else{
             for(auto & jp : simulationSave->getJumpersReference())
             {
@@ -1137,10 +1138,19 @@ void CompetitionConfigWindow::on_pushButton_orderByJumpersList_clicked()
 {
     if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
     {
-        IndividualCompetitionManager::setStartListOrderByDefault(&simulationSave->getJumpersReference(), seasonCompetitionJumpers);
+        QInputDialog dialog;
+        dialog.setOptions(QInputDialog::UseListViewForComboBoxItems);
+        QStringList items;
+        for(auto & list : simulationSave->getJumpersListsReference())
+                items.push_back(list.getName());
+        dialog.setComboBoxItems(items);
+        dialog.setWindowTitle(tr("Wybierz listę zawodników"));
+        if(dialog.exec() == QDialog::Accepted)
+        {
+            IndividualCompetitionManager::setStartListOrderByJumpersList(&simulationSave->getJumpersListsReference()[items.indexOf(dialog.textValue())], seasonCompetitionJumpers);
+        }
     }
 }
-
 
 void CompetitionConfigWindow::on_pushButton_jumpersLists_clicked()
 {
@@ -1150,6 +1160,7 @@ void CompetitionConfigWindow::on_pushButton_jumpersLists_clicked()
     if(window->exec() == QDialog::Accepted)
     {
         QSet<Jumper *> addedJumpers;
+        int i = 0;
         for(auto & status : window->constructJumpersListsStatuses())
         {
             if(status.second == JumpersListsListItemWidget::Select && seasonCompetition->getAdvancementCompetition() == nullptr && seasonCompetition->getAdvancementClassification() == nullptr)
@@ -1157,7 +1168,8 @@ void CompetitionConfigWindow::on_pushButton_jumpersLists_clicked()
                 for(auto & jumper : status.first->getJumpersReference())
                 {
                     if(seasonCompetitionJumpers.contains(jumper) == false){
-                        seasonCompetitionJumpers.push_front(jumper);
+                        seasonCompetitionJumpers.insert(i, jumper);
+                        i++;
                         addedJumpers.insert(jumper);
                       }
                 }

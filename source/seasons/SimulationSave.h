@@ -43,6 +43,7 @@ private:
 
     //SETTINGS
     bool showForm;
+    bool showTendence;
     bool saveFileSizeReduce;
 
 public:
@@ -75,6 +76,8 @@ public:
     QVector<SaveJumpersList> getJumpersLists() const;
     QVector<SaveJumpersList> & getJumpersListsReference();
     void setJumpersLists(const QVector<SaveJumpersList> &newJumpersLists);
+    bool getShowTendence() const;
+    void setShowTendence(bool newShowTendence);
 };
 
 #endif // SIMULATIONSAVE_H

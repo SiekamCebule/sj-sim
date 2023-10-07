@@ -42,7 +42,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     connect(ui->toolBox, &QToolBox::currentChanged, this, [this](){
         if(ui->toolBox->currentIndex() == 0 || ui->toolBox->currentIndex() == 1)
         {
-            QTimer::singleShot(276, this, [this](){
+            QTimer::singleShot(200, this, [this](){
                 showJumperAndHillsEditingHelp();
             });
         }
@@ -62,7 +62,9 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     connect(jumpersListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex & index){
         jumperEditor->show();
         jumperEditor->setJumper(simulationSave->getJumpersReference()[index.row()]);
-        jumperEditor->setTendence(&simulationSave->getJumperTendence(jumperEditor->getJumper())->getTendence());
+        if(simulationSave->getShowTendence() == true)
+            jumperEditor->setTendence(&simulationSave->getJumperTendence(jumperEditor->getJumper())->getTendence());
+        else jumperEditor->setTendence(nullptr);
         jumperEditor->fillJumperInputs();
         jumperEditor->setShowForm(simulationSave->getShowForm());
     });
@@ -249,6 +251,10 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
             emit jumpersListsListView->getListModel()->dataChanged(jumpersListsListView->getListModel()->index(0), jumpersListsListView->getListModel()->index(jumpersListsListView->getListModel()->rowCount() - 1));
         }
     });
+
+    ui->checkBox_compactSaveFile->setChecked(simulationSave->getSaveFileSizeReduce());
+    ui->checkBox_showForm->setChecked(simulationSave->getShowForm());
+    ui->checkBox_showTendence->setChecked(simulationSave->getShowTendence());
 }
 
 void SimulationSaveManagerWindow::showClassificationApperanceWindowAfterListClick(const QModelIndex &index, Classification * classification)
@@ -822,5 +828,11 @@ void SimulationSaveManagerWindow::on_checkBox_showForm_stateChanged(int arg1)
 void SimulationSaveManagerWindow::on_checkBox_compactSaveFile_stateChanged(int arg1)
 {
     simulationSave->setSaveFileSizeReduce(arg1);
+}
+
+
+void SimulationSaveManagerWindow::on_checkBox_showTendence_stateChanged(int arg1)
+{
+    simulationSave->setShowTendence(arg1);
 }
 

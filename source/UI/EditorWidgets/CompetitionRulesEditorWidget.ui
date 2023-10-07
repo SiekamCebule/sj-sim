@@ -207,6 +207,23 @@ color: black;</string>
        </property>
       </widget>
      </item>
+     <item row="7" column="1">
+      <widget class="QCheckBox" name="checkBox_hillRecordBreaking">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Rekordy skoczni</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item row="8" column="0">
       <widget class="QLabel" name="label_jumpersInTeam">
        <property name="font">
@@ -460,73 +477,19 @@ w drużynie</string>
        </property>
        <item>
         <property name="text">
-         <string>Oryginalne</string>
+         <string>Proste (niedokładne)</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Ulepszone (Zmniejszony wpływ bocznego wiatru na wysokość rekompensaty)</string>
+         <string>Proste (ulepszone)</string>
         </property>
        </item>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QCheckBox" name="checkBox_hillRecordBreaking">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>9</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Rekordy skoczni</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="font">
-        <font>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Ważność skoków</string>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_jumpsImportance">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>208</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>208</width>
-         <height>21</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QWidget{
-	background-color: rgb(222, 221, 218);
-	color: rgb(60, 60, 60);
-	border: 2px solid rgb(65, 0, 0);
-	border-radius: 7px;
-}</string>
-       </property>
+       <item>
+        <property name="text">
+         <string>Zaawansowane (rzeczywiste)</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
@@ -565,7 +528,7 @@ width: 5px;
         <x>0</x>
         <y>0</y>
         <width>314</width>
-        <height>263</height>
+        <height>290</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -592,7 +555,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>296</width>
-            <height>179</height>
+            <height>206</height>
            </rect>
           </property>
           <attribute name="label">
@@ -605,7 +568,7 @@ width: 5px;
             <x>0</x>
             <y>0</y>
             <width>296</width>
-            <height>179</height>
+            <height>206</height>
            </rect>
           </property>
           <attribute name="label">

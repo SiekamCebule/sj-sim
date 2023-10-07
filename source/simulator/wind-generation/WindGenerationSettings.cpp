@@ -20,7 +20,7 @@ void WindGenerationSettings::randomizeSettings(QVector<WindGenerationSettings> *
         else if(lotability > 10)
             lotability = 10;
     }
-    double baseWindStrength = MyRandom::normalDistributionRandom(0.9 + lotability / 6.5, lotability / 10);
+    double baseWindStrength = MyRandom::normalDistributionRandom(1 + lotability / 8.5, lotability / 9);
     for(auto & sett : *settings)
     {
         double windDirection = prefferedDirection + MyRandom::normalDistributionRandom(0, lotability * 4);
@@ -33,12 +33,12 @@ void WindGenerationSettings::randomizeSettings(QVector<WindGenerationSettings> *
             windDirection -= (int(windDirection / 360)) * 360;
         }
         sett.setBaseDirection(windDirection);
-        double windDirectionInstability = lotability * 21 + MyRandom::normalDistributionRandom(0, lotability * 5);
+        double windDirectionInstability = lotability * 27 + MyRandom::normalDistributionRandom(0, lotability * 4);
         sett.setWindDirectionInstability(windDirectionInstability);
 
         double windStrength = baseWindStrength + MyRandom::normalDistributionRandom(0, lotability / 11);
         sett.setBaseWindStrength(windStrength);
-        double windStrengthInstability = lotability / 2.87 + MyRandom::normalDistributionRandom(0, lotability / 6);
+        double windStrengthInstability = lotability / 4 + MyRandom::normalDistributionRandom(0, lotability / 7);
         sett.setWindStrengthInstability(windStrengthInstability);
     }
 }

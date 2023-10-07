@@ -1,5 +1,6 @@
 #include "MultipleTrialRoundsEditDialog.h"
 #include "ui_MultipleTrialRoundsEditDialog.h"
+#include "../../../global/GlobalDatabase.h"
 #include <QComboBox>
 #include <QLabel>
 
@@ -8,6 +9,10 @@ MultipleTrialRoundsEditDialog::MultipleTrialRoundsEditDialog(QWidget *parent) :
     ui(new Ui::MultipleTrialRoundsEditDialog)
 {
     ui->setupUi(this);
+
+    for(auto & preset : GlobalDatabase::get()->getJumpsImportancePresetsReference()){
+        ui->comboBox_importancePreset->addItem(preset.getName() + " (" + QString::number(preset.getJumpsImportance(), 'f', 2) +")");
+    }
 }
 
 MultipleTrialRoundsEditDialog::~MultipleTrialRoundsEditDialog()
@@ -23,6 +28,11 @@ bool MultipleTrialRoundsEditDialog::getTrialRoundChecked()
 CompetitionRules MultipleTrialRoundsEditDialog::getTrialRoundRules()
 {
     return trialRoundRules;
+}
+
+double MultipleTrialRoundsEditDialog::getJumpsImportance()
+{
+    return ui->doubleSpinBox_importance->value();
 }
 
 void MultipleTrialRoundsEditDialog::on_pushButton_trainingsRules_clicked()
@@ -95,5 +105,23 @@ QVector<CompetitionRules> *MultipleTrialRoundsEditDialog::getRulesList() const
 void MultipleTrialRoundsEditDialog::setRulesList(QVector<CompetitionRules> *newRulesList)
 {
     rulesList = newRulesList;
+}
+
+void MultipleTrialRoundsEditDialog::on_comboBox_importancePreset_currentIndexChanged(int index)
+{
+    if(index > 0)
+    {
+        index--;
+        ui->doubleSpinBox_importance->setValue(GlobalDatabase::get()->getJumpsImportancePresetsReference()[index].getJumpsImportance());
+    }
+    else
+    {
+        ui->doubleSpinBox_importance->setValue(5);
+    }
+}
+
+void MultipleTrialRoundsEditDialog::setImp(double newImp)
+{
+    ui->doubleSpinBox_importance->setValue(newImp);
 }
 

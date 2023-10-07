@@ -687,8 +687,10 @@ void CalendarEditorWidget::execMultipleTrainingsEditDialog(QVector<int> *rows, i
             break;
         }
     }
-    if(competition->getTrainingsReference().count() > 0)
+    if(competition->getTrainingsReference().count() > 0){
         dialog->setTrainingsRules(competition->getTrainingsReference().first()->getRules());
+        dialog->setImp(competition->getTrainingsReference().first()->getJumpsImportance());
+    }
     dialog->setCount(competition->getTrainingsReference().count());
     connect(dialog, &MultipleTrainingsEditDialog::submitted, dialog, &MultipleTrainingsEditDialog::accept);
     if(dialog->exec() == QDialog::Accepted){
@@ -717,6 +719,7 @@ void CalendarEditorWidget::execMultipleTrainingsEditDialog(QVector<int> *rows, i
                     CompetitionInfo * training = new CompetitionInfo(competition->getHill());
                     training->setSerieType(CompetitionInfo::Training);
                     training->setRules(dialog->getTrainingsRules());
+                    training->setJumpsImportance(dialog->getJumpsImportance());
                     qDebug()<<"AAA: "<<dialog->getTrainingsRules().getName();
                     competition->getTrainingsReference().insert(0, training);
                     if(competition->getTrialRound() != nullptr)
@@ -746,8 +749,10 @@ void CalendarEditorWidget::execMultipleTrialRoundsEditDialog(QVector<int> *rows,
             break;
         }
     }
-    if(competition->getTrialRound() != nullptr)
+    if(competition->getTrialRound() != nullptr){
         dialog->setTrialRoundRules(competition->getTrialRound()->getRules());
+        dialog->setImp(competition->getTrialRound()->getJumpsImportance());
+    }
     dialog->setTrialRound(competition->getTrialRound() != nullptr);
     connect(dialog, &MultipleTrialRoundsEditDialog::submitted, dialog, &MultipleTrialRoundsEditDialog::accept);
     if(dialog->exec() == QDialog::Accepted){
@@ -776,6 +781,7 @@ void CalendarEditorWidget::execMultipleTrialRoundsEditDialog(QVector<int> *rows,
                     CompetitionInfo * trialRound = new CompetitionInfo(competition->getHill());
                     trialRound->setSerieType(CompetitionInfo::TrialRound);
                     trialRound->setRules(dialog->getTrialRoundRules());
+                    trialRound->setJumpsImportance(dialog->getJumpsImportance());
                     competition->setTrialRound(trialRound);
                     calendar->getCompetitionsReference().insert(competitionIndex, trialRound);
                     competitionIndex++;

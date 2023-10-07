@@ -12,8 +12,9 @@ class WindsCalculator
 {
 public:
     enum AverageWindType{
-        Original,
-        Improved
+        Simple,
+        SimpleImproved,
+        Original
     };
     static Wind getAveragedWind(const QVector<Wind> &winds, short type);
     static double getWindCompensation(Wind avgWind, Hill * hill);
