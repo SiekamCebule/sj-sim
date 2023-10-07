@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1189</width>
-    <height>794</height>
+    <height>807</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -110,7 +110,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>757</width>
-          <height>619</height>
+          <height>632</height>
          </rect>
         </property>
         <attribute name="label">
@@ -174,7 +174,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>757</width>
-          <height>619</height>
+          <height>632</height>
          </rect>
         </property>
         <attribute name="label">
@@ -238,7 +238,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>757</width>
-          <height>619</height>
+          <height>632</height>
          </rect>
         </property>
         <attribute name="label">
@@ -806,6 +806,18 @@ height: 30px;
            <property name="alignment">
             <set>Qt::AlignCenter</set>
            </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox_jumpsImportancePreset">
+           <property name="styleSheet">
+            <string notr="true">color: black;</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Preset ważności skoków</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>

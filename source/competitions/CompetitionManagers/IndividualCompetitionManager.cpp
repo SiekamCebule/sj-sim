@@ -313,6 +313,27 @@ void IndividualCompetitionManager::setStartListOrderByCountries(QVector<QString>
     startList = tempJumpers;
 }
 
+void IndividualCompetitionManager::setStartListOrderByJumpersList(SaveJumpersList *list, QVector<Jumper *> &startList)
+{
+    QVector<Jumper *> tempJumpers;
+    for(auto & jumperFromList : list->getJumpersReference())
+    {
+        if(startList.contains(jumperFromList) == true)
+        {
+            tempJumpers.push_back(jumperFromList);
+        }
+    }
+    int i=0;
+    for(auto & j : startList)
+    {
+        if(tempJumpers.contains(j) == false){
+            tempJumpers.insert(i, j);
+            i++;
+        }
+    }
+    startList = tempJumpers;
+}
+
 QVector<QVector<KOGroup> *> IndividualCompetitionManager::getRoundsKOGroups() const
 {
     return roundsKOGroups;

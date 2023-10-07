@@ -37,6 +37,8 @@ QVariant CalendarEditorTableModel::headerData(int section, Qt::Orientation orien
                 return tr("Awans (konkurs)");
             case 8:
                 return tr("Awans (klasyfikacja)");
+            case 9:
+                return tr("Ważność skoków");
             }
         }
         else if(orientation == Qt::Vertical){
@@ -64,7 +66,7 @@ int CalendarEditorTableModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return 9;
+    return 10;
 }
 
 QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) const
@@ -164,6 +166,11 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
                 {
                     return competition->getAdvancementClassification()->getName();
                 }
+                break;
+            }
+            case 9:
+            {
+                return competition->getJumpsImportance();
             }
             default:
                 break;

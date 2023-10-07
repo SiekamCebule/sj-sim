@@ -99,7 +99,7 @@ background-color: rgb(253, 253, 253);</string>
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>699</height>
+          <height>732</height>
          </rect>
         </property>
         <attribute name="label">
@@ -153,7 +153,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>699</height>
+          <height>732</height>
          </rect>
         </property>
         <attribute name="label">
@@ -216,7 +216,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>699</height>
+          <height>732</height>
          </rect>
         </property>
         <attribute name="label">
@@ -254,7 +254,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>699</height>
+          <height>732</height>
          </rect>
         </property>
         <attribute name="label">
@@ -290,7 +290,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>699</height>
+          <height>732</height>
          </rect>
         </property>
         <attribute name="label">
@@ -321,19 +321,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
           </layout>
          </item>
         </layout>
-       </widget>
-       <widget class="QWidget" name="page_settings">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>1227</width>
-          <height>699</height>
-         </rect>
-        </property>
-        <attribute name="label">
-         <string>Ustawienia</string>
-        </attribute>
        </widget>
       </widget>
      </item>

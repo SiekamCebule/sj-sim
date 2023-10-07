@@ -11,7 +11,8 @@ JumperEditorWidget::JumperEditorWidget(Jumper *jumper, CharacteristicsEditor *ch
     jumper(jumper),
     characteristicsEditor(characteristicsEditor),
     QWidget(parent),
-    ui(new Ui::JumperEditorWidget)
+    ui(new Ui::JumperEditorWidget),
+    tendence(nullptr)
 {
     ui->setupUi(this);
 
@@ -40,7 +41,8 @@ void JumperEditorWidget::resetJumperInputs()
     ui->comboBox_flightStyle->setCurrentIndex(0);
     ui->doubleSpinBox_landingStyle->setValue(0);
     ui->doubleSpinBox_form->setValue(0);
-    ui->doubleSpinBox_jumpsEquality->setValue(0);;
+    ui->doubleSpinBox_jumpsEquality->setValue(0);
+    ui->doubleSpinBox_formTendence->setValue(0);
     characteristicsEditor->setCharacteristics(QSet<Characteristic>());
 }
 
@@ -56,6 +58,15 @@ void JumperEditorWidget::fillJumperInputs()
     ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_countryFlag->size()));
     ui->lineEdit_img->setText(jumper->getImageName());
     ui->doubleSpinBox_personalBest->setValue(jumper->getPersonalBest());
+    if(tendence != nullptr){
+        ui->doubleSpinBox_formTendence->setValue(*tendence);
+        ui->doubleSpinBox_formTendence->show();
+        ui->label_formTendence->show();
+    }
+    else{
+        ui->doubleSpinBox_formTendence->hide();
+        ui->label_formTendence->hide();
+    }
 
     ui->doubleSpinBox_takeoffTechnique->setValue(jumper->getJumperSkills().getTakeoffTechnique());
     ui->doubleSpinBox_flightTechnique->setValue(jumper->getJumperSkills().getFlightTechnique());
@@ -76,6 +87,17 @@ Jumper JumperEditorWidget::getJumperFromWidgetInput() const
     jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
     jumper.setImageName(ui->lineEdit_img->text());
     jumper.setPersonalBest(ui->doubleSpinBox_personalBest->value());
+
+    if(tendence != nullptr){
+        *tendence = ui->doubleSpinBox_formTendence->value();
+        ui->doubleSpinBox_formTendence->show();
+        ui->label_formTendence->show();
+    }
+    else{
+        ui->doubleSpinBox_formTendence->hide();
+        ui->label_formTendence->hide();
+    }
+
     jumper.getJumperSkillsPointer()->setTakeoffTechnique(ui->doubleSpinBox_takeoffTechnique->value());
     jumper.getJumperSkillsPointer()->setFlightTechnique(ui->doubleSpinBox_flightTechnique->value());
     jumper.getJumperSkillsPointer()->setFlightStyle(ui->comboBox_flightStyle->currentIndex());
@@ -136,4 +158,14 @@ void JumperEditorWidget::on_lineEdit_img_textChanged(const QString &arg1)
     QPixmap pixmap("jumpersImages/" + arg1);
     pixmap = pixmap.scaled(ui->label_imgPreview->size());
     ui->label_imgPreview->setPixmap(pixmap);
+}
+
+double *JumperEditorWidget::getTendence() const
+{
+    return tendence;
+}
+
+void JumperEditorWidget::setTendence(double *newTendence)
+{
+    tendence = newTendence;
 }

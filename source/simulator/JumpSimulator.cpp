@@ -133,7 +133,7 @@ void JumpSimulator::generateTakeoffRating()
 {
     double multiplier = GlobalSimulationSettings::get()->getMaxSkills() / 100;
 
-    double ratingMultiplier = 0.8065
+    double ratingMultiplier = 0.824
                               + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
     simulationData->takeoffRating = jumperSkills->getTakeoffTechnique() * ratingMultiplier;
 
@@ -141,7 +141,7 @@ void JumpSimulator::generateTakeoffRating()
         += ((jumperSkills->getLevelOfCharacteristic("takeoff-power") * 2 * multiplier)
             * (1 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect")));
 
-    ratingMultiplier = 0.1935 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
+    ratingMultiplier = 0.176 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     simulationData->takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill)
@@ -167,11 +167,11 @@ void JumpSimulator::generateFlightRating()
 {
     double multiplier = GlobalSimulationSettings::get()->getMaxSkills() / 100;
 
-    double ratingMultiplier = 0.795
+    double ratingMultiplier = 0.81
                               + 0.11 * hill->getLevelOfCharacteristic("flight-technique-effect");
     simulationData->flightRating = jumperSkills->getFlightTechnique() * ratingMultiplier;
 
-    ratingMultiplier = 0.205 + 0.1 * hill->getLevelOfCharacteristic("flight-form-effect");
+    ratingMultiplier = 0.19 + 0.1 * hill->getLevelOfCharacteristic("flight-form-effect");
     simulationData->flightRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->flightRating -= std::abs(
@@ -239,7 +239,7 @@ void JumpSimulator::generateWindEffects()
         {
             double windDirectionDeviation = Wind::getAbsForFrontWindDistance(wind.getDirection());
             change = (wind.getStrength() * (1 - (windDirectionDeviation / 72)))
-                     * (getWindSegmentDistance() / 27.12);
+                     * (getWindSegmentDistance() / 28.25);
             change *= 1.00 + (((simulationData->getFlightRating() - 75 * multiplier)) / 350);
             switch (jumperSkills->getFlightStyle()) {
             case JumperSkills::VStyle:
@@ -266,7 +266,7 @@ void JumpSimulator::generateWindEffects()
             double windDirectionDeviation = abs(180 - wind.getDirection());
             change = changeAdditionFromFrontWide
                      + ((wind.getStrength() * (1 - (windDirectionDeviation / 90)))
-                        * (getWindSegmentDistance() / 12.35));
+                        * (getWindSegmentDistance() / 14));
             change /= 1.00 + (((simulationData->getFlightRating() - 75 * multiplier)) / 450);
             switch (jumperSkills->getFlightStyle()) {
             case JumperSkills::VStyle:
@@ -709,12 +709,12 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 5.7;
+        dev = 3.5;
         double newDev = dev;
-        newDev -= (double(skills->getJumpsEquality()) / 2.3);
-        newDev -= (skills->getLevelOfCharacteristic("takeoff-height") / 6);
-        newDev -= ((skills->getForm() - 50) / 100);
-        newDev -= ((jumpsImportance - 5) / 3.4);
+        newDev -= (double(skills->getJumpsEquality()) / 2.45);
+        newDev -= (skills->getLevelOfCharacteristic("takeoff-height") / 7);
+        newDev -= ((skills->getForm() - 50) / 110);
+        newDev -= ((jumpsImportance - 5) / 5);
 
         double addition = ((dev / newDev) - 1);
         qDebug() << "addition: " << addition;
@@ -735,7 +735,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 5.7;
+        dev = 3.5;
         switch (skills->getFlightStyle()) {
         case JumperSkills::VStyle:
             dev -= 0.23;
@@ -758,7 +758,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         qDebug()<<"dev after flight height: "<<newDev;
         newDev -= ((skills->getForm() - 50) / 100);
         qDebug()<<"dev after form"<<newDev;
-        newDev -= ((jumpsImportance - 5) / 3.4);
+        newDev -= ((jumpsImportance - 5) / 4.4);
         qDebug()<<"dev after jumps jumps importance"<<newDev;
 
         double addition = ((dev / newDev) - 1);

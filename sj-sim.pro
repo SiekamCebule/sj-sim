@@ -11,6 +11,7 @@ CONFIG += c++17
 
 SOURCES += \
     source/UI/AppSettings/JumpDataInfoChoiceDialog.cpp \
+    source/UI/AppSettings/NewJumpsImportancePresetDialog.cpp \
     source/UI/Competition/CompetitionManagerWindow.cpp \
     source/UI/Competition/JumperCompetitionResultsWidget.cpp \
     source/UI/Competition/RandomWindConfigWindow.cpp \
@@ -110,6 +111,7 @@ SOURCES += \
     source/global/GlobalSimulationSettings.cpp \
     source/global/GlobalTranslators.cpp \
     source/global/JumpDataInfoChoice.cpp \
+    source/global/JumpsImportancePreset.cpp \
     source/global/PointsForPlacesPreset.cpp \
     source/global/TreeItem.cpp \
     source/main.cpp \
@@ -145,6 +147,7 @@ SOURCES += \
 
 HEADERS += \
     source/UI/AppSettings/JumpDataInfoChoiceDialog.h \
+    source/UI/AppSettings/NewJumpsImportancePresetDialog.h \
     source/UI/Competition/CompetitionManagerWindow.h \
     source/UI/Competition/JumperCompetitionResultsWidget.h \
     source/UI/Competition/RandomWindConfigWindow.h \
@@ -245,6 +248,7 @@ HEADERS += \
     source/global/GlobalSimulationSettings.h \
     source/global/GlobalTranslators.h \
     source/global/JumpDataInfoChoice.h \
+    source/global/JumpsImportancePreset.h \
     source/global/PointsForPlacesPreset.h \
     source/global/TreeItem.h \
     source/seasons/ClassificationSingleResult.h \
@@ -278,6 +282,7 @@ HEADERS += \
 
 FORMS += \
     source/UI/AppSettings/JumpDataInfoChoiceDialog.ui \
+    source/UI/AppSettings/NewJumpsImportancePresetDialog.ui \
     source/UI/Competition/CompetitionManagerWindow.ui \
     source/UI/Competition/JumperCompetitionResultsWidget.ui \
     source/UI/Competition/RandomWindConfigWindow.ui \

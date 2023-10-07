@@ -62,6 +62,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     connect(jumpersListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex & index){
         jumperEditor->show();
         jumperEditor->setJumper(simulationSave->getJumpersReference()[index.row()]);
+        jumperEditor->setTendence(&simulationSave->getJumperTendence(jumperEditor->getJumper())->getTendence());
         jumperEditor->fillJumperInputs();
         jumperEditor->setShowForm(simulationSave->getShowForm());
     });
@@ -130,7 +131,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     classificationEditor->setParent(this);
     ui->verticalLayout_classificationEditor->addWidget(classificationEditor);
 
-    classificationsListView = new DatabaseItemsListView(DatabaseItemsListView::ClassificationItems, true, false, false, this);
+    classificationsListView = new DatabaseItemsListView(DatabaseItemsListView::ClassificationItems, true, true, true, this);
     classificationsListView->setClassifications(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());
     classificationsListView->setupListModel();
     classificationsListView->selectOnlyFirstRow();
@@ -197,6 +198,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     {
         emit ui->comboBox_classifications->currentIndexChanged(0);
     }
+    ui->comboBox_archiveSeason->setCurrentIndex(0);
 
     competitionsArchiveModel = new CompetitionsArchiveListModel(&simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference());
     classificationsArchiveModel = new ClassificationsArchiveListModel(&simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference());

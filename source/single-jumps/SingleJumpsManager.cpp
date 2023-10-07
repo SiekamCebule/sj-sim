@@ -34,7 +34,7 @@ void SingleJumpsManager::simulate()
     jumpSimulator.setDSQBaseProbability(getDSQProbability());
     jumpSimulator.setCompetitionRules(&rules);
     jumpSimulator.setManipulator(new JumpManipulator());
-    jumpSimulator.setJumpsImportance(rules.getJumpsImportance());
+    jumpSimulator.setJumpsImportance(importance);
 
     double min = 0, max = 100000, avg = 0;
 

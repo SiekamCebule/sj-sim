@@ -42,6 +42,7 @@ private:
     CompetitionResults results;
     short serieType;
     int exceptionalRoundsCount;
+    double jumpsImportance;
 
     bool cancelled;
     bool played;
@@ -99,6 +100,8 @@ public:
     QVector<QVector<KOGroup> > & getRoundsKOGroupsReference();
     QVector<QVector<KOGroup> > getRoundsKOGroups() const;
     void setRoundsKOGroups(const QVector<QVector<KOGroup> > &newRoundsKOGroups);
+    double getJumpsImportance() const;
+    void setJumpsImportance(double newJumpsImportance);
 };
 
 #endif // COMPETITIONINFO_H

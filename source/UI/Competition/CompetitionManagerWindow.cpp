@@ -1300,7 +1300,8 @@ void CompetitionManagerWindow::setupSimulator()
     simulator.setWinds(actualWinds);
     updateActualInrunSnow();
     simulator.setInrunSnow(actualInrunSnow);
-    simulator.setJumpsImportance(manager->getCompetitionRules()->getJumpsImportance());
+    qDebug()<<"importance: "<<manager->getCompetitionInfo()->getJumpsImportance();
+    simulator.setJumpsImportance(manager->getCompetitionInfo()->getJumpsImportance());
 }
 
 void CompetitionManagerWindow::on_pushButton_jump_clicked()

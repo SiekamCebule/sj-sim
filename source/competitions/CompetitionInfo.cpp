@@ -182,6 +182,16 @@ QString CompetitionInfo::getShortSerieTypeText()
     }
 }
 
+double CompetitionInfo::getJumpsImportance() const
+{
+    return jumpsImportance;
+}
+
+void CompetitionInfo::setJumpsImportance(double newJumpsImportance)
+{
+    jumpsImportance = newJumpsImportance;
+}
+
 QVector<QVector<KOGroup> > CompetitionInfo::getRoundsKOGroups() const
 {
     return roundsKOGroups;
@@ -284,6 +294,7 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     object.insert("exceptional-rounds-count", competition.getExceptionalRoundsCount());
     object.insert("cancelled", competition.getCancelled());
     object.insert("played", competition.getPlayed());
+    object.insert("jumps-importance", competition.getJumpsImportance());
 
     if(competition.getTrialRound() != nullptr)
         object.insert("trial-round-id", QString::number(competition.getTrialRound()->getID()));
@@ -365,6 +376,7 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json, DatabaseOb
     comp.setExceptionalRoundsCount(json.value("exceptional-rounds-count").toInt());
     comp.setCancelled(json.value("cancelled").toBool());
     comp.setPlayed(json.value("played").toBool());
+    comp.setJumpsImportance(json.value("jumps-importance").toDouble(5));
     comp.setTrialRound(static_cast<CompetitionInfo *>(objectsManager->getObjectByID(json.value("trial-round-id").toString().toULong())));
 
     QJsonArray trainingsArray = json.value("training-ids").toArray();

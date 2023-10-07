@@ -57,6 +57,17 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     });
 
     ui->toolBox->setCurrentIndex(0);
+
+    for(auto & preset : GlobalDatabase::get()->getJumpsImportancePresetsReference())
+    {
+        ui->comboBox_jumpsImportancePreset->addItem(preset.getName() + " (" + QString::number(preset.getJumpsImportance(), 'f', 2) + ")");
+    }
+    connect(ui->comboBox_jumpsImportancePreset, &QComboBox::currentIndexChanged, this, [this](int index){
+        if(index > 0)
+            ui->doubleSpinBox_jumpsImportance->setValue(GlobalDatabase::get()->getJumpsImportancePresetsReference()[index - 1].getJumpsImportance());
+        else
+            ui->doubleSpinBox_jumpsImportance->setValue(5.0);
+    });
 }
 
 SingleJumpsConfigWindow::~SingleJumpsConfigWindow()

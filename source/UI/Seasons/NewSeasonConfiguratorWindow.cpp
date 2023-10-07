@@ -102,7 +102,7 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(bool nextSeason, QWidge
         }
     });
 
-    calendarTableModel = new CalendarEditorTableModel(&calendar, &hills, &GlobalDatabase::get()->getEditableCompetitionRules(), 0, this);
+    calendarTableModel = new CalendarEditorTableModel(&calendar, &hills, &competitionsRules, 0, this);
     calendarEditor = new CalendarEditorWidget(calendarTableModel, &calendar.getClassificationsReference(), this);
     ui->verticalLayout_calendarEditor->addWidget(calendarEditor);
 

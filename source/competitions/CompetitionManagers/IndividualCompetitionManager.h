@@ -10,6 +10,7 @@
 #include "../CompetitionResults.h"
 #include "../CompetitionInfo.h"
 #include "KORoundManager.h"
+#include "../../seasons/SaveJumpersList.h"
 
 class IndividualCompetitionManager : public AbstractCompetitionManager
 {
@@ -32,6 +33,7 @@ public:
     static void setStartListOrderByDefault(QVector<Jumper *> * jumpersList, QVector<Jumper *> & startList);
     static void setStartListOrderRandomly(QVector<Jumper *> & startList);
     static void setStartListOrderByCountries(QVector<QString> countries, QVector<Jumper *> & startList);
+    static void setStartListOrderByJumpersList(SaveJumpersList * list, QVector<Jumper *> & startList);
 
 private:
     QVector<QVector<Jumper *>> roundsJumpers;

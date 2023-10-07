@@ -52,6 +52,8 @@ private slots:
 
     void on_pushButton_jumpInfoChoice_clicked();
 
+    void on_pushButton_addJumpsImportancePreset_clicked();
+
 private:
     Ui::AppSettingsWindow *ui;
 

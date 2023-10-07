@@ -36,6 +36,21 @@ GlobalDatabase::~GlobalDatabase()
     delete m_globalDatabase;
 }
 
+QVector<JumpsImportancePreset> GlobalDatabase::getJumpsImportancePresets() const
+{
+    return jumpsImportancePresets;
+}
+
+QVector<JumpsImportancePreset> &GlobalDatabase::getJumpsImportancePresetsReference()
+{
+    return jumpsImportancePresets;
+}
+
+void GlobalDatabase::setJumpsImportancePresets(const QVector<JumpsImportancePreset> &newJumpsImportancePresets)
+{
+    jumpsImportancePresets = newJumpsImportancePresets;
+}
+
 QVector<JumperFormGeneratorSettingsPreset> GlobalDatabase::getFormGeneratorPresets() const
 {
     return formGeneratorPresets;
@@ -165,12 +180,12 @@ void GlobalDatabase::removeJumper(int index)
 
 bool GlobalDatabase::loadFromJson()
 {
-    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadPointsForPlacesPresets() && loadCalendarPresets() && loadFormGeneratorPresets());
+    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadPointsForPlacesPresets() && loadCalendarPresets() && loadFormGeneratorPresets() && loadJumpsImportancePresets());
 }
 
 bool GlobalDatabase::writeToJson()
 {
-    return (writeJumpers() && writeHills() && writeCompetitionsRules() && writeSimulationSaves() && writePointsForPlacesPresets() && writeCalendarPresets() && writeFormGeneratorPresets());
+    return (writeJumpers() && writeHills() && writeCompetitionsRules() && writeSimulationSaves() && writePointsForPlacesPresets() && writeCalendarPresets() && writeFormGeneratorPresets() && writeJumpsImportancePresets());
 }
 
 bool GlobalDatabase::loadJumpers()
@@ -339,6 +354,29 @@ bool GlobalDatabase::loadFormGeneratorPresets()
     return ok;
 }
 
+bool GlobalDatabase::loadJumpsImportancePresets()
+{
+    QDir dir(QCoreApplication::applicationDirPath());
+    if(dir.exists("userData") == false && QSysInfo::productType() == "windows")
+        dir.cdUp();
+    dir.setPath(dir.path() + "/userData/GlobalDatabase/jumpsImportancePresets");
+    dir.setNameFilters(QStringList() << "*.json");
+
+    QStringList fileNames = dir.entryList();
+
+    bool ok = true;
+    for(auto & fileName : fileNames){
+        QFile file("userData/GlobalDatabase/jumpsImportancePresets/" + fileName);
+        file.open(QFile::ReadOnly | QFile::Text);
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        QJsonObject object = doc.object();
+        JumpsImportancePreset p = JumpsImportancePreset::getFromJson(object);
+        jumpsImportancePresets.push_back(p);
+        file.close();
+    }
+    return ok;
+}
+
 bool GlobalDatabase::writeJumpers()
 {
     QJsonDocument document;
@@ -435,7 +473,7 @@ bool GlobalDatabase::writePointsForPlacesPresets()
     bool ok = true;
     for(auto & preset : globalPointsForPlacesPresets)
     {
-        if(preset.saveToFile("pointsForPlacesPresets/") == false)
+        if(preset.saveToFile("userData/GlobalDatabase/pointsForPlacesPresets/") == false)
             ok = false;
     }
     return ok;
@@ -458,6 +496,17 @@ bool GlobalDatabase::writeFormGeneratorPresets()
     for(auto & preset : formGeneratorPresets)
     {
         if(preset.saveToFile("userData/GlobalDatabase/formGeneratorPresets/") == false)
+            ok = false;
+    }
+    return ok;
+}
+
+bool GlobalDatabase::writeJumpsImportancePresets()
+{
+    bool ok = true;
+    for(auto & preset : jumpsImportancePresets)
+    {
+        if(preset.saveToFile("userData/GlobalDatabase/jumpsImportancePresets/") == false)
             ok = false;
     }
     return ok;

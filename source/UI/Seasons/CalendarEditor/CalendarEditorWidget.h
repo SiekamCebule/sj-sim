@@ -69,6 +69,7 @@ private:
     void multipleEditSerieTypes(QVector<int> * rows, int column);
     void execMultipleAdvancementCompetitionEditDialog(QVector<int> *rows, int column);
     void execMultipleAdvancementClassificationEditDialog(QVector<int> * rows, int column);
+    void execJumpsImportanceEditDialog(QVector<int> * rows, int column);
 
 public:
     CalendarEditorTableModel *getModel() const;

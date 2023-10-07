@@ -75,10 +75,27 @@ push_button_randomWind->setParent(this);
         ui->comboBox_classification->hide();
         ui->comboBox_competition->hide();
         ui->pushButton_defaultStartListOrder->hide();
+        ui->pushButton_orderByJumpersList->hide();
         ui->label_3->hide();
+
+        for(auto & preset : GlobalDatabase::get()->getJumpsImportancePresetsReference())
+        {
+            ui->comboBox_jumpsImportancePreset->addItem(preset.getName() + " (" + QString::number(preset.getJumpsImportance(), 'f', 2) + ")");
+        }
+
+        connect(ui->comboBox_jumpsImportancePreset, &QComboBox::currentIndexChanged, this, [this](int index){
+            if(index > 0)
+                ui->doubleSpinBox_jumpsImportance->setValue(GlobalDatabase::get()->getJumpsImportancePresetsReference()[index - 1].getJumpsImportance());
+            else
+                ui->doubleSpinBox_jumpsImportance->setValue(5);
+        });
     }
     else
     {
+        ui->label_jumpsImportance->hide();
+        ui->doubleSpinBox_jumpsImportance->hide();
+        ui->comboBox_jumpsImportancePreset->hide();
+
         int compType = seasonCompetition->getRulesPointer()->getCompetitionType();
         for(auto & classification : Classification::getSpecificTypeClassifications(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference(), compType))
             ui->comboBox_classification->addItem(classification->getName());
@@ -729,6 +746,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         qualsInfo.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
         qualsInfo.setSerieType(CompetitionInfo::Qualifications);
         qualsInfo.setExceptionalRoundsCount(1);
+        qualsInfo.setJumpsImportance(ui->doubleSpinBox_jumpsImportance->value() / 1.16);
         int type = competitionRulesEditor->getCompetitionTypeFromInput();
 
         for(auto & team : competitionTeams)
@@ -801,6 +819,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         info.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
         info.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
         info.setSerieType(CompetitionInfo::Competition);
+        info.setJumpsImportance(ui->doubleSpinBox_jumpsImportance->value());
 
         //competitionManager->setStartingJumpers(startListDisplayWidget->getIndividualCompetitionJumpers());
         //Wypełnić
@@ -1114,6 +1133,14 @@ void CompetitionConfigWindow::on_pushButton_defaultStartListOrder_clicked()
     }
 }
 
+void CompetitionConfigWindow::on_pushButton_orderByJumpersList_clicked()
+{
+    if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+    {
+        IndividualCompetitionManager::setStartListOrderByDefault(&simulationSave->getJumpersReference(), seasonCompetitionJumpers);
+    }
+}
+
 
 void CompetitionConfigWindow::on_pushButton_jumpersLists_clicked()
 {
@@ -1129,9 +1156,10 @@ void CompetitionConfigWindow::on_pushButton_jumpersLists_clicked()
             {
                 for(auto & jumper : status.first->getJumpersReference())
                 {
-                    if(seasonCompetitionJumpers.contains(jumper) == false)
-                        seasonCompetitionJumpers.push_back(jumper);
-                    addedJumpers.insert(jumper);
+                    if(seasonCompetitionJumpers.contains(jumper) == false){
+                        seasonCompetitionJumpers.push_front(jumper);
+                        addedJumpers.insert(jumper);
+                      }
                 }
             }
             else if(status.second == JumpersListsListItemWidget::Unselect)
@@ -1181,7 +1209,10 @@ void CompetitionConfigWindow::on_pushButton_autoGate_clicked()
         simulator.setCompetitionRules(new CompetitionRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs()));
         simulator.setHill(new Hill(hillEditor->getHillFromWidgetInput()));
     }
-    simulator.setJumpsImportance(simulator.getCompetitionRules()->getJumpsImportance());
+    if(type == CompetitionConfigWindow::SeasonCompetition)
+        simulator.setJumpsImportance(seasonCompetition->getJumpsImportance());
+    else
+        simulator.setJumpsImportance(ui->doubleSpinBox_jumpsImportance->value());
     WindsGenerator windsGenerator;
     windsGenerator.setGenerationSettings(windsGeneratorSettingsEditor->getWindsGenerationSettingsFromInputs());
     while(true)

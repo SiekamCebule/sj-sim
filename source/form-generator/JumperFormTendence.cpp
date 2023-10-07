@@ -32,7 +32,7 @@ JumperFormTendence JumperFormTendence::getFromJson(QJsonObject obj, DatabaseObje
     return tendence;
 }
 
-double JumperFormTendence::getTendence() const
+double & JumperFormTendence::getTendence()
 {
     return tendence;
 }

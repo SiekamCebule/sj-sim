@@ -26,8 +26,8 @@ QVariant JumperFormGeneratorsSettingsTableModel::headerData(int section, Qt::Ori
         case 4:
             return tr("Maks. tend.");
         case 5:
-        return tr("Wyrów. tend.");
-            case 6:
+            return tr("Wyrów. tend.");
+        case 6:
             return tr("Zmienn. formy");
         case 7:
             return tr("Bonus formy");

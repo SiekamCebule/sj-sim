@@ -13,6 +13,7 @@
 #include <QLabel>
 #include <QInputDialog>
 #include <QCheckBox>
+#include <QDoubleSpinBox>
 
 CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVector<Classification *> *classificationsList, QWidget *parent) :
     QWidget(parent),
@@ -594,6 +595,11 @@ void CalendarEditorWidget::editActionTriggered()
             execMultipleAdvancementClassificationEditDialog(&rows, column);
             break;
         }
+        case 9:
+        {
+            execJumpsImportanceEditDialog(&rows, column);
+            break;
+        }
         }
         ui->tableView->resizeColumnsToContents();
     }
@@ -958,6 +964,59 @@ void CalendarEditorWidget::execMultipleAdvancementClassificationEditDialog(QVect
             competition->setAdvancementClassification(advancementClassification);
         }
         calendar->fixAdvancementClassifications();
+        emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
+    }
+}
+
+void CalendarEditorWidget::execJumpsImportanceEditDialog(QVector<int> *rows, int column)
+{
+    QDialog * dialog = new QDialog(this);
+    dialog->setModal(true);
+    dialog->setWindowFlags(Qt::Window);
+    dialog->setWindowTitle(tr("Ważność skoków"));
+    dialog->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dialog->setLayout(new QVBoxLayout(this));
+    dialog->setStyleSheet("background-color: white; color: black;");
+
+    QWidget * widget = new QWidget(dialog);
+    QHBoxLayout * layout = new QHBoxLayout(dialog);
+    QLabel * label = new QLabel(dialog);
+    label->setText("Preset: ");
+    QFont font("Ubuntu", 10);
+    font.setBold(true);
+    label->setFont(font);
+    QComboBox * comboBox = new QComboBox(dialog);
+    comboBox->addItem(tr("BRAK"));
+    for(auto & preset : GlobalDatabase::get()->getJumpsImportancePresetsReference()){
+        comboBox->addItem(preset.getName() + " (" + QString::number(preset.getJumpsImportance(), 'f', 2) +")");
+    }
+    layout->addWidget(label);
+    layout->addWidget(comboBox);
+    widget->setLayout(layout);
+
+    QDoubleSpinBox * spinBox = new QDoubleSpinBox(this);
+    spinBox->setValue(SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), rows->first())->getJumpsImportance());
+    spinBox->setFont(QFont("Ubuntu", 11));
+    spinBox->setStyleSheet("color: black;");
+
+    connect(comboBox, &QComboBox::currentIndexChanged, this, [spinBox](int index){
+        if(index > 0)
+            spinBox->setValue(GlobalDatabase::get()->getJumpsImportancePresetsReference()[index - 1].getJumpsImportance());
+        else
+            spinBox->setValue(5);
+    });
+
+    dialog->layout()->addWidget(widget);
+    dialog->layout()->addWidget(spinBox);
+
+    connect(dialog, &QDialog::rejected, dialog,&QDialog::accept);
+
+    if(dialog->exec() == QDialog::Accepted)
+    {
+        for(auto & row : qAsConst(*rows)){
+            CompetitionInfo * competition = SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), row);
+            competition->setJumpsImportance(spinBox->value());
+        }
         emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
     }
 }

@@ -27,7 +27,7 @@ private:
 public:
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
-    double getTendence() const;
+    double &getTendence();
     void setTendence(double newTendence);
 };
 

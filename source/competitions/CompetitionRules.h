@@ -29,7 +29,6 @@ private:
     QString name;
     short competitionType;
     QVector<RoundInfo> rounds;
-    double jumpsImportance;
 
     bool has95HSRule;
     bool hasWindCompensations;
@@ -74,8 +73,6 @@ public:
     void setWindCompensationDistanceEffect(short newWindCompensationDistanceEffect);
     bool getHillRecordBreaking() const;
     void setHillRecordBreaking(bool newHillRecordBreaking);
-    double getJumpsImportance() const;
-    void setJumpsImportance(double newJumpsImportance);
 };
 
 #endif // COMPETITIONRULES_H

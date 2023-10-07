@@ -143,11 +143,11 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
                 Team * team = results->getResultsReference()[index.row()].getTeam();
                 if(manager->getActualRound() == manager->getCompetitionInfo()->getRulesPointer()->getRoundsReference().count() && manager->getActualGroup() == manager->getCompetitionInfo()->getRulesPointer()->getJumpersInTeamCount())
                 {
-                    if(index.row() + 1 + StartListCompetitorStatus::remainingJumpers(manager->getStartListStatusesReference()) == 3)
+                    if(results->getResultOfTeam(team)->getPosition() + StartListCompetitorStatus::remainingJumpers(manager->getStartListStatusesReference()) == 3)
                         return QColor(qRgb(255, 232, 215));
-                    else if(index.row() + 1 + StartListCompetitorStatus::remainingJumpers(manager->getStartListStatusesReference()) == 2)
+                    else if(results->getResultOfTeam(team)->getPosition() + StartListCompetitorStatus::remainingJumpers(manager->getStartListStatusesReference()) == 2)
                         return QColor(qRgb(232, 232, 232));
-                    else if(index.row() + 1 + StartListCompetitorStatus::remainingJumpers(manager->getStartListStatusesReference()) == 1)
+                    else if(results->getResultOfTeam(team)->getPosition() + StartListCompetitorStatus::remainingJumpers(manager->getStartListStatusesReference()) == 1)
                         return QColor(qRgb(255, 247, 205));
                 }
                 if(manager->getAdvanceStatusOfTeam(team) == StartListCompetitorStatus::SureDroppedOut){

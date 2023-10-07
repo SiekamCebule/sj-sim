@@ -69,12 +69,13 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
             switch(type){
             case CompetitionRules::Individual:{
                 results->sortInDescendingOrder();
+                Jumper * jumper = results->getResultsReference().at(index.row()).getJumper();
                 if(manager->getActualRound() == manager->getCompetitionRules()->getRoundsReference().count()){
-                    if(index.row() + 1 + StartListCompetitorStatus::remainingJumpers(*startListStatuses) == 3)
+                    if(results->getResultOfIndividualJumper(jumper)->getPosition() + StartListCompetitorStatus::remainingJumpers(*startListStatuses) == 3)
                         return QColor(qRgb(255, 232, 215));
-                    else if(index.row() + 1 + StartListCompetitorStatus::remainingJumpers(*startListStatuses) == 2)
+                    else if(results->getResultOfIndividualJumper(jumper)->getPosition() + StartListCompetitorStatus::remainingJumpers(*startListStatuses) == 2)
                         return QColor(qRgb(232, 232, 232));
-                    else if(index.row() + 1 + StartListCompetitorStatus::remainingJumpers(*startListStatuses) == 1)
+                    else if(results->getResultOfIndividualJumper(jumper)->getPosition() + StartListCompetitorStatus::remainingJumpers(*startListStatuses) == 1)
                         return QColor(qRgb(255, 247, 205));
                 }
 

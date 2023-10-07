@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "../../simulator/Jumper.h"
 #include "CharacteristicsEditor.h"
+class SimulationSave;
 
 namespace Ui {
 class JumperEditorWidget;
@@ -43,6 +44,10 @@ private:
 
     CharacteristicsEditor * characteristicsEditor;
     Jumper * jumper;
+    double * tendence;
+public:
+    double *getTendence() const;
+    void setTendence(double *newTendence);
 };
 
 #endif // JUMPEREDITORWIDGET_H

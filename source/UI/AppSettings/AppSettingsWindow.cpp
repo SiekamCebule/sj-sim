@@ -14,6 +14,7 @@
 #include "../../global/GlobalDatabase.h"
 #include "../../global/IDGenerator.h"
 #include "JumpDataInfoChoiceDialog.h"
+#include "NewJumpsImportancePresetDialog.h"
 
 extern IDGenerator globalIDGenerator;
 
@@ -305,6 +306,39 @@ void AppSettingsWindow::on_pushButton_jumpInfoChoice_clicked()
     if(dialog->exec() == QDialog::Accepted)
     {
         GlobalAppSettings::get()->setJumpDataInfoChoice(dialog->getChoiceFromInputs());
+    }
+}
+
+
+void AppSettingsWindow::on_pushButton_addJumpsImportancePreset_clicked()
+{
+    NewJumpsImportancePresetDialog dialog;
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        bool contains = false;
+        int i=0;
+        for(auto & pr : GlobalDatabase::get()->getJumpsImportancePresetsReference())
+        {
+            if(pr.getName() == dialog.name())
+            {
+                contains = true;
+                    break;
+            }
+            i++;
+        }
+
+        JumpsImportancePreset preset;
+        preset.setName(dialog.name());
+        preset.setJumpsImportance(dialog.importance());
+        if(contains)
+        {
+            GlobalDatabase::get()->getJumpsImportancePresetsReference()[i] = preset;
+        }
+        else
+        {
+            GlobalDatabase::get()->getJumpsImportancePresetsReference().push_back(preset);
+        }
+        GlobalDatabase::get()->writeToJson();
     }
 }
 
