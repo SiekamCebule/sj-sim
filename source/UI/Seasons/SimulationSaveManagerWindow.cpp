@@ -619,8 +619,8 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
                 fillNextCompetitionInformations();
                 ui->listView_competitionsArchive->reset();
                 simulationSave->saveToFile("simulationSaves/");
-                if(configWindow->getCSVFileName() != "")
-                    competition->saveToCsvFile("results/season-competitions/csv/", simulationSave->getName() + " " + configWindow->getCSVFileName() + ".csv");
+
+                competition->saveToCsvFile("results/season-competitions/csv/", simulationSave->getName() + " " + QString::number(simulationSave->getActualSeason()->getSeasonNumber()) + "-" + QString::number(simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference().indexOf(competition)) + " " + competition->getHill()->getHillText() + " (" + competition->getShortSerieTypeText() + ")" +configWindow->getCSVFileName() + ".csv");
 
                 if(simulationSave->getNextCompetition() == nullptr)
                 {

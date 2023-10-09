@@ -239,7 +239,7 @@ void JumpSimulator::generateWindEffects()
         {
             double windDirectionDeviation = Wind::getAbsForFrontWindDistance(wind.getDirection());
             change = (wind.getStrength() * (1 - (windDirectionDeviation / 72)))
-                     * (getWindSegmentDistance() / 24);
+                     * (getWindSegmentDistance() / 27);
             change *= 1.00 + (((simulationData->getFlightRating() - 75 * multiplier)) / 350);
             switch (jumperSkills->getFlightStyle()) {
             case JumperSkills::VStyle:
@@ -262,11 +262,11 @@ void JumpSimulator::generateWindEffects()
             double changeAdditionFromFrontWide = abs(
                 (wind.getStrength()
                  * (1 - (Wind::getAbsForFrontWindDistance(wind.getDirection()) / 72)))
-                * (getWindSegmentDistance() / 24));
+                * (getWindSegmentDistance() / 27));
             double windDirectionDeviation = abs(180 - wind.getDirection());
             change = changeAdditionFromFrontWide
                      + ((wind.getStrength() * (1 - (windDirectionDeviation / 90)))
-                        * (getWindSegmentDistance() / 11.5));
+                        * (getWindSegmentDistance() / 13));
             change /= 1.00 + (((simulationData->getFlightRating() - 75 * multiplier)) / 450);
             switch (jumperSkills->getFlightStyle()) {
             case JumperSkills::VStyle:

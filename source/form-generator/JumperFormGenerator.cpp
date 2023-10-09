@@ -13,7 +13,7 @@ void JumperFormGenerator::generateJumperFormTendence()
 
     double base = 0;
 
-    double deviation = 4 + ((settings.getTendenceVariability() - 5) / 1.25);
+    double deviation = 5 + ((settings.getTendenceVariability() - 5) / 1);
 
     double random = 0;
     if(settings.getTendenceVariability() > 0)
@@ -21,7 +21,7 @@ void JumperFormGenerator::generateJumperFormTendence()
     else
         random = 0;
 
-    double divider = 1 + (abs(oldTendence + random - 0) / 4);
+    double divider = 1 + (abs(oldTendence + random - 0) / 4.12);
     qDebug()<<"divider: "<<divider;
     if(oldTendence + (random / divider) > 0 && (random > 0))
         random /= divider;
@@ -57,11 +57,11 @@ void JumperFormGenerator::generateJumperForm()
     double oldForm = jumper->getJumperSkillsPointer()->getForm();
     double formChange = 0;
 
-    formChange += tendence->getTendence() * 2.0;
+    formChange += tendence->getTendence() * 1.25;
     formChange *= 1 + ((settings.getFormVariability() - 5) / 5);
 
     double distanceFromAverage = abs(oldForm - 50);
-    double divider = 1 + (distanceFromAverage / 13);
+    double divider = 1 + (distanceFromAverage / 12);
     if(((oldForm + (formChange / divider)) > 50 && (formChange / divider) > 0) || ((oldForm + (formChange / divider)) < 50 && (formChange / divider) < 0))
         formChange /= divider;
     /*else

@@ -131,6 +131,7 @@ SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json, DatabaseObjectsMana
                     }
                 }
                 singleResult->updateSingleResults();
+                singleResult->updatePointsSum();
             }
             classification->sortInDescendingOrder();
         }
