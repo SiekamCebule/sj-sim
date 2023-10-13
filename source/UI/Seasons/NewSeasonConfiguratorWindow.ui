@@ -99,7 +99,7 @@ background-color: rgb(253, 253, 253);</string>
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>732</height>
+          <height>798</height>
          </rect>
         </property>
         <attribute name="label">
@@ -153,7 +153,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>732</height>
+          <height>798</height>
          </rect>
         </property>
         <attribute name="label">
@@ -216,7 +216,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <x>0</x>
           <y>0</y>
           <width>1227</width>
-          <height>732</height>
+          <height>798</height>
          </rect>
         </property>
         <attribute name="label">
@@ -243,80 +243,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </item>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_rulesEditor"/>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="page_calendar">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>1227</width>
-          <height>732</height>
-         </rect>
-        </property>
-        <attribute name="label">
-         <string>Kalendarz</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_8">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_calendarEditor"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_loadCalendarPreset">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Wczytaj preset kalendarza</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="page_classifications">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>1227</width>
-          <height>732</height>
-         </rect>
-        </property>
-        <attribute name="label">
-         <string>Klasyfikacje</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_7">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_classificationsList"/>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_classificationEditor"/>
            </item>
           </layout>
          </item>

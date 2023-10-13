@@ -23,6 +23,7 @@ DatabaseItemsListView::DatabaseItemsListView(int type, bool allowInserting, bool
     pointsForPlacesPresets = nullptr;
     jumpersLists = nullptr;
     listModel = nullptr;
+    calendars = nullptr;
 
     insertAction = new QAction(this);
     insertAction->setShortcut(Qt::CTRL | Qt::Key_A);
@@ -91,6 +92,8 @@ void DatabaseItemsListView::setupListModel()
     case JumpersListsItems:
         listModel = new JumpersListsListModel(this->jumpersLists);
         break;
+    case CalendarItems:
+        listModel = new CalendarsListModel(this->calendars);
     }
     listModel->setParent(this);
     ui->listView->setModel(listModel);
@@ -98,7 +101,6 @@ void DatabaseItemsListView::setupListModel()
 
 void DatabaseItemsListView::selectOnlyFirstRow()
 {
-    qDebug()<<"list model: "<<listModel;
     if(listModel->rowCount() > 0)
     {
         ui->listView->clearSelection();
@@ -122,6 +124,31 @@ void DatabaseItemsListView::showInstructions()
 void DatabaseItemsListView::setRemoveKeySequence(QKeySequence sequence)
 {
     removeAction->setShortcut(sequence);
+}
+
+void DatabaseItemsListView::setAddKeySequence(QKeySequence sequence)
+{
+    insertAction->setShortcut(sequence);
+}
+
+void DatabaseItemsListView::setUpKeySequence(QKeySequence sequence)
+{
+    upAction->setShortcut(sequence);
+}
+
+void DatabaseItemsListView::setDownKeySequence(QKeySequence sequence)
+{
+    downAction->setShortcut(sequence);
+}
+
+QVector<SeasonCalendar *> *DatabaseItemsListView::getCalendars() const
+{
+    return calendars;
+}
+
+void DatabaseItemsListView::setCalendars(QVector<SeasonCalendar *> *newCalendars)
+{
+    calendars = newCalendars;
 }
 
 QVector<SaveJumpersList> *DatabaseItemsListView::getJumpersLists() const
@@ -266,6 +293,10 @@ void DatabaseItemsListView::onInsertActionTriggered()
         case JumpersListsItems:{
             count = jumpersLists->count();
             break;
+        case CalendarItems:{
+            count = calendars->count();
+            break;
+        }
         }
         default: break;
         }
@@ -332,6 +363,13 @@ void DatabaseItemsListView::onInsertActionTriggered()
                 JumpersListsListModel * model = dynamic_cast<JumpersListsListModel *>(listModel);
                 model->insertRows(rowToInsert, 1);
                 model->getJumpersLists()->insert(rowToInsert, 1, SaveJumpersList("Jumpers List"));
+                emit model->dataChanged(model->index(rowToInsert), model->index(model->rowCount() - 1));
+                break;
+            }
+            case CalendarItems:{
+                CalendarsListModel * model = dynamic_cast<CalendarsListModel *>(listModel);
+                model->insertRows(rowToInsert, 1);
+                model->getCalendars()->insert(rowToInsert, 1, new SeasonCalendar("Calendar"));
                 emit model->dataChanged(model->index(rowToInsert), model->index(model->rowCount() - 1));
                 break;
             }
@@ -430,6 +468,17 @@ void DatabaseItemsListView::onRemoveActionTriggered()
                     int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
                     model->removeRows(rowToRemove, 1);
                     model->getJumpersLists()->remove(rowToRemove, 1);
+                }
+                emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
+                break;
+            }
+            case CalendarItems:
+            {
+                CalendarsListModel * model = dynamic_cast<CalendarsListModel *>(listModel);
+                while(ui->listView->selectionModel()->selectedRows().size() > 0){
+                    int rowToRemove = ui->listView->selectionModel()->selectedRows().first().row();
+                    model->removeRows(rowToRemove, 1);
+                    model->getCalendars()->remove(rowToRemove, 1);
                 }
                 emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
                 break;
@@ -539,6 +588,15 @@ void DatabaseItemsListView::onUpActionTriggered()
                 emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
                 break;
             }
+            case CalendarItems:{
+                CalendarsListModel * model = dynamic_cast<CalendarsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(model->index(index.row() - 1));
+                for(auto & index : rows)
+                    model->getCalendars()->swapItemsAt(index.row(), index.row() - 1);
+                emit model->dataChanged(model->index(firstRow), model->index(model->rowCount() - 1));
+                break;
+            }
             default: break;
             }
             emit up();
@@ -642,6 +700,15 @@ void DatabaseItemsListView::onDownActionTriggered()
                     ui->listView->setCurrentIndex(model->index(index.row() + 1));
                 for(auto & index : rows)
                     model->getJumpersLists()->swapItemsAt(index.row(), index.row() + 1);
+                emit model->dataChanged(model->index(lastRow), model->index(0));
+                break;
+            }
+            case CalendarItems:{
+                CalendarsListModel * model = dynamic_cast<CalendarsListModel *>(listModel);
+                for(auto & index : rows)
+                    ui->listView->setCurrentIndex(model->index(index.row() + 1));
+                for(auto & index : rows)
+                    model->getCalendars()->swapItemsAt(index.row(), index.row() + 1);
                 emit model->dataChanged(model->index(lastRow), model->index(0));
                 break;
             }

@@ -98,14 +98,14 @@ push_button_randomWind->setParent(this);
         ui->comboBox_jumpsImportancePreset->hide();
 
         int compType = seasonCompetition->getRulesPointer()->getCompetitionType();
-        for(auto & classification : Classification::getSpecificTypeClassifications(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference(), compType))
+        for(auto & classification : Classification::getSpecificTypeClassifications(simulationSave->getActualSeason()->getActualCalendar()->getClassificationsReference(), compType))
             ui->comboBox_classification->addItem(classification->getName());
 
-        QVector<CompetitionInfo *> competitions = CompetitionInfo::getSpecificTypeCompetitions(simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference(), compType);
+        QVector<CompetitionInfo *> competitions = CompetitionInfo::getSpecificTypeCompetitions(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference(), compType);
         for(auto & competition : competitions)
         {
-            int competitionIndex = simulationSave->getActualSeason()->getCalendarReference().getCompetitionMainIndex(simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference(), competition); //Index konkursu na głównej liście (bez treningów i serii próbnych)
-            if(competitionIndex < SeasonCalendar::getCompetitionMainIndex(simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference(), simulationSave->getNextCompetition())){
+            int competitionIndex = simulationSave->getActualSeason()->getActualCalendar()->getCompetitionMainIndex(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference(), competition); //Index konkursu na głównej liście (bez treningów i serii próbnych)
+            if(competitionIndex < SeasonCalendar::getCompetitionMainIndex(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference(), simulationSave->getNextCompetition())){
                 Hill * hill = competition->getHill();
                 ui->comboBox_competition->addItem(QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower()))),
                                               QString::number(competitionIndex + 1) + ". " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
@@ -123,13 +123,13 @@ push_button_randomWind->setParent(this);
         jumpersListView->setSeasonJumpers(&competitionJumpers);
     else{
         jumpersListView->setType(DatabaseItemsListView::SeasonJumpersItems);
-        bool condition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference().count() > simulationSave->getNextCompetitionIndex() + 1;
+        bool condition = simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference().count() > simulationSave->getNextCompetitionIndex() + 1;
         bool secondCondition = false;
         if(condition)
-            secondCondition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1]->getTrialRound() == seasonCompetition && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual;
+            secondCondition = simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1]->getTrialRound() == seasonCompetition && seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual;
         CompetitionInfo * comp;
         if(secondCondition)
-            comp = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1];
+            comp = simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1];
         else
             comp = seasonCompetition;
         //Czy seria próbna następnego konkursu po aktualnym równa się aktualnemu konkursowi
@@ -225,13 +225,13 @@ push_button_randomWind->setParent(this);
 
         if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
         {
-            bool condition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference().count() > simulationSave->getNextCompetitionIndex() + 1;
+            bool condition = simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference().count() > simulationSave->getNextCompetitionIndex() + 1;
             bool secondCondition = false;
             if(condition)
-                secondCondition = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1]->getTrialRound() == seasonCompetition;
+                secondCondition = simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1]->getTrialRound() == seasonCompetition;
             CompetitionInfo * comp;
             if(secondCondition)
-                comp = simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1];
+                comp = simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference()[simulationSave->getNextCompetitionIndex() + 1];
             else
                 comp = seasonCompetition;
             if(comp->getAdvancementCompetition() != nullptr)
@@ -984,7 +984,7 @@ void CompetitionConfigWindow::on_comboBox_competition_activated(int index)
     {
         index--; //Nie liczymy pierwszego item'a - "Według konkursu"
         int type = seasonCompetition->getRulesPointer()->getCompetitionType();
-        QVector<CompetitionInfo *> competitions = CompetitionInfo::getSpecificTypeCompetitions(simulationSave->getActualSeason()->getCalendarReference().getCompetitionsReference(), type);
+        QVector<CompetitionInfo *> competitions = CompetitionInfo::getSpecificTypeCompetitions(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference(), type);
         CompetitionInfo * competition = SeasonCalendar::getMainCompetitionByIndex(competitions, index);
         if(type == CompetitionRules::Individual){
             IndividualCompetitionManager::setStartListOrderByCompetitionResults(seasonCompetitionJumpers, competition);
@@ -1013,7 +1013,7 @@ void CompetitionConfigWindow::on_comboBox_classification_activated(int index)
     {
         index--; //Nie liczymy pierwszego item'a - "Według klasyfikacji"
         int type = seasonCompetition->getRulesPointer()->getCompetitionType();
-        Classification * classification = Classification::getSpecificTypeClassifications(simulationSave->getActualSeason()->getCalendarReference().getClassificationsReference(), type).at(index);
+        Classification * classification = Classification::getSpecificTypeClassifications(simulationSave->getActualSeason()->getActualCalendar()->getClassificationsReference(), type).at(index);
         if(type == CompetitionRules::Individual)
         {
             IndividualCompetitionManager::setStartListOrderByClassification(seasonCompetitionJumpers, classification);

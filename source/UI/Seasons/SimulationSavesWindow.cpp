@@ -66,11 +66,10 @@ void SimulationSavesWindow::on_pushButton_add_clicked()
 
             Season season;
             season.setSeasonNumber(simulationSaveWindow->getSeasonNumberFromInput());
-            season.setCalendar(seasonWindow->getCalendar());
-            season.getCalendarReference().updateCompetitionsQualifyingCompetitions();
 
             simulationSave->getSeasonsReference().push_back(season);
             simulationSave->setActualSeason(&simulationSave->getSeasonsReference().last());
+            simulationSave->getActualSeason()->setActualCalendar(nullptr);
 
             simulationSave->updateNextCompetitionIndex();
 

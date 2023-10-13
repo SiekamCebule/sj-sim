@@ -58,10 +58,10 @@ QVariant SimulationRecordsTableModel::data(const QModelIndex &index, int role) c
             CompetitionInfo * comp = jump->getCompetition();
             Season * season = nullptr;
             for(auto & s : save->getSeasonsReference())
-                if(s.getCalendarReference().getCompetitionsReference().contains(comp))
+                if(s.getActualCalendar()->getCompetitionsReference().contains(comp))
                     season = &s;
 
-            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getCalendarReference().getCompetitionsReference().indexOf(comp) + 1)
+            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getActualCalendar()->getCompetitionsReference().indexOf(comp) + 1)
                              + " " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()) + tr(" (Runda ")
                              + QString::number(MyFunctions::getIndexOfItemInVector(jump->getSingleResult()->getJumpsReference(), jump) + 1) + ") ";
             switch(comp->getSerieType())

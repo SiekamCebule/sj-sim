@@ -34,8 +34,14 @@ public:
 
     void setupNextSeasonConfigButton();
     void configNextSeason();
+    bool checkSeasonEnd();
 
     void showClassificationApperanceWindowAfterListClick(const QModelIndex & index, Classification *classification);
+
+    void updateArchive();
+
+signals:
+    void actualCalendarChanged();
 
 private:
     Ui::SimulationSaveManagerWindow *ui;
@@ -53,6 +59,7 @@ private:
 
     CalendarEditorTableModel * calendarTableModel;
     CalendarEditorWidget * calendarEditor;
+    DatabaseItemsListView * calendarsListView;
 
     DatabaseItemsListView * classificationsListView;
     int classificationsListViewActualElement;
@@ -70,6 +77,9 @@ private:
 
 public:
     SimulationSave *getSimulationSave() const;
+    DatabaseItemsListView *getCalendarsListView() const;
+    void setCalendarsListView(DatabaseItemsListView *newCalendarsListView);
+
 private slots:
     void on_pushButton_competitionConfig_clicked();
     void on_pushButton_saveToFile_clicked();
@@ -83,6 +93,8 @@ private slots:
     void on_checkBox_showForm_stateChanged(int arg1);
     void on_checkBox_compactSaveFile_stateChanged(int arg1);
     void on_checkBox_showTendence_stateChanged(int arg1);
+    void on_lineEdit_calendarName_editingFinished();
+    void on_comboBox_archiveCalendar_currentIndexChanged(int index);
 };
 
 #endif // SIMULATIONSAVEMANAGERWINDOW_H

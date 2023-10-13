@@ -14,20 +14,24 @@ class Season : public ClassWithID
 {
 public:
     Season();
+    ~Season();
 
     static QJsonObject getJsonObject(Season & season);
     static Season getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
 
 private:
-    SeasonCalendar calendar;
+    QVector<SeasonCalendar *> calendars;
+    SeasonCalendar * actualCalendar;
     int seasonNumber;
 
 public:
-    SeasonCalendar getCalendar() const;
-    SeasonCalendar & getCalendarReference();
-    void setCalendar(const SeasonCalendar &newCalendar);
     int getSeasonNumber() const;
     void setSeasonNumber(int newSeasonNumber);
+    QVector<SeasonCalendar *> getCalendars() const;
+    QVector<SeasonCalendar *> & getCalendarsReference();
+    void setCalendars(const QVector<SeasonCalendar *> &newCalendars);
+    SeasonCalendar *getActualCalendar() const;
+    void setActualCalendar(SeasonCalendar *newActualCalendar);
 };
 
 #endif // SEASON_H

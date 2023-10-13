@@ -10,6 +10,7 @@
 #include "../../simulator/Team.h"
 #include "../../competitions/CompetitionRules.h"
 #include "../../seasons/Classification.h"
+#include "../../seasons/SeasonCalendar.h"
 #include "../../global/PointsForPlacesPreset.h"
 #include "ListModels/CompetitionRulesListModel.h"
 #include "ListModels/HillsListModel.h"
@@ -19,6 +20,7 @@
 #include "ListModels/SeasonJumpersListModel.h"
 #include "ListModels/SeasonHillsListModel.h"
 #include "ListModels/JumpersListsListModel.h"
+#include "ListModels/CalendarsListModel.h"
 
 namespace Ui {
 class DatabaseItemsListView;
@@ -40,7 +42,8 @@ public:
         CompetitionRulesItems,
         ClassificationItems,
         PointsForPlacesPresetsItems,
-        JumpersListsItems
+        JumpersListsItems,
+        CalendarItems
     };
 
     void setupListModel();
@@ -50,6 +53,9 @@ public:
     void showInstructions();
 
     void setRemoveKeySequence(QKeySequence sequence);
+    void setAddKeySequence(QKeySequence sequence);
+    void setUpKeySequence(QKeySequence sequence);
+    void setDownKeySequence(QKeySequence sequence);
 
 signals:
     void listViewDoubleClicked(const QModelIndex &index);
@@ -71,6 +77,7 @@ private:
     QVector<Classification *> * classifications;
     QVector<PointsForPlacesPreset> * pointsForPlacesPresets;
     QVector<SaveJumpersList> * jumpersLists;
+    QVector<SeasonCalendar *> * calendars;
 
     QAbstractListModel * listModel;
 
@@ -125,6 +132,8 @@ public:
     void setShowItemsNumbers(bool newShowItemsNumbers);
     QVector<SaveJumpersList> *getJumpersLists() const;
     void setJumpersLists(QVector<SaveJumpersList> *newJumpersLists);
+    QVector<SeasonCalendar *> *getCalendars() const;
+    void setCalendars(QVector<SeasonCalendar *> *newCalendars);
 };
 
 #endif // DATABASEITEMSLISTVIEW_H

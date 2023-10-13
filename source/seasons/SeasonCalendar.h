@@ -5,11 +5,12 @@
 #include <QSharedPointer>
 #include <QJsonObject>
 #include "../competitions/CompetitionInfo.h"
+#include "../utilities/ClassWithID.h"
 
-class SeasonCalendar
+class SeasonCalendar : public ClassWithID
 {
 public:
-    SeasonCalendar();
+    SeasonCalendar(QString name = "");
     ~SeasonCalendar();
 
     void fixCompetitionsClassifications();
@@ -25,9 +26,12 @@ public:
     static CompetitionInfo * getCompetitionByIndexAndType(QVector<CompetitionInfo *> & competitions, int index, int type);
     static CompetitionInfo * getCompetitionAfterCompetitionFilteredByType(QVector<CompetitionInfo *> & competitions, int actualIndex, int type, int howMany);
 
+    bool getAllPlayed();
+
 private:
     QVector<CompetitionInfo *> competitions;
     QVector<Classification *> classifications;
+    QString name;
 
 public:
     QVector<CompetitionInfo *> getCompetitions() const;
@@ -36,6 +40,8 @@ public:
     QVector<Classification *> getClassifications() const;
     QVector<Classification *> &getClassificationsReference();
     void setClassifications(const QVector<Classification *> &newClassifications);
+    QString getName() const;
+    void setName(const QString &newName);
 };
 
 #endif // SEASONCALENDAR_H

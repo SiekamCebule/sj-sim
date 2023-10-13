@@ -21,12 +21,14 @@ int CompetitionsArchiveListModel::rowCount(const QModelIndex &parent) const
         return 0;
 
     int count = 0;
+    if(seasonCompetitions != nullptr){
     for(auto & competition : *seasonCompetitions)
     {
         if(competition->getPlayed() == true)
             count++;
         else
             break;
+    }
     }
     return count;
 }

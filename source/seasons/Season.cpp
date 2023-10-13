@@ -3,7 +3,11 @@
 Season::Season() :
     ClassWithID()
 {
+    generateID();
+}
 
+Season::~Season()
+{
 }
 
 QJsonObject Season::getJsonObject(Season &season)
@@ -11,7 +15,16 @@ QJsonObject Season::getJsonObject(Season &season)
     QJsonObject obj;
     obj.insert("id", QString::number(season.getID()));
     obj.insert("season-number", season.getSeasonNumber());
-    obj.insert("calendar", SeasonCalendar::getJsonObject(season.getCalendarReference()));
+    if(season.getActualCalendar() != nullptr)
+        obj.insert("actual-calendar-id", QString::number(season.getActualCalendar()->getID()));
+    else
+        obj.insert("actual-calendar-id", QString::number(-1));
+    QJsonArray array;
+    for(auto & cal : season.getCalendarsReference())
+    {
+        array.push_back(SeasonCalendar::getJsonObject(*cal));
+    }
+    obj.insert("calendars", array);
 
     return obj;
 }
@@ -21,13 +34,46 @@ Season Season::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsMana
     Season season;
     season.setID(obj.value("id").toString().toULong());
     season.setSeasonNumber(obj.value("season-number").toInt());
-    season.setCalendar(SeasonCalendar::getFromJson(obj.value("calendar").toObject(), objectsManager));
+    QJsonArray array = obj.value("calendars").toArray();
+    for(auto a : array)
+    {
+        season.getCalendarsReference().push_back(new SeasonCalendar(SeasonCalendar::getFromJson(a.toObject(), objectsManager)));
+    }
+    if(objectsManager != nullptr)
+        objectsManager->fill(&season.getCalendarsReference());
+
+    if(obj.value("actual-calendar-id").toString().toULong() == -1)
+        season.setActualCalendar(nullptr);
+    else
+        season.setActualCalendar(static_cast<SeasonCalendar *>(objectsManager->getObjectByID(obj.value("actual-calendar-id").toString().toULong())));
 
     return season;
 }
 
-// Gdzie powinny być zapisywane CompetitionResults i dlaczego w CompetitionResults to jest wskaźnik a nie obiekt?
-// W sumie nie wiem dlaczego resultsy nie są jako obiekt w CompetitionInfo. Chyba powinniśmy tak zrobić bo inaczej będzie trzeba robić jako new i usuwać.
+SeasonCalendar *Season::getActualCalendar() const
+{
+    return actualCalendar;
+}
+
+void Season::setActualCalendar(SeasonCalendar *newActualCalendar)
+{
+    actualCalendar = newActualCalendar;
+}
+
+QVector<SeasonCalendar *> Season::getCalendars() const
+{
+    return calendars;
+}
+
+QVector<SeasonCalendar *> &Season::getCalendarsReference()
+{
+    return calendars;
+}
+
+void Season::setCalendars(const QVector<SeasonCalendar *> &newCalendars)
+{
+    calendars = newCalendars;
+}
 
 int Season::getSeasonNumber() const
 {
@@ -37,19 +83,4 @@ int Season::getSeasonNumber() const
 void Season::setSeasonNumber(int newSeasonNumber)
 {
     seasonNumber = newSeasonNumber;
-}
-
-SeasonCalendar Season::getCalendar() const
-{
-    return calendar;
-}
-
-SeasonCalendar &Season::getCalendarReference()
-{
-    return calendar;
-}
-
-void Season::setCalendar(const SeasonCalendar &newCalendar)
-{
-    calendar = newCalendar;
 }

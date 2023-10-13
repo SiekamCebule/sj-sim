@@ -6,7 +6,7 @@
 #include <QJsonArray>
 #include <QJsonValue>
 
-SeasonCalendar::SeasonCalendar()
+SeasonCalendar::SeasonCalendar(QString name) : name(name)
 {
 
 }
@@ -97,6 +97,8 @@ void SeasonCalendar::updateCompetitionsQualifyingCompetitions()
 SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json, DatabaseObjectsManager * objectsManager)
 {
     SeasonCalendar calendar;
+    calendar.setID(json.value("id").toString().toULong());
+    calendar.setName(json.value("name").toString());
 
     QJsonArray classificationsArray = json.value("classifications").toArray();
     for(auto val : classificationsArray){
@@ -143,6 +145,8 @@ SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json, DatabaseObjectsMana
 QJsonObject SeasonCalendar::getJsonObject(SeasonCalendar &calendar)
 {
     QJsonObject object;
+    object.insert("id", QString::number(calendar.getID()));
+    object.insert("name", calendar.getName());
 
     QJsonArray classificationsArray;
     for(auto & cls : qAsConst(calendar.getClassificationsReference()))
@@ -217,6 +221,24 @@ CompetitionInfo *SeasonCalendar::getCompetitionAfterCompetitionFilteredByType(QV
         }
     }
     return nullptr;
+}
+
+bool SeasonCalendar::getAllPlayed()
+{
+    for(auto & comp : competitions)
+        if(comp->getPlayed() == false)
+            return false;
+    return true;
+}
+
+QString SeasonCalendar::getName() const
+{
+    return name;
+}
+
+void SeasonCalendar::setName(const QString &newName)
+{
+    name = newName;
 }
 
 QVector<Classification *> SeasonCalendar::getClassifications() const

@@ -238,7 +238,7 @@ void AppSettingsWindow::on_pushButton_repairDatabase_2_clicked()
 
     for(auto & save : GlobalDatabase::get()->getEditableGlobalSimulationSaves())
     {
-        SeasonCalendar * calendar = &save->getActualSeason()->getCalendarReference();
+        SeasonCalendar * calendar = save->getActualSeason()->getActualCalendar();
         calendar->fixAdvancementClassifications();
         dialog.setValue(dialog.value() + 1);
         QCoreApplication::processEvents();

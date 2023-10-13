@@ -64,7 +64,7 @@ void ApperanceInClassificationWindow::fillChart()
     //Chcemy na wykresie pokazać pozycje po koleji (od najstarszego konkursu)
     archiveResultsCompetitions = archiveResults.keys();
     positions.clear();
-    for(auto & comp : season->getCalendarReference().getCompetitionsReference())
+    for(auto & comp : season->getActualCalendar()->getCompetitionsReference())
     {
         if(archiveResultsCompetitions.contains(comp))
             positions.push_back(archiveResults.value(comp));
@@ -115,7 +115,7 @@ void ApperanceInClassificationWindow::updateChartCompetition(const QPointF &poin
         {
             CompetitionInfo * competition = nullptr;
             int i=0;
-            for(auto & comp : season->getCalendarReference().getCompetitionsReference())
+            for(auto & comp : season->getActualCalendar()->getCompetitionsReference())
             {
                 if(archiveResultsCompetitions.contains(comp)){
                     if(i==int(point.x() - 1)){
@@ -127,7 +127,7 @@ void ApperanceInClassificationWindow::updateChartCompetition(const QPointF &poin
             }
             Hill * hill = competition->getHill();
 
-            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getCalendarReference().getCompetitionsReference().indexOf(competition) + 1)
+            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getActualCalendar()->getCompetitionsReference().indexOf(competition) + 1)
                              + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint());
             switch(competition->getSerieType())
             {

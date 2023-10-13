@@ -659,26 +659,26 @@ void SimulationRatingsWindow::fillWindow()
     for(auto & season : save->getSeasonsReference())
     {
         Hill * hill = mostDifferenceBetweenWinnerCompetition->getHill();
-        ui->label_biggerWinJumper->setText("   " + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getCalendarReference().getCompetitionsReference().indexOf(mostDifferenceBetweenWinnerCompetition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
+        ui->label_biggerWinJumper->setText("   " + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getActualCalendar()->getCompetitionsReference().indexOf(mostDifferenceBetweenWinnerCompetition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
     }
     ui->label_smallestWin->setText(QString::number(worstDifferenceBetweenWinner) + tr("pkt"));
     for(auto & season : save->getSeasonsReference())
     {
         Hill * hill = worstDifferenceBetweenWinnerCompetition->getHill();
-        ui->label_smallestWinJumper->setText("   " + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getCalendarReference().getCompetitionsReference().indexOf(worstDifferenceBetweenWinnerCompetition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
+        ui->label_smallestWinJumper->setText("   " + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getActualCalendar()->getCompetitionsReference().indexOf(worstDifferenceBetweenWinnerCompetition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
     }
 
     ui->label_10Largestdifference->setText(QString::number(mostDifferenceBetween10) + tr("pkt"));
     for(auto & season : save->getSeasonsReference())
     {
         Hill * hill = mostDifferenceBetween10Competition->getHill();
-        ui->label_10Largestdifference->setText(QString::number(mostDifferenceBetween10) + tr("pkt   ") + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getCalendarReference().getCompetitionsReference().indexOf(mostDifferenceBetween10Competition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
+        ui->label_10Largestdifference->setText(QString::number(mostDifferenceBetween10) + tr("pkt   ") + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getActualCalendar()->getCompetitionsReference().indexOf(mostDifferenceBetween10Competition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
     }
     ui->label_10smallestDifference->setText(QString::number(worstDifferenceBetween10) + tr("pkt"));
     for(auto & season : save->getSeasonsReference())
     {
         Hill * hill = worstDifferenceBetween10Competition->getHill();
-        ui->label_10smallestDifference->setText(QString::number(worstDifferenceBetween10) + tr("pkt   ") + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getCalendarReference().getCompetitionsReference().indexOf(worstDifferenceBetween10Competition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
+        ui->label_10smallestDifference->setText(QString::number(worstDifferenceBetween10) + tr("pkt   ") + QString::number(season.getSeasonNumber()) + "/" + QString::number(season.getActualCalendar()->getCompetitionsReference().indexOf(worstDifferenceBetween10Competition) + 1) + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
     }
     ui->label_saveAvgJudges->setText(QString::number(averageJudges) + tr("pkt"));
     ui->label_saveAvgWind->setText(QString::number(averageWind) + tr("m/s"));
@@ -868,9 +868,9 @@ void SimulationRatingsWindow::saveRecordsCsv(QString fileName, short recordType,
         CompetitionInfo * comp = pair.first->getCompetition();
         Season * season = nullptr;
         for(auto & s : save->getSeasonsReference())
-            if(s.getCalendarReference().getCompetitionsReference().contains(comp))
+            if(s.getActualCalendar()->getCompetitionsReference().contains(comp))
                 season = &s;
-        QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getCalendarReference().getCompetitionsReference().indexOf(comp) + 1)
+        QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getActualCalendar()->getCompetitionsReference().indexOf(comp) + 1)
                          + " " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()) + tr(" (Runda ")
                          + QString::number(MyFunctions::getIndexOfItemInVector(pair.first->getSingleResult()->getJumpsReference(), pair.first) + 1) + ") " + " (" + comp->getShortSerieTypeText() + ")";
         stream += QString::number(pos) + ";" + pair.first->getJumper()->getNameAndSurname() + " (" + pair.first->getJumper()->getCountryCode() + ")" +";" + QString::number(pair.second) + ";" + string + "\n";

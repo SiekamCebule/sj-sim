@@ -22,6 +22,7 @@ SOURCES += \
     source/UI/Competition/TeamsSquadsTreeModel.cpp \
     source/UI/Competition/TeamsSquadsTreeView.cpp \
     source/UI/DatabaseEditor/DatabaseItemsListView.cpp \
+    source/UI/DatabaseEditor/ListModels/CalendarsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/ClassificationsListModel.cpp \
     source/UI/DatabaseEditor/ListModels/CompetitionRulesListModel.cpp \
     source/UI/DatabaseEditor/ListModels/HillsListModel.cpp \
@@ -158,6 +159,7 @@ HEADERS += \
     source/UI/Competition/TeamsSquadsTreeModel.h \
     source/UI/Competition/TeamsSquadsTreeView.h \
     source/UI/DatabaseEditor/DatabaseItemsListView.h \
+    source/UI/DatabaseEditor/ListModels/CalendarsListModel.h \
     source/UI/DatabaseEditor/ListModels/ClassificationsListModel.h \
     source/UI/DatabaseEditor/ListModels/CompetitionRulesListModel.h \
     source/UI/DatabaseEditor/ListModels/HillsListModel.h \

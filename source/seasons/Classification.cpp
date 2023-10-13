@@ -190,7 +190,7 @@ QHash<QString, QHash<CompetitionInfo *, int> > Classification::constructTeamsArc
     QHash<QString, QHash<CompetitionInfo *, int>> results;
     QHash<QString, double> tempResultsToSort;
 
-    for(auto & seasonCompetition : season->getCalendarReference().getCompetitionsReference())
+    for(auto & seasonCompetition : season->getActualCalendar()->getCompetitionsReference())
     {
         if(seasonCompetition->getPlayed() == true)
         {
@@ -300,7 +300,7 @@ QHash<Jumper *, QHash<CompetitionInfo *, int>> Classification::constructJumpersA
     QHash<Jumper *, QHash<CompetitionInfo *, int>> results;
     QHash<Jumper *, double> tempResultsToSort;
 
-    for(auto & seasonCompetition : season->getCalendarReference().getCompetitionsReference())
+    for(auto & seasonCompetition : season->getActualCalendar()->getCompetitionsReference())
     {
         if(seasonCompetition->getPlayed() == true)
         {

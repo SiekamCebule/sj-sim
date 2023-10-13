@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1405</width>
-    <height>992</height>
+    <height>1003</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: white; color: black;</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_8">
+  <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_4">
      <item>
@@ -95,6 +95,35 @@
            </property>
            <property name="textFormat">
             <enum>Qt::AutoText</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="font">
+            <font>
+             <family>Quicksand SemiBold</family>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Kalendarz</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="label_calendarName">
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(82, 69, 0);</string>
+           </property>
+           <property name="text">
+            <string>&lt;calendar name&gt;</string>
            </property>
           </widget>
          </item>
@@ -237,15 +266,15 @@ background-color: rgb(249, 255, 241);
           </font>
          </property>
          <property name="currentIndex">
-          <number>7</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="page_jumpers">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>648</height>
+            <width>183</width>
+            <height>76</height>
            </rect>
           </property>
           <attribute name="label">
@@ -319,8 +348,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>648</height>
+            <width>98</width>
+            <height>40</height>
            </rect>
           </property>
           <attribute name="label">
@@ -357,8 +386,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>648</height>
+            <width>98</width>
+            <height>40</height>
            </rect>
           </property>
           <attribute name="label">
@@ -396,13 +425,113 @@ background-color: rgb(255, 223, 189);
             <x>0</x>
             <y>0</y>
             <width>845</width>
-            <height>648</height>
+            <height>632</height>
            </rect>
           </property>
           <attribute name="label">
            <string>Kalendarz</string>
           </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
+          <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0,0,1">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_calendarsListView">
+             <item>
+              <widget class="QTextEdit" name="textEdit_calendarsListShortcuts">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>78</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background: transparent; border: none; color: black;</string>
+               </property>
+               <property name="documentTitle">
+                <string/>
+               </property>
+               <property name="html">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:700;&quot;&gt;Ctrl+Shift+A&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; --&amp;gt; Dodaj (Tylko przy edycji bazy danych)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:700;&quot;&gt;Ctrl+Shift+D&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; --&amp;gt; Usuwanie&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-weight:700;&quot;&gt;Ctrl+Shift+Strzałki&lt;/span&gt;&lt;span style=&quot; font-family:'Ubuntu';&quot;&gt; --&amp;gt; Przesuwaj&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="textInteractionFlags">
+                <set>Qt::NoTextInteraction</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEdit_calendarName">
+               <property name="minimumSize">
+                <size>
+                 <width>120</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="placeholderText">
+                <string>Nazwa kalendarza</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_13">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Maximum</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>5</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_calendar"/>
            </item>
@@ -413,8 +542,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>648</height>
+            <width>98</width>
+            <height>40</height>
            </rect>
           </property>
           <attribute name="label">
@@ -451,8 +580,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>648</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
           <attribute name="label">
@@ -469,8 +598,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>648</height>
+            <width>136</width>
+            <height>178</height>
            </rect>
           </property>
           <attribute name="label">
@@ -478,19 +607,56 @@ background-color: rgb(255, 223, 189);
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_9">
            <item>
-            <widget class="QComboBox" name="comboBox_archiveSeason">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_11">
              <item>
-              <property name="text">
-               <string>2024</string>
-              </property>
+              <widget class="QComboBox" name="comboBox_archiveSeason">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <item>
+                <property name="text">
+                 <string>2024</string>
+                </property>
+               </item>
+              </widget>
              </item>
-            </widget>
+             <item>
+              <widget class="QComboBox" name="comboBox_archiveCalendar">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <item>
+                <property name="text">
+                 <string>LGP</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>WC</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_14">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QToolBox" name="toolBox_2">
@@ -502,7 +668,7 @@ background-color: rgb(255, 223, 189);
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>88</width>
+                <width>98</width>
                 <height>88</height>
                </rect>
               </property>
@@ -520,8 +686,8 @@ background-color: rgb(255, 223, 189);
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>827</width>
-                <height>540</height>
+                <width>98</width>
+                <height>90</height>
                </rect>
               </property>
               <attribute name="label">
@@ -549,8 +715,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>845</width>
-            <height>648</height>
+            <width>308</width>
+            <height>104</height>
            </rect>
           </property>
           <attribute name="label">

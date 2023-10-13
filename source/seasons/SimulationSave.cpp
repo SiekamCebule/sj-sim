@@ -19,10 +19,13 @@ SimulationSave::~SimulationSave()
         delete jumper;
     for(auto & season : seasons)
     {
-        for(auto & competition : season.getCalendarReference().getCompetitionsReference())
-            delete competition;
-        for(auto & classification : season.getCalendarReference().getClassificationsReference())
-            delete classification;
+        for(auto & cal : season.getCalendarsReference())
+        {
+            for(auto & competition : cal->getCompetitionsReference())
+                delete competition;
+            for(auto & classification : cal->getClassificationsReference())
+                delete classification;
+        }
     }
 }
 
@@ -89,7 +92,10 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
 
     save->setActualSeason(static_cast<Season *>(objectsManager->getObjectByID(obj.value("actual-season-id").toString().toULong())));
     save->setNextCompetitionIndex(obj.value("next-competition-index").toInt());
-    save->setNextCompetition(save->getActualSeason()->getCalendarReference().getCompetitionsReference()[save->getNextCompetitionIndex()]);
+    if(save->getActualSeason()->getActualCalendar() != nullptr && save->getActualSeason()->getActualCalendar()->getCompetitionsReference().count() > 0)
+        save->setNextCompetition(save->getActualSeason()->getActualCalendar()->getCompetitionsReference()[save->getNextCompetitionIndex()]);
+    else
+        save->setNextCompetition(nullptr);
 
     save->setShowForm(obj.value("show-form").toBool(true));
     save->setShowTendence(obj.value("show-tendence").toBool(true));
@@ -195,16 +201,18 @@ SimulationSave *SimulationSave::loadFromFile(QString fileName)
 void SimulationSave::updateNextCompetitionIndex()
 {
     nextCompetitionIndex = 0;
-    for(auto & comp : getActualSeason()->getCalendarReference().getCompetitionsReference())
+    if(actualSeason->getActualCalendar() != nullptr){
+    for(auto & comp : getActualSeason()->getActualCalendar()->getCompetitionsReference())
     {
         if(comp->getPlayed() == false)
             break;
         nextCompetitionIndex++;
     }
-    if(nextCompetitionIndex == actualSeason->getCalendarReference().getCompetitionsReference().count())
+    if(nextCompetitionIndex == actualSeason->getActualCalendar()->getCompetitionsReference().count())
         nextCompetition = nullptr;
     else
-        nextCompetition = getActualSeason()->getCalendarReference().getCompetitionsReference()[nextCompetitionIndex];
+        nextCompetition = getActualSeason()->getActualCalendar()->getCompetitionsReference()[nextCompetitionIndex];
+        }
 }
 
 void SimulationSave::repairDatabase()
@@ -218,26 +226,29 @@ void SimulationSave::repairDatabase()
         objects.push_back(&rules);
     for(auto & season : seasons)
     {
-        for(auto & competition : season.getCalendarReference().getCompetitionsReference())
+        for(auto & cal : season.getCalendarsReference())
         {
-            objects.push_back(competition);
-            objects.push_back(&competition->getResultsReference());
-            for(auto & groups : competition->getRoundsKOGroupsReference())
+            for(auto & competition : cal->getCompetitionsReference())
             {
-                for(auto & group : groups)
-                    objects.push_back(&group);
+                objects.push_back(competition);
+                objects.push_back(&competition->getResultsReference());
+                for(auto & groups : competition->getRoundsKOGroupsReference())
+                {
+                    for(auto & group : groups)
+                        objects.push_back(&group);
+                }
+                for(auto & team : competition->getTeamsReference())
+                    objects.push_back(&team);
+                for(auto & result : competition->getResultsReference().getResultsReference())
+                    objects.push_back(&result);
             }
-            for(auto & team : competition->getTeamsReference())
-                objects.push_back(&team);
-            for(auto & result : competition->getResultsReference().getResultsReference())
-                objects.push_back(&result);
-        }
-        for(auto & classification : season.getCalendarReference().getClassificationsReference())
-        {
-            objects.push_back(classification);
-            for(auto & result : classification->getResultsReference())
+            for(auto & classification : cal->getClassificationsReference())
             {
-                objects.push_back(result);
+                objects.push_back(classification);
+                for(auto & result : classification->getResultsReference())
+                {
+                    objects.push_back(result);
+                }
             }
         }
     }

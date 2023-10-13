@@ -54,6 +54,7 @@ int CalendarEditorTableModel::rowCount(const QModelIndex &parent) const
         return 0;
 
     int count = 0;
+    if(calendar != nullptr)
     for(auto & comp : calendar->getCompetitionsReference()){
         if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition)
             count++;
@@ -232,6 +233,9 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
         return QColor(qRgb(40, 40, 40));
     }
     else if(role == Qt::BackgroundRole){
+        if(calendar->getAllPlayed() == true)
+            return QColor(qRgb(200, 200, 200));
+
         if(competition->getCancelled() == true)
             return QColor(qRgb(255, 199, 199));
         if(calendar->getCompetitionsReference().indexOf(competition) >= dontModifyBefore)

@@ -266,10 +266,10 @@ void JumperStatsWindow::updateChartCompetitionBySingleResult(const QPointF &poin
 
             Season * season = nullptr;
             for(auto & s : *rangeComboBoxes->getSeasonsList())
-                if(s.getCalendarReference().getCompetitionsReference().contains(result->getCompetition()))
+                if(s.getActualCalendar()->getCompetitionsReference().contains(result->getCompetition()))
                     season = &s;
 
-            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getCalendarReference().getCompetitionsReference().indexOf(result->getCompetition()) + 1)
+            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getActualCalendar()->getCompetitionsReference().indexOf(result->getCompetition()) + 1)
                              + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint());
             switch(result->getCompetition()->getSerieType())
             {
@@ -285,12 +285,12 @@ void JumperStatsWindow::updateChartCompetitionBySingleResult(const QPointF &poin
             case CompetitionInfo::Training:
             {
                 CompetitionInfo * mainCompetition = nullptr;
-                for(int i=season->getCalendarReference().getCompetitionsReference().indexOf(result->getCompetition()); i<season->getCalendarReference().getCompetitionsReference().count(); i++)
+                for(int i=season->getActualCalendar()->getCompetitionsReference().indexOf(result->getCompetition()); i<season->getActualCalendar()->getCompetitionsReference().count(); i++)
                 {
-                    CompetitionInfo * c = season->getCalendarReference().getCompetitionsReference()[i];
+                    CompetitionInfo * c = season->getActualCalendar()->getCompetitionsReference()[i];
                     if(c->getSerieType() == CompetitionInfo::Qualifications || c->getSerieType() == CompetitionInfo::Competition)
                     {
-                        mainCompetition = season->getCalendarReference().getCompetitionsReference()[i];
+                        mainCompetition = season->getActualCalendar()->getCompetitionsReference()[i];
                         break;
                     }
                 }
@@ -347,10 +347,10 @@ void JumperStatsWindow::updateChartCompetitionByJumpData(const QPointF &point, b
 
             Season * season = nullptr;
             for(auto & s : *rangeComboBoxes->getSeasonsList())
-                if(s.getCalendarReference().getCompetitionsReference().contains(result->getCompetition()))
+                if(s.getActualCalendar()->getCompetitionsReference().contains(result->getCompetition()))
                     season = &s;
 
-            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getCalendarReference().getCompetitionsReference().indexOf(result->getCompetition()) + 1)
+            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getActualCalendar()->getCompetitionsReference().indexOf(result->getCompetition()) + 1)
                              + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint());
             switch(result->getCompetition()->getSerieType())
             {
@@ -366,12 +366,12 @@ void JumperStatsWindow::updateChartCompetitionByJumpData(const QPointF &point, b
             case CompetitionInfo::Training:
             {
                 CompetitionInfo * mainCompetition = nullptr;
-                for(int i=season->getCalendarReference().getCompetitionsReference().indexOf(result->getCompetition()); i<season->getCalendarReference().getCompetitionsReference().count(); i++)
+                for(int i=season->getActualCalendar()->getCompetitionsReference().indexOf(result->getCompetition()); i<season->getActualCalendar()->getCompetitionsReference().count(); i++)
                 {
-                    CompetitionInfo * c = season->getCalendarReference().getCompetitionsReference()[i];
+                    CompetitionInfo * c = season->getActualCalendar()->getCompetitionsReference()[i];
                     if(c->getSerieType() == CompetitionInfo::Qualifications || c->getSerieType() == CompetitionInfo::Competition)
                     {
-                        mainCompetition = season->getCalendarReference().getCompetitionsReference()[i];
+                        mainCompetition = season->getActualCalendar()->getCompetitionsReference()[i];
                         break;
                     }
                 }

@@ -19,9 +19,11 @@ public:
     explicit CalendarEditorWidget(CalendarEditorTableModel *model, QVector<Classification *> * classificationsList, QWidget *parent = nullptr);
     ~CalendarEditorWidget();
 
+    void updateTable();
+
 signals:
     void needToUpdateModel();
-
+    void calendarPresetLoaded();
     void changed();
 
 private:
@@ -58,6 +60,8 @@ private slots:
     void duplicateActionTriggered();
 
     void on_pushButton_saveCalendarPreset_clicked();
+
+    void on_pushButton_loadFromPreset_clicked();
 
 private:
     void execMultipleHillEditDialog(QVector<int> * rows, int column);

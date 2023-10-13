@@ -102,40 +102,6 @@ NewSeasonConfiguratorWindow::NewSeasonConfiguratorWindow(bool nextSeason, QWidge
         }
     });
 
-    calendarTableModel = new CalendarEditorTableModel(&calendar, &hills, &competitionsRules, 0, this);
-    calendarEditor = new CalendarEditorWidget(calendarTableModel, &calendar.getClassificationsReference(), this);
-    ui->verticalLayout_calendarEditor->addWidget(calendarEditor);
-
-    classificationEditor = new ClassificationEditorWidget();
-    classificationEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    classificationEditor->setParent(this);
-    ui->verticalLayout_classificationEditor->addWidget(classificationEditor);
-
-    classificationsListView = new DatabaseItemsListView(DatabaseItemsListView::ClassificationItems, true, true, true, this);
-    classificationsListView->setClassifications(&calendar.getClassificationsReference());
-    classificationsListView->setupListModel();
-    classificationsListView->selectOnlyFirstRow();
-    ui->verticalLayout_classificationsList->addWidget(classificationsListView);
-    connect(classificationsListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex &index){
-        Classification * classification = calendar.getClassificationsReference()[index.row()];
-        if(classificationEditor->getClassification() != nullptr)
-            classificationEditor->resetInputs();
-        classificationEditor->setClassification(classification);
-        classificationEditor->fillInputs();
-    });
-    connect(classificationEditor, &ClassificationEditorWidget::submitted, this, [this](){
-        if(classificationsListView->getListView()->selectionModel()->selectedRows().count() > 0)
-        {
-            int row = classificationsListView->getListView()->selectionModel()->selectedRows().at(0).row();
-            calendar.getClassificationsReference()[row] = classificationEditor->getClassificationFromInputs();
-        }
-    });
-
-    connect(classificationsListView, &DatabaseItemsListView::remove, this, [this](){
-        calendar.fixCompetitionsClassifications();
-        calendar.fixAdvancementClassifications();
-        emit calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));
-    });
     connect(hillsListView, &DatabaseItemsListView::remove, this, [this](){
         calendar.fixCompetitionsHills(&hills, hills.first());
         emit calendarTableModel->dataChanged(calendarTableModel->index(0, 0), calendarTableModel->index(calendarTableModel->rowCount() - 1, 6));

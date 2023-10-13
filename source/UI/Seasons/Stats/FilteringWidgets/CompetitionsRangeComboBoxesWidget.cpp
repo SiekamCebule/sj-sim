@@ -32,7 +32,7 @@ void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
         QString string = "--- Sezon " + QString::number(season.getSeasonNumber()) + " ---";
         ui->comboBox_firstCompetition->addItem(string);
         ui->comboBox_secondCompetition->addItem(string);
-        for(auto & competition : season.getCalendarReference().getCompetitionsReference())
+        for(auto & competition : season.getActualCalendar()->getCompetitionsReference())
         {
             if(competition->getPlayed() == false)
                 break;
@@ -99,9 +99,9 @@ CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
         //Teraz odejmijmy index za każdy sezon
         for(auto & season : *seasonsList)
         {
-            if(index > season.getCalendarReference().getCompetitionsReference().count())
+            if(index > season.getActualCalendar()->getCompetitionsReference().count())
             {
-                index -= season.getCalendarReference().getCompetitionsReference().count();
+                index -= season.getActualCalendar()->getCompetitionsReference().count();
                 index -= 1;
                 i++;
                 continue;
@@ -110,7 +110,7 @@ CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
             {
                 if(index > 0)
                     index--;
-                return season.getCalendarReference().getCompetitionsReference()[index];
+                return season.getActualCalendar()->getCompetitionsReference()[index];
             }
         }
     }

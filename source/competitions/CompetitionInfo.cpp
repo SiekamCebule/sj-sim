@@ -32,6 +32,7 @@ CompetitionInfo::CompetitionInfo(Hill *hill) : hill(hill),
     advancementClassification = nullptr;
     advancementCompetition = nullptr;
     results.setCompetition(this);
+    jumpsImportance = 5;
 }
 
 CompetitionInfo::~CompetitionInfo()
@@ -159,7 +160,7 @@ QVector<CompetitionInfo *> CompetitionInfo::mergeSeasonsCompetitions(QVector<Sea
     QVector<CompetitionInfo *> competitions;
     for(auto & season : *seasons)
     {
-        for(auto & comp : season.getCalendarReference().getCompetitionsReference())
+        for(auto & comp : season.getActualCalendar()->getCompetitionsReference())
             competitions.push_back(comp);
     }
     return competitions;

@@ -127,6 +127,14 @@ CalendarEditorWidget::~CalendarEditorWidget()
     delete ui;
 }
 
+void CalendarEditorWidget::updateTable()
+{
+    ui->tableView->setModel(nullptr);
+    ui->tableView->setModel(calendarModel);
+    ui->tableView->resizeColumnsToContents();
+    updateActualCompetitionByID();
+}
+
 SimulationSave *CalendarEditorWidget::getSave() const
 {
     return save;
@@ -135,6 +143,7 @@ SimulationSave *CalendarEditorWidget::getSave() const
 void CalendarEditorWidget::setSave(SimulationSave *newSave)
 {
     save = newSave;
+    calendar = save->getActualSeason()->getActualCalendar();
 }
 
 QVector<Classification *> *CalendarEditorWidget::getClassificationsList() const
@@ -1117,12 +1126,11 @@ void CalendarEditorWidget::execMultipleClassificationsEditDialog(QVector<int> *r
     dialog->setLayout(new QVBoxLayout(this));
     dialog->setStyleSheet("background-color: white; color: black;");
 
-    int i=0;
     CompetitionInfo * competition = SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), rows->first());
 
     QVBoxLayout * checkBoxesLayout = new QVBoxLayout(dialog);
-    for(int i=0; i<classificationsList->count(); i++){
-        Classification * c = const_cast<Classification *>(classificationsList->at(i));
+    for(int i=0; i<save->getActualSeason()->getActualCalendar()->getClassificationsReference().count(); i++){
+        Classification * c = const_cast<Classification *>(save->getActualSeason()->getActualCalendar()->getClassificationsReference()[i]);
         QCheckBox * checkBox = new QCheckBox(dialog);
         checkBox->setChecked(competition->getClassificationsReference().contains(c));
         QString text = c->getName();
@@ -1168,7 +1176,7 @@ void CalendarEditorWidget::execMultipleClassificationsEditDialog(QVector<int> *r
                     competition->getClassificationsReference().clear();
 
                 if(static_cast<QCheckBox *>(checkBoxesLayout->itemAt(i)->widget())->isChecked() == true){
-                    competition->getClassificationsReference().push_back(const_cast<Classification *>(classificationsList->at(i)));
+                    competition->getClassificationsReference().push_back(const_cast<Classification *>(calendar->getClassificationsReference()[i]));
                     emit calendarModel->dataChanged(calendarModel->index(competitionIndex, 0), calendarModel->index(0, calendarModel->columnCount() - 1));
                 }
             }
@@ -1325,3 +1333,119 @@ void CalendarEditorWidget::on_pushButton_saveCalendarPreset_clicked()
         GlobalDatabase::get()->writeCalendarPresets();
     }
 }
+
+void CalendarEditorWidget::on_pushButton_loadFromPreset_clicked()
+{
+    if(save->getNextCompetitionIndex() > 0)
+    {
+        QMessageBox::information(this, tr("Preset kalendarza"), tr("Niestety nie można wczytać presetu kalendarza, ponieważ zostały rozegrane już konkursy. Stwórz inny kalendarz i spróbuj ponownie."), QMessageBox::Ok);
+return;
+    }
+    else
+    {
+        bool ok = false;
+        QStringList presetsNames;
+        for(auto & preset : GlobalDatabase::get()->getEditableGlobalCalendarPresets())
+            presetsNames.push_back(preset.getName());
+        QString itemText = QInputDialog::getItem(this, tr("Wybierz preset kalendarza"), tr("Wybierz z listy preset kalendarza który chcesz wczytać"), presetsNames,0, false, &ok);
+
+    if(ok == true)
+    {
+        SeasonCalendarPreset * preset = &GlobalDatabase::get()->getEditableGlobalCalendarPresets()[presetsNames.indexOf(itemText)];
+        for(auto & comp : calendar->getCompetitionsReference())
+        {
+            MyFunctions::removeFromVector(calendar->getCompetitionsReference(), comp);
+            delete comp;
+        }
+        QHash<CompetitionInfo *, CompetitionInfo *> competitions; //1. Konkurs z presetu, 2. Nowy konkurs z kalendarza
+        for(auto & presetCompetition : preset->getCalendarReference().getCompetitionsReference())
+        {
+            CompetitionInfo * calendarCompetition = new CompetitionInfo(*presetCompetition);
+            calendarCompetition->generateID();
+            calendarCompetition->getResultsReference().generateID();
+
+            calendarCompetition->getClassificationsReference().detach();
+            calendarCompetition->getQualifyingCompetitionsReference().detach();
+            calendarCompetition->getResultsReference().getResultsReference().detach();
+            calendarCompetition->getRoundsKOGroupsReference().detach();
+            calendarCompetition->getTeamsReference().detach();
+            calendarCompetition->getTrainingsReference().detach();
+            calendar->getCompetitionsReference().push_back(calendarCompetition);
+            competitions.insert(presetCompetition, calendarCompetition);
+        }
+        for(auto & calendarCompetition : calendar->getCompetitionsReference())
+        {
+            for(auto & presetCompetition : preset->getCalendarReference().getCompetitionsReference())
+            {
+                    if(calendarCompetition->getAdvancementCompetition() == presetCompetition)
+                        calendarCompetition->setAdvancementCompetition(competitions.value(presetCompetition));
+                    if(calendarCompetition->getTrialRound() == presetCompetition)
+                        calendarCompetition->setTrialRound(competitions.value(presetCompetition));
+                    for(auto & calendarTraining : calendarCompetition->getTrainingsReference())
+                    {
+                        if(calendarTraining == presetCompetition){
+                            calendarTraining = competitions.value(presetCompetition);
+                        }
+                    }
+            }
+        }
+        for(auto & cls : calendar->getClassificationsReference())
+        {
+            MyFunctions::removeFromVector(calendar->getClassificationsReference(), cls);
+            delete cls;
+        }
+        QHash<Classification *, Classification *> classifications; //1. Klasyfikacja z presetu, 2. Nowa Klasyfikacja z kalendarza
+        for(auto & presetClassification : preset->getCalendarReference().getClassificationsReference())
+        {
+            Classification * calendarClassification = new Classification(*presetClassification);
+            calendarClassification->regenerateID();
+
+            calendarClassification->getPointsForPlacesReference().detach();
+            calendarClassification->getResultsReference().detach();
+            calendar->getClassificationsReference().push_back(calendarClassification);
+            classifications.insert(presetClassification, calendarClassification);
+        }
+        for(auto & calendarCompetition : calendar->getCompetitionsReference())
+        {
+            for(auto & presetClassification : preset->getCalendarReference().getClassificationsReference())
+            {
+                    if(calendarCompetition->getAdvancementClassification() == presetClassification)
+                        calendarCompetition->setAdvancementClassification(classifications.value(presetClassification));
+                    for(auto & cls : calendarCompetition->getClassificationsReference())
+                    {
+                        if(cls == presetClassification)
+                            cls = classifications.value(presetClassification);
+                    }
+            }
+        }
+        calendar->updateCompetitionsQualifyingCompetitions();
+        int i=0;
+        for(auto & presetHill : preset->getHillsReference())
+        {
+            Hill * hillToSet = nullptr;
+            for(auto & hill : save->getHillsReference())
+            {
+                    if(hill->getName() == presetHill.first && hill->getHSPoint() == presetHill.second){
+                        hillToSet = hill;
+                    }
+            }
+            if(hillToSet != nullptr)
+            {
+                    calendar->getCompetitionsReference()[i]->setHill(hillToSet);
+            }
+            else
+            {
+                    calendar->getCompetitionsReference()[i]->setHill(new Hill("Hill"));
+            }
+            i++;
+        }
+        calendarModel->setCalendar(calendar);
+        ui->tableView->setModel(nullptr);
+        ui->tableView->setModel(calendarModel);
+        ui->tableView->resizeColumnsToContents();
+
+        emit calendarPresetLoaded();
+    }
+    }
+}
+

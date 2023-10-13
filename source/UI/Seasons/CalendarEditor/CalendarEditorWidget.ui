@@ -84,6 +84,53 @@ li.checked::marker { content: &quot;\2612&quot;; }
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="pushButton_loadFromPreset">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(40, 80, 140);
+border: 1px solid rgb(18, 14, 53);
+border-radius: 9px;
+padding: 6px;
+color: rgb(241, 241, 241);</string>
+           </property>
+           <property name="text">
+            <string>Wczytaj preset</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Maximum</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>13</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QPushButton" name="pushButton_saveCalendarPreset">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -101,6 +148,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
             <font>
              <pointsize>11</pointsize>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(40, 80, 140);
+border: 1px solid rgb(18, 14, 53);
+border-radius: 9px;
+padding: 6px;
+color: rgb(241, 241, 241);</string>
            </property>
            <property name="text">
             <string>Zapisz jako preset</string>
