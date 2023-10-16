@@ -185,12 +185,12 @@ QJsonObject Classification::getJsonObject(Classification * classification)
     return obj;
 }
 
-QHash<QString, QHash<CompetitionInfo *, int> > Classification::constructTeamsArchiveResults(Season *season)
+QHash<QString, QHash<CompetitionInfo *, int> > Classification::constructTeamsArchiveResults(Season *season, SeasonCalendar *calendar)
 {
     QHash<QString, QHash<CompetitionInfo *, int>> results;
     QHash<QString, double> tempResultsToSort;
 
-    for(auto & seasonCompetition : season->getActualCalendar()->getCompetitionsReference())
+    for(auto & seasonCompetition : calendar->getCompetitionsReference())
     {
         if(seasonCompetition->getPlayed() == true)
         {
@@ -295,12 +295,12 @@ QHash<QString, QHash<CompetitionInfo *, int> > Classification::constructTeamsArc
     return results;
 }
 
-QHash<Jumper *, QHash<CompetitionInfo *, int>> Classification::constructJumpersArchiveResults(Season *season)
+QHash<Jumper *, QHash<CompetitionInfo *, int>> Classification::constructJumpersArchiveResults(Season *season, SeasonCalendar * calendar)
 {
     QHash<Jumper *, QHash<CompetitionInfo *, int>> results;
     QHash<Jumper *, double> tempResultsToSort;
 
-    for(auto & seasonCompetition : season->getActualCalendar()->getCompetitionsReference())
+    for(auto & seasonCompetition : calendar->getCompetitionsReference())
     {
         if(seasonCompetition->getPlayed() == true)
         {

@@ -23,6 +23,9 @@ void CompetitionsRangeComboBoxesWidget::setupConnections()
 
 void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
 {
+    qDebug()<<QString("setup............. (%1)").arg(calendarFilter);
+    disconnect(ui->comboBox_firstCompetition, &QComboBox::currentIndexChanged, this, &CompetitionsRangeComboBoxesWidget::changed);
+    disconnect(ui->comboBox_secondCompetition, &QComboBox::currentIndexChanged, this, &CompetitionsRangeComboBoxesWidget::changed);
     ui->comboBox_firstCompetition->clear();
     ui->comboBox_secondCompetition->clear();
     int seasonIndex=1;
@@ -30,39 +33,48 @@ void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
     {
         int competitionIndex = 1;
         QString string = "--- Sezon " + QString::number(season.getSeasonNumber()) + " ---";
+        qDebug()<<string;
         ui->comboBox_firstCompetition->addItem(string);
         ui->comboBox_secondCompetition->addItem(string);
-        for(auto & competition : season.getActualCalendar()->getCompetitionsReference())
+        for(auto & cal : season.getCalendarsReference())
         {
-            if(competition->getPlayed() == false)
-                break;
-            QString string = "S" + QString::number(seasonIndex) + "C" + QString::number(competitionIndex);
-            string += " - " + competition->getHill()->getName() + " HS" + QString::number(competition->getHill()->getHSPoint());
-            if(competition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
-                string += tr(" (D)");
-            switch(competition->getSerieType())
+            if(cal->getName() == calendarFilter || calendarFilter == "")
             {
-            case CompetitionInfo::Competition:
-                string += tr(" (Konk.)");
-                break;
-            case CompetitionInfo::Qualifications:
-                string += tr(" (Kwal.)");
-                break;
-            case CompetitionInfo::TrialRound:
-                string += tr(" (Prób.)");
-                    break;
-            case CompetitionInfo::Training:
-                string += tr(" (Tren.)");
-                break;
-            }
+                for(auto & competition : cal->getCompetitionsReference())
+                {
+                    if(competition->getPlayed() == false)
+                        break;
+                    QString string = "S" + QString::number(seasonIndex) + "C" + QString::number(competitionIndex);
+                    string += " - " + competition->getHill()->getName() + " HS" + QString::number(competition->getHill()->getHSPoint());
+                    if(competition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
+                        string += tr(" (D)");
+                    switch(competition->getSerieType())
+                    {
+                    case CompetitionInfo::Competition:
+                        string += tr(" (Konk.)");
+                        break;
+                    case CompetitionInfo::Qualifications:
+                        string += tr(" (Kwal.)");
+                        break;
+                    case CompetitionInfo::TrialRound:
+                        string += tr(" (Prób.)");
+                            break;
+                    case CompetitionInfo::Training:
+                        string += tr(" (Tren.)");
+                        break;
+                    }
 
-            QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(competition->getHill()->getCountryCode().toLower()));
-            ui->comboBox_firstCompetition->addItem(QIcon(pixmap), string);
-            ui->comboBox_secondCompetition->addItem(QIcon(pixmap), string);
-            competitionIndex++;
+                    QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(competition->getHill()->getCountryCode().toLower()));
+                    ui->comboBox_firstCompetition->addItem(QIcon(pixmap), string);
+                    ui->comboBox_secondCompetition->addItem(QIcon(pixmap), string);
+                    competitionIndex++;
+                }
+                qDebug()<<"kal "<<cal->getName()<<", "<<ui->comboBox_firstCompetition->count();
+            }
         }
         seasonIndex++;
     }
+    setupConnections();
     if(ui->comboBox_firstCompetition->count() > 0)
         ui->comboBox_firstCompetition->setCurrentIndex(1);
     ui->comboBox_secondCompetition->setCurrentIndex(ui->comboBox_secondCompetition->count() - 1);
@@ -81,7 +93,8 @@ void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
 */
 CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
 {
-    qDebug()<<which;
+    qDebug()<<"GET COMPETITION NUMBER "<<which;
+    qDebug()<<"filter: "<<calendarFilter;
     int index = 0;
     switch(which)
     {
@@ -99,18 +112,38 @@ CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
         //Teraz odejmijmy index za każdy sezon
         for(auto & season : *seasonsList)
         {
-            if(index > season.getActualCalendar()->getCompetitionsReference().count())
-            {
-                index -= season.getActualCalendar()->getCompetitionsReference().count();
+            qDebug()<<"na początku sezonu: "<<index;
+            qDebug()<<"season: "<<season.getSeasonNumber();
+            if(season.containsCalendarByName(calendarFilter) == false && calendarFilter != "" && index > 0){
+                qDebug()<<QString("not contains calendar by name (%1)").arg(calendarFilter);
                 index -= 1;
-                i++;
                 continue;
             }
-            else
+            qDebug()<<"po odjeciu za brak bycia w sezonie: "<<index;
+            //else index -= 1;
+            for(auto & cal : season.getCalendarsReference())
             {
-                if(index > 0)
-                    index--;
-                return season.getActualCalendar()->getCompetitionsReference()[index];
+                qDebug()<<"cal: "<<cal->getName();
+                if(cal->getName() == calendarFilter || calendarFilter == "")
+                {
+                    qDebug()<<"jest taka jak filter lub brak filtra:";
+                    if(index > cal->getCompetitionsReference().count() && cal->getCompetitionsReference().count() > 0)
+                    {
+                        qDebug()<<"konieczność odjęcia";
+                        index -= cal->getCompetitionsReference().count();
+                        index -= 1;
+                        qDebug()<<"po odjęciu: "<<index<<QString("(-%1-1)").arg(cal->getCompetitionsReference().count());
+                        i++;
+                    }
+                    else
+                    {
+                        qDebug()<<"Zaraz return";
+                        if(index > 0)
+                            index--;
+                        qDebug()<<"return index: "<<index;
+                        return cal->getCompetitionsReference()[index];
+                    }
+                }
             }
         }
     }
@@ -125,4 +158,14 @@ QVector<Season> *CompetitionsRangeComboBoxesWidget::getSeasonsList() const
 void CompetitionsRangeComboBoxesWidget::setSeasonsList(QVector<Season> *newSeasonsList)
 {
     seasonsList = newSeasonsList;
+}
+
+QString CompetitionsRangeComboBoxesWidget::getCalendarFilter() const
+{
+    return calendarFilter;
+}
+
+void CompetitionsRangeComboBoxesWidget::setCalendarFilter(const QString &newCalendarFilter)
+{
+    calendarFilter = newCalendarFilter;
 }

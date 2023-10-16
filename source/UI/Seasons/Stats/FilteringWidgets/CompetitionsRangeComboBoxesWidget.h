@@ -20,10 +20,6 @@ public:
 
     void setupConnections();
     void setupComboBoxes();
-    CompetitionInfo * getCompetition(int which);
-
-    QVector<Season> *getSeasonsList() const;
-    void setSeasonsList(QVector<Season> *newSeasonsList);
 
 signals:
     void changed();
@@ -31,6 +27,13 @@ signals:
 private:
     Ui::CompetitionsRangeComboBoxesWidget *ui;
     QVector<Season> * seasonsList;
+    QString calendarFilter;
+public:
+    CompetitionInfo * getCompetition(int which);
+    QVector<Season> *getSeasonsList() const;
+    void setSeasonsList(QVector<Season> *newSeasonsList);
+    QString getCalendarFilter() const;
+    void setCalendarFilter(const QString &newCalendarFilter);
 };
 
 #endif // COMPETITIONSRANGECOMBOBOXESWIDGET_H

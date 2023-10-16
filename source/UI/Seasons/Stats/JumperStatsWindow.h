@@ -6,10 +6,12 @@
 #include <QLineSeries>
 #include <QChartView>
 #include <QLabel>
+#include <QMetaObject>
 #include <QCheckBox>
 #include <QSpacerItem>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QComboBox>
 #include "FilteringWidgets/CompetitionsRangeComboBoxesWidget.h"
 #include "FilteringWidgets/SerieTypesComboBoxesWidget.h"
 #include "FilteringWidgets/ClassificationsCheckBoxesWidget.h"
@@ -47,6 +49,7 @@ public:
     void fillFlightRatingChart();
 
     QCheckBox * getShowFormCheckBox();
+    QComboBox * getCalendarComboBox();
 
 private slots:
     void updateChartCompetitionBySingleResult(const QPointF & point, bool state, int type);
@@ -89,6 +92,8 @@ private:
     QChart * flightRatingChart;
     QChartView * flightRatingChartView;
     QLineSeries * flightRatingLineSeries;
+
+    QVector<QMetaObject::Connection> toDisconnect;
 
     void setupCharts();
 

@@ -18,6 +18,7 @@ public:
 
     static QJsonObject getJsonObject(Season & season);
     static Season getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
+    bool containsCalendarByName(QString n);
 
 private:
     QVector<SeasonCalendar *> calendars;

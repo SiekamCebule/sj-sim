@@ -163,7 +163,7 @@ bool ascendingCompForRecords(const QPair<JumpData *, double> p1, const QPair<Jum
 
 void SimulationRatingsWindow::fillWindow()
 {
-    QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList()),
+    QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList(), rangeComboBoxes->getCalendarFilter()),
                                                                                             rangeComboBoxes->getCompetition(1), rangeComboBoxes->getCompetition(2));
     Hill * specificHill = nullptr;
     if(ui->comboBox_hillFilter->currentIndex() > 0)
@@ -745,10 +745,6 @@ void SimulationRatingsWindow::fillWindow()
         ui->tableView_generalClassification->setModel(nullptr);
         ui->tableView_generalClassification->setModel(generalClassificationModel);
     }
-
-
-
-
 }
 
 void SimulationRatingsWindow::setupComboBox()
@@ -761,6 +757,35 @@ void SimulationRatingsWindow::setupComboBox()
         ui->comboBox_hillFilter->addItem(QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower()))), hill->getHillText());
     }
     connect(ui->comboBox_hillFilter, &QComboBox::currentIndexChanged, this, &SimulationRatingsWindow::fillWindow);
+
+    disconnect(ui->comboBox_calendar, &QComboBox::currentIndexChanged, this, &SimulationRatingsWindow::fillWindow);
+    disconnect(ui->comboBox_calendar, &QComboBox::currentIndexChanged, rangeComboBoxes, &CompetitionsRangeComboBoxesWidget::setupComboBoxes);
+    for(auto & c : toDisconnect)
+        disconnect(c);
+    toDisconnect.clear();
+
+    ui->comboBox_calendar->clear(); 
+    for(auto & cal : save->getActualSeason()->getCalendarsReference())
+    {
+        ui->comboBox_calendar->addItem(cal->getName());
+    } 
+    auto c = connect(ui->comboBox_calendar, &QComboBox::currentIndexChanged, this, [this](){
+        SeasonCalendar * cal = save->getActualSeason()->getCalendarsReference()[ui->comboBox_calendar->currentIndex()];
+        for(auto & s : save->getSeasonsReference())
+        {
+            for(auto & cl : s.getCalendarsReference())
+                if(cl->getName() == cal->getName()){
+                    if(cl->getCompetitionsReference().first()->getPlayed() == true){
+                        rangeComboBoxes->setCalendarFilter(cl->getName());
+                        rangeComboBoxes->setupComboBoxes();
+                        return;
+                    }
+                }
+        }
+    });
+    toDisconnect.push_back(c);
+    connect(ui->comboBox_calendar, &QComboBox::currentIndexChanged, rangeComboBoxes, &CompetitionsRangeComboBoxesWidget::setupComboBoxes);
+    connect(ui->comboBox_calendar, &QComboBox::currentIndexChanged, this, &SimulationRatingsWindow::fillWindow);
 }
 
 void SimulationRatingsWindow::setupConnections()
@@ -774,6 +799,11 @@ void SimulationRatingsWindow::setupConnections()
 QCheckBox *SimulationRatingsWindow::getShowFormCheckBox()
 {
     return ui->checkBox_showHidden;
+}
+
+QComboBox *SimulationRatingsWindow::getCalendarComboBox()
+{
+    return ui->comboBox_calendar;
 }
 
 QVector<Jumper *> SimulationRatingsWindow::getFilteredJumpers() const

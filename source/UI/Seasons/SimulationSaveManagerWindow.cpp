@@ -23,6 +23,7 @@
 #include <QTimer>
 #include <QProgressDialog>
 #include <QPushButton>
+#include <QDesktopServices>
 #include <QTableView>
 #include <QTreeView>
 
@@ -220,7 +221,6 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     {
         emit ui->comboBox_classifications->currentIndexChanged(0);
     }
-    ui->comboBox_archiveSeason->setCurrentIndex(0);
 
     if(simulationSave->getActualSeason()->getActualCalendar() != nullptr)
     {
@@ -238,7 +238,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     {
         ui->comboBox_archiveSeason->insertItem(0, QString::number(season.getSeasonNumber()));
     }
-    emit ui->comboBox_archiveSeason->currentIndexChanged(0);
+    ui->comboBox_archiveCalendar->setCurrentIndex(0);
     if(simulationSave->getActualSeason()->getActualCalendar())
         ui->comboBox_archiveCalendar->setCurrentIndex(simulationSave->getActualSeason()->getCalendarsReference().indexOf(simulationSave->getActualSeason()->getActualCalendar()));
 
@@ -344,20 +344,23 @@ void SimulationSaveManagerWindow::showClassificationApperanceWindowAfterListClic
          Season * classificationSeason = nullptr;
          for(auto & season : simulationSave->getSeasonsReference())
          {
-             for(auto & classification : season.getActualCalendar()->getClassificationsReference())
-                 if(classification == window->getClassification())
-                     classificationSeason = &season;
+             for(auto & cal : season.getCalendarsReference())
+             {
+                 for(auto & classification : cal->getClassificationsReference())
+                     if(classification == window->getClassification())
+                         classificationSeason = &season;
+             }
          }
          window->setSeason(classificationSeason);
 
          if(classification->getClassificationType() == Classification::Individual){
-             QHash<Jumper *, QHash<CompetitionInfo *, int>> archiveResults; //Tu są pozycje danego zawodnika z danych etapów klasyfikacji.
-             archiveResults = classification->constructJumpersArchiveResults(classificationSeason);
+             QHash<Jumper *, QHash<CompetitionInfo *, int>> archiveResults; //Tu są pozycje danego zawodnika z danych etapów klasyfikacji. 
+             archiveResults = classification->constructJumpersArchiveResults(classificationSeason, classificationSeason->getCalendarsReference()[ui->comboBox_archiveCalendar->currentIndex()]);
              window->setArchiveResults(archiveResults.value(window->getJumper())); //Daliśmy do windowa informacje o pozycjach Kamila Stocha w różnych etapach klasyfikacji
          }
          else{
              QHash<QString, QHash<CompetitionInfo *, int>> archiveResults;
-             archiveResults = classification->constructTeamsArchiveResults(classificationSeason);
+             archiveResults = classification->constructTeamsArchiveResults(classificationSeason, classificationSeason->getCalendarsReference()[ui->comboBox_archiveCalendar->currentIndex()]);
              window->setArchiveResults(archiveResults.value(window->getTeamCode()));
         }
          window->fillWindow();
@@ -888,6 +891,17 @@ void SimulationSaveManagerWindow::on_listView_classificationsArchive_doubleClick
 
 void SimulationSaveManagerWindow::on_pushButton_jumperStats_clicked()
 {
+    bool condition = false;
+    for(auto & cal : simulationSave->getSeasonsReference().first().getCalendarsReference())
+    {
+        for(auto & comp : cal->getCompetitionsReference())
+            if(comp->getPlayed()){
+                condition = true;
+                break;
+            }
+    }
+    if(simulationSave->getActualSeason()->getActualCalendar() != nullptr && condition)
+    {
     if(jumpersListView->getListView()->selectionModel()->selectedRows().count() == 0)
     {
         QMessageBox::warning(this, tr("Statystyki skoczka"), tr("Najpierw zaznacz jakiegoś zawodnika!"), QMessageBox::Ok);
@@ -905,18 +919,52 @@ void SimulationSaveManagerWindow::on_pushButton_jumperStats_clicked()
         statsWindow.getRangeComboBoxes()->setupConnections();
         statsWindow.getClassificationsCheckBoxes()->setClassificationsList(&simulationSave->getActualSeason()->getActualCalendar()->getClassificationsReference());
         statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
-        statsWindow.fillWindow();
         statsWindow.setupConnections();
         statsWindow.getShowFormCheckBox()->setChecked(simulationSave->getShowForm());
+        if(statsWindow.getCalendarComboBox()->count() > 0){
+            statsWindow.getCalendarComboBox()->setCurrentIndex(simulationSave->getActualSeason()->getCalendarsReference().indexOf(simulationSave->getActualSeason()->getActualCalendar()));
+            emit statsWindow.getCalendarComboBox()->currentIndexChanged(statsWindow.getCalendarComboBox()->currentIndex());
+        }
+        else
+            statsWindow.fillWindow();
         if(statsWindow.exec() == QDialog::Accepted)
         {
 
         }
     }
+    }
+    else
+    {
+    QMessageBox * msgBox = new QMessageBox(this);
+    msgBox->setText(tr("Statystyki zawodnika"));
+    msgBox->setText(tr("Tępy kretynie! Jakim cudem chcesz zobaczyć statystyki, jeśli nie rozegrałeś jeszcze żadnego konkursu?"));
+    QPushButton *sorryButton = msgBox->addButton(tr("Przepraszam, to się więcej nie powtórzy"), QMessageBox::RejectRole);
+    QPushButton *showButton = msgBox->addButton(tr("Pokaż statystyki mimo to"), QMessageBox::AcceptRole);
+    msgBox->show();
+
+    connect(msgBox, &QMessageBox::buttonClicked, this, [sorryButton, showButton, msgBox](QAbstractButton * btn){
+        if(btn == showButton)
+        {
+            QDesktopServices::openUrl(QUrl("https://pl.wikipedia.org/wiki/Jaynagar_Majilpur"));
+        }
+        msgBox->accept();
+    });
+    }
 }
 
 void SimulationSaveManagerWindow::on_pushButton_clicked()
 {
+    bool condition = false;
+    for(auto & cal : simulationSave->getSeasonsReference().first().getCalendarsReference())
+    {
+        for(auto & comp : cal->getCompetitionsReference())
+            if(comp->getPlayed()){
+                condition = true;
+                break;
+            }
+    }
+    if(simulationSave->getActualSeason()->getActualCalendar() != nullptr && condition)
+    {
     SimulationRatingsWindow statsWindow(simulationSave, this);
     statsWindow.getRangeComboBoxes()->setSeasonsList(&simulationSave->getSeasonsReference());
     statsWindow.getRangeComboBoxes()->setupComboBoxes();
@@ -925,12 +973,35 @@ void SimulationSaveManagerWindow::on_pushButton_clicked()
     statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
     statsWindow.setFilteredJumpers(simulationSave->getJumpersReference());
     statsWindow.setupComboBox();
-    statsWindow.fillWindow();   
     statsWindow.setupConnections();
     statsWindow.getShowFormCheckBox()->setChecked(simulationSave->getShowForm());
+    if(statsWindow.getCalendarComboBox()->count() > 0){
+        statsWindow.getCalendarComboBox()->setCurrentIndex(simulationSave->getActualSeason()->getCalendarsReference().indexOf(simulationSave->getActualSeason()->getActualCalendar()));
+        emit statsWindow.getCalendarComboBox()->currentIndexChanged(statsWindow.getCalendarComboBox()->currentIndex());
+    }
+    else
+        statsWindow.fillWindow();
     if(statsWindow.exec() == QDialog::Accepted)
     {
 
+    }
+    }
+    else
+    {
+    QMessageBox * msgBox = new QMessageBox(this);
+    msgBox->setText(tr("Statystyki zapisu"));
+    msgBox->setText(tr("Tępy kretynie! Jakim cudem chcesz zobaczyć statystyki, jeśli nie rozegrałeś jeszcze żadnego konkursu?"));
+    QPushButton *sorryButton = msgBox->addButton(tr("Przepraszam, to się więcej nie powtórzy"), QMessageBox::RejectRole);
+    QPushButton *showButton = msgBox->addButton(tr("Pokaż statystyki mimo to"), QMessageBox::AcceptRole);
+    msgBox->show();
+
+    connect(msgBox, &QMessageBox::buttonClicked, this, [sorryButton, showButton, msgBox](QAbstractButton * btn){
+        if(btn == showButton)
+        {
+            QDesktopServices::openUrl(QUrl("https://pl.wikipedia.org/wiki/Jaynagar_Majilpur"));
+        }
+        msgBox->accept();
+    });
     }
 }
 

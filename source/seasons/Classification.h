@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include "../utilities/ClassWithID.h"
 #include "ClassificationSingleResult.h"
+#include "../seasons/SeasonCalendar.h"
 
 class Season;
 
@@ -38,8 +39,8 @@ public:
     static Classification *getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager);
     static QJsonObject getJsonObject(Classification *classification);
 
-    QHash<Jumper *, QHash<CompetitionInfo *, int> > constructJumpersArchiveResults(Season * season);
-    QHash<QString, QHash<CompetitionInfo *, int> > constructTeamsArchiveResults(Season * season);
+    QHash<Jumper *, QHash<CompetitionInfo *, int> > constructJumpersArchiveResults(Season * season, SeasonCalendar *calendar);
+    QHash<QString, QHash<CompetitionInfo *, int> > constructTeamsArchiveResults(Season * season, SeasonCalendar *calendar);
 
 private:
     QString name;

@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QCheckBox>
+#include <QComboBox>
+#include <QMetaObject>
 #include "FilteringWidgets/ClassificationsCheckBoxesWidget.h"
 #include "FilteringWidgets/CompetitionsRangeComboBoxesWidget.h"
 #include "FilteringWidgets/SerieTypesComboBoxesWidget.h"
@@ -29,6 +31,7 @@ public:
     void setupConnections();
 
     QCheckBox * getShowFormCheckBox();
+    QComboBox * getCalendarComboBox();
 
 private:
     Ui::SimulationRatingsWindow *ui;
@@ -65,6 +68,8 @@ private:
     SimulationRecordsTableModel * worstFlightModel;
     //General classification models
     GeneralClassificationTableModel * generalClassificationModel;
+
+    QVector<QMetaObject::Connection> toDisconnect;
 
 public:
     ClassificationsCheckBoxesWidget *getClassificationsCheckBoxes() const;

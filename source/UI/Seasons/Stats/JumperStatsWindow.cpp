@@ -57,6 +57,39 @@ void JumperStatsWindow::setupComboBox()
         ui->comboBox_hillFilter->addItem(QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower()))), hill->getHillText());
     }
     connect(ui->comboBox_hillFilter, &QComboBox::currentIndexChanged, this, &JumperStatsWindow::fillWindow);
+
+    disconnect(ui->comboBox_calendar, &QComboBox::currentIndexChanged, this, &JumperStatsWindow::fillWindow);
+    disconnect(ui->comboBox_calendar, &QComboBox::currentIndexChanged, rangeComboBoxes, &CompetitionsRangeComboBoxesWidget::setupComboBoxes);
+    for(auto & c : toDisconnect)
+        disconnect(c);
+    toDisconnect.clear();
+
+    ui->comboBox_calendar->clear();
+    for(auto & cal : save->getActualSeason()->getCalendarsReference())
+    {
+        ui->comboBox_calendar->addItem(cal->getName());
+    }
+    //ui->comboBox_calendar->setCurrentIndex(save->getActualSeason()->getCalendarsReference().indexOf(save->getActualSeason()->getActualCalendar()));
+    auto c = connect(ui->comboBox_calendar, &QComboBox::currentIndexChanged, this, [this](){
+        qDebug()<<"[ui->comboBox_calendar->currentIndex()]: "<<ui->comboBox_calendar->currentIndex();
+        qDebug()<<"count: "<<ui->comboBox_calendar->count();
+        SeasonCalendar * cal = save->getActualSeason()->getCalendarsReference()[ui->comboBox_calendar->currentIndex()];
+        for(auto & s : save->getSeasonsReference())
+        {
+            for(auto & cl : s.getCalendarsReference())
+                if(cl->getName() == cal->getName()){
+                    if(cl->getCompetitionsReference().first()->getPlayed() == true){
+                        rangeComboBoxes->setCalendarFilter(cl->getName());
+                        rangeComboBoxes->setupComboBoxes();
+                        return;
+                    }
+                }
+        }
+    });
+    toDisconnect.push_back(c);
+
+    connect(ui->comboBox_calendar, &QComboBox::currentIndexChanged, rangeComboBoxes, &CompetitionsRangeComboBoxesWidget::setupComboBoxes);
+    connect(ui->comboBox_calendar, &QComboBox::currentIndexChanged, this, &JumperStatsWindow::fillWindow);
 }
 
 void JumperStatsWindow::fillWindow()
@@ -68,7 +101,7 @@ void JumperStatsWindow::fillWindow()
     if(ui->comboBox_hillFilter->currentIndex() > 0)
         specificHill = save->getHillsReference()[ui->comboBox_hillFilter->currentIndex() - 1];
 
-    QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList()),
+    QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList(), rangeComboBoxes->getCalendarFilter()),
                                                                                             rangeComboBoxes->getCompetition(1), rangeComboBoxes->getCompetition(2));
     singleResults = CompetitionSingleResult::getFilteredSingleResults(competitions, jumper,
         serieTypesCheckBoxes->getSerieTypes(), hillTypesCheckBoxes->getHillTypesSet(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked(), specificHill);
@@ -255,21 +288,34 @@ QCheckBox *JumperStatsWindow::getShowFormCheckBox()
     return ui->checkBox;
 }
 
+QComboBox *JumperStatsWindow::getCalendarComboBox()
+{
+    return ui->comboBox_calendar;
+}
+
 void JumperStatsWindow::updateChartCompetitionBySingleResult(const QPointF &point, bool state, int type)
 {
     if(state)
     {
-        if((point.x() + 0.4 > int(point.x()) && point.x() - 0.4 < int(point.x())) && (point.y() + 0.4 > point.y() && point.y() - 0.4 < point.y()))
+        if((point.x() + 0.3 > int(point.x()) && point.x() - 0.3 < int(point.x())) && (point.y() + 0.3 > point.y() && point.y() - 0.3 < point.y()))
         {
             CompetitionSingleResult * result = singleResults[int(point.x() - 1)];
             Hill * hill = result->getCompetition()->getHill();
 
             Season * season = nullptr;
+            SeasonCalendar * calendar = nullptr;
             for(auto & s : *rangeComboBoxes->getSeasonsList())
-                if(s.getActualCalendar()->getCompetitionsReference().contains(result->getCompetition()))
-                    season = &s;
+            {
+                for(auto & c : s.getCalendarsReference())
+                {
+                    if(c->getCompetitionsReference().contains(result->getCompetition())){
+                        season = &s;
+                        calendar = c;
+                    }
+                }
+            }
 
-            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getActualCalendar()->getCompetitionsReference().indexOf(result->getCompetition()) + 1)
+            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(calendar->getCompetitionsReference().indexOf(result->getCompetition()) + 1)
                              + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint());
             switch(result->getCompetition()->getSerieType())
             {
@@ -285,12 +331,21 @@ void JumperStatsWindow::updateChartCompetitionBySingleResult(const QPointF &poin
             case CompetitionInfo::Training:
             {
                 CompetitionInfo * mainCompetition = nullptr;
-                for(int i=season->getActualCalendar()->getCompetitionsReference().indexOf(result->getCompetition()); i<season->getActualCalendar()->getCompetitionsReference().count(); i++)
+                /*for(int i=season->getActualCalendar()->getCompetitionsReference().indexOf(result->getCompetition()); i<season->getActualCalendar()->getCompetitionsReference().count(); i++)
                 {
                     CompetitionInfo * c = season->getActualCalendar()->getCompetitionsReference()[i];
                     if(c->getSerieType() == CompetitionInfo::Qualifications || c->getSerieType() == CompetitionInfo::Competition)
                     {
                         mainCompetition = season->getActualCalendar()->getCompetitionsReference()[i];
+                        break;
+                    }
+                }*/
+                for(int i=calendar->getCompetitionsReference().indexOf(result->getCompetition()); i<calendar->getCompetitionsReference().count(); i++)
+                {
+                    CompetitionInfo * c = calendar->getCompetitionsReference()[i];
+                    if(c->getSerieType() == CompetitionInfo::Qualifications || c->getSerieType() == CompetitionInfo::Competition)
+                    {
+                        mainCompetition = calendar->getCompetitionsReference()[i];
                         break;
                     }
                 }
@@ -346,11 +401,19 @@ void JumperStatsWindow::updateChartCompetitionByJumpData(const QPointF &point, b
             Hill * hill = result->getCompetition()->getHill();
 
             Season * season = nullptr;
+            SeasonCalendar * calendar = nullptr;
             for(auto & s : *rangeComboBoxes->getSeasonsList())
-                if(s.getActualCalendar()->getCompetitionsReference().contains(result->getCompetition()))
-                    season = &s;
+            {
+                for(auto & c : s.getCalendarsReference())
+                {
+                    if(c->getCompetitionsReference().contains(result->getCompetition())){
+                        season = &s;
+                        calendar = c;
+                    }
+                }
+            }
 
-            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(season->getActualCalendar()->getCompetitionsReference().indexOf(result->getCompetition()) + 1)
+            QString string = QString::number(season->getSeasonNumber()) + "/" + QString::number(calendar->getCompetitionsReference().indexOf(result->getCompetition()) + 1)
                              + ": " + hill->getName() + " HS" + QString::number(hill->getHSPoint());
             switch(result->getCompetition()->getSerieType())
             {
@@ -366,12 +429,12 @@ void JumperStatsWindow::updateChartCompetitionByJumpData(const QPointF &point, b
             case CompetitionInfo::Training:
             {
                 CompetitionInfo * mainCompetition = nullptr;
-                for(int i=season->getActualCalendar()->getCompetitionsReference().indexOf(result->getCompetition()); i<season->getActualCalendar()->getCompetitionsReference().count(); i++)
+                for(int i=calendar->getCompetitionsReference().indexOf(result->getCompetition()); i<calendar->getCompetitionsReference().count(); i++)
                 {
-                    CompetitionInfo * c = season->getActualCalendar()->getCompetitionsReference()[i];
+                    CompetitionInfo * c = calendar->getCompetitionsReference()[i];
                     if(c->getSerieType() == CompetitionInfo::Qualifications || c->getSerieType() == CompetitionInfo::Competition)
                     {
-                        mainCompetition = season->getActualCalendar()->getCompetitionsReference()[i];
+                        mainCompetition = calendar->getCompetitionsReference()[i];
                         break;
                     }
                 }

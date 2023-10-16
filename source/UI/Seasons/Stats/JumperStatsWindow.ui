@@ -21,7 +21,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
      <item>
       <widget class="QPushButton" name="pushButton_csvExport">
        <property name="font">
@@ -137,6 +137,9 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_calendar"/>
      </item>
      <item>
       <widget class="QComboBox" name="comboBox_hillFilter"/>

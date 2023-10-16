@@ -74,8 +74,8 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
                 additionalGroup.getJumpersReference().push_back(jumpers->at(number));
                 groups.push_back(additionalGroup);
             }
-            break;
         }
+        break;
     }
     case KOGroup::ForLargerGroups:
     {

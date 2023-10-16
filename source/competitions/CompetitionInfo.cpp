@@ -155,13 +155,15 @@ QVector<CompetitionInfo *> CompetitionInfo::getCompetitionsByStartAndEnd(QVector
     return competitions;
 }
 
-QVector<CompetitionInfo *> CompetitionInfo::mergeSeasonsCompetitions(QVector<Season> *seasons)
+QVector<CompetitionInfo *> CompetitionInfo::mergeSeasonsCompetitions(QVector<Season> *seasons, QString filter)
 {
     QVector<CompetitionInfo *> competitions;
     for(auto & season : *seasons)
     {
-        for(auto & comp : season.getActualCalendar()->getCompetitionsReference())
-            competitions.push_back(comp);
+        for(auto & cal : season.getCalendarsReference())
+            if(cal->getName() == filter || filter == "")
+                for(auto & comp : cal->getCompetitionsReference())
+                    competitions.push_back(comp);
     }
     return competitions;
 }

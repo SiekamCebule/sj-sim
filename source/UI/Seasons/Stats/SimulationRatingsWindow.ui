@@ -18,7 +18,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
      <item>
       <widget class="QPushButton" name="pushButton_csvExport">
        <property name="font">
@@ -99,6 +99,9 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_calendar"/>
      </item>
      <item>
       <widget class="QComboBox" name="comboBox_hillFilter"/>
@@ -485,8 +488,8 @@ background-color: rgb(241, 200, 255);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>380</width>
-            <height>437</height>
+            <width>1774</width>
+            <height>826</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_28">

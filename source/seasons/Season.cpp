@@ -50,6 +50,16 @@ Season Season::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsMana
     return season;
 }
 
+bool Season::containsCalendarByName(QString n)
+{
+    for(auto & c : calendars)
+    {
+        if(c->getName() == n)
+            return true;
+    }
+    return false;
+}
+
 SeasonCalendar *Season::getActualCalendar() const
 {
     return actualCalendar;
