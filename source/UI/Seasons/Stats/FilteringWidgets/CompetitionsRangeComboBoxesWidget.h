@@ -28,12 +28,15 @@ private:
     Ui::CompetitionsRangeComboBoxesWidget *ui;
     QVector<Season> * seasonsList;
     QString calendarFilter;
+    bool mergeCalendars;
 public:
     CompetitionInfo * getCompetition(int which);
     QVector<Season> *getSeasonsList() const;
     void setSeasonsList(QVector<Season> *newSeasonsList);
     QString getCalendarFilter() const;
     void setCalendarFilter(const QString &newCalendarFilter);
+    bool getMergeCalendars() const;
+    void setMergeCalendars(bool newMergeCalendars);
 };
 
 #endif // COMPETITIONSRANGECOMBOBOXESWIDGET_H

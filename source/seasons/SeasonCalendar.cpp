@@ -231,6 +231,15 @@ bool SeasonCalendar::getAllPlayed()
     return true;
 }
 
+int SeasonCalendar::howManyCompetitionsPlayed()
+{
+    int count=0;
+    for(auto & c : competitions)
+        if(c->getPlayed())
+            count++;
+    return count;
+}
+
 QString SeasonCalendar::getName() const
 {
     return name;

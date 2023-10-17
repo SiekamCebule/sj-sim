@@ -27,6 +27,7 @@ public:
     static CompetitionInfo * getCompetitionAfterCompetitionFilteredByType(QVector<CompetitionInfo *> & competitions, int actualIndex, int type, int howMany);
 
     bool getAllPlayed();
+    int howManyCompetitionsPlayed();
 
 private:
     QVector<CompetitionInfo *> competitions;

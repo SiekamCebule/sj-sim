@@ -12,7 +12,7 @@ CountryFlagsManager::CountryFlagsManager()
 
 QPixmap CountryFlagsManager::getFlagPixmap(const QString &twoLettersCountryCode)
 {
-    return QPixmap("flags/" + twoLettersCountryCode + ".svg");
+    return QPixmap("flags/" + twoLettersCountryCode.toUpper() + ".svg");
 }
 
 QString CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(const QString &code)

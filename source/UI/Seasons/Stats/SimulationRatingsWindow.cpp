@@ -163,7 +163,7 @@ bool ascendingCompForRecords(const QPair<JumpData *, double> p1, const QPair<Jum
 
 void SimulationRatingsWindow::fillWindow()
 {
-    QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList(), rangeComboBoxes->getCalendarFilter()),
+    QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList(), rangeComboBoxes->getCalendarFilter(), ui->checkBox_mergeCalendars->isChecked()),
                                                                                             rangeComboBoxes->getCompetition(1), rangeComboBoxes->getCompetition(2));
     Hill * specificHill = nullptr;
     if(ui->comboBox_hillFilter->currentIndex() > 0)
@@ -176,6 +176,8 @@ void SimulationRatingsWindow::fillWindow()
     QVector<QPair<Jumper *, double>> avgPositionsRanking;
     for(auto & jumper : jumpersSingleResults.keys())
     {
+        if(jumpersSingleResults.value(jumper).count() < ui->spinBox_minimalResults->value())
+            continue;
         double avgPosition = 0;
         for(auto & result : jumpersSingleResults.value(jumper))
         {
@@ -197,6 +199,8 @@ void SimulationRatingsWindow::fillWindow()
     QVector<QPair<Jumper *, double>> avgJudgesRanking;
     for(auto & jumper : jumpersSingleResults.keys())
     {
+        if(jumpersSingleResults.value(jumper).count() < ui->spinBox_minimalResults->value())
+            continue;
         int count = 0;
         double avgJudges = 0;
         for(auto & result : jumpersSingleResults.value(jumper))
@@ -229,6 +233,8 @@ void SimulationRatingsWindow::fillWindow()
     QVector<QPair<Jumper *, double>> avgWindRanking;
     for(auto & jumper : jumpersSingleResults.keys())
     {
+        if(jumpersSingleResults.value(jumper).count() < ui->spinBox_minimalResults->value())
+            continue;
         int count = 0;
         double avgWind = 0;
         for(auto & result : jumpersSingleResults.value(jumper))
@@ -258,6 +264,8 @@ void SimulationRatingsWindow::fillWindow()
     QVector<QPair<Jumper *, double>> avgTakeoffRatingRanking;
     for(auto & jumper : jumpersSingleResults.keys())
     {
+        if(jumpersSingleResults.value(jumper).count() < ui->spinBox_minimalResults->value())
+            continue;
         int count = 0;
         double avgRating = 0;
         for(auto & result : jumpersSingleResults.value(jumper))
@@ -287,6 +295,8 @@ void SimulationRatingsWindow::fillWindow()
     QVector<QPair<Jumper *, double>> avgFlightRatingRanking;
     for(auto & jumper : jumpersSingleResults.keys())
     {
+        if(jumpersSingleResults.value(jumper).count() < ui->spinBox_minimalResults->value())
+            continue;
         int count = 0;
         double avgRating = 0;
         for(auto & result : jumpersSingleResults.value(jumper))
@@ -316,6 +326,8 @@ void SimulationRatingsWindow::fillWindow()
     QVector<QPair<Jumper *, double>> avgDistanceRanking;
     for(auto & jumper : jumpersSingleResults.keys())
     {
+        if(jumpersSingleResults.value(jumper).count() < ui->spinBox_minimalResults->value())
+            continue;
         int count = 0;
         double avgDistance = 0;
         for(auto & result : jumpersSingleResults.value(jumper))
@@ -801,6 +813,11 @@ QCheckBox *SimulationRatingsWindow::getShowFormCheckBox()
     return ui->checkBox_showHidden;
 }
 
+QCheckBox *SimulationRatingsWindow::getMergeCalendarsCheckBox()
+{
+    return ui->checkBox_mergeCalendars;
+}
+
 QComboBox *SimulationRatingsWindow::getCalendarComboBox()
 {
     return ui->comboBox_calendar;
@@ -1054,8 +1071,20 @@ void SimulationRatingsWindow::on_checkBox_generalClassificationCompPoints_stateC
     fillWindow();
 }
 
-
 void SimulationRatingsWindow::on_checkBox_indResToTeam_stateChanged(int arg1)
+{
+    fillWindow();
+}
+
+void SimulationRatingsWindow::on_checkBox_mergeCalendars_stateChanged(int arg1)
+{
+    rangeComboBoxes->setMergeCalendars(arg1);
+    rangeComboBoxes->setupComboBoxes();
+    fillWindow();
+}
+
+
+void SimulationRatingsWindow::on_spinBox_minimalResults_editingFinished()
 {
     fillWindow();
 }

@@ -15,6 +15,7 @@
 #include "../../global/IDGenerator.h"
 #include "JumpDataInfoChoiceDialog.h"
 #include "NewJumpsImportancePresetDialog.h"
+#include "CountriesEditorWindow.h"
 
 extern IDGenerator globalIDGenerator;
 
@@ -339,6 +340,17 @@ void AppSettingsWindow::on_pushButton_addJumpsImportancePreset_clicked()
             GlobalDatabase::get()->getJumpsImportancePresetsReference().push_back(preset);
         }
         GlobalDatabase::get()->writeToJson();
+    }
+}
+
+
+void AppSettingsWindow::on_pushButton_countriesEditor_clicked()
+{
+    CountriesEditorWindow * window = new CountriesEditorWindow(this);
+    window->fill();
+    if(window->exec() == QDialog::Accepted)
+    {
+        GlobalDatabase::get()->writeCountries();
     }
 }
 

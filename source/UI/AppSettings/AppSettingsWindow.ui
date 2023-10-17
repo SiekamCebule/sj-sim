@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>411</width>
-    <height>575</height>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -555,6 +555,38 @@ skoków</string>
      <property name="text">
       <string>Wybór informacji o skoku
 do pokazania</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_countriesEditor">
+     <property name="minimumSize">
+      <size>
+       <width>180</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>180</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI Light</family>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+	background-color: rgb(116, 214, 203);
+	color: rgb(0, 0, 0);
+}</string>
+     </property>
+     <property name="text">
+      <string>Edytor krajów</string>
      </property>
     </widget>
    </item>

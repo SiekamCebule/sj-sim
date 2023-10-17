@@ -23,7 +23,7 @@ void CompetitionsRangeComboBoxesWidget::setupConnections()
 
 void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
 {
-    qDebug()<<QString("setup............. (%1)").arg(calendarFilter);
+    qDebug()<<QString("setup............. (%1, %2)").arg(calendarFilter).arg(mergeCalendars);
     disconnect(ui->comboBox_firstCompetition, &QComboBox::currentIndexChanged, this, &CompetitionsRangeComboBoxesWidget::changed);
     disconnect(ui->comboBox_secondCompetition, &QComboBox::currentIndexChanged, this, &CompetitionsRangeComboBoxesWidget::changed);
     ui->comboBox_firstCompetition->clear();
@@ -33,12 +33,11 @@ void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
     {
         int competitionIndex = 1;
         QString string = "--- Sezon " + QString::number(season.getSeasonNumber()) + " ---";
-        qDebug()<<string;
         ui->comboBox_firstCompetition->addItem(string);
         ui->comboBox_secondCompetition->addItem(string);
         for(auto & cal : season.getCalendarsReference())
         {
-            if(cal->getName() == calendarFilter || calendarFilter == "")
+            if(cal->getName() == calendarFilter || calendarFilter == "" || mergeCalendars == true)
             {
                 for(auto & competition : cal->getCompetitionsReference())
                 {
@@ -70,14 +69,25 @@ void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
                     competitionIndex++;
                 }
                 qDebug()<<"kal "<<cal->getName()<<", "<<ui->comboBox_firstCompetition->count();
+                qDebug()<<"count: "<<ui->comboBox_firstCompetition->count();
             }
         }
         seasonIndex++;
     }
-    setupConnections();
     if(ui->comboBox_firstCompetition->count() > 0)
         ui->comboBox_firstCompetition->setCurrentIndex(1);
     ui->comboBox_secondCompetition->setCurrentIndex(ui->comboBox_secondCompetition->count() - 1);
+    setupConnections();
+}
+
+bool CompetitionsRangeComboBoxesWidget::getMergeCalendars() const
+{
+    return mergeCalendars;
+}
+
+void CompetitionsRangeComboBoxesWidget::setMergeCalendars(bool newMergeCalendars)
+{
+    mergeCalendars = newMergeCalendars;
 }
 
 /*
@@ -114,7 +124,7 @@ CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
         {
             qDebug()<<"na początku sezonu: "<<index;
             qDebug()<<"season: "<<season.getSeasonNumber();
-            if(season.containsCalendarByName(calendarFilter) == false && calendarFilter != "" && index > 0){
+            if(((season.containsCalendarByName(calendarFilter) == false && calendarFilter != "") && mergeCalendars == false) && index > 0){
                 qDebug()<<QString("not contains calendar by name (%1)").arg(calendarFilter);
                 index -= 1;
                 continue;
@@ -124,15 +134,15 @@ CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
             for(auto & cal : season.getCalendarsReference())
             {
                 qDebug()<<"cal: "<<cal->getName();
-                if(cal->getName() == calendarFilter || calendarFilter == "")
+                if(cal->getName() == calendarFilter || calendarFilter == "" || mergeCalendars == true)
                 {
                     qDebug()<<"jest taka jak filter lub brak filtra:";
                     if(index > cal->getCompetitionsReference().count() && cal->getCompetitionsReference().count() > 0)
                     {
                         qDebug()<<"konieczność odjęcia";
-                        index -= cal->getCompetitionsReference().count();
-                        index -= 1;
-                        qDebug()<<"po odjęciu: "<<index<<QString("(-%1-1)").arg(cal->getCompetitionsReference().count());
+                        index -= cal->howManyCompetitionsPlayed();
+                        //index -= 1;
+                        qDebug()<<"po odjęciu: "<<index<<QString("(-%1)").arg(cal->getCompetitionsReference().count());
                         i++;
                     }
                     else
@@ -145,6 +155,7 @@ CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
                     }
                 }
             }
+            index--;
         }
     }
     return nullptr;

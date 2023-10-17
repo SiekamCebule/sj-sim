@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1122</width>
+    <width>1358</width>
     <height>844</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
      <item>
       <widget class="QPushButton" name="pushButton_csvExport">
        <property name="font">
@@ -139,6 +139,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="QCheckBox" name="checkBox_mergeCalendars">
+       <property name="text">
+        <string>Połącz kalendarze</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QComboBox" name="comboBox_calendar"/>
      </item>
      <item>
@@ -235,6 +242,16 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_withDSQ">
+       <property name="text">
+        <string>Wliczaj DSQ</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QCheckBox" name="checkBox">
@@ -604,7 +621,7 @@ ukryte wykresy</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1080</width>
+            <width>1316</width>
             <height>672</height>
            </rect>
           </property>

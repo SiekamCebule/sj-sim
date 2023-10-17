@@ -49,6 +49,7 @@ public:
     void fillFlightRatingChart();
 
     QCheckBox * getShowFormCheckBox();
+    QCheckBox * getMergeCalendarsCheckBox();
     QComboBox * getCalendarComboBox();
 
 private slots:
@@ -122,6 +123,8 @@ private slots:
     void on_horizontalScrollBar_jumperStatsChartScrollBar_valueChanged(int value);
     void on_checkBox_stateChanged(int arg1);
     void on_pushButton_csvExport_clicked();
+    void on_checkBox_mergeCalendars_stateChanged(int arg1);
+    void on_checkBox_withDSQ_stateChanged(int arg1);
 };
 
 #endif // JUMPERSTATSWINDOW_H

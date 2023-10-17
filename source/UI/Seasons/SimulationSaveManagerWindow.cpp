@@ -915,6 +915,7 @@ void SimulationSaveManagerWindow::on_pushButton_jumperStats_clicked()
         statsWindow.setupComboBox();
         statsWindow.setJumper(jumper);
         statsWindow.getRangeComboBoxes()->setSeasonsList(&simulationSave->getSeasonsReference());
+        statsWindow.getRangeComboBoxes()->setMergeCalendars(statsWindow.getMergeCalendarsCheckBox()->isChecked());
         statsWindow.getRangeComboBoxes()->setupComboBoxes();
         statsWindow.getRangeComboBoxes()->setupConnections();
         statsWindow.getClassificationsCheckBoxes()->setClassificationsList(&simulationSave->getActualSeason()->getActualCalendar()->getClassificationsReference());
@@ -966,15 +967,16 @@ void SimulationSaveManagerWindow::on_pushButton_clicked()
     if(simulationSave->getActualSeason()->getActualCalendar() != nullptr && condition)
     {
     SimulationRatingsWindow statsWindow(simulationSave, this);
-    statsWindow.getRangeComboBoxes()->setSeasonsList(&simulationSave->getSeasonsReference());
-    statsWindow.getRangeComboBoxes()->setupComboBoxes();
-    statsWindow.getRangeComboBoxes()->setupConnections();
     statsWindow.getClassificationsCheckBoxes()->setClassificationsList(&simulationSave->getActualSeason()->getActualCalendar()->getClassificationsReference());
     statsWindow.getClassificationsCheckBoxes()->setupCheckBoxes();
     statsWindow.setFilteredJumpers(simulationSave->getJumpersReference());
     statsWindow.setupComboBox();
     statsWindow.setupConnections();
-    statsWindow.getShowFormCheckBox()->setChecked(simulationSave->getShowForm());
+    statsWindow.getRangeComboBoxes()->setSeasonsList(&simulationSave->getSeasonsReference());
+    statsWindow.getRangeComboBoxes()->setMergeCalendars(statsWindow.getMergeCalendarsCheckBox()->isChecked());
+    statsWindow.getRangeComboBoxes()->setupComboBoxes();
+    statsWindow.getRangeComboBoxes()->setupConnections();
+    statsWindow.getShowFormCheckBox()->setChecked(simulationSave->getShowForm());  
     if(statsWindow.getCalendarComboBox()->count() > 0){
         statsWindow.getCalendarComboBox()->setCurrentIndex(simulationSave->getActualSeason()->getCalendarsReference().indexOf(simulationSave->getActualSeason()->getActualCalendar()));
         emit statsWindow.getCalendarComboBox()->currentIndexChanged(statsWindow.getCalendarComboBox()->currentIndex());

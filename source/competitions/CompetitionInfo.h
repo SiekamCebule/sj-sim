@@ -33,7 +33,7 @@ public:
 
     static QVector<CompetitionInfo *> getSpecificTypeCompetitions(QVector<CompetitionInfo *> competitions, int type);
     static QVector<CompetitionInfo *> getCompetitionsByStartAndEnd(QVector<CompetitionInfo *> competitions, CompetitionInfo * start, CompetitionInfo * end);
-    static QVector<CompetitionInfo *> mergeSeasonsCompetitions(QVector<Season> *seasons, QString filter);
+    static QVector<CompetitionInfo *> mergeSeasonsCompetitions(QVector<Season> *seasons, QString filter, bool mergeCalendars);
     QString getShortSerieTypeText();
 
 private:

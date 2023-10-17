@@ -36,6 +36,21 @@ GlobalDatabase::~GlobalDatabase()
     delete m_globalDatabase;
 }
 
+QVector<QPair<QString, QString> > GlobalDatabase::getCountries() const
+{
+    return countries;
+}
+
+QVector<QPair<QString, QString> > &GlobalDatabase::getCountriesReference()
+{
+    return countries;
+}
+
+void GlobalDatabase::setCountries(const QVector<QPair<QString, QString> > &newCountries)
+{
+    countries = newCountries;
+}
+
 QVector<JumpsImportancePreset> GlobalDatabase::getJumpsImportancePresets() const
 {
     return jumpsImportancePresets;
@@ -180,12 +195,12 @@ void GlobalDatabase::removeJumper(int index)
 
 bool GlobalDatabase::loadFromJson()
 {
-    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadPointsForPlacesPresets() && loadCalendarPresets() && loadFormGeneratorPresets() && loadJumpsImportancePresets());
+    return (loadJumpers() && loadHills() && loadCompetitionsRules() && loadPointsForPlacesPresets() && loadCalendarPresets() && loadFormGeneratorPresets() && loadJumpsImportancePresets() && loadCountries());
 }
 
 bool GlobalDatabase::writeToJson()
 {
-    return (writeJumpers() && writeHills() && writeCompetitionsRules() && writeSimulationSaves() && writePointsForPlacesPresets() && writeCalendarPresets() && writeFormGeneratorPresets() && writeJumpsImportancePresets());
+    return (writeJumpers() && writeHills() && writeCompetitionsRules() && writeSimulationSaves() && writePointsForPlacesPresets() && writeCalendarPresets() && writeFormGeneratorPresets() && writeJumpsImportancePresets() && writeCountries());
 }
 
 bool GlobalDatabase::loadJumpers()
@@ -377,6 +392,24 @@ bool GlobalDatabase::loadJumpsImportancePresets()
     return ok;
 }
 
+bool GlobalDatabase::loadCountries()
+{
+    QFile file("userData/GlobalDatabase/globalCountries.json");
+    file.open(QFile::ReadOnly | QFile::Text);
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    QJsonObject object = doc.object();
+    QJsonArray array = object.value("countries").toArray();
+    for(auto val : array)
+    {
+        QPair<QString, QString> c;
+        c.first = val.toObject().value("code").toString();
+        c.second = val.toObject().value("name").toString();
+        countries.push_back(c);
+    }
+    file.close();
+    return true;
+}
+
 bool GlobalDatabase::writeJumpers()
 {
     QJsonDocument document;
@@ -512,10 +545,42 @@ bool GlobalDatabase::writeJumpsImportancePresets()
     return ok;
 }
 
+bool GlobalDatabase::writeCountries()
+{
+    QJsonDocument document;
+    QJsonObject mainObject;
+    QJsonArray array;
+    for(auto & country : countries)
+    {
+        QJsonObject countryObject;
+        countryObject.insert("code", country.first);
+        countryObject.insert("name", country.second);
+        array.push_back(countryObject);
+    }
+    mainObject.insert("countries", array);
+    document.setObject(mainObject);
+    QFile file("userData/GlobalDatabase/globalCountries.json");
+    file.open(QFile::WriteOnly | QFile::Text);
+    file.resize(0);
+    file.write(document.toJson(QJsonDocument::Indented));
+    file.close();
+    return true;
+}
+
 void GlobalDatabase::setupJumpersFlags()
 {
     for(auto & jumper : getEditableGlobalJumpers())
     {
         jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
     }
+}
+
+QString GlobalDatabase::getCountryName(QString countryCode)
+{
+    for(auto & c : countries)
+    {
+        if(c.first == countryCode)
+            return c.second;
+    }
+    return "COUNTRY-ERROR";
 }

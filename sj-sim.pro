@@ -10,6 +10,8 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    source/UI/AppSettings/CountriesEditorTableModel.cpp \
+    source/UI/AppSettings/CountriesEditorWindow.cpp \
     source/UI/AppSettings/JumpDataInfoChoiceDialog.cpp \
     source/UI/AppSettings/NewJumpsImportancePresetDialog.cpp \
     source/UI/Competition/CompetitionManagerWindow.cpp \
@@ -147,6 +149,8 @@ SOURCES += \
     source/utilities/functions.cpp
 
 HEADERS += \
+    source/UI/AppSettings/CountriesEditorTableModel.h \
+    source/UI/AppSettings/CountriesEditorWindow.h \
     source/UI/AppSettings/JumpDataInfoChoiceDialog.h \
     source/UI/AppSettings/NewJumpsImportancePresetDialog.h \
     source/UI/Competition/CompetitionManagerWindow.h \
@@ -283,6 +287,7 @@ HEADERS += \
     source/utilities/functions.h
 
 FORMS += \
+    source/UI/AppSettings/CountriesEditorWindow.ui \
     source/UI/AppSettings/JumpDataInfoChoiceDialog.ui \
     source/UI/AppSettings/NewJumpsImportancePresetDialog.ui \
     source/UI/Competition/CompetitionManagerWindow.ui \

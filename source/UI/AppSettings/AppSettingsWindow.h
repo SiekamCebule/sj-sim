@@ -54,6 +54,8 @@ private slots:
 
     void on_pushButton_addJumpsImportancePreset_clicked();
 
+    void on_pushButton_countriesEditor_clicked();
+
 private:
     Ui::AppSettingsWindow *ui;
 

@@ -31,6 +31,7 @@ public:
     void setupConnections();
 
     QCheckBox * getShowFormCheckBox();
+    QCheckBox * getMergeCalendarsCheckBox();
     QComboBox * getCalendarComboBox();
 
 private:
@@ -108,6 +109,8 @@ private slots:
     void on_checkBox_generalClassificationTeam_stateChanged(int arg1);
     void on_checkBox_generalClassificationCompPoints_stateChanged(int arg1);
     void on_checkBox_indResToTeam_stateChanged(int arg1);
+    void on_checkBox_mergeCalendars_stateChanged(int arg1);
+    void on_spinBox_minimalResults_editingFinished();
 };
 
 #endif // SIMULATIONRATINGSWINDOW_H

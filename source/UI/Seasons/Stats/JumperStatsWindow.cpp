@@ -101,7 +101,7 @@ void JumperStatsWindow::fillWindow()
     if(ui->comboBox_hillFilter->currentIndex() > 0)
         specificHill = save->getHillsReference()[ui->comboBox_hillFilter->currentIndex() - 1];
 
-    QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList(), rangeComboBoxes->getCalendarFilter()),
+    QVector<CompetitionInfo *> competitions = CompetitionInfo::getCompetitionsByStartAndEnd(CompetitionInfo::mergeSeasonsCompetitions(rangeComboBoxes->getSeasonsList(), rangeComboBoxes->getCalendarFilter(), ui->checkBox_mergeCalendars->isChecked()),
                                                                                             rangeComboBoxes->getCompetition(1), rangeComboBoxes->getCompetition(2));
     singleResults = CompetitionSingleResult::getFilteredSingleResults(competitions, jumper,
         serieTypesCheckBoxes->getSerieTypes(), hillTypesCheckBoxes->getHillTypesSet(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked(), specificHill);
@@ -129,6 +129,8 @@ void JumperStatsWindow::fillJumperApperancesChart()
     int i=1;
     for(auto & result : singleResults)
     {
+        if(result->getJumpsReference().first().getDSQ() && ui->checkBox_withDSQ->isChecked() == false)
+            continue;
         jumperApperancesLineSeries->append(i, result->getPosition());
 
         if(result->getPosition() < bestPosition)
@@ -288,6 +290,11 @@ QCheckBox *JumperStatsWindow::getShowFormCheckBox()
     return ui->checkBox;
 }
 
+QCheckBox *JumperStatsWindow::getMergeCalendarsCheckBox()
+{
+    return ui->checkBox_mergeCalendars;
+}
+
 QComboBox *JumperStatsWindow::getCalendarComboBox()
 {
     return ui->comboBox_calendar;
@@ -299,7 +306,14 @@ void JumperStatsWindow::updateChartCompetitionBySingleResult(const QPointF &poin
     {
         if((point.x() + 0.3 > int(point.x()) && point.x() - 0.3 < int(point.x())) && (point.y() + 0.3 > point.y() && point.y() - 0.3 < point.y()))
         {
-            CompetitionSingleResult * result = singleResults[int(point.x() - 1)];
+            QVector<CompetitionSingleResult *> tempSingleResults = singleResults;
+            tempSingleResults.detach();
+            for(auto & res : tempSingleResults)
+            {
+                if(res->getJumpsReference().first().getDSQ() == true && ui->checkBox_withDSQ->isChecked() == false)
+                    MyFunctions::removeFromVector(tempSingleResults, res);
+            }
+            CompetitionSingleResult * result = tempSingleResults[int(point.x() - 1)];
             Hill * hill = result->getCompetition()->getHill();
 
             Season * season = nullptr;
@@ -681,3 +695,17 @@ void JumperStatsWindow::on_pushButton_csvExport_clicked()
         saveJumperChartCsv(text + "flight-rating.csv", FlightRating);
     }
 }
+
+void JumperStatsWindow::on_checkBox_mergeCalendars_stateChanged(int arg1)
+{
+    rangeComboBoxes->setMergeCalendars(arg1);
+    rangeComboBoxes->setupComboBoxes();
+    fillWindow();
+}
+
+
+void JumperStatsWindow::on_checkBox_withDSQ_stateChanged(int arg1)
+{
+    fillWindow();
+}
+
