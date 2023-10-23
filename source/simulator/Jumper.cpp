@@ -1,5 +1,6 @@
 #include "Jumper.h"
 #include "../global/CountryFlagsManager.h"
+#include "../global/GlobalDatabase.h"
 
 #include <QObject>
 #include <QDebug>
@@ -34,6 +35,11 @@ QPixmap Jumper::getImagePixmap()
 QString Jumper::getTextInfo()
 {
     return getNameAndSurname() + " (" + countryCode + ")";
+}
+
+QString Jumper::getTextForDiscord()
+{
+    return getNameAndSurname() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(countryCode).getAlpha2().toLower());
 }
 
 QString Jumper::getImageName() const
@@ -150,7 +156,7 @@ void Jumper::setupJumpersFlagPixmaps(QVector<Jumper> & jumpers)
 {
     for(auto & jumper : jumpers)
     {
-        jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
+        jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(jumper.getCountryCode().toLower()));
     }
 }
 
@@ -166,7 +172,7 @@ void Jumper::setFlagPixmap(const QPixmap &newFlagPixmap)
 
 void Jumper::updateCountryFlagPixmap()
 {
-    flagPixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(countryCode));
+    flagPixmap = CountryFlagsManager::getFlagPixmap(countryCode);
 }
 
 JumperSkills Jumper::getJumperSkills() const

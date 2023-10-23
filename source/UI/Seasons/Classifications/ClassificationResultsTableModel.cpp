@@ -76,7 +76,7 @@ QVariant ClassificationResultsTableModel::data(const QModelIndex &index, int rol
                     countryCode = classification->getResultsReference()[index.row()]->getJumper()->getCountryCode();
                 else
                     countryCode = classification->getResultsReference()[index.row()]->getTeamCode();
-                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(countryCode.toLower())).scaled(28, 19.95);
+                return CountryFlagsManager::getFlagPixmap(countryCode.toLower()).scaled(28, 19.95);
             }
         }
         else if(role == Qt::FontRole)

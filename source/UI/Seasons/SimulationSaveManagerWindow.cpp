@@ -427,7 +427,7 @@ void SimulationSaveManagerWindow::fillNextCompetitionInformations()
     if(competition != nullptr){
         QString text = QString::number(competitionIndex + 1) + ". " + competition->getHill()->getName() + " HS" + QString::number(competition->getHill()->getHSPoint());
         ui->label_nextCompetitionIndexAndHill->setText(text);
-        ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(competition->getHill()->getCountryCode().toLower())).scaled(ui->label_hillFlag->size()));
+        ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(competition->getHill()->getCountryCode().toLower()).scaled(ui->label_hillFlag->size()));
         switch(competition->getSerieType())
         {
         case CompetitionInfo::Competition:
@@ -640,6 +640,7 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
                     competition->getRoundsKOGroupsReference().push_back(QVector<KOGroup>());
                     static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&competition->getRoundsKOGroupsReference().last());
                 }
+                competition->setStartList(static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsJumpersReference().first());
 
             }
             else if(type == CompetitionRules::Team){

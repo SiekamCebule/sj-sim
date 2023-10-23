@@ -1,6 +1,7 @@
 #include "IndividualCompetitionManager.h"
 #include "../../utilities/functions.h"
 #include <QVector>
+#include <random>
 
 IndividualCompetitionManager::IndividualCompetitionManager() : AbstractCompetitionManager(CompetitionRules::Individual)
 {
@@ -253,7 +254,10 @@ void IndividualCompetitionManager::setStartListOrderByClassification(QVector<Jum
             if(tempJumpers.contains(jumper) == false)
                 others.push_back(jumper);
         }
-        std::random_shuffle(others.begin(), others.end());
+        std::random_device rd;
+        std::mt19937 g(rd());
+
+        std::shuffle(others.begin(), others.end(), g);
 
         tempJumpers.append(others);
 
@@ -297,7 +301,10 @@ void IndividualCompetitionManager::setStartListOrderByDefault(QVector<Jumper *> 
 
 void IndividualCompetitionManager::setStartListOrderRandomly(QVector<Jumper *> &startList)
 {
-    std::random_shuffle(startList.begin(), startList.end());
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    std::shuffle(startList.begin(), startList.end(), g);
 }
 
 void IndividualCompetitionManager::setStartListOrderByCountries(QVector<QString> countries, QVector<Jumper *> &startList)

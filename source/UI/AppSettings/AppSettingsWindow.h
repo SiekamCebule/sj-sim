@@ -56,6 +56,12 @@ private slots:
 
     void on_pushButton_countriesEditor_clicked();
 
+    void on_lineEdit_jumpInfoWh_editingFinished();
+
+    void on_lineEdit_singleResultWh_editingFinished();
+
+    void on_lineEdit_compResultsWh_editingFinished();
+
 private:
     Ui::AppSettingsWindow *ui;
 

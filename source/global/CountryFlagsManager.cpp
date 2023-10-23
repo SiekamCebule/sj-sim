@@ -15,7 +15,7 @@ QPixmap CountryFlagsManager::getFlagPixmap(const QString &twoLettersCountryCode)
     return QPixmap("flags/" + twoLettersCountryCode.toUpper() + ".svg");
 }
 
-QString CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(const QString &code)
+/*QString CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(const QString &code)
 {
     if(code == "afg") return "af";
     else if(code == "alb") return "al";
@@ -267,7 +267,7 @@ QString CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(const QS
     else if(code == "zwe") return "zw";
     else if(code == "ala") return "ax";
     else return "xx";
-}
+}*/
 
 QSize CountryFlagsManager::getFlagPixmapSize(short type)
 {

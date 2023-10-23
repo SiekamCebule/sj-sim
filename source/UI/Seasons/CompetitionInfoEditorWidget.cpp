@@ -105,7 +105,7 @@ void CompetitionInfoEditorWidget::setupHillsComboBox()
     ui->comboBox_hill->clear();
     ui->comboBox_hill->addItem(tr("BRAK"));
     for(const auto & hill : *hillsList){
-        ui->comboBox_hill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())))), hill->getName() + " HS" + QString::number(hill->getHSPoint()));
+        ui->comboBox_hill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower()))), hill->getName() + " HS" + QString::number(hill->getHSPoint()));
     }
 }
 

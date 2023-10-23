@@ -207,6 +207,40 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_sendWebhook">
+       <property name="minimumSize">
+        <size>
+         <width>240</width>
+         <height>27</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>240</width>
+         <height>27</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+background-color: rgb(145, 186, 237);
+color: rgb(47, 47, 47);
+border-radius: 10px;
+}
+QPushButton:hover{
+	background-color: rgb(115, 156, 207);
+}</string>
+       </property>
+       <property name="text">
+        <string>Wyślij webhooka (występ indywidualny)</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>

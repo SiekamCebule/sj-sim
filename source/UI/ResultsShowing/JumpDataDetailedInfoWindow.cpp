@@ -3,7 +3,11 @@
 
 #include "../../global/CountryFlagsManager.h"
 #include "../../global/GlobalAppSettings.h"
+#include "../../global/GlobalDatabase.h"
 #include "../../utilities/functions.h"
+#include <dpp/dpp.h>
+
+extern const QString appVersion;
 
 JumpDataDetailedInfoWindow::JumpDataDetailedInfoWindow(JumpData *jumpData, QWidget *parent) :
     jumpData(jumpData),
@@ -31,7 +35,7 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
         jumper = jumpData->getJumper();
 
         ui->label_nameAndSurname->setText(jumper->getNameAndSurname());
-        ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+        ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(jumper->getCountryCode().toLower()).scaled(ui->label_flag->size()));
         ui->label_distance->setText(QString::number(jumpData->getDistance()) + "m");
         ui->label_points->setText(QString::number(jumpData->getPoints()) + tr("pkt"));
         ui->label_gate->setText(QString::number(jumpData->getGate()));
@@ -82,25 +86,7 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
         if(jumpData->getCompetition() != nullptr){
         if(jumpData->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
         {
-            double round = MyFunctions::getIndexOfItemInVector(jumpData->getCompetition()->getResultsReference().getResultOfIndividualJumper(jumpData->getJumper())->getJumpsReference(), jumpData) + 1;
-            double points = jumpData->getPoints();
-            double position = 1;
-            CompetitionResults results = jumpData->getCompetition()->getResultsReference();
-            results.getResultsReference().detach();
-            for(auto & res : results.getResultsReference())
-            {
-                if(res.getJumpsReference().count() > round)
-                    res.getJumpsReference().remove(round, res.getJumpsReference().count() - round);
-                res.updatePointsSum();
-            }
-            results.sortInDescendingOrder();
-
-            for(auto & res : results.getResultsReference())
-            {
-                    if(res.getJumpsReference()[round - 1].getPoints() > points)
-                        position++;
-            }
-            ui->label_positionInRound->setText(QString::number(position));
+            ui->label_positionInRound->setText(QString::number(jumpData->getPositionInRound()));
         }
         else
         {
@@ -187,6 +173,8 @@ void JumpDataDetailedInfoWindow::removeWindsInfoLayout()
     delete ui->verticalLayout_windsInfo;
 }
 
+
+
 JumpData *JumpDataDetailedInfoWindow::getJumpData() const
 {
     return jumpData;
@@ -195,4 +183,102 @@ JumpData *JumpDataDetailedInfoWindow::getJumpData() const
 void JumpDataDetailedInfoWindow::setJumpData(JumpData *newJumpData)
 {
     jumpData = newJumpData;
+}
+
+void JumpDataDetailedInfoWindow::on_pushButton_clicked()
+{
+    dpp::cluster bot("");
+    dpp::webhook wh(GlobalAppSettings::get()->getJumpInfoWebhook().toStdString());
+    dpp::message msg;
+    msg.add_embed(getEmbedForJumpInfo());
+    bot.execute_webhook(wh, msg);
+}
+
+dpp::embed JumpDataDetailedInfoWindow::getEmbedForJumpInfo()
+{
+    Jumper * jumper = jumpData->getJumper();
+    CompetitionInfo * comp = jumpData->getCompetition();
+
+    int round = 0;
+    if(jumpData->getInSingleJumps() == false){
+    if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+        round = MyFunctions::getIndexOfItemInVector(comp->getResultsReference().getResultOfIndividualJumper(jumper)->getJumpsReference(), jumpData) + 1;
+    else
+        round = MyFunctions::getIndexOfItemInVector(comp->getResultsReference().getResultOfTeam(Team::getTeamByCountryCode(&comp->getTeamsReference(), jumper->getCountryCode()))->getTeamJumperResult(jumper)->getJumpsReference(), jumpData) + 1;
+    }
+
+    dpp::embed embed;
+    embed.set_color(dpp::colors::summer_sky);
+    QString title = QString("**%1 %2**").arg(jumper->getNameAndSurname()).arg(QString(":flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(jumper->getCountryCode()).getAlpha2().toLower()));
+    QString description;
+    QString typeText;
+    if(jumpData->getInSingleJumps() == false){
+    if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+        typeText = tr("indywidualny");
+    else
+        typeText = tr("drużynowy");
+    }
+    if(jumpData->getInSingleJumps() == false)
+        description = comp->getHill()->getHillTextForDiscord() + QString(" (%1)").arg(comp->getLongSerieTypeText()) + " " + typeText + tr(" - Skok %1").arg(QString::number(round));
+    else
+        description = jumpData->getHill()->getHillTextForDiscord() + tr(" (tryb pojedynczych skoków)");
+    embed.set_title(title.toStdString());
+    embed.set_description(description.toStdString());
+
+    bool gateComp = true;
+    bool windComp = true;
+    bool judges = true;
+    if(comp != nullptr)
+    {
+        gateComp = comp->getRulesPointer()->getHasGateCompensations();
+        windComp = comp->getRulesPointer()->getHasWindCompensations();
+        judges = comp->getRulesPointer()->getHasJudgesPoints();
+    }
+
+    JumpDataInfoChoice * c = &GlobalAppSettings::get()->getJumpDataInfoChoiceReference();
+    if(c->getDistance())
+        embed.add_field(tr("Odległość").toStdString(), QString::number(jumpData->getDistance()).toStdString(), true);
+    if(c->getPoints())
+        embed.add_field(tr("Punkty").toStdString(), QString::number(jumpData->getPoints()).toStdString(), true);
+    if(c->getGate())
+        embed.add_field(tr("Belka").toStdString(), QString::number(jumpData->getGate()).toStdString(), true);
+    if(c->getAveragedWind())
+        embed.add_field(tr("Uśredniony wiatr").toStdString(), QString::number(jumpData->getAveragedWind()).toStdString(), true);
+    if(c->getGateCompensation() && gateComp)
+        embed.add_field(tr("Rekompensata za belkę").toStdString(), QString::number(jumpData->getGateCompensation()).toStdString(), false);
+    if(c->getWindCompensation() && windComp)
+        embed.add_field(tr("Rekompensata za wiatr").toStdString(), QString::number(jumpData->getWindCompensation()).toStdString(), true);
+    if(c->getTotalCompensation() && (gateComp || windComp))
+        embed.add_field(tr("Łączna rekompensata").toStdString(), QString::number(jumpData->getTotalCompensation()).toStdString(), true);
+    if(c->getJudges() && judges)
+        embed.add_field(tr("Noty sędziowskie").toStdString(), jumpData->getJudgesText().toStdString(), false);
+    if(c->getJudgesPoints() && judges)
+        embed.add_field(tr("Punkty od sędziów").toStdString(), QString::number(jumpData->getJudgesPoints()).toStdString(), true);
+    if(c->getLandingType())
+        embed.add_field(tr("Rodzaj lądowania").toStdString(), jumpData->getLanding().getTextLandingType().toStdString(), true);
+    if(c->getSpecificWind())
+        embed.add_field(tr("Wiatr przy skoku").toStdString(), jumpData->getWindsText().toStdString(), false);
+    if(c->getPositionAfterJump() && jumpData->getInSingleJumps() == false){
+        if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+            embed.add_field(tr("Miejsce po skoku").toStdString(), QString::number(comp->getResultsReference().getResultOfIndividualJumper(jumper)->getPosition()).toStdString(), true);
+        else
+            embed.add_field(tr("Miejsce po skoku").toStdString(), QString::number(comp->getResultsReference().getResultOfTeam(Team::getTeamByCountryCode(&comp->getTeamsReference(), jumper->getCountryCode()))->getPosition()).toStdString(), true);
+    }
+    if(c->getJumpPositionInRound() && jumpData->getInSingleJumps() == false && comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+        embed.add_field(tr("Pozycja noty w serii").toStdString(), QString::number(jumpData->getPositionInRound()).toStdString(), true);
+    if(c->getTakeoffRating())
+        embed.add_field(tr("Ocena wybicia").toStdString(), QString::number(jumpData->getSimulationDataReference().getTakeoffRating()).toStdString(), false);
+    if(c->getFlightRating())
+        embed.add_field(tr("Ocena lotu").toStdString(), QString::number(jumpData->getSimulationDataReference().getFlightRating()).toStdString(), true);
+    if(c->getLandingRating())
+        embed.add_field(tr("Ocena lądowania").toStdString(), QString::number(jumpData->getLanding().getRating()).toStdString(), true);
+    if(c->getInrunSnow())
+        embed.add_field(tr("Śnieg/deszcz przy skoku").toStdString(), QString::number(jumpData->getSimulationDataReference().getInrunSnow()).toStdString(), true);
+
+
+    embed.set_footer(
+        dpp::embed_footer()
+            .set_text(tr("Wiadomość wysłana z poziomu Sj.Sim ").toStdString() + appVersion.toStdString() + "\n" + "https://github.com/SiekamCebule/sj-sim")
+        );
+    return embed;
 }

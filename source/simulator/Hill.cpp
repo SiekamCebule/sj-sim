@@ -2,6 +2,7 @@
 #include "Landing.h"
 
 #include "../global/CountryFlagsManager.h"
+#include "../global/GlobalDatabase.h"
 
 #include <QFile>
 #include <QByteArray>
@@ -36,6 +37,11 @@ Hill::Hill(const QString &name, const QString &countryCode, double KPoint, doubl
 QString Hill::getHillText()
 {
     return name + " HS" + QString::number(HSPoint);
+}
+
+QString Hill::getHillTextForDiscord()
+{
+    return name + QString(" :flag_%1: ").arg(GlobalDatabase::get()->getCountryByAlpha3(countryCode).getAlpha2().toLower()) + QString("HS%1").arg(QString::number(HSPoint));
 }
 
 double Hill::getRecord() const

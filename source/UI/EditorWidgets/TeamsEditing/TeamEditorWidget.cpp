@@ -26,7 +26,7 @@ TeamEditorWidget::~TeamEditorWidget()
 void TeamEditorWidget::fillWidgetInputs()
 {
     ui->label_teamCountryCode->setText(team->getCountryCode());
-    ui->label_flagPixmap->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(team->getCountryCode().toLower())).scaled(ui->label_flagPixmap->size()));
+    ui->label_flagPixmap->setPixmap(CountryFlagsManager::getFlagPixmap(team->getCountryCode().toLower()).scaled(ui->label_flagPixmap->size()));
 }
 
 void TeamEditorWidget::removeSubmitButton()

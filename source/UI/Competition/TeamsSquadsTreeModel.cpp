@@ -2,6 +2,7 @@
 #include <QFont>
 #include <QPixmap>
 #include "../../global/CountryFlagsManager.h"
+#include "../../global/GlobalDatabase.h"
 
 TeamsSquadsTreeModel::TeamsSquadsTreeModel(QVector<Team> *teams, int jumpersInTeam, QObject *parent)
     : QAbstractItemModel(parent), teams(teams), jumpersInTeam(jumpersInTeam)
@@ -106,7 +107,7 @@ QVariant TeamsSquadsTreeModel::data(const QModelIndex &index, int role) const
             else
                 teamIndex = item->getParentItem()->row();
 
-            QPixmap flagPixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(teams->at(teamIndex).getCountryCode().toLower())).scaled(QSize(24, 14));
+            QPixmap flagPixmap = CountryFlagsManager::getFlagPixmap(teams->at(teamIndex).getCountryCode().toLower()).scaled(QSize(24, 14));
             if(item->getParentItem() == rootItem)
             {
                 flagPixmap = flagPixmap.scaled(QSize(35, 21));
@@ -160,7 +161,7 @@ void TeamsSquadsTreeModel::setupTreeItems()
     TreeItem::deleteAllTreeItemsRecursively(rootItem);
     rootItem = new TreeItem({"Drużyna", "Zawodnik"});
     for(auto & team : *teams){
-        TreeItem * teamItem = new TreeItem({team.getCountryCode(), ""}, rootItem);
+        TreeItem * teamItem = new TreeItem({GlobalDatabase::get()->getCountryByAlpha3(team.getCountryCode()).getName(), ""}, rootItem);
         int i=0;
         for(auto & jumper : team.getJumpersReference()){
             if(i == jumpersInTeam) break;

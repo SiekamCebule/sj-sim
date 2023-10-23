@@ -35,7 +35,7 @@ void KOGroupEditorWidget::updateComboBoxesLayout()
         QComboBox * comboBox = new QComboBox();
         for(auto & jumper : *jumpersList)
         {
-            comboBox->addItem(QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower()))),
+            comboBox->addItem(QIcon(CountryFlagsManager::getFlagPixmap(jumper->getCountryCode().toLower())),
                               jumper->getNameAndSurname());
         }
         comboBoxes.push_back(comboBox);

@@ -14,6 +14,7 @@ HillsListModel::HillsListModel(QVector<Hill> *hillsVectorPointer, QObject *paren
 QVariant HillsListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     // FIXME: Implement me!
+    return QVariant();
 }
 
 bool HillsListModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
@@ -44,7 +45,7 @@ QVariant HillsListModel::data(const QModelIndex &index, int role) const
         return hillsVectorPointer->at(index.row()).getName() + " HS" + QString::number(hillsVectorPointer->at(index.row()).getHSPoint());
     }
     else if(role == Qt::DecorationRole){
-        return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hillsVectorPointer->at(index.row()).getCountryCode().toLower())));
+        return QIcon(CountryFlagsManager::getFlagPixmap(hillsVectorPointer->at(index.row()).getCountryCode().toLower()));
     }
     else if(role == Qt::FontRole){
         return QFont("Quicksand Medium", 11, 600);

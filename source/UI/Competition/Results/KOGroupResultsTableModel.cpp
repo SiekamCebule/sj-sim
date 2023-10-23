@@ -69,7 +69,7 @@ QVariant KOGroupResultsTableModel::data(const QModelIndex &index, int role) cons
     {
         if(index.column() == 1)
         {
-            return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())));
+            return QIcon(CountryFlagsManager::getFlagPixmap(jumper->getCountryCode().toLower()));
         }
     }
     else if(role == Qt::BackgroundRole)

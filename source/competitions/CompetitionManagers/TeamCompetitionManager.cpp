@@ -1,6 +1,6 @@
 #include "TeamCompetitionManager.h"
 #include "../../utilities/functions.h"
-
+#include <random>
 
 TeamCompetitionManager::TeamCompetitionManager() : AbstractCompetitionManager(CompetitionRules::Team)
 {
@@ -153,6 +153,17 @@ QVector<Team *> TeamCompetitionManager::getFilteredTeamsForNextRound()
     return teams;
 }
 
+void TeamCompetitionManager::updateTeamsVectorByQualifications(QVector<Team> &teamsVectorToModify)
+{
+    QVector<Team *> teams = getFilteredTeamsForNextRound();
+
+    for(auto & team : teamsVectorToModify)
+    {
+        if(Team::containsTeamByCode(teams, team.getCountryCode()) == false)
+            MyFunctions::removeFromVector(teamsVectorToModify, &team);
+    }
+}
+
 QVector<Team> TeamCompetitionManager::getFilteredTeamsAfterQualifications(CompetitionInfo *competition)
 {
     CompetitionResults * results = &competition->getAdvancementCompetition()->getResultsReference();
@@ -239,7 +250,10 @@ void TeamCompetitionManager::setStartListOrderByClassification(QVector<Team> & t
             if(MyFunctions::vectorContains(tempTeams, Team::getTeamByCountryCode(&tempTeams, team.getCountryCode())) == false)
                 others.push_back(team);
         }
-        std::random_shuffle(others.begin(), others.end());
+        std::random_device rd;
+        std::mt19937 g(rd());
+
+        std::shuffle(others.begin(), others.end(), g);
 
         tempTeams.append(others);
 
@@ -267,7 +281,10 @@ void TeamCompetitionManager::setStartListOrderByCompetitionResults(QVector<Team>
             if(MyFunctions::vectorContains(tempTeams, Team::getTeamByCountryCode(&tempTeams, team.getCountryCode())) == false)
                 others.push_back(team);
         }
-        std::random_shuffle(others.begin(), others.end());
+        std::random_device rd;
+        std::mt19937 g(rd());
+
+        std::shuffle(others.begin(), others.end(), g);
 
         tempTeams.append(others);
 
@@ -278,7 +295,10 @@ void TeamCompetitionManager::setStartListOrderByCompetitionResults(QVector<Team>
 
 void TeamCompetitionManager::setStartListOrderRandomly(QVector<Team> &teams)
 {
-    std::random_shuffle(teams.begin(), teams.end());
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    std::shuffle(teams.begin(), teams.end(), g);
 }
 
 bool TeamCompetitionManager::checkCompetitionEnd()

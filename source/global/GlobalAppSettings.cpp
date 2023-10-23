@@ -22,6 +22,36 @@ GlobalAppSettings *GlobalAppSettings::get()
     return m_globalAppSettings;
 }
 
+QString GlobalAppSettings::getJumpInfoWebhook() const
+{
+    return jumpInfoWebhook;
+}
+
+void GlobalAppSettings::setJumpInfoWebhook(const QString &newJumpInfoWebhook)
+{
+    jumpInfoWebhook = newJumpInfoWebhook;
+}
+
+QString GlobalAppSettings::getCompetitionSingleResultWebhook() const
+{
+    return competitionSingleResultWebhook;
+}
+
+void GlobalAppSettings::setCompetitionSingleResultWebhook(const QString &newCompetitionSingleResultWebhook)
+{
+    competitionSingleResultWebhook = newCompetitionSingleResultWebhook;
+}
+
+QString GlobalAppSettings::getCompetitionResultsWebhook() const
+{
+    return competitionResultsWebhook;
+}
+
+void GlobalAppSettings::setCompetitionResultsWebhook(const QString &newCompetitionResultsWebhook)
+{
+    competitionResultsWebhook = newCompetitionResultsWebhook;
+}
+
 JumpDataInfoChoice GlobalAppSettings::getJumpDataInfoChoice() const
 {
     return jumpDataInfoChoice;
@@ -100,6 +130,9 @@ bool GlobalAppSettings::loadFromJson()
     setShowCalendarEditorHelp(value.toObject().value("show-calendar-editor-help").toBool(true));
     setShowSeasonJumpersAndHillsHelp(value.toObject().value("show-season-jumpers-and-hills-help").toBool(true));
     setJumpDataInfoChoice(JumpDataInfoChoice::getFromJson(value.toObject().value("jump-data-info-choice").toObject()));
+    setJumpInfoWebhook(value.toObject().value("jump-info-webhook").toString());
+    setCompetitionSingleResultWebhook(value.toObject().value("competition-single-result-webhook").toString());
+    setCompetitionResultsWebhook(value.toObject().value("competition-results-webhook").toString());
 
     return true;
 }
@@ -121,6 +154,9 @@ bool GlobalAppSettings::writeToJson()
     settingsObject.insert("show-calendar-editor-help", getShowCalendarEditorHelp());
     settingsObject.insert("show-season-jumpers-and-hills-help", getShowSeasonJumpersAndHillsHelp());
     settingsObject.insert("jump-data-info-choice", JumpDataInfoChoice::getJsonObject(jumpDataInfoChoice));
+    settingsObject.insert("jump-info-webhook", getJumpInfoWebhook());
+    settingsObject.insert("competition-single-result-webhook", getCompetitionSingleResultWebhook());
+    settingsObject.insert("competition-results-webhook", getCompetitionResultsWebhook());
 
     mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);

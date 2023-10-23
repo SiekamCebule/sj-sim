@@ -16,8 +16,10 @@ QVariant CountriesEditorTableModel::headerData(int section, Qt::Orientation orie
         switch(section)
         {
         case 0:
-            return tr("Kod kraju");
+            return tr("Kod alpha3");
         case 1:
+            return tr("Kod alpha2");
+        case 2:
             return tr("Nazwa kraju");
         }
     }
@@ -48,7 +50,7 @@ int CountriesEditorTableModel::columnCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return 2;
+    return 3;
 }
 
 QVariant CountriesEditorTableModel::data(const QModelIndex &index, int role) const
@@ -59,15 +61,17 @@ QVariant CountriesEditorTableModel::data(const QModelIndex &index, int role) con
     if(role == Qt::DisplayRole)
     {
         if(index.column() == 0)
-            return countries->at(index.row()).first;
+            return countries->at(index.row()).getAlpha3();
         else if(index.column() == 1)
-            return countries->at(index.row()).second;
+            return countries->at(index.row()).getAlpha2();
+        else if(index.column() == 2)
+            return countries->at(index.row()).getName();
     }
     else if(role == Qt::DecorationRole)
     {
         if(index.column() == 0)
         {
-            return QIcon(CountryFlagsManager::getFlagPixmap(countries->at(index.row()).first));
+            return QIcon(CountryFlagsManager::getFlagPixmap(countries->at(index.row()).getAlpha3()));
         }
     }
     else if(role == Qt::FontRole)
@@ -83,15 +87,19 @@ QVariant CountriesEditorTableModel::data(const QModelIndex &index, int role) con
 
 bool CountriesEditorTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (data(index, role) != value) {
+    if (data(index, role) != value && value.toString() != "") {
         // FIXME: Implement me!
         if(index.column() == 0 && value.toString().count() > 3)
             return false;
+        if(index.column() == 1 && value.toString().count() > 2)
+            return false;
 
         if(index.column() == 0)
-            (*countries)[index.row()].first = value.toString();
+            (*countries)[index.row()].setAlpha3(value.toString());
         else if(index.column() == 1)
-            (*countries)[index.row()].second = value.toString();
+            (*countries)[index.row()].setAlpha2(value.toString());
+        else if(index.column() == 2)
+            (*countries)[index.row()].setName(value.toString());
         emit edited();
 
         emit dataChanged(index, index, {role});
@@ -140,12 +148,12 @@ bool CountriesEditorTableModel::removeColumns(int column, int count, const QMode
     return true;
 }
 
-QVector<QPair<QString, QString> > *CountriesEditorTableModel::getCountries() const
+QVector<Country> *CountriesEditorTableModel::getCountries() const
 {
     return countries;
 }
 
-void CountriesEditorTableModel::setCountries(QVector<QPair<QString, QString> > *newCountries)
+void CountriesEditorTableModel::setCountries(QVector<Country> *newCountries)
 {
     countries = newCountries;
 }

@@ -33,6 +33,9 @@ AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
     ui->checkBox_autoAdjustHillEffects->setChecked(GlobalSimulationSettings::get()->getAutoAdjustHillEffects());
     ui->doubleSpinBox->setValue(GlobalSimulationSettings::get()->getHillsEffectsMultiplier());
     ui->checkBox_globalDatabaseRecords->setChecked(GlobalSimulationSettings::get()->getUpdateGlobalDatabaseRecords());
+    ui->lineEdit_jumpInfoWh->setText(GlobalAppSettings::get()->getJumpInfoWebhook());
+    ui->lineEdit_singleResultWh->setText(GlobalAppSettings::get()->getCompetitionSingleResultWebhook());
+    ui->lineEdit_compResultsWh->setText(GlobalAppSettings::get()->getCompetitionResultsWebhook());
 }
 
 AppSettingsWindow::~AppSettingsWindow()
@@ -73,6 +76,7 @@ void AppSettingsWindow::setMainWindowParent(MainWindow *newMainWindowParent)
 void AppSettingsWindow::closeEvent(QCloseEvent *event)
 {
     GlobalSimulationSettings::get()->writeToFile();
+    GlobalAppSettings::get()->writeToJson();
     event->accept();
 }
 
@@ -352,5 +356,21 @@ void AppSettingsWindow::on_pushButton_countriesEditor_clicked()
     {
         GlobalDatabase::get()->writeCountries();
     }
+}
+
+
+void AppSettingsWindow::on_lineEdit_jumpInfoWh_editingFinished()
+{
+    GlobalAppSettings::get()->setJumpInfoWebhook(ui->lineEdit_jumpInfoWh->text());
+}
+
+void AppSettingsWindow::on_lineEdit_singleResultWh_editingFinished()
+{
+    GlobalAppSettings::get()->setCompetitionSingleResultWebhook(ui->lineEdit_singleResultWh->text());
+}
+
+void AppSettingsWindow::on_lineEdit_compResultsWh_editingFinished()
+{
+    GlobalAppSettings::get()->setCompetitionResultsWebhook(ui->lineEdit_compResultsWh->text());
 }
 

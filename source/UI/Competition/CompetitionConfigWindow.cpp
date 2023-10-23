@@ -15,6 +15,7 @@
 #include "../../utilities/functions.h"
 #include "CompetitionManagerWindow.h"
 #include "RandomWindConfigWindow.h"
+#include "StartListByOtherCompetitionConfigWindow.h"
 
 #include <QSizePolicy>
 #include <QStringListModel>
@@ -77,6 +78,7 @@ push_button_randomWind->setParent(this);
         ui->comboBox_competition->hide();
         ui->pushButton_defaultStartListOrder->hide();
         ui->pushButton_orderByJumpersList->hide();
+        ui->pushButton_byOtherComp->hide();
         ui->label_3->hide();
 
         for(auto & preset : GlobalDatabase::get()->getJumpsImportancePresetsReference())
@@ -101,13 +103,13 @@ push_button_randomWind->setParent(this);
         for(auto & classification : Classification::getSpecificTypeClassifications(simulationSave->getActualSeason()->getActualCalendar()->getClassificationsReference(), compType))
             ui->comboBox_classification->addItem(classification->getName());
 
-        QVector<CompetitionInfo *> competitions = CompetitionInfo::getSpecificTypeCompetitions(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference(), compType);
+        QVector<CompetitionInfo *> competitions = CompetitionInfo::getSpecificTypeMainCompetitions(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference(), compType);
         for(auto & competition : competitions)
         {
             int competitionIndex = simulationSave->getActualSeason()->getActualCalendar()->getCompetitionMainIndex(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference(), competition); //Index konkursu na głównej liście (bez treningów i serii próbnych)
             if(competitionIndex < SeasonCalendar::getCompetitionMainIndex(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference(), simulationSave->getNextCompetition())){
                 Hill * hill = competition->getHill();
-                ui->comboBox_competition->addItem(QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower()))),
+                ui->comboBox_competition->addItem(QIcon(CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower())),
                                               QString::number(competitionIndex + 1) + ". " + hill->getName() + " HS" + QString::number(hill->getHSPoint()));
             }
         }
@@ -196,6 +198,8 @@ push_button_randomWind->setParent(this);
     else teamsSquadsModel->setJumpersInTeam(seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
     teamsSquadsModel->setupTreeItems();
     teamsTreeView = new TeamsSquadsTreeView(teamsSquadsModel, this);
+    teamsTreeView->setFixedWidth(390);
+    jumpersListView->setFixedWidth(280);
     ui->verticalLayout_startList->addWidget(teamsTreeView);
 
     if(getType() == SeasonCompetition)
@@ -532,7 +536,7 @@ void CompetitionConfigWindow::setupHillToolBoxItem()
     ui->comboBox_existingHill->addItem(tr("BRAK"));
     for(const auto & hill : GlobalDatabase::get()->getEditableGlobalHills())
     {
-        ui->comboBox_existingHill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())))) ,hill.getName() + " HS" + QString::number(hill.getHSPoint()));
+        ui->comboBox_existingHill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(hill.getCountryCode().toLower()))) ,hill.getName() + " HS" + QString::number(hill.getHSPoint()));
     }
 
     hillEditor = new HillEditorWidget(this);
@@ -776,8 +780,10 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
                   //  static_cast<IndividualCompetitionManager *>(qualificationsManager)->getRoundsKOGroupsReference().push_back(competitionGroups);
             }
             else if(type == CompetitionRules::Team){
+                qualsInfo.setTeams(competitionTeams);
+                qualsInfo.getTeamsReference().detach();
                 QVector<Team *> teams;
-                for(auto & t : competitionTeams)
+                for(auto & t : qualsInfo.getTeamsReference())
                     teams.push_back(&t);
                 static_cast<TeamCompetitionManager *>(qualificationsManager)->getRoundsTeamsReference().push_back(teams);
             }
@@ -869,7 +875,10 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
                 static_cast<IndividualCompetitionManager *>(competitionManager)->getRoundsKOGroupsReference().push_back(&info.getRoundsKOGroupsReference().last());*/
             }
             else if(type == CompetitionRules::Team){
-                static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(static_cast<TeamCompetitionManager *>(qualificationsManager)->getFilteredTeamsForNextRound());
+                info.setTeams(competitionTeams);
+                static_cast<TeamCompetitionManager *>(qualificationsManager)->updateTeamsVectorByQualifications(info.getTeamsReference());
+
+                static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(MyFunctions::convertToVectorOfPointers(&info.getTeamsReference()));
             }
             competitionManager->setActualGate(qualificationsManager->getActualGate());
             competitionManager->setWindGenerationSettings(qualificationsManager->getWindGenerationSettingsReference());
@@ -889,8 +898,11 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
                 }
             }
             else if(type == CompetitionRules::Team){
+                info.setTeams(competitionTeams);
+                info.getTeamsReference().detach();
                 QVector<Team *> teams;
-                for(auto & t : competitionTeams) teams.push_back(&t);
+                for(auto & t : info.getTeamsReference())
+                    teams.push_back(&t);
                 static_cast<TeamCompetitionManager *>(competitionManager)->getRoundsTeamsReference().push_back(teams);
             }
         }
@@ -984,7 +996,7 @@ void CompetitionConfigWindow::on_comboBox_competition_activated(int index)
     {
         index--; //Nie liczymy pierwszego item'a - "Według konkursu"
         int type = seasonCompetition->getRulesPointer()->getCompetitionType();
-        QVector<CompetitionInfo *> competitions = CompetitionInfo::getSpecificTypeCompetitions(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference(), type);
+        QVector<CompetitionInfo *> competitions = CompetitionInfo::getSpecificTypeMainCompetitions(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference(), type);
         CompetitionInfo * competition = SeasonCalendar::getMainCompetitionByIndex(competitions, index);
         if(type == CompetitionRules::Individual){
             IndividualCompetitionManager::setStartListOrderByCompetitionResults(seasonCompetitionJumpers, competition);
@@ -1250,3 +1262,77 @@ void CompetitionConfigWindow::on_pushButton_autoGate_clicked()
     }
     ui->spinBox_startGate->setValue(gate);
  }
+
+
+void CompetitionConfigWindow::on_pushButton_byOtherComp_clicked()
+{
+    StartListByOtherCompetitionConfigWindow * window = new StartListByOtherCompetitionConfigWindow(this);
+    window->setSave(simulationSave);
+    window->setCompetitionType(seasonCompetition->getRulesPointer()->getCompetitionType());
+    window->setupComboBox();
+    if(window->exec() == QDialog::Accepted)
+    {
+        if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual){
+        if(window->getCheckBoxState() == false){
+            seasonCompetitionJumpers = window->getCompetition()->getStartList();
+            jumpersListView->setupListModel();
+        }
+        else
+        {
+            QVector<Jumper *> temp = seasonCompetitionJumpers;
+            temp.detach();
+            seasonCompetitionJumpers.clear();
+            for(auto & j : window->getCompetition()->getStartListReference())
+            {
+                if(temp.contains(j))
+                    seasonCompetitionJumpers.push_back(j);
+            }
+            for(auto & seasonJumper : seasonCompetitionJumpers)
+                MyFunctions::removeFromVector(temp, seasonJumper);
+
+            std::random_device rd;
+            std::mt19937 g(rd());
+            std::shuffle(temp.begin(), temp.end(), g);
+            for(auto & j : temp)
+                seasonCompetitionJumpers.push_front(j);
+            jumpersListView->setupListModel();
+        }
+        }
+        else if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
+        {
+        if(window->getCheckBoxState() == false){
+            seasonCompetition->getTeamsReference().clear();
+            for(auto & team : window->getCompetition()->getTeamsReference())
+            {
+                Team t;
+                t.generateID();
+                t.setJumpers(team.getJumpersReference());
+                t.setCountryCode(team.getCountryCode());
+                seasonCompetition->getTeamsReference().push_back(t);
+            }
+            delete teamsSquadsModel;
+            teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
+            teamsSquadsModel->setupTreeItems();
+            teamsTreeView->setModel(teamsSquadsModel);
+            teamsTreeView->getTreeView()->expandToDepth(0);
+        }
+        else
+        {
+            QVector<Team> temp = competitionTeams;
+            temp.detach();
+            competitionTeams.clear();
+            for(auto & t : window->getCompetition()->getTeamsReference())
+            {
+                if(Team::containsTeamByCode(temp, t.getCountryCode()))
+                    competitionTeams.push_back(Team::getTeamObjectByCountryCode(&temp, t.getCountryCode()));
+            }
+            delete teamsSquadsModel;
+            teamsSquadsModel = new TeamsSquadsTreeModel(&competitionTeams, seasonCompetition->getRulesPointer()->getJumpersInTeamCount());
+            teamsSquadsModel->setupTreeItems();
+            teamsTreeView->setModel(teamsSquadsModel);
+            teamsTreeView->getTreeView()->expandToDepth(0);
+        }
+        }
+    }
+}
+

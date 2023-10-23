@@ -140,6 +140,36 @@ Team *Team::getTeamByCountryCode(QVector<Team> *teams, QString countryCode)
     return nullptr;
 }
 
+Team Team::getTeamObjectByCountryCode(QVector<Team> *teams, QString countryCode)
+{
+    for(auto & team : *teams)
+    {
+        if(team.getCountryCode() == countryCode)
+            return team;
+    }
+    return Team();
+}
+
+bool Team::containsTeamByCode(QVector<Team> &teams, QString code)
+{
+    for(auto & t : teams)
+    {
+        if(t.getCountryCode() == code)
+            return true;
+    }
+    return false;
+}
+
+bool Team::containsTeamByCode(QVector<Team *> &teams, QString code)
+{
+    for(auto & t : teams)
+    {
+        if(t->getCountryCode() == code)
+            return true;
+    }
+    return false;
+}
+
 QJsonObject Team::getJsonObject(Team &team)
 {
     QJsonObject object;

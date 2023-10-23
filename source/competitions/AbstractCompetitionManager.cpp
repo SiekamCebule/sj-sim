@@ -288,14 +288,7 @@ void AbstractCompetitionManager::updateLast10Judges()
                                         .last()
                                         .getJudgesPoints();
                 else
-                    last10Judges += results
-                                        ->getResultOfTeam(Team::getTeamByCountryCode(
-                                            &competitionInfo->getTeamsReference(),
-                                            startListStatuses[i].getJumper()->getCountryCode()))
-                                        ->getTeamJumperResult(startListStatuses[i].getJumper())
-                                        ->getJumpsReference()
-                                        .last()
-                                        .getJudgesPoints();
+                    last10Judges += results->getResultOfTeam(Team::getTeamByCountryCode(&competitionInfo->getTeamsReference(),startListStatuses[i].getJumper()->getCountryCode()))->getTeamJumperResult(startListStatuses[i].getJumper())->getJumpsReference().last().getJudgesPoints();
                 howMany++;
             }
             i--;

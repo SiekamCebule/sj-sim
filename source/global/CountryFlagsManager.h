@@ -11,7 +11,6 @@ public:
     CountryFlagsManager();
 
     static QPixmap getFlagPixmap(const QString & twoLettersCountryCode);
-    static QString convertThreeLettersCountryCodeToTwoLetters(const QString & code);
     static QSize getFlagPixmapSize(short type = 0);
 
     enum FlagSizeType{

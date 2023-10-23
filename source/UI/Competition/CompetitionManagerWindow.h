@@ -14,6 +14,7 @@
 #include "../../simulator/JumpManipulator.h"
 #include "../../simulator/InrunSnowGenerator.h"
 #include "../Seasons/Classifications/ClassificationResultsTableView.h"
+#include <dpp/dpp.h>
 
 namespace Ui {
 class CompetitionManagerWindow;
@@ -58,6 +59,10 @@ public:
 
     void checkRecords(JumpData &jump, bool multipleRecords = false);
     void checkRecordsByResults(CompetitionResults * results);
+
+    dpp::embed getEmbedForResults();
+    dpp::message getMessageForResults();
+    QString getTextForFullResultsEmbed();
 
 signals:
     void nextRoundButtonClicked();
@@ -140,6 +145,7 @@ private slots:
     void on_pushButton_coachGate_clicked();
     void on_pushButton_inrunSnowGeneratorSettings_clicked();
     void on_comboBox_virtualClassification_currentIndexChanged(int index);
+    void on_pushButton_sendResultsWebhook_clicked();
 };
 
 #endif // COMPETITIONMANAGERWINDOW_H

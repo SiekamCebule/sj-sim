@@ -16,7 +16,7 @@ CountriesEditorWindow::CountriesEditorWindow(QWidget *parent) :
         int insertIndex = 0;
         if(ui->tableView->selectionModel()->selectedIndexes().count() > 0)
             insertIndex = ui->tableView->selectionModel()->selectedIndexes().first().row();
-        model->getCountries()->insert(insertIndex, QPair<QString, QString>("XXX", "NAME"));
+        model->getCountries()->insert(insertIndex, Country("COUNTRY", "XX", "XXX"));
         model->insertRow(insertIndex);
         emit model->dataChanged(model->index(insertIndex, 0), model->index(insertIndex, 1));
     });
@@ -45,16 +45,16 @@ void CountriesEditorWindow::fill()
     if(model == nullptr){
         model = new CountriesEditorTableModel(this);
         connect(model, &CountriesEditorTableModel::edited, this, [this](){
-            sort();
+            //sort();
         });
     }
     ui->tableView->setModel(nullptr);
     ui->tableView->setModel(model);
 }
 
-bool cmp(const QPair<QString, QString> & p1, const QPair<QString, QString> & p2)
+bool cmp(const Country & p1, Country & p2)
 {
-    return p1.first < p2.first;
+    return p1.getAlpha3() < p2.getAlpha3();
 }
 
 void CountriesEditorWindow::sort()

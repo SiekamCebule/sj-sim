@@ -22,6 +22,10 @@ class JumpData : public ClassWithID
 public:
     friend class JumpSimulator;
     JumpData(Jumper *jumper = nullptr, Hill *hill = nullptr);
+
+    QString getJudgesText();
+    QString getWindsText();
+    int getPositionInRound();
 private:
     int gate;
     double distance;
@@ -53,6 +57,8 @@ private:
     CompetitionSingleResult * singleResult;
 
     double jumperForm;
+
+    bool inSingleJumps;
 
 public:
     void reset();
@@ -108,6 +114,8 @@ public:
     void setCompetition(CompetitionInfo *newCompetition);
     CompetitionSingleResult *getSingleResult() const;
     void setSingleResult(CompetitionSingleResult *newSingleResult);
+    bool getInSingleJumps() const;
+    void setInSingleJumps(bool newInSingleJumps);
 };
 
 QDebug operator<<(QDebug d, const JumpData & jumpData);

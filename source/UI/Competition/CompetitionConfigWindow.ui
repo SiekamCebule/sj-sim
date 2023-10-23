@@ -69,7 +69,7 @@ color: rgb(26, 95, 180);
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_startList" stretch="0,0,0,0,0,0,0,0">
+      <layout class="QVBoxLayout" name="verticalLayout_startList" stretch="0,0,0,0,0,0,0,0,0">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
@@ -289,6 +289,31 @@ background-color: rgb(241, 200, 255);
          </property>
          <property name="text">
           <string>Listy zawodników</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_byOtherComp">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+color: rgb(0, 0, 0);
+	background-color: rgb(255, 191, 139);
+padding: 2px;
+}
+QPushButton:hover{
+background-color: rgb(255, 170, 118);
+}</string>
+         </property>
+         <property name="text">
+          <string>Lista startowa wg innego konkursu</string>
          </property>
         </widget>
        </item>

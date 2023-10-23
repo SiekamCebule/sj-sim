@@ -322,6 +322,21 @@ color: black;
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="label_countryName">
+           <property name="font">
+            <font>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: blackl;</string>
+           </property>
+           <property name="text">
+            <string>(Niemcy)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_6">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>

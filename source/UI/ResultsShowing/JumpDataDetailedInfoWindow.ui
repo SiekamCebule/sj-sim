@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>496</width>
-    <height>418</height>
+    <height>508</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -564,6 +564,40 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="minimumSize">
+        <size>
+         <width>160</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>160</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+background-color: rgb(111, 172, 94);
+color: rgb(40, 40, 40);
+border-radius: 10px;
+}
+QPushButton:hover{
+background-color: rgb(81, 142, 64);
+}</string>
+       </property>
+       <property name="text">
+        <string>Wyślij webhook-a</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

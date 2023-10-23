@@ -181,7 +181,7 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
     else if(role == Qt::DecorationRole){
         if(index.column() == 0){
             if(competition != nullptr){
-                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(competition->getHill()->getCountryCode().toLower())).scaled(QSize(33, 18));
+                return CountryFlagsManager::getFlagPixmap(competition->getHill()->getCountryCode().toLower()).scaled(QSize(33, 18));
             }
         }
     }

@@ -37,13 +37,13 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
     ui->comboBox_existingJumper->addItem(tr("BRAK"));
     for(const auto & jumper : GlobalDatabase::get()->getGlobalJumpers())
     {
-        ui->comboBox_existingJumper->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())))) ,jumper.getNameAndSurname());
+        ui->comboBox_existingJumper->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(jumper.getCountryCode().toLower()))) ,jumper.getNameAndSurname());
     }
 
     ui->comboBox_existingHill->addItem(tr("BRAK"));
     for(const auto & hill : GlobalDatabase::get()->getGlobalHills())
     {
-        ui->comboBox_existingHill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill.getCountryCode().toLower())))) ,hill.getName() + " HS" + QString::number(hill.getHSPoint()));
+        ui->comboBox_existingHill->addItem(QIcon(QPixmap(CountryFlagsManager::getFlagPixmap(hill.getCountryCode().toLower()))) ,hill.getName() + " HS" + QString::number(hill.getHSPoint()));
     }
 
     ui->verticalLayout_jumperContent->addWidget(jumperEditor);

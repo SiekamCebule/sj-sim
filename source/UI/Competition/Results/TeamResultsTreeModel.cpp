@@ -3,6 +3,7 @@
 #include <QPixmap>
 #include "../../../global/CountryFlagsManager.h"
 #include "../../../global/IDGenerator.h"
+#include "../../../global/GlobalDatabase.h"
 #include "../../../utilities/functions.h"
 
 extern IDGenerator globalIDGenerator;
@@ -113,7 +114,7 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
             if(item->getParentItem() == rootItem)
                 teamIndex = item->row();
             else teamIndex = item->getParentItem()->row();
-            QPixmap flagPixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultsReference()[index.row()].getTeam()->getCountryCode().toLower())).scaled(QSize(24, 14));
+            QPixmap flagPixmap = CountryFlagsManager::getFlagPixmap(results->getResultsReference()[index.row()].getTeam()->getCountryCode().toLower()).scaled(QSize(24, 14));
             if(item->getParentItem() == rootItem)
             {
                 flagPixmap = flagPixmap.scaled(QSize(35, 21));
@@ -225,7 +226,7 @@ void TeamResultsTreeModel::setupTreeItems()
     rootItem = new TreeItem({tr("Miejsce"), tr("Drużyna"), tr("Zawodnik"), tr("Punkty")});
                results->sortInDescendingOrder();
     for(auto & res : results->getResultsReference()){
-        TreeItem * teamHeaderItem = new TreeItem({QString::number(res.getPosition()), res.getTeam()->getCountryCode(), "", QString::number(res.getPointsSum())}, rootItem);
+        TreeItem * teamHeaderItem = new TreeItem({QString::number(res.getPosition()), GlobalDatabase::get()->getCountryByAlpha3(res.getTeam()->getCountryCode()).getName(), "", QString::number(res.getPointsSum())}, rootItem);
         for(auto & jumper : res.getTeam()->getJumpersReference()){
             //Czy w resultsach jest już ten zawodnik?
             bool resultsContainsJumper = false;

@@ -115,11 +115,11 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         case 1:
             switch(type){
             case CompetitionRules::Individual:{
-                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultByIndex(index.row())->getJumper()->getCountryCode().toLower())).scaled(40, 28.5);
+                return CountryFlagsManager::getFlagPixmap(results->getResultByIndex(index.row())->getJumper()->getCountryCode().toLower()).scaled(40, 28.5);
                 break;
             }
             case CompetitionRules::Team:{
-                return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(results->getResultByIndex(index.row())->getTeam()->getCountryCode().toLower())).scaled(40, 28.5);
+                return CountryFlagsManager::getFlagPixmap(results->getResultByIndex(index.row())->getTeam()->getCountryCode().toLower()).scaled(40, 28.5);
                 break;
             }
             }

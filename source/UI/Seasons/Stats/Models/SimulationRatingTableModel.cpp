@@ -80,7 +80,7 @@ QVariant SimulationRatingTableModel::data(const QModelIndex &index, int role) co
     {
         if(index.column() == 1)
         {
-            return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(ranking[index.row()].first->getCountryCode().toLower())));
+            return QIcon(CountryFlagsManager::getFlagPixmap(ranking[index.row()].first->getCountryCode()));
         }
     }
     else if(role == Qt::TextAlignmentRole)

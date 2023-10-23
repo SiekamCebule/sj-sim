@@ -377,6 +377,7 @@ CompetitionSingleResult *CompetitionResults::getResultOfTeam(Team *team)
 {
     for(auto & result : results)
     {
+        qDebug()<<"t: "<<result.getTeam()->getCountryCode()<<", "<<result.getTeam()<<"  ||  "<<team->getCountryCode()<<", "<<team;
         if(result.getTeam() == team)
             return &result;
     }

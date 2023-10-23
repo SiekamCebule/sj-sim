@@ -3,11 +3,6 @@ QT       += core gui charts concurrent
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
-#CONFIG += console
-
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
     source/UI/AppSettings/CountriesEditorTableModel.cpp \
@@ -21,6 +16,7 @@ SOURCES += \
     source/UI/Competition/Results/ResultsTableModel.cpp \
     source/UI/Competition/Results/TeamResultsTreeModel.cpp \
     source/UI/Competition/StartList/StartListModel.cpp \
+    source/UI/Competition/StartListByOtherCompetitionConfigWindow.cpp \
     source/UI/Competition/TeamsSquadsTreeModel.cpp \
     source/UI/Competition/TeamsSquadsTreeView.cpp \
     source/UI/DatabaseEditor/DatabaseItemsListView.cpp \
@@ -107,6 +103,7 @@ SOURCES += \
     source/form-generator/JumperFormGeneratorSettings.cpp \
     source/form-generator/JumperFormGeneratorSettingsPreset.cpp \
     source/form-generator/JumperFormTendence.cpp \
+    source/global/Country.cpp \
     source/global/CountryFlagsManager.cpp \
     source/global/DatabaseObjectsManager.cpp \
     source/global/GlobalAppSettings.cpp \
@@ -160,6 +157,7 @@ HEADERS += \
     source/UI/Competition/Results/ResultsTableModel.h \
     source/UI/Competition/Results/TeamResultsTreeModel.h \
     source/UI/Competition/StartList/StartListModel.h \
+    source/UI/Competition/StartListByOtherCompetitionConfigWindow.h \
     source/UI/Competition/TeamsSquadsTreeModel.h \
     source/UI/Competition/TeamsSquadsTreeView.h \
     source/UI/DatabaseEditor/DatabaseItemsListView.h \
@@ -247,6 +245,7 @@ HEADERS += \
     source/form-generator/JumperFormGeneratorSettings.h \
     source/form-generator/JumperFormGeneratorSettingsPreset.h \
     source/form-generator/JumperFormTendence.h \
+    source/global/Country.h \
     source/global/CountryFlagsManager.h \
     source/global/DatabaseObjectsManager.h \
     source/global/GlobalAppSettings.h \
@@ -293,6 +292,7 @@ FORMS += \
     source/UI/Competition/CompetitionManagerWindow.ui \
     source/UI/Competition/JumperCompetitionResultsWidget.ui \
     source/UI/Competition/RandomWindConfigWindow.ui \
+    source/UI/Competition/StartListByOtherCompetitionConfigWindow.ui \
     source/UI/Competition/TeamsSquadsTreeView.ui \
     source/UI/DatabaseEditor/DatabaseItemsListView.ui \
     source/UI/EditorWidgets/ClassificationEditorWidget.ui \
@@ -354,15 +354,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#copydata.commands = $(COPY_DIR) $$PWD/translations $$PWD/flags $$OUT_PWD
-#copydata.commands = $(COPY_DIR) $$PWD/userData $$PWD/translations $$PWD/flags $$OUT_PWD
-first.depends = $(first) copydata
-export(first.depends)
-export(copydata.commands)
-QMAKE_EXTRA_TARGETS += first copydata
-
-#UI_DIR = $$PWD
-
 DISTFILES += \
     flaticon_authors \
     flags_author \
@@ -374,3 +365,9 @@ DISTFILES += \
 
 RESOURCES += \
 assets.qrc
+
+win32:CONFIG(release, debug|release): LIBS += -LC:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/lib/dpp-10.0/ -ldpp
+else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/lib/dpp-10.0/ -ldppd
+
+INCLUDEPATH += C:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/include/dpp-10.0
+DEPENDPATH += C:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/include/dpp-10.0

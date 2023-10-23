@@ -26,6 +26,7 @@ public:
     };
 
     QString getHillText();
+    QString getHillTextForDiscord();
 
 private:
     QString name;

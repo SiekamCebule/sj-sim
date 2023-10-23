@@ -67,7 +67,7 @@ QVariant CompetitionsArchiveListModel::data(const QModelIndex &index, int role) 
     else if(role == Qt::DecorationRole)
     {
         CompetitionInfo * competition = seasonCompetitions->at(index.row());
-        return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(competition->getHill()->getCountryCode().toLower())));
+        return QIcon(CountryFlagsManager::getFlagPixmap(competition->getHill()->getCountryCode().toLower()));
     }
     else if(role == Qt::FontRole)
     {

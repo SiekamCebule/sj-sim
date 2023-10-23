@@ -50,13 +50,13 @@ SingleJumpsResultsWindow::~SingleJumpsResultsWindow()
 void SingleJumpsResultsWindow::fillJumperInfo()
 {
     ui->label_jumperNameAndSurname->setText(manager->getJumper().getNameAndSurname());
-    ui->label_jumperFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(manager->getJumper().getCountryCode().toLower())).scaled(ui->label_jumperFlag->size()));
+    ui->label_jumperFlag->setPixmap(CountryFlagsManager::getFlagPixmap(manager->getJumper().getCountryCode().toLower()).scaled(ui->label_jumperFlag->size()));
 }
 
 void SingleJumpsResultsWindow::fillHillInfo()
 {
     ui->label_hillName->setText(manager->getHill().getName() + " HS" + QString::number(manager->getHill().getHSPoint()));
-    ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(manager->getHill().getCountryCode().toLower())).scaled(ui->label_hillFlag->size()));
+    ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(manager->getHill().getCountryCode().toLower()).scaled(ui->label_hillFlag->size()));
 }
 
 void SingleJumpsResultsWindow::fillDistancesChart()

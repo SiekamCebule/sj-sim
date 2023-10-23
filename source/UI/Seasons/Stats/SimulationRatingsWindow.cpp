@@ -766,7 +766,7 @@ void SimulationRatingsWindow::setupComboBox()
     ui->comboBox_hillFilter->addItem(tr("BRAK"));
     for(auto & hill : save->getHillsReference())
     {
-        ui->comboBox_hillFilter->addItem(QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower()))), hill->getHillText());
+        ui->comboBox_hillFilter->addItem(QIcon(CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower())), hill->getHillText());
     }
     connect(ui->comboBox_hillFilter, &QComboBox::currentIndexChanged, this, &SimulationRatingsWindow::fillWindow);
 

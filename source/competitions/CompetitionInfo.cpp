@@ -119,7 +119,7 @@ bool CompetitionInfo::saveToCsvFile(QString dir, QString name)
     return true;
 }
 
-QVector<CompetitionInfo *> CompetitionInfo::getSpecificTypeCompetitions(QVector<CompetitionInfo *> competitions, int type)
+QVector<CompetitionInfo *> CompetitionInfo::getSpecificTypeMainCompetitions(QVector<CompetitionInfo *> & competitions, int type)
 {
     QVector<CompetitionInfo *> toReturn;
     for(auto & competition : competitions)
@@ -131,6 +131,20 @@ QVector<CompetitionInfo *> CompetitionInfo::getSpecificTypeCompetitions(QVector<
                 toReturn.push_back(competition);
             }
         }
+    }
+
+    return toReturn;
+}
+
+QVector<CompetitionInfo *> CompetitionInfo::getSpecificTypeCompetitions(QVector<CompetitionInfo *> &competitions, int type)
+{
+    QVector<CompetitionInfo *> toReturn;
+    for(auto & competition : competitions)
+    {
+            if(competition->getRulesPointer()->getCompetitionType() == type)
+            {
+                toReturn.push_back(competition);
+            }
     }
 
     return toReturn;
@@ -168,6 +182,19 @@ QVector<CompetitionInfo *> CompetitionInfo::mergeSeasonsCompetitions(QVector<Sea
     return competitions;
 }
 
+int CompetitionInfo::howManyPlayedStatic(QVector<CompetitionInfo *> comps)
+{
+    int counter = 0;
+    for(auto & c : comps)
+    {
+        if(c->getPlayed())
+            counter++;
+        else
+            break;
+    }
+    return counter;
+}
+
 QString CompetitionInfo::getShortSerieTypeText()
 {
     switch(serieType)
@@ -183,6 +210,38 @@ QString CompetitionInfo::getShortSerieTypeText()
     default:
         return "X";
     }
+}
+
+QString CompetitionInfo::getLongSerieTypeText()
+{
+    switch(serieType)
+    {
+    case Competition:
+        return QObject::tr("Konkurs");
+    case Qualifications:
+        return QObject::tr("Kwalifikacje");
+    case TrialRound:
+        return QObject::tr("Seria próbna");
+    case Training:
+        return QObject::tr("Trening");
+    default:
+        return QObject::tr("<Błąd!!!>");
+    }
+}
+
+QVector<Jumper *> CompetitionInfo::getStartList() const
+{
+    return startList;
+}
+
+QVector<Jumper *> &CompetitionInfo::getStartListReference()
+{
+    return startList;
+}
+
+void CompetitionInfo::setStartList(const QVector<Jumper *> &newStartList)
+{
+    startList = newStartList;
 }
 
 double CompetitionInfo::getJumpsImportance() const
@@ -336,6 +395,13 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     }
     object.insert("rounds-ko-groups", KOGroupsArray);
 
+    QJsonArray startListArray;
+    for(auto & j : competition.getStartList())
+    {
+        startListArray.push_back(QString::number(j->getID()));
+    }
+    object.insert("start-list", startListArray);
+
     return object;
 }
 
@@ -390,6 +456,12 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json, DatabaseOb
     QJsonArray classificationsArray = json.value("classifications-ids").toArray();
     for(auto val : classificationsArray){
         comp.getClassificationsReference().push_back(static_cast<Classification *>(objectsManager->getObjectByID(val.toString().toULong())));
+    }
+
+    QJsonArray startListArray = json.value("start-list").toArray();
+    for(auto val : startListArray)
+    {
+        comp.getStartListReference().push_back(static_cast<Jumper *>(objectsManager->getObjectByID(val.toString().toULong())));
     }
 
     comp.setAdvancementClassification(static_cast<Classification *>(objectsManager->getObjectByID(json.value("advancement-classification-id").toString().toULong())));

@@ -63,7 +63,7 @@ void CompetitionsRangeComboBoxesWidget::setupComboBoxes()
                         break;
                     }
 
-                    QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(competition->getHill()->getCountryCode().toLower()));
+                    QPixmap pixmap = CountryFlagsManager::getFlagPixmap(competition->getHill()->getCountryCode().toLower());
                     ui->comboBox_firstCompetition->addItem(QIcon(pixmap), string);
                     ui->comboBox_secondCompetition->addItem(QIcon(pixmap), string);
                     competitionIndex++;
@@ -103,8 +103,6 @@ void CompetitionsRangeComboBoxesWidget::setMergeCalendars(bool newMergeCalendars
 */
 CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
 {
-    qDebug()<<"GET COMPETITION NUMBER "<<which;
-    qDebug()<<"filter: "<<calendarFilter;
     int index = 0;
     switch(which)
     {
@@ -122,35 +120,23 @@ CompetitionInfo *CompetitionsRangeComboBoxesWidget::getCompetition(int which)
         //Teraz odejmijmy index za każdy sezon
         for(auto & season : *seasonsList)
         {
-            qDebug()<<"na początku sezonu: "<<index;
-            qDebug()<<"season: "<<season.getSeasonNumber();
             if(((season.containsCalendarByName(calendarFilter) == false && calendarFilter != "") && mergeCalendars == false) && index > 0){
-                qDebug()<<QString("not contains calendar by name (%1)").arg(calendarFilter);
                 index -= 1;
                 continue;
             }
-            qDebug()<<"po odjeciu za brak bycia w sezonie: "<<index;
-            //else index -= 1;
             for(auto & cal : season.getCalendarsReference())
             {
-                qDebug()<<"cal: "<<cal->getName();
                 if(cal->getName() == calendarFilter || calendarFilter == "" || mergeCalendars == true)
                 {
-                    qDebug()<<"jest taka jak filter lub brak filtra:";
                     if(index > cal->getCompetitionsReference().count() && cal->getCompetitionsReference().count() > 0)
                     {
-                        qDebug()<<"konieczność odjęcia";
                         index -= cal->howManyCompetitionsPlayed();
-                        //index -= 1;
-                        qDebug()<<"po odjęciu: "<<index<<QString("(-%1)").arg(cal->getCompetitionsReference().count());
                         i++;
                     }
                     else
                     {
-                        qDebug()<<"Zaraz return";
                         if(index > 0)
                             index--;
-                        qDebug()<<"return index: "<<index;
                         return cal->getCompetitionsReference()[index];
                     }
                 }

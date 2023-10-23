@@ -139,6 +139,7 @@ private slots:
     void on_pushButton_sortStartListRandomly_clicked();
     void on_pushButton_sortStartListByCountries_clicked();
     void on_pushButton_orderByJumpersList_clicked();
+    void on_pushButton_byOtherComp_clicked();
 };
 
 #endif // COMPETITIONCONFIGWINDOW_H

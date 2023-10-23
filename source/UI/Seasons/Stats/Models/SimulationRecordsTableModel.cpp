@@ -16,7 +16,7 @@ QVariant SimulationRecordsTableModel::headerData(int section, Qt::Orientation or
             return tr("Lp");
         else if(section == 1)
             return tr("Zawodnik");
-        else if(section == 2i)
+        else if(section == 2)
             return tr("Wartość");
         else if(section == 3)
             return tr("Zawody/Skok");
@@ -108,9 +108,9 @@ QVariant SimulationRecordsTableModel::data(const QModelIndex &index, int role) c
     {
         JumpData * jump = records[index.row()].first;
         if(index.column() == 1) //zawodnik
-            return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jump->getJumper()->getCountryCode().toLower())));
+            return QIcon(CountryFlagsManager::getFlagPixmap(jump->getJumper()->getCountryCode().toLower()));
         else if(index.column() == 3) //skocznia
-            return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jump->getCompetition()->getHill()->getCountryCode().toLower())));
+            return QIcon(CountryFlagsManager::getFlagPixmap(jump->getCompetition()->getHill()->getCountryCode().toLower()));
     }
     else if(role == Qt::BackgroundRole)
     {

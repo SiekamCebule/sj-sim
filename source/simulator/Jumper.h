@@ -17,6 +17,7 @@ public:
 
     QPixmap getImagePixmap();
     QString getTextInfo();
+    QString getTextForDiscord();
 
 private:
     QString name, surname;

@@ -68,6 +68,7 @@ void SingleJumpsManager::simulate()
         }
         jumpSimulator.simulateJump();
         jumps.push_back(jumpSimulator.getJumpData());
+        jumps.last().setInSingleJumps(true);
 
         dialog.setValue(i+1);
         dialog.setLabelText(QString(QObject::tr("Przesymulowano %1 z %2 skoków")).arg(QString::number(dialog.value()), QString::number(dialog.maximum())));

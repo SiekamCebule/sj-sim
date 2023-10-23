@@ -1,6 +1,7 @@
 #include "ApperanceInClassificationWindow.h"
 #include "ui_ApperanceInClassificationWindow.h"
 #include "../../../global/CountryFlagsManager.h"
+#include "../../../global/GlobalDatabase.h"
 #include "../../../simulator/Jumper.h"
 #include "../../../simulator/Team.h"
 #include "../../../competitions/CompetitionInfo.h"
@@ -26,13 +27,13 @@ void ApperanceInClassificationWindow::fillWindow()
     if(jumper != nullptr)
     {
         ui->label_jumperNameAndSurname->setText(jumper->getNameAndSurname());
-        ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower()))
+        ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(jumper->getCountryCode().toLower())
                                       .scaled(ui->label_flag->size()));
     }
     else if(teamCode != "")
     {
-        ui->label_jumperNameAndSurname->setText(teamCode);
-        ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(teamCode.toLower()))
+        ui->label_jumperNameAndSurname->setText(GlobalDatabase::get()->getCountryByAlpha3(teamCode).getName());
+        ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(teamCode.toLower())
                                       .scaled(ui->label_flag->size()));
     }
     fillChart();
@@ -162,7 +163,7 @@ void ApperanceInClassificationWindow::updateChartCompetition(const QPointF &poin
 
             ui->label_chartStat->setText(QString::number(positions[int(point.x()) - 1]) + tr(" miejsce"));
             ui->label_chartCompetition->setText(string);
-            QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size());
+            QPixmap pixmap = CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower()).scaled(ui->label_hillFlag->size());
             ui->label_hillFlag->setPixmap(pixmap);
         }
     }

@@ -100,7 +100,7 @@ QVariant JumperFormGeneratorsSettingsTableModel::data(const QModelIndex &index, 
     else if(role == Qt::DecorationRole)
     {
         if(index.column() == 0)
-            return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(generatorsSettings[index.row()].getJumper()->getCountryCode().toLower())));
+            return QIcon(CountryFlagsManager::getFlagPixmap(generatorsSettings[index.row()].getJumper()->getCountryCode().toLower()));
     }
     else if(role == Qt::ForegroundRole)
     {

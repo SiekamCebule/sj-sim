@@ -62,6 +62,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_sendResultsWebhook">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(70, 78,95)</string>
+       </property>
+       <property name="text">
+        <string>Wyślij webhooka z akualnymi wynikami</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer_20">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

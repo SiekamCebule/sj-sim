@@ -79,9 +79,9 @@ QVariant GeneralClassificationTableModel::data(const QModelIndex &index, int rol
         if(index.column() == 1)
         {
             if(type == Ind)
-                return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(indResults[index.row()].first->getCountryCode().toLower())));
+                return QIcon(CountryFlagsManager::getFlagPixmap(indResults[index.row()].first->getCountryCode().toLower()));
             else
-                return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(teamResults[index.row()].first.toLower())));
+                return QIcon(CountryFlagsManager::getFlagPixmap(teamResults[index.row()].first.toLower()));
         }
     }
     else if(role == Qt::FontRole)

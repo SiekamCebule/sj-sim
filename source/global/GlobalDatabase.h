@@ -9,6 +9,7 @@
 #include "../form-generator/JumperFormGeneratorSettingsPreset.h"
 #include "JumpsImportancePreset.h"
 #include "PointsForPlacesPreset.h"
+#include "Country.h"
 
 #include <QVector>
 #include <QPair>
@@ -31,7 +32,7 @@ private:
     QVector<SeasonCalendarPreset> globalCalendarPresets;
     QVector<JumperFormGeneratorSettingsPreset> formGeneratorPresets;
     QVector<JumpsImportancePreset> jumpsImportancePresets;
-    QVector<QPair<QString, QString>> countries;
+    QVector<Country> countries;
 
     bool loadedSimulationSaves;
 
@@ -67,7 +68,8 @@ public:
     void setupJumpersFlags();
     void setupHillsFlags();
 
-    QString getCountryName(QString countryCode);
+    Country & getCountryByAlpha2(QString alpha2);
+    Country & getCountryByAlpha3(QString alpha3);
 
     QVector<Jumper> getGlobalJumpers() const;
     void setGlobalJumpers(const QVector<Jumper> &newGlobalJumpers);
@@ -95,9 +97,9 @@ public:
     QVector<JumpsImportancePreset> getJumpsImportancePresets() const;
     QVector<JumpsImportancePreset> & getJumpsImportancePresetsReference();
     void setJumpsImportancePresets(const QVector<JumpsImportancePreset> &newJumpsImportancePresets);
-    QVector<QPair<QString, QString> > getCountries() const;
-    QVector<QPair<QString, QString> > & getCountriesReference();
-    void setCountries(const QVector<QPair<QString, QString> > &newCountries);
+    QVector<Country> getCountries() const;
+    QVector<Country> & getCountriesReference();
+    void setCountries(const QVector<Country> &newCountries);
 };
 
 #endif // GLOBALDATABASE_H

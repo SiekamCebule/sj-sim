@@ -54,7 +54,7 @@ void JumperStatsWindow::setupComboBox()
     ui->comboBox_hillFilter->addItem(tr("BRAK"));
     for(auto & hill : save->getHillsReference())
     {
-        ui->comboBox_hillFilter->addItem(QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower()))), hill->getHillText());
+        ui->comboBox_hillFilter->addItem(QIcon(CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower())), hill->getHillText());
     }
     connect(ui->comboBox_hillFilter, &QComboBox::currentIndexChanged, this, &JumperStatsWindow::fillWindow);
 
@@ -95,7 +95,7 @@ void JumperStatsWindow::setupComboBox()
 void JumperStatsWindow::fillWindow()
 {
     ui->label_jumperNameAndSurname->setText(jumper->getNameAndSurname());
-    ui->label_jumperFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_jumperFlag->size()));
+    ui->label_jumperFlag->setPixmap(CountryFlagsManager::getFlagPixmap(jumper->getCountryCode().toLower()).scaled(ui->label_jumperFlag->size()));
 
     Hill * specificHill = nullptr;
     if(ui->comboBox_hillFilter->currentIndex() > 0)
@@ -376,7 +376,7 @@ void JumperStatsWindow::updateChartCompetitionBySingleResult(const QPointF &poin
             else if(type == Form)
                 ui->label_chartStat->setText(QString::number(result->getJumpsReference().first().getJumperForm()));
 
-            QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size());
+            QPixmap pixmap = CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower()).scaled(ui->label_hillFlag->size());
             ui->label_hillFlag->setPixmap(pixmap);
         }
     }
@@ -468,7 +468,7 @@ void JumperStatsWindow::updateChartCompetitionByJumpData(const QPointF &point, b
             else if(type == FlightRating)
                 ui->label_chartStat->setText(QString::number(jumpData->getSimulationDataReference().getFlightRating()));
 
-            QPixmap pixmap = CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size());
+            QPixmap pixmap = CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower()).scaled(ui->label_hillFlag->size());
             ui->label_hillFlag->setPixmap(pixmap);
         }
     }

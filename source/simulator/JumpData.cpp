@@ -3,6 +3,7 @@
 #include "wind-generation/WindsGenerator.h"
 #include "../competitions/CompetitionInfo.h"
 #include "../competitions/CompetitionSingleResult.h"
+#include "../utilities/functions.h"
 
 #include <QDebug>
 #include <QJsonDocument>
@@ -18,6 +19,62 @@ JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
 {
     DSQ = false;
     DNS = false;
+    inSingleJumps = false;
+}
+
+QString JumpData::getJudgesText()
+{
+    QString s = "|";
+    for(auto & jg : judges)
+    {
+        s += QString::number(jg, 'f', 1) + "|";
+    }
+    return s;
+}
+
+QString JumpData::getWindsText()
+{
+    QString s;
+    int i=0;
+    for(auto & wind : winds)
+    {
+        s += QString::number(i+1) + ". " + QString::number(wind.getStrength(), 'f', 2) + "m/s" + " (" + QString::number(wind.getDirection()) + "°)" + "\n";
+        i++;
+    }
+    return s;
+}
+
+int JumpData::getPositionInRound()
+{
+    double round = MyFunctions::getIndexOfItemInVector(getCompetition()->getResultsReference().getResultOfIndividualJumper(getJumper())->getJumpsReference(), this) + 1;
+    double points = getPoints();
+    double position = 1;
+    CompetitionResults results = getCompetition()->getResultsReference();
+    results.getResultsReference().detach();
+    for(auto & res : results.getResultsReference())
+    {
+        if(res.getJumpsReference().count() > round)
+            res.getJumpsReference().remove(round, res.getJumpsReference().count() - round);
+        res.updatePointsSum();
+    }
+    results.sortInDescendingOrder();
+
+    for(auto & res : results.getResultsReference())
+    {
+        if(res.getJumpsReference()[round - 1].getPoints() > points)
+            position++;
+    }
+    return position;
+}
+
+bool JumpData::getInSingleJumps() const
+{
+    return inSingleJumps;
+}
+
+void JumpData::setInSingleJumps(bool newInSingleJumps)
+{
+    inSingleJumps = newInSingleJumps;
 }
 
 CompetitionSingleResult *JumpData::getSingleResult() const
@@ -229,6 +286,7 @@ QJsonObject JumpData::getJsonObject(JumpData jumpData)
     object.insert("jumper-id", QString::number(jumpData.getJumper()->getID()));
     object.insert("jumper-form", jumpData.getJumperForm());
     object.insert("hill-id", QString::number(jumpData.getHill()->getID()));
+    object.insert("in-single-jumps", jumpData.getInSingleJumps());
     return object;
 }
 
@@ -281,6 +339,7 @@ JumpData JumpData::getFromJson(QJsonObject obj, DatabaseObjectsManager * objects
     jump.setJumper(static_cast<Jumper *>(objectsManager->getObjectByID(obj.value("jumper-id").toString().toULong())));
     jump.setJumperForm(obj.value("jumper-form").toDouble());
     jump.setHill(static_cast<Hill *>(objectsManager->getObjectByID(obj.value("hill-id").toString().toULong())));
+    jump.setInSingleJumps(obj.value("in-single-jumps").toBool(false));
 
     return jump;
 }

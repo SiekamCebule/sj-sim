@@ -9,6 +9,7 @@ CalendarsListModel::CalendarsListModel(QVector<SeasonCalendar *> *calendars, QOb
 QVariant CalendarsListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     // FIXME: Implement me!
+    return QVariant();
 }
 
 int CalendarsListModel::rowCount(const QModelIndex &parent) const

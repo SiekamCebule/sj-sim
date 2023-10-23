@@ -12,6 +12,7 @@ ClassificationsListModel::ClassificationsListModel(QVector<Classification *> *cl
 QVariant ClassificationsListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     // FIXME: Implement me!
+    return QVariant();
 }
 
 int ClassificationsListModel::rowCount(const QModelIndex &parent) const

@@ -19,6 +19,9 @@ public:
     static QVector<Jumper *> getJumpersFilteredByCountryCode(QVector<Jumper *> &jumpers, const QString &countryCode);
     static void cutTeamJumpers(Team * team, int jumpersCount);
     static Team * getTeamByCountryCode(QVector<Team> * teams, QString countryCode);
+    static Team getTeamObjectByCountryCode(QVector<Team> * teams, QString countryCode);
+    static bool containsTeamByCode(QVector<Team> & teams, QString code);
+    static bool containsTeamByCode(QVector<Team *> & teams, QString code);
 
     static QJsonObject getJsonObject(Team & team);
     static Team getFromJson(QJsonObject json, DatabaseObjectsManager *objectsManager);

@@ -2,6 +2,7 @@
 #include "ui_HillEditorWidget.h"
 
 #include "../../global/CountryFlagsManager.h"
+#include "../../global/GlobalDatabase.h"
 #include "../../simulator/Hill.h"
 #include "../../simulator/Characteristic.h"
 #include "../../utilities/functions.h"
@@ -79,7 +80,8 @@ void HillEditorWidget::fillHillInputs()
     ui->lineEdit_name->setText(hill->getName());
 
     ui->lineEdit_countryCode->setText(hill->getCountryCode());
-    ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_countryFlag->size()));
+    ui->label_countryName->setText(GlobalDatabase::get()->getCountryByAlpha3(hill->getCountryCode()).getName());
+    ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower()).scaled(ui->label_countryFlag->size()));
 
     ui->doubleSpinBox_KPoint->setValue(hill->getKPoint());
     ui->doubleSpinBox_HSPoint->setValue(hill->getHSPoint());
@@ -213,7 +215,7 @@ void HillEditorWidget::setHill(Hill *newHill)
 void HillEditorWidget::on_lineEdit_countryCode_textChanged(const QString &arg1)
 {
     if(arg1.length() == 3)
-        ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(ui->lineEdit_countryCode->text().toLower())).scaled(CountryFlagsManager::getFlagPixmapSize()));
+        ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(ui->lineEdit_countryCode->text().toLower()).scaled(CountryFlagsManager::getFlagPixmapSize()));
 }
 
 void HillEditorWidget::on_pushButton_submit_clicked()

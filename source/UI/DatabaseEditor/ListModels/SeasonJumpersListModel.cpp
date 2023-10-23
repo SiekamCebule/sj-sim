@@ -40,7 +40,7 @@ QVariant SeasonJumpersListModel::data(const QModelIndex &index, int role) const
         return string;
     }
     else if(role == Qt::DecorationRole){
-         return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(seasonJumpers->at(index.row())->getCountryCode().toLower())));
+         return QIcon(CountryFlagsManager::getFlagPixmap(seasonJumpers->at(index.row())->getCountryCode().toLower()));
     }
     else if(role == Qt::FontRole){
         return QFont("Quicksand Medium", 11, 600);

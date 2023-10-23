@@ -35,7 +35,7 @@ QVariant JumpersListModel::data(const QModelIndex &index, int role) const
         return jumpersVectorPointer->at(index.row()).getNameAndSurname();
     }
     else if(role == Qt::DecorationRole){
-        return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumpersVectorPointer->at(index.row()).getCountryCode().toLower())));
+        return QIcon(CountryFlagsManager::getFlagPixmap(jumpersVectorPointer->at(index.row()).getCountryCode().toLower()));
     }
     else if(role == Qt::FontRole){
         return QFont("Quicksand Medium", 11, 600);

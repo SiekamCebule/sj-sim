@@ -43,10 +43,10 @@ signals:
     void edited();
 
 private:
-    QVector<QPair<QString, QString>> * countries;
+    QVector<Country> * countries;
 public:
-    QVector<QPair<QString, QString> > *getCountries() const;
-    void setCountries(QVector<QPair<QString, QString> > *newCountries);
+    QVector<Country> *getCountries() const;
+    void setCountries(QVector<Country> *newCountries);
 };
 
 #endif // COUNTRIESEDITORTABLEMODEL_H

@@ -15,6 +15,7 @@ CompetitionRulesListModel::CompetitionRulesListModel(QVector<CompetitionRules> *
 QVariant CompetitionRulesListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     // FIXME: Implement me!
+    return QVariant();
 }
 
 bool CompetitionRulesListModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)

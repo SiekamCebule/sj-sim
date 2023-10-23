@@ -873,7 +873,7 @@ void CalendarEditorWidget::execMultipleAdvancementCompetitionEditDialog(QVector<
     label->setFont(font);
     QComboBox * comboBox = new QComboBox(dialog);
     comboBox->addItem("BRAK");
-    QVector<CompetitionInfo *> comps = CompetitionInfo::getSpecificTypeCompetitions(calendar->getCompetitionsReference(), competition->getRulesPointer()->getCompetitionType());
+    QVector<CompetitionInfo *> comps = CompetitionInfo::getSpecificTypeMainCompetitions(calendar->getCompetitionsReference(), competition->getRulesPointer()->getCompetitionType());
     int maxMainIndex = row;//SeasonCalendar::getCompetitionMainIndex(comps, SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), row));
     // comps to tylko konkursy indywidualne i tylko kwalifikacje lub konkurs.
     // czego szukamy w maxMainIndex? Maksymalnego wiersza w tabeli odejmując drużynówki
@@ -885,7 +885,7 @@ void CalendarEditorWidget::execMultipleAdvancementCompetitionEditDialog(QVector<
             int displayIndex = SeasonCalendar::getCompetitionMainIndex(calendar->getCompetitionsReference(), comp) + 1;
             if(mainIndex < maxMainIndex)
             {
-                comboBox->addItem(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(comp->getHill()->getCountryCode().toLower())), QString::number(displayIndex) + ". " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()));
+                comboBox->addItem(CountryFlagsManager::getFlagPixmap(comp->getHill()->getCountryCode().toLower()), QString::number(displayIndex) + ". " + comp->getHill()->getName() + " HS" + QString::number(comp->getHill()->getHSPoint()));
             }
             else break;
         }
@@ -1204,7 +1204,7 @@ void CalendarEditorWidget::execMultipleHillEditDialog(QVector<int> *rows, int co
     label->setFont(font);
     QComboBox * comboBox = new QComboBox(dialog);
     for(auto & hill : *calendarModel->getHillsList()){
-        comboBox->addItem(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())), hill->getName() + " HS" + QString::number(hill->getHSPoint()));
+        comboBox->addItem(CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower()), hill->getName() + " HS" + QString::number(hill->getHSPoint()));
     }
     layout->addWidget(label);
     layout->addWidget(comboBox);
@@ -1321,7 +1321,7 @@ void CalendarEditorWidget::on_pushButton_saveCalendarPreset_clicked()
             comp->getRoundsKOGroupsReference().clear();
             comp->getTeamsReference().clear();
             comp->getTrainingsReference().detach();
-            QPair hillPair = {comp->getHill()->getName(), comp->getHill()->getHSPoint()};
+            QPair<QString, double> hillPair = {comp->getHill()->getName(), comp->getHill()->getHSPoint()};
             preset->getHillsReference().push_back(hillPair);
             comp->setHill(nullptr);
         }

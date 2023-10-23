@@ -36,17 +36,17 @@ GlobalDatabase::~GlobalDatabase()
     delete m_globalDatabase;
 }
 
-QVector<QPair<QString, QString> > GlobalDatabase::getCountries() const
+QVector<Country> GlobalDatabase::getCountries() const
 {
     return countries;
 }
 
-QVector<QPair<QString, QString> > &GlobalDatabase::getCountriesReference()
+QVector<Country> &GlobalDatabase::getCountriesReference()
 {
     return countries;
 }
 
-void GlobalDatabase::setCountries(const QVector<QPair<QString, QString> > &newCountries)
+void GlobalDatabase::setCountries(const QVector<Country> &newCountries)
 {
     countries = newCountries;
 }
@@ -401,9 +401,10 @@ bool GlobalDatabase::loadCountries()
     QJsonArray array = object.value("countries").toArray();
     for(auto val : array)
     {
-        QPair<QString, QString> c;
-        c.first = val.toObject().value("code").toString();
-        c.second = val.toObject().value("name").toString();
+        Country c;
+        c.setName(val.toObject().value("name").toString());
+        c.setAlpha2(val.toObject().value("alpha2").toString());
+        c.setAlpha3(val.toObject().value("alpha3").toString());
         countries.push_back(c);
     }
     file.close();
@@ -553,8 +554,9 @@ bool GlobalDatabase::writeCountries()
     for(auto & country : countries)
     {
         QJsonObject countryObject;
-        countryObject.insert("code", country.first);
-        countryObject.insert("name", country.second);
+        countryObject.insert("name", country.getName());
+        countryObject.insert("alpha2", country.getAlpha2());
+        countryObject.insert("alpha3", country.getAlpha3());
         array.push_back(countryObject);
     }
     mainObject.insert("countries", array);
@@ -571,16 +573,24 @@ void GlobalDatabase::setupJumpersFlags()
 {
     for(auto & jumper : getEditableGlobalJumpers())
     {
-        jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
+        jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(jumper.getCountryCode().toLower()));
     }
 }
 
-QString GlobalDatabase::getCountryName(QString countryCode)
+Country & GlobalDatabase::getCountryByAlpha2(QString alpha2)
 {
     for(auto & c : countries)
     {
-        if(c.first == countryCode)
-            return c.second;
+        if(c.getAlpha2() == alpha2)
+            return c;
     }
-    return "COUNTRY-ERROR";
+}
+
+Country &GlobalDatabase::getCountryByAlpha3(QString alpha3)
+{
+    for(auto & c : countries)
+    {
+        if(c.getAlpha3() == alpha3)
+            return c;
+    }
 }

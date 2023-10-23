@@ -34,7 +34,7 @@ QVariant SeasonHillsListModel::data(const QModelIndex &index, int role) const
         return seasonHills->at(index.row())->getName() + " HS" + QString::number(seasonHills->at(index.row())->getHSPoint());
     }
     else if(role == Qt::DecorationRole){
-        return QIcon(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(seasonHills->at(index.row())->getCountryCode().toLower())));
+        return QIcon(CountryFlagsManager::getFlagPixmap(seasonHills->at(index.row())->getCountryCode().toLower()));
     }
     else if(role == Qt::FontRole){
         return QFont("Quicksand Medium", 11, 600);

@@ -31,10 +31,14 @@ public:
     bool saveToJsonFile(QString dir, QString name);
     bool saveToCsvFile(QString dir, QString name);
 
-    static QVector<CompetitionInfo *> getSpecificTypeCompetitions(QVector<CompetitionInfo *> competitions, int type);
+    static QVector<CompetitionInfo *> getSpecificTypeMainCompetitions(QVector<CompetitionInfo *> &competitions, int type);
+    static QVector<CompetitionInfo *> getSpecificTypeCompetitions(QVector<CompetitionInfo *> &competitions, int type);
     static QVector<CompetitionInfo *> getCompetitionsByStartAndEnd(QVector<CompetitionInfo *> competitions, CompetitionInfo * start, CompetitionInfo * end);
     static QVector<CompetitionInfo *> mergeSeasonsCompetitions(QVector<Season> *seasons, QString filter, bool mergeCalendars);
+    static int howManyPlayedStatic(QVector<CompetitionInfo *> comps);
+
     QString getShortSerieTypeText();
+    QString getLongSerieTypeText();
 
 private:
     Hill * hill;
@@ -57,6 +61,7 @@ private:
 
     QVector<Team> teams;
     QVector<QVector<KOGroup>> roundsKOGroups;
+    QVector<Jumper *> startList;
 
 public:
     static QJsonObject getJsonObject(CompetitionInfo &competition);
@@ -102,6 +107,9 @@ public:
     void setRoundsKOGroups(const QVector<QVector<KOGroup> > &newRoundsKOGroups);
     double getJumpsImportance() const;
     void setJumpsImportance(double newJumpsImportance);
+    QVector<Jumper *> getStartList() const;
+    QVector<Jumper *> & getStartListReference();
+    void setStartList(const QVector<Jumper *> &newStartList);
 };
 
 #endif // COMPETITIONINFO_H

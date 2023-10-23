@@ -10,6 +10,7 @@ TeamJumpersListModel::TeamJumpersListModel(QVector<Jumper *> *jumpers, int jumpe
 QVariant TeamJumpersListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     // FIXME: Implement me!
+    return QVariant();
 }
 
 int TeamJumpersListModel::rowCount(const QModelIndex &parent) const
@@ -33,7 +34,7 @@ QVariant TeamJumpersListModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         return jumpers->at(index.row())->getNameAndSurname();
     case Qt::DecorationRole:
-        return CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumpers->at(index.row())->getCountryCode().toLower())).scaled(38, 22);
+        return CountryFlagsManager::getFlagPixmap(jumpers->at(index.row())->getCountryCode().toLower()).scaled(38, 22);
     case Qt::FontRole:
     {
         QFont font("Quicksand Medium", 13);

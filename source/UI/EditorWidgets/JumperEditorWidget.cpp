@@ -55,7 +55,8 @@ void JumperEditorWidget::fillJumperInputs()
     ui->lineEdit_name->setText(jumper->getName());
     ui->lineEdit_surname->setText(jumper->getSurname());
     ui->lineEdit_countryCode->setText(jumper->getCountryCode());
-    ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper->getCountryCode().toLower())).scaled(ui->label_countryFlag->size()));
+    ui->label_countryName->setText(GlobalDatabase::get()->getCountryByAlpha3(jumper->getCountryCode().toUpper()).getName());
+    ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(jumper->getCountryCode().toLower()).scaled(ui->label_countryFlag->size()));
     ui->lineEdit_img->setText(jumper->getImageName());
     ui->doubleSpinBox_personalBest->setValue(jumper->getPersonalBest());
     if(tendence != nullptr){
@@ -84,7 +85,7 @@ Jumper JumperEditorWidget::getJumperFromWidgetInput() const
     jumper.setName(ui->lineEdit_name->text());
     jumper.setSurname(ui->lineEdit_surname->text());
     jumper.setCountryCode(ui->lineEdit_countryCode->text());
-    jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumper.getCountryCode().toLower())));
+    jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(jumper.getCountryCode().toLower()));
     jumper.setImageName(ui->lineEdit_img->text());
     jumper.setPersonalBest(ui->doubleSpinBox_personalBest->value());
 
@@ -145,7 +146,7 @@ void JumperEditorWidget::setCharacteristicsEditor(CharacteristicsEditor *newChar
 void JumperEditorWidget::on_lineEdit_countryCode_textChanged(const QString &arg1)
 {
     if(arg1.length() > 2)
-        ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(ui->lineEdit_countryCode->text().toLower())).scaled(CountryFlagsManager::getFlagPixmapSize()));
+        ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(ui->lineEdit_countryCode->text().toLower()).scaled(CountryFlagsManager::getFlagPixmapSize()));
 }
 
 void JumperEditorWidget::on_pushButton_submit_clicked()

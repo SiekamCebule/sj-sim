@@ -4,6 +4,8 @@
 #include "../ResultsShowing/JumpDataDetailedInfoWindow.h"
 #include "../../global/CountryFlagsManager.h"
 #include "../../global/GlobalAppSettings.h"
+#include "../../competitions/CompetitionInfo.h"
+#include <dpp/dpp.h>
 
 JumperCompetitionResultsWidget::JumperCompetitionResultsWidget(QWidget *parent) :
     QWidget(parent),
@@ -25,7 +27,7 @@ JumperCompetitionResultsWidget::~JumperCompetitionResultsWidget()
 void JumperCompetitionResultsWidget::fillWidget()
 {
     ui->label_nameAndSurname->setText(jumperResult->getJumper()->getNameAndSurname());
-    ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(jumperResult->getJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+    ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(jumperResult->getJumper()->getCountryCode().toLower()).scaled(ui->label_flag->size()));
     ui->label_pointsSum->setText(QString::number(jumperResult->getPointsSum()) + tr(" punktów"));
     if(positionShowing == true)
         ui->label_actualPosition->setText("(" + QString::number(jumperResult->getPosition()) + tr(" miejsce)"));
@@ -50,6 +52,11 @@ void JumperCompetitionResultsWidget::fillWidget()
         i++;
     }
     ui->tabWidget_jumps->setCurrentIndex(ui->tabWidget_jumps->count() - 1);
+
+    if(jumperResult->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+        ui->pushButton_sendWebhook->setText(tr("Wyślij webhooka (występ zawodnika)"));
+    else
+        ui->pushButton_sendWebhook->setText(tr("Wyślij webhooka (występ drużyny)"));
 }
 
 bool JumperCompetitionResultsWidget::getPositionShowing() const
@@ -71,3 +78,19 @@ void JumperCompetitionResultsWidget::setJumperResult(CompetitionSingleResult *ne
 {
     jumperResult = newJumperResult;
 }
+
+void JumperCompetitionResultsWidget::on_pushButton_sendWebhook_clicked()
+{
+    dpp::cluster bot("");
+    dpp::webhook wh(GlobalAppSettings::get()->getCompetitionSingleResultWebhook().toStdString());
+    dpp::message msg;
+    if(jumperResult->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+        msg.add_embed(jumperResult->getEmbedForIndividualSingleCompResult());
+    else
+    {
+        CompetitionSingleResult * teamResult = jumperResult->getCompetition()->getResultsReference().getResultOfTeam(Team::getTeamByCountryCode(&jumperResult->getCompetition()->getTeamsReference(), jumperResult->getJumper()->getCountryCode()));
+        msg.add_embed(teamResult->getEmbedForTeamSingleCompResult());
+    }
+    bot.execute_webhook(wh, msg);
+}
+

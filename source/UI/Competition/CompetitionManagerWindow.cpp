@@ -6,6 +6,7 @@
 #include "../../global/MyRandom.h"
 #include "../../global/GlobalDatabase.h"
 #include "../../global/GlobalSimulationSettings.h"
+#include "../../global/GlobalAppSettings.h"
 #include "../../utilities/functions.h"
 #include "../EditorWidgets/WindsGeneratorSettingsEditorWidget.h"
 #include "../EditorWidgets/InrunSnowGeneratorSettingsEditorWidget.h"
@@ -15,8 +16,11 @@
 #include <QComboBox>
 #include <QMessageBox>
 #include <QStringListModel>
+#include <string>
 #include <QPropertyAnimation>
 #include <QGraphicsItem>
+
+extern const QString appVersion;
 
 CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *manager, QWidget *parent, bool singleCompetition) :
     QDialog(parent),
@@ -67,7 +71,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
 
 
     ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
-    ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+    ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(this->manager->getActualJumper()->getCountryCode().toLower()).scaled(ui->label_flag->size()));
     ui->label_nextJumperIMG->setPixmap(this->manager->getActualJumper()->getImagePixmap().scaled(ui->label_nextJumperIMG->size()));
     ui->label_personalBest->setText(QString::number(manager->getActualJumper()->getPersonalBest(), 'f', 1));
 
@@ -86,7 +90,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     connect(this->manager, &AbstractCompetitionManager::actualJumperChanged, this, [this](){
         if(this->manager->getActualStartListIndex() < this->manager->getStartListStatusesReference().count()){
             ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
-            ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(this->manager->getActualJumper()->getCountryCode().toLower())).scaled(ui->label_flag->size()));
+            ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(this->manager->getActualJumper()->getCountryCode().toLower()).scaled(ui->label_flag->size()));
             ui->label_nextJumperIMG->setPixmap(this->manager->getActualJumper()->getImagePixmap().scaled(ui->label_nextJumperIMG->size()));
             ui->label_personalBest->setText(QString::number(this->manager->getActualJumper()->getPersonalBest(), 'f', 1));
 
@@ -163,7 +167,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     Hill * hill = manager->getCompetitionInfo()->getHill();
 
     ui->label_hillNameAndHSPoint->setText(hill->getName() + " HS" + QString::number(hill->getHSPoint()));
-    ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(hill->getCountryCode().toLower())).scaled(ui->label_hillFlag->size()));
+    ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower()).scaled(ui->label_hillFlag->size()));
 
     jumperResultsWidget->hide();
 
@@ -1101,7 +1105,7 @@ void CompetitionManagerWindow::autoSimulateJumps()
 
 void CompetitionManagerWindow::checkRecords(JumpData &jump, bool multipleRecords)
 {
-    if(jump.getCompetition()->getRulesPointer()->getHillRecordBreaking() == true && (jump.getLanding().getType() == Landing::TelemarkLanding || jump.getLanding().getType() == Landing::BothLegsLanding)){
+    if(jump.getCompetition()->getRulesPointer()->getHillRecordBreaking() == true && (jump.getLanding().getType() == Landing::TelemarkLanding || jump.getLanding().getType() == Landing::BothLegsLanding) && (singleCompetition == false || GlobalSimulationSettings::get()->getUpdateGlobalDatabaseRecords() == true)){
         if(roundDoubleToHalf(jump.getDistance()) == roundDoubleToHalf(jump.getHill()->getRecord()) && multipleRecords == false)
         {
             QMessageBox::information(this, "Wyrównanie rekordu skoczni", tr("%1 wyrównał rekord skoczni %2, wynoszący %3m").arg(jump.getJumper()->getTextInfo()).arg(jump.getHill()->getHillText()).arg(QString::number(jump.getHill()->getRecord(), 'f', 1)), QMessageBox::Ok);
@@ -1121,7 +1125,7 @@ void CompetitionManagerWindow::checkRecords(JumpData &jump, bool multipleRecords
     }
     }
 
-    if(jump.getHill()->getHillType() == Hill::Flying && (jump.getLanding().getType() == Landing::TelemarkLanding || jump.getLanding().getType() == Landing::BothLegsLanding)){
+    if(jump.getHill()->getHillType() == Hill::Flying && (jump.getLanding().getType() == Landing::TelemarkLanding || jump.getLanding().getType() == Landing::BothLegsLanding)  && (singleCompetition == false || GlobalSimulationSettings::get()->getUpdateGlobalDatabaseRecords() == true)){
     if(roundDoubleToHalf(jump.getDistance()) == roundDoubleToHalf(jump.getJumper()->getPersonalBest()) && multipleRecords == false)
     {
         QMessageBox::information(this, "Wyrównanie rekordu życiowego", tr("%1 wyrównał swój własny rekord życiowy, skacząc %2m").arg(jump.getJumper()->getTextInfo()).arg(QString::number(jump.getDistance(), 'f', 1)), QMessageBox::Ok);
@@ -1591,3 +1595,142 @@ void CompetitionManagerWindow::on_comboBox_virtualClassification_currentIndexCha
     }
 }
 
+
+void CompetitionManagerWindow::on_pushButton_sendResultsWebhook_clicked()
+{
+    dpp::cluster bot("");
+    dpp::webhook wh(GlobalAppSettings::get()->getCompetitionResultsWebhook().toStdString());
+    dpp::message msg = getMessageForResults();
+    qDebug()<<"dlugość, "<<msg.content.length()<<" (" + std::to_string(ceil(double(msg.content.length()) / double(2000)));
+    for(int i=0; i< ceil(double(msg.content.length()) / double(2000)); i++)
+    {
+        dpp::message tempMsg = msg;
+        dpp::webhook tempWh = wh;
+        int second = (i+1) * 2000;
+        if(i+1 == ceil(double(msg.content.length()) / double(2000)))
+        {
+            second = msg.content.length() - (i) * 2000;
+        }
+        qDebug()<<"second : "<<second;
+        tempMsg.content = tempMsg.content.substr((i) * 2000, second);
+        bot.execute_webhook(tempWh, tempMsg);
+        bot.execute_webhook(tempWh, dpp::message("fff"));
+    }
+
+    //msg.add_embed(getEmbedForResults());
+    bot.execute_webhook(wh, msg);
+}
+
+dpp::embed CompetitionManagerWindow::getEmbedForResults()
+{
+    CompetitionInfo * comp = manager->getCompetitionInfo();
+    CompetitionResults * res = &comp->getResultsReference();
+    dpp::embed embed;
+    embed.set_color(dpp::colors::purple_dragon);
+
+    QString typeText;
+    if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+        typeText = tr("(indywidualny)");
+    else
+        typeText = tr("(drużynowy)");
+    QString title = comp->getHill()->getHillTextForDiscord() + " - " + comp->getLongSerieTypeText() + " " + typeText;
+
+    QString description;
+    if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
+    {
+        description = tr("Po %1 z %2 skoków grupy %3 (runda %4)").arg(manager->getActualStartListIndex()).arg(static_cast<TeamCompetitionManager *>(manager)->getActualRoundTeamsReference().count()).arg(static_cast<TeamCompetitionManager *>(manager)->getActualGroup()).arg(manager->getActualRound());
+    }
+    else
+    {
+        description = tr("Po %1 z %2 skoków rundy %3").arg(manager->getActualStartListIndex()).arg(static_cast<IndividualCompetitionManager *>(manager)->getActualRoundJumpersReference().count()).arg(manager->getActualRound());
+    }
+
+    embed.set_title(title.toStdString());
+    embed.set_description(description.toStdString());
+    embed.add_field(tr("Wyniki").toStdString(), getTextForFullResultsEmbed().toStdString());
+    embed.set_footer(
+        dpp::embed_footer()
+            .set_text(tr("Wiadomość wysłana z poziomu Sj.Sim ").toStdString() + appVersion.toStdString() + "\n" + "https://github.com/SiekamCebule/sj-sim")
+        );
+
+    return embed;
+}
+
+dpp::message CompetitionManagerWindow::getMessageForResults()
+{
+    CompetitionInfo * comp = manager->getCompetitionInfo();
+    CompetitionResults * res = &comp->getResultsReference();
+    dpp::message message;
+
+    QString typeText;
+    if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+        typeText = tr("(indywidualny)");
+    else
+        typeText = tr("(drużynowy)");
+            QString title = comp->getHill()->getHillTextForDiscord() + " - " + comp->getLongSerieTypeText() + " " + typeText;
+
+    QString description;
+    if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
+    {
+        description = tr("Po %1 z %2 skoków grupy %3 (runda %4)").arg(manager->getActualStartListIndex() + 1).arg(static_cast<TeamCompetitionManager *>(manager)->getActualRoundTeamsReference().count()).arg(static_cast<TeamCompetitionManager *>(manager)->getActualGroup()).arg(manager->getActualRound());
+    }
+    else
+    {
+        description = tr("Po %1 z %2 skoków rundy %3").arg(manager->getActualStartListIndex() + 1).arg(static_cast<IndividualCompetitionManager *>(manager)->getActualRoundJumpersReference().count()).arg(manager->getActualRound());
+    }
+    message.content = title.toStdString() + "\n";
+    message.content += description.toStdString() + "\n\n";
+    message.content += tr("### Wyniki").toStdString() + "\n" + getTextForFullResultsEmbed().toStdString() + "\n";
+    message.content += tr("\n*Wiadomość wysłana z poziomu Sj.Sim").toStdString() + appVersion.toStdString() + "*";
+
+    return message;
+}
+
+QString CompetitionManagerWindow::getTextForFullResultsEmbed()
+{
+    CompetitionInfo * comp = manager->getCompetitionInfo();
+    CompetitionResults * res = &comp->getResultsReference();
+
+    QString fullstring;
+    int i=0;
+    if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+    {
+        for(auto & sr : res->getResultsReference())
+        {
+        QString s;
+        s += QString::number(sr.getPosition()) + ". " + sr.getJumper()->getTextForDiscord() + ": ";
+        for(auto & jump : sr.getJumpsReference()){
+            s += "*" + QString::number(jump.getDistance(), 'f', 1) + "m" + "*";
+        i++;
+        if(i < sr.getJumpsReference().count())
+            s += " | ";
+        }
+        s += " --> **" + QString::number(sr.getPointsSum()) + tr("pkt") + "**\n";
+        fullstring += s;
+        }
+    }
+    else
+    {
+        for(auto & sr : res->getResultsReference())
+        {
+        QString ss = "__" + GlobalDatabase::get()->getCountryByAlpha3(sr.getTeam()->getCountryCode()).getName() + QString(" :flag:%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(sr.getTeam()->getCountryCode()).getAlpha2().toLower()) + QString("__** --> %1**\n").arg(QString::number(sr.getPointsSum(), 'f', 1) + tr("pkt"));
+        fullstring += ss;
+        for(auto & tjr : sr.getTeamJumpersResultsReference())
+        {
+        QString s;
+        s = tjr.getJumper()->getNameAndSurname() + ": ";
+        int i=0;
+        for(auto & jump : tjr.getJumpsReference())
+        {
+            s += "*" + QString::number(jump.getDistance(), 'f', 1) + "m*";
+            i++;
+            if(i < tjr.getJumpsReference().count())
+                s += " | ";
+        }
+        fullstring += s + "\n";
+        }
+        }
+    }
+
+    return fullstring;
+}

@@ -23,6 +23,7 @@ public:
 
     int getAdvanceStatusOfTeam(Team * team);
     QVector<Team *> getFilteredTeamsForNextRound();
+    void updateTeamsVectorByQualifications(QVector<Team> & teamsVectorToModify);
 
     static QVector<Team> getFilteredTeamsAfterQualifications(CompetitionInfo *competition);
     static QVector<Team> getFilteredTeamsByClassification(CompetitionInfo *competition, Classification *classification, QVector<Team> & teams);
