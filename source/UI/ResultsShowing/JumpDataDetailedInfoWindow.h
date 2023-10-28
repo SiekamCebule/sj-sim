@@ -35,6 +35,10 @@ private:
 public:
     JumpData *getJumpData() const;
     void setJumpData(JumpData *newJumpData);
+    Ui::JumpDataDetailedInfoWindow *getUi() const;
+
+    JumpWindInfoWidget *getWindInfoWidget() const;
+
 private slots:
     void on_pushButton_clicked();
 };

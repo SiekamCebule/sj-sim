@@ -96,6 +96,7 @@ void JumperStatsWindow::fillWindow()
 {
     ui->label_jumperNameAndSurname->setText(jumper->getNameAndSurname());
     ui->label_jumperFlag->setPixmap(CountryFlagsManager::getFlagPixmap(jumper->getCountryCode().toLower()).scaled(ui->label_jumperFlag->size()));
+    ui->label_img->setPixmap(jumper->getImagePixmap().scaled(ui->label_img->size()));
 
     Hill * specificHill = nullptr;
     if(ui->comboBox_hillFilter->currentIndex() > 0)

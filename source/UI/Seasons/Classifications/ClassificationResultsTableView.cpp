@@ -33,6 +33,16 @@ void ClassificationResultsTableView::fillTable()
     ui->tableView->resizeColumnsToContents();
 }
 
+SimulationSave *ClassificationResultsTableView::getSave() const
+{
+    return save;
+}
+
+void ClassificationResultsTableView::setSave(SimulationSave *newSave)
+{
+    save = newSave;
+}
+
 bool ClassificationResultsTableView::getAllowShowDetails() const
 {
     return allowShowDetails;
@@ -57,3 +67,9 @@ void ClassificationResultsTableView::setClassification(Classification *newClassi
 {
     classification = newClassification;
 }
+
+void ClassificationResultsTableView::on_pushButton_webhook_clicked()
+{
+    classification->sendResultsWebhook(save);
+}
+

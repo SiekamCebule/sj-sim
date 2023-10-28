@@ -1,5 +1,7 @@
 #include "Season.h"
 
+#include "QtConcurrent"
+
 Season::Season() :
     ClassWithID()
 {
@@ -10,7 +12,7 @@ Season::~Season()
 {
 }
 
-QJsonObject Season::getJsonObject(Season &season)
+QJsonObject Season::getJsonObject(const Season &season)
 {
     QJsonObject obj;
     obj.insert("id", QString::number(season.getID()));
@@ -19,12 +21,12 @@ QJsonObject Season::getJsonObject(Season &season)
         obj.insert("actual-calendar-id", QString::number(season.getActualCalendar()->getID()));
     else
         obj.insert("actual-calendar-id", QString::number(-1));
-    QJsonArray array;
-    for(auto & cal : season.getCalendarsReference())
-    {
-        array.push_back(SeasonCalendar::getJsonObject(*cal));
-    }
-    obj.insert("calendars", array);
+
+    QFuture<QJsonObject> calendarsFuture = QtConcurrent::mapped(season.getCalendars(), [](SeasonCalendar * p){return SeasonCalendar::getJsonObject(*p);});
+    QJsonArray calendarsArray;
+    for(auto & o : calendarsFuture.results())
+        calendarsArray.append(o);
+    obj.insert("calendars", calendarsArray);
 
     return obj;
 }
@@ -34,6 +36,19 @@ Season Season::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsMana
     Season season;
     season.setID(obj.value("id").toString().toULong());
     season.setSeasonNumber(obj.value("season-number").toInt());
+
+
+    /*QJsonArray array = obj.value("calendars").toArray();
+    QVector<QJsonValue> values;
+    for(auto val : array)
+        values.push_back(val);
+    QFuture<SeasonCalendar *> calendarsFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue &value){
+        return new SeasonCalendar(SeasonCalendar::getFromJson(value.toObject(), objectsManager));
+    });
+    season.setCalendars(calendarsFuture.results().toVector());
+    if(objectsManager != nullptr)
+        objectsManager->fill(&season.getCalendarsReference());*/
+
     QJsonArray array = obj.value("calendars").toArray();
     for(auto a : array)
     {

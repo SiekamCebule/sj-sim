@@ -33,7 +33,8 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
 {
     SimulationSave * save = new SimulationSave();
     save->setID(obj.value("id").toString().toULong());
-    save->setName(obj.value("name").toString());
+
+    qDebug()<<"id: "<<save->getID();
 
     QJsonArray array = obj.value("jumpers").toArray();
     QVector<QJsonValue> values;
@@ -44,6 +45,8 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
     });
     save->setJumpers(jumpersFuture.results().toVector());
     objectsManager->fill(&save->getJumpersReference());
+
+    qDebug()<<"jumpers";
 
     array = obj.value("hills").toArray();
     values.clear();
@@ -65,12 +68,20 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
     save->setCompetitionRules(rulesFuture.results().toVector());
     objectsManager->fill(&save->getCompetitionRulesReference());
 
+    qDebug()<<"rules";
+
     QJsonArray seasonsArray = obj.value("seasons").toArray();
-    for(auto val : seasonsArray){
-        Season season = Season::getFromJson(val.toObject(), objectsManager);
-        save->getSeasonsReference().push_back(season);
-    }
+    values.clear();
+    for(auto val : seasonsArray)
+        values.push_back(val);
+    QFuture<Season> seasonsFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue &value){
+        return Season::getFromJson(value.toObject(), objectsManager);
+    });
+    save->setSeasons(seasonsFuture.results().toVector());
     objectsManager->fill(&save->getSeasonsReference());
+        /*Season season = Season::getFromJson(val.toObject(), objectsManager);
+        save->getSeasonsReference().push_back(season);*/
+
 
     array = obj.value("jumpers-form-tendences").toArray();
     values.clear();
@@ -108,42 +119,41 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
 {
     QJsonObject object;
     object.insert("id", QString::number(save.getID()));
-    object.insert("name", save.getName());
 
+    QFuture<QJsonObject> jumpersFuture = QtConcurrent::mapped(save.getJumpersReference(), [](Jumper * p){return Jumper::getJsonObject(*p);});
     QJsonArray jumpersArray;
-    for(auto & jumper : save.getJumpersReference()){
-        jumpersArray.push_back(Jumper::getJsonObject(*jumper));
-    }
+    for(auto & o : jumpersFuture.results())
+        jumpersArray.append(o);
     object.insert("jumpers", jumpersArray);
 
+    QFuture<QJsonObject> hillsFuture = QtConcurrent::mapped(save.getHillsReference(), [](Hill * p){return Hill::getJsonObject(*p);});
     QJsonArray hillsArray;
-    for(auto & hill : save.getHillsReference()){
-        hillsArray.push_back(Hill::getJsonObject(*hill));
-    }
+    for(auto & o : hillsFuture.results())
+        hillsArray.append(o);
     object.insert("hills", hillsArray);
 
+    QFuture<QJsonObject> rulesFuture = QtConcurrent::mapped(save.getCompetitionRulesReference(), [](const CompetitionRules & p){return CompetitionRules::getJsonObject(p);});
     QJsonArray rulesArray;
-    for(auto & rules : save.getCompetitionRulesReference()){
-        rulesArray.push_back(CompetitionRules::getJsonObject(rules));
-    }
+    for(auto & o : rulesFuture.results())
+        rulesArray.append(o);
     object.insert("rules", rulesArray);
 
+    QFuture<QJsonObject> seasonsFuture = QtConcurrent::mapped(save.getSeasonsReference(), [](const Season & p){return Season::getJsonObject(p);});
     QJsonArray seasonsArray;
-    for(auto & season : save.getSeasonsReference()){
-        seasonsArray.push_back(Season::getJsonObject(season));
-    }
+    for(auto & o : seasonsFuture.results())
+        seasonsArray.append(o);
     object.insert("seasons", seasonsArray);
 
+    QFuture<QJsonObject> tendencesFuture = QtConcurrent::mapped(save.getJumpersFormTendencesReference(), [](const JumperFormTendence & p){return JumperFormTendence::getJsonObject(p);});
     QJsonArray tendencesArray;
-    for(auto & tendence : save.getJumpersFormTendencesReference()){
-        tendencesArray.push_back(JumperFormTendence::getJsonObject(tendence));
-    }
+    for(auto & o : tendencesFuture.results())
+        tendencesArray.append(o);
     object.insert("jumpers-form-tendences", tendencesArray);
 
+    QFuture<QJsonObject> listsFuture = QtConcurrent::mapped(save.getJumpersListsReference(), [](const SaveJumpersList & p){return SaveJumpersList::getJsonObject(p);});
     QJsonArray listsArray;
-    for(auto & list : save.getJumpersListsReference()){
-        listsArray.push_back(SaveJumpersList::getJsonObject(list));
-    }
+    for(auto & o : listsFuture.results())
+        listsArray.append(o);
     object.insert("jumpers-lists", listsArray);
 
     object.insert("actual-season-id", QString::number(save.getActualSeason()->getID()));
@@ -156,15 +166,17 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
     return object;
 }
 
-bool SimulationSave::saveToFile(QString dir)
+bool SimulationSave::saveToFile(QString dir, QString fileName)
 {
+    if(fileName == "!default")
+        fileName = getName();
     QJsonDocument document;
     QJsonObject mainObject;
     repairDatabase();
     mainObject.insert("simulation-save", SimulationSave::getJsonObject(*this));
     document.setObject(mainObject);
 
-    QFile file(dir + getName() + ".json");
+    QFile file(dir + fileName + ".json");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QMessageBox message(QMessageBox::Icon::Critical, "Nie można otworzyć pliku z zapisem symulacji " + getName(), "Nie udało się otworzyć pliku " + dir + getName() + ".json" + "\nUpewnij się, że istnieje tam taki plik lub ma on odpowiednie uprawnienia",  QMessageBox::StandardButton::Ok);
@@ -195,6 +207,8 @@ SimulationSave *SimulationSave::loadFromFile(QString fileName)
         file.close();
         QJsonObject object = doc.object().value("simulation-save").toObject();
         SimulationSave * s = SimulationSave::getFromJson(object, &objectsManager);
+        fileName.chop(5);
+        s->setName(fileName);
         return s;
 }
 

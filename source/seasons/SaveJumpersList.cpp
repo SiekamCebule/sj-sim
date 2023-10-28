@@ -6,13 +6,13 @@ SaveJumpersList::SaveJumpersList(QString name) : name(name)
     isDefault = false;
 }
 
-QJsonObject SaveJumpersList::getJsonObject(SaveJumpersList &jumpersList)
+QJsonObject SaveJumpersList::getJsonObject(const SaveJumpersList &jumpersList)
 {
     QJsonObject object;
     object.insert("name", jumpersList.getName());
     object.insert("is-default", jumpersList.getIsDefault());
     QJsonArray jumpersArray;
-    for(auto & jumper : jumpersList.getJumpersReference())
+    for(auto & jumper : jumpersList.getJumpers())
     {
         jumpersArray.push_back(QString::number(jumper->getID()));
     }

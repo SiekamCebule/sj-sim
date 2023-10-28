@@ -24,6 +24,10 @@ private:
     QString jumpInfoWebhook;
     QString competitionSingleResultWebhook;
     QString competitionResultsWebhook;
+    QString classificationResultsWebhook;
+
+    bool liveCompetition;
+    double liveCompetitionSpeedMulti;
 
 public:
     short getLanguageID() const;
@@ -49,6 +53,12 @@ public:
     void setCompetitionSingleResultWebhook(const QString &newCompetitionSingleResultWebhook);
     QString getCompetitionResultsWebhook() const;
     void setCompetitionResultsWebhook(const QString &newCompetitionResultsWebhook);
+    QString getClassificationResultsWebhook() const;
+    void setClassificationResultsWebhook(const QString &newClassificationResultsWebhook);
+    bool getLiveCompetition() const;
+    void setLiveCompetition(bool newLiveCompetition);
+    double getLiveCompetitionSpeedMulti() const;
+    void setLiveCompetitionSpeedMulti(double newLiveCompetitionSpeedMulti);
 };
 
 #endif // GLOBALAPPSETTINGS_H

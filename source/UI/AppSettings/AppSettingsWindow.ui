@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>510</width>
-    <height>726</height>
+    <height>874</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -306,6 +306,92 @@ color: rgb(13, 13, 13);</string>
       </layout>
      </item>
      <item>
+      <layout class="QFormLayout" name="formLayout_8">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: black;</string>
+         </property>
+         <property name="text">
+          <string>Wpływ formy przy wybiciu</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_takeoffFormEffect">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(246, 245, 244);
+color: rgb(13, 13, 13);</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QFormLayout" name="formLayout_9">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: black;</string>
+         </property>
+         <property name="text">
+          <string>Wpływ formy w locie</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_flightFormEffect">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(246, 245, 244);
+color: rgb(13, 13, 13);</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="decimals">
+          <number>4</number>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
       <widget class="QCheckBox" name="checkBox_autoAdjustHillEffects">
        <property name="font">
         <font>
@@ -338,6 +424,60 @@ do aktualnego zakresu umiejętności</string>
 globalnej bazy danych</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_liveCompetition">
+       <property name="font">
+        <font>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: black;</string>
+       </property>
+       <property name="text">
+        <string>Rozgrywanie konkursu &quot;na żywo&quot;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QFormLayout" name="formLayout_7">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: black;</string>
+         </property>
+         <property name="text">
+          <string>Mnożnik szybkości rozgrywania
+konkursu &quot;na żywo&quot;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_liveCompSpeed">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(246, 245, 244);
+color: rgb(13, 13, 13);</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -668,6 +808,35 @@ color: rgb(0, 0, 0);</string>
      </item>
      <item row="2" column="1">
       <widget class="QLineEdit" name="lineEdit_compResultsWh">
+       <property name="font">
+        <font>
+         <pointsize>7</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(222, 222, 222);
+color: rgb(0, 0, 0);</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="font">
+        <font>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: black;</string>
+       </property>
+       <property name="text">
+        <string>Webhook: wyniki klasyfikacji</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="lineEdit_clsResultsWh">
        <property name="font">
         <font>
          <pointsize>7</pointsize>

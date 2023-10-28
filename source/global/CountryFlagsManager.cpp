@@ -1,7 +1,10 @@
 #include "CountryFlagsManager.h"
 
 #include <QPixmap>
+#include <QFile>
+#include <QtSvg/QSvgRenderer>
 #include <QString>
+#include <QIcon>
 #include <QDebug>
 #include <QSize>
 
@@ -12,7 +15,10 @@ CountryFlagsManager::CountryFlagsManager()
 
 QPixmap CountryFlagsManager::getFlagPixmap(const QString &twoLettersCountryCode)
 {
-    return QPixmap("flags/" + twoLettersCountryCode.toUpper() + ".svg");
+    QPixmap p("flags/" + twoLettersCountryCode.toUpper() + ".svg");
+
+    QFile f("flags/" + twoLettersCountryCode.toUpper() + ".svg");
+    return p;
 }
 
 /*QString CountryFlagsManager::convertThreeLettersCountryCodeToTwoLetters(const QString &code)

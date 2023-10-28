@@ -7,8 +7,10 @@
 #include "../utilities/ClassWithID.h"
 #include "ClassificationSingleResult.h"
 #include "../seasons/SeasonCalendar.h"
+#include <dpp/dpp.h>
 
 class Season;
+class SimulationSave;
 
 class Classification : public ClassWithID
 {
@@ -41,6 +43,10 @@ public:
 
     QHash<Jumper *, QHash<CompetitionInfo *, int> > constructJumpersArchiveResults(Season * season, SeasonCalendar *calendar);
     QHash<QString, QHash<CompetitionInfo *, int> > constructTeamsArchiveResults(Season * season, SeasonCalendar *calendar);
+
+    QString getSingleResultsTextForWebhook();
+    dpp::message getMessageForResultsWebhook(SimulationSave *save);
+    void sendResultsWebhook(SimulationSave *save);
 
 private:
     QString name;

@@ -18,6 +18,26 @@ GlobalSimulationSettings::GlobalSimulationSettings()
     simulationRandomMultiplier = 0;
 }
 
+double GlobalSimulationSettings::getTakeoffFormEffect() const
+{
+    return takeoffFormEffect;
+}
+
+void GlobalSimulationSettings::setTakeoffFormEffect(double newTakeoffFormEffect)
+{
+    takeoffFormEffect = newTakeoffFormEffect;
+}
+
+double GlobalSimulationSettings::getFlightFormEffect() const
+{
+    return flightFormEffect;
+}
+
+void GlobalSimulationSettings::setFlightFormEffect(double newFlightFormEffect)
+{
+    flightFormEffect = newFlightFormEffect;
+}
+
 bool GlobalSimulationSettings::getUpdateGlobalDatabaseRecords() const
 {
     return updateGlobalDatabaseRecords;
@@ -121,6 +141,8 @@ bool GlobalSimulationSettings::loadFromFile()
     this->setAutoAdjustHillEffects(value.toObject().value("auto-adjust-hill-effects").toBool(false));
     this->setHillsEffectsMultiplier(value.toObject().value("hills-effects-multiplier").toDouble(1));
     this->setUpdateGlobalDatabaseRecords(value.toObject().value("update-global-database-records").toBool(false));
+    this->setTakeoffFormEffect(value.toObject().value("takeoff-form-effect").toDouble());
+    this->setFlightFormEffect(value.toObject().value("flight-form-effect").toDouble());
 
     return true;
 }
@@ -144,6 +166,8 @@ bool GlobalSimulationSettings::writeToFile()
     settingsObject.insert("auto-adjust-hill-effects", getAutoAdjustHillEffects());
     settingsObject.insert("hills-effects-multiplier", getHillsEffectsMultiplier());
     settingsObject.insert("update-global-database-records", getUpdateGlobalDatabaseRecords());
+    settingsObject.insert("takeoff-form-effect", getTakeoffFormEffect());
+    settingsObject.insert("flight-form-effect", getFlightFormEffect());
     mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);
     file.resize(0);

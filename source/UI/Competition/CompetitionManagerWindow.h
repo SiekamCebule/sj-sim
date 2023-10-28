@@ -64,6 +64,8 @@ public:
     dpp::message getMessageForResults();
     QString getTextForFullResultsEmbed();
 
+    void executeLiveCompetitionEffects();
+
 signals:
     void nextRoundButtonClicked();
 
@@ -146,6 +148,9 @@ private slots:
     void on_pushButton_inrunSnowGeneratorSettings_clicked();
     void on_comboBox_virtualClassification_currentIndexChanged(int index);
     void on_pushButton_sendResultsWebhook_clicked();
+    void on_checkBox_liveCompetition_stateChanged(int arg1);
+protected:
+    void closeEvent(QCloseEvent * event);
 };
 
 #endif // COMPETITIONMANAGERWINDOW_H

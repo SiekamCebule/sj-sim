@@ -42,7 +42,6 @@ public:
     int getJumpsCountFromInput();
     bool getChangeableWindFromInput();
     short getResultsFormatFromInput();
-    QString getResultsFileName();
     short getWindAverageCalculatingType();
     short getWindCompensationDistanceEffect();
     int getGateFromInput();

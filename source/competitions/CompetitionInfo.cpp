@@ -2,8 +2,13 @@
 
 #include "../simulator/Hill.h"
 #include "../global/DatabaseObjectsManager.h"
+#include "../global/GlobalAppSettings.h"
+#include "../global/GlobalDatabase.h"
 #include "CompetitionRules.h"
 #include "CompetitionResults.h"
+#include "AbstractCompetitionManager.h"
+#include "CompetitionManagers/IndividualCompetitionManager.h"
+#include "CompetitionManagers/TeamCompetitionManager.h"
 #include "../seasons/Season.h"
 
 #include <QDate>
@@ -20,6 +25,7 @@
 #include <QMessageBox>
 #include <QByteArray>
 extern DatabaseObjectsManager seasonObjectsManager;
+extern const QString appVersion;
 
 CompetitionInfo::CompetitionInfo(Hill *hill) : hill(hill),
     ClassWithID()
@@ -229,6 +235,162 @@ QString CompetitionInfo::getLongSerieTypeText()
     }
 }
 
+QString CompetitionInfo::getSingleResultsTextForWebhook(AbstractCompetitionManager * manager)
+{
+    CompetitionInfo * comp = this;
+    CompetitionResults * res = &comp->getResultsReference();
+
+    QString fullstring;
+    if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+    {
+        for(auto & sr : res->getResultsReference())
+        {
+            QString s;
+            QString koEmoji;
+            if(comp->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+            {
+                IndividualCompetitionManager * im = static_cast<IndividualCompetitionManager*>(manager);
+                if(manager != nullptr){
+                    KORoundManager * km = im->getKOManager();
+                    if(km != nullptr)
+                    {
+                        if(km->getStatusesReference().count() > 0)
+                        {
+                            if(km->getLuckyLoserReference().contains(sr.getJumper()) == true)
+                                koEmoji = "**(LL)** :yellow_circle:";
+                            else if(km->getStatusesReference().value(sr.getJumper()) == KORoundManager::Winner)
+                                koEmoji = ":green_circle:";
+                            else if(km->getStatusesReference().value(sr.getJumper()) == KORoundManager::Loser)
+                                koEmoji = ":red_circle:";
+                            else
+                                koEmoji = ":yellow_circle:";
+                            koEmoji += " ";
+                        }
+                    }
+                }
+            }
+            s += koEmoji + QString::number(sr.getPosition()) + ". " + sr.getJumper()->getTextForDiscord() + ": ";
+            int i=0;
+            for(auto & jump : sr.getJumpsReference()){
+                s += "*" + QString::number(jump.getDistance(), 'f', 1) + "m" + "*";
+                i++;
+                if(i < sr.getJumpsReference().count())
+                    s += " | ";
+            }
+            s += " --> **" + QString::number(sr.getPointsSum()) + QObject::tr("pkt") + "**\n";
+            fullstring += s;
+        }
+    }
+    else
+    {
+        for(auto & sr : res->getResultsReference())
+        {
+            QString ss = "__" + GlobalDatabase::get()->getCountryByAlpha3(sr.getTeam()->getCountryCode()).getName() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(sr.getTeam()->getCountryCode()).getAlpha2().toLower()) + QString("__** --> %1**\n").arg(QString::number(sr.getPointsSum(), 'f', 1) + QObject::tr("pkt"));
+            fullstring += ss;
+            for(auto & tjr : sr.getTeamJumpersResultsReference())
+            {
+                QString s;
+                s = tjr.getJumper()->getNameAndSurname() + ": ";
+                int i=0;
+                for(auto & jump : tjr.getJumpsReference())
+                {
+                    s += "*" + QString::number(jump.getDistance(), 'f', 1) + "m*";
+                    i++;
+                    if(i < tjr.getJumpsReference().count())
+                        s += " | ";
+                }
+                fullstring += s + "\n";
+            }
+        }
+    }
+    return fullstring;
+}
+
+dpp::message CompetitionInfo::getResultsWebhookMessage(AbstractCompetitionManager * manager)
+{
+    dpp::message message;
+
+    QString typeText;
+    QString koRoundText;
+    if(getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+        typeText = QObject::tr("(indywidualny)");
+    else
+        typeText = QObject::tr("(drużynowy)");
+
+    if(rules.getCompetitionType() == CompetitionRules::Individual)
+    {
+        IndividualCompetitionManager * im = static_cast<IndividualCompetitionManager*>(manager);
+        if(manager != nullptr){
+            KORoundManager * km = im->getKOManager();
+            if(km != nullptr)
+            {
+                koRoundText = QObject::tr("(runda KO)");
+            }
+        }
+    }
+
+    QString title = "**" + getHill()->getHillTextForDiscord() + " - " + getLongSerieTypeText() + " " + typeText + " " + koRoundText + "**";
+    QString description;
+    if(manager != nullptr){
+    if(getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
+    {
+        description = QObject::tr("*Po %1 z %2 skoków grupy %3 (runda %4)*").arg(manager->getActualStartListIndex() + 1).arg(static_cast<TeamCompetitionManager *>(manager)->getActualRoundTeamsReference().count()).arg(static_cast<TeamCompetitionManager *>(manager)->getActualGroup()).arg(manager->getActualRound());
+    }
+    else
+    {
+        description = QObject::tr("*Po %1 z %2 skoków rundy %3*").arg(manager->getActualStartListIndex() + 1).arg(static_cast<IndividualCompetitionManager *>(manager)->getActualRoundJumpersReference().count()).arg(manager->getActualRound());
+    }
+    }
+    else
+    {
+        description = QObject::tr("*Po wszystkich skokach konkursu*");
+    }
+
+    message.content = title.toStdString() + "\n";
+    message.content += description.toStdString() + "\n";
+    message.content += QObject::tr("### Wyniki:").toStdString() + "\n" + getSingleResultsTextForWebhook(manager).toStdString() + "\n";
+    message.content += QObject::tr("\n*Wiadomość wysłana z poziomu Sj.Sim").toStdString() + appVersion.toStdString() + "*";
+
+    return message;
+}
+
+void CompetitionInfo::sendResultsWebhook(AbstractCompetitionManager * manager)
+{
+    /*dpp::message msg = getResultsWebhookMessage(manager);
+    qDebug()<<"msg length: "<<msg.content.length();
+    std::string content = msg.content;
+    for(int i=0; i<ceil(double(content.length()) / double(2000)); i++)
+    {
+        dpp::cluster bot("");
+        dpp::webhook wh(GlobalAppSettings::get()->getCompetitionResultsWebhook().toStdString());
+        std::string newContent;
+        if(i+1 == ceil(double(content.length()) / double(2000)))
+            newContent = content.substr(0, content.length() - 1);
+        else
+            newContent = content.substr(0, 1999);
+        content = content.substr(2000, content.length());
+        bot.execute_webhook(wh, dpp::message(newContent));
+        qDebug()<<"newContent no. "<<QString::number(i+1)<<" length: "<<QString::number(newContent.length());
+    }*/
+
+
+    dpp::message msg = getResultsWebhookMessage(manager);
+    qDebug()<<"msg length: "<<msg.content.length();
+    std::string content = msg.content;
+    int i = 0;
+    while (!content.empty())
+    {
+        dpp::cluster bot("");
+        dpp::webhook wh(GlobalAppSettings::get()->getCompetitionResultsWebhook().toStdString());
+        std::string newContent = content.substr(0, std::min(2000, int(content.length())));
+        content.replace(0, newContent.length(), "");
+        bot.execute_webhook(wh, dpp::message(newContent));
+        i++;
+        qDebug()<<"newContent no. "<<QString::number(i)<<" length: "<<QString::number(newContent.length());
+    }
+
+}
+
 QVector<Jumper *> CompetitionInfo::getStartList() const
 {
     return startList;
@@ -346,6 +508,7 @@ CompetitionResults &CompetitionInfo::getResultsReference()
 
 QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
 {
+    qDebug()<<"comp";
     QJsonObject object;
     object.insert("id", QString::number(competition.getID()));
     if(competition.getHill() != nullptr)
@@ -357,6 +520,8 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     object.insert("cancelled", competition.getCancelled());
     object.insert("played", competition.getPlayed());
     object.insert("jumps-importance", competition.getJumpsImportance());
+
+    qDebug()<<"basic";
 
     if(competition.getTrialRound() != nullptr)
         object.insert("trial-round-id", QString::number(competition.getTrialRound()->getID()));
@@ -378,6 +543,7 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     if(competition.getAdvancementCompetition() != nullptr)
         object.insert("advancement-competition-id", QString::number(competition.getAdvancementCompetition()->getID()));
 
+    qDebug()<<"after teams";
     QJsonArray teamsArray;
     for(auto & team : competition.getTeamsReference())
     {

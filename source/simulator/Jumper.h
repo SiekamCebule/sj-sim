@@ -22,7 +22,6 @@ public:
 private:
     QString name, surname;
     QString countryCode;
-    QPixmap flagPixmap;
     QString imageName;
     double personalBest;
 
@@ -43,14 +42,10 @@ public:
     JumperSkills getJumperSkills() const;
     JumperSkills * getJumperSkillsPointer() const;
     void setJumperSkills(const JumperSkills &newJumperSkills);
-    QPixmap getFlagPixmap() const;
-    void setFlagPixmap(const QPixmap &newFlagPixmap);
     double getPersonalBest() const;
     void setPersonalBest(double newPersonalBest);
     QString getImageName() const;
     void setImageName(const QString &newImageName);
-
-    void updateCountryFlagPixmap();
 };
 
 #endif // JUMPER_H

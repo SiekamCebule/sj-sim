@@ -66,13 +66,8 @@ CompetitionResults CompetitionResults::getFromJson(QJsonObject obj, DatabaseObje
     QFuture<CompetitionSingleResult> future = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
         return CompetitionSingleResult::getFromJson(value.toObject(), objectsManager);
     });
-    //QVector<CompetitionSingleResult *> res = future.results().toVector();
     results.setResults(future.results().toVector());
 
-    /*QJsonArray resultsArray = obj.value("results").toArray();
-    for(auto res : resultsArray){
-        results.getResultsReference().push_back(CompetitionSingleResult::getFromJson(res.toObject(), objectsManager));
-    }*/
     objectsManager->fill(&results.getResultsReference());
 
     return results;
@@ -83,14 +78,13 @@ QJsonObject CompetitionResults::getJsonObject(CompetitionResults &results)
     QJsonObject object;
     object.insert("id", QString::number(results.getID()));
 
+    QFuture<QJsonObject> resultsFuture = QtConcurrent::mapped(results.getResultsReference(), [](const CompetitionSingleResult & p){return CompetitionSingleResult::getJsonObject(p);});
     QJsonArray resultsArray;
-    for(auto & res : qAsConst(results.getResultsReference()))
-    {
-        QJsonObject o = CompetitionSingleResult::getJsonObject(res);
-        resultsArray.push_back(o);
-    }
+    for(auto & o : resultsFuture.results())
+        resultsArray.append(o);
     object.insert("results", resultsArray);
 
+    //qDebug()<<QString("full res of comp -> end (%1) (%2)").arg(resultsArray.count()).arg(results.getCompetition()->getHill()->getHillText());
     return object;
 }
 
@@ -235,7 +229,7 @@ QHash<Jumper *, int> CompetitionResults::getResultsWithJumpersPositionsForClassi
         if(previousResultPoints == pair.second)
         {
             pos = actualPosition;
-            add == 1;
+            add = 1;
         }
         else{
             actualPosition += add;
@@ -377,7 +371,6 @@ CompetitionSingleResult *CompetitionResults::getResultOfTeam(Team *team)
 {
     for(auto & result : results)
     {
-        qDebug()<<"t: "<<result.getTeam()->getCountryCode()<<", "<<result.getTeam()<<"  ||  "<<team->getCountryCode()<<", "<<team;
         if(result.getTeam() == team)
             return &result;
     }
@@ -407,6 +400,8 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
         result = &results.last();
     }
     int index = jumpNumber;
+    qDebug()<<result;
+    qDebug()<<result->getJumpsReference().count();
     if(jumpNumber == -1 || jumpNumber >= result->getJumpsReference().count())
         result->getJumpsReference().push_back(jump);
     else{

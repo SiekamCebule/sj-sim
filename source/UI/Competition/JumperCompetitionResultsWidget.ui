@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>387</width>
-    <height>471</height>
+    <height>534</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -37,6 +37,28 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_img">
+       <property name="minimumSize">
+        <size>
+         <width>38</width>
+         <height>46</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>38</width>
+         <height>46</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_nameSurnameAndFlag">

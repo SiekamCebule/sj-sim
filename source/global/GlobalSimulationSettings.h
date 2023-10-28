@@ -16,6 +16,8 @@ private:
     bool autoAdjustHillEffects;
     bool updateGlobalDatabaseRecords;
     int baseDsqProbability;
+    double takeoffFormEffect;
+    double flightFormEffect;
 
 public:
     GlobalSimulationSettings(GlobalSimulationSettings &) = delete;
@@ -36,6 +38,10 @@ public:
     void setHillsEffectsMultiplier(double newHillsEffectsMultiplier);
     bool getUpdateGlobalDatabaseRecords() const;
     void setUpdateGlobalDatabaseRecords(bool newUpdateGlobalDatabaseRecords);
+    double getTakeoffFormEffect() const;
+    void setTakeoffFormEffect(double newTakeoffFormEffect);
+    double getFlightFormEffect() const;
+    void setFlightFormEffect(double newFlightFormEffect);
 };
 
 #endif // GLOBALSIMULATIONSETTINGS_H

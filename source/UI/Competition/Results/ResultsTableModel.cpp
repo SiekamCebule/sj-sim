@@ -16,7 +16,8 @@ ResultsTableModel::ResultsTableModel(int type, CompetitionResults *results, Abst
     type(type),
     results(results),
     manager(manager),
-    startListStatuses(nullptr)
+    startListStatuses(nullptr),
+    lastJumper(nullptr)
 {
 }
 
@@ -38,7 +39,7 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
                 return results->getResultsReference().at(index.row()).getJumper()->getNameAndSurname();
                 break;
             case 2:
-                return results->getResultsReference().at(index.row()).getPointsSum();
+                return QString::number(results->getResultsReference().at(index.row()).getPointsSum(), 'f', 0);
                 break;
             }
             if(index.column() > 2){
@@ -65,6 +66,11 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
         }
     }
     else if(role == Qt::BackgroundRole){
+        if(lastJumper != nullptr)
+        {
+            if(results->getResultByIndex(index.row())->getJumper() == lastJumper)
+                return QColor(qRgb(232, 243, 255));
+        }
         if(startListStatuses != nullptr){
             switch(type){
             case CompetitionRules::Individual:{
@@ -158,6 +164,16 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
 
     // FIXME: Implement me!
     return QVariant();
+}
+
+Jumper *ResultsTableModel::getLastJumper() const
+{
+    return lastJumper;
+}
+
+void ResultsTableModel::setLastJumper(Jumper *newLastJumper)
+{
+    lastJumper = newLastJumper;
 }
 
 int ResultsTableModel::getQualifiersLimit() const

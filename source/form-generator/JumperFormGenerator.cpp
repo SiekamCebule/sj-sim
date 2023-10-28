@@ -8,7 +8,7 @@ JumperFormGenerator::JumperFormGenerator()
 
 void JumperFormGenerator::generateJumperFormTendence()
 {
-    double oldTendence = tendence->getTendence();
+    double oldTendence = tendence->getTendenceReference();
     double newTendence = 0;
 
     double base = 0;
@@ -57,7 +57,7 @@ void JumperFormGenerator::generateJumperForm()
     double oldForm = jumper->getJumperSkillsPointer()->getForm();
     double formChange = 0;
 
-    formChange += tendence->getTendence() * 1.25;
+    formChange += tendence->getTendenceReference() * 1.25;
     formChange *= 1 + ((settings.getFormVariability() - 5) / 5);
 
     double distanceFromAverage = abs(oldForm - 50);

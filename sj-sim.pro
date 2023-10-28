@@ -366,8 +366,8 @@ DISTFILES += \
 RESOURCES += \
 assets.qrc
 
-win32:CONFIG(release, debug|release): LIBS += -LC:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/lib/dpp-10.0/ -ldpp
-else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/lib/dpp-10.0/ -ldppd
-
+#win32:CONFIG(release, debug|release): LIBS += -LC:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/lib/dpp-10.0/ -ldpp
+#else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/lib/dpp-10.0/ -ldppd
+LIBS += -LC:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/lib/dpp-10.0 -ldpp
 INCLUDEPATH += C:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/include/dpp-10.0
 DEPENDPATH += C:/Users/Konrad/Downloads/libdpp-10.0.26-win64release/include/dpp-10.0

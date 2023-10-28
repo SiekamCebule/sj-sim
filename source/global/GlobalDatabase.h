@@ -40,6 +40,9 @@ public:
     GlobalDatabase(GlobalDatabase &) = delete;
     static GlobalDatabase * get();
 
+    void repairDatabase();
+    void repairSimulationSaves();
+
     void removeJumper(int index);
 
     bool loadFromJson();
@@ -65,7 +68,6 @@ public:
     bool writeJumpsImportancePresets();
     bool writeCountries();
 
-    void setupJumpersFlags();
     void setupHillsFlags();
 
     Country & getCountryByAlpha2(QString alpha2);

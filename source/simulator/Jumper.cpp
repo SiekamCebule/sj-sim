@@ -19,8 +19,6 @@ Jumper::Jumper(const QString &name, const QString &surname, const QString &count
     jumperSkills(skills),
     ClassWithID()
 {
-    if(countryCode.length() == 3)
-        updateCountryFlagPixmap();
 }
 
 Jumper::~Jumper()
@@ -148,31 +146,7 @@ QVector<Jumper> Jumper::getVectorFromJson(const QByteArray &bytes)
         jumpers.push_back(Jumper::getFromJson(val.toObject()));
     }
 
-    Jumper::setupJumpersFlagPixmaps(jumpers);
     return jumpers;
-}
-
-void Jumper::setupJumpersFlagPixmaps(QVector<Jumper> & jumpers)
-{
-    for(auto & jumper : jumpers)
-    {
-        jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(jumper.getCountryCode().toLower()));
-    }
-}
-
-QPixmap Jumper::getFlagPixmap() const
-{
-    return flagPixmap;
-}
-
-void Jumper::setFlagPixmap(const QPixmap &newFlagPixmap)
-{
-    flagPixmap = newFlagPixmap;
-}
-
-void Jumper::updateCountryFlagPixmap()
-{
-    flagPixmap = CountryFlagsManager::getFlagPixmap(countryCode);
 }
 
 JumperSkills Jumper::getJumperSkills() const
@@ -223,5 +197,4 @@ QString Jumper::getCountryCode() const
 void Jumper::setCountryCode(const QString &newCountryCode)
 {
     countryCode = newCountryCode;
-    updateCountryFlagPixmap();
 }

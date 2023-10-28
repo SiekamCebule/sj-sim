@@ -137,6 +137,34 @@ public:
         }
         return -1;
     }
+    template<typename T>
+    static int getIndexOfItemInVector(QVector<T*> & vector, T * item)
+    {
+        int index=0;
+        for(auto & el : vector)
+        {
+            if(el == item)
+            {
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+    template<typename T>
+    static int getIndexOfItemInVectorById(QVector<T> & vector, T * item)
+    {
+        int index=0;
+        for(auto & el : vector)
+        {
+            if(el.getID() == item->getID())
+            {
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
 
     /*template<typename T, typename AverageType>
     static T standardDeviation(QVector<T> & values, AverageType average)

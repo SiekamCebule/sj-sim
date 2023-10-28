@@ -28,6 +28,9 @@ public:
     QString getHillText();
     QString getHillTextForDiscord();
 
+    double calculateTakeoffEffect();
+    double calculateFlightEffect();
+
 private:
     QString name;
     QString countryCode;
@@ -43,9 +46,9 @@ private:
     double pointsForGate;
 
     //symulacja
-    double takeoffEffect;
-    double flightEffect;
     double realHS; // "prawdziwa wielkość skoczni", tam gdzie robi się niebezpicznie
+    double balance;
+    double distanceMultiplier;
 
     bool autoPointsForKPoint;
     bool autoPointsForMeter;
@@ -90,10 +93,6 @@ public:
     void setPointsForGate(double newPointsForGate);
     QSet<Characteristic> getCharacteristics() const;
     void setCharacteristics(const QSet<Characteristic> &newCharacteristics);
-    double getTakeoffEffect() const;
-    void setTakeoffEffect(double newTakeoffEffect);
-    double getFlightEffect() const;
-    void setFlightEffect(double newFlightEffect);
     double getRealHS() const;
     void setRealHS(double newRealHS);
     void setRealHSByCharacteristic();
@@ -107,6 +106,10 @@ public:
     void setAutoPointsForBackWind(bool newAutoPointsForBackWind);
     double getRecord() const;
     void setRecord(double newRecord);
+    double getBalance() const;
+    void setBalance(double newBalance);
+    double getDistanceMultiplier() const;
+    void setDistanceMultiplier(double newDistanceMultiplier);
 };
 
 #endif // HILL_H

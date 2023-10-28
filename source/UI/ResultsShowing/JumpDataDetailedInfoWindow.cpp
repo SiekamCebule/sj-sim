@@ -84,20 +84,20 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
         showOrHideByAppSettings();
 
         if(jumpData->getCompetition() != nullptr){
-        if(jumpData->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
-        {
-            ui->label_positionInRound->setText(QString::number(jumpData->getPositionInRound()));
-        }
-        else
-        {
-            ui->label_positionInRoundTitle->hide();
-            ui->label_positionInRoundTitle->hide();
-        }
-        }
-        else
-        {
-            ui->label_positionInRoundTitle->hide();
-            ui->label_positionInRoundTitle->hide();
+            if(jumpData->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+            {
+                ui->label_positionInRound->setText(QString::number(jumpData->getPositionInRound()));
+                ui->label_positionInGroup->hide();
+                ui->label_positionInGroupTitle->hide();
+                ui->label_positionInCompetition->hide();
+                ui->label_positionInCompetitionTitle->hide();
+            }
+            else
+            {
+                ui->label_positionInGroup->setText(QString::number(jumpData->getPositionInGroupForTeamCompetition()));
+                ui->label_positionInRound->setText(QString::number(jumpData->getPositionInRoundForTeamCompetition()));
+                ui->label_positionInCompetition->setText(QString::number(jumpData->getPositionInCompetitionForTeamCompetition()));
+            }
         }
     }
     else qDebug()<<"jumpData is nullptr!";
@@ -137,6 +137,10 @@ void JumpDataDetailedInfoWindow::showOrHideByAppSettings()
     ui->label_snowRain->setHidden(!c->getInrunSnow());
     ui->label_positionInRoundTitle->setHidden(!c->getJumpPositionInRound());
     ui->label_positionInRound->setHidden(!c->getJumpPositionInRound());
+    ui->label_positionInGroupTitle->setHidden(!c->getJumpPositionInRound());
+    ui->label_positionInGroup->setHidden(!c->getJumpPositionInRound());
+    ui->label_positionInCompetitionTitle->setHidden(!c->getJumpPositionInRound());
+    ui->label_positionInCompetition->setHidden(!c->getJumpPositionInRound());
 }
 
 void JumpDataDetailedInfoWindow::removeJumperInfoTitle()
@@ -281,4 +285,14 @@ dpp::embed JumpDataDetailedInfoWindow::getEmbedForJumpInfo()
             .set_text(tr("Wiadomość wysłana z poziomu Sj.Sim ").toStdString() + appVersion.toStdString() + "\n" + "https://github.com/SiekamCebule/sj-sim")
         );
     return embed;
+}
+
+JumpWindInfoWidget *JumpDataDetailedInfoWindow::getWindInfoWidget() const
+{
+    return windInfoWidget;
+}
+
+Ui::JumpDataDetailedInfoWindow *JumpDataDetailedInfoWindow::getUi() const
+{
+    return ui;
 }

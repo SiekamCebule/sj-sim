@@ -29,12 +29,15 @@ void ApperanceInClassificationWindow::fillWindow()
         ui->label_jumperNameAndSurname->setText(jumper->getNameAndSurname());
         ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(jumper->getCountryCode().toLower())
                                       .scaled(ui->label_flag->size()));
+        ui->label_img->show();
+        ui->label_img->setPixmap(jumper->getImagePixmap().scaled(ui->label_img->size()));
     }
     else if(teamCode != "")
     {
         ui->label_jumperNameAndSurname->setText(GlobalDatabase::get()->getCountryByAlpha3(teamCode).getName());
         ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(teamCode.toLower())
                                       .scaled(ui->label_flag->size()));
+        ui->label_img->hide();
     }
     fillChart();
     ui->label_classification->setText(classification->getName());

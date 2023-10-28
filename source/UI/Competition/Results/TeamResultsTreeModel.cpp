@@ -9,7 +9,7 @@
 extern IDGenerator globalIDGenerator;
 
 TeamResultsTreeModel::TeamResultsTreeModel(TeamCompetitionManager * manager, QObject *parent)
-    : QAbstractItemModel(parent), manager(manager)
+    : QAbstractItemModel(parent), manager(manager), lastTeam(nullptr)
 {
     rootItem = new TreeItem({tr("Miejsce"), tr("Drużyna"), tr("Zawodnik"), tr("Punkty")});
         if(manager != nullptr)
@@ -139,6 +139,12 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
             return QColor(qRgb(30, 30, 30));
     }
     else if(role == Qt::BackgroundRole){
+        if(lastTeam != nullptr)
+        {
+            if(results->getResultByIndex(index.row())->getTeam() == lastTeam)
+                if(item->getParentItem() == rootItem)
+                    return QColor(qRgb(232, 243, 255));
+        }
         if(manager != nullptr){
             if(item->getParentItem() == rootItem){
                 Team * team = results->getResultsReference()[index.row()].getTeam();
@@ -183,6 +189,16 @@ QVariant TeamResultsTreeModel::data(const QModelIndex &index, int role) const
     }
 
     return QVariant();
+}
+
+Team *TeamResultsTreeModel::getLastTeam() const
+{
+    return lastTeam;
+}
+
+void TeamResultsTreeModel::setLastTeam(Team *newLastTeam)
+{
+    lastTeam = newLastTeam;
 }
 
 CompetitionResults *TeamResultsTreeModel::getResults() const
@@ -241,7 +257,7 @@ void TeamResultsTreeModel::setupTreeItems()
                     if(jump.getJumper() == jumper)
                         jumperPointsSum += jump.getPoints();
                 }
-                TreeItem * jumperItem = new TreeItem({"", "", jumper->getNameAndSurname(), QString::number(jumperPointsSum)}, teamHeaderItem);
+                TreeItem * jumperItem = new TreeItem({"", "", jumper->getNameAndSurname(), QString::number(jumperPointsSum, 'f', 1)}, teamHeaderItem);
             }
         }
     }

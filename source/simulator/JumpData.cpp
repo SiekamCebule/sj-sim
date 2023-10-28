@@ -46,25 +46,104 @@ QString JumpData::getWindsText()
 
 int JumpData::getPositionInRound()
 {
-    double round = MyFunctions::getIndexOfItemInVector(getCompetition()->getResultsReference().getResultOfIndividualJumper(getJumper())->getJumpsReference(), this) + 1;
-    double points = getPoints();
-    double position = 1;
-    CompetitionResults results = getCompetition()->getResultsReference();
-    results.getResultsReference().detach();
-    for(auto & res : results.getResultsReference())
+    int round = MyFunctions::getIndexOfItemInVector(competition->getResultsReference().getResultOfIndividualJumper(jumper)->getJumpsReference(), this) + 1;
+    qDebug()<<"Rd "<<round;
+    QHash<Jumper *, double> hash;
+    for(auto & res : competition->getResultsReference().getResultsReference())
     {
-        if(res.getJumpsReference().count() > round)
-            res.getJumpsReference().remove(round, res.getJumpsReference().count() - round);
-        res.updatePointsSum();
+        if(res.getJumpsReference().count() >= round){
+            if(hash.contains(jumper))
+                hash[res.getJumper()] += res.getJumpsReference()[round - 1].getPoints();
+            else
+                hash[res.getJumper()] = res.getJumpsReference()[round - 1].getPoints();
+        }
     }
-    results.sortInDescendingOrder();
+    int pos = 1;
+    qDebug()<<"ct "<<hash.count();
+    for(auto & key : hash.keys())
+    {
+        if(hash.value(jumper) < hash.value(key))
+            pos++;
+    }
+    return pos;
+}
 
-    for(auto & res : results.getResultsReference())
+int JumpData::getPositionInGroupForTeamCompetition()
+{
+    Team * team = Team::getTeamByCountryCode(&competition->getTeamsReference(), jumper->getCountryCode());
+    int group = team->getJumpersReference().indexOf(jumper) + 1;
+    int round = MyFunctions::getIndexOfItemInVector(competition->getResultsReference().getResultOfTeam(team)->getTeamJumperResult(jumper)->getJumpsReference(), this) + 1;
+
+    QHash<Jumper *, double> hash;
+    for(auto & teamResult : competition->getResultsReference().getResultsReference())
     {
-        if(res.getJumpsReference()[round - 1].getPoints() > points)
-            position++;
+        for(auto & jumperResult : teamResult.getTeamJumpersResultsReference())
+        {
+           if(MyFunctions::getIndexOfItemInVector(teamResult.getTeamJumpersResultsReference(), &jumperResult) + 1 == group && jumperResult.getJumpsReference().count() >= round){
+               if(hash.contains(jumperResult.getJumper()))
+                    hash[jumperResult.getJumper()] += jumperResult.getJumpsReference()[round - 1].getPoints();
+               else
+                    hash[jumperResult.getJumper()] = jumperResult.getJumpsReference()[round - 1].getPoints();
+           }
+        }
     }
-    return position;
+    int pos = 1;
+    for(auto & key : hash.keys())
+    {
+        if(hash.value(jumper) < hash.value(key))
+           pos++;
+    }
+    return pos;
+}
+
+int JumpData::getPositionInRoundForTeamCompetition()
+{
+    Team * team = Team::getTeamByCountryCode(&competition->getTeamsReference(), jumper->getCountryCode());
+    int group = team->getJumpersReference().indexOf(jumper) + 1;
+    int round = MyFunctions::getIndexOfItemInVector(competition->getResultsReference().getResultOfTeam(team)->getTeamJumperResult(jumper)->getJumpsReference(), this) + 1;
+
+    QHash<Jumper *, double> hash;
+    for(auto & teamResult : competition->getResultsReference().getResultsReference())
+    {
+        for(auto & jumperResult : teamResult.getTeamJumpersResultsReference())
+        {
+           if(jumperResult.getJumpsReference().count() >= round){
+               if(hash.contains(jumperResult.getJumper()))
+                    hash[jumperResult.getJumper()] += jumperResult.getJumpsReference()[round - 1].getPoints();
+               else
+                    hash[jumperResult.getJumper()] = jumperResult.getJumpsReference()[round - 1].getPoints();
+           }
+        }
+    }
+    int pos = 1;
+    for(auto & key : hash.keys())
+    {
+        if(hash.value(jumper) < hash.value(key))
+           pos++;
+    }
+    return pos;
+}
+
+int JumpData::getPositionInCompetitionForTeamCompetition()
+{
+    QHash<Jumper *, double> hash;
+    for(auto & teamResult : competition->getResultsReference().getResultsReference())
+    {
+        for(auto & jumperResult : teamResult.getTeamJumpersResultsReference())
+        {
+               if(hash.contains(jumperResult.getJumper()))
+                    hash[jumperResult.getJumper()] += jumperResult.getPointsSum();
+               else
+                    hash[jumperResult.getJumper()] = jumperResult.getPointsSum();
+        }
+    }
+    int pos = 1;
+    for(auto & key : hash.keys())
+    {
+        if(hash.value(jumper) < hash.value(key))
+           pos++;
+    }
+    return pos;
 }
 
 bool JumpData::getInSingleJumps() const

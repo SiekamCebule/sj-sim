@@ -18,7 +18,7 @@ public:
     };
 
     int getTendenceType();
-    static QJsonObject getJsonObject(JumperFormTendence & tendence);
+    static QJsonObject getJsonObject(const JumperFormTendence &tendence);
     static JumperFormTendence getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager);
 
 private:
@@ -27,8 +27,9 @@ private:
 public:
     Jumper *getJumper() const;
     void setJumper(Jumper *newJumper);
-    double &getTendence();
+    double &getTendenceReference();
     void setTendence(double newTendence);
+    double getTendence() const;
 };
 
 #endif // JUMPERFORMTENDENCE_H

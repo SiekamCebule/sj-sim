@@ -33,6 +33,7 @@ private:
     TeamCompetitionManager * manager;
     QVector<QPair<Team *, int>> * teamsAdvanceStatuses;
     TreeItem * rootItem;
+    Team * lastTeam;
 public:
     void setupTreeItems();
 public:
@@ -45,6 +46,8 @@ public:
     void setTeams(QVector<Team *> *newTeams);
     CompetitionResults *getResults() const;
     void setResults(CompetitionResults *newResults);
+    Team *getLastTeam() const;
+    void setLastTeam(Team *newLastTeam);
 };
 
 #endif // TEAMRESULTSTREEMODEL_H

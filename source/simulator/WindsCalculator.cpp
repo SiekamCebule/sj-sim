@@ -1,19 +1,22 @@
 #include "WindsCalculator.h"
 
 #include "../utilities/functions.h"
+#include "../global/MyRandom.h"
 
 #include <QRandomGenerator>
 #include <QDebug>
 #include <functional>
 
-Wind WindsCalculator::getAveragedWind(const QVector<Wind> & winds, short type)
+Wind WindsCalculator::getAveragedWind(QVector<Wind> winds, short type)
 {
     double percent = 100 / winds.count();
     double windAvg = 0;
     int i=0;
 
-    for(const auto & wind : winds)
+    for(auto & wind : winds)
     {
+        wind.setStrength(wind.getStrength() + MyRandom::normalDistributionRandom(0, wind.getStrength() / 13));
+        wind.setDirection(wind.getDirection() + MyRandom::normalDistributionRandom(0, wind.getStrength() * 2));
         if(type == Simple){
             if(wind.getDirectionType() == Wind::Front || wind.getDirectionType() == Wind::FrontSide){
                 windAvg += wind.getStrength() * percent;
@@ -39,7 +42,7 @@ Wind WindsCalculator::getAveragedWind(const QVector<Wind> & winds, short type)
                 windAvg += addition;
             else
                 windAvg += addition;
-            qDebug()<<"addition: "<<addition<<" ("<<wind.getDirection()<<" stopni, "<<wind.getStrength()<<" m/s)";
+            //qDebug()<<"addition: "<<addition<<" ("<<wind.getDirection()<<" stopni, "<<wind.getStrength()<<" m/s)";
         }
         i++;
     }

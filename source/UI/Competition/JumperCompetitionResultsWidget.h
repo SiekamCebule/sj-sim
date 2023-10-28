@@ -28,6 +28,8 @@ public:
     void setJumperResult(CompetitionSingleResult *newJumperResult);
     bool getPositionShowing() const;
     void setPositionShowing(bool newPositionShowing);
+    Ui::JumperCompetitionResultsWidget *getUi() const;
+
 private slots:
     void on_pushButton_sendWebhook_clicked();
 };

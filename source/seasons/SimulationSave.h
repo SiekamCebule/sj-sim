@@ -21,7 +21,7 @@ public:
     static SimulationSave *getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
     static QJsonObject getJsonObject(SimulationSave & save);
 
-    bool saveToFile(QString dir = "");
+    bool saveToFile(QString dir = "", QString fileName = "!default");
     static SimulationSave *loadFromFile(QString fileName);
     void updateNextCompetitionIndex();
     void repairDatabase();

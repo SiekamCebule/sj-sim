@@ -22,6 +22,36 @@ GlobalAppSettings *GlobalAppSettings::get()
     return m_globalAppSettings;
 }
 
+double GlobalAppSettings::getLiveCompetitionSpeedMulti() const
+{
+    return liveCompetitionSpeedMulti;
+}
+
+void GlobalAppSettings::setLiveCompetitionSpeedMulti(double newLiveCompetitionSpeedMulti)
+{
+    liveCompetitionSpeedMulti = newLiveCompetitionSpeedMulti;
+}
+
+bool GlobalAppSettings::getLiveCompetition() const
+{
+    return liveCompetition;
+}
+
+void GlobalAppSettings::setLiveCompetition(bool newLiveCompetition)
+{
+    liveCompetition = newLiveCompetition;
+}
+
+QString GlobalAppSettings::getClassificationResultsWebhook() const
+{
+    return classificationResultsWebhook;
+}
+
+void GlobalAppSettings::setClassificationResultsWebhook(const QString &newClassificationResultsWebhook)
+{
+    classificationResultsWebhook = newClassificationResultsWebhook;
+}
+
 QString GlobalAppSettings::getJumpInfoWebhook() const
 {
     return jumpInfoWebhook;
@@ -133,6 +163,9 @@ bool GlobalAppSettings::loadFromJson()
     setJumpInfoWebhook(value.toObject().value("jump-info-webhook").toString());
     setCompetitionSingleResultWebhook(value.toObject().value("competition-single-result-webhook").toString());
     setCompetitionResultsWebhook(value.toObject().value("competition-results-webhook").toString());
+    setClassificationResultsWebhook(value.toObject().value("classification-results-webhook").toString());
+    setLiveCompetition(value.toObject().value("live-competition").toBool(true));
+    setLiveCompetitionSpeedMulti(value.toObject().value("live-competition-speed").toDouble(1));
 
     return true;
 }
@@ -157,6 +190,9 @@ bool GlobalAppSettings::writeToJson()
     settingsObject.insert("jump-info-webhook", getJumpInfoWebhook());
     settingsObject.insert("competition-single-result-webhook", getCompetitionSingleResultWebhook());
     settingsObject.insert("competition-results-webhook", getCompetitionResultsWebhook());
+    settingsObject.insert("classification-results-webhook", getClassificationResultsWebhook());
+    settingsObject.insert("live-competition", getLiveCompetition());
+    settingsObject.insert("live-competition-speed", getLiveCompetitionSpeedMulti());
 
     mainObject.insert("settings", settingsObject);
     document.setObject(mainObject);

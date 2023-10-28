@@ -15,7 +15,7 @@ int JumperFormTendence::getTendenceType()
         return Neutral;
 }
 
-QJsonObject JumperFormTendence::getJsonObject(JumperFormTendence &tendence)
+QJsonObject JumperFormTendence::getJsonObject(const JumperFormTendence &tendence)
 {
     QJsonObject object;
     object.insert("jumper-id", QString::number(tendence.getJumper()->getID()));
@@ -32,7 +32,12 @@ JumperFormTendence JumperFormTendence::getFromJson(QJsonObject obj, DatabaseObje
     return tendence;
 }
 
-double & JumperFormTendence::getTendence()
+double JumperFormTendence::getTendence() const
+{
+    return tendence;
+}
+
+double & JumperFormTendence::getTendenceReference()
 {
     return tendence;
 }

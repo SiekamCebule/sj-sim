@@ -31,6 +31,8 @@ private:
 
     int qualifiersLimit;
 
+    Jumper * lastJumper;
+
 public:
     CompetitionResults *getResults() const;
     void setResults(CompetitionResults *newResults);
@@ -42,6 +44,8 @@ public:
     void setStartListStatuses(QVector<StartListCompetitorStatus> *newStartListStatuses);
     int getQualifiersLimit() const;
     void setQualifiersLimit(int newQualifiersLimit);
+    Jumper *getLastJumper() const;
+    void setLastJumper(Jumper *newLastJumper);
 };
 
 #endif // RESULTSTABLEMODEL_H

@@ -5,6 +5,7 @@
 #include <QTableView>
 #include "ClassificationResultsTableModel.h"
 #include "../../../seasons/Classification.h"
+#include "../../../seasons/SimulationSave.h"
 
 namespace Ui {
 class ClassificationResultsTableView;
@@ -25,6 +26,7 @@ private:
 
     ClassificationResultsTableModel * tableModel;
     Classification * classification;
+    SimulationSave * save;
     bool allowShowDetails;
 public:
     Classification *getClassification() const;
@@ -32,6 +34,11 @@ public:
     bool getAllowShowDetails() const;
     void setAllowShowDetails(bool newAllowShowDetails);
     QTableView * getTableView();
+    SimulationSave *getSave() const;
+    void setSave(SimulationSave *newSave);
+
+private slots:
+    void on_pushButton_webhook_clicked();
 };
 
 #endif // CLASSIFICATIONRESULTSTABLEVIEW_H

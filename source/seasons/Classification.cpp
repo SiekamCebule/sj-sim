@@ -5,9 +5,14 @@
 #include <QMap>
 #include <QJsonValue>
 #include "../seasons/Season.h"
+#include "../seasons/SimulationSave.h"
 #include "../global/DatabaseObjectsManager.h"
+#include "../global/GlobalDatabase.h"
 #include "../global/MyRandom.h"
+#include "../global/GlobalAppSettings.h"
 #include <QtConcurrent>
+
+extern const QString appVersion;
 
 Classification::Classification(QString name) : name(name),
     ClassWithID()
@@ -157,6 +162,7 @@ Classification * Classification::getFromJson(QJsonObject obj, DatabaseObjectsMan
 
 QJsonObject Classification::getJsonObject(Classification * classification)
 {
+    qDebug()<<"classification name: "<<classification->getName();
     QJsonObject obj;
     obj.insert("id", QString::number(classification->getID()));
     obj.insert("name", classification->getName());
@@ -176,12 +182,15 @@ QJsonObject Classification::getJsonObject(Classification * classification)
     obj.insert("alt-points-for-places", altPointsForPlacesArray);
 
     QJsonArray resultsArray;
-    for(auto result : classification->getResultsReference())
-    {
-        resultsArray.push_back(ClassificationSingleResult::getJsonObject(*result));
+    if(classification->getResultsReference().count() > 0){
+    QFuture<QJsonObject> resultsFuture = QtConcurrent::mapped(classification->getResultsReference(), [](ClassificationSingleResult * p){return ClassificationSingleResult::getJsonObject(*p);});
+    if(resultsFuture.isFinished() == false)
+            resultsFuture.waitForFinished();
+    for(auto & o : resultsFuture.results())
+        resultsArray.append(o);
     }
     obj.insert("results", resultsArray);
-
+    qDebug()<<"cls return";
     return obj;
 }
 
@@ -293,6 +302,74 @@ QHash<QString, QHash<CompetitionInfo *, int> > Classification::constructTeamsArc
     }
 
     return results;
+}
+
+QString Classification::getSingleResultsTextForWebhook()
+{
+    QString s;
+    if(classificationType == Individual)
+    {
+        for(auto & res : results)
+        {
+            s += QString::number(res->getPosition()) + ". " + res->getJumper()->getTextForDiscord() + " -> " + QString::number(res->getPointsSum(), 'f', 1) + QObject::tr("pkt") + "\n";
+        }
+    }
+    else
+    {
+        for(auto & res : results)
+        {
+            s += QString::number(res->getPosition()) + ". " + GlobalDatabase::get()->getCountryByAlpha3(res->getTeamCode()).getName() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(res->getTeamCode()).getAlpha2().toLower()) + " -> " + QString::number(res->getPointsSum(), 'f', 1) + QObject::tr("pkt") + "\n";
+        }
+    }
+
+    return s;
+}
+
+dpp::message Classification::getMessageForResultsWebhook(SimulationSave * save)
+{
+    dpp::message msg;
+
+    SeasonCalendar * cal;
+    for(auto & season : save->getSeasonsReference())
+        for(auto & c : season.getCalendarsReference())
+            if(c->getClassificationsReference().contains(this))
+            {
+                cal = c;
+                break;
+            }
+    int howMany = 0;
+    int played;
+    for(auto & comp : cal->getCompetitionsReference())
+    {
+
+        if(comp->getClassificationsReference().contains(this))
+        {
+            howMany++;
+            if(comp->getPlayed() == true)
+                played++;
+        }
+    }
+
+    QString typeText;
+    if(classificationType == Individual)
+        typeText += QObject::tr("(indywidualna)");
+    else
+        typeText += QObject::tr("(drużynowa)");
+    msg.content = "**" + name.toStdString() + " " + typeText.toStdString() + "**\n";
+    msg.content += QObject::tr("*Po %1 z %2 konkursów*").arg(QString::number(played)).arg(QString::number(howMany)).toStdString() + "\n";
+    msg.content += QObject::tr("__Wyniki:__\n").toStdString();
+    msg.content += getSingleResultsTextForWebhook().toStdString();
+    msg.content += QObject::tr("\n\n*Wiadomość wysłana z poziomu Sj.Sim").toStdString() + appVersion.toStdString() + "*";
+
+    return msg;
+}
+
+void Classification::sendResultsWebhook(SimulationSave * save)
+{
+    dpp::cluster bot("");
+    dpp::webhook wh(GlobalAppSettings::get()->getClassificationResultsWebhook().toStdString());
+    dpp::message message = getMessageForResultsWebhook(save);
+    bot.execute_webhook(wh, message);
 }
 
 QHash<Jumper *, QHash<CompetitionInfo *, int>> Classification::constructJumpersArchiveResults(Season *season, SeasonCalendar * calendar)

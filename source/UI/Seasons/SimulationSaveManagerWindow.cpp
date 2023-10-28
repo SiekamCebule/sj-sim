@@ -2,6 +2,7 @@
 #include "ui_SimulationSaveManagerWindow.h"
 #include "../../global/GlobalAppSettings.h"
 #include "../../global/CountryFlagsManager.h"
+#include "../../global/GlobalDatabase.h"
 #include "../../utilities/functions.h"
 #include "../../competitions/CompetitionManagers/IndividualCompetitionManager.h"
 #include "../../competitions/CompetitionManagers/TeamCompetitionManager.h"
@@ -23,8 +24,10 @@
 #include <QTimer>
 #include <QProgressDialog>
 #include <QPushButton>
+#include <QInputDialog>
 #include <QDesktopServices>
 #include <QTableView>
+#include <QFileDialog>
 #include <QTreeView>
 
 SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, QWidget *parent) :
@@ -68,7 +71,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
         jumperEditor->show();
         jumperEditor->setJumper(simulationSave->getJumpersReference()[index.row()]);
         if(simulationSave->getShowTendence() == true)
-            jumperEditor->setTendence(&simulationSave->getJumperTendence(jumperEditor->getJumper())->getTendence());
+            jumperEditor->setTendence(&simulationSave->getJumperTendence(jumperEditor->getJumper())->getTendenceReference());
         else jumperEditor->setTendence(nullptr);
         jumperEditor->fillJumperInputs();
         jumperEditor->setShowForm(simulationSave->getShowForm());
@@ -212,6 +215,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     });
 
     classificationResultsTableView = new ClassificationResultsTableView(false, nullptr, this);
+    classificationResultsTableView->setSave(simulationSave);
     classificationResultsTableView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     classificationResultsTableView->setFixedHeight(500);
     ui->verticalLayout_classificationResults->addWidget(classificationResultsTableView);
@@ -246,6 +250,9 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     ui->listView_classificationsArchive->setModel(classificationsArchiveModel);
 
     archiveClassificationResults = new ClassificationResultsTableView(false, nullptr, this);
+    archiveClassificationResults->setSave(simulationSave);
+    archiveClassificationResults->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    archiveClassificationResults->setFixedHeight(500);
     ui->verticalLayout_archiveClassificationResults->addWidget(archiveClassificationResults);
 
     connect(classificationResultsTableView->getTableView(), &QTableView::doubleClicked, this, [this](const QModelIndex & index){
@@ -726,7 +733,7 @@ void SimulationSaveManagerWindow::on_pushButton_competitionConfig_clicked()
                 ui->listView_competitionsArchive->reset();
                 simulationSave->saveToFile("simulationSaves/");
 
-                competition->saveToCsvFile("results/season-competitions/csv/", simulationSave->getName() + " " + QString::number(simulationSave->getActualSeason()->getSeasonNumber()) + "-" + QString::number(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference().indexOf(competition)) + " " + competition->getHill()->getHillText() + " (" + competition->getShortSerieTypeText() + ")" +configWindow->getCSVFileName() + ".csv");
+                competition->saveToCsvFile("results/season-competitions/csv/", simulationSave->getName() + QString(" (%1)" ).arg(simulationSave->getActualSeason()->getActualCalendar()->getName()) + QString::number(simulationSave->getActualSeason()->getSeasonNumber()) + "-" + QString::number(simulationSave->getActualSeason()->getActualCalendar()->getCompetitionsReference().indexOf(competition)) + " " + competition->getHill()->getHillText() + " (" + competition->getShortSerieTypeText() + ")" + ".csv");
 
                 if(checkSeasonEnd())
                 {
@@ -750,6 +757,18 @@ void SimulationSaveManagerWindow::on_pushButton_saveToFile_clicked()
     QMessageBox::information(this, tr("Zapis do pliku"), tr("Pomyślnie zapisano aktualny zapis symulacji do pliku"), QMessageBox::Ok);
 }
 
+void SimulationSaveManagerWindow::on_pushButton_saveAsCopy_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Otwórz folder"));
+    bool ok;
+    QString name = QInputDialog::getText(this, tr("Nazwa kopii zapisu symulacji"), tr("Za pomocą jakiej etykiety znamienity pan/pani zamierza oznaczyć sporządzony w bliskiej przyszłości dokument przechowujący kopię bieżącego zapisu symulacji dyscypliny olimpijskiej jaką są skoki narciarskie w pamięci aktualnie używanego komputera?"), QLineEdit::Normal, simulationSave->getName() + "copy", &ok);
+    if(ok){
+        simulationSave->saveToFile(dir + "/", name);
+        qDebug()<<"dir: "<<dir;
+        qDebug()<<"name "<<name;
+        QMessageBox::information(this, tr("Kopia zapisu symulacji"), tr("Pomyślnie zapisano kopię aktualnego zapisu symulacji do pliku"), QMessageBox::Ok);
+    }
+}
 
 void SimulationSaveManagerWindow::on_pushButton_repairDatabase_clicked()
 {
@@ -863,6 +882,15 @@ void SimulationSaveManagerWindow::on_listView_competitionsArchive_doubleClicked(
     JumperCompetitionResultsWidget * jumperResultWidget = new JumperCompetitionResultsWidget(this);
     mainLayout->addWidget(jumperResultWidget);
     mainLayout->setStretch(0, 1);
+
+    QPushButton * button = new QPushButton(tr("Wyślij webhooka"), this);
+    button->setFixedWidth(150);
+    button->setFont(QFont("Segoe UI", 12));
+    button->setStyleSheet("color: black");
+    mainLayout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, [competition](){
+        competition->sendResultsWebhook(nullptr);
+    });
 
     connect(resultsTableView, &QListView::doubleClicked, this, [jumperResultWidget, competition](const QModelIndex index){
         jumperResultWidget->setJumperResult(competition->getResultsReference().getResultByIndex(index.row()));
@@ -1057,3 +1085,4 @@ void SimulationSaveManagerWindow::on_lineEdit_calendarName_editingFinished()
         calendarsListView->setupListModel();
     }
 }
+

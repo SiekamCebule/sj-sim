@@ -52,6 +52,8 @@ QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult resul
     }
     resultObject.insert("jumps", jumpsArray);
 
+    qDebug()<<"sr of "<<result.getCompetition();
+
     return resultObject;
 }
 
@@ -219,6 +221,11 @@ dpp::embed CompetitionSingleResult::getEmbedForIndividualSingleCompResult()
     embed.add_field(QObject::tr("Pozycja").toStdString(), QString::number(position).toStdString(), true);
     embed.add_field(QObject::tr("Nota łączna").toStdString(), QString::number(pointsSum, 'f', 1).toStdString(), true);
     embed.add_field(QObject::tr("Skoki").toStdString(), getIndividualJumpsSummaryText().toStdString(), false);
+
+    embed.set_footer(
+        dpp::embed_footer()
+            .set_text(QObject::tr("Wiadomość wysłana z poziomu Sj.Sim ").toStdString() + appVersion.toStdString() + "\n" + "https://github.com/SiekamCebule/sj-sim")
+        );
 
     return embed;
 }

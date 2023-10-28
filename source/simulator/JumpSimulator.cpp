@@ -133,7 +133,7 @@ void JumpSimulator::generateTakeoffRating()
 {
     double multiplier = GlobalSimulationSettings::get()->getMaxSkills() / 100;
 
-    double ratingMultiplier = 0.82
+    double ratingMultiplier = (1 - GlobalSimulationSettings::get()->getTakeoffFormEffect())
                               + 0.1 * hill->getLevelOfCharacteristic("takeoff-technique-effect");
     simulationData->takeoffRating = jumperSkills->getTakeoffTechnique() * ratingMultiplier;
 
@@ -141,13 +141,13 @@ void JumpSimulator::generateTakeoffRating()
         += ((jumperSkills->getLevelOfCharacteristic("takeoff-power") * 2 * multiplier)
             * (1 + 0.1 * hill->getLevelOfCharacteristic("takeoff-power-effect")));
 
-    ratingMultiplier = 0.18 + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
+    ratingMultiplier = GlobalSimulationSettings::get()->getTakeoffFormEffect() + 0.1 * hill->getLevelOfCharacteristic("takeoff-form-effect");
     simulationData->takeoffRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->takeoffRating -= std::abs(Hill::calculateBestTakeoffHeightLevel(hill)
                                               - jumper->getJumperSkills().getLevelOfCharacteristic(
                                                   "takeoff-height"))
-                                     * 1.15 * multiplier;
+                                     * 1.3 * multiplier;
     qDebug() << "takeoff level: " << Hill::calculateBestTakeoffHeightLevel(hill);
     qDebug() << "flight level: " << Hill::calculateBestFlightHeightLevel(hill);
 
@@ -167,16 +167,16 @@ void JumpSimulator::generateFlightRating()
 {
     double multiplier = GlobalSimulationSettings::get()->getMaxSkills() / 100;
 
-    double ratingMultiplier = 0.81
+    double ratingMultiplier = (1 - GlobalSimulationSettings::get()->getFlightFormEffect())
                               + 0.11 * hill->getLevelOfCharacteristic("flight-technique-effect");
     simulationData->flightRating = jumperSkills->getFlightTechnique() * ratingMultiplier;
 
-    ratingMultiplier = 0.19 + 0.1 * hill->getLevelOfCharacteristic("flight-form-effect");
+    ratingMultiplier = GlobalSimulationSettings::get()->getFlightFormEffect() + 0.1 * hill->getLevelOfCharacteristic("flight-form-effect");
     simulationData->flightRating += jumperSkills->getForm() * ratingMultiplier;
 
     simulationData->flightRating -= std::abs(
         Hill::calculateBestFlightHeightLevel(hill)
-        - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 1.4 * multiplier);
+        - jumper->getJumperSkills().getLevelOfCharacteristic("flight-height") * 1.6 * multiplier);
 
     simulationData->flightRating *= getMultiplierForFlightStyleEffect();
     double random = JumpSimulator::getRandomForJumpSimulation(JumpSimulator::FlightRating, jumper, jumpsImportance);
@@ -212,18 +212,11 @@ void JumpSimulator::generateDistance()
     if (hasCoachGate)
         tempGate = coachGate;
 
-    double takeoffEffect = hill->getTakeoffEffect();
-    if (GlobalSimulationSettings::get()->getAutoAdjustHillEffects())
-        takeoffEffect *= (100 / GlobalSimulationSettings::get()->getMaxSkills());
-    takeoffEffect *= GlobalSimulationSettings::get()->getHillsEffectsMultiplier();
+    qDebug()<<"takeoff effect: "<<hill->calculateTakeoffEffect();
+    qDebug()<<"flight effect: "<<hill->calculateFlightEffect();
 
-    double flightEffect = hill->getFlightEffect();
-    if (GlobalSimulationSettings::get()->getAutoAdjustHillEffects())
-        flightEffect *= (100 / GlobalSimulationSettings::get()->getMaxSkills());
-    flightEffect *= GlobalSimulationSettings::get()->getHillsEffectsMultiplier();
-
-    jumpData.distance += simulationData->takeoffRating * takeoffEffect;
-    jumpData.distance += simulationData->flightRating * flightEffect;
+    jumpData.distance += simulationData->takeoffRating * hill->calculateTakeoffEffect();
+    jumpData.distance += simulationData->flightRating * hill->calculateFlightEffect();
     jumpData.distance += tempGate * (hill->getPointsForGate() / hill->getPointsForMeter());
     jumpData.distance = roundDoubleToHalf(jumpData.getDistance());
 }

@@ -509,11 +509,6 @@ int CompetitionConfigWindow::getBaseDSQProbability() const
     return ui->spinBox_dsqProbability->value();
 }
 
-QString CompetitionConfigWindow::getCSVFileName() const
-{
-    return ui->lineEdit->text();
-}
-
 WindsGeneratorSettingsEditorWidget *CompetitionConfigWindow::getWindGeneratorSettingsWidget()
 {
     return windsGeneratorSettingsEditor;
@@ -843,7 +838,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
 
         if(qualsInfo.getCancelled() == true)
             return;
-        if(qualsInfo.getResultsReference().getResultsReference().count() > 0){
+        if(qualsInfo.getResultsReference().getResultsReference().count() > 0 && qualsInfo.getCancelled() == false){
             if(type == CompetitionRules::Individual){
                 if (competitionRulesEditor->getRoundsFromInput().at(0).getKO() == true) {
                     RoundInfo rinf = competitionRulesEditor->getRoundsFromInput().at(0);
@@ -921,13 +916,12 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         }
         competitionTeams = Team::constructTeamsVectorByJumpersList(competitionJumpers, competitionRulesEditor->getJumpersCountInTeam());
 
-        if(getCSVFileName() != ""){
-            info.setPlayed(true);
-            info.saveToCsvFile("results/single-competitions/csv/", getCSVFileName() + ".csv");
-            if(qualificationsManager != nullptr){
-                qualsInfo.setPlayed(true);
-                qualsInfo.saveToCsvFile("results/single-competitions/csv/", getCSVFileName() + " (Q)"+".csv");
-        }
+        QDate date = QDate::currentDate();
+        QTime time = QTime::currentTime();
+        QString name = QString("%1-%2-%3 %4 (%5-%6)").arg(QString::number(date.day())).arg(QString::number(date.month())).arg(QString::number(date.year())).arg(info.getHill()->getName() + " HS" + QString::number(info.getHill()->getHSPoint())).arg(QString::number(time.hour())).arg(QString::number(time.minute()));
+        info.saveToCsvFile("results/single-competitions/csv/", name + ".csv");
+        if(qualificationsManager != nullptr){
+            qualsInfo.saveToCsvFile("results/single-competitions/csv/", name + " (Q)"+".csv");
         }
 
         Hill * hill = nullptr;

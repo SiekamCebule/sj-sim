@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>426</width>
+    <width>463</width>
     <height>561</height>
    </rect>
   </property>
@@ -923,7 +923,7 @@ color: rgb(0, 0, 0);
 }</string>
          </property>
          <property name="text">
-          <string>Wpływ wybicia</string>
+          <string>Mnożnik odległości</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -931,7 +931,7 @@ color: rgb(0, 0, 0);
         </widget>
        </item>
        <item row="9" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_takeoffEffect">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_distanceMultiplier">
          <property name="minimumSize">
           <size>
            <width>160</width>
@@ -977,13 +977,16 @@ border-radius: 3px;
           <number>4</number>
          </property>
          <property name="minimum">
-          <double>-1000000.000000000000000</double>
+          <double>-10.000000000000000</double>
          </property>
          <property name="maximum">
-          <double>1000000.000000000000000</double>
+          <double>10.000000000000000</double>
          </property>
          <property name="singleStep">
           <double>0.100000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -1003,15 +1006,15 @@ color: rgb(0, 0, 0);
 }</string>
          </property>
          <property name="text">
-          <string>Wpływ lotu</string>
+          <string>Balans między wybiciem a lotem</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignCenter</set>
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
         </widget>
        </item>
        <item row="10" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_flightEffect">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_balance">
          <property name="minimumSize">
           <size>
            <width>160</width>
@@ -1057,13 +1060,16 @@ border-radius: 3px;
           <number>4</number>
          </property>
          <property name="minimum">
-          <double>-1000000.000000000000000</double>
+          <double>-10.000000000000000</double>
          </property>
          <property name="maximum">
-          <double>1000000.000000000000000</double>
+          <double>10.000000000000000</double>
          </property>
          <property name="singleStep">
           <double>0.100000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
          </property>
         </widget>
        </item>

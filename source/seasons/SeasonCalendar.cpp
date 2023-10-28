@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
+#include <QtConcurrent>
 
 SeasonCalendar::SeasonCalendar(QString name) : name(name)
 {
@@ -157,6 +158,18 @@ QJsonObject SeasonCalendar::getJsonObject(SeasonCalendar &calendar)
     for(auto & cmp : qAsConst(calendar.getCompetitionsReference()))
         competitionsArray.push_back(CompetitionInfo::getJsonObject(*cmp));
     object.insert("competitions", competitionsArray);
+
+    /*QFuture<QJsonObject> classificationsFuture = QtConcurrent::mapped(calendar.getClassifications(), [](Classification * p){return Classification::getJsonObject(p);});
+    QJsonArray classificationsArray;
+    for(auto & o : classificationsFuture.results())
+        classificationsArray.append(o);
+    object.insert("classifications", classificationsArray);*.
+
+    /*QFuture<QJsonObject> competitionsFuture = QtConcurrent::mapped(calendar.getCompetitions(), [](CompetitionInfo * p){return CompetitionInfo::getJsonObject(*p);});
+    QJsonArray competitionsArray;
+    for(auto & o : competitionsFuture.results())
+        competitionsArray.append(o);
+    object.insert("competitions", competitionsArray);*/
 
     return object;
 }

@@ -222,6 +222,19 @@ background-color: rgb(249, 255, 241);
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_saveAsCopy">
+         <property name="font">
+          <font>
+           <family>Quicksand</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Zapisz jako kopię</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButton_repairDatabase">
          <property name="font">
           <font>
@@ -266,15 +279,15 @@ background-color: rgb(249, 255, 241);
           </font>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="page_jumpers">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>183</width>
-            <height>76</height>
+            <width>845</width>
+            <height>632</height>
            </rect>
           </property>
           <attribute name="label">
@@ -348,8 +361,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>40</height>
+            <width>845</width>
+            <height>632</height>
            </rect>
           </property>
           <attribute name="label">
@@ -386,8 +399,8 @@ background-color: rgb(255, 223, 189);
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>40</height>
+            <width>845</width>
+            <height>632</height>
            </rect>
           </property>
           <attribute name="label">
@@ -542,8 +555,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>40</height>
+            <width>845</width>
+            <height>632</height>
            </rect>
           </property>
           <attribute name="label">
@@ -580,8 +593,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>28</height>
+            <width>845</width>
+            <height>632</height>
            </rect>
           </property>
           <attribute name="label">
@@ -598,8 +611,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>136</width>
-            <height>178</height>
+            <width>845</width>
+            <height>632</height>
            </rect>
           </property>
           <attribute name="label">
@@ -668,7 +681,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
+                <width>88</width>
                 <height>88</height>
                </rect>
               </property>
@@ -686,8 +699,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>90</height>
+                <width>827</width>
+                <height>522</height>
                </rect>
               </property>
               <attribute name="label">
@@ -715,8 +728,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>308</width>
-            <height>104</height>
+            <width>845</width>
+            <height>632</height>
            </rect>
           </property>
           <attribute name="label">

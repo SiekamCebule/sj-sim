@@ -72,6 +72,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="checkBox_liveCompetition">
+       <property name="styleSheet">
+        <string notr="true">color: black;</string>
+       </property>
+       <property name="text">
+        <string>Rozgrywanie konkursu &quot;na żywo&quot;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer_20">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

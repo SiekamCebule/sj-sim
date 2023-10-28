@@ -21,7 +21,6 @@ SingleJumpsConfigWindow::SingleJumpsConfigWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
-    ui->lineEdit_csvFile->setAlignment(Qt::AlignHCenter);
     ui->spinBox_dsqProbability->setValue(GlobalSimulationSettings::get()->getBaseDsqProbability());
 
     jumperEditor = new JumperEditorWidget;
@@ -117,11 +116,6 @@ int SingleJumpsConfigWindow::getJumpsCountFromInput()
 bool SingleJumpsConfigWindow::getChangeableWindFromInput()
 {
     return ui->checkBox_changeableWind->isChecked();
-}
-
-QString SingleJumpsConfigWindow::getResultsFileName()
-{
-    return ui->lineEdit_csvFile->text();
 }
 
 short SingleJumpsConfigWindow::getWindAverageCalculatingType()

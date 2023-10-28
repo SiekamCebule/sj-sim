@@ -36,6 +36,145 @@ GlobalDatabase::~GlobalDatabase()
     delete m_globalDatabase;
 }
 
+void GlobalDatabase::repairDatabase()
+{
+    GlobalDatabase * db = this;
+    /*if(db->getLoadedSimulationSaves() == false){
+        db->loadSimulationSaves(true);
+        db->setLoadedSimulationSaves(true);
+    }*/
+    QProgressDialog dialog;
+    dialog.setStyleSheet("QProgressDialog{background-color: white; color: black;}");
+    dialog.setMinimum(0);
+    dialog.setMaximum(db->getEditableGlobalJumpers().count() +  db->getEditableGlobalHills().count()
+                      + db->getEditableCompetitionRules().count() + db->getEditableGlobalSimulationSaves().count() + 1);
+    dialog.setMinimumDuration(0);
+    dialog.setValue(0);
+    dialog.setWindowTitle(QObject::tr("Naprawa bazy danych"));
+    //dialog.setLabelText(QString(QObject::tr("Postęp naprawy bazy danych: %1 z %2")).arg(QString::number(dialog.value())).arg(QString::number(dialog.maximum())));
+    dialog.setModal(true);
+    dialog.setWindowModality(Qt::WindowModal);
+
+    QSet<ulong> values; //Te ktore już wystąpiły
+
+    for(auto & jumper : db->getEditableGlobalJumpers()){
+        if(values.contains(jumper.getID()))
+            jumper.generateID();
+        else jumper.regenerateID();
+        values.insert(jumper.getID());
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
+    }
+    for(auto & hill : db->getEditableGlobalHills()){
+        if(values.contains(hill.getID()))
+            hill.generateID();
+        else hill.regenerateID();
+        values.insert(hill.getID());
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
+    }
+    for(auto & rules : db->getEditableCompetitionRules()){
+        if(values.contains(rules.getID()))
+            rules.generateID();
+        else rules.regenerateID();
+        values.insert(rules.getID());
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
+    }
+    for(auto & calendarPreset : db->getEditableGlobalCalendarPresets())
+    {
+        for(auto & competition : calendarPreset.getCalendarReference().getCompetitionsReference())
+        {
+            if(values.contains(competition->getID()))
+                competition->generateID();
+            else competition->regenerateID();
+
+            if(values.contains(competition->getResultsReference().getID()))
+                competition->getResultsReference().generateID();
+            else competition->getResultsReference().regenerateID();
+
+            for(auto & groups : competition->getRoundsKOGroupsReference())
+            {
+                for(auto & group : groups){
+                    if(values.contains(group.getID()))
+                        group.generateID();
+                    else group.regenerateID();
+                }
+            }
+            for(auto & team : competition->getTeamsReference())
+            {
+                if(values.contains(team.getID()))
+                    team.generateID();
+                else team.regenerateID();
+            }
+        }
+        for(auto & classification : calendarPreset.getCalendarReference().getClassificationsReference())
+        {
+            if(values.contains(classification->getID()))
+                classification->generateID();
+            else classification->regenerateID();
+        }
+    }
+    for(auto & save : db->getEditableGlobalSimulationSaves()){
+        if(values.contains(save->getID()))
+            save->generateID();
+        else save->regenerateID();
+        save->repairDatabase();
+        values.insert(save->getID());
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
+    }
+
+    db->writeToJson();
+    dialog.setValue(dialog.value() + 1);
+
+    QMessageBox::information(nullptr, QObject::tr("Naprawa bazy danych"), QObject::tr("Naprawiono bazę danych"), QMessageBox::Ok);
+}
+
+void GlobalDatabase::repairSimulationSaves()
+{
+    GlobalDatabase * db = this;
+    if(db->getLoadedSimulationSaves() == false){
+        db->loadSimulationSaves(true);
+        db->setLoadedSimulationSaves(true);
+    }
+
+    QProgressDialog dialog;
+    dialog.setStyleSheet("QProgressDialog{background-color: white; color: black;}");
+    dialog.setMinimum(0);
+    dialog.setMaximum(db->getEditableGlobalSimulationSaves().count() * 11);
+    dialog.setMinimumDuration(0);
+    dialog.setValue(0);
+    dialog.setWindowTitle(QObject::tr("Naprawa zapisów symulacji "));
+        //dialog.setLabelText(QString(QObject::tr("Postęp naprawiania zapisów symulacji: %1 z %2")).arg(QString::number(dialog.value())).arg(QString::number(dialog.maximum())));
+        dialog.setWindowModality(Qt::WindowModal);
+
+    for(auto & save : GlobalDatabase::get()->getEditableGlobalSimulationSaves())
+    {
+        qDebug()<<"save "<<save->getName();
+        SeasonCalendar * calendar = save->getActualSeason()->getActualCalendar();
+        calendar->fixAdvancementClassifications();
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
+        calendar->fixAdvancementCompetitions();
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
+        calendar->fixCompetitionsClassifications();
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
+        calendar->fixCompetitionsHills(&save->getHillsReference(), save->getHillsReference().first()  );
+        dialog.setValue(dialog.value() + 1);
+        QCoreApplication::processEvents();
+        save->repairDatabase();
+        dialog.setValue(dialog.value() + 5);
+        QCoreApplication::processEvents();
+        save->saveToFile("simulationSaves/");
+        dialog.setValue(dialog.value() + 2);
+        QCoreApplication::processEvents();
+    }
+    QMessageBox::information(nullptr, QObject::tr("Naprawiono zapisy symulacji"), QObject::tr("Naprawiono zapisy symulacji. Aby zmiana weszła w życie wejdź jeszcze raz do programu aby ponownie wczytać zapisy symulacji."), QMessageBox::Ok);
+}
+
 QVector<Country> GlobalDatabase::getCountries() const
 {
     return countries;
@@ -276,6 +415,7 @@ bool GlobalDatabase::loadSimulationSaves(bool progressDialog)
 
     bool ok = true;
 
+    qDebug()<<fileNames<<" (names)";
     globalIDGenerator.setFreezed(true);
     QFuture<SimulationSave *> future = QtConcurrent::mapped(fileNames, SimulationSave::loadFromFile);
 
@@ -494,6 +634,12 @@ bool GlobalDatabase::writeCompetitionsRules()
 bool GlobalDatabase::writeSimulationSaves()
 {
     bool ok = true;
+    /*QtConcurrent::map(globalSimulationSaves, [](SimulationSave * save){
+        save->saveToFile("simulationSaves/");
+    });*/
+ //&SimulationSave::saveToFile);
+
+    qDebug()<<"saves";
     for(auto & save : globalSimulationSaves)
     {
         if(save->saveToFile("simulationSaves/") == false)
@@ -569,13 +715,6 @@ bool GlobalDatabase::writeCountries()
     return true;
 }
 
-void GlobalDatabase::setupJumpersFlags()
-{
-    for(auto & jumper : getEditableGlobalJumpers())
-    {
-        jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(jumper.getCountryCode().toLower()));
-    }
-}
 
 Country & GlobalDatabase::getCountryByAlpha2(QString alpha2)
 {

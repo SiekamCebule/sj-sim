@@ -85,7 +85,6 @@ Jumper JumperEditorWidget::getJumperFromWidgetInput() const
     jumper.setName(ui->lineEdit_name->text());
     jumper.setSurname(ui->lineEdit_surname->text());
     jumper.setCountryCode(ui->lineEdit_countryCode->text());
-    jumper.setFlagPixmap(CountryFlagsManager::getFlagPixmap(jumper.getCountryCode().toLower()));
     jumper.setImageName(ui->lineEdit_img->text());
     jumper.setPersonalBest(ui->doubleSpinBox_personalBest->value());
 

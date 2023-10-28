@@ -26,6 +26,9 @@ public:
     QString getJudgesText();
     QString getWindsText();
     int getPositionInRound();
+    int getPositionInGroupForTeamCompetition();
+    int getPositionInRoundForTeamCompetition();
+    int getPositionInCompetitionForTeamCompetition();
 private:
     int gate;
     double distance;

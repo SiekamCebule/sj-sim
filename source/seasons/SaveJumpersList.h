@@ -12,7 +12,7 @@ class SaveJumpersList
 public:
     SaveJumpersList(QString name = "");
 
-    static QJsonObject getJsonObject(SaveJumpersList & jumpersList);
+    static QJsonObject getJsonObject(const SaveJumpersList &jumpersList);
     static SaveJumpersList getFromJson(QJsonObject object, DatabaseObjectsManager *objectsManager);
 
 private:

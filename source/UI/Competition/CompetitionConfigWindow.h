@@ -43,7 +43,6 @@ public:
     int getJumpersCountInTeam() const;
     int getStartingGateFromInput() const;
     int getBaseDSQProbability() const;
-    QString getCSVFileName() const;
     WindsGeneratorSettingsEditorWidget * getWindGeneratorSettingsWidget();
     InrunSnowGeneratorSettingsEditorWidget * getInrunSnowGeneratorSettingsWidget();
 

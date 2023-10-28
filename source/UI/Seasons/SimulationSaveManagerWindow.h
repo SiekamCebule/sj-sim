@@ -95,6 +95,7 @@ private slots:
     void on_checkBox_showTendence_stateChanged(int arg1);
     void on_lineEdit_calendarName_editingFinished();
     void on_comboBox_archiveCalendar_currentIndexChanged(int index);
+    void on_pushButton_saveAsCopy_clicked();
 };
 
 #endif // SIMULATIONSAVEMANAGERWINDOW_H

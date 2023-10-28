@@ -3,6 +3,7 @@
 
 class Hill;
 class SeasonCalendar;
+class AbstractCompetitionManager;
 class Season;
 #include "CompetitionRules.h"
 #include "CompetitionResults.h"
@@ -39,6 +40,10 @@ public:
 
     QString getShortSerieTypeText();
     QString getLongSerieTypeText();
+
+    QString getSingleResultsTextForWebhook(AbstractCompetitionManager *manager);
+    dpp::message getResultsWebhookMessage(AbstractCompetitionManager *manager);
+    void sendResultsWebhook(AbstractCompetitionManager *manager);
 
 private:
     Hill * hill;

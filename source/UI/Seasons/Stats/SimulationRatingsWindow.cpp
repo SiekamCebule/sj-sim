@@ -172,6 +172,16 @@ void SimulationRatingsWindow::fillWindow()
     jumpersSingleResults = CompetitionSingleResult::getJumpersFilteredSingleResults(filteredJumpers, competitions,
                                                                                     serieTypesCheckBoxes->getSerieTypes(), hillTypesCheckBoxes->getHillTypesSet(), classificationsCheckBoxes->getClassifications(), classificationsCheckBoxes->allUnchecked(), specificHill);
 
+    bool allIsEmpty = true;
+    for(auto & key : jumpersSingleResults.keys())
+        if(jumpersSingleResults.value(key).count() > 0){
+                allIsEmpty = false;
+                break;
+        }
+    if(allIsEmpty){
+        QMessageBox::information(this, tr("Zero statystyk"), tr("Nie można utworzyć zestawu statystyk z powodu ich zerowej ilości. Spróbuj przefiltrować statystyki w inny sposób."), QMessageBox::Ok);
+        return;
+    }
     //Średnia pozycja
     QVector<QPair<Jumper *, double>> avgPositionsRanking;
     for(auto & jumper : jumpersSingleResults.keys())

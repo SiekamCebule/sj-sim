@@ -64,8 +64,8 @@ void HillEditorWidget::resetHillInputs()
     ui->doubleSpinBox_backWindPoints->setValue(0);
     ui->checkBox_autoBackWindPoints->setChecked(false);
 
-    ui->doubleSpinBox_takeoffEffect->setValue(0);
-    ui->doubleSpinBox_flightEffect->setValue(0);
+    ui->doubleSpinBox_distanceMultiplier->setValue(0);
+    ui->doubleSpinBox_balance->setValue(0);
 
     ui->doubleSpinBox_record->setValue(0);
 }
@@ -98,8 +98,8 @@ void HillEditorWidget::fillHillInputs()
     ui->doubleSpinBox_backWindPoints->setValue(hill->getPointsForBackWind());
     ui->checkBox_autoBackWindPoints->setChecked(hill->getAutoPointsForBackWind());
 
-    ui->doubleSpinBox_takeoffEffect->setValue(hill->getTakeoffEffect());
-    ui->doubleSpinBox_flightEffect->setValue(hill->getFlightEffect());
+    ui->doubleSpinBox_distanceMultiplier->setValue(hill->getDistanceMultiplier());
+    ui->doubleSpinBox_balance->setValue(hill->getBalance());
 
     ui->doubleSpinBox_record->setValue(hill->getRecord());
 
@@ -133,8 +133,8 @@ Hill HillEditorWidget::getHillFromWidgetInput() const
     hill.setPointsForBackWind(ui->doubleSpinBox_backWindPoints->value());
     hill.setAutoPointsForBackWind(ui->checkBox_autoBackWindPoints->isChecked());
 
-    hill.setTakeoffEffect(ui->doubleSpinBox_takeoffEffect->value());
-    hill.setFlightEffect(ui->doubleSpinBox_flightEffect->value());
+    hill.setDistanceMultiplier(ui->doubleSpinBox_distanceMultiplier->value());
+    hill.setBalance(ui->doubleSpinBox_balance->value());
     hill.setRecord(ui->doubleSpinBox_record->value());
     hill.setCharacteristics(characteristicsEditor->getCharacteristics());
     return hill;

@@ -16,7 +16,7 @@ public:
     Season();
     ~Season();
 
-    static QJsonObject getJsonObject(Season & season);
+    static QJsonObject getJsonObject(const Season &season);
     static Season getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
     bool containsCalendarByName(QString n);
 

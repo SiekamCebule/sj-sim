@@ -211,25 +211,8 @@ void AbstractCompetitionManager::updateLastQualifiedResult()
             }
         }
         else{
-            bool exaequo = true;
             lastQualifiedPosition = abs(competitorsCount - limit - (actualStartListIndex + 1));
             koLastQualifiedPosition = lastQualifiedPosition;
-
-            for(auto & res : results->getResultsReference()){ // Sprawdzamy, czy wystąpiło ex aequo.
-                if(res.getPosition() == lastQualifiedPosition){
-                    exaequo = false;
-                    break;
-                }
-            }
-            if(exaequo == true) // Jeżeli wystąpiło ex aequo
-            {
-                for(auto & res : results->getResultsReference()){
-                    if(res.getPosition() > lastQualifiedPosition){
-                        lastQualifiedPosition = res.getPosition();
-                        break;
-                    }
-                }
-            }
         }
     }
     bool isLastQualifiedPositionValid = lastQualifiedPosition > 0 && lastQualifiedPosition <= results->getResultsReference().count();

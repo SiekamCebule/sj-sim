@@ -28,6 +28,8 @@ void JumperCompetitionResultsWidget::fillWidget()
 {
     ui->label_nameAndSurname->setText(jumperResult->getJumper()->getNameAndSurname());
     ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(jumperResult->getJumper()->getCountryCode().toLower()).scaled(ui->label_flag->size()));
+    ui->label_img->setPixmap(jumperResult->getJumper()->getImagePixmap().scaled(ui->label_img->size()));
+
     ui->label_pointsSum->setText(QString::number(jumperResult->getPointsSum()) + tr(" punktów"));
     if(positionShowing == true)
         ui->label_actualPosition->setText("(" + QString::number(jumperResult->getPosition()) + tr(" miejsce)"));
@@ -57,6 +59,11 @@ void JumperCompetitionResultsWidget::fillWidget()
         ui->pushButton_sendWebhook->setText(tr("Wyślij webhooka (występ zawodnika)"));
     else
         ui->pushButton_sendWebhook->setText(tr("Wyślij webhooka (występ drużyny)"));
+}
+
+Ui::JumperCompetitionResultsWidget *JumperCompetitionResultsWidget::getUi() const
+{
+return ui;
 }
 
 bool JumperCompetitionResultsWidget::getPositionShowing() const

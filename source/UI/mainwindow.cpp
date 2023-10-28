@@ -33,7 +33,7 @@
 #include <dpp/dpp.h>
 
 extern IDGenerator globalIDGenerator;
-const QString appVersion = "1.1.0beta2";
+const QString appVersion = "1.1.0beta3";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -71,7 +71,6 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         SingleJumpsManager manager;
         manager.setJumpsCount(singleJumpsConfig.getJumpsCountFromInput());
         manager.setChangeableWind(singleJumpsConfig.getChangeableWindFromInput());
-        manager.setResultsFileName(singleJumpsConfig.getResultsFileName());
         manager.setGate(singleJumpsConfig.getGateFromInput());
         manager.setJumper(singleJumpsConfig.getJumperEditor()->getJumperFromWidgetInput());
         manager.setHill(singleJumpsConfig.getHillEditor()->getHillFromWidgetInput());
@@ -95,9 +94,9 @@ void MainWindow::on_pushButton_singleJumps_clicked()
         resultsWindow.installShortcuts();
         if(resultsWindow.exec() == QDialog::Rejected)
         {
-            if(manager.getResultsFileName().isNull() == false){
-                manager.saveResultsCsv(manager.getResultsFileName());
-            }
+            QDate date = QDate::currentDate();
+            QTime time = QTime::currentTime();
+            manager.saveResultsCsv(QString("%1-%2-%3 %4 (%5) (%6-%7)").arg(QString::number(date.day())).arg(QString::number(date.month())).arg(QString::number(date.year())).arg(manager.getJumper().getNameAndSurname()).arg(manager.getHill().getName() + " HS" + QString::number(manager.getHill().getHSPoint())).arg(QString::number(time.hour())).arg(QString::number(time.minute())) + ".csv");
         }
     }
 }

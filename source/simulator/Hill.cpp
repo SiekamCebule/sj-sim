@@ -3,6 +3,7 @@
 
 #include "../global/CountryFlagsManager.h"
 #include "../global/GlobalDatabase.h"
+#include "../global/GlobalSimulationSettings.h"
 
 #include <QFile>
 #include <QByteArray>
@@ -22,8 +23,6 @@ Hill::Hill(const QString &name, const QString &countryCode, double KPoint, doubl
     pointsForFrontWind(pointsForFrontWind),
     pointsForBackWind(pointsForBackWind),
     pointsForGate(pointsForGate),
-    takeoffEffect(takeoffEffect),
-    flightEffect(flightEffect),
     realHS(realHS),
     autoPointsForKPoint(autoPointsForKPoint),
     autoPointsForMeter(autoPointsForMeter),
@@ -32,6 +31,7 @@ Hill::Hill(const QString &name, const QString &countryCode, double KPoint, doubl
 {
     setCharacteristics(characteristics);
     setRealHSByCharacteristic();
+    balance = distanceMultiplier = 0;
 }
 
 QString Hill::getHillText()
@@ -42,6 +42,44 @@ QString Hill::getHillText()
 QString Hill::getHillTextForDiscord()
 {
     return name + QString(" :flag_%1: ").arg(GlobalDatabase::get()->getCountryByAlpha3(countryCode).getAlpha2().toLower()) + QString("HS%1").arg(QString::number(HSPoint));
+}
+
+double Hill::calculateTakeoffEffect()
+{
+    double takeoffEffect = (0.15 + (getKPoint() / 1000)) * getDistanceMultiplier() * getBalance();
+    if (GlobalSimulationSettings::get()->getAutoAdjustHillEffects())
+        takeoffEffect *= (100 / GlobalSimulationSettings::get()->getMaxSkills());
+    takeoffEffect *= GlobalSimulationSettings::get()->getHillsEffectsMultiplier();
+    return takeoffEffect;
+}
+
+double Hill::calculateFlightEffect()
+{
+    double flightEffect = (((0.75 * getKPoint()) / 116) - (0.15 + (getKPoint() / 1000))) * getDistanceMultiplier() * (2 - getBalance());
+    if (GlobalSimulationSettings::get()->getAutoAdjustHillEffects())
+        flightEffect *= (100 / GlobalSimulationSettings::get()->getMaxSkills());
+    flightEffect *= GlobalSimulationSettings::get()->getHillsEffectsMultiplier();
+    return flightEffect;
+}
+
+double Hill::getDistanceMultiplier() const
+{
+    return distanceMultiplier;
+}
+
+void Hill::setDistanceMultiplier(double newDistanceMultiplier)
+{
+    distanceMultiplier = newDistanceMultiplier;
+}
+
+double Hill::getBalance() const
+{
+    return balance;
+}
+
+void Hill::setBalance(double newBalance)
+{
+    balance = newBalance;
 }
 
 double Hill::getRecord() const
@@ -78,8 +116,8 @@ QJsonObject Hill::getJsonObject(const Hill & hill)
 
     object.insert("points-for-front-wind", hill.getPointsForFrontWind());
     object.insert("points-for-gate", hill.getPointsForGate());
-    object.insert("takeoff-effect", hill.getTakeoffEffect());
-    object.insert("flight-effect", hill.getFlightEffect());
+    object.insert("distance-multiplier", hill.getDistanceMultiplier());
+    object.insert("balance", hill.getBalance());
 
     QJsonArray characteristicsArray;
     QSet<Characteristic> cs = hill.getCharacteristics();
@@ -130,8 +168,8 @@ Hill Hill::getFromJson(QJsonObject obj)
     }
     else hill.setPointsForBackWind(obj.value("points-for-back-wind").toDouble());
 
-    hill.setTakeoffEffect(obj.value("takeoff-effect").toDouble());
-    hill.setFlightEffect(obj.value("flight-effect").toDouble());
+    hill.setDistanceMultiplier(obj.value("distance-multiplier").toDouble(1));
+    hill.setBalance(obj.value("balance").toDouble(1));
 
     QJsonArray characteristicsArray = obj.value("characteristics").toArray();
     for(const auto & val : characteristicsArray){
@@ -244,20 +282,20 @@ double Hill::calculatePointsForBackWindBy50PercentsOfFrontWind(double pointsForF
 
 double Hill::calculateBestTakeoffHeightLevel(Hill *hill)
 {
-    if(hill->getTakeoffEffect() > hill->getFlightEffect())
-        return 1.85 + ((hill->getTakeoffEffect() / hill->getFlightEffect()) - 1) / 0.186;
+    if(hill->calculateTakeoffEffect() > hill->calculateFlightEffect())
+        return 1.85 + ((hill->calculateTakeoffEffect() / hill->calculateFlightEffect()) - 1) / 0.186;
     else
-        return 1.85 + -((hill->getFlightEffect() / hill->getTakeoffEffect()) - 1) / 0.186;
+        return 1.85 + -((hill->calculateFlightEffect() / hill->calculateTakeoffEffect()) - 1) / 0.186;
 
     return 0;
 }
 
 double Hill::calculateBestFlightHeightLevel(Hill *hill)
 {
-    if(hill->getTakeoffEffect() > hill->getFlightEffect())
-        return 2.1 + (hill->getTakeoffEffect() / hill->getFlightEffect() - 1) / 0.1425;
+    if(hill->calculateTakeoffEffect() > hill->calculateFlightEffect())
+        return 2.1 + (hill->calculateTakeoffEffect() / hill->calculateFlightEffect() - 1) / 0.1425;
     else
-        return 2.1 + -(hill->getFlightEffect() / hill->getTakeoffEffect() - 1) / 0.1425;
+        return 2.1 + -(hill->calculateFlightEffect() / hill->calculateTakeoffEffect() - 1) / 0.1425;
 
     return 0;
 }
@@ -313,26 +351,6 @@ void Hill::setRealHSByCharacteristic()
 {
     realHS = HSPoint;
     realHS *= 1.02211565 + (getLevelOfCharacteristic("real-hs-point") * 0.015);
-}
-
-double Hill::getFlightEffect() const
-{
-    return flightEffect;
-}
-
-void Hill::setFlightEffect(double newFlightEffect)
-{
-    flightEffect = newFlightEffect;
-}
-
-double Hill::getTakeoffEffect() const
-{
-    return takeoffEffect;
-}
-
-void Hill::setTakeoffEffect(double newTakeoffEffect)
-{
-    takeoffEffect = newTakeoffEffect;
 }
 
 void Hill::setPointsForMeter(double newPointsForMeter)

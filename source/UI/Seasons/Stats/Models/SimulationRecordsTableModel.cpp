@@ -21,6 +21,7 @@ QVariant SimulationRecordsTableModel::headerData(int section, Qt::Orientation or
         else if(section == 3)
             return tr("Zawody/Skok");
     }
+    return QVariant();
 }
 
 int SimulationRecordsTableModel::rowCount(const QModelIndex &parent) const

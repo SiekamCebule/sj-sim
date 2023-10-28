@@ -16,7 +16,7 @@ public:
         SimpleImproved,
         Original
     };
-    static Wind getAveragedWind(const QVector<Wind> &winds, short type);
+    static Wind getAveragedWind(QVector<Wind> winds, short type);
     static double getWindCompensation(Wind avgWind, Hill * hill);
     static double getGateCompensation(int startGate, int actualGate, Hill * hill);
 };
