@@ -242,7 +242,7 @@ void TeamResultsTreeModel::setupTreeItems()
     rootItem = new TreeItem({tr("Miejsce"), tr("Drużyna"), tr("Zawodnik"), tr("Punkty")});
                results->sortInDescendingOrder();
     for(auto & res : results->getResultsReference()){
-        TreeItem * teamHeaderItem = new TreeItem({QString::number(res.getPosition()), GlobalDatabase::get()->getCountryByAlpha3(res.getTeam()->getCountryCode()).getName(), "", QString::number(res.getPointsSum())}, rootItem);
+        TreeItem * teamHeaderItem = new TreeItem({QString::number(res.getPosition()), GlobalDatabase::get()->getCountryByAlpha3(res.getTeam()->getCountryCode())->getName(), "", QString::number(res.getPointsSum())}, rootItem);
         for(auto & jumper : res.getTeam()->getJumpersReference()){
             //Czy w resultsach jest już ten zawodnik?
             bool resultsContainsJumper = false;

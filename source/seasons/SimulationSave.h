@@ -25,8 +25,8 @@ public:
     static SimulationSave *loadFromFile(QString fileName);
     void updateNextCompetitionIndex();
     void repairDatabase();
-    void fixJumpersFormTendences();
-    JumperFormTendence * getJumperTendence(Jumper * jumper);
+    void fixJumpersFormInstabilities();
+    double * getJumperFormInstability(Jumper *j);
 
 private:
     QString name;
@@ -35,15 +35,15 @@ private:
     QVector<Jumper *> jumpers;
     QVector<Hill *> hills;
     QVector<CompetitionRules> competitionRules;
-    QVector<JumperFormTendence> jumpersFormTendences;
     QVector<SaveJumpersList> jumpersLists;
+    QHash<Jumper *, double> jumpersFormInstabilities;
 
     CompetitionInfo * nextCompetition;
     int nextCompetitionIndex;
 
     //SETTINGS
     bool showForm;
-    bool showTendence;
+    bool showInstability;
     bool saveFileSizeReduce;
 
 public:
@@ -66,9 +66,6 @@ public:
     void setNextCompetitionIndex(int newNextCompetitionIndex);
     CompetitionInfo *getNextCompetition() const;
     void setNextCompetition(CompetitionInfo *newNextCompetition);
-    QVector<JumperFormTendence> getJumpersFormTendences() const;
-    QVector<JumperFormTendence> & getJumpersFormTendencesReference();
-    void setJumpersFormTendences(const QVector<JumperFormTendence> &newJumpersFormTendences);
     bool getShowForm() const;
     void setShowForm(bool newShowForm);
     bool getSaveFileSizeReduce() const;
@@ -76,8 +73,12 @@ public:
     QVector<SaveJumpersList> getJumpersLists() const;
     QVector<SaveJumpersList> & getJumpersListsReference();
     void setJumpersLists(const QVector<SaveJumpersList> &newJumpersLists);
-    bool getShowTendence() const;
-    void setShowTendence(bool newShowTendence);
+    QHash<Jumper *, double> getJumpersFormInstabilities() const;
+    QHash<Jumper *, double> & getJumpersFormInstabilitiesReference();
+    QVector<QPair<Jumper *, double> > getJumpersFormInstabilitiesToVector();
+    void setJumpersFormInstabilities(const QHash<Jumper *, double> &newJumpersFormInstabilities);
+    bool getShowInstability() const;
+    void setShowInstability(bool newShowInstability);
 };
 
 #endif // SIMULATIONSAVE_H

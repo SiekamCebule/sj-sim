@@ -142,9 +142,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_landingRating">
+        <widget class="QCheckBox" name="checkBox_distanceRandom">
          <property name="text">
-          <string>Ocena lądowania (zachwianie)</string>
+          <string>Losowość odległości</string>
          </property>
         </widget>
        </item>

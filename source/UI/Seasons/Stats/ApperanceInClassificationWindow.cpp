@@ -34,7 +34,7 @@ void ApperanceInClassificationWindow::fillWindow()
     }
     else if(teamCode != "")
     {
-        ui->label_jumperNameAndSurname->setText(GlobalDatabase::get()->getCountryByAlpha3(teamCode).getName());
+        ui->label_jumperNameAndSurname->setText(GlobalDatabase::get()->getCountryByAlpha3(teamCode)->getName());
         ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(teamCode.toLower())
                                       .scaled(ui->label_flag->size()));
         ui->label_img->hide();

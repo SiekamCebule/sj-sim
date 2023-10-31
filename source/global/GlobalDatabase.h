@@ -70,8 +70,8 @@ public:
 
     void setupHillsFlags();
 
-    Country & getCountryByAlpha2(QString alpha2);
-    Country & getCountryByAlpha3(QString alpha3);
+    Country *getCountryByAlpha2(QString alpha2);
+    Country *getCountryByAlpha3(QString alpha3);
 
     QVector<Jumper> getGlobalJumpers() const;
     void setGlobalJumpers(const QVector<Jumper> &newGlobalJumpers);

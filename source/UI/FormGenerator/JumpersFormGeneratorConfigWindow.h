@@ -43,11 +43,6 @@ public:
     void setRemoveFromTableAction(QAction *newRemoveFromTableAction);
 
 public slots:
-    void on_doubleSpinBox_tendenceVariability_editingFinished();
-    void on_doubleSpinBox_tendBonus_editingFinished();
-    void on_doubleSpinBox_tendAlignment_editingFinished();
-    void on_doubleSpinBox_minTend_editingFinished();
-    void on_doubleSpinBox_maxTend_editingFinished();
     void on_doubleSpinBox_tendVariability_editingFinished();
     void on_doubleSpinBox_formBonus_editingFinished();
     void on_doubleSpinBox_minForm_editingFinished();

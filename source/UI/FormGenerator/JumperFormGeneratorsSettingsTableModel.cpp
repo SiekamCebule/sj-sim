@@ -64,7 +64,7 @@ int JumperFormGeneratorsSettingsTableModel::columnCount(const QModelIndex &paren
     if (parent.isValid())
         return 0;
 
-    return 10;
+    return 5;
 }
 
 QVariant JumperFormGeneratorsSettingsTableModel::data(const QModelIndex &index, int role) const
@@ -78,22 +78,12 @@ QVariant JumperFormGeneratorsSettingsTableModel::data(const QModelIndex &index, 
         case 0:
             return generatorsSettings[index.row()].getJumper()->getNameAndSurname();
         case 1:
-            return generatorsSettings[index.row()].getTendenceVariability();
-        case 2:
-            return generatorsSettings[index.row()].getTendenceBonus();
-        case 3:
-            return generatorsSettings[index.row()].getMinTendence();
-        case 4:
-            return generatorsSettings[index.row()].getMaxTendence();
-        case 5:
-            return generatorsSettings[index.row()].getTendenceAlignmentMultiplier();
-        case 6:
             return generatorsSettings[index.row()].getFormVariability();
-        case 7:
+        case 2:
             return generatorsSettings[index.row()].getFormBonus();
-        case 8:
+        case 3:
             return generatorsSettings[index.row()].getMinForm();
-        case 9:
+        case 4:
             return generatorsSettings[index.row()].getMaxForm();
         }
     }
@@ -104,75 +94,7 @@ QVariant JumperFormGeneratorsSettingsTableModel::data(const QModelIndex &index, 
     }
     else if(role == Qt::ForegroundRole)
     {
-        if(index.column() == 5)
-        {
-            double multi = generatorsSettings[index.row()].getTendenceAlignmentMultiplier();
-            if(multi <= (-8))
-                return QColor(qRgb(255, 194, 100));
-            else if(multi <= (-6))
-                return QColor(qRgb(235, 191, 61));
-            else if(multi <= (-4))
-                return QColor(qRgb(199, 168, 76));
-            else if(multi <= (-2))
-                return QColor(qRgb(179, 155, 84));
-            else if(multi < (0))
-                return QColor(qRgb(143, 126, 77));
-            else if(multi == 0)
-                return QColor(qRgb(64, 64, 64));
-            else if(multi <= (2))
-                return QColor(qRgb(68, 97, 55));
-            else if(multi <= (4))
-                return QColor(qRgb(94, 140, 73));
-            else if(multi <= (6))
-                return QColor(qRgb(103, 181, 67));
-            else if(multi <= (8))
-                return QColor(qRgb(102, 204, 55));
-            else if(multi <= (10))
-                return QColor(qRgb(90, 240, 22));
-
-        }
-        else if(index.column() == 1 || index.column() == 6)
-        {
-            double variability = 0;
-            if(index.column() == 1)
-                variability = generatorsSettings[index.row()].getTendenceVariability();
-            else
-                variability = generatorsSettings[index.row()].getFormVariability();
-
-            if(variability == 0)
-                return QColor(qRgb(64, 64, 64));
-            else if(variability <= 1)
-                return QColor(qRgb(55, 82, 97));
-            else if(variability <= 2)
-                return QColor(qRgb(66, 109, 133));
-            else if(variability <= 3)
-                return QColor(qRgb(70, 123, 153));
-            else if(variability <= 4)
-                return QColor(qRgb(68, 134, 171));
-            else if(variability <= 5)
-                return QColor(qRgb(67, 147, 191));
-            else if(variability <= 6)
-                return QColor(qRgb(62, 155, 207));
-            else if(variability <= 7)
-                return QColor(qRgb(57, 161, 219));
-            else if(variability <= 8)
-                return QColor(qRgb(38, 158, 224));
-            else if(variability <= 9)
-                return QColor(qRgb(24, 161, 237));
-            else if(variability <= 10)
-                return QColor(qRgb(0, 162, 252));
-        }
-        else if(index.column() == 2)
-        {
-            double bonus = generatorsSettings[index.row()].getTendenceBonus();
-            if(bonus > 0)
-                return QColor(qRgb(114, 181, 107));
-            else if(bonus < 0)
-                return QColor(qRgb(179, 100, 96));
-            else
-                return QColor(qRgb(40, 40, 40));
-        }
-        else if(index.column() == 7)
+        if(index.column() == 2)
         {
             double bonus = generatorsSettings[index.row()].getFormBonus();
             if(bonus > 0)
@@ -188,9 +110,9 @@ QVariant JumperFormGeneratorsSettingsTableModel::data(const QModelIndex &index, 
     else if(role == Qt::FontRole)
     {
         QFont font("Quicksand Medium", 7);
-        if(index.column() == 0 || index.column() == 1 || index.column() == 6)
+        if(index.column() == 0)
             font.setBold(true);
-        else if(index.column() == 2 || index.column() == 3 || index.column() == 4|| index.column() == 7|| index.column() == 8|| index.column() == 9)
+        else if(index.column() == 3 || index.column() == 4)
             font.setItalic(true);
         return font;
     }
@@ -207,44 +129,19 @@ bool JumperFormGeneratorsSettingsTableModel::setData(const QModelIndex &index, c
         case 1:
             if(value.toDouble() < 0 || value.toDouble() > 20)
                 return false;
-            generatorsSettings[index.row()].setTendenceVariability(value.toDouble());
-            break;
-        case 2:
-            if(value.toDouble() < -10 || value.toDouble() > 10)
-                return false;
-            generatorsSettings[index.row()].setTendenceBonus(value.toDouble());
-            break;
-        case 3:
-            if(value.toDouble() < -10 || value.toDouble() > 10)
-                return false;
-            generatorsSettings[index.row()].setMinTendence(value.toDouble());
-            break;
-        case 4:
-            if(value.toDouble() < -10 || value.toDouble() > 10)
-                return false;
-            generatorsSettings[index.row()].setMaxTendence(value.toDouble());
-            break;
-        case 5:
-            if(value.toDouble() < -10 || value.toDouble() > 10)
-                return false;
-            generatorsSettings[index.row()].setTendenceAlignmentMultiplier(value.toDouble());
-            break;
-        case 6:
-            if(value.toDouble() < 0 || value.toDouble() > 20)
-                return false;
             generatorsSettings[index.row()].setFormVariability(value.toDouble());
             break;
-        case 7:
+        case 2:
             if(value.toDouble() < -100 || value.toDouble() > 100)
                 return false;
             generatorsSettings[index.row()].setFormBonus(value.toDouble());
             break;
-        case 8:
+        case 3:
             if(value.toDouble() < 0 || value.toDouble() > 100)
                 return false;
             generatorsSettings[index.row()].setMinForm(value.toDouble());
             break;
-        case 9:
+        case 4:
             if(value.toDouble() < 0 || value.toDouble() > 100)
                 return false;
             generatorsSettings[index.row()].setMaxForm(value.toDouble());

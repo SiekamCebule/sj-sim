@@ -716,20 +716,22 @@ bool GlobalDatabase::writeCountries()
 }
 
 
-Country & GlobalDatabase::getCountryByAlpha2(QString alpha2)
+Country * GlobalDatabase::getCountryByAlpha2(QString alpha2)
 {
     for(auto & c : countries)
     {
         if(c.getAlpha2() == alpha2)
-            return c;
+            return &c;
     }
+    return new Country("", "xx", "xxx");
 }
 
-Country &GlobalDatabase::getCountryByAlpha3(QString alpha3)
+Country * GlobalDatabase::getCountryByAlpha3(QString alpha3)
 {
     for(auto & c : countries)
     {
         if(c.getAlpha3() == alpha3)
-            return c;
+            return &c;
     }
+    return new Country("", "xx", "xxx");
 }

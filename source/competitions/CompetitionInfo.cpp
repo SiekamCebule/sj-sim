@@ -277,7 +277,7 @@ QString CompetitionInfo::getSingleResultsTextForWebhook(AbstractCompetitionManag
                 if(i < sr.getJumpsReference().count())
                     s += " | ";
             }
-            s += " --> **" + QString::number(sr.getPointsSum()) + QObject::tr("pkt") + "**\n";
+            s += " --> **" + QString::number(sr.getPointsSum(), 'f', 1) + QObject::tr("pkt") + "**\n";
             fullstring += s;
         }
     }
@@ -285,7 +285,7 @@ QString CompetitionInfo::getSingleResultsTextForWebhook(AbstractCompetitionManag
     {
         for(auto & sr : res->getResultsReference())
         {
-            QString ss = "__" + GlobalDatabase::get()->getCountryByAlpha3(sr.getTeam()->getCountryCode()).getName() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(sr.getTeam()->getCountryCode()).getAlpha2().toLower()) + QString("__** --> %1**\n").arg(QString::number(sr.getPointsSum(), 'f', 1) + QObject::tr("pkt"));
+            QString ss = "__" + GlobalDatabase::get()->getCountryByAlpha3(sr.getTeam()->getCountryCode())->getName() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(sr.getTeam()->getCountryCode())->getAlpha2().toLower()) + QString("__** --> %1**\n").arg(QString::number(sr.getPointsSum(), 'f', 1) + QObject::tr("pkt"));
             fullstring += ss;
             for(auto & tjr : sr.getTeamJumpersResultsReference())
             {
@@ -331,14 +331,18 @@ dpp::message CompetitionInfo::getResultsWebhookMessage(AbstractCompetitionManage
 
     QString title = "**" + getHill()->getHillTextForDiscord() + " - " + getLongSerieTypeText() + " " + typeText + " " + koRoundText + "**";
     QString description;
+
+    int index=manager->getActualStartListIndex();
+    if(manager->isAllJumpsAreFinished())
+        index++;
     if(manager != nullptr){
     if(getRulesPointer()->getCompetitionType() == CompetitionRules::Team)
     {
-        description = QObject::tr("*Po %1 z %2 skoków grupy %3 (runda %4)*").arg(manager->getActualStartListIndex() + 1).arg(static_cast<TeamCompetitionManager *>(manager)->getActualRoundTeamsReference().count()).arg(static_cast<TeamCompetitionManager *>(manager)->getActualGroup()).arg(manager->getActualRound());
+        description = QObject::tr("*Po %1 z %2 skoków grupy %3 (runda %4)*").arg(index).arg(static_cast<TeamCompetitionManager *>(manager)->getActualRoundTeamsReference().count()).arg(static_cast<TeamCompetitionManager *>(manager)->getActualGroup()).arg(manager->getActualRound());
     }
     else
     {
-        description = QObject::tr("*Po %1 z %2 skoków rundy %3*").arg(manager->getActualStartListIndex() + 1).arg(static_cast<IndividualCompetitionManager *>(manager)->getActualRoundJumpersReference().count()).arg(manager->getActualRound());
+        description = QObject::tr("*Po %1 z %2 skoków rundy %3*").arg(index).arg(static_cast<IndividualCompetitionManager *>(manager)->getActualRoundJumpersReference().count()).arg(manager->getActualRound());
     }
     }
     else
@@ -356,26 +360,7 @@ dpp::message CompetitionInfo::getResultsWebhookMessage(AbstractCompetitionManage
 
 void CompetitionInfo::sendResultsWebhook(AbstractCompetitionManager * manager)
 {
-    /*dpp::message msg = getResultsWebhookMessage(manager);
-    qDebug()<<"msg length: "<<msg.content.length();
-    std::string content = msg.content;
-    for(int i=0; i<ceil(double(content.length()) / double(2000)); i++)
-    {
-        dpp::cluster bot("");
-        dpp::webhook wh(GlobalAppSettings::get()->getCompetitionResultsWebhook().toStdString());
-        std::string newContent;
-        if(i+1 == ceil(double(content.length()) / double(2000)))
-            newContent = content.substr(0, content.length() - 1);
-        else
-            newContent = content.substr(0, 1999);
-        content = content.substr(2000, content.length());
-        bot.execute_webhook(wh, dpp::message(newContent));
-        qDebug()<<"newContent no. "<<QString::number(i+1)<<" length: "<<QString::number(newContent.length());
-    }*/
-
-
     dpp::message msg = getResultsWebhookMessage(manager);
-    qDebug()<<"msg length: "<<msg.content.length();
     std::string content = msg.content;
     int i = 0;
     while (!content.empty())
@@ -386,7 +371,6 @@ void CompetitionInfo::sendResultsWebhook(AbstractCompetitionManager * manager)
         content.replace(0, newContent.length(), "");
         bot.execute_webhook(wh, dpp::message(newContent));
         i++;
-        qDebug()<<"newContent no. "<<QString::number(i)<<" length: "<<QString::number(newContent.length());
     }
 
 }

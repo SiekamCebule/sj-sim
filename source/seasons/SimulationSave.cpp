@@ -83,14 +83,20 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
         save->getSeasonsReference().push_back(season);*/
 
 
-    array = obj.value("jumpers-form-tendences").toArray();
+    array = obj.value("jumpers-form-instabilities").toArray();
     values.clear();
     for(auto val : qAsConst(array))
         values.push_back(val);
-    QFuture<JumperFormTendence> tendencesFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
-        return JumperFormTendence::getFromJson(value.toObject(), objectsManager);
+    QFuture<QPair<Jumper *, double>> instFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+        QPair<Jumper *, double> pair;
+        pair.first = static_cast<Jumper *>(objectsManager->getObjectByID(value.toObject().value("jumper-id").toString().toULong()));
+        pair.second = value.toObject().value("instability").toDouble();
+        return pair;
     });
-    save->setJumpersFormTendences(tendencesFuture.results().toVector());
+    QHash<Jumper *, double> instabilitiesHash;
+    for(auto & pair : instFuture.results())
+        instabilitiesHash.insert(pair.first, pair.second);
+    save->setJumpersFormInstabilities(instabilitiesHash);
 
     array = obj.value("jumpers-lists").toArray();
     values.clear();
@@ -109,7 +115,7 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
         save->setNextCompetition(nullptr);
 
     save->setShowForm(obj.value("show-form").toBool(true));
-    save->setShowTendence(obj.value("show-tendence").toBool(true));
+    save->setShowInstability(obj.value("show-instability").toBool(true));
     save->setSaveFileSizeReduce(obj.value("save-file-size-reduce").toBool(false));
 
     return save;
@@ -144,11 +150,16 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
         seasonsArray.append(o);
     object.insert("seasons", seasonsArray);
 
-    QFuture<QJsonObject> tendencesFuture = QtConcurrent::mapped(save.getJumpersFormTendencesReference(), [](const JumperFormTendence & p){return JumperFormTendence::getJsonObject(p);});
-    QJsonArray tendencesArray;
-    for(auto & o : tendencesFuture.results())
-        tendencesArray.append(o);
-    object.insert("jumpers-form-tendences", tendencesArray);
+    QFuture<QJsonObject> instabilitiesFuture = QtConcurrent::mapped(save.getJumpersFormInstabilitiesToVector(), [](QPair<Jumper *, double> p){
+        QJsonObject o;
+        o.insert("jumper-id", QString::number(p.first->getID()));
+        o.insert("instability", QString::number(p.second));
+        return o;
+    });
+    QJsonArray instabilitiesArray;
+    for(auto & o : instabilitiesFuture.results())
+        instabilitiesArray.append(o);
+    object.insert("jumpers-form-instabilities", instabilitiesArray);
 
     QFuture<QJsonObject> listsFuture = QtConcurrent::mapped(save.getJumpersListsReference(), [](const SaveJumpersList & p){return SaveJumpersList::getJsonObject(p);});
     QJsonArray listsArray;
@@ -160,7 +171,7 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
     object.insert("next-competition-index", save.getNextCompetitionIndex());
 
     object.insert("show-form", save.getShowForm());
-    object.insert("show-tendence", save.getShowTendence());
+    object.insert("show-instability", save.getShowInstability());
     object.insert("save-file-size-reduce", save.getSaveFileSizeReduce());
 
     return object;
@@ -280,31 +291,49 @@ void SimulationSave::repairDatabase()
     return;
 }
 
-void SimulationSave::fixJumpersFormTendences()
+void SimulationSave::fixJumpersFormInstabilities()
 {
-    for(auto & jumper : jumpers)
+    for(auto & j : jumpers)
     {
-        if(getJumperTendence(jumper) == nullptr)
-            jumpersFormTendences.push_back(JumperFormTendence(jumper, 0));
+        if(getJumperFormInstability(j) == nullptr)
+            jumpersFormInstabilities.insert(j, 0);
     }
 }
 
-JumperFormTendence *SimulationSave::getJumperTendence(Jumper *jumper)
+double * SimulationSave::getJumperFormInstability(Jumper * j)
 {
-    for(auto & formTendence : jumpersFormTendences)
-        if(formTendence.getJumper() == jumper)
-            return &formTendence;
-    return nullptr;
+    if(jumpersFormInstabilities.contains(j) == false)
+        return nullptr;
+    else
+        return &jumpersFormInstabilities[j];
 }
 
-bool SimulationSave::getShowTendence() const
+bool SimulationSave::getShowInstability() const
 {
-    return showTendence;
+    return showInstability;
 }
 
-void SimulationSave::setShowTendence(bool newShowTendence)
+void SimulationSave::setShowInstability(bool newShowInstability)
 {
-    showTendence = newShowTendence;
+    showInstability = newShowInstability;
+}
+
+QVector<QPair<Jumper *, double> > SimulationSave::getJumpersFormInstabilitiesToVector()
+{
+    QVector<QPair<Jumper *, double>> vec;
+    for(auto & key : jumpersFormInstabilities.keys())
+    {
+        QPair<Jumper *, double> p;
+        p.first = key;
+        p.second = jumpersFormInstabilities.value(key);
+        vec.push_back(p);
+    }
+    return vec;
+}
+
+void SimulationSave::setJumpersFormInstabilities(const QHash<Jumper *, double> &newJumpersFormInstabilities)
+{
+    jumpersFormInstabilities = newJumpersFormInstabilities;
 }
 
 QVector<SaveJumpersList> SimulationSave::getJumpersLists() const
@@ -320,6 +349,11 @@ QVector<SaveJumpersList> &SimulationSave::getJumpersListsReference()
 void SimulationSave::setJumpersLists(const QVector<SaveJumpersList> &newJumpersLists)
 {
     jumpersLists = newJumpersLists;
+}
+
+QHash<Jumper *, double> &SimulationSave::getJumpersFormInstabilitiesReference()
+{
+    return jumpersFormInstabilities;
 }
 
 bool SimulationSave::getSaveFileSizeReduce() const
@@ -340,21 +374,6 @@ bool SimulationSave::getShowForm() const
 void SimulationSave::setShowForm(bool newShowForm)
 {
     showForm = newShowForm;
-}
-
-QVector<JumperFormTendence> SimulationSave::getJumpersFormTendences() const
-{
-    return jumpersFormTendences;
-}
-
-QVector<JumperFormTendence> &SimulationSave::getJumpersFormTendencesReference()
-{
-    return jumpersFormTendences;
-}
-
-void SimulationSave::setJumpersFormTendences(const QVector<JumperFormTendence> &newJumpersFormTendences)
-{
-    jumpersFormTendences = newJumpersFormTendences;
 }
 
 CompetitionInfo *SimulationSave::getNextCompetition() const

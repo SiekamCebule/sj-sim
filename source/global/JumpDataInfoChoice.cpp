@@ -23,7 +23,7 @@ QJsonObject JumpDataInfoChoice::getJsonObject(const JumpDataInfoChoice &choice)
     object.insert("specific-wind", choice.getSpecificWind());
     object.insert("takeoff-rating", choice.getTakeoffRating());
     object.insert("flight-rating", choice.getFlightRating());
-    object.insert("landing-rating", choice.getLandingRating());
+    object.insert("distance-random", choice.getDistanceRandom());
     object.insert("inrun-snow", choice.getInrunSnow());
     return object;
 }
@@ -46,9 +46,19 @@ JumpDataInfoChoice JumpDataInfoChoice::getFromJson(QJsonObject obj)
     choice.setSpecificWind(obj.value("specific-wind").toBool(false));
     choice.setTakeoffRating(obj.value("takeoff-rating").toBool(false));
     choice.setFlightRating(obj.value("flight-rating").toBool(false));
-    choice.setLandingRating(obj.value("landing-rating").toBool(false));
+    choice.setDistanceRandom(obj.value("distance-random").toBool(false));
     choice.setInrunSnow(obj.value("inrun-snow").toBool(false));
     return choice;
+}
+
+bool JumpDataInfoChoice::getDistanceRandom() const
+{
+    return distanceRandom;
+}
+
+void JumpDataInfoChoice::setDistanceRandom(bool newDistanceRandom)
+{
+    distanceRandom = newDistanceRandom;
 }
 
 bool JumpDataInfoChoice::getDistance() const
@@ -179,16 +189,6 @@ bool JumpDataInfoChoice::getFlightRating() const
 void JumpDataInfoChoice::setFlightRating(bool newFlightRating)
 {
     flightRating = newFlightRating;
-}
-
-bool JumpDataInfoChoice::getLandingRating() const
-{
-    return landingRating;
-}
-
-void JumpDataInfoChoice::setLandingRating(bool newLandingRating)
-{
-    landingRating = newLandingRating;
 }
 
 bool JumpDataInfoChoice::getInrunSnow() const

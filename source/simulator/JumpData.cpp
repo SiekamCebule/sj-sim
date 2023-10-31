@@ -331,7 +331,6 @@ QJsonObject JumpData::getJsonObject(JumpData jumpData)
     object.insert("total-compensation", jumpData.getTotalCompensation());
     object.insert("judges-points", jumpData.getJudgesPoints());
     object.insert("landing-type", jumpData.getLanding().getType());
-    object.insert("landing-imbalance", jumpData.getLanding().getRating());
     object.insert("dsq", jumpData.getDSQ());
     object.insert("dns", jumpData.getDNS());
     object.insert("has-coach-gate", jumpData.getHasCoachGate());
@@ -348,6 +347,7 @@ QJsonObject JumpData::getJsonObject(JumpData jumpData)
     simulationDataObject.insert("flight-rating", jumpData.getSimulationDataReference().getFlightRating());
     simulationDataObject.insert("dsq-probability", jumpData.getSimulationDataReference().getDSQProbability());
     simulationDataObject.insert("inrun-snow", jumpData.getSimulationDataReference().getInrunSnow());
+    simulationDataObject.insert("meters-sum-random", jumpData.getSimulationDataReference().getMetersSumRandom());
     object.insert("simulation-data", simulationDataObject);
     QJsonArray windsArray;
     int i=0;
@@ -381,7 +381,7 @@ JumpData JumpData::getFromJson(QJsonObject obj, DatabaseObjectsManager * objects
     jump.setWindCompensation(obj.value("wind-compensation").toDouble());
     jump.setTotalCompensation(obj.value("total-compensation").toDouble());
     jump.setJudgesPoints(obj.value("judges-points").toDouble());
-    jump.setLanding(Landing(obj.value("landing-type").toInt(), obj.value("landing-imbalance").toDouble()));
+    jump.setLanding(Landing(obj.value("landing-type").toInt()));
     jump.setDSQ(obj.value("dsq").toBool());
     jump.setDNS(obj.value("dns").toBool());
     jump.setHasCoachGate(obj.value("has-coach-gate").toBool());
@@ -400,6 +400,7 @@ JumpData JumpData::getFromJson(QJsonObject obj, DatabaseObjectsManager * objects
     simulationData.setFlightRating(simulationDataObject.value("flight-rating").toDouble());
     simulationData.setDSQProbability(simulationDataObject.value("dsq-probability").toInt());
     simulationData.setInrunSnow(simulationDataObject.value("inrun-snow").toDouble());
+    simulationData.setMetersSumRandom(simulationDataObject.value("meters-sum-random").toDouble());
     jump.setSimulationData(simulationData);
     QJsonArray windsArray = obj.value("winds").toArray();
     QVector<Wind> winds;

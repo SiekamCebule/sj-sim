@@ -161,7 +161,7 @@ void TeamsSquadsTreeModel::setupTreeItems()
     TreeItem::deleteAllTreeItemsRecursively(rootItem);
     rootItem = new TreeItem({"Drużyna", "Zawodnik"});
     for(auto & team : *teams){
-        TreeItem * teamItem = new TreeItem({GlobalDatabase::get()->getCountryByAlpha3(team.getCountryCode()).getName(), ""}, rootItem);
+        TreeItem * teamItem = new TreeItem({GlobalDatabase::get()->getCountryByAlpha3(team.getCountryCode())->getName(), ""}, rootItem);
         int i=0;
         for(auto & jumper : team.getJumpersReference()){
             if(i == jumpersInTeam) break;

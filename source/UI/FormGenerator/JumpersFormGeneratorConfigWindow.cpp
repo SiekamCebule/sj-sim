@@ -45,12 +45,6 @@ void JumpersFormGeneratorConfigWindow::updateTable()
 JumperFormGeneratorSettings JumpersFormGeneratorConfigWindow::getSettingsFromInputs()
 {
     JumperFormGeneratorSettings settings;
-    settings.setTendenceVariability(ui->doubleSpinBox_tendenceVariability->value());
-    settings.setMinTendence(ui->doubleSpinBox_minTend->value());
-    settings.setMaxTendence(ui->doubleSpinBox_maxTend->value());
-    settings.setTendenceBonus(ui->doubleSpinBox_tendBonus->value());
-    settings.setTendenceAlignmentMultiplier(ui->doubleSpinBox_tendAlignment->value());
-
     settings.setFormVariability(ui->doubleSpinBox_formVariability->value());
     settings.setMinForm(ui->doubleSpinBox_minForm->value());
     settings.setMaxForm(ui->doubleSpinBox_maxForm->value());
@@ -81,56 +75,6 @@ void JumpersFormGeneratorConfigWindow::setSave(SimulationSave *newSave)
 JumperFormGeneratorsSettingsTableModel *JumpersFormGeneratorConfigWindow::getTableModel() const
 {
     return tableModel;
-}
-
-void JumpersFormGeneratorConfigWindow::on_doubleSpinBox_tendenceVariability_editingFinished()
-{
-    double value = ui->doubleSpinBox_tendenceVariability->value();
-    for(auto & settings : tableModel->getGeneratorsSettingsReference())
-    {
-        settings.setTendenceVariability(value);
-    }
-    updateTable();
-}
-
-void JumpersFormGeneratorConfigWindow::on_doubleSpinBox_tendBonus_editingFinished()
-{
-    double value = ui->doubleSpinBox_tendBonus->value();
-    for(auto & settings : tableModel->getGeneratorsSettingsReference())
-    {
-        settings.setTendenceBonus(value);
-    }
-    updateTable();
-}
-
-void JumpersFormGeneratorConfigWindow::on_doubleSpinBox_tendAlignment_editingFinished()
-{
-    double value = ui->doubleSpinBox_tendAlignment->value();
-    for(auto & settings : tableModel->getGeneratorsSettingsReference())
-    {
-        settings.setTendenceAlignmentMultiplier(value);
-    }
-    updateTable();
-}
-
-void JumpersFormGeneratorConfigWindow::on_doubleSpinBox_minTend_editingFinished()
-{
-    double value = ui->doubleSpinBox_minTend->value();
-    for(auto & settings : tableModel->getGeneratorsSettingsReference())
-    {
-        settings.setMinTendence(value);
-    }
-    updateTable();
-}
-
-void JumpersFormGeneratorConfigWindow::on_doubleSpinBox_maxTend_editingFinished()
-{
-    double value = ui->doubleSpinBox_maxTend->value();
-    for(auto & settings : tableModel->getGeneratorsSettingsReference())
-    {
-        settings.setMaxTendence(value);
-    }
-    updateTable();
 }
 
 void JumpersFormGeneratorConfigWindow::on_doubleSpinBox_tendVariability_editingFinished()
@@ -179,7 +123,7 @@ void JumpersFormGeneratorConfigWindow::on_listWidget_questions_doubleClicked(con
     else if(index.row() == 1)
     {
         QMessageBox::information(this, tr("Jak działa generator formy?"), tr(
-        "Każdy zawodnik ma swoją \"tendencję formy\", która może być wzrostowa lub spadkowa. Jeśli zawodnik ma np. tendencję wzrostową, jego forma będzie rosnąć.\nTendencja ta ma również swoją siłę. Mocna tendencja spadkowa będzie powodować duże spadki formy i trudno będzie ją odwrócić (W końcu i tak zostanie odwrócona ponieważ czym forma zawodnika jest bardziej skrajna, tym łatwiej odwrócić tendencję w drugą stronę. Np. jeżeli forma jest wysoka, zwiększa się prawdopodobieństwo na tendencję spadkową).\nGenerator formy najpierw zmienia tendencję formy zawodnika w oparciu o aktualną formę i parametry generowania (Parametr zmienności tendencji i wyrównania tendencji) a następnie ustala nową formę zawodnika w oparciu o nową tendencję i parametr zmienności formy (Jeżeli jest mocna tendencja wzrostowa ale mała zmienność formy w generatorze, to wzrost formy nie będzie bardzo zauważalny."), QMessageBox::Ok);
+        "Na podstawie wielu czynników generator losuje jak bardzo zmieni się forma zawodnika. Użytkownik musi wpisać jedynie jaką zmienność ma mieć generator i ewentualnie jakie bonusy mają dostać zawodnicy (lub w jakim zakresie ma zmieścić się ich forma), a resztę robi komputer. Każdy zawodnik ma swoją \"niestabilność formy\" która dodatkowo wpływa na ewentualną zmianę formy i która również jest automatycznie zmieniana. Oprócz tego istnieją inne mechanizmy generatora formy, np. takie które zapobiegają zbyt częstemu występowaniu skrajnych form zawodnika."), QMessageBox::Ok);
     }
     else if(index.row() == 2)
     {
@@ -188,8 +132,8 @@ void JumpersFormGeneratorConfigWindow::on_listWidget_questions_doubleClicked(con
     }
     else if(index.row() == 3)
     {
-        QMessageBox::information(this, tr("Jak ustalić formę na start nowego sezonu?"), tr(
-                                 "Aby osiągnąć taki efekt, że zawodnicy na start następnego sezonu mają całkiem inną formę z ułamkiem formy z końcówki poprzedniego sezonu, należy wykonać 3 czynności z generatorem formy:\n1. Wygenerować nową tendencję i formę zawodników. Dzięki temu zawodnicy mają odświeżoną formę na nowy sezon. Trzeba ustawić dużą zmienność tendencji i dużą zmienność formy, a także powinno się ustawić wyrównanie tendencji powyżej 0 (aby forma zawodników wyrównała się do środka na początek sezonu). Zalecane jest też ustawienie minusowego bonusu formy w wysokości około -10, jeśli początek sezonu to \"okres przygotowawczy\" (Dzięki temu na start przygotowań nikt nie będzie miał bardzo wysokiej formy co nie było by do końca realistyczne).\n2. Ustalić każdemu zawodnikowi neutralną tendencję formy (Trzeba ustawić minimalną i maksymalną tendencję na 0. To samo robimy ze zmiennością tendencji i formy, też ustawiamy na 0). Resztę trzeba zostawić domyślnie. Robimy to po to, aby każdy zawodnik miał nową niezbyt mocną tendencję ponieważ przez dużą moc tendencji jaka byłaby przez punkt 1, byłyby nierealistycznie duże spadki i wzrosty formy.\n3. Ustalić każdemu zawodnikowi nową, niezbyt mocną tendencję poprzez ustawienie średniej zmienności tendencji i ZEROWEJ zmienności formy (formy zmieniać nie chcemy). Można również ustawić według uznania bonus tendencji jeżeli chce się aby zawodnikom na start sezonu forma raczej rosła niż spadała (można też zrobić na odwrót).\nPo wykonaniu tych 3 kroków, wszyscy zawodnicy są gotowi do ciekawej walki w następnym sezonie."), QMessageBox::Ok);
+        //QMessageBox::information(this, tr("Jak ustalić formę na start nowego sezonu?"), tr(
+                                // "Aby osiągnąć taki efekt, że zawodnicy na start następnego sezonu mają całkiem inną formę z ułamkiem formy z końcówki poprzedniego sezonu, należy wykonać 3 czynności z generatorem formy:\n1. Wygenerować nową tendencję i formę zawodników. Dzięki temu zawodnicy mają odświeżoną formę na nowy sezon. Trzeba ustawić dużą zmienność tendencji i dużą zmienność formy, a także powinno się ustawić wyrównanie tendencji powyżej 0 (aby forma zawodników wyrównała się do środka na początek sezonu). Zalecane jest też ustawienie minusowego bonusu formy w wysokości około -10, jeśli początek sezonu to \"okres przygotowawczy\" (Dzięki temu na start przygotowań nikt nie będzie miał bardzo wysokiej formy co nie było by do końca realistyczne).\n2. Ustalić każdemu zawodnikowi neutralną tendencję formy (Trzeba ustawić minimalną i maksymalną tendencję na 0. To samo robimy ze zmiennością tendencji i formy, też ustawiamy na 0). Resztę trzeba zostawić domyślnie. Robimy to po to, aby każdy zawodnik miał nową niezbyt mocną tendencję ponieważ przez dużą moc tendencji jaka byłaby przez punkt 1, byłyby nierealistycznie duże spadki i wzrosty formy.\n3. Ustalić każdemu zawodnikowi nową, niezbyt mocną tendencję poprzez ustawienie średniej zmienności tendencji i ZEROWEJ zmienności formy (formy zmieniać nie chcemy). Można również ustawić według uznania bonus tendencji jeżeli chce się aby zawodnikom na start sezonu forma raczej rosła niż spadała (można też zrobić na odwrót).\nPo wykonaniu tych 3 kroków, wszyscy zawodnicy są gotowi do ciekawej walki w następnym sezonie."), QMessageBox::Ok);
     }
 }
 
@@ -245,11 +189,6 @@ void JumpersFormGeneratorConfigWindow::on_pushButton_loadPreset_clicked()
             settings.setJumper(jumper);
         }
         JumperFormGeneratorSettings * settings = &preset->getSettingsReference();
-        ui->doubleSpinBox_tendenceVariability->setValue(settings->getTendenceVariability());
-        ui->doubleSpinBox_tendBonus->setValue(settings->getTendenceBonus());
-        ui->doubleSpinBox_minTend->setValue(settings->getMinTendence());
-        ui->doubleSpinBox_maxTend->setValue(settings->getMaxTendence());
-        ui->doubleSpinBox_tendAlignment->setValue(settings->getTendenceAlignmentMultiplier());
         ui->doubleSpinBox_formVariability->setValue(settings->getFormVariability());
         ui->doubleSpinBox_formBonus->setValue(settings->getFormBonus());
         ui->doubleSpinBox_minForm->setValue(settings->getMinForm());
@@ -264,8 +203,7 @@ void JumpersFormGeneratorConfigWindow::on_pushButton_generate_clicked()
     for(auto & jumperSettings : tableModel->getGeneratorsSettingsReference())
     {
         generator.setSettings(jumperSettings);
-        generator.setTendence(save->getJumperTendence(generator.getJumper()));
-        generator.generateJumperFormTendence();
+        generator.setInstability(save->getJumperFormInstability(jumperSettings.getJumper()));
         generator.generateJumperForm();
     }
 

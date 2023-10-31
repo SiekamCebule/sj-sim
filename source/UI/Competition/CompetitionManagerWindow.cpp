@@ -31,7 +31,8 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     ui(new Ui::CompetitionManagerWindow),
     manager(manager),
     KOManager(nullptr),
-    singleCompetition(singleCompetition)
+    singleCompetition(singleCompetition),
+    teamResultsTreeView(nullptr)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
@@ -141,7 +142,6 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
             int jumperIndex = item->row();
 
             jumperResultsWidget->setJumperResult(&this->manager->getResults()->getResultsReference()[teamIndex].getTeamJumpersResultsReference()[jumperIndex]);
-            jumperResultsWidget->setPositionShowing(false);
             jumperResultsWidget->fillWidget();
         });
 
@@ -1210,7 +1210,7 @@ void CompetitionManagerWindow::executeLiveCompetitionEffects()
     info->getUi()->label_landingType->hide();
     info->getUi()->label_takeoffRating->hide();
     info->getUi()->label_flightRating->hide();
-    info->getUi()->label_landingRating->hide();
+    info->getUi()->label_random->hide();
     info->getUi()->label_snowRain->hide();
     info->getUi()->label_positionInRound->hide();
 
@@ -1246,14 +1246,18 @@ void CompetitionManagerWindow::executeLiveCompetitionEffects()
         info->getUi()->label_takeoffRating->show();
     if(c->getFlightRating())
         info->getUi()->label_flightRating->show();
-    if(c->getLandingRating())
-        info->getUi()->label_landingRating->show();
+    if(c->getDistanceRandom())
+        info->getUi()->label_random->show();
     if(c->getInrunSnow())
         info->getUi()->label_snowRain->show();
 
-
-    ui->tableView_results->setUpdatesEnabled(true);
-    ui->tableView_KOGroupResults->setUpdatesEnabled(true);
+    if(manager->getCompetitionInfo()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual){
+        ui->tableView_results->setUpdatesEnabled(true);
+        if(KOManager != nullptr)
+            ui->tableView_KOGroupResults->setUpdatesEnabled(true);
+    }
+    if(teamResultsTreeView != nullptr)
+        teamResultsTreeView->setUpdatesEnabled(true);
     ui->tableView_results->show();
     enableCompetitionManagementButtons();
     /*if(getType() == CompetitionRules::Individual){
@@ -1434,9 +1438,15 @@ void CompetitionManagerWindow::setupSimulator()
 void CompetitionManagerWindow::on_pushButton_jump_clicked()
 {
     if(GlobalAppSettings::get()->getLiveCompetition()){
-        ui->tableView_results->setUpdatesEnabled(false);
-        ui->tableView_KOGroupResults->setUpdatesEnabled(false);
+        if(manager->getCompetitionInfo()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual){
+            ui->tableView_results->setUpdatesEnabled(false);
+            if(KOManager != nullptr)
+                ui->tableView_KOGroupResults->setUpdatesEnabled(false);
+        }
+        if(teamResultsTreeView != nullptr)
+            teamResultsTreeView->setUpdatesEnabled(false);
         //ui->tableView_results->show();
+
     }
     IndividualCompetitionManager * indManager = dynamic_cast<IndividualCompetitionManager *>(manager);
     TeamCompetitionManager * tmManager = dynamic_cast<TeamCompetitionManager *>(manager);
@@ -1483,7 +1493,6 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     }
     else if(type == CompetitionRules::Team){
         jumperResultsWidget->setJumperResult(manager->getResults()->getResultOfTeam(tmManager->getActualTeam())->getTeamJumperResult(manager->getActualJumper()));
-        jumperResultsWidget->setPositionShowing(false);
     }
     jumperResultsWidget->fillWidget();
     if(GlobalAppSettings::get()->getLiveCompetition())

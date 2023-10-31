@@ -21,13 +21,10 @@ public:
 private:
     Ui::JumperCompetitionResultsWidget *ui;
     CompetitionSingleResult * jumperResult;
-    bool positionShowing;
 
 public:
     CompetitionSingleResult *getJumperResult() const;
     void setJumperResult(CompetitionSingleResult *newJumperResult);
-    bool getPositionShowing() const;
-    void setPositionShowing(bool newPositionShowing);
     Ui::JumperCompetitionResultsWidget *getUi() const;
 
 private slots:

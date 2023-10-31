@@ -8,7 +8,7 @@ ClassWithID()
 
 void JumpSimulationData::reset()
 {
-    takeoffRating = flightRating = DSQProbability = inrunSnow = 0;
+    takeoffRating = flightRating = DSQProbability = inrunSnow = metersSumRandom = 0;
 }
 
 double JumpSimulationData::getTakeoffRating() const
@@ -49,4 +49,14 @@ double JumpSimulationData::getInrunSnow() const
 void JumpSimulationData::setInrunSnow(double newInrunSnow)
 {
     inrunSnow = newInrunSnow;
+}
+
+double JumpSimulationData::getMetersSumRandom() const
+{
+    return metersSumRandom;
+}
+
+void JumpSimulationData::setMetersSumRandom(double newMetersSumRandom)
+{
+    metersSumRandom = newMetersSumRandom;
 }

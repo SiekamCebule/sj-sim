@@ -12,7 +12,7 @@ JumperEditorWidget::JumperEditorWidget(Jumper *jumper, CharacteristicsEditor *ch
     characteristicsEditor(characteristicsEditor),
     QWidget(parent),
     ui(new Ui::JumperEditorWidget),
-    tendence(nullptr)
+    formInstability(nullptr)
 {
     ui->setupUi(this);
 
@@ -42,7 +42,7 @@ void JumperEditorWidget::resetJumperInputs()
     ui->doubleSpinBox_landingStyle->setValue(0);
     ui->doubleSpinBox_form->setValue(0);
     ui->doubleSpinBox_jumpsEquality->setValue(0);
-    ui->doubleSpinBox_formTendence->setValue(0);
+    ui->doubleSpinBox_formInstability->setValue(0);
     characteristicsEditor->setCharacteristics(QSet<Characteristic>());
 }
 
@@ -55,18 +55,19 @@ void JumperEditorWidget::fillJumperInputs()
     ui->lineEdit_name->setText(jumper->getName());
     ui->lineEdit_surname->setText(jumper->getSurname());
     ui->lineEdit_countryCode->setText(jumper->getCountryCode());
-    ui->label_countryName->setText(GlobalDatabase::get()->getCountryByAlpha3(jumper->getCountryCode().toUpper()).getName());
+    if(GlobalDatabase::get()->getCountryByAlpha3(jumper->getCountryCode().toUpper()))
+        ui->label_countryName->setText(GlobalDatabase::get()->getCountryByAlpha3(jumper->getCountryCode().toUpper())->getName());
     ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(jumper->getCountryCode().toLower()).scaled(ui->label_countryFlag->size()));
     ui->lineEdit_img->setText(jumper->getImageName());
     ui->doubleSpinBox_personalBest->setValue(jumper->getPersonalBest());
-    if(tendence != nullptr){
-        ui->doubleSpinBox_formTendence->setValue(*tendence);
-        ui->doubleSpinBox_formTendence->show();
-        ui->label_formTendence->show();
+    if(formInstability != nullptr){
+        ui->doubleSpinBox_formInstability->setValue(*formInstability);
+        ui->doubleSpinBox_formInstability->show();
+        ui->label_formInstability->show();
     }
     else{
-        ui->doubleSpinBox_formTendence->hide();
-        ui->label_formTendence->hide();
+        ui->doubleSpinBox_formInstability->hide();
+        ui->label_formInstability->hide();
     }
 
     ui->doubleSpinBox_takeoffTechnique->setValue(jumper->getJumperSkills().getTakeoffTechnique());
@@ -88,14 +89,14 @@ Jumper JumperEditorWidget::getJumperFromWidgetInput() const
     jumper.setImageName(ui->lineEdit_img->text());
     jumper.setPersonalBest(ui->doubleSpinBox_personalBest->value());
 
-    if(tendence != nullptr){
-        *tendence = ui->doubleSpinBox_formTendence->value();
-        ui->doubleSpinBox_formTendence->show();
-        ui->label_formTendence->show();
+    if(formInstability != nullptr){
+        *formInstability = ui->doubleSpinBox_formInstability->value();
+        ui->doubleSpinBox_formInstability->show();
+        ui->label_formInstability->show();
     }
     else{
-        ui->doubleSpinBox_formTendence->hide();
-        ui->label_formTendence->hide();
+        ui->doubleSpinBox_formInstability->hide();
+        ui->label_formInstability->hide();
     }
 
     jumper.getJumperSkillsPointer()->setTakeoffTechnique(ui->doubleSpinBox_takeoffTechnique->value());
@@ -142,6 +143,11 @@ void JumperEditorWidget::setCharacteristicsEditor(CharacteristicsEditor *newChar
     characteristicsEditor = newCharacteristicsEditor;
 }
 
+double JumperEditorWidget::getFormInstabilityFromUI()
+{
+    return ui->doubleSpinBox_formInstability->value();
+}
+
 void JumperEditorWidget::on_lineEdit_countryCode_textChanged(const QString &arg1)
 {
     if(arg1.length() > 2)
@@ -160,12 +166,12 @@ void JumperEditorWidget::on_lineEdit_img_textChanged(const QString &arg1)
     ui->label_imgPreview->setPixmap(pixmap);
 }
 
-double *JumperEditorWidget::getTendence() const
+double *JumperEditorWidget::getFormInstability() const
 {
-    return tendence;
+    return formInstability;
 }
 
-void JumperEditorWidget::setTendence(double *newTendence)
+void JumperEditorWidget::setFormInstability(double *newFormInstability)
 {
-    tendence = newTendence;
+    formInstability = newFormInstability;
 }

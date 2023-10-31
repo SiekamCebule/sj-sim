@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1358</width>
+    <width>1215</width>
     <height>844</height>
    </rect>
   </property>
@@ -640,8 +640,8 @@ ukryte wykresy</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1316</width>
-            <height>664</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_7">

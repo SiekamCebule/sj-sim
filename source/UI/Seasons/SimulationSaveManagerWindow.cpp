@@ -70,15 +70,16 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     connect(jumpersListView, &DatabaseItemsListView::listViewDoubleClicked, this, [this](const QModelIndex & index){
         jumperEditor->show();
         jumperEditor->setJumper(simulationSave->getJumpersReference()[index.row()]);
-        if(simulationSave->getShowTendence() == true)
-            jumperEditor->setTendence(&simulationSave->getJumperTendence(jumperEditor->getJumper())->getTendenceReference());
-        else jumperEditor->setTendence(nullptr);
+        if(simulationSave->getShowInstability() == true)
+            jumperEditor->setFormInstability(simulationSave->getJumperFormInstability(jumperEditor->getJumper()));
+        else jumperEditor->setFormInstability(nullptr);
         jumperEditor->fillJumperInputs();
         jumperEditor->setShowForm(simulationSave->getShowForm());
     });
     connect(jumperEditor, &JumperEditorWidget::submitted, this, [this](){
         int idx = jumpersListView->getLastDoubleClickedIndex();
         *simulationSave->getJumpersReference()[idx] = jumperEditor->getJumperFromWidgetInput();
+        simulationSave->getJumpersFormInstabilitiesReference()[jumperEditor->getJumper()] = jumperEditor->getFormInstabilityFromUI();
         emit jumpersListView->getListModel()->dataChanged(jumpersListView->getListModel()->index(idx), jumpersListView->getListModel()->index(idx));
     });
 
@@ -293,7 +294,7 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
 
     ui->checkBox_compactSaveFile->setChecked(simulationSave->getSaveFileSizeReduce());
     ui->checkBox_showForm->setChecked(simulationSave->getShowForm());
-    ui->checkBox_showTendence->setChecked(simulationSave->getShowTendence());
+    ui->checkBox_showInstability->setChecked(simulationSave->getShowInstability());
 
     connect(this, &SimulationSaveManagerWindow::actualCalendarChanged, this, [this](){
         classificationsListView->setupListModel();
@@ -903,7 +904,6 @@ void SimulationSaveManagerWindow::on_listView_competitionsArchive_doubleClicked(
         int teamIndex = item->getParentItem()->row();
         int jumperIndex = item->row();
         jumperResultWidget->setJumperResult(&competition->getResultsReference().getResultsReference()[teamIndex].getTeamJumpersResultsReference()[jumperIndex]);
-        jumperResultWidget->setPositionShowing(false);
         jumperResultWidget->fillWidget();
     });
 
@@ -1042,11 +1042,6 @@ void SimulationSaveManagerWindow::on_pushButton_formGenerator_clicked()
     window.getTableModel()->setGeneratorsSettings(JumperFormGeneratorSettings::constructJumperFormGeneratorsSettingsVector(simulationSave->getJumpersReference()));
     window.setSave(simulationSave);
     window.updateTable();
-    window.on_doubleSpinBox_tendenceVariability_editingFinished();
-    window.on_doubleSpinBox_tendBonus_editingFinished();
-    window.on_doubleSpinBox_tendAlignment_editingFinished();
-    window.on_doubleSpinBox_minTend_editingFinished();
-    window.on_doubleSpinBox_maxTend_editingFinished();
     window.on_doubleSpinBox_tendVariability_editingFinished();
     window.on_doubleSpinBox_formBonus_editingFinished();
     window.on_doubleSpinBox_minForm_editingFinished();
@@ -1069,13 +1064,6 @@ void SimulationSaveManagerWindow::on_checkBox_compactSaveFile_stateChanged(int a
     simulationSave->setSaveFileSizeReduce(arg1);
 }
 
-
-void SimulationSaveManagerWindow::on_checkBox_showTendence_stateChanged(int arg1)
-{
-    simulationSave->setShowTendence(arg1);
-}
-
-
 void SimulationSaveManagerWindow::on_lineEdit_calendarName_editingFinished()
 {
     if(calendarsListView->getListView()->selectionModel()->selectedRows(0).count() > 0)
@@ -1084,5 +1072,11 @@ void SimulationSaveManagerWindow::on_lineEdit_calendarName_editingFinished()
         c->setName(ui->lineEdit_calendarName->text());
         calendarsListView->setupListModel();
     }
+}
+
+
+void SimulationSaveManagerWindow::on_checkBox_showInstability_stateChanged(int arg1)
+{
+   simulationSave->setShowInstability(arg1);
 }
 

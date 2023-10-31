@@ -29,6 +29,7 @@ public:
     void setJumper(Jumper *newJumper);
     CharacteristicsEditor *getCharacteristicsEditor() const;
     void setCharacteristicsEditor(CharacteristicsEditor *newCharacteristicsEditor);
+    double getFormInstabilityFromUI();
 
 signals:
     void submitted();
@@ -44,10 +45,10 @@ private:
 
     CharacteristicsEditor * characteristicsEditor;
     Jumper * jumper;
-    double * tendence;
+    double * formInstability;
 public:
-    double *getTendence() const;
-    void setTendence(double *newTendence);
+    double *getFormInstability() const;
+    void setFormInstability(double *newFormInstability);
 };
 
 #endif // JUMPEREDITORWIDGET_H

@@ -6,92 +6,105 @@ JumperFormGenerator::JumperFormGenerator()
 
 }
 
-void JumperFormGenerator::generateJumperFormTendence()
-{
-    double oldTendence = tendence->getTendenceReference();
-    double newTendence = 0;
-
-    double base = 0;
-
-    double deviation = 5 + ((settings.getTendenceVariability() - 5) / 1);
-
-    double random = 0;
-    if(settings.getTendenceVariability() > 0)
-        random = (MyRandom::normalDistributionRandom(base, deviation));
-    else
-        random = 0;
-
-    double divider = 1 + (abs(oldTendence + random - 0) / 4.12);
-    qDebug()<<"divider: "<<divider;
-    if(oldTendence + (random / divider) > 0 && (random > 0))
-        random /= divider;
-    else if(oldTendence + (random / divider) < 0 && (random < 0))
-        random /= divider;
-
-    newTendence = oldTendence + random;
-
-    double muliplier = settings.getTendenceAlignmentMultiplier();
-    if(muliplier > 1)
-        if(newTendence > 0)
-            newTendence /= muliplier;
-        else
-            newTendence /= muliplier;
-    else
-        if(newTendence > 0)
-            newTendence /= muliplier;
-        else
-            newTendence /= muliplier;
-
-    newTendence += settings.getTendenceBonus();
-    if(newTendence > settings.getMaxTendence())
-        newTendence = settings.getMaxTendence();
-    else if(newTendence < settings.getMinTendence())
-        newTendence = settings.getMinTendence();
-
-    tendence->setTendence(newTendence);
-    qDebug()<<jumper->getNameAndSurname()<<": "<<oldTendence<<" --> "<<newTendence<<" (Tendencja)";
-}
-
 void JumperFormGenerator::generateJumperForm()
 {
     double oldForm = jumper->getJumperSkillsPointer()->getForm();
-    double formChange = 0;
+    double newForm;
+    double oldInstability = *instability;
+    double newInstability = oldInstability;
+    double change = 0;
 
-    formChange += tendence->getTendenceReference() * 1.25;
-    formChange *= 1 + ((settings.getFormVariability() - 5) / 5);
+    if(oldForm > 50){
+        if(MyRandom::randomDouble(0, 2, 5) <= 1 - oldInstability)
+            change = MyRandom::normalDistributionRandomHalf(0, 9.5, 0);
+        else
+            change = MyRandom::normalDistributionRandomHalf(0, 9.5, 1);
+    }
+    else{
+        if(MyRandom::randomDouble(0, 2, 5) <= 1 - oldInstability)
+           change = MyRandom::normalDistributionRandomHalf(0, 9.5, 1);
+        else
+           change = MyRandom::normalDistributionRandomHalf(0, 9.5, 0);
+    }
+    change *= settings.getFormVariability();
+    if(oldForm > 50 && change > 0)
+    {
+        change /= 1 + ((oldForm - 50) / 10.5);
+    }
+    else if(oldForm > 50 && change < 0)
+    {
+        change /= 1 + ((oldForm - 50) / 25);
+    }
+    else if(oldForm < 50 && change < 0)
+    {
+        change /= 1 + ((50 - (oldForm)) / 10.5);
+    }
+    else if(oldForm < 50 && change > 0)
+    {
+        change /= 1 + ((50 - (oldForm)) / 25);
+    }
 
-    double distanceFromAverage = abs(oldForm - 50);
-    double divider = 1 + (distanceFromAverage / 12);
-    if(((oldForm + (formChange / divider)) > 50 && (formChange / divider) > 0) || ((oldForm + (formChange / divider)) < 50 && (formChange / divider) < 0))
-        formChange /= divider;
-    /*else
-        formChange *= (divider / 1);*/
+    newInstability /= (1.30 * settings.getFormVariability());
+    if(oldForm + change > 50 && change > 0)
+    {
+        newInstability += (((oldForm + change) / oldForm) - 1) / 1.5;
+    }
+    else if(oldForm + change < 50 && change < 0)
+    {
+        newInstability += ((oldForm / (oldForm + change)) - 1) / 1.5;
+    }
+    else if(oldForm + change > 50 && change < 0)
+    {
+        newInstability += (((oldForm + change) / oldForm) - 1) / 1.5;
+    }
+    else if(oldForm + change < 50 && change > 0)
+    {
+        newInstability += ((oldForm / (oldForm + change)) - 1) / 1.5;
+    }
+    if(newInstability < 0.01)
+        newInstability = 0.01;
+    if(newInstability > 0.99)
+        newInstability = 0.99;
 
-    double newForm = oldForm + formChange;
-    newForm += settings.getFormBonus();
-    if(newForm > settings.getMaxForm())
-        newForm = settings.getMaxForm();
-    else if(newForm < settings.getMinForm())
+    if(settings.getFormVariability() == 0)
+    {
+        newInstability = oldInstability;
+        change = 0;
+        if(oldForm == 50)
+           newInstability = 0;
+    }
+
+    newForm = oldForm + change + settings.getFormBonus();
+    if(newForm < settings.getMinForm())
         newForm = settings.getMinForm();
+    else if(newForm > settings.getMaxForm())
+        newForm = settings.getMaxForm();
 
     jumper->getJumperSkillsPointer()->setForm(newForm);
-    qDebug()<<jumper->getNameAndSurname()<<": "<<oldForm<<" --> "<<newForm;//<<" (Forma na bazie tendencji " + QString::number(tendence->getTendence()) + ")";
+    *instability = newInstability;
+    qDebug()<<jumper->getNameAndSurname() + QString(": (Forma %1 --> %2) (Niestabilność %3 --> %4)").arg(QString::number(oldForm)).arg(QString::number(newForm)).arg(QString::number(oldInstability)).arg(QString::number(newInstability));
+}
+
+double JumperFormGenerator::getBaseRandom()
+{
+    //int random = MyRandom::normalDistributionRandomHalf(0, 100, 1);
+
+    return 0;
+}
+
+double *JumperFormGenerator::getInstability() const
+{
+    return instability;
+}
+
+void JumperFormGenerator::setInstability(double *newInstability)
+{
+    instability = newInstability;
 }
 
 Jumper *JumperFormGenerator::getJumper() const
 {
     return jumper;
-}
-
-JumperFormTendence *JumperFormGenerator::getTendence() const
-{
-    return tendence;
-}
-
-void JumperFormGenerator::setTendence(JumperFormTendence *newTendence)
-{
-    tendence = newTendence;
-    jumper = tendence->getJumper();
 }
 
 JumperFormGeneratorSettings &JumperFormGenerator::getSettingsReference()

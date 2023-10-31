@@ -37,7 +37,7 @@ QString Jumper::getTextInfo()
 
 QString Jumper::getTextForDiscord()
 {
-    return getNameAndSurname() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(countryCode).getAlpha2().toLower());
+    return getNameAndSurname() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(countryCode)->getAlpha2().toLower());
 }
 
 QString Jumper::getImageName() const

@@ -31,7 +31,7 @@ JumpDataInfoChoice JumpDataInfoChoiceDialog::getChoiceFromInputs()
     ch.setSpecificWind(ui->checkBox_specificWind->isChecked());
     ch.setTakeoffRating(ui->checkBox_takeoffRating->isChecked());
     ch.setFlightRating(ui->checkBox_flightRating->isChecked());
-    ch.setLandingRating(ui->checkBox_landingRating->isChecked());
+    ch.setDistanceRandom(ui->checkBox_distanceRandom->isChecked());
     ch.setInrunSnow(ui->checkBox_snowRain->isChecked());
     return ch;
 }
@@ -53,7 +53,7 @@ void JumpDataInfoChoiceDialog::fillInputs()
     ui->checkBox_specificWind->setChecked(choice->getSpecificWind());
     ui->checkBox_takeoffRating->setChecked(choice->getTakeoffRating());
     ui->checkBox_flightRating->setChecked(choice->getFlightRating());
-    ui->checkBox_landingRating->setChecked(choice->getLandingRating());
+    ui->checkBox_distanceRandom->setChecked(choice->getDistanceRandom());
     ui->checkBox_snowRain->setChecked(choice->getInrunSnow());
 }
 

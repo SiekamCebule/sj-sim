@@ -17,12 +17,6 @@ QJsonObject JumperFormGeneratorSettingsPreset::getJsonObject(JumperFormGenerator
     QJsonObject object;
     QJsonObject settingsObject;
     JumperFormGeneratorSettings * settings = &preset.getSettingsReference();
-    settingsObject.insert("tendence-variability", settings->getTendenceVariability());
-    settingsObject.insert("min-tendence", settings->getMinTendence());
-    settingsObject.insert("max-tendence", settings->getMaxTendence());
-    settingsObject.insert("tendence-bonus", settings->getTendenceBonus());
-    settingsObject.insert("tendence-alignment-multiplier", settings->getTendenceAlignmentMultiplier());
-
     settingsObject.insert("form-variability", settings->getFormVariability());
     settingsObject.insert("min-form", settings->getMinForm());
     settingsObject.insert("max-form", settings->getMaxForm());
@@ -38,12 +32,6 @@ JumperFormGeneratorSettingsPreset JumperFormGeneratorSettingsPreset::getFromJson
     preset.setName(json.value("name").toString());
     JumperFormGeneratorSettings * settings = &preset.getSettingsReference();
     QJsonObject object = json.value("settings").toObject();
-    settings->setTendenceVariability(object.value("tendence-variability").toDouble());
-    settings->setMinTendence(object.value("min-tendence").toDouble());
-    settings->setMaxTendence(object.value("max-tendence").toDouble());
-    settings->setTendenceBonus(object.value("tendence-bonus").toDouble());
-    settings->setTendenceAlignmentMultiplier(object.value("tendence-alignment-multiplier").toDouble());
-
     settings->setFormVariability(object.value("form-variability").toDouble());
     settings->setMinForm(object.value("min-form").toDouble());
     settings->setMaxForm(object.value("max-form").toDouble());

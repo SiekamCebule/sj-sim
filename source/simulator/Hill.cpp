@@ -41,7 +41,7 @@ QString Hill::getHillText()
 
 QString Hill::getHillTextForDiscord()
 {
-    return name + QString(" :flag_%1: ").arg(GlobalDatabase::get()->getCountryByAlpha3(countryCode).getAlpha2().toLower()) + QString("HS%1").arg(QString::number(HSPoint));
+    return name + QString(" :flag_%1: ").arg(GlobalDatabase::get()->getCountryByAlpha3(countryCode)->getAlpha2().toLower()) + QString("HS%1").arg(QString::number(HSPoint));
 }
 
 double Hill::calculateTakeoffEffect()
@@ -350,7 +350,7 @@ void Hill::setRealHS(double newRealHS)
 void Hill::setRealHSByCharacteristic()
 {
     realHS = HSPoint;
-    realHS *= 1.02211565 + (getLevelOfCharacteristic("real-hs-point") * 0.015);
+    realHS *= 1.018 + (getLevelOfCharacteristic("real-hs-point") * 0.015);
 }
 
 void Hill::setPointsForMeter(double newPointsForMeter)

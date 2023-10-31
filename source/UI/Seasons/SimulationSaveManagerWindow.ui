@@ -749,9 +749,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBox_showTendence">
+              <widget class="QCheckBox" name="checkBox_showInstability">
                <property name="text">
-                <string>Pokaż tendencję formy zawodników</string>
+                <string>Pokaż niestabilność formy zawodników</string>
                </property>
               </widget>
              </item>

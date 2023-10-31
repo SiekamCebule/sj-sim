@@ -213,7 +213,7 @@ dpp::embed CompetitionSingleResult::getEmbedForIndividualSingleCompResult()
 {
     dpp::embed embed;
     embed.set_color(dpp::colors::coffee);
-    QString title = QString("**%1 %2**").arg(jumper->getNameAndSurname()).arg(QString(":flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(jumper->getCountryCode()).getAlpha2().toLower()));
+    QString title = QString("**%1 %2**").arg(jumper->getNameAndSurname()).arg(QString(":flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(jumper->getCountryCode())->getAlpha2().toLower()));
     embed.set_title(title.toStdString());
     QString description = competition->getHill()->getHillTextForDiscord() + QString(" (%1)").arg(competition->getLongSerieTypeText()) + " (indywidualny)";
     embed.set_description(description.toStdString());
@@ -232,7 +232,7 @@ dpp::embed CompetitionSingleResult::getEmbedForIndividualSingleCompResult()
 
 dpp::embed CompetitionSingleResult::getEmbedForTeamSingleCompResult()
 {
-    Country * country = &GlobalDatabase::get()->getCountryByAlpha3(team->getCountryCode());
+    Country * country = GlobalDatabase::get()->getCountryByAlpha3(team->getCountryCode());
     dpp::embed embed;
     embed.set_color(dpp::colors::coffee);
     QString title = QString("**%1 %2**").arg(country->getName()).arg(QString(":flag_%1:").arg(country->getAlpha2().toLower()));

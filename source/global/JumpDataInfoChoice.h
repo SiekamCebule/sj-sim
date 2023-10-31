@@ -25,7 +25,7 @@ private:
     bool jumpPositionInRound;
     bool takeoffRating;
     bool flightRating;
-    bool landingRating;
+    bool distanceRandom;
     bool inrunSnow;
     bool landingType;
     bool positionAfterJump;
@@ -56,14 +56,14 @@ public:
     void setTakeoffRating(bool newTakeoffRating);
     bool getFlightRating() const;
     void setFlightRating(bool newFlightRating);
-    bool getLandingRating() const;
-    void setLandingRating(bool newLandingRating);
     bool getInrunSnow() const;
     void setInrunSnow(bool newInrunSnow);
     bool getLandingType() const;
     void setLandingType(bool newLandingType);
     bool getPositionAfterJump() const;
     void setPositionAfterJump(bool newPositionAfterJump);
+    bool getDistanceRandom() const;
+    void setDistanceRandom(bool newDistanceRandom);
 };
 
 #endif // JUMPDATAINFOCHOICE_H

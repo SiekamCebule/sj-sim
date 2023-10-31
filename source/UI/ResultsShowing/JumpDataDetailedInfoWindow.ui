@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>496</width>
+    <width>515</width>
     <height>508</height>
    </rect>
   </property>
@@ -616,6 +616,23 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="label_DSQ">
+       <property name="font">
+        <font>
+         <family>Quicksand</family>
+         <pointsize>16</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(116, 0, 2);</string>
+       </property>
+       <property name="text">
+        <string>DYSKWALIFIKACJA</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QVBoxLayout" name="verticalLayout_windsInfo">
        <property name="spacing">
         <number>2</number>
@@ -681,7 +698,7 @@ background-color: rgb(81, 142, 64);
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>60</width>
+       <width>20</width>
        <height>20</height>
       </size>
      </property>
@@ -712,7 +729,7 @@ background-color: rgb(81, 142, 64);
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_landingRatingTitle">
+        <widget class="QLabel" name="label_randomTitle">
          <property name="font">
           <font>
            <family>Quicksand</family>
@@ -724,7 +741,7 @@ background-color: rgb(81, 142, 64);
           <string>color: rgb(20, 20, 20);</string>
          </property>
          <property name="text">
-          <string>Ocena lądowania</string>
+          <string>Losowość</string>
          </property>
         </widget>
        </item>
@@ -786,7 +803,7 @@ background-color: rgb(81, 142, 64);
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLabel" name="label_landingRating">
+        <widget class="QLabel" name="label_random">
          <property name="font">
           <font>
            <family>Quicksand Medium</family>

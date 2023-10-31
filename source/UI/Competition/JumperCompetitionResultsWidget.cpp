@@ -16,7 +16,6 @@ JumperCompetitionResultsWidget::JumperCompetitionResultsWidget(QWidget *parent) 
         delete ui->tabWidget_jumps->widget(0);
         ui->tabWidget_jumps->removeTab(0);
     }
-    positionShowing = true;
 }
 
 JumperCompetitionResultsWidget::~JumperCompetitionResultsWidget()
@@ -30,10 +29,13 @@ void JumperCompetitionResultsWidget::fillWidget()
     ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(jumperResult->getJumper()->getCountryCode().toLower()).scaled(ui->label_flag->size()));
     ui->label_img->setPixmap(jumperResult->getJumper()->getImagePixmap().scaled(ui->label_img->size()));
 
-    ui->label_pointsSum->setText(QString::number(jumperResult->getPointsSum()) + tr(" punktów"));
-    if(positionShowing == true)
-        ui->label_actualPosition->setText("(" + QString::number(jumperResult->getPosition()) + tr(" miejsce)"));
-    else ui->label_actualPosition->hide();
+    ui->label_pointsSum->setText(QString::number(jumperResult->getPointsSum(), 'f', 1) + tr(" punktów"));
+        if(jumperResult->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
+             ui->label_actualPosition->setText("(" + QString::number(jumperResult->getPosition()) + tr(" miejsce)"));
+        else{
+             int pos = jumperResult->getCompetition()->getResultsReference().getResultOfTeam(Team::getTeamByCountryCode(&jumperResult->getCompetition()->getTeamsReference(), jumperResult->getJumper()->getCountryCode()))->getPosition();
+             ui->label_actualPosition->setText("(" + QString::number(pos) + tr(" miejsce)"));
+        }
 
     if(GlobalAppSettings::get()->getJumpDataInfoChoiceReference().getPositionAfterJump() == true)
     {
@@ -64,16 +66,6 @@ void JumperCompetitionResultsWidget::fillWidget()
 Ui::JumperCompetitionResultsWidget *JumperCompetitionResultsWidget::getUi() const
 {
 return ui;
-}
-
-bool JumperCompetitionResultsWidget::getPositionShowing() const
-{
-    return positionShowing;
-}
-
-void JumperCompetitionResultsWidget::setPositionShowing(bool newPositionShowing)
-{
-    positionShowing = newPositionShowing;
 }
 
 CompetitionSingleResult *JumperCompetitionResultsWidget::getJumperResult() const

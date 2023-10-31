@@ -13,20 +13,16 @@ public:
 
 private:
     QPair<double, double> distanceRange; //min, max
-    QPair<double, double> landingRatingRange;
     QPair<double, double> inrunSnowRange;
     QPair<double, double> takeoffRatingRange;
     QPair<double, double> flightRatingRange;
-    QPair<double, double> judgesRatingRange;
     QPair<double, double> averagedWindRange;
     bool averagedWindRangeEnabled;
 
     double distanceBonus;
-    double landingRatingBonus;
     double inrunSnowBonus;
     double takeoffRatingBonus;
     double flightRatingBonus;
-    double judgesRatingBonus;
     double averagedWindBonus;
 
     int exactLandingType;
@@ -42,8 +38,6 @@ public:
     void setTakeoffRatingRange(const QPair<double, double> &newTakeoffRatingRange);
     QPair<double, double> getFlightRatingRange() const;
     void setFlightRatingRange(const QPair<double, double> &newFlightRatingRange);
-    QPair<double, double> getJudgesRatingRange() const;
-    void setJudgesRatingRange(const QPair<double, double> &newJudgesRatingRange);
     QPair<double, double> getAveragedWindRange() const;
     void setAveragedWindRange(const QPair<double, double> &newAveragedWindRange);
     double getDistanceBonus() const;
@@ -52,8 +46,6 @@ public:
     void setTakeoffRatingBonus(double newTakeoffRatingBonus);
     double getFlightRatingBonus() const;
     void setFlightRatingBonus(double newFlightRatingBonus);
-    double getJudgesRatingBonus() const;
-    void setJudgesRatingBonus(double newJudgesRatingBonus);
     double getAveragedWindBonus() const;
     void setAveragedWindBonus(double newAveragedWindBonus);
     int getExactLandingType() const;
@@ -70,10 +62,6 @@ public:
     void setInrunSnowRange(const QPair<double, double> &newInrunSnowRange);
     double getInrunSnowBonus() const;
     void setInrunSnowBonus(double newInrunSnowBonus);
-    QPair<double, double> getLandingRatingRange() const;
-    void setLandingRatingRange(const QPair<double, double> &newLandingRatingRange);
-    double getLandingRatingBonus() const;
-    void setLandingRatingBonus(double newLandingRatingBonus);
 };
 
 #endif // JUMPMANIPULATOR_H

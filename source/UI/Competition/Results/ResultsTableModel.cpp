@@ -39,7 +39,7 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
                 return results->getResultsReference().at(index.row()).getJumper()->getNameAndSurname();
                 break;
             case 2:
-                return QString::number(results->getResultsReference().at(index.row()).getPointsSum(), 'f', 0);
+                return QString::number(results->getResultsReference().at(index.row()).getPointsSum(), 'f', 1);
                 break;
             }
             if(index.column() > 2){

@@ -318,7 +318,7 @@ QString Classification::getSingleResultsTextForWebhook()
     {
         for(auto & res : results)
         {
-            s += QString::number(res->getPosition()) + ". " + GlobalDatabase::get()->getCountryByAlpha3(res->getTeamCode()).getName() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(res->getTeamCode()).getAlpha2().toLower()) + " -> " + QString::number(res->getPointsSum(), 'f', 1) + QObject::tr("pkt") + "\n";
+            s += QString::number(res->getPosition()) + ". " + GlobalDatabase::get()->getCountryByAlpha3(res->getTeamCode())->getName() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(res->getTeamCode())->getAlpha2().toLower()) + " -> " + QString::number(res->getPointsSum(), 'f', 1) + QObject::tr("pkt") + "\n";
         }
     }
 
@@ -366,10 +366,18 @@ dpp::message Classification::getMessageForResultsWebhook(SimulationSave * save)
 
 void Classification::sendResultsWebhook(SimulationSave * save)
 {
-    dpp::cluster bot("");
-    dpp::webhook wh(GlobalAppSettings::get()->getClassificationResultsWebhook().toStdString());
     dpp::message message = getMessageForResultsWebhook(save);
-    bot.execute_webhook(wh, message);
+    std::string content = message.content;
+    int i = 0;
+    while (!content.empty())
+    {
+        dpp::cluster bot("");
+        dpp::webhook wh(GlobalAppSettings::get()->getCompetitionResultsWebhook().toStdString());
+        std::string newContent = content.substr(0, std::min(2000, int(content.length())));
+        content.replace(0, newContent.length(), "");
+        bot.execute_webhook(wh, dpp::message(newContent));
+        i++;
+    }
 }
 
 QHash<Jumper *, QHash<CompetitionInfo *, int>> Classification::constructJumpersArchiveResults(Season *season, SeasonCalendar * calendar)

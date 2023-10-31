@@ -33,7 +33,7 @@
 #include <dpp/dpp.h>
 
 extern IDGenerator globalIDGenerator;
-const QString appVersion = "1.1.0beta3";
+const QString appVersion = "1.1.0beta3b";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

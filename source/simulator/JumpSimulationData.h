@@ -19,12 +19,15 @@ public:
     void setDSQProbability(int newDSQProbability);
     double getInrunSnow() const;
     void setInrunSnow(double newInrunSnow);
+    double getMetersSumRandom() const;
+    void setMetersSumRandom(double newMetersSumRandom);
 
 private:
     double flightRating;
     double takeoffRating;
     int DSQProbability;
     double inrunSnow; //0-10
+    double metersSumRandom;
 };
 
 #endif // JUMPSIMULATIONDATA_H

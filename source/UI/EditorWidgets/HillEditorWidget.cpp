@@ -80,7 +80,7 @@ void HillEditorWidget::fillHillInputs()
     ui->lineEdit_name->setText(hill->getName());
 
     ui->lineEdit_countryCode->setText(hill->getCountryCode());
-    ui->label_countryName->setText(GlobalDatabase::get()->getCountryByAlpha3(hill->getCountryCode()).getName());
+    ui->label_countryName->setText(GlobalDatabase::get()->getCountryByAlpha3(hill->getCountryCode())->getName());
     ui->label_countryFlag->setPixmap(CountryFlagsManager::getFlagPixmap(hill->getCountryCode().toLower()).scaled(ui->label_countryFlag->size()));
 
     ui->doubleSpinBox_KPoint->setValue(hill->getKPoint());

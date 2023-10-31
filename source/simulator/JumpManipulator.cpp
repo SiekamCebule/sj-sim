@@ -2,31 +2,11 @@
 
 JumpManipulator::JumpManipulator()
 {
-    distanceRange = landingRatingRange = inrunSnowRange = takeoffRatingRange = flightRatingRange = judgesRatingRange = averagedWindRange = inrunSnowRange = QPair<double, double>(0, -1);
-    distanceBonus = landingRatingBonus = inrunSnowBonus = takeoffRatingBonus = flightRatingBonus = judgesRatingBonus = averagedWindBonus = 0;
+    distanceRange = inrunSnowRange = takeoffRatingRange = flightRatingRange = averagedWindRange = inrunSnowRange = QPair<double, double>(0, -1);
+    distanceBonus = inrunSnowBonus = takeoffRatingBonus = flightRatingBonus = averagedWindBonus = 0;
     averagedWindRangeEnabled = false;
     exactLandingType = exactDSQProbability = -1;
     exactJudges.fill(-1, 5);
-}
-
-double JumpManipulator::getLandingRatingBonus() const
-{
-    return landingRatingBonus;
-}
-
-void JumpManipulator::setLandingRatingBonus(double newLandingRatingBonus)
-{
-    landingRatingBonus = newLandingRatingBonus;
-}
-
-QPair<double, double> JumpManipulator::getLandingRatingRange() const
-{
-    return landingRatingRange;
-}
-
-void JumpManipulator::setLandingRatingRange(const QPair<double, double> &newLandingRatingRange)
-{
-    landingRatingRange = newLandingRatingRange;
 }
 
 double JumpManipulator::getInrunSnowBonus() const
@@ -109,16 +89,6 @@ void JumpManipulator::setAveragedWindBonus(double newAveragedWindBonus)
     averagedWindBonus = newAveragedWindBonus;
 }
 
-double JumpManipulator::getJudgesRatingBonus() const
-{
-    return judgesRatingBonus;
-}
-
-void JumpManipulator::setJudgesRatingBonus(double newJudgesRatingBonus)
-{
-    judgesRatingBonus = newJudgesRatingBonus;
-}
-
 double JumpManipulator::getFlightRatingBonus() const
 {
     return flightRatingBonus;
@@ -157,16 +127,6 @@ QPair<double, double> JumpManipulator::getAveragedWindRange() const
 void JumpManipulator::setAveragedWindRange(const QPair<double, double> &newAveragedWindRange)
 {
     averagedWindRange = newAveragedWindRange;
-}
-
-QPair<double, double> JumpManipulator::getJudgesRatingRange() const
-{
-    return judgesRatingRange;
-}
-
-void JumpManipulator::setJudgesRatingRange(const QPair<double, double> &newJudgesRatingRange)
-{
-    judgesRatingRange = newJudgesRatingRange;
 }
 
 QPair<double, double> JumpManipulator::getFlightRatingRange() const

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1425</width>
-    <height>973</height>
+    <height>843</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -102,7 +102,7 @@ color: rgb(26, 95, 180);
             <number>8</number>
            </property>
            <item row="0" column="0">
-            <widget class="QLabel" name="label_3">
+            <widget class="QLabel" name="label_4">
              <property name="font">
               <font>
                <family>Quicksand</family>
@@ -111,13 +111,13 @@ color: rgb(26, 95, 180);
               </font>
              </property>
              <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Zmienność tendencji&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Ogólny parametr mówiący o tym, jak bardzo może się zmienić tendencja. Od 0 do 20 (chociaż teorytycznie od 0 do 10, a wartości powyżej 10 są zarezerwowane do ekstremalnych przypadków jak zmiana formy między długim okresem czasu, np. na nowy sezon).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Zmienność formy&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Zmiana formy i inne rzeczy związane z generowaniem formy są mnożone przez tą wartość. Dla przykładu: Jeżeli zmienność wynosi 0.50, zmiany formy będą o połowę mniejsze. Dla zmienności 1.24 będą za to o około 24% większe.&lt;/p&gt;&lt;p&gt;Zmienność nie może być mniejsza niż 0, a wartości większe niż 2 powinny być używane tylko okazjonalnie przy znaczących zmianach formy.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;s</string>
              </property>
              <property name="styleSheet">
-              <string notr="true">color: rgb(140, 73, 5);</string>
+              <string notr="true">color: rgb(48, 5, 112);</string>
              </property>
              <property name="text">
-              <string>Zmienność tendencji</string>
+              <string>Zmienność formy</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -125,182 +125,6 @@ color: rgb(26, 95, 180);
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_tendenceVariability">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="minimum">
-              <double>0.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>20.000000000000000</double>
-             </property>
-             <property name="singleStep">
-              <double>1.000000000000000</double>
-             </property>
-             <property name="value">
-              <double>5.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_8">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>9</pointsize>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Minimalna tendencja&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Poniżej tej wartości tendencja na pewno nie zejdzie. Od 0 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(140, 73, 5);</string>
-             </property>
-             <property name="text">
-              <string>Minimalna tendencja</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_7">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>9</pointsize>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Maksymalna tendencja&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tendencja nie będzie wyższa niż ta wartość. Od 0 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(140, 73, 5);</string>
-             </property>
-             <property name="text">
-              <string>Maksymalna tendencja</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>9</pointsize>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Bonus do tendencji&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Czyli ustalony przez użytkownika dodatek do tendencji który na pewno wystąpi. Od -10 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(140, 73, 5);</string>
-             </property>
-             <property name="text">
-              <string>Bonus do tendencji</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_tendBonus">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="minimum">
-              <double>-10.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>10.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_minTend">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="minimum">
-              <double>-10.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>10.000000000000000</double>
-             </property>
-             <property name="value">
-              <double>-10.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_maxTend">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="maximum">
-              <double>10.000000000000000</double>
-             </property>
-             <property name="value">
-              <double>10.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_tendAlignment">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="minimum">
-              <double>0.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>10.000000000000000</double>
-             </property>
-             <property name="value">
-              <double>1.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
             <widget class="QDoubleSpinBox" name="doubleSpinBox_formVariability">
              <property name="font">
               <font>
@@ -312,56 +136,14 @@ color: rgb(26, 95, 180);
               <set>Qt::AlignCenter</set>
              </property>
              <property name="maximum">
-              <double>20.000000000000000</double>
-             </property>
-             <property name="value">
               <double>5.000000000000000</double>
              </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_formBonus">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="minimum">
-              <double>-100.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>100.000000000000000</double>
+             <property name="value">
+              <double>1.000000000000000</double>
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_5">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>9</pointsize>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Wyrównanie tendencji&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Jeżeli wartość jest powyżej 1, wzrasta szansa na naturalne odwrócenie tendencji, tzn. w przeciwnym kierunku do aktualnej (Np. ze wzrostowej na spadkową). Jeżeli jest poniżej 0, wzrasta szansa na umocnienie tendencji zawodnika (wzrostowa tendencja ma szansę być bardziej wzrostową). Od 0 do 10 (Dziesięć to bardzo dużo, więc należy używać tego parametru z rozwagą)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(140, 73, 5);</string>
-             </property>
-             <property name="text">
-              <string>Wyrównanie tendencji (mnożnik)</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
+           <item row="1" column="0">
             <widget class="QLabel" name="label_9">
              <property name="font">
               <font>
@@ -384,30 +166,26 @@ color: rgb(26, 95, 180);
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_4">
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_formBonus">
              <property name="font">
               <font>
                <family>Quicksand</family>
-               <pointsize>9</pointsize>
-               <bold>true</bold>
+               <pointsize>10</pointsize>
               </font>
-             </property>
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Zmienność formy&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Ogólny parametr mówiący o tym, jak bardzo może się zmienić forma na podstawie aktualnej tendencji. Od 0 do 20 (teorytycznie od 0 do 10, ale wartości powyżej 10 są zarezerwowane do ekstrmalnych przypadków takich jak zmiana formy po długim okresie czasu).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(48, 5, 112);</string>
-             </property>
-             <property name="text">
-              <string>Zmienność formy</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
+             <property name="minimum">
+              <double>-100.000000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>100.000000000000000</double>
+             </property>
             </widget>
            </item>
-           <item row="7" column="0">
+           <item row="2" column="0">
             <widget class="QLabel" name="label_11">
              <property name="font">
               <font>
@@ -430,7 +208,23 @@ color: rgb(26, 95, 180);
              </property>
             </widget>
            </item>
-           <item row="8" column="0">
+           <item row="2" column="1">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_minForm">
+             <property name="font">
+              <font>
+               <family>Quicksand</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="maximum">
+              <double>100.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
             <widget class="QLabel" name="label_10">
              <property name="font">
               <font>
@@ -453,23 +247,7 @@ color: rgb(26, 95, 180);
              </property>
             </widget>
            </item>
-           <item row="7" column="1">
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_minForm">
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="maximum">
-              <double>100.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
+           <item row="3" column="1">
             <widget class="QDoubleSpinBox" name="doubleSpinBox_maxForm">
              <property name="font">
               <font>
@@ -756,11 +534,6 @@ background-color: rgb(186, 151, 184);
   <tabstop>pushButton_loadPreset</tabstop>
   <tabstop>pushButton_saveAsPreset</tabstop>
   <tabstop>pushButton_generate</tabstop>
-  <tabstop>doubleSpinBox_tendenceVariability</tabstop>
-  <tabstop>doubleSpinBox_tendBonus</tabstop>
-  <tabstop>doubleSpinBox_minTend</tabstop>
-  <tabstop>doubleSpinBox_tendAlignment</tabstop>
-  <tabstop>doubleSpinBox_maxTend</tabstop>
   <tabstop>doubleSpinBox_formVariability</tabstop>
   <tabstop>doubleSpinBox_formBonus</tabstop>
   <tabstop>doubleSpinBox_minForm</tabstop>

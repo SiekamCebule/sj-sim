@@ -2,26 +2,27 @@
 #define JUMPERFORMGENERATOR_H
 
 #include "JumperFormGeneratorSettings.h"
-#include "JumperFormTendence.h"
 
 class JumperFormGenerator
 {
 public:
     JumperFormGenerator();
 
-    void generateJumperFormTendence();
+public:
     void generateJumperForm();
-
+private:
+    double getBaseRandom();
 private:
     JumperFormGeneratorSettings settings;
-    JumperFormTendence * tendence;
+
     Jumper * jumper;
+    double * instability;
 public:
     JumperFormGeneratorSettings & getSettingsReference();
     void setSettings(const JumperFormGeneratorSettings &newSettings);
-    JumperFormTendence *getTendence() const;
-    void setTendence(JumperFormTendence *newTendence);
     Jumper *getJumper() const;
+    double *getInstability() const;
+    void setInstability(double *newInstability);
 };
 
 #endif // JUMPERFORMGENERATOR_H
