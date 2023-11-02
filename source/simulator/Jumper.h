@@ -19,6 +19,8 @@ public:
     QString getTextInfo();
     QString getTextForDiscord();
 
+    static Jumper loadByCSV(QStringList list);
+
 private:
     QString name, surname;
     QString countryCode;

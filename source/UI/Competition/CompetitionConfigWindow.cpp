@@ -1269,6 +1269,7 @@ void CompetitionConfigWindow::on_pushButton_byOtherComp_clicked()
         if(seasonCompetition->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual){
         if(window->getCheckBoxState() == false){
             seasonCompetitionJumpers = window->getCompetition()->getStartList();
+                qDebug()<<"seasonCompetitionJumpers count: "<<seasonCompetitionJumpers.count();
             jumpersListView->setupListModel();
         }
         else
@@ -1281,8 +1282,10 @@ void CompetitionConfigWindow::on_pushButton_byOtherComp_clicked()
                 if(temp.contains(j))
                     seasonCompetitionJumpers.push_back(j);
             }
+            qDebug()<<"temop1 : "<<temp.count();
             for(auto & seasonJumper : seasonCompetitionJumpers)
                 MyFunctions::removeFromVector(temp, seasonJumper);
+            qDebug()<<"temp: "<<temp.count();
 
             std::random_device rd;
             std::mt19937 g(rd());

@@ -14,6 +14,8 @@ JumpersListEditorWindow::JumpersListEditorWindow(QWidget *parent, QString name, 
     selectedJumpersListView->setSeasonJumpers(&selectedJumpers);
     selectedJumpersListView->setupListModel();
     selectedJumpersListView->setRemoveKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_D);
+    selectedJumpersListView->setUpKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Up);
+    selectedJumpersListView->setDownKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Down);
     ui->verticalLayout_selected->addWidget(selectedJumpersListView);
 
     unselectedJumpersListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonJumpersItems, false, false, true);

@@ -16,15 +16,15 @@ void JumperFormGenerator::generateJumperForm()
 
     if(oldForm > 50){
         if(MyRandom::randomDouble(0, 2, 5) <= 1 - oldInstability)
-            change = MyRandom::normalDistributionRandomHalf(0, 9.5, 0);
+            change = MyRandom::normalDistributionRandomHalf(0, 9, 0);
         else
-            change = MyRandom::normalDistributionRandomHalf(0, 9.5, 1);
+            change = MyRandom::normalDistributionRandomHalf(0, 9, 1);
     }
     else{
         if(MyRandom::randomDouble(0, 2, 5) <= 1 - oldInstability)
-           change = MyRandom::normalDistributionRandomHalf(0, 9.5, 1);
+           change = MyRandom::normalDistributionRandomHalf(0, 9, 1);
         else
-           change = MyRandom::normalDistributionRandomHalf(0, 9.5, 0);
+           change = MyRandom::normalDistributionRandomHalf(0, 9, 0);
     }
     change *= settings.getFormVariability();
     if(oldForm > 50 && change > 0)
@@ -33,7 +33,7 @@ void JumperFormGenerator::generateJumperForm()
     }
     else if(oldForm > 50 && change < 0)
     {
-        change /= 1 + ((oldForm - 50) / 25);
+        change /= 1 + ((oldForm - 50) / 33);
     }
     else if(oldForm < 50 && change < 0)
     {
@@ -41,7 +41,7 @@ void JumperFormGenerator::generateJumperForm()
     }
     else if(oldForm < 50 && change > 0)
     {
-        change /= 1 + ((50 - (oldForm)) / 25);
+        change /= 1 + ((50 - (oldForm)) / 33);
     }
 
     newInstability /= (1.30 * settings.getFormVariability());

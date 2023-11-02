@@ -11,6 +11,7 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QMessageBox>
+#include <QRegularExpression>
 #include <QByteArray>
 
 Jumper::Jumper(const QString &name, const QString &surname, const QString &countryCode, const JumperSkills &skills) : name(name),
@@ -38,6 +39,38 @@ QString Jumper::getTextInfo()
 QString Jumper::getTextForDiscord()
 {
     return getNameAndSurname() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(countryCode)->getAlpha2().toLower());
+}
+
+Jumper Jumper::loadByCSV(QStringList list)
+{
+    Jumper j;
+    int i=0;
+    for(auto & str : list)
+    {
+        if(i == 0){
+            QStringList output = str.split(QRegularExpression("\\s"));
+            j.setName(output.first());
+            j.setSurname(str.mid(j.getName().length() + 1).trimmed());
+            qDebug()<<"Name: "<<j.getName();
+            qDebug()<<"Surname: "<<j.getSurname();
+        }
+        else if(i == 1)
+            j.setCountryCode(str);
+        else if(i == 2)
+            j.getJumperSkillsPointer()->setTakeoffTechnique(str.toDouble());
+        else if(i == 3)
+            j.getJumperSkillsPointer()->setFlightTechnique(str.toDouble());
+        else if(i == 4)
+            j.getJumperSkillsPointer()->setFlightStyle(str.toDouble());
+        else if(i == 5)
+            j.getJumperSkillsPointer()->setForm(str.toDouble());
+        else if(i == 6)
+            j.getJumperSkillsPointer()->setLandingStyle(str.toDouble());
+        else if(i == 7)
+            j.getJumperSkillsPointer()->setJumpsEquality(str.toDouble());
+        i++;
+    }
+    return j;
 }
 
 QString Jumper::getImageName() const

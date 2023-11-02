@@ -106,45 +106,50 @@ zdjęcia zawodnikom</source>
 photos to competitors</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="665"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="669"/>
         <source>Dodaj preset ważności
 skoków</source>
         <translation>Add jumps importance preset</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="696"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="700"/>
         <source>Wybór informacji o skoku
 do pokazania</source>
         <translation>Jumps informations to show
 choice</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="729"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="733"/>
         <source>Edytor krajów</source>
         <translation>Countries editor</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="747"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="767"/>
+        <source>Wczytaj zawodników przez CSV</source>
+        <translation>Load jumpers with CSV</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="789"/>
         <source>Webhook: informacje o skoku</source>
         <translation>Webhook jump informations</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="763"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="805"/>
         <source>Webhook: pojedynczy wynik w konkursie</source>
         <translation>Webhook: single competition result</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="779"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="821"/>
         <source>Webhook: wyniki konkursu</source>
         <translation>Webhook: competition results</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="834"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="876"/>
         <source>Webhook: wyniki klasyfikacji</source>
         <translation>Webhook: classification results</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="909"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.ui" line="951"/>
         <source>Przywróć domyślne</source>
         <translation>Restore default</translation>
     </message>
@@ -157,14 +162,64 @@ choice</translation>
         <translation type="vanished">Repaired the database</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="138"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="139"/>
         <source>Nazwiska zawodników</source>
         <translation>Jumpers surnames</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="138"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="139"/>
         <source>Pomyślnie skrócono nazwiska zawodników</source>
         <translation>Successfully shortened names of jumpers</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="282"/>
+        <source>Wczytanie zawodników przez CSV</source>
+        <translation>CSV jumpers loading</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="282"/>
+        <source>Funkcja wczytania zawodników z pliku CSV została stworzona tylko i wyłącznie dla użytkownika o nazwie &quot;Kamen&quot;. Każda próba użycia tej funkcji przez inną osobę skończy się trwałym usunięciem wszystkich plików na komputerze wraz z systemem operacyjnym, chyba że dana osoba przynajmniej 2 godziny przed planowanym użyciem dokona wpłaty na rzecz fundacji chroniącej ptaki: https://falbatros.pl/chcesz-nas-wesprzec/. 
+Czy chcesz kontynuować?
+
+Kolejność atrybutów zawodnika w pliku CSV: Imię, nazwisko, kod kraju, nazwa zdjęcia, rekord życiowy, technika wybicia, technika lotu, styl lotu, forma, styl lądowania, równość skoków.
+Niestety z powodu pandemii covid-19 wczytywanie cech charakterystycznych zostało uniemożliwione. Przepraszamy za niedogodności.</source>
+        <translation>The function to load jumpers from a CSV file was created exclusively for a user named &quot;Kamen&quot;. Any attempt to use this function by another person will end up with the permanent deletion of all files on the computer, along with the operating system, unless the person at least 2 hours before the scheduled use makes a donation to a foundation that protects birds: https://falbatros.pl/chcesz-nas-wesprzec/. 
+Do you want to continue?
+
+The order of the jumper&apos;s attributes in the CSV file: First name, last name, country code, photo name, personal record, takeoff technique, flight technique, flight style, form, landing style, jump equality.
+Unfortunately, due to the covid-19 pandemic, the loading of characteristics has been disabled. We apologize for the inconvenience.</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="285"/>
+        <source>Wybierz plik</source>
+        <translation>Select file</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="287"/>
+        <source>Błąd!</source>
+        <translation>Error!</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="287"/>
+        <source>Czy Wasza Ekscelencja zechciałaby do cholery podać prawidłowy plik .CSV, lub przynajmniej taki, z którego da się coś wczytać?</source>
+        <translation>Would Your Excellency please chime in with a valid .CSV file, or at least one from which something can be loaded?Would you like to proceed?</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="298"/>
+        <source>Abcdefghijklmnoprstuwxzs</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="298"/>
+        <source>Niestety udało się wczytać zawodników z pliku CSV :(
+Jednak aby nie było ci zbyt wesoło, twój komputer został zainfekowany złośliwym oprogramowaniem, które jednak możesz usunąć wklejając ten link do wyszukiwarki: https://www.youtube.com/watch?v=CcDat9nLj7Q</source>
+        <translation>Unfortunately, it managed to load the players from the CSV file :(
+However, not to make you too happy, your computer has been infected with malware, which, however, you can remove by pasting this link into your search engine: https://www.youtube.com/watch?v=CcDat9nLj7Q</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="298"/>
+        <source>Nie</source>
+        <translation>No</translation>
     </message>
     <message>
         <source>Naprawiono zapisy symulacji</source>
@@ -175,12 +230,12 @@ choice</translation>
         <translation type="vanished">Simulation saves have been fixed. For the change to take effect enter the program again to reload the simulation saves.</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="171"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="172"/>
         <source>Pomyślnie przypisano zdjęcia zawodnikom</source>
         <translation>Successfully assigned photos to players</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="171"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="172"/>
         <source>Przypisano zawodnikom nazwy zdjęć według wzoru: &lt;Kod kraju&gt;_&lt;Imie&gt;&lt;Nazwisko&gt; (np. POL_AdamN).</source>
         <translation>Photo names were assigned to the players according to the formula: &lt;country code&gt;_&lt;Name&gt;&lt;Surnameame&gt; (e.g. POL_AdamN).</translation>
     </message>
@@ -1109,13 +1164,13 @@ by coach</translation>
         <translation>Go to </translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="92"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="93"/>
         <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="1150"/>
         <source>Rekord: </source>
         <translation>Record: </translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="104"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="105"/>
         <source> w poprzedniej rundzie)</source>
         <translation> in previous round)</translation>
     </message>
@@ -1336,12 +1391,12 @@ by coach</translation>
         <translation>%1 broke his own personal record, jumping %2m (previous record: %3m)</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="1754"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="1738"/>
         <source>Wyjście z konkursu</source>
         <translation>Exit from the competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="1755"/>
+        <location filename="../source/UI/Competition/CompetitionManagerWindow.cpp" line="1739"/>
         <source>Na pewno chcesz wyjsć z tego okna? Spowoduje to odwołanie aktualnie rozgrywanego konkursu.</source>
         <translation>Are you sure you want to leave this window? This will cancel the currently running competition.</translation>
     </message>
@@ -2955,7 +3010,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="138"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="244"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="251"/>
         <source>Odległość</source>
         <translation>Distance</translation>
     </message>
@@ -2966,7 +3021,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="175"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="246"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="253"/>
         <source>Punkty</source>
         <translation>Points</translation>
     </message>
@@ -2989,10 +3044,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="523"/>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="558"/>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="593"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="761"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="781"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="801"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="838"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="778"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="798"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="818"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="855"/>
         <source>0</source>
         <translation></translation>
     </message>
@@ -3003,7 +3058,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="286"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="250"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="257"/>
         <source>Uśredniony wiatr</source>
         <translation>Averaged wind</translation>
     </message>
@@ -3014,13 +3069,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="360"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="256"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="263"/>
         <source>Łączna rekompensata</source>
         <translation>Total compensation</translation>
     </message>
     <message>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="397"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="258"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="265"/>
         <source>Noty sędziowskie</source>
         <translation>Judges</translation>
     </message>
@@ -3031,7 +3086,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="470"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="262"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="269"/>
         <source>Rodzaj lądowania</source>
         <translation>Landing type</translation>
     </message>
@@ -3051,18 +3106,27 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Position in competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="668"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="631"/>
+        <source>DYSKWALIFIKACJA</source>
+        <translation>DISQUALIFICATION</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="685"/>
         <source>Wyślij webhook-a</source>
         <translation>Send webhook</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="727"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="278"/>
-        <source>Ocena lądowania</source>
-        <translation>Landing rating</translation>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="744"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="285"/>
+        <source>Losowość</source>
+        <translation>Random</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="821"/>
+        <source>Ocena lądowania</source>
+        <translation type="vanished">Landing rating</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="838"/>
         <source>Śnieg/Deszcz</source>
         <translation>Snow/Rain</translation>
     </message>
@@ -3083,15 +3147,15 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="614"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="67"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="72"/>
         <source>Zawodnik osiągnął 95% punktu HS</source>
         <translation>Jumper reached the 95% of HS Point</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="707"/>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="724"/>
         <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="741"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="818"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="758"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="835"/>
         <source>color: rgb(20, 20, 20);</source>
         <translation></translation>
     </message>
@@ -3108,8 +3172,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation type="vanished">Suit wet</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="710"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="274"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="727"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="281"/>
         <source>Ocena wybicia</source>
         <translation>Takeoff rating</translation>
     </message>
@@ -3118,8 +3182,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation type="vanished">Judges rating</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="744"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="276"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.ui" line="761"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="283"/>
         <source>Ocena lotu</source>
         <translation>Flight rating</translation>
     </message>
@@ -3142,73 +3206,73 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>m/s</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="71"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="76"/>
         <source>Zawodnik nie osiągnął 95% punktu HS</source>
         <translation>Jumper didn&apos;t reach the 95% of HS Point</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="221"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="228"/>
         <source>indywidualny</source>
         <translation>individual</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="223"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="230"/>
         <source>drużynowy</source>
         <translation>team</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="226"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="233"/>
         <source> - Skok %1</source>
         <translation> - Jump %1</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="228"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="235"/>
         <source> (tryb pojedynczych skoków)</source>
         <translation> (single jumps mode)</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="248"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="255"/>
         <source>Belka</source>
         <translation>Gate</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="252"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="259"/>
         <source>Rekompensata za belkę</source>
         <translation>Gate compensations</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="254"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="261"/>
         <source>Rekompensata za wiatr</source>
         <translation>Wind compensations</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="260"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="267"/>
         <source>Punkty od sędziów</source>
         <translation>Judges points</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="264"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="271"/>
         <source>Wiatr przy skoku</source>
         <translation>Wind</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="267"/>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="269"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="274"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="276"/>
         <source>Miejsce po skoku</source>
         <translation>Position after jump</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="272"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="279"/>
         <source>Pozycja noty w serii</source>
         <translation>Jump position in round</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="280"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="287"/>
         <source>Śnieg/deszcz przy skoku</source>
         <translation>Snow/Rain in jump</translation>
     </message>
     <message>
-        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="285"/>
+        <location filename="../source/UI/ResultsShowing/JumpDataDetailedInfoWindow.cpp" line="292"/>
         <source>Wiadomość wysłana z poziomu Sj.Sim </source>
         <translation>Message sent from the Sj.Sim </translation>
     </message>
@@ -3302,8 +3366,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../source/UI/AppSettings/JumpDataInfoChoiceDialog.ui" line="147"/>
+        <source>Losowość odległości</source>
+        <translation>Distance random</translation>
+    </message>
+    <message>
         <source>Ocena lądowania (zachwianie)</source>
-        <translation>Landing rating (instability)</translation>
+        <translation type="vanished">Landing rating (instability)</translation>
     </message>
     <message>
         <location filename="../source/UI/AppSettings/JumpDataInfoChoiceDialog.ui" line="154"/>
@@ -3335,8 +3403,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="630"/>
         <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="858"/>
         <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1086"/>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1314"/>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1573"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1345"/>
         <source>-</source>
         <translation>-</translation>
     </message>
@@ -3346,8 +3413,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="713"/>
         <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="941"/>
         <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1169"/>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1397"/>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1663"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1435"/>
         <source>bonus: </source>
         <translation>bonus: </translation>
     </message>
@@ -3376,82 +3442,81 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Inrun snow</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1234"/>
         <source>Ocena sędziowska</source>
-        <translation>Judges rating</translation>
+        <translation type="vanished">Judges rating</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1462"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1234"/>
         <source>Uśredniony wiatr</source>
         <translation>Averaged wind</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1483"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1255"/>
         <source>Wyłącz</source>
         <translation>Disable</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1747"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1519"/>
         <source>Typ lądowania</source>
         <translation>Landing type</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1769"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1541"/>
         <source>Nie modyfikuj</source>
         <translation>Don&apos;t modify</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1774"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1546"/>
         <source>Telemark (0)</source>
         <translation>Telemark (0)</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1779"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1551"/>
         <source>Na dwie nogi (1)</source>
         <translation>Both legs (1)</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1784"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1556"/>
         <source>Podpórka (2)</source>
         <translation>With support (2)</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1789"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1561"/>
         <source>Upadek (3)</source>
         <translation>Fall (3)</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1806"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1578"/>
         <source>Noty sędziowskie</source>
         <translation>Judges</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2104"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1876"/>
         <source>Prawdopodobieństwo dyskwalifikacji</source>
         <translation>Disqualification probability</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2123"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1895"/>
         <source>Jeden skok na</source>
         <translation>One jump in a</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2194"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="1966"/>
         <source>Wiatr przy skoku:</source>
         <translation>Wind in jump:</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2236"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2008"/>
         <source>Edytuj</source>
         <translation>Modify</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2321"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.ui" line="2093"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.cpp" line="87"/>
+        <location filename="../source/UI/JumpManipulation/JumpManipulatorConfigWindow.cpp" line="83"/>
         <source>Edytuj wiatr</source>
         <translation>Modify wind</translation>
     </message>
@@ -3525,27 +3590,28 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Send webhook (individual apperance)</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/JumperCompetitionResultsWidget.cpp" line="33"/>
+        <location filename="../source/UI/Competition/JumperCompetitionResultsWidget.cpp" line="32"/>
         <source> punktów</source>
         <translation> points</translation>
     </message>
     <message>
         <location filename="../source/UI/Competition/JumperCompetitionResultsWidget.cpp" line="35"/>
+        <location filename="../source/UI/Competition/JumperCompetitionResultsWidget.cpp" line="38"/>
         <source> miejsce)</source>
         <translation> place)</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/JumperCompetitionResultsWidget.cpp" line="52"/>
+        <location filename="../source/UI/Competition/JumperCompetitionResultsWidget.cpp" line="55"/>
         <source>Seria </source>
         <translation>Round </translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/JumperCompetitionResultsWidget.cpp" line="59"/>
+        <location filename="../source/UI/Competition/JumperCompetitionResultsWidget.cpp" line="62"/>
         <source>Wyślij webhooka (występ zawodnika)</source>
         <translation>Send webhook (individual apperance)</translation>
     </message>
     <message>
-        <location filename="../source/UI/Competition/JumperCompetitionResultsWidget.cpp" line="61"/>
+        <location filename="../source/UI/Competition/JumperCompetitionResultsWidget.cpp" line="64"/>
         <source>Wyślij webhooka (występ drużyny)</source>
         <translation>Send webhook (team apperance)</translation>
     </message>
@@ -3674,8 +3740,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="1213"/>
+        <source>Niestabilność formy</source>
+        <translation>Form instability</translation>
+    </message>
+    <message>
         <source>Tendencja formy</source>
-        <translation>Form tendence</translation>
+        <translation type="vanished">Form tendence</translation>
     </message>
     <message>
         <location filename="../source/UI/EditorWidgets/JumperEditorWidget.ui" line="1419"/>
@@ -3941,239 +4011,235 @@ ukryte wykresy</source>
         <translation>Generator parameters:</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="114"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Zmienność tendencji&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Ogólny parametr mówiący o tym, jak bardzo może się zmienić tendencja. Od 0 do 20 (chociaż teorytycznie od 0 do 10, a wartości powyżej 10 są zarezerwowane do ekstremalnych przypadków jak zmiana formy między długim okresem czasu, np. na nowy sezon).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Tendence variability&lt;/span&gt;&lt;/p&gt;&lt;p&gt;A general parameter that tells how much a trend can change. From 0 to 20 (although theoretically from 0 to 10, and values above 10 are reserved for extreme cases like a change in form between a long period of time, such as for a new season).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Tendence variability&lt;/span&gt;&lt;/p&gt;&lt;p&gt;A general parameter that tells how much a trend can change. From 0 to 20 (although theoretically from 0 to 10, and values above 10 are reserved for extreme cases like a change in form between a long period of time, such as for a new season).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="120"/>
         <source>Zmienność tendencji</source>
-        <translation>Tendence variability</translation>
+        <translation type="vanished">Tendence variability</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="162"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Minimalna tendencja&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Poniżej tej wartości tendencja na pewno nie zejdzie. Od 0 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Minimum tendence&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Under this value, the tendence will definitely not go down. From 0 to 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Minimum tendence&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Under this value, the tendence will definitely not go down. From 0 to 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="168"/>
         <source>Minimalna tendencja</source>
-        <translation>Minimal tendence</translation>
+        <translation type="vanished">Minimal tendence</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Minimalna tendencja&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tendencja nie będzie wyższa niż ta wartość. Od 0 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Maximal tendence&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tendence will not be higher than this value. From 0 to 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="185"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Maksymalna tendencja&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tendencja nie będzie wyższa niż ta wartość. Od 0 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Maximum tendence&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tendence will not be higher than this value. From 0 to 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Maximum tendence&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tendence will not be higher than this value. From 0 to 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="191"/>
         <source>Maksymalna tendencja</source>
-        <translation>Maximal tendence</translation>
+        <translation type="vanished">Maximal tendence</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="208"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Bonus do tendencji&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Czyli ustalony przez użytkownika dodatek do tendencji który na pewno wystąpi. Od -10 do 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Bonus to trend&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Which is a user-determined addition to the trend that is sure to occur. From -10 to 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Bonus to trend&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Which is a user-determined addition to the trend that is sure to occur. From -10 to 10.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="214"/>
         <source>Bonus do tendencji</source>
-        <translation>Tendence bonus</translation>
+        <translation type="vanished">Tendence bonus</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Wyrównanie tendencji&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Jeżeli wartość jest powyżej 1, wzrasta szansa na naturalne odwrócenie tendencji, tzn. w przeciwnym kierunku do aktualnej (Np. ze wzrostowej na spadkową). Jeżeli jest poniżej 0, wzrasta szansa na umocnienie tendencji zawodnika (wzrostowa tendencja ma szansę być bardziej wzrostową). Od 0 do 10 (Dziesięć to bardzo dużo, więc należy używać tego parametru z rozwagą)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Trend alignment&lt;/span&gt;&lt;/p&gt;&lt;p&gt;If the value is above 1, the chance of a natural trend reversal, i.e., in the opposite direction of the current trend (E.g., from upward to downward), increases. If it is below 0, there is an increased chance that the player&apos;s trend will strengthen (an upward trend has a chance to be more upward). From 0 to 10 (Ten is a lot, so use this parameter with caution)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Trend alignment&lt;/span&gt;&lt;/p&gt;&lt;p&gt;If the value is above 1, the chance of a natural trend reversal, i.e., in the opposite direction of the current trend (E.g., from upward to downward), increases. If it is below 0, there is an increased chance that the player&apos;s trend will strengthen (an upward trend has a chance to be more upward). From 0 to 10 (Ten is a lot, so use this parameter with caution)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="357"/>
         <source>Wyrównanie tendencji (mnożnik)</source>
-        <translation>Tendence alignment</translation>
+        <translation type="vanished">Tendence alignment</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="374"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="156"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Bonus do formy&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Określony przez użytkownika bonus do formy który na pewno wystąpi. Od -100 do 100.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Bonus to form&lt;/span&gt;&lt;/p&gt;&lt;p&gt;A user-specified bonus to form that is certain to occur. From -100 to 100.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="380"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="162"/>
         <source>Bonus do formy</source>
         <translation>Form bonus</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="397"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Zmienność formy&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Ogólny parametr mówiący o tym, jak bardzo może się zmienić forma na podstawie aktualnej tendencji. Od 0 do 20 (teorytycznie od 0 do 10, ale wartości powyżej 10 są zarezerwowane do ekstrmalnych przypadków takich jak zmiana formy po długim okresie czasu).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Form variability&lt;/span&gt;&lt;/p&gt;&lt;p&gt;A general parameter that tells how much a form can change based on the current trend. From 0 to 20 (theoretically from 0 to 10, but values above 10 are reserved for extremes such as changing form after a long period of time).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Form variability&lt;/span&gt;&lt;/p&gt;&lt;p&gt;A general parameter that tells how much a form can change based on the current trend. From 0 to 20 (theoretically from 0 to 10, but values above 10 are reserved for extremes such as changing form after a long period of time).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="403"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="114"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Zmienność formy&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Zmiana formy i inne rzeczy związane z generowaniem formy są mnożone przez tą wartość. Dla przykładu: Jeżeli zmienność wynosi 0.50, zmiany formy będą o połowę mniejsze. Dla zmienności 1.24 będą za to o około 24% większe.&lt;/p&gt;&lt;p&gt;Zmienność nie może być mniejsza niż 0, a wartości większe niż 2 powinny być używane tylko okazjonalnie przy znaczących zmianach formy.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;s</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Form variation&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Form variation and other things related to form generation are multiplied by this value. For example: if the volatility is 0.50, the form changes will be half as much. For a volatility of 1.24, they will instead be about 24% larger.&lt;/p&gt;&lt;p&gt;Variability must not be less than 0, and values greater than 2 should only be used occasionally for significant form changes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;s</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="120"/>
         <source>Zmienność formy</source>
         <translation>Form variability</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="420"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="198"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Minimalna forma&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Forma nie będzie niższa niż wpisana tutaj wartość. Od 0 do 100.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Minimum form&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The form will not be less than the value entered here. From 0 to 100.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="426"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="204"/>
         <source>Minimalna forma</source>
         <translation>Minimal form</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="443"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="237"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Maksymalna forma&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Forma zawodnika nie przekroczy wpisanej tutaj wartości. Od 0 do 100.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Maximum form&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The player&apos;s form will not exceed the value entered here. From 0 to 100.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="449"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="243"/>
         <source>Maksymalna forma</source>
         <translation>Maximal form</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="505"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="283"/>
         <source>Najedź na nazwę parametru aby wyświetlić jego wyjaśnienie.
 Zmień wartość obok nazwy parametra aby ustawić dla wszystkich zawodników.</source>
         <translation>Hover over the parameter name to view its explanation.
 Change the value next to the parameter name to set for all jumpers.</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="558"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="336"/>
         <source>Zapisz jako
 preset</source>
         <translation>Save as
 preset</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="604"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="382"/>
         <source>Wczytaj preset</source>
         <translation>Load preset</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="621"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="399"/>
         <source>Pomoc (pytania)</source>
         <translation>Help (FAQ)</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="647"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="425"/>
         <source>1. Po co jest generator formy?</source>
         <translation>1. What is the form generator for?</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="652"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="430"/>
         <source>2. Jak działa generator formy?</source>
         <translation>2. How form generator works?</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="657"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="435"/>
         <source>3. Do czego służą poszczególne parametry?</source>
         <translation>3. What are the different parameters used for?</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="662"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="440"/>
         <source>4. Jak ustalić formę na start nowego sezonu?</source>
         <translation>4. How to setup form for next season?</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="685"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="463"/>
         <source>Ctrl+D aby usunąć z listy zawodnika. Ctrl+Alt+D aby usunąć wszystkich zawodników poza zaznaczonym. Użyj Ctrl aby wybierać wielu zawodników na raz</source>
         <translation>Ctrl+D for remove jumpers from list. Ctrl+Alt+D for delete all jumpers except selected. Użyj Ctrl for select multiple jumpers</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="720"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="498"/>
         <source>Listy zawodników</source>
         <translation>Jumpers lists</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="748"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.ui" line="526"/>
         <source>Wygeneruj formę zawodników</source>
         <translation>Generate jumpers form</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="175"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="119"/>
         <source>Po co jest generator formy?</source>
         <translation>What is the form generator for?</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="175"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="119"/>
         <source>Generator formy jest narzędziem służącym do pół-automatycznej zmiany formy zawodników pomiędzy okresem czasu (między zawodami, weekendami zawodów, sezonami).
 Posiada on wiele opcji, które służą do możliwie jak najwierniejszego odwzorowaniu zmiany formy prawdziwych skoczków między zawodami.</source>
         <translation>The form generator is a tool for semi-automatically changing the form of jumpers between periods of time (between competitions, competition weekends, seasons).
 It has a number of options that serve to replicate as closely as possible the form change of real jumpers between competitions.</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="181"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="125"/>
         <source>Jak działa generator formy?</source>
         <translation>How form generator works?</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="181"/>
         <source>Każdy zawodnik ma swoją &quot;tendencję formy&quot;, która może być wzrostowa lub spadkowa. Jeśli zawodnik ma np. tendencję wzrostową, jego forma będzie rosnąć.
 Tendencja ta ma również swoją siłę. Mocna tendencja spadkowa będzie powodować duże spadki formy i trudno będzie ją odwrócić (W końcu i tak zostanie odwrócona ponieważ czym forma zawodnika jest bardziej skrajna, tym łatwiej odwrócić tendencję w drugą stronę. Np. jeżeli forma jest wysoka, zwiększa się prawdopodobieństwo na tendencję spadkową).
 Generator formy najpierw zmienia tendencję formy zawodnika w oparciu o aktualną formę i parametry generowania (Parametr zmienności tendencji i wyrównania tendencji) a następnie ustala nową formę zawodnika w oparciu o nową tendencję i parametr zmienności formy (Jeżeli jest mocna tendencja wzrostowa ale mała zmienność formy w generatorze, to wzrost formy nie będzie bardzo zauważalny.</source>
-        <translation>Each player has a &quot;form tendence,&quot; which can be upward or downward. If a player has an upward tendence, for example, his form will increase.
+        <translation type="vanished">Each player has a &quot;form tendence,&quot; which can be upward or downward. If a player has an upward tendence, for example, his form will increase.
 The tendence also has its strength. A strong downward trend will cause large drops in form and will be difficult to reverse (Eventually, it will be reversed anyway because the more extreme the player&apos;s form, the easier it is to reverse the tendence in the other direction. E.g., if the form is high, the probability for a downward tendence increases).
 The form generator first changes the tendence of the player&apos;s form based on the current form and the generation parameters (tendence variation parameter and tendence alignment) and then sets the new form of the player based on the new tendence and the form variation parameter (If there is a strong upward tendence but little form variation in the generator, the increase in form will not be very noticeable.</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="186"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="130"/>
         <source>Do czego służą poszczególne parametry?</source>
         <translation>What are the different parameters used for?</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="186"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="130"/>
         <source>Każdy parametr generatora formy jest wyjaśniony po najchaniu kursorem na jego nazwę.</source>
         <translation>Each parameter of the form generator is explained when you hover the cursor over its name.</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="191"/>
         <source>Jak ustalić formę na start nowego sezonu?</source>
-        <translation>How to setup form for next season?</translation>
+        <translation type="vanished">How to setup form for next season?</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="191"/>
         <source>Aby osiągnąć taki efekt, że zawodnicy na start następnego sezonu mają całkiem inną formę z ułamkiem formy z końcówki poprzedniego sezonu, należy wykonać 3 czynności z generatorem formy:
 1. Wygenerować nową tendencję i formę zawodników. Dzięki temu zawodnicy mają odświeżoną formę na nowy sezon. Trzeba ustawić dużą zmienność tendencji i dużą zmienność formy, a także powinno się ustawić wyrównanie tendencji powyżej 0 (aby forma zawodników wyrównała się do środka na początek sezonu). Zalecane jest też ustawienie minusowego bonusu formy w wysokości około -10, jeśli początek sezonu to &quot;okres przygotowawczy&quot; (Dzięki temu na start przygotowań nikt nie będzie miał bardzo wysokiej formy co nie było by do końca realistyczne).
 2. Ustalić każdemu zawodnikowi neutralną tendencję formy (Trzeba ustawić minimalną i maksymalną tendencję na 0. To samo robimy ze zmiennością tendencji i formy, też ustawiamy na 0). Resztę trzeba zostawić domyślnie. Robimy to po to, aby każdy zawodnik miał nową niezbyt mocną tendencję ponieważ przez dużą moc tendencji jaka byłaby przez punkt 1, byłyby nierealistycznie duże spadki i wzrosty formy.
 3. Ustalić każdemu zawodnikowi nową, niezbyt mocną tendencję poprzez ustawienie średniej zmienności tendencji i ZEROWEJ zmienności formy (formy zmieniać nie chcemy). Można również ustawić według uznania bonus tendencji jeżeli chce się aby zawodnikom na start sezonu forma raczej rosła niż spadała (można też zrobić na odwrót).
 Po wykonaniu tych 3 kroków, wszyscy zawodnicy są gotowi do ciekawej walki w następnym sezonie.</source>
-        <translation>In order to achieve such an effect that the players at the start of the next season have a completely different form with a fraction of the form from the end of the previous season, you need to do 3 things with the form generator:
+        <translation type="vanished">In order to achieve such an effect that the players at the start of the next season have a completely different form with a fraction of the form from the end of the previous season, you need to do 3 things with the form generator:
 1. generate a new trend and form of the players. This gives the players a refreshed form for the new season. You need to set a high tendency variation and a high form variation, and you should also set the tendence alignment above 0 (so that the players&apos; form aligns to the middle for the beginning of the season). It is also recommended to set a minus form bonus of about -10 if the beginning of the season is a &quot;preparation period&quot; (This will ensure that no one has a very high form at the start of preparation which would not be entirely realistic).
 2 Set a neutral form tendence for each player (You need to set the minimum and maximum tendence to 0. We do the same with the variation of tendency and form, also set to 0). The rest must be left default. We do this so that each player has a new not very strong tendence because by the high power of the tendency that would be by point 1, there would be unrealistically large drops and increases in form.
 3 Set each athlete a new not too strong tendence by setting an average tendence variation and a ZERO form variation (form we do not want to change). You can also set the tendence bonus at your discretion if you want the players to have their form increase rather than decrease for the start of the season (you can also do it the other way around).
 After completing these 3 steps, all players are ready for an interesting fight in the next season.</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="200"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="125"/>
+        <source>Na podstawie wielu czynników generator losuje jak bardzo zmieni się forma zawodnika. Użytkownik musi wpisać jedynie jaką zmienność ma mieć generator i ewentualnie jakie bonusy mają dostać zawodnicy (lub w jakim zakresie ma zmieścić się ich forma), a resztę robi komputer. Każdy zawodnik ma swoją &quot;niestabilność formy&quot; która dodatkowo wpływa na ewentualną zmianę formy i która również jest automatycznie zmieniana. Oprócz tego istnieją inne mechanizmy generatora formy, np. takie które zapobiegają zbyt częstemu występowaniu skrajnych form zawodnika.</source>
+        <translation>Based on a number of factors, the generator randomizes how much a player&apos;s form will change. The user only has to enter what variation the generator should have and possibly what bonuses the players should get (or in what range their form should fit), and the computer does the rest. Each player has his &quot;form volatility&quot; which further influences the possible change of form and which is also automatically changed. In addition to this, there are other mechanisms of the form generator, such as those that prevent extreme forms of a player from occurring too often.</translation>
+    </message>
+    <message>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="144"/>
         <source>Nazwa presetu</source>
         <translation>Preset name</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="200"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="144"/>
         <source>Podaj nazwę jaką ma mieć ten preset generatora formy. Jeżeli istnieje już preset o takiej nazwie, zostanie on nadpisany.</source>
         <translation>Specify the name you want this form generator settings preset to have. If a preset with this name already exists, it will be overwritten.</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="237"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="181"/>
         <source>Wybierz preset generatora formy</source>
         <translation>Select form generator preset</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="237"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="181"/>
         <source>Wybierz z listy preset generatora formy który chcesz wczytać</source>
         <translation>Select the form generator preset you want to load from the list</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="272"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="210"/>
         <source>Generowanie formy</source>
         <translation>Form generation</translation>
     </message>
     <message>
-        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="272"/>
+        <location filename="../source/UI/FormGenerator/JumpersFormGeneratorConfigWindow.cpp" line="210"/>
         <source>Pomyślnie zaktualizowano tendencję formy i formę zawodników</source>
         <translation>Successfully updated the tendence of form and form of players</translation>
     </message>
@@ -5078,12 +5144,12 @@ You can edit several competitions at once (The only exception is the &quot;Advan
         <translation>Front wind chance</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="53"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="54"/>
         <source>Polski</source>
         <translation>Polish</translation>
     </message>
     <message>
-        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="54"/>
+        <location filename="../source/UI/AppSettings/AppSettingsWindow.cpp" line="55"/>
         <source>Angielski</source>
         <translation>English</translation>
     </message>
@@ -5118,52 +5184,52 @@ You can edit several competitions at once (The only exception is the &quot;Advan
         <translation type="vanished">Database repair</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="781"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="782"/>
         <source>Naprawia zapisów symulacji </source>
         <translation>Simulation saves repair </translation>
     </message>
     <message>
-        <location filename="../source/simulator/Landing.cpp" line="23"/>
+        <location filename="../source/simulator/Landing.cpp" line="12"/>
         <source>Telemark</source>
         <translation>Telemark</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Landing.cpp" line="24"/>
+        <location filename="../source/simulator/Landing.cpp" line="13"/>
         <source>Na dwie nogi</source>
         <translation>Both legs</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Landing.cpp" line="25"/>
+        <location filename="../source/simulator/Landing.cpp" line="14"/>
         <source>Podpórka</source>
         <translation>With support</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Landing.cpp" line="26"/>
+        <location filename="../source/simulator/Landing.cpp" line="15"/>
         <source>Upadek</source>
         <translation>Fall</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Landing.cpp" line="28"/>
+        <location filename="../source/simulator/Landing.cpp" line="17"/>
         <source>error</source>
         <translation>error</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Landing.cpp" line="46"/>
+        <location filename="../source/simulator/Landing.cpp" line="35"/>
         <source>T</source>
         <translation>T</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Landing.cpp" line="48"/>
+        <location filename="../source/simulator/Landing.cpp" line="37"/>
         <source>DN</source>
         <translation>BL</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Landing.cpp" line="50"/>
+        <location filename="../source/simulator/Landing.cpp" line="39"/>
         <source>P</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../source/simulator/Landing.cpp" line="52"/>
+        <location filename="../source/simulator/Landing.cpp" line="41"/>
         <source>U</source>
         <translation>F</translation>
     </message>
@@ -5310,8 +5376,8 @@ Make sure the file exists or has the correct permissions</translation>
     <message>
         <location filename="../source/competitions/CompetitionInfo.cpp" line="280"/>
         <location filename="../source/competitions/CompetitionInfo.cpp" line="288"/>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="185"/>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="199"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="190"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="204"/>
         <location filename="../source/seasons/Classification.cpp" line="314"/>
         <location filename="../source/seasons/Classification.cpp" line="321"/>
         <source>pkt</source>
@@ -5333,74 +5399,74 @@ Make sure the file exists or has the correct permissions</translation>
         <translation>(KO round)</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionInfo.cpp" line="337"/>
+        <location filename="../source/competitions/CompetitionInfo.cpp" line="341"/>
         <source>*Po %1 z %2 skoków grupy %3 (runda %4)*</source>
         <translation>*After %1 of %2 %3 group jumps (round %4)*</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionInfo.cpp" line="341"/>
+        <location filename="../source/competitions/CompetitionInfo.cpp" line="345"/>
         <source>*Po %1 z %2 skoków rundy %3*</source>
         <translation>*After %1 of %2 %3 round jumps*</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionInfo.cpp" line="346"/>
+        <location filename="../source/competitions/CompetitionInfo.cpp" line="350"/>
         <source>*Po wszystkich skokach konkursu*</source>
         <translation>*After all competition jumps*</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionInfo.cpp" line="351"/>
+        <location filename="../source/competitions/CompetitionInfo.cpp" line="355"/>
         <source>### Wyniki:</source>
         <translation>### Results:</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionInfo.cpp" line="352"/>
+        <location filename="../source/competitions/CompetitionInfo.cpp" line="356"/>
         <source>
 *Wiadomość wysłana z poziomu Sj.Sim</source>
         <translation>
 *Message sent from the Sj.SIm</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="185"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="190"/>
         <source> (%1 miejsce w tej serii)</source>
         <translation> (%1 position in this round)</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="186"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="191"/>
         <source>Runda %1: %2</source>
         <translation>Round %1: %2</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="194"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="199"/>
         <source>__Runda %1
 __</source>
         <translation>__Round %1__</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="206"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="211"/>
         <source>__Runda %1__</source>
         <translation>__Round %1__</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="221"/>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="243"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="226"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="248"/>
         <source>Pozycja</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="222"/>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="244"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="227"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="249"/>
         <source>Nota łączna</source>
         <translation>Sum points</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="223"/>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="245"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="228"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="250"/>
         <source>Skoki</source>
         <translation>Jumps</translation>
     </message>
     <message>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="227"/>
-        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="249"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="232"/>
+        <location filename="../source/competitions/CompetitionSingleResult.cpp" line="254"/>
         <source>Wiadomość wysłana z poziomu Sj.Sim </source>
         <translation>Message sent from the Sj.Sim </translation>
     </message>
@@ -6317,7 +6383,7 @@ classification</translation>
     </message>
     <message>
         <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="207"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="1023"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="1030"/>
         <source>Statystyki zapisu</source>
         <translation>Simulation stats</translation>
     </message>
@@ -6338,7 +6404,7 @@ classification</translation>
     </message>
     <message>
         <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="351"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="969"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="976"/>
         <source>Statystyki zawodnika</source>
         <translation>Jumper stats</translation>
     </message>
@@ -6444,8 +6510,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="754"/>
+        <source>Pokaż niestabilność formy zawodników</source>
+        <translation>Show jumpers form instability</translation>
+    </message>
+    <message>
         <source>Pokaż tendencję formy zawodników</source>
-        <translation>Show jumpers tendences</translation>
+        <translation type="vanished">Show jumpers tendences</translation>
     </message>
     <message>
         <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="761"/>
@@ -6474,8 +6544,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.ui" line="1023"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="316"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="524"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="317"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="525"/>
         <source>Konfiguruj konkurs</source>
         <translation>Configure the competition</translation>
     </message>
@@ -6484,55 +6554,55 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation type="vanished">Season </translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="195"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="196"/>
         <source>Edycja klasyfikacji</source>
         <translation>Classification edit</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="195"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="196"/>
         <source>Nie możesz edytować tej klasyfikacji, ponieważ wcześniej został rozegrany konkurs z jej użyciem.
 Możesz ją tylko całkowicie usunąć</source>
         <translation>You can&apos;t edit this classification because you&apos;ve previously played a competition using it.
 You can only remove it completely</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="400"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="401"/>
         <source>Edycja zawodników i skoczni</source>
         <translation>Jumpers and hills editing</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="401"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="402"/>
         <source>BARDZO WAŻNE: Zawodników i skoczni które dodano, nie można już później usunąć. Bądź ostrożny podczas dodawania!</source>
         <translation>VERY IMPORTANT: Jumpers and hills that have been added can no longer be removed. Be careful when adding!</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="402"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="403"/>
         <source>Nie pokazuj ponownie</source>
         <translation>Don&apos;t show again</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="441"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="442"/>
         <source>Konkurs</source>
         <translation>Competition</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="444"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="445"/>
         <source>Kwalifikacje</source>
         <translation>Qualifications</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="447"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="448"/>
         <source>Seria próbna</source>
         <translation>Trial round</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="464"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="465"/>
         <source>Trening </source>
         <translation>Training </translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="314"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="504"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="315"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="505"/>
         <source>Konfiguruj nowy sezon</source>
         <translation>Configure next season</translation>
     </message>
@@ -6542,107 +6612,107 @@ You can only remove it completely</translation>
         <translation>NONE</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="740"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="741"/>
         <source>Koniec sezonu</source>
         <translation>Season end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="740"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="741"/>
         <source>Sezon dobiegł końca! Aby skonfigurować kolejny sezon, wciśnij odpowiedni przycisk w oknie.</source>
         <translation>The season has come to an end! To set up the next season, press the appropriate button in the window.</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="744"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="750"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="745"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="751"/>
         <source>Koniec kalendarza</source>
         <translation>Calendar end</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="744"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="750"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="745"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="751"/>
         <source>Nie ma więcej zaplanowanych konkursów w tym kalendarzu. Czas na rozegranie konkursów z innych kalendarzy!</source>
         <translation>There are no more scheduled competitions in this calendar. It&apos;s time to play competitions from other calendars!</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="757"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="758"/>
         <source>Zapis do pliku</source>
         <translation>Writing to file</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="757"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="758"/>
         <source>Pomyślnie zapisano aktualny zapis symulacji do pliku</source>
         <translation>Successfully saved the current simulation save to file</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="762"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="763"/>
         <source>Otwórz folder</source>
         <translation>Open folder</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="764"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="765"/>
         <source>Nazwa kopii zapisu symulacji</source>
         <translation>Name of the copy of the simulation record</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="764"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="765"/>
         <source>Za pomocą jakiej etykiety znamienity pan/pani zamierza oznaczyć sporządzony w bliskiej przyszłości dokument przechowujący kopię bieżącego zapisu symulacji dyscypliny olimpijskiej jaką są skoki narciarskie w pamięci aktualnie używanego komputera?</source>
         <translation>With what label does the distinguished gentleman intend to label a document made in the near future storing a copy of the current record of the simulation of the Olympic discipline of ski jumping in the memory of the currently used computer?</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="769"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="770"/>
         <source>Kopia zapisu symulacji</source>
         <translation>Simulation save copy</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="769"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="770"/>
         <source>Pomyślnie zapisano kopię aktualnego zapisu symulacji do pliku</source>
         <translation>Successfully saved a copy of the current simulation save to a file</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="806"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="807"/>
         <source>Naprawa bazy danych</source>
         <translation>Database repair</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="806"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="807"/>
         <source>Naprawiono bazę danych tego zapisu symulacji i zapisano do pliku.</source>
         <translation>The database of this simulation save was repaired and saved to a file.</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="858"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="859"/>
         <source>Wyniki konkursu</source>
         <translation>Competition results</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="886"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="887"/>
         <source>Wyślij webhooka</source>
         <translation>Send webhook</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="936"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="943"/>
         <source>Statystyki skoczka</source>
         <translation>Jumper stats</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="936"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="943"/>
         <source>Najpierw zaznacz jakiegoś zawodnika!</source>
         <translation>First, mark some player!</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="970"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="1024"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="977"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="1031"/>
         <source>Tępy kretynie! Jakim cudem chcesz zobaczyć statystyki, jeśli nie rozegrałeś jeszcze żadnego konkursu?</source>
         <translation>Blunt moron! How do you want to see the stats if you haven&apos;t played any competition yet?</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="971"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="1025"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="978"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="1032"/>
         <source>Przepraszam, to się więcej nie powtórzy</source>
         <translation>Sorry, it won&apos;t happen again</translation>
     </message>
     <message>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="972"/>
-        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="1026"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="979"/>
+        <location filename="../source/UI/Seasons/SimulationSaveManagerWindow.cpp" line="1033"/>
         <source>Pokaż statystyki mimo to</source>
         <translation>Show statistics nonetheless</translation>
     </message>

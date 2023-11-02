@@ -30,13 +30,14 @@ void JumperCompetitionResultsWidget::fillWidget()
     ui->label_img->setPixmap(jumperResult->getJumper()->getImagePixmap().scaled(ui->label_img->size()));
 
     ui->label_pointsSum->setText(QString::number(jumperResult->getPointsSum(), 'f', 1) + tr(" punktów"));
+        if(jumperResult->getCompetition() != nullptr){
         if(jumperResult->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
              ui->label_actualPosition->setText("(" + QString::number(jumperResult->getPosition()) + tr(" miejsce)"));
         else{
              int pos = jumperResult->getCompetition()->getResultsReference().getResultOfTeam(Team::getTeamByCountryCode(&jumperResult->getCompetition()->getTeamsReference(), jumperResult->getJumper()->getCountryCode()))->getPosition();
              ui->label_actualPosition->setText("(" + QString::number(pos) + tr(" miejsce)"));
         }
-
+        }
     if(GlobalAppSettings::get()->getJumpDataInfoChoiceReference().getPositionAfterJump() == true)
     {
         ui->label_actualPosition->show();

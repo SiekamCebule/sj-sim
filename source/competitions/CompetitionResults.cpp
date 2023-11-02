@@ -397,6 +397,7 @@ void CompetitionResults::addJump(Jumper *jumper, JumpData &jump, int jumpNumber)
     if(result == nullptr){
         results.push_back(CompetitionSingleResult(competition, jumper, CompetitionSingleResult::IndividualResult));
         jump.setSingleResult(&results.last());
+        jump.setCompetition(results.last().getCompetition());
         result = &results.last();
     }
     int index = jumpNumber;
@@ -426,6 +427,7 @@ void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
     if(result == nullptr){
         results.push_back(CompetitionSingleResult(competition, team, CompetitionSingleResult::TeamResult));
         jump.setSingleResult(&results.last());
+        jump.setCompetition(results.last().getCompetition());
         result = &results.last();
     }
     int index = jumpNumber;
@@ -444,13 +446,16 @@ void CompetitionResults::addJump(Team *team, JumpData &jump, int jumpNumber)
 void CompetitionResults::addJump(CompetitionSingleResult *result, JumpData &jump, int jumpNumber)
 {
     int index = jumpNumber;
-    if(jumpNumber == -1 || jumpNumber >= result->getJumpsReference().count())
+    if(jumpNumber == -1 || jumpNumber >= result->getJumpsReference().count()){
         result->getJumpsReference().push_back(jump);
+        jump.setCompetition(result->getJumpsReference().first().getCompetition());
+    }
     else{
         if(jumpNumber < 0)
             index = 0;
 
         jump.setSingleResult(result);
+        jump.setCompetition(result->getCompetition());
         result->getJumpsReference().insert(index, jump);
     }
     result->updatePointsSum();

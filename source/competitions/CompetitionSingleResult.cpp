@@ -52,8 +52,6 @@ QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult resul
     }
     resultObject.insert("jumps", jumpsArray);
 
-    qDebug()<<"sr of "<<result.getCompetition();
-
     return resultObject;
 }
 
@@ -160,8 +158,15 @@ QString CompetitionSingleResult::getCsvResultsObject()
 {
     QString s;
     s += QString::number(position)+";";
+    if(jumper != nullptr){
     s += jumper->getNameAndSurname()+";";
     s += jumper->getCountryCode()+";";
+    }
+    else
+    {
+    s += GlobalDatabase::get()->getCountryByAlpha3(team->getCountryCode())->getName()+";";
+    s += team->getCountryCode()+";";
+    }
     s += QString::number(pointsSum)+";";
     for(auto & jump : jumps)
     {

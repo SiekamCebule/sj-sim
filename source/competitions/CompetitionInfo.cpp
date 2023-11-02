@@ -492,7 +492,6 @@ CompetitionResults &CompetitionInfo::getResultsReference()
 
 QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
 {
-    qDebug()<<"comp";
     QJsonObject object;
     object.insert("id", QString::number(competition.getID()));
     if(competition.getHill() != nullptr)
@@ -504,8 +503,6 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     object.insert("cancelled", competition.getCancelled());
     object.insert("played", competition.getPlayed());
     object.insert("jumps-importance", competition.getJumpsImportance());
-
-    qDebug()<<"basic";
 
     if(competition.getTrialRound() != nullptr)
         object.insert("trial-round-id", QString::number(competition.getTrialRound()->getID()));
@@ -527,7 +524,6 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     if(competition.getAdvancementCompetition() != nullptr)
         object.insert("advancement-competition-id", QString::number(competition.getAdvancementCompetition()->getID()));
 
-    qDebug()<<"after teams";
     QJsonArray teamsArray;
     for(auto & team : competition.getTeamsReference())
     {
@@ -546,6 +542,7 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     object.insert("rounds-ko-groups", KOGroupsArray);
 
     QJsonArray startListArray;
+    //qDebug()<<"slc "<<competition.getStartListReference().count();
     for(auto & j : competition.getStartList())
     {
         startListArray.push_back(QString::number(j->getID()));

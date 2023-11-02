@@ -20,6 +20,7 @@ JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     DSQ = false;
     DNS = false;
     inSingleJumps = false;
+    competition = nullptr;
 }
 
 QString JumpData::getJudgesText()
@@ -70,6 +71,8 @@ int JumpData::getPositionInRound()
 
 int JumpData::getPositionInGroupForTeamCompetition()
 {
+    qDebug()<<"JUMPER "<<jumper->getCountryCode();
+    qDebug()<<"TEAMS "<<competition->getTeamsReference().count();
     Team * team = Team::getTeamByCountryCode(&competition->getTeamsReference(), jumper->getCountryCode());
     int group = team->getJumpersReference().indexOf(jumper) + 1;
     int round = MyFunctions::getIndexOfItemInVector(competition->getResultsReference().getResultOfTeam(team)->getTeamJumperResult(jumper)->getJumpsReference(), this) + 1;

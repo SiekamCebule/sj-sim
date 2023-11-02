@@ -1258,35 +1258,10 @@ void CompetitionManagerWindow::executeLiveCompetitionEffects()
     }
     if(teamResultsTreeView != nullptr)
         teamResultsTreeView->setUpdatesEnabled(true);
-    ui->tableView_results->show();
+    else
+        ui->tableView_results->show();
     enableCompetitionManagementButtons();
-    /*if(getType() == CompetitionRules::Individual){
-        ui->tableView_results->setModel(nullptr);
-        ui->tableView_results->setModel(resultsTableModel);
-        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-        ui->tableView_results->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        if(KOManager != nullptr)
-        {
-       KOManager->updateActualGroup(manager->getActualJumper());
-       KOManager->updateJumpersSortedByResults();
-       KOManager->updateStatuses();
-       KOGroupsResultsModel->setGroup(KOManager->getActualGroup());
-       manager->updateLastQualifiedResult();
-       updateToAdvanceDistanceLabel();
-       ui->tableView_KOGroupResults->setModel(nullptr);
-       ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
-       ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-       ui->tableView_KOGroupResults->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        }
-    }
-    else if(getType() == CompetitionRules::Team){
-        teamResultsTreeModel->setupTreeItems();
-        teamResultsTreeView->setModel(nullptr);
-        teamResultsTreeView->setModel(teamResultsTreeModel);
-        teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::Stretch);
-        teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        teamResultsTreeView->expandToDepth(0);
-    }*/
+
     updateToBeatDistanceLabel();
     updateToAdvanceDistanceLabel();
     updatePointsToTheLeaderLabel();

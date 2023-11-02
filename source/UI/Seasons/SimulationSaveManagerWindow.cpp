@@ -895,6 +895,7 @@ void SimulationSaveManagerWindow::on_listView_competitionsArchive_doubleClicked(
 
     connect(resultsTableView, &QListView::doubleClicked, this, [jumperResultWidget, competition](const QModelIndex index){
         jumperResultWidget->setJumperResult(competition->getResultsReference().getResultByIndex(index.row()));
+        jumperResultWidget->getJumperResult()->setCompetition(competition);
         jumperResultWidget->fillWidget();
     });
     connect(teamResultsTreeView, &QTreeView::doubleClicked, this, [jumperResultWidget, competition, teamResultsModel](const QModelIndex index){
@@ -903,7 +904,13 @@ void SimulationSaveManagerWindow::on_listView_competitionsArchive_doubleClicked(
             return;
         int teamIndex = item->getParentItem()->row();
         int jumperIndex = item->row();
+        qDebug()<<"teamIndex "<<teamIndex;
+        qDebug()<<"jumperIndex "<<jumperIndex;
+        //qDebug()<<competition<<" "<<jumperResultWidget->getJumperResult()->getCompetition();
         jumperResultWidget->setJumperResult(&competition->getResultsReference().getResultsReference()[teamIndex].getTeamJumpersResultsReference()[jumperIndex]);
+        jumperResultWidget->getJumperResult()->setCompetition(competition);
+        for(auto & jmp : jumperResultWidget->getJumperResult()->getJumpsReference())
+            jmp.setCompetition(competition);
         jumperResultWidget->fillWidget();
     });
 

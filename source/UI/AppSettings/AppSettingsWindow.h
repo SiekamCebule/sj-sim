@@ -72,6 +72,8 @@ private slots:
 
     void on_doubleSpinBox_flightFormEffect_editingFinished();
 
+    void on_pushButton_loadJumpersWithCSV_clicked();
+
 private:
     Ui::AppSettingsWindow *ui;
 

@@ -236,7 +236,7 @@ void JumpSimulator::generateWindEffects()
         {
             double windDirectionDeviation = Wind::getAbsForFrontWindDistance(wind.getDirection());
             change = (wind.getStrength() * (1 - (windDirectionDeviation / 90)))
-                     * (getWindSegmentDistance() / 26);
+                     * (getWindSegmentDistance() / 22.5);
             change *= 1.00 + (((simulationData->getFlightRating() - 75 * multiplier)) / 350);
             switch (jumperSkills->getFlightStyle()) {
             case JumperSkills::VStyle:
@@ -259,11 +259,11 @@ void JumpSimulator::generateWindEffects()
             double changeAdditionFromFrontWide = abs(
                 (wind.getStrength()
                  * (1 - (Wind::getAbsForFrontWindDistance(wind.getDirection()) / 90)))
-                * (getWindSegmentDistance() / 26));
+                * (getWindSegmentDistance() / 22.5));
             double windDirectionDeviation = abs(180 - wind.getDirection());
             change = changeAdditionFromFrontWide
                      + ((wind.getStrength() * (1 - (windDirectionDeviation / 90)))
-                        * (getWindSegmentDistance() / 12.5));
+                        * (getWindSegmentDistance() / 13.5));
             change /= 1.00 + (((simulationData->getFlightRating() - 75 * multiplier)) / 450);
             switch (jumperSkills->getFlightStyle()) {
             case JumperSkills::VStyle:
@@ -390,25 +390,31 @@ void JumpSimulator::generateLanding()
 void JumpSimulator::generateJudges()
 {
     if (competitionRules->getHasJudgesPoints() == true) {
-        double judgesRating = 17.35;
+        double judgesRating = 17.15;
         qDebug()<<"JudgesRating at start: "<<judgesRating;
         judgesRating += ((jumperSkills->getLandingStyle() - 12) / 5);
         qDebug()<<"JudgesRating after landingStyle: "<<judgesRating;
-        judgesRating *= 1 + ((jumpData.distance / hill->getKPoint() - 1) / 1.635);
+        judgesRating *= 1 + ((jumpData.distance / hill->getKPoint() - 1) / 1.9);
         qDebug()<<"JudgesRating after distance: "<<judgesRating;
+        double base = 0 + (((jumpData.distance / hill->getHSPoint()) - 1) * 15);
+        double dev = 0 + (((jumpData.distance / hill->getHSPoint()) - 1) * 12);
+        qDebug()<<"Base "<<base<<", dev "<<dev;
+        if(dev > 0 && base >= 0)
+            judgesRating -= MyRandom::normalDistributionRandomHalf(base, dev, MyRandom::Positive);
+        qDebug()<<"JudgesRating after long distance random: "<<judgesRating;
         switch(jumpData.landing.getType())
         {
         case Landing::TelemarkLanding:
-            judgesRating += MyRandom::normalDistributionRandom(0, 0.2);
+            judgesRating += MyRandom::normalDistributionRandom(0, 0.4);
             break;
         case Landing::BothLegsLanding:
-            judgesRating += MyRandom::normalDistributionRandom(-2.5, 0.35);
+            judgesRating += MyRandom::normalDistributionRandom(-2.5, 0.5);
             break;
         case Landing::SupportLanding:
-            judgesRating += MyRandom::normalDistributionRandom(-7, 0.5);
+            judgesRating += MyRandom::normalDistributionRandom(-7, 0.7);
             break;
         case Landing::Fall:
-            judgesRating += MyRandom::normalDistributionRandom(-9, 0.5);
+            judgesRating += MyRandom::normalDistributionRandom(-9, 0.7);
             break;
         default:
             break;
@@ -685,7 +691,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 3.075;
+        dev = 3.5;
         double newDev = dev * 0.6;
         newDev /= 1 + ((skills->getForm() - 50) / 30 * 0.13);
         newDev /= 1 + (0.13 * double(skills->getJumpsEquality()) / 2.4);
@@ -712,7 +718,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 3.075;
+        dev = 3.5;
         switch (skills->getFlightStyle()) {
         case JumperSkills::VStyle:
             dev -= 0.22;

@@ -91,6 +91,7 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
         if(jumpData->getCompetition() != nullptr){
             if(jumpData->getCompetition()->getRulesPointer()->getCompetitionType() == CompetitionRules::Individual)
             {
+                qDebug()<<"INDIVIDUAALLL";
                 ui->label_positionInRound->setText(QString::number(jumpData->getPositionInRound()));
                 ui->label_positionInGroup->hide();
                 ui->label_positionInGroupTitle->hide();
@@ -99,6 +100,7 @@ void JumpDataDetailedInfoWindow::fillJumpInformations()
             }
             else
             {
+                qDebug()<<"TEAMMM";
                 ui->label_positionInGroup->setText(QString::number(jumpData->getPositionInGroupForTeamCompetition()));
                 ui->label_positionInRound->setText(QString::number(jumpData->getPositionInRoundForTeamCompetition()));
                 ui->label_positionInCompetition->setText(QString::number(jumpData->getPositionInCompetitionForTeamCompetition()));
