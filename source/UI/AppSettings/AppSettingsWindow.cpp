@@ -279,14 +279,17 @@ void AppSettingsWindow::on_doubleSpinBox_flightFormEffect_editingFinished()
 
 void AppSettingsWindow::on_pushButton_loadJumpersWithCSV_clicked()
 {
-    QMessageBox::StandardButton btn = QMessageBox::warning(this, tr("Wczytanie zawodników przez CSV"), tr("Funkcja wczytania zawodników z pliku CSV została stworzona tylko i wyłącznie dla użytkownika o nazwie \"Kamen\". Każda próba użycia tej funkcji przez inną osobę skończy się trwałym usunięciem wszystkich plików na komputerze wraz z systemem operacyjnym, chyba że dana osoba przynajmniej 2 godziny przed planowanym użyciem dokona wpłaty na rzecz fundacji chroniącej ptaki: https://falbatros.pl/chcesz-nas-wesprzec/. \nCzy chcesz kontynuować?\n\nKolejność atrybutów zawodnika w pliku CSV: Imię, nazwisko, kod kraju, nazwa zdjęcia, rekord życiowy, technika wybicia, technika lotu, styl lotu, forma, styl lądowania, równość skoków.\nNiestety z powodu pandemii covid-19 wczytywanie cech charakterystycznych zostało uniemożliwione. Przepraszamy za niedogodności."), QMessageBox::Yes | QMessageBox::No);
+    QMessageBox::StandardButton btn = QMessageBox::warning(this, tr("Wczytanie zawodników przez CSV"), tr("Funkcja wczytania zawodników z pliku CSV została stworzona tylko i wyłącznie dla użytkownika o nazwie \"Kamen\". Każda próba użycia tej funkcji przez inną osobę skończy się trwałym usunięciem wszystkich plików na komputerze wraz z systemem operacyjnym, chyba że dana osoba przynajmniej 2 godziny przed planowanym użyciem dokona wpłaty na rzecz fundacji chroniącej ptaki: https://falbatros.pl/chcesz-nas-wesprzec/. \nCzy chcesz kontynuować?\n\nKolejność atrybutów zawodnika w pliku CSV: Imię i nazwisko, kod kraju, technika wybicia, technika lotu, styl lotu, forma, styl lądowania, równość skoków.\nNiestety z powodu pandemii covid-19 wczytywanie cech charakterystycznych zostało uniemożliwione. Przepraszamy za niedogodności."), QMessageBox::Yes | QMessageBox::No);
     if(btn != QMessageBox::Yes)
         return;
-    QFile file(QFileDialog::getOpenFileName(this, tr("Wybierz plik"), QString(), "*.csv"));
-    if(file.open(QIODevice::ReadOnly) == false || file.readAll().count() == 0){
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Wybierz plik"), QString(), "*.csv");
+    QFile file(fileName);
+    file.open(QFile::ReadOnly | QFile::Text);
+    if(file.readAll().count() == 0){
         QMessageBox::question(this, tr("Błąd!"), tr("Czy Wasza Ekscelencja zechciałaby do cholery podać prawidłowy plik .CSV, lub przynajmniej taki, z którego da się coś wczytać?"), QMessageBox::No);
             return;
-            }
+    }
+    file.seek(0);
 
     GlobalDatabase::get()->getEditableGlobalJumpers().clear();
     while (!file.atEnd()) {

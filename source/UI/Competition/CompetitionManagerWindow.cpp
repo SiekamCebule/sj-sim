@@ -47,6 +47,8 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
 
     startListModel = new StartListModel(this->manager, this);
     startListModel->setType(getType());
+    qDebug()<<"hau ahu piesek";
+    qDebug()<<this->manager->getStartListStatusesReference().count();
     startListModel->setStartListStatuses(&this->manager->getStartListStatusesReference());
     if(dynamic_cast<IndividualCompetitionManager *>(manager) != nullptr){
         if(dynamic_cast<IndividualCompetitionManager *>(manager)->getRoundsKOGroupsReference()[0]->count() > 0){
@@ -528,7 +530,7 @@ void CompetitionManagerWindow::setupGoToNextButtonForNextRound()
                 KOManager->updateActualGroup(manager->getActualJumper());
                 KOManager->setIndManager(dynamic_cast<IndividualCompetitionManager *>(manager));
                 indManager->setKOManager(KOManager);
-                KOGroupsResultsModel = new KOGroupResultsTableModel(KOManager, &dynamic_cast<IndividualCompetitionManager *>(manager)->getRoundsKOGroupsReference()[0]->first(), this);
+                KOGroupsResultsModel = new KOGroupResultsTableModel(KOManager, &dynamic_cast<IndividualCompetitionManager *>(manager)->getRoundsKOGroupsReference()[manager->getActualRound() - 1]->first(), this);
                 ui->tableView_KOGroupResults->setModel(KOGroupsResultsModel);
                 ui->tableView_KOGroupResults->resizeColumnsToContents();
                 ui->tableView_KOGroupResults->show();
@@ -1267,6 +1269,33 @@ void CompetitionManagerWindow::executeLiveCompetitionEffects()
     updatePointsToTheLeaderLabel();
 }
 
+void CompetitionManagerWindow::checkForEasterEggs()
+{
+    //6000
+    //50000000
+    CompetitionInfo * c = manager->getCompetitionInfo();
+    if(c->getHill()->getName() == "Innsbruck" && c->getHill()->getKPoint() == 120)
+    {
+        if(MyRandom::randomInt(1, 6000) == 10)
+        {
+            QString jumperText = manager->getActualJumper()->getNameAndSurname();
+            QString secondText;
+            if(MyRandom::randomInt(1, 2000) == 2)
+         secondText = tr("Niestety fatalne wieści dopłynęły do nas z austriackiego Innsbrucka. Nie udało się odratować %1 który zmarł na miejscu.").arg(jumperText);
+            else if(MyRandom::randomInt(1, 2000) < 200)
+         secondText = tr("Zawodnik został poważnie poturbowany ale nic nie zagraża jego życiu.");
+            else
+         secondText = tr("Zawodnik na szczęście wyszedł bez szwanku.");
+         QMessageBox::warning(this, tr("Niebezpieczna sytuacja na skoczni"), tr("Zawodnik %1 nie zdążył wyhamować i w niebezpieczny sposób przeleciał przez bandę.\n%2").arg(jumperText).arg(secondText), tr("Jestem wzruszony"), tr("Dobrze tak temu łajdakowi"), tr("Mam nadzieje że wzrost populacji krokodyli nastąpi maksymalnie do 2028 roku"));
+        }
+    }
+    if(MyRandom::randomInt(1, 50000000) == 2)
+    {
+        QMessageBox::critical(this, tr("Koniec konkursu!!!"), tr("Niestety konkurs musi zostać odwołany w trybie NATYCHMIASTOWYM. Pod skocznią wykryto bombę która w każdej chwili może wybuchnąć. Przepraszamy za niedogodności."), tr("XD"), tr("Ez super mega ok"), tr("Też tak myślę"));
+        close();
+    }
+}
+
 bool CompetitionManagerWindow::getSingleCompetition() const
 {
     return singleCompetition;
@@ -1472,6 +1501,7 @@ void CompetitionManagerWindow::on_pushButton_jump_clicked()
     jumperResultsWidget->fillWidget();
     if(GlobalAppSettings::get()->getLiveCompetition())
         executeLiveCompetitionEffects();
+    checkForEasterEggs();
 
     emit startListModel->dataChanged(startListModel->index(manager->getActualStartListIndex() - 1), startListModel->index(manager->getActualStartListIndex() - 1));
     ui->listView_startList->scrollTo(startListModel->index(manager->getActualStartListIndex() - 1));

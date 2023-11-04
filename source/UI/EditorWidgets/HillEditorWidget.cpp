@@ -64,8 +64,8 @@ void HillEditorWidget::resetHillInputs()
     ui->doubleSpinBox_backWindPoints->setValue(0);
     ui->checkBox_autoBackWindPoints->setChecked(false);
 
-    ui->doubleSpinBox_distanceMultiplier->setValue(0);
-    ui->doubleSpinBox_balance->setValue(0);
+    ui->doubleSpinBox_distanceMultiplier->setValue(1);
+    ui->doubleSpinBox_balance->setValue(1);
 
     ui->doubleSpinBox_record->setValue(0);
 }

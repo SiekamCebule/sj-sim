@@ -23,6 +23,7 @@
 #include "Seasons/SimulationSavesWindow.h"
 
 #include "HelpWindow.h"
+#include "ThanksWindow.h"
 
 #include <QDebug>
 #include <QCloseEvent>
@@ -33,7 +34,7 @@
 #include <dpp/dpp.h>
 
 extern IDGenerator globalIDGenerator;
-const QString appVersion = "1.1.0beta5";
+const QString appVersion = "1.1.0";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -173,5 +174,13 @@ void MainWindow::on_pushButton_help_clicked()
     HelpWindow * helpWindow = new HelpWindow();
     helpWindow->setAttribute(Qt::WA_DeleteOnClose);
     helpWindow->show();
+}
+
+
+void MainWindow::on_pushButton_thanks_clicked()
+{
+    ThanksWindow * thanksWindow = new ThanksWindow();
+    thanksWindow->setAttribute(Qt::WA_DeleteOnClose);
+    thanksWindow->show();
 }
 

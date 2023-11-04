@@ -712,10 +712,35 @@ color: rgb(32, 120, 252);
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="pushButton_thanks">
+        <property name="font">
+         <font>
+          <family>Quicksand</family>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+color: rgb(20, 20, 20);
+	background-color: rgb(223, 199, 255);
+padding: 2px;
+border: 1px solid rgb(27, 0, 0);
+border-radius: 3px;
+}
+QPushButton:hover{
+	background-color: rgb(253, 229, 255);
+}</string>
+        </property>
+        <property name="text">
+         <string>Podziękowania</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="pushButton_reportIssue">
         <property name="font">
          <font>
-          <family>Quicksand Light [PfEd]</family>
+          <family>Quicksand</family>
           <bold>true</bold>
          </font>
         </property>
@@ -766,16 +791,16 @@ background-color: rgb(255, 255, 251);
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>806</width>
-     <height>21</height>
-    </rect>
+  <action name="actionAbout_QT">
+   <property name="text">
+    <string>About QT</string>
    </property>
-  </widget>
+  </action>
+  <action name="actionPodzi_kowania">
+   <property name="text">
+    <string>Podziękowania</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../../assets.qrc"/>

@@ -31,7 +31,7 @@ Hill::Hill(const QString &name, const QString &countryCode, double KPoint, doubl
 {
     setCharacteristics(characteristics);
     setRealHSByCharacteristic();
-    balance = distanceMultiplier = 0;
+    balance = distanceMultiplier = 1;
 }
 
 QString Hill::getHillText()

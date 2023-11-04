@@ -90,13 +90,15 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
     QFuture<QPair<Jumper *, double>> instFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
         QPair<Jumper *, double> pair;
         pair.first = static_cast<Jumper *>(objectsManager->getObjectByID(value.toObject().value("jumper-id").toString().toULong()));
-        pair.second = value.toObject().value("instability").toDouble();
+        pair.second = value.toObject().value("instability").toString().toDouble();
         return pair;
     });
     QHash<Jumper *, double> instabilitiesHash;
     for(auto & pair : instFuture.results())
         instabilitiesHash.insert(pair.first, pair.second);
     save->setJumpersFormInstabilities(instabilitiesHash);
+    qDebug()<<save->getJumpersFormInstabilitiesReference().count();
+    qDebug()<<save->getJumpersFormInstabilitiesReference().value(save->getJumpersReference().first());
 
     array = obj.value("jumpers-lists").toArray();
     values.clear();

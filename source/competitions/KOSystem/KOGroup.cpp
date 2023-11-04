@@ -174,6 +174,9 @@ QVector<KOGroup> KOGroup::constructKOGroups(RoundInfo *roundInfo, QVector<Jumper
                 }
             }
         }
+        qDebug()<<"groups count: "<<groups.count();
+            if(groups.count() > 0)
+        qDebug()<<"first "<<groups.first().getJumpersReference().count();
         break;
     }
     case KOGroup::Random: {

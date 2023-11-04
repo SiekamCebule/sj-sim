@@ -38,6 +38,8 @@ private slots:
 
     void on_pushButton_help_clicked();
 
+    void on_pushButton_thanks_clicked();
+
 private:
     Ui::MainWindow *ui;
 

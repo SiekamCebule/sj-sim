@@ -88,6 +88,7 @@ SOURCES += \
     source/UI/SingleJumps/SingleJumpsResultsTableModel.cpp \
     source/UI/SingleJumps/SingleJumpsResultsTableSortDialog.cpp \
     source/UI/SingleJumps/SingleJumpsResultsWindow.cpp \
+    source/UI/ThanksWindow.cpp \
     source/competitions/AbstractCompetitionManager.cpp \
     source/competitions/CompetitionInfo.cpp \
     source/competitions/CompetitionManagers/KORoundManager.cpp \
@@ -229,6 +230,7 @@ HEADERS += \
     source/UI/SingleJumps/SingleJumpsResultsTableModel.h \
     source/UI/SingleJumps/SingleJumpsResultsTableSortDialog.h \
     source/UI/SingleJumps/SingleJumpsResultsWindow.h \
+    source/UI/ThanksWindow.h \
     source/UI/mainwindow.h \
     source/competitions/AbstractCompetitionManager.h \
     source/competitions/CompetitionInfo.h \
@@ -342,6 +344,7 @@ FORMS += \
     source/UI/EditorWidgets/JumperEditorWidget.ui \
     source/UI/SingleJumps/SingleJumpsResultsTableSortDialog.ui \
     source/UI/SingleJumps/SingleJumpsResultsWindow.ui \
+    source/UI/ThanksWindow.ui \
     source/UI/mainwindow.ui
 
 TRANSLATIONS += \

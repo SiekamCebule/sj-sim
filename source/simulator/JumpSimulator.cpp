@@ -691,12 +691,12 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 3.5;
+        dev = 4;
         double newDev = dev * 0.6;
         newDev /= 1 + ((skills->getForm() - 50) / 30 * 0.13);
         newDev /= 1 + (0.13 * double(skills->getJumpsEquality()) / 2.4);
         newDev /= 1 + (0.05 * skills->getLevelOfCharacteristic("takeoff-height"));
-        newDev *= 1 + (0.8 * (10 - jumpsImportance));
+        newDev *= 1 + (0.915 * (10 - jumpsImportance)) * (1 - (skills->getLevelOfCharacteristic("less-important-jumps") / 5));
 
 
         double addition = ((dev / newDev) - 1);
@@ -718,7 +718,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         double base = 0;
         double dev = 0;
         double random = 0;
-        dev = 3.5;
+        dev = 4;
         switch (skills->getFlightStyle()) {
         case JumperSkills::VStyle:
             dev -= 0.22;
@@ -742,7 +742,7 @@ double JumpSimulator::getRandomForJumpSimulation(short parameter, Jumper *jumper
         qDebug()<<"dev after flight height: "<<newDev;
         newDev /= 1 + (0.05 * skills->getLevelOfCharacteristic("flight-height"));
         qDebug()<<"dev after form"<<newDev;
-        newDev *= 1 + (0.8 * (10 - jumpsImportance));
+        newDev *= 1 + (0.915 * (10 - jumpsImportance)) * (1 - (skills->getLevelOfCharacteristic("less-important-jumps") / 4));
         qDebug()<<"dev after jumps jumps importance"<<newDev;
 
         double addition = ((dev / newDev) - 1);

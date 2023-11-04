@@ -66,6 +66,8 @@ public:
 
     void executeLiveCompetitionEffects();
 
+    void checkForEasterEggs();
+
 signals:
     void nextRoundButtonClicked();
 

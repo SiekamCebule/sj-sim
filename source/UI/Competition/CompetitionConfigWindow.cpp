@@ -746,7 +746,7 @@ void CompetitionConfigWindow::on_pushButton_submit_clicked()
         qualsInfo.setRules(competitionRulesEditor->getCompetitionRulesFromWidgetInputs());
         qualsInfo.setSerieType(CompetitionInfo::Qualifications);
         qualsInfo.setExceptionalRoundsCount(1);
-        qualsInfo.setJumpsImportance(ui->doubleSpinBox_jumpsImportance->value() / 1.16);
+        qualsInfo.setJumpsImportance(ui->doubleSpinBox_jumpsImportance->value() / 1.373015873015873);
         int type = competitionRulesEditor->getCompetitionTypeFromInput();
 
         for(auto & team : competitionTeams)

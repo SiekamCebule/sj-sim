@@ -56,7 +56,12 @@ QVariant ResultsTableModel::data(const QModelIndex &index, int role) const
                 int i = col % 2;
                 if(results->getResultsReference().at(index.row()).getJumps().count() > jump){
                     switch(i){
-                    case 0: return results->getResultsReference().at(index.row()).getJumps().at(jump).getDistance();
+                    case 0:{
+                        QString text = QString::number(results->getResultsReference().at(index.row()).getJumps().at(jump).getDistance());
+                        if(results->getResultsReference().at(index.row()).getJumps().at(jump).getLanding().getType() == Landing::Fall)
+                            text += "*";
+                        return text;
+                    }
                     case 1: return results->getResultsReference().at(index.row()).getJumps().at(jump).getPoints();
                     }
                 }

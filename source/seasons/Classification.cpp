@@ -311,6 +311,7 @@ QString Classification::getSingleResultsTextForWebhook()
     {
         for(auto & res : results)
         {
+            if(res->getPointsSum() != 0)
             s += QString::number(res->getPosition()) + ". " + res->getJumper()->getTextForDiscord() + " -> " + QString::number(res->getPointsSum(), 'f', 1) + QObject::tr("pkt") + "\n";
         }
     }
@@ -318,6 +319,7 @@ QString Classification::getSingleResultsTextForWebhook()
     {
         for(auto & res : results)
         {
+            if(res->getPointsSum() != 0)
             s += QString::number(res->getPosition()) + ". " + GlobalDatabase::get()->getCountryByAlpha3(res->getTeamCode())->getName() + QString(" :flag_%1:").arg(GlobalDatabase::get()->getCountryByAlpha3(res->getTeamCode())->getAlpha2().toLower()) + " -> " + QString::number(res->getPointsSum(), 'f', 1) + QObject::tr("pkt") + "\n";
         }
     }

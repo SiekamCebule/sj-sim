@@ -108,11 +108,15 @@ QVariant StartListModel::data(const QModelIndex &index, int role) const
         }
         return font;
     }
+    qDebug()<<"index "<<index.row();
+    qDebug()<<startListStatuses->at(index.row()).getJumper();
+    qDebug()<<startListStatuses->at(index.row()).getJumper()->getPersonalBest();
+    qDebug()<<startListStatuses->at(index.row()).getJumper()->getNameAndSurname();
     QString string = QString::number(index.row() + 1) + ". " + startListStatuses->at(index.row()).getJumper()->getNameAndSurname();
     if(role == Qt::DisplayRole){
         if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dns)
             return string + "   (Nie wystartował)";
-                   else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
+        else if(startListStatuses->at(index.row()).getJumpStatus() == StartListCompetitorStatus::Dsq)
                    return string + "   (Dyskwalifikacja)";
         else
             return string;
