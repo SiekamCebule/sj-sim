@@ -1,7 +1,7 @@
 #ifndef COMPETITIONSINGLERESULT_H
 #define COMPETITIONSINGLERESULT_H
 
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include "../simulator/JumpData.h"
 #include "../simulator/Team.h"
 #include <QVector>
@@ -15,7 +15,7 @@
 class CompetitionInfo;
 class Classification;
 
-class CompetitionSingleResult : public ClassWithID
+class CompetitionSingleResult : public Identifiable
 {
 public:
     CompetitionSingleResult(CompetitionInfo * competition = nullptr, Jumper * jumper = nullptr, int type = 0);
@@ -27,9 +27,9 @@ public:
         TeamResult
     };
 
-    static CompetitionSingleResult getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
+    static CompetitionSingleResult getFromJson(QJsonObject obj, IdentifiableObjectsStorage *storage);
     static QJsonObject getJsonObject(CompetitionSingleResult result);
-    static CompetitionSingleResult getFromJsonValue(QJsonValue val, DatabaseObjectsManager *objectsManager);
+    static CompetitionSingleResult getFromJsonValue(QJsonValue val, IdentifiableObjectsStorage *storage);
 
     static QVector<CompetitionSingleResult *> getFilteredSingleResults(QVector<CompetitionInfo *> & competitions, Jumper * jumper, QSet<int> serieTypes, QSet<int> hillTypes,
                                                                        QVector<Classification *> classifications, bool skipClassifications, Hill *specificHill);
@@ -89,7 +89,7 @@ inline bool operator>(const CompetitionSingleResult & l, const CompetitionSingle
 {
     if(l.getPointsSum() == r.getPointsSum())
     {
-        return l.getID() > r.getID();
+        return l.getID().str() > r.getID().str();
     }
     else return l.getPointsSum() > r.getPointsSum();
 }

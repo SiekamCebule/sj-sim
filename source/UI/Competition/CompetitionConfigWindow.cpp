@@ -55,7 +55,7 @@ CompetitionConfigWindow::CompetitionConfigWindow(short type, QWidget *parent, Si
     competitionRulesEditor->setParent(this);
 
     ui->toolBox->raise();
-    ui->label_title->raise();
+    //ui->label_title->raise();
     ui->toolBox->addItem(windsGeneratorSettingsEditor, tr("Ustawienia generatora wiatru"));
     push_button_randomWind = new QPushButton(tr("Losowe ustawienia generatora wiatru"));
 push_button_randomWind->setParent(this);
@@ -269,7 +269,7 @@ push_button_randomWind->setParent(this);
         checkBox_singleCompetitionQualifications = new QCheckBox(tr("Przeprowadzenie kwalifikacji"), this);
         checkBox_singleCompetitionQualifications->setStyleSheet("color: rgb(30, 30, 30);\nQCheckBox::indicator{\nwidth: 40px;\nheight: 30px;\n}");
         checkBox_singleCompetitionQualifications->setFont(QFont("Quicksand Medium", 12, 650));
-        ui->formLayout_competitionOptions->addWidget(checkBox_singleCompetitionQualifications);
+        ui->verticalLayout_competitionOptions->insertWidget(0, checkBox_singleCompetitionQualifications);
 
         setWindowTitle("Konfiguracja pojedynczego konkursu");
         competitionJumpers = MyFunctions::convertToVectorOfPointers(&GlobalDatabase::get()->getEditableGlobalJumpers());
@@ -1302,7 +1302,7 @@ void CompetitionConfigWindow::on_pushButton_byOtherComp_clicked()
             for(auto & team : window->getCompetition()->getTeamsReference())
             {
                 Team t;
-                t.generateID();
+                t.reassign();
                 t.setJumpers(team.getJumpersReference());
                 t.setCountryCode(team.getCountryCode());
                 seasonCompetition->getTeamsReference().push_back(t);

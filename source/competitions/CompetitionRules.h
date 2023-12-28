@@ -1,14 +1,14 @@
 #ifndef COMPETITIONRULES_H
 #define COMPETITIONRULES_H
 
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include "RoundInfo.h"
 #include <QVector>
 #include <QString>
 #include <QJsonObject>
 #include <QByteArray>
 
-class CompetitionRules : public ClassWithID
+class CompetitionRules : public Identifiable
 {
 public:
     CompetitionRules(const QString & name = "");

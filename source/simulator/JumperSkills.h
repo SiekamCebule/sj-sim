@@ -1,7 +1,7 @@
 #ifndef JUMPERSKILLS_H
 #define JUMPERSKILLS_H
 
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include "../utilities/ClassWithCharacteristics.h"
 #include "Characteristic.h"
 
@@ -10,7 +10,7 @@ class Jumper;
 #include <QSet>
 #include <QStringList>
 
-class JumperSkills : public ClassWithID, public ClassWithCharacteristics
+class JumperSkills : public Identifiable, public ClassWithCharacteristics
 {
 public:
     JumperSkills(double takeoffPower = 0, double takeoffTechnique = 0, double flightTechnique = 0, short flightStyle = 0, double form = 0, double landingStyle = 0, const QSet<Characteristic> &characteristics = QSet<Characteristic>(), Jumper * jumper = nullptr);
@@ -24,7 +24,7 @@ private:
     double landingStyle; // 1-15
 
     Jumper * jumper;
-    ulong jumperID;
+    sole::uuid jumperID;
 
 public:
     enum FlightStyle{
@@ -37,7 +37,7 @@ public:
     void checkSkillsLimits();
 
 public:
-    void setJumperID(ulong ID);
+    void setJumperID(sole::uuid ID);
     double getTakeoffTechnique() const;
     void setTakeoffTechnique(double newTakeoffTechnique);
     short getFlightStyle() const;

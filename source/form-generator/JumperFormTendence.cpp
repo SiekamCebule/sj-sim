@@ -18,16 +18,16 @@ int JumperFormTendence::getTendenceType()
 QJsonObject JumperFormTendence::getJsonObject(const JumperFormTendence &tendence)
 {
     QJsonObject object;
-    object.insert("jumper-id", QString::number(tendence.getJumper()->getID()));
+    object.insert("jumper-id", tendence.getJumper()->getIDStr());
     object.insert("tendence", tendence.getTendence());
 
     return object;
 }
 
-JumperFormTendence JumperFormTendence::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
+JumperFormTendence JumperFormTendence::getFromJson(QJsonObject obj, IdentifiableObjectsStorage * storage)
 {
     JumperFormTendence tendence;
-    tendence.setJumper(static_cast<Jumper *>(objectsManager->getObjectByID(obj.value("jumper-id").toString().toULong())));
+    tendence.setJumper(static_cast<Jumper *>(storage->get(obj.value("jumper-id").toString())));
     tendence.setTendence(obj.value("tendence").toDouble());
     return tendence;
 }

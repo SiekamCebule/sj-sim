@@ -7,6 +7,7 @@
 #include "../seasons/SimulationSave.h"
 #include "../seasons/SeasonCalendarPreset.h"
 #include "../form-generator/JumperFormGeneratorSettingsPreset.h"
+#include "../global/IdentifiableObjectsStorage.h"
 #include "JumpsImportancePreset.h"
 #include "PointsForPlacesPreset.h"
 #include "Country.h"
@@ -17,7 +18,7 @@
 #include <QStringList>
 #include <QtConcurrent>
 
-class GlobalDatabase
+class GlobalDatabase : public IdentifiableObjectsStorage
 {
 private:
     GlobalDatabase(); 
@@ -53,7 +54,7 @@ public:
     bool loadCompetitionsRules();
     bool loadSimulationSaves(bool progressDialog = false);
     bool loadPointsForPlacesPresets();
-    bool loadCalendarPresets();
+    bool loadCalendarPresets(bool before1_2_0 = false);
     bool loadFormGeneratorPresets();
     bool loadJumpsImportancePresets();
     bool loadCountries();

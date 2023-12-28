@@ -14,14 +14,14 @@ QJsonObject SaveJumpersList::getJsonObject(const SaveJumpersList &jumpersList)
     QJsonArray jumpersArray;
     for(auto & jumper : jumpersList.getJumpers())
     {
-        jumpersArray.push_back(QString::number(jumper->getID()));
+        jumpersArray.push_back(jumper->getIDStr());
     }
     object.insert("jumpers-ids", jumpersArray);
 
     return object;
 }
 
-SaveJumpersList SaveJumpersList::getFromJson(QJsonObject object, DatabaseObjectsManager * objectsManager)
+SaveJumpersList SaveJumpersList::getFromJson(QJsonObject object, IdentifiableObjectsStorage * storage)
 {
     SaveJumpersList jumpersList;
     jumpersList.setName(object.value("name").toString());
@@ -29,7 +29,7 @@ SaveJumpersList SaveJumpersList::getFromJson(QJsonObject object, DatabaseObjects
     QJsonArray jumpersArray = object.value("jumpers-ids").toArray();
     for(auto jumperID : jumpersArray)
     {
-        jumpersList.getJumpersReference().push_back(static_cast<Jumper *>(objectsManager->getObjectByID(jumperID.toString().toULong())));
+        jumpersList.getJumpersReference().push_back(static_cast<Jumper *>(storage->get(jumperID.toString())));
     }
 
     return jumpersList;

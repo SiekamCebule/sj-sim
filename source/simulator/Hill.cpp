@@ -27,7 +27,7 @@ Hill::Hill(const QString &name, const QString &countryCode, double KPoint, doubl
     autoPointsForKPoint(autoPointsForKPoint),
     autoPointsForMeter(autoPointsForMeter),
     autoPointsForBackWind(autoPointsForBackWind),
-    ClassWithID()
+    Identifiable()
 {
     setCharacteristics(characteristics);
     setRealHSByCharacteristic();
@@ -95,7 +95,7 @@ void Hill::setRecord(double newRecord)
 QJsonObject Hill::getJsonObject(const Hill & hill)
 {
     QJsonObject object;
-    object.insert("id", QString::number(hill.getID()));
+    object.insert("id", hill.getIDStr());
     object.insert("name", hill.getName());
     object.insert("country-code", hill.getCountryCode());
     object.insert("k-point", hill.getKPoint());
@@ -137,7 +137,7 @@ QJsonObject Hill::getJsonObject(const Hill & hill)
 Hill Hill::getFromJson(QJsonObject obj)
 {
     Hill hill;
-    hill.setID(obj.value("id").toString().toULong());
+    hill.setID(sole::rebuild(obj.value("id").toString().toStdString()));
     hill.setName(obj.value("name").toString());
     hill.setCountryCode(obj.value("country-code").toString());
     hill.setKPoint(obj.value("k-point").toDouble());

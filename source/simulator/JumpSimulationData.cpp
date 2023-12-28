@@ -1,7 +1,7 @@
 #include "JumpSimulationData.h"
 
 JumpSimulationData::JumpSimulationData() :
-ClassWithID()
+Identifiable()
 {
     reset();
 }

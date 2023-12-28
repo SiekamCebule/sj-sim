@@ -1,11 +1,11 @@
 #ifndef WIND_H
 #define WIND_H
 
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 
 class QString;
 
-class Wind : public ClassWithID
+class Wind : public Identifiable
 {
 public:
     enum DirectionType{

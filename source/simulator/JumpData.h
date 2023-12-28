@@ -4,20 +4,20 @@
 #include <QVector>
 #include <QJsonObject>
 
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include "../competitions/CompetitionRules.h"
+#include "../global/IdentifiableObjectsStorage.h"
 #include "WindsCalculator.h"
 #include "Landing.h"
 #include "Jumper.h"
 #include "Hill.h"
 #include "JumpSimulationData.h"
-#include "../global/DatabaseObjectsManager.h"
 
 class JumpSimulator;
 class CompetitionSingleResult;
 class CompetitionInfo;
 
-class JumpData : public ClassWithID
+class JumpData : public Identifiable
 {
 public:
     friend class JumpSimulator;
@@ -68,7 +68,7 @@ public:
     void setupForNextJumper();
 
     static QJsonObject getJsonObject(JumpData jumpData);
-    static JumpData getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
+    static JumpData getFromJson(QJsonObject obj, IdentifiableObjectsStorage *storage);
 
     double getDistance() const;
     void setDistance(double newDistance);

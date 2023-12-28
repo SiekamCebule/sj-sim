@@ -1,9 +1,9 @@
 #ifndef JUMPSIMULATIONDATA_H
 #define JUMPSIMULATIONDATA_H
 
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 
-class JumpSimulationData : ClassWithID
+class JumpSimulationData : Identifiable
 {
     friend class JumpSimulator;
 public:

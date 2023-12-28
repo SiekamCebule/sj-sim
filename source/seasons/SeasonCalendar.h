@@ -5,13 +5,15 @@
 #include <QSharedPointer>
 #include <QJsonObject>
 #include "../competitions/CompetitionInfo.h"
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 
-class SeasonCalendar : public ClassWithID
+class SeasonCalendar : public Identifiable
 {
 public:
     SeasonCalendar(QString name = "");
     ~SeasonCalendar();
+
+    void debugCalendar(CompetitionInfo *next) const;
 
     void fixCompetitionsClassifications();
     void fixCompetitionsHills(QVector<Hill *> *hillsList, Hill *defaultHill);
@@ -19,7 +21,7 @@ public:
     void fixAdvancementClassifications();
     void updateCompetitionsQualifyingCompetitions();
 
-    static SeasonCalendar getFromJson(QJsonObject json, DatabaseObjectsManager *objectsManager);
+    static SeasonCalendar getFromJson(QJsonObject json, IdentifiableObjectsStorage *storage, QMap<ulong, Identifiable *> *before120Map = nullptr);
     static QJsonObject getJsonObject(SeasonCalendar & calendar);
     static int getCompetitionMainIndex(QVector<CompetitionInfo *> & competitions, CompetitionInfo * competition);
     static CompetitionInfo * getMainCompetitionByIndex(QVector<CompetitionInfo *> & competitions, int index);

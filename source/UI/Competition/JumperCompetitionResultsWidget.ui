@@ -146,6 +146,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <family>Quicksand Medium</family>
+      </font>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -233,18 +238,19 @@
       <widget class="QPushButton" name="pushButton_sendWebhook">
        <property name="minimumSize">
         <size>
-         <width>240</width>
+         <width>260</width>
          <height>27</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>240</width>
+         <width>260</width>
          <height>27</height>
         </size>
        </property>
        <property name="font">
         <font>
+         <family>Quicksand Medium</family>
          <pointsize>10</pointsize>
         </font>
        </property>

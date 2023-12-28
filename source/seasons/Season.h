@@ -8,16 +8,16 @@
 #include <QJsonValue>
 #include "SeasonCalendar.h"
 #include "Classification.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../global/IdentifiableObjectsStorage.h"
 
-class Season : public ClassWithID
+class Season : public Identifiable
 {
 public:
     Season();
     ~Season();
 
     static QJsonObject getJsonObject(const Season &season);
-    static Season getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
+    static Season getFromJson(QJsonObject obj, IdentifiableObjectsStorage *storage);
     bool containsCalendarByName(QString n);
 
 private:

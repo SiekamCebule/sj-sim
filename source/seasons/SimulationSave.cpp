@@ -1,12 +1,12 @@
 #include "SimulationSave.h"
 #include <QFile>
-#include "../global/IDGenerator.h"
+#include "../global/Uuid.h"
 #include <QtConcurrent>
 
-extern IDGenerator globalIDGenerator;
+extern Uuid globalIDGenerator;
 
 SimulationSave::SimulationSave() :
-    ClassWithID()
+    Identifiable()
 {
     actualSeason = nullptr;
 }
@@ -29,10 +29,14 @@ SimulationSave::~SimulationSave()
     }
 }
 
-SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
+SimulationSave * SimulationSave::getFromJson(QJsonObject obj, IdentifiableObjectsStorage * storage)
 {
     SimulationSave * save = new SimulationSave();
-    save->setID(obj.value("id").toString().toULong());
+    if(storage == nullptr)
+    {
+        storage = save;
+    }
+    save->setID(sole::rebuild(obj.value("id").toString().toStdString()));
 
     qDebug()<<"id: "<<save->getID();
 
@@ -40,11 +44,11 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
     QVector<QJsonValue> values;
     for(auto val : qAsConst(array))
         values.push_back(val);
-    QFuture<Jumper *> jumpersFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+    QFuture<Jumper *> jumpersFuture = QtConcurrent::mapped(values, [storage](const QJsonValue & value){
         return new Jumper(Jumper::getFromJson(value.toObject()));
     });
     save->setJumpers(jumpersFuture.results().toVector());
-    objectsManager->fill(&save->getJumpersReference());
+    storage->add(save->getJumpersReference());
 
     qDebug()<<"jumpers";
 
@@ -52,21 +56,21 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
     values.clear();
     for(auto val : qAsConst(array))
         values.push_back(val);
-    QFuture<Hill *> hillsFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+    QFuture<Hill *> hillsFuture = QtConcurrent::mapped(values, [storage](const QJsonValue & value){
         return new Hill(Hill::getFromJson(value.toObject()));
     });
     save->setHills(hillsFuture.results().toVector());
-    objectsManager->fill(&save->getHillsReference());
+    storage->add(save->getHillsReference());
 
     array = obj.value("rules").toArray();
     values.clear();
     for(auto val : qAsConst(array))
         values.push_back(val);
-    QFuture<CompetitionRules> rulesFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+    QFuture<CompetitionRules> rulesFuture = QtConcurrent::mapped(values, [storage](const QJsonValue & value){
         return CompetitionRules::getFromJson(value.toObject());
     });
     save->setCompetitionRules(rulesFuture.results().toVector());
-    objectsManager->fill(&save->getCompetitionRulesReference());
+    storage->add(save->getCompetitionRulesReference());
 
     qDebug()<<"rules";
 
@@ -74,11 +78,11 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
     values.clear();
     for(auto val : seasonsArray)
         values.push_back(val);
-    QFuture<Season> seasonsFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue &value){
-        return Season::getFromJson(value.toObject(), objectsManager);
+    QFuture<Season> seasonsFuture = QtConcurrent::mapped(values, [storage](const QJsonValue &value){
+        return Season::getFromJson(value.toObject(), storage);
     });
     save->setSeasons(seasonsFuture.results().toVector());
-    objectsManager->fill(&save->getSeasonsReference());
+    storage->add(save->getSeasonsReference());
         /*Season season = Season::getFromJson(val.toObject(), objectsManager);
         save->getSeasonsReference().push_back(season);*/
 
@@ -87,9 +91,9 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
     values.clear();
     for(auto val : qAsConst(array))
         values.push_back(val);
-    QFuture<QPair<Jumper *, double>> instFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
+    QFuture<QPair<Jumper *, double>> instFuture = QtConcurrent::mapped(values, [storage](const QJsonValue & value){
         QPair<Jumper *, double> pair;
-        pair.first = static_cast<Jumper *>(objectsManager->getObjectByID(value.toObject().value("jumper-id").toString().toULong()));
+        pair.first = static_cast<Jumper *>(storage->get(value.toObject().value("jumper-id").toString()));
         pair.second = value.toObject().value("instability").toString().toDouble();
         return pair;
     });
@@ -104,12 +108,12 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
     values.clear();
     for(auto & val : qAsConst(array))
         values.push_back(val);
-    QFuture<SaveJumpersList> listsFuture = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
-        return SaveJumpersList::getFromJson(value.toObject(), objectsManager);
+    QFuture<SaveJumpersList> listsFuture = QtConcurrent::mapped(values, [storage](const QJsonValue & value){
+        return SaveJumpersList::getFromJson(value.toObject(), storage);
     });
     save->setJumpersLists(listsFuture.results());
 
-    save->setActualSeason(static_cast<Season *>(objectsManager->getObjectByID(obj.value("actual-season-id").toString().toULong())));
+    save->setActualSeason(static_cast<Season *>(storage->get(obj.value("actual-season-id").toString())));
     save->setNextCompetitionIndex(obj.value("next-competition-index").toInt());
     if(save->getActualSeason()->getActualCalendar() != nullptr && save->getActualSeason()->getActualCalendar()->getCompetitionsReference().count() > 0)
         save->setNextCompetition(save->getActualSeason()->getActualCalendar()->getCompetitionsReference()[save->getNextCompetitionIndex()]);
@@ -126,7 +130,7 @@ SimulationSave * SimulationSave::getFromJson(QJsonObject obj, DatabaseObjectsMan
 QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
 {
     QJsonObject object;
-    object.insert("id", QString::number(save.getID()));
+    object.insert("id", save.getIDStr());
 
     QFuture<QJsonObject> jumpersFuture = QtConcurrent::mapped(save.getJumpersReference(), [](Jumper * p){return Jumper::getJsonObject(*p);});
     QJsonArray jumpersArray;
@@ -154,7 +158,7 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
 
     QFuture<QJsonObject> instabilitiesFuture = QtConcurrent::mapped(save.getJumpersFormInstabilitiesToVector(), [](QPair<Jumper *, double> p){
         QJsonObject o;
-        o.insert("jumper-id", QString::number(p.first->getID()));
+        o.insert("jumper-id", p.first->getIDStr());
         o.insert("instability", QString::number(p.second));
         return o;
     });
@@ -169,7 +173,7 @@ QJsonObject SimulationSave::getJsonObject(SimulationSave &save)
         listsArray.append(o);
     object.insert("jumpers-lists", listsArray);
 
-    object.insert("actual-season-id", QString::number(save.getActualSeason()->getID()));
+    object.insert("actual-season-id", save.getActualSeason()->getIDStr());
     object.insert("next-competition-index", save.getNextCompetitionIndex());
 
     object.insert("show-form", save.getShowForm());
@@ -208,7 +212,7 @@ bool SimulationSave::saveToFile(QString dir, QString fileName)
 
 SimulationSave *SimulationSave::loadFromFile(QString fileName)
 {
-    DatabaseObjectsManager objectsManager;
+    IdentifiableObjectsStorage objectsManager;
         QFile file("simulationSaves/" + fileName);
         if(!file.open(QFile::ReadOnly | QFile::Text))
         {
@@ -219,7 +223,7 @@ SimulationSave *SimulationSave::loadFromFile(QString fileName)
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         file.close();
         QJsonObject object = doc.object().value("simulation-save").toObject();
-        SimulationSave * s = SimulationSave::getFromJson(object, &objectsManager);
+        SimulationSave * s = SimulationSave::getFromJson(object, nullptr);
         fileName.chop(5);
         s->setName(fileName);
         return s;
@@ -244,7 +248,7 @@ void SimulationSave::updateNextCompetitionIndex()
 
 void SimulationSave::repairDatabase()
 {
-    QVector<ClassWithID *> objects;
+    QVector<Identifiable *> objects;
     for(auto & jumper : jumpers)
         objects.push_back(jumper);
     for(auto & hill : hills)
@@ -283,11 +287,7 @@ void SimulationSave::repairDatabase()
     //globalIDGenerator.reset();
     for(auto & object : objects)
     {
-        object->setID(0);
-    }
-    for(auto & object : objects)
-    {
-        object->generateID();
+        object->reassign();
     }
 
     return;

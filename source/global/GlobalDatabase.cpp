@@ -16,7 +16,7 @@
 #include "../global/CountryFlagsManager.h"
 
 GlobalDatabase* GlobalDatabase::m_globalDatabase = nullptr;
-extern IDGenerator globalIDGenerator;
+extern Uuid globalIDGenerator;
 
 GlobalDatabase::GlobalDatabase()
 {
@@ -55,28 +55,22 @@ void GlobalDatabase::repairDatabase()
     dialog.setModal(true);
     dialog.setWindowModality(Qt::WindowModal);
 
-    QSet<ulong> values; //Te ktore już wystąpiły
+    QSet<sole::uuid> values; //Te ktore już wystąpiły
 
     for(auto & jumper : db->getEditableGlobalJumpers()){
-        if(values.contains(jumper.getID()))
-            jumper.generateID();
-        else jumper.regenerateID();
+        jumper.reassign();
         values.insert(jumper.getID());
         dialog.setValue(dialog.value() + 1);
         QCoreApplication::processEvents();
     }
     for(auto & hill : db->getEditableGlobalHills()){
-        if(values.contains(hill.getID()))
-            hill.generateID();
-        else hill.regenerateID();
+        hill.reassign();
         values.insert(hill.getID());
         dialog.setValue(dialog.value() + 1);
         QCoreApplication::processEvents();
     }
     for(auto & rules : db->getEditableCompetitionRules()){
-        if(values.contains(rules.getID()))
-            rules.generateID();
-        else rules.regenerateID();
+        rules.reassign();
         values.insert(rules.getID());
         dialog.setValue(dialog.value() + 1);
         QCoreApplication::processEvents();
@@ -85,40 +79,28 @@ void GlobalDatabase::repairDatabase()
     {
         for(auto & competition : calendarPreset.getCalendarReference().getCompetitionsReference())
         {
-            if(values.contains(competition->getID()))
-                competition->generateID();
-            else competition->regenerateID();
+            competition->reassign();
 
-            if(values.contains(competition->getResultsReference().getID()))
-                competition->getResultsReference().generateID();
-            else competition->getResultsReference().regenerateID();
+            competition->getResultsReference().reassign();
 
             for(auto & groups : competition->getRoundsKOGroupsReference())
             {
                 for(auto & group : groups){
-                    if(values.contains(group.getID()))
-                        group.generateID();
-                    else group.regenerateID();
+                    group.reassign();
                 }
             }
             for(auto & team : competition->getTeamsReference())
             {
-                if(values.contains(team.getID()))
-                    team.generateID();
-                else team.regenerateID();
+                team.reassign();
             }
         }
         for(auto & classification : calendarPreset.getCalendarReference().getClassificationsReference())
         {
-            if(values.contains(classification->getID()))
-                classification->generateID();
-            else classification->regenerateID();
+            classification->reassign();
         }
     }
     for(auto & save : db->getEditableGlobalSimulationSaves()){
-        if(values.contains(save->getID()))
-            save->generateID();
-        else save->regenerateID();
+        save->reassign();
         save->repairDatabase();
         values.insert(save->getID());
         dialog.setValue(dialog.value() + 1);
@@ -416,13 +398,11 @@ bool GlobalDatabase::loadSimulationSaves(bool progressDialog)
     bool ok = true;
 
     qDebug()<<fileNames<<" (names)";
-    globalIDGenerator.setFreezed(true);
     QFuture<SimulationSave *> future = QtConcurrent::mapped(fileNames, SimulationSave::loadFromFile);
 
     // Czekamy na zakończenie zadania i pobieramy wyniki do listy persons
     future.waitForFinished();
     globalSimulationSaves = future.results();
-    globalIDGenerator.setFreezed(false);
     return ok;
 }
 
@@ -439,16 +419,14 @@ bool GlobalDatabase::loadPointsForPlacesPresets()
 
     bool ok = true;
 
-    globalIDGenerator.setFreezed(true);
     QFuture<PointsForPlacesPreset> future = QtConcurrent::mapped(fileNames, PointsForPlacesPreset::loadFromJson);
 
     future.waitForFinished();
     globalPointsForPlacesPresets = future.results();
-    globalIDGenerator.setFreezed(false);
     return ok;
 }
 
-bool GlobalDatabase::loadCalendarPresets()
+bool GlobalDatabase::loadCalendarPresets(bool before1_2_0)
 {
     QDir dir(QCoreApplication::applicationDirPath());
     if(dir.exists("userData") == false && QSysInfo::productType() == "windows")
@@ -471,9 +449,13 @@ bool GlobalDatabase::loadCalendarPresets()
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         QJsonObject object = doc.object().value("calendar-preset").toObject();
 
-        DatabaseObjectsManager * manager = new DatabaseObjectsManager();
-        SeasonCalendarPreset p = SeasonCalendarPreset::getFromJson(object, manager);
-        delete manager;
+        QMap<ulong, Identifiable*> objects;
+        auto o = &objects;
+        if(!before1_2_0) o = nullptr;
+        IdentifiableObjectsStorage * storage = this;
+        if(before1_2_0)
+            storage = nullptr;
+        SeasonCalendarPreset p = SeasonCalendarPreset::getFromJson(object, storage, o);
         globalCalendarPresets.push_back(p);
         file.close();
     }

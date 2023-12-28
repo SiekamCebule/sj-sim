@@ -5,13 +5,13 @@
 #include <QJsonObject>
 #include "../../simulator/Jumper.h"
 #include "../../simulator/Team.h"
-#include "../../utilities/ClassWithID.h"
+#include "../../utilities/Identifiable.h"
 
 class CompetitionInfo;
 class CompetitionRules;
 class RoundInfo;
 
-class KOGroup : public ClassWithID
+class KOGroup : public Identifiable
 {
 public:
     KOGroup();
@@ -24,7 +24,7 @@ public:
     };
 
     static QJsonObject getJsonObject(KOGroup &group);
-    static KOGroup getFromJson(const QJsonObject & json, DatabaseObjectsManager *objectsManager);
+    static KOGroup getFromJson(const QJsonObject & json, IdentifiableObjectsStorage *storage);
 
     static QVector<KOGroup> constructKOGroups(RoundInfo * roundInfo, QVector<Jumper *> * jumpers, int selectionType, CompetitionInfo *competition);
     static QVector<Jumper *> getJumpersFromGroups(QVector<KOGroup> * groups);

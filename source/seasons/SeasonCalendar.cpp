@@ -1,6 +1,6 @@
 #include "SeasonCalendar.h"
 #include "../utilities/functions.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../global/IdentifiableObjectsStorage.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
@@ -14,6 +14,26 @@ SeasonCalendar::SeasonCalendar(QString name) : name(name)
 
 SeasonCalendar::~SeasonCalendar()
 {
+}
+
+void SeasonCalendar::debugCalendar(CompetitionInfo * next) const
+{
+    qDebug()<<"-----------"<<name<<"-----------";
+    int i = 0;
+    for(auto & comp : competitions)
+    {
+        QString s = "";
+        if(comp->getTrainingsReference().count() > 0)
+        {
+            s = QString("%1 treningów").arg(comp->getTrainingsReference().count());
+        }
+        if(comp == next)
+        {
+            s += " (NASTĘPNY)";
+        }
+        qDebug()<<QString::number(i)<<". "<<comp->getShortSerieTypeText()<<"  "<<comp->getHill()->getHillText()<<s<<" ("<<comp<<")";
+        i++;
+    }
 }
 
 void SeasonCalendar::fixCompetitionsClassifications()
@@ -38,7 +58,7 @@ void SeasonCalendar::fixCompetitionsHills(QVector<Hill *> *hillsList, Hill * def
             comp->setHill(defaultHill);
             continue;
         }
-        ulong hillID = comp->getHill()->getID();
+        sole::uuid hillID = comp->getHill()->getID();
         bool contains = false;
         Hill * hillWhichContains = nullptr;
         for(auto & hill : qAsConst(*hillsList)){
@@ -95,42 +115,63 @@ void SeasonCalendar::updateCompetitionsQualifyingCompetitions()
     }
 }
 
-SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json, DatabaseObjectsManager * objectsManager)
+SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json, IdentifiableObjectsStorage * storage, QMap<ulong, Identifiable*> * before120Map)
 {
     SeasonCalendar calendar;
-    calendar.setID(json.value("id").toString().toULong());
+    calendar.setID(sole::rebuild(json.value("id").toString().toStdString()));
     calendar.setName(json.value("name").toString());
 
     QJsonArray classificationsArray = json.value("classifications").toArray();
     for(auto val : classificationsArray){
-         calendar.getClassificationsReference().push_back(Classification::getFromJson(val.toObject(), objectsManager));
+        int cId = 0;
+        Classification * c = Classification::getFromJson(val.toObject(), storage, &cId);
+        if(before120Map != nullptr){
+            qDebug()<<"BEFORE 120 MAP";
+            c->reassign();
+            before120Map->insert(cId, c);
+        }
+        calendar.getClassificationsReference().push_back(c);
     }
-    if(objectsManager != nullptr)
-        objectsManager->fill(&calendar.getClassificationsReference());
+    if(storage != nullptr)
+        storage->add(calendar.getClassificationsReference());
 
     QJsonArray competitionsArray = json.value("competitions").toArray();
     for(auto val : competitionsArray){
-        CompetitionInfo * c = new CompetitionInfo(CompetitionInfo::getFromJson(val.toObject(), objectsManager));
+        int cId = 0;
+        CompetitionInfo * c = new CompetitionInfo(CompetitionInfo::getFromJson(val.toObject(), storage, &cId, before120Map));
+        QString s = "";
+        if(!c->getTrainingsReference().isEmpty())
+        {
+            s = QString(" (%1 treningów)").arg(QString::number(c->getTrainingsReference().count()));
+        }
+        qDebug()<<c->getShortSerieTypeText()<<s;
+
+        if(before120Map != nullptr)
+        {
+            c->reassign();
+            before120Map->insert(cId, c);
+        }
         calendar.getCompetitionsReference().push_back(c);
-        if(objectsManager != nullptr)
-            objectsManager->addObject(c);
+        if(storage != nullptr)
+            storage->add(c);
     }
     calendar.updateCompetitionsQualifyingCompetitions();
 
-    if(objectsManager != nullptr){
+    if(storage != nullptr){
         for(auto val : classificationsArray){
-            Classification * classification = static_cast<Classification *>(objectsManager->getObjectByID(val.toObject().value("id").toString().toULong()));
+            Classification * classification;
+                classification = static_cast<Classification *>(storage->get(val.toObject().value("id").toString()));
             for(auto & singleResult : classification->getResultsReference())
             {
                 singleResult->setClassification(classification);
                 QJsonArray singleResultsArray = val.toObject().value("results").toArray();
                 for(auto jsonRes : singleResultsArray)
                 {
-                    if(jsonRes.toObject().value("id").toString().toULong() == singleResult->getID())
+                    if(sole::rebuild(jsonRes.toObject().value("id").toString().toStdString()) == singleResult->getID())
                     {
                         QJsonArray compsIds = jsonRes.toObject().value("competitions-results-ids").toArray();
                         for(auto id : compsIds)
-                            singleResult->getCompetitionsResultsReference().push_back(static_cast<CompetitionResults *>(objectsManager->getObjectByID(id.toString().toULong())));
+                            singleResult->getCompetitionsResultsReference().push_back(static_cast<CompetitionResults *>(storage->get(id.toString())));
                     }
                 }
                 singleResult->updateSingleResults();
@@ -146,7 +187,7 @@ SeasonCalendar SeasonCalendar::getFromJson(QJsonObject json, DatabaseObjectsMana
 QJsonObject SeasonCalendar::getJsonObject(SeasonCalendar &calendar)
 {
     QJsonObject object;
-    object.insert("id", QString::number(calendar.getID()));
+    object.insert("id", calendar.getIDStr());
     object.insert("name", calendar.getName());
 
     QJsonArray classificationsArray;

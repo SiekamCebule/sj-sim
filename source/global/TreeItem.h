@@ -3,9 +3,9 @@
 
 #include <QVector>
 #include <QVariant>
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 
-class TreeItem : public ClassWithID
+class TreeItem : public Identifiable
 {
 public:
     TreeItem(const QVector<QVariant> & dataVector, TreeItem * parentItem = nullptr);

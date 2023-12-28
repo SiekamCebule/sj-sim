@@ -115,7 +115,7 @@ CalendarEditorWidget::CalendarEditorWidget(CalendarEditorTableModel *model, QVec
             debugCalendar();
             delete calendar->getCompetitionsReference()[actualCompetitionIndex];
             calendar->getCompetitionsReference()[actualCompetitionIndex] = competition;
-            actualCompetitionID = competition->getID();
+            actualCompetitionID = competition->getIDStr();
             emit calendarModel->dataChanged(calendarModel->index(0, 0), calendarModel->index(calendarModel->rowCount() - 1, calendarModel->columnCount() - 1));
             ui->tableView->resizeColumnsToContents();
         }
@@ -158,10 +158,10 @@ void CalendarEditorWidget::setClassificationsList(QVector<Classification *> *new
 
 void CalendarEditorWidget::updateActualCompetitionByID()
 {
-    if(actualCompetitionID > 0){
+    if(actualCompetitionID.isEmpty() == false){
         int i=0;
         for(auto & comp : calendar->getCompetitionsReference()){
-            if(comp->getID() == actualCompetitionID){
+            if(comp->getIDStr() == actualCompetitionID){
                 actualCompetitionIndex = i;
                 actualCompetition = comp;
                 break;
@@ -643,7 +643,7 @@ void CalendarEditorWidget::duplicateActionTriggered()
         debugCalendar();
         calendarModel->insertRow(insertIndex);
         CompetitionInfo * comp = new CompetitionInfo(existing->getHill());
-        comp->generateID();
+        comp->reassign();
         comp->setSerieType(existing->getSerieType());
         comp->setRules(existing->getRules());
         comp->setClassifications(existing->getClassifications());
@@ -1313,8 +1313,8 @@ void CalendarEditorWidget::on_pushButton_saveCalendarPreset_clicked()
         SeasonCalendar * calendar = &preset->getCalendarReference();
         for(auto & comp : calendar->getCompetitionsReference())
         {
-            comp->generateID();
-            comp->getResultsReference().generateID();
+            comp->reassign();
+            comp->getResultsReference().reassign();
             comp->setPlayed(false);
             comp->setCancelled(false);
             comp->getResultsReference().getResultsReference().clear();
@@ -1327,7 +1327,7 @@ void CalendarEditorWidget::on_pushButton_saveCalendarPreset_clicked()
         }
         for(auto & cls : calendar->getClassificationsReference())
         {
-            cls->generateID();
+            cls->reassign();
             cls->getResultsReference().clear();
         }
         GlobalDatabase::get()->writeCalendarPresets();
@@ -1361,8 +1361,8 @@ return;
         for(auto & presetCompetition : preset->getCalendarReference().getCompetitionsReference())
         {
             CompetitionInfo * calendarCompetition = new CompetitionInfo(*presetCompetition);
-            calendarCompetition->generateID();
-            calendarCompetition->getResultsReference().generateID();
+            calendarCompetition->reassign();
+            calendarCompetition->getResultsReference().reassign();
 
             calendarCompetition->getClassificationsReference().detach();
             calendarCompetition->getQualifyingCompetitionsReference().detach();
@@ -1398,7 +1398,7 @@ return;
         for(auto & presetClassification : preset->getCalendarReference().getClassificationsReference())
         {
             Classification * calendarClassification = new Classification(*presetClassification);
-            calendarClassification->regenerateID();
+            calendarClassification->reassign();
 
             calendarClassification->getPointsForPlacesReference().detach();
             calendarClassification->getResultsReference().detach();

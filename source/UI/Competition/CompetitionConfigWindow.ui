@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1316</width>
-    <height>960</height>
+    <width>1320</width>
+    <height>888</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,58 +18,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_title">
-     <item>
-      <spacer name="horizontalSpacer_titleLeft">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_title">
-       <property name="font">
-        <font>
-         <family>Quicksand Medium</family>
-         <pointsize>23</pointsize>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-color: rgb(26, 95, 180);
-}</string>
-       </property>
-       <property name="text">
-        <string>Konfiguracja konkursu</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_titleRight">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_startList" stretch="0,0,0,0,0,0,0,0,0">
+      <layout class="QVBoxLayout" name="verticalLayout_startList" stretch="0,0,0,0,0,0,0,0">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
@@ -115,6 +66,7 @@ color: rgb(26, 95, 180);
              </property>
              <property name="font">
               <font>
+               <family>Quicksand Medium</family>
                <pointsize>8</pointsize>
               </font>
              </property>
@@ -138,6 +90,7 @@ color: rgb(26, 95, 180);
              </property>
              <property name="font">
               <font>
+               <family>Quicksand Medium</family>
                <pointsize>8</pointsize>
               </font>
              </property>
@@ -173,12 +126,12 @@ color: rgb(26, 95, 180);
           <string notr="true">QPushButton{
 border: 1px solid rgb(0, 59, 23);
 border-radius: 6px;
-color: rgb(0, 0, 0);
-background-color: rgb(220, 236, 255);
+color: rgb(0, 30, 80);
+	background-color: rgb(215, 215, 215);
 padding: 2px;
 }
 QPushButton:hover{
-background-color: rgb(240, 255, 255);
+background-color: rgb(200, 200, 200);
 }</string>
          </property>
          <property name="text">
@@ -198,12 +151,12 @@ background-color: rgb(240, 255, 255);
           <string notr="true">QPushButton{
 border: 1px solid rgb(0, 59, 23);
 border-radius: 6px;
-color: rgb(0, 0, 0);
-background-color: rgb(242, 255, 244);
+color: rgb(0, 30, 80);
+	background-color: rgb(240, 240, 240);
 padding: 2px;
 }
 QPushButton:hover{
-background-color: rgb(255, 255, 255);
+background-color: rgb(210, 210, 210);
 }</string>
          </property>
          <property name="text">
@@ -223,12 +176,12 @@ background-color: rgb(255, 255, 255);
           <string notr="true">QPushButton{
 border: 1px solid rgb(0, 59, 23);
 border-radius: 6px;
-color: rgb(0, 0, 0);
-background-color: rgb(251, 255, 222);
+color: rgb(0, 30, 80);
+	background-color: rgb(240, 240, 240);
 padding: 2px;
 }
 QPushButton:hover{
-background-color: rgb(255, 255, 248);
+background-color: rgb(210, 210, 210);
 }</string>
          </property>
          <property name="text">
@@ -248,12 +201,12 @@ background-color: rgb(255, 255, 248);
           <string notr="true">QPushButton{
 border: 1px solid rgb(0, 59, 23);
 border-radius: 6px;
-color: rgb(0, 0, 0);
-background-color: rgb(204, 255, 201);
+color: rgb(0, 30, 80);
+	background-color: rgb(240, 240, 240);
 padding: 2px;
 }
 QPushButton:hover{
-background-color: rgb(222, 255, 226);
+background-color: rgb(210, 210, 210);
 }</string>
          </property>
          <property name="text">
@@ -264,7 +217,7 @@ background-color: rgb(222, 255, 226);
        <item>
         <widget class="QPushButton" name="pushButton_jumpersLists">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -279,12 +232,12 @@ background-color: rgb(222, 255, 226);
           <string notr="true">QPushButton{
 border: 1px solid rgb(0, 59, 23);
 border-radius: 6px;
-color: rgb(0, 0, 0);
-background-color: rgb(225, 185, 255);
+color: rgb(0, 30, 80);
+	background-color: rgb(240, 240, 240);
 padding: 2px;
 }
 QPushButton:hover{
-background-color: rgb(241, 200, 255);
+background-color: rgb(210, 210, 210);
 }</string>
          </property>
          <property name="text">
@@ -304,12 +257,12 @@ background-color: rgb(241, 200, 255);
           <string notr="true">QPushButton{
 border: 1px solid rgb(0, 59, 23);
 border-radius: 6px;
-color: rgb(0, 0, 0);
-	background-color: rgb(255, 191, 139);
+color: rgb(0, 30, 80);
+	background-color: rgb(240, 240, 240);
 padding: 2px;
 }
 QPushButton:hover{
-background-color: rgb(255, 170, 118);
+background-color: rgb(210, 210, 210);
 }</string>
          </property>
          <property name="text">
@@ -320,55 +273,38 @@ background-color: rgb(255, 170, 118);
        <item>
         <widget class="QPushButton" name="pushButton_loadJumpers">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="maximumSize">
           <size>
-           <width>252</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{color: black; background-color: rgb(245, 172, 166); border: 1px solid rgb(75, 75, 75); border-radius: 9px; margin: 2px; padding: 4px;} QPushButton:hover{background-color: rgb(255, 200, 195)}</string>
-         </property>
-         <property name="text">
-          <string>Wczytaj zawodników z innego pliku</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_title_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
            <family>Quicksand Medium</family>
-           <pointsize>15</pointsize>
-           <bold>false</bold>
+           <pointsize>10</pointsize>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">QLabel{
-color: rgb(26, 95, 180);
+          <string notr="true">QPushButton{
+color: black;
+ background-color: rgb(220, 240, 255); 
+border: 1px solid rgb(0, 59, 23);
+border-radius: 6px;
+ padding: 2px;
+} 
+QPushButton:hover
+{
+background-color: rgb(200, 220, 255);
 }</string>
          </property>
          <property name="text">
-          <string>Lista startowa</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+          <string>Wczytaj zawodników z innego pliku</string>
          </property>
         </widget>
        </item>
@@ -384,6 +320,7 @@ color: rgb(26, 95, 180);
        </property>
        <property name="font">
         <font>
+         <family>Quicksand Medium</family>
          <pointsize>13</pointsize>
         </font>
        </property>
@@ -398,8 +335,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>675</width>
-          <height>821</height>
+          <width>665</width>
+          <height>798</height>
          </rect>
         </property>
         <attribute name="label">
@@ -414,7 +351,7 @@ color: rgb(26, 95, 180);
               <widget class="QLabel" name="label_2">
                <property name="font">
                 <font>
-                 <family>Quicksand [PfEd]</family>
+                 <family>Quicksand Medium</family>
                  <pointsize>12</pointsize>
                  <bold>true</bold>
                 </font>
@@ -475,8 +412,8 @@ color: black;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>675</width>
-          <height>821</height>
+          <width>665</width>
+          <height>798</height>
          </rect>
         </property>
         <attribute name="label">
@@ -503,14 +440,20 @@ color: black;
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_competitionOptions">
+       <property name="spacing">
+        <number>8</number>
+       </property>
        <item>
-        <layout class="QFormLayout" name="formLayout_competitionOptions">
-         <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <item>
           <widget class="QLabel" name="label">
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
+             <pointsize>11</pointsize>
              <bold>false</bold>
             </font>
            </property>
@@ -518,19 +461,38 @@ color: black;
             <string notr="true">color: black;</string>
            </property>
            <property name="text">
-            <string>Belka
-startowa</string>
+            <string>Belka startowa</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QSpinBox" name="spinBox_startGate">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="font">
             <font>
-             <pointsize>15</pointsize>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -547,56 +509,132 @@ startowa</string>
            </property>
           </widget>
          </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_autoGate">
-         <property name="styleSheet">
-          <string notr="true">color:black;</string>
-         </property>
-         <property name="text">
-          <string>Ustaw automatycznie</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_9">
          <item>
-          <spacer name="verticalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Maximum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>15</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_4">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
+          <widget class="QPushButton" name="pushButton_autoGate">
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
              <pointsize>11</pointsize>
-             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:black;</string>
+           </property>
+           <property name="text">
+            <string>Auto</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+             <bold>false</bold>
             </font>
            </property>
            <property name="styleSheet">
             <string notr="true">color: black;</string>
            </property>
            <property name="text">
-            <string>Prawdopodobieństwo dyskwalifikacji</string>
+            <string>DSQ: Jeden skok na</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="spinBox_dsqProbability">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>148</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>148</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: black;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="minimum">
+            <number>-1</number>
+           </property>
+           <property name="maximum">
+            <number>10000000</number>
+           </property>
+           <property name="value">
+            <number>-1</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>5</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_jumpsImportance">
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: black;</string>
+           </property>
+           <property name="text">
+            <string>Ważność skoków</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -604,115 +642,65 @@ startowa</string>
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <item>
-            <widget class="QLabel" name="label_5">
-             <property name="font">
-              <font>
-               <family>Quicksand Medium</family>
-               <pointsize>11</pointsize>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: black;</string>
-             </property>
-             <property name="text">
-              <string>Jeden skok na</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="spinBox_dsqProbability">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>14</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: black;</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="minimum">
-              <number>-1</number>
-             </property>
-             <property name="maximum">
-              <number>10000000</number>
-             </property>
-             <property name="value">
-              <number>-1</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_jumpsImportance">
+           <property name="minimumSize">
+            <size>
+             <width>148</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>148</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: black;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="maximum">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>5.000000000000000</double>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
        <item>
-        <spacer name="verticalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Minimum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>10</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_jumpsImportance">
-         <property name="font">
-          <font>
-           <pointsize>13</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: black;</string>
-         </property>
-         <property name="text">
-          <string>Ważność skoków</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_jumpsImportance">
-         <property name="font">
-          <font>
-           <pointsize>13</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: black;</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="maximum">
-          <double>10.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>5.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QComboBox" name="comboBox_jumpsImportancePreset">
+         <property name="font">
+          <font>
+           <family>Quicksand Medium</family>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">color: black;</string>
          </property>
@@ -747,7 +735,7 @@ startowa</string>
          <property name="minimumSize">
           <size>
            <width>250</width>
-           <height>60</height>
+           <height>70</height>
           </size>
          </property>
          <property name="font">
@@ -763,11 +751,11 @@ startowa</string>
           <string notr="true">QPushButton{
 border: 1px solid rgb(0, 59, 23);
 border-radius: 6px;
-color: rgb(0, 0, 0);
-background-color: rgb(123, 220, 144);
+color: rgb(244, 244, 244);
+background-color:  rgb(5, 80, 116);
 }
 QPushButton:hover{
-background-color: rgb(153, 253, 174);
+background-color: rgb(30, 110, 146);
 }</string>
          </property>
          <property name="text">

@@ -1,7 +1,7 @@
 #ifndef WINDSCALCULATOR_H
 #define WINDSCALCULATOR_H
 
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include "Wind.h"
 #include "Hill.h"
 #include "JumpManipulator.h"

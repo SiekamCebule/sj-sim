@@ -6,7 +6,7 @@
 #include <QJsonValue>
 #include "../seasons/Season.h"
 #include "../seasons/SimulationSave.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../global/IdentifiableObjectsStorage.h"
 #include "../global/GlobalDatabase.h"
 #include "../global/MyRandom.h"
 #include "../global/GlobalAppSettings.h"
@@ -15,7 +15,7 @@
 extern const QString appVersion;
 
 Classification::Classification(QString name) : name(name),
-    ClassWithID()
+    Identifiable()
 {
     classificationType = 0;
     punctationType = 0;
@@ -122,10 +122,14 @@ void Classification::setAltPointsForPlaces(const QMap<int, double> &newAltPoints
     altPointsForPlaces = newAltPointsForPlaces;
 }
 
-Classification * Classification::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
+Classification * Classification::getFromJson(QJsonObject obj, IdentifiableObjectsStorage * storage, int * oldId)
 {
     Classification * classification = new Classification();
-    classification->setID(obj.value("id").toString().toULong());
+    if(oldId != nullptr)
+    {
+        *oldId = obj.value("id").toString().toULong();
+    }
+    classification->setID(sole::rebuild(obj.value("id").toString().toStdString()));
     classification->setName(obj.value("name").toString());
     classification->setClassificationType(obj.value("classification-type").toInt());
     classification->setPunctationType(obj.value("punctation-type").toInt());
@@ -147,15 +151,15 @@ Classification * Classification::getFromJson(QJsonObject obj, DatabaseObjectsMan
     for(auto val : resultsArray)
         values.push_back(val);
 
-    QFuture<ClassificationSingleResult *> future = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
-        return new ClassificationSingleResult(ClassificationSingleResult::getFromJson(value.toObject(), objectsManager));
+    QFuture<ClassificationSingleResult *> future = QtConcurrent::mapped(values, [storage](const QJsonValue & value){
+        return new ClassificationSingleResult(ClassificationSingleResult::getFromJson(value.toObject(), storage));
     });
     //QVector<CompetitionSingleResult *> res = future.results().toVector();
     classification->setResults(future.results().toVector());
     for(auto & res : classification->getResultsReference())
         res->setClassification(classification);
 
-    objectsManager->fill(&classification->getResultsReference());
+    storage->add(classification->getResultsReference());
 
     return classification;
 }
@@ -164,7 +168,7 @@ QJsonObject Classification::getJsonObject(Classification * classification)
 {
     qDebug()<<"classification name: "<<classification->getName();
     QJsonObject obj;
-    obj.insert("id", QString::number(classification->getID()));
+    obj.insert("id", classification->getIDStr());
     obj.insert("name", classification->getName());
     obj.insert("classification-type", classification->getClassificationType());
     obj.insert("punctation-type", classification->getPunctationType());

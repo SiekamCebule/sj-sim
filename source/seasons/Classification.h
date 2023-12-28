@@ -4,7 +4,7 @@
 #include <QMap>
 #include <QString>
 #include <QJsonObject>
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include "ClassificationSingleResult.h"
 #include "../seasons/SeasonCalendar.h"
 #include <dpp/dpp.h>
@@ -12,7 +12,7 @@
 class Season;
 class SimulationSave;
 
-class Classification : public ClassWithID
+class Classification : public Identifiable
 {
 public:
     Classification(QString name = "");
@@ -38,7 +38,7 @@ public:
 
     static QVector<Classification *> getSpecificTypeClassifications(QVector<Classification *> classifications, int type);
 
-    static Classification *getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager);
+    static Classification *getFromJson(QJsonObject obj, IdentifiableObjectsStorage * storage, int * oldId = nullptr);
     static QJsonObject getJsonObject(Classification *classification);
 
     QHash<Jumper *, QHash<CompetitionInfo *, int> > constructJumpersArchiveResults(Season * season, SeasonCalendar *calendar);

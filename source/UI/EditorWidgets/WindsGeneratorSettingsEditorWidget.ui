@@ -16,6 +16,11 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QToolBox" name="toolBox">
+     <property name="font">
+      <font>
+       <family>Quicksand Medium</family>
+      </font>
+     </property>
      <property name="toolTip">
       <string>Wciśnij Ctrl+F aby wypełnić automatycznie</string>
      </property>
@@ -43,8 +48,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>391</width>
-        <height>402</height>
+        <width>98</width>
+        <height>28</height>
        </rect>
       </property>
       <attribute name="label">

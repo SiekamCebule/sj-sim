@@ -139,7 +139,7 @@ bool rankingCompForPositions(const QPair<Jumper *, double> p1, const QPair<Jumpe
 bool rankingComp(const QPair<Jumper *, double> p1, const QPair<Jumper *, double> p2)
 {
     if(p1.second == p2.second)
-        return p1.first->getID() > p2.first->getID();
+        return p1.first->getIDStr() > p2.first->getIDStr();
     return p1.second > p2.second;
 }
 
@@ -151,7 +151,7 @@ bool rankingCompForTeams(const QPair<QString, double> p1, const QPair<QString, d
 bool descendingCompForRecords(const QPair<JumpData *, double> p1, const QPair<JumpData *, double> p2)
 {
     if(p1.second == p2.second)
-        return p1.first->getID() > p2.first->getID();
+        return p1.first->getIDStr() > p2.first->getIDStr();
     return p1.second > p2.second;
 }
 bool ascendingCompForRecords(const QPair<JumpData *, double> p1, const QPair<JumpData *, double> p2)

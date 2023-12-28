@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1189</width>
-    <height>807</height>
+    <width>1112</width>
+    <height>735</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -37,58 +37,9 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(236, 236, 236);</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_10">
+  <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_title">
-     <item>
-      <spacer name="horizontalSpacer_titleLeft">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_title">
-       <property name="font">
-        <font>
-         <family>Quicksand Medium</family>
-         <pointsize>23</pointsize>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-color: rgb(26, 95, 180);
-}</string>
-       </property>
-       <property name="text">
-        <string>Pojedyncze skoki (konfiguracja)</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_titleRight">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_underTitle">
+    <layout class="QHBoxLayout" name="horizontalLayout_underTitle" stretch="15,0,1,0">
      <item>
       <widget class="QToolBox" name="toolBox">
        <property name="font">
@@ -109,8 +60,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>757</width>
-          <height>632</height>
+          <width>600</width>
+          <height>607</height>
          </rect>
         </property>
         <attribute name="label">
@@ -129,7 +80,7 @@ color: rgb(26, 95, 180);
                   <font>
                    <family>Quicksand Medium</family>
                    <pointsize>11</pointsize>
-                   <bold>true</bold>
+                   <bold>false</bold>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -173,8 +124,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>757</width>
-          <height>632</height>
+          <width>600</width>
+          <height>607</height>
          </rect>
         </property>
         <attribute name="label">
@@ -193,7 +144,7 @@ color: rgb(26, 95, 180);
                   <font>
                    <family>Quicksand Medium</family>
                    <pointsize>11</pointsize>
-                   <bold>true</bold>
+                   <bold>false</bold>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -237,8 +188,8 @@ color: rgb(26, 95, 180);
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>757</width>
-          <height>632</height>
+          <width>600</width>
+          <height>607</height>
          </rect>
         </property>
         <attribute name="label">
@@ -270,12 +221,15 @@ color: rgb(26, 95, 180);
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_singleJumpsSettings">
+       <property name="spacing">
+        <number>10</number>
+       </property>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
           <widget class="QLabel" name="label_jumpsCount">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -283,8 +237,8 @@ color: rgb(26, 95, 180);
            <property name="font">
             <font>
              <family>Quicksand Medium</family>
-             <pointsize>12</pointsize>
-             <bold>true</bold>
+             <pointsize>11</pointsize>
+             <bold>false</bold>
             </font>
            </property>
            <property name="styleSheet">
@@ -299,16 +253,42 @@ color: rgb(26, 95, 180);
           </widget>
          </item>
          <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QSpinBox" name="spinBox_jumpsCount">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="font">
             <font>
-             <pointsize>14</pointsize>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
              <bold>false</bold>
             </font>
            </property>
@@ -326,34 +306,92 @@ color: rgb(26, 95, 180);
         </layout>
        </item>
        <item>
-        <spacer name="verticalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Maximum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>5</height>
-          </size>
-         </property>
-        </spacer>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>11</pointsize>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: black;</string>
+             </property>
+             <property name="text">
+              <string>DSQ: Jeden skok na</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="spinBox_dsqProbability">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>150</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: black;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="minimum">
+              <number>-1</number>
+             </property>
+             <property name="maximum">
+              <number>10000000</number>
+             </property>
+             <property name="value">
+              <number>-1</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QCheckBox" name="checkBox_changeableWind">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="font">
           <font>
-           <family>Quicksand</family>
-           <pointsize>10</pointsize>
-           <bold>true</bold>
+           <family>Quicksand Medium</family>
+           <pointsize>11</pointsize>
+           <bold>false</bold>
           </font>
          </property>
          <property name="toolTip">
@@ -381,37 +419,98 @@ height: 30px;
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_9">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>12</number>
+         </property>
          <item>
-          <widget class="QLabel" name="label_4">
+          <widget class="QCheckBox" name="checkBox_hasJudges">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="font">
             <font>
-             <family>Quicksand</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+             <bold>false</bold>
             </font>
            </property>
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Jeśli zmienny wiatr jest wyłączony, to przy każym skoku będzie wiatr z ustawień generatora wiatru licząc tylko bazowy kierunek i siłę wiatru.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="whatsThis">
+            <string/>
+           </property>
            <property name="styleSheet">
-            <string notr="true">color: black;</string>
+            <string notr="true">color: rgb(30, 30, 30);
+QCheckBox::indicator{
+width: 40px;
+height: 30px;
+}</string>
            </property>
            <property name="text">
-            <string>Prawdopodobieństwo dyskwalifikacji</string>
+            <string>Noty sędziowskie</string>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <widget class="QCheckBox" name="checkBox_hasWindCompensation">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Jeśli zmienny wiatr jest wyłączony, to przy każym skoku będzie wiatr z ustawień generatora wiatru licząc tylko bazowy kierunek i siłę wiatru.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="whatsThis">
+            <string/>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(30, 30, 30);
+QCheckBox::indicator{
+width: 40px;
+height: 30px;
+}</string>
+           </property>
+           <property name="text">
+            <string>Punkty za wiatr</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
-            <widget class="QLabel" name="label_5">
+            <widget class="QLabel" name="label_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="font">
               <font>
                <family>Quicksand Medium</family>
@@ -423,103 +522,50 @@ height: 30px;
               <string notr="true">color: black;</string>
              </property>
              <property name="text">
-              <string>Jeden skok na</string>
+              <string>Wpływ odległości
+ na rekompensatę</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinBox_dsqProbability">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
-             <property name="font">
-              <font>
-               <pointsize>14</pointsize>
-              </font>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
              </property>
-             <property name="styleSheet">
-              <string notr="true">color: black;</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="minimum">
-              <number>-1</number>
-             </property>
-             <property name="maximum">
-              <number>10000000</number>
-             </property>
-             <property name="value">
-              <number>-1</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>30</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
-           <item>
-            <widget class="QLabel" name="label_3">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Quicksand</family>
-               <pointsize>10</pointsize>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: black;</string>
-             </property>
-             <property name="text">
-              <string>Wpływ odległości na rekompensatę</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
+            </spacer>
            </item>
            <item>
             <widget class="QComboBox" name="comboBox_windCompensationDistanceEffect">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>150</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
-               <width>250</width>
+               <width>150</width>
                <height>16777215</height>
               </size>
              </property>
              <property name="font">
               <font>
+               <family>Quicksand Medium</family>
                <pointsize>9</pointsize>
               </font>
              </property>
@@ -555,25 +601,225 @@ height: 30px;
           </layout>
          </item>
          <item>
-          <widget class="QLabel" name="label_2">
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>11</pointsize>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: black;</string>
+             </property>
+             <property name="text">
+              <string>Liczenie rekompensaty
+ za wiatr</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_windAverageCalculatingType">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>150</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &amp;quot;Oryginalne&amp;quot; uważa wiatr boczno-przedni lub boczno-tylni za stuprocentowo wiatr przedni-tylni.&lt;/p&gt;&lt;p&gt;- &amp;quot;Ulepszone&amp;quot; mnoży rekompensatę za wiatr boczno-przedni/tylni przez 0.5.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: black;</string>
+             </property>
+             <property name="maxCount">
+              <number>100</number>
+             </property>
+             <item>
+              <property name="text">
+               <string>Oryginalne</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Ulepszone</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <item>
+              <widget class="QLabel" name="label_6">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Quicksand Medium</family>
+                 <pointsize>11</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: black;</string>
+               </property>
+               <property name="text">
+                <string>Ważność skoków (0-10)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_jumpsImportance">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Quicksand Medium</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: black;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_jumpsImportancePreset">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: black;</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>Preset ważności skoków</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <item>
+          <widget class="QLabel" name="label">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="font">
             <font>
-             <family>Quicksand</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+             <bold>false</bold>
             </font>
            </property>
            <property name="styleSheet">
             <string notr="true">color: black;</string>
            </property>
            <property name="text">
-            <string>Liczenie rekompensaty za wiatr</string>
+            <string>Belka</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -581,211 +827,42 @@ height: 30px;
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox_windAverageCalculatingType">
+          <spacer name="horizontalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="spinBox_gate">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
-             <width>250</width>
+             <width>150</width>
              <height>16777215</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &amp;quot;Oryginalne&amp;quot; uważa wiatr boczno-przedni lub boczno-tylni za stuprocentowo wiatr przedni-tylni.&lt;/p&gt;&lt;p&gt;- &amp;quot;Ulepszone&amp;quot; mnoży rekompensatę za wiatr boczno-przedni/tylni przez 0.5.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: black;</string>
-           </property>
-           <property name="maxCount">
-            <number>100</number>
-           </property>
-           <item>
-            <property name="text">
-             <string>Oryginalne</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Ulepszone (Zmniejszony wpływ bocznego wiatru na wysokość rekompensaty)</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QCheckBox" name="checkBox_hasJudges">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <family>Quicksand</family>
-             <pointsize>9</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Jeśli zmienny wiatr jest wyłączony, to przy każym skoku będzie wiatr z ustawień generatora wiatru licząc tylko bazowy kierunek i siłę wiatru.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="statusTip">
-            <string/>
-           </property>
-           <property name="whatsThis">
-            <string/>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(30, 30, 30);
-QCheckBox::indicator{
-width: 40px;
-height: 30px;
-}</string>
-           </property>
-           <property name="text">
-            <string>Noty sędziowskie</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_hasWindCompensation">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <family>Quicksand</family>
-             <pointsize>9</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Jeśli zmienny wiatr jest wyłączony, to przy każym skoku będzie wiatr z ustawień generatora wiatru licząc tylko bazowy kierunek i siłę wiatru.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="statusTip">
-            <string/>
-           </property>
-           <property name="whatsThis">
-            <string/>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(30, 30, 30);
-QCheckBox::indicator{
-width: 40px;
-height: 30px;
-}</string>
-           </property>
-           <property name="text">
-            <string>Punkty za wiatr</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_6">
-           <property name="font">
-            <font>
-             <family>Quicksand</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: black;</string>
-           </property>
-           <property name="text">
-            <string>Ważność skoków (0-10)</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_jumpsImportance">
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: black;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="comboBox_jumpsImportancePreset">
-           <property name="styleSheet">
-            <string notr="true">color: black;</string>
-           </property>
-           <item>
-            <property name="text">
-             <string>Preset ważności skoków</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <family>Quicksand</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: black;</string>
-           </property>
-           <property name="text">
-            <string>Belka startowa</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="spinBox_gate">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>14</pointsize>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -797,9 +874,6 @@ height: 30px;
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_windsPreset"/>
        </item>
        <item>
         <spacer name="verticalSpacer_7">
@@ -807,7 +881,7 @@ height: 30px;
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Maximum</enum>
+          <enum>QSizePolicy::Expanding</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -820,14 +894,14 @@ height: 30px;
        <item>
         <widget class="QPushButton" name="pushButton_submit">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>250</width>
+           <width>0</width>
            <height>60</height>
           </size>
          </property>
@@ -844,11 +918,11 @@ height: 30px;
           <string notr="true">QPushButton{
 border: 1px solid rgb(0, 59, 23);
 border-radius: 6px;
-color: rgb(0, 0, 0);
-background-color: rgb(123, 220, 144);
+color: rgb(247,247,247);
+background-color:  rgb(5, 80, 116);
 }
 QPushButton:hover{
-background-color: rgb(153, 253, 174);
+background-color:  rgb(25, 105, 140);
 }</string>
          </property>
          <property name="text">

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>334</width>
-    <height>723</height>
+    <width>340</width>
+    <height>747</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -30,13 +30,16 @@ color: black;</string>
       <widget class="QLabel" name="label">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
+         <family>Quicksand</family>
          <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
        <property name="text">
         <string>Nazwa</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -56,7 +59,8 @@ color: black;</string>
        </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -73,13 +77,16 @@ color: black;</string>
       <widget class="QLabel" name="label_6">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
+         <family>Quicksand</family>
          <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
        <property name="text">
         <string>Rodzaj konkursu</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -99,7 +106,8 @@ color: black;</string>
        </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -126,9 +134,9 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_windCompensation">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
-         <pointsize>9</pointsize>
-         <bold>true</bold>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
@@ -143,9 +151,9 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_gateCompensation">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
-         <pointsize>9</pointsize>
-         <bold>true</bold>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
@@ -160,9 +168,9 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_judgesPoints">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
-         <pointsize>9</pointsize>
-         <bold>true</bold>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
@@ -177,9 +185,9 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_95HsRule">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
-         <pointsize>9</pointsize>
-         <bold>true</bold>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
@@ -194,9 +202,9 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_dsq">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
-         <pointsize>9</pointsize>
-         <bold>true</bold>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
@@ -211,9 +219,9 @@ color: black;</string>
       <widget class="QCheckBox" name="checkBox_hillRecordBreaking">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
-         <pointsize>9</pointsize>
-         <bold>true</bold>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
         </font>
        </property>
        <property name="text">
@@ -228,7 +236,7 @@ color: black;</string>
       <widget class="QLabel" name="label_jumpersInTeam">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
+         <family>Quicksand</family>
          <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
@@ -236,6 +244,9 @@ color: black;</string>
        <property name="text">
         <string>Ilość zawodników
 w drużynie</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -255,7 +266,8 @@ w drużynie</string>
        </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -275,13 +287,16 @@ w drużynie</string>
       <widget class="QLabel" name="label_7">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
+         <family>Quicksand</family>
          <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
        </property>
        <property name="text">
         <string>Ilość rund</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -301,7 +316,8 @@ w drużynie</string>
        </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -327,7 +343,7 @@ w drużynie</string>
        </property>
        <property name="font">
         <font>
-         <family>Segoe UI</family>
+         <family>Quicksand</family>
          <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
@@ -340,7 +356,7 @@ w drużynie</string>
  na rekompensatę</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
        <property name="wordWrap">
         <bool>false</bool>
@@ -369,7 +385,8 @@ w drużynie</string>
        </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="toolTip">
@@ -416,7 +433,7 @@ w drużynie</string>
        </property>
        <property name="font">
         <font>
-         <family>Segoe UI</family>
+         <family>Quicksand</family>
          <pointsize>9</pointsize>
          <bold>true</bold>
         </font>
@@ -429,7 +446,7 @@ w drużynie</string>
  wiatru</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
        <property name="wordWrap">
         <bool>false</bool>
@@ -458,7 +475,8 @@ w drużynie</string>
        </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <family>Quicksand Medium</family>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="toolTip">
@@ -527,8 +545,8 @@ width: 5px;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>314</width>
-        <height>290</height>
+        <width>320</width>
+        <height>320</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -554,8 +572,8 @@ width: 5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>296</width>
-            <height>206</height>
+            <width>302</width>
+            <height>236</height>
            </rect>
           </property>
           <attribute name="label">
@@ -567,8 +585,8 @@ width: 5px;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>296</width>
-            <height>206</height>
+            <width>302</width>
+            <height>232</height>
            </rect>
           </property>
           <attribute name="label">

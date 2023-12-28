@@ -7,18 +7,19 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include "Season.h"
-#include "../utilities/ClassWithID.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../utilities/Identifiable.h"
+#include "../global/IdentifiableObjectsStorage.h"
+#include "../global/IdentifiableObjectsStorage.h"
 #include "../form-generator/JumperFormTendence.h"
 #include "../seasons/SaveJumpersList.h"
 
-class SimulationSave : public ClassWithID
+class SimulationSave : public Identifiable, public IdentifiableObjectsStorage
 {
 public:
     SimulationSave();
     ~SimulationSave();
 
-    static SimulationSave *getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
+    static SimulationSave *getFromJson(QJsonObject obj, IdentifiableObjectsStorage *storage);
     static QJsonObject getJsonObject(SimulationSave & save);
 
     bool saveToFile(QString dir = "", QString fileName = "!default");

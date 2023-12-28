@@ -7,7 +7,7 @@ JumperSkills::JumperSkills(double takeoffPower, double takeoffTechnique, double 
     flightTechnique(flightTechnique),
     form(form),
     landingStyle(landingStyle),
-    ClassWithID()
+    Identifiable()
 {
     if(jumper != nullptr)
         jumperID = jumper->getID();
@@ -44,7 +44,7 @@ void JumperSkills::setForm(double newForm)
     form = newForm;
 }
 
-void JumperSkills::setJumperID(ulong ID)
+void JumperSkills::setJumperID(sole::uuid ID)
 {
     jumperID = ID;
 }

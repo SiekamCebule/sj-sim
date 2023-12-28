@@ -106,15 +106,16 @@ SOURCES += \
     source/form-generator/JumperFormTendence.cpp \
     source/global/Country.cpp \
     source/global/CountryFlagsManager.cpp \
-    source/global/DatabaseObjectsManager.cpp \
     source/global/GlobalAppSettings.cpp \
     source/global/GlobalDatabase.cpp \
     source/global/GlobalSimulationSettings.cpp \
     source/global/GlobalTranslators.cpp \
+    source/global/IdentifiableObjectsStorage.cpp \
     source/global/JumpDataInfoChoice.cpp \
     source/global/JumpsImportancePreset.cpp \
     source/global/PointsForPlacesPreset.cpp \
     source/global/TreeItem.cpp \
+    source/global/Uuid.cpp \
     source/main.cpp \
     source/UI/mainwindow.cpp \
     source/seasons/ClassificationSingleResult.cpp \
@@ -141,9 +142,8 @@ SOURCES += \
     source/simulator/wind-generation/WindsGenerator.cpp \
     source/single-jumps/SingleJumpsManager.cpp \
     source/utilities/ClassWithCharacteristics.cpp \
-    source/utilities/ClassWithID.cpp \
-    source/global/IDGenerator.cpp \
     source/global/MyRandom.cpp \
+    source/utilities/Identifiable.cpp \
     source/utilities/functions.cpp
 
 HEADERS += \
@@ -249,15 +249,16 @@ HEADERS += \
     source/form-generator/JumperFormTendence.h \
     source/global/Country.h \
     source/global/CountryFlagsManager.h \
-    source/global/DatabaseObjectsManager.h \
     source/global/GlobalAppSettings.h \
     source/global/GlobalDatabase.h \
     source/global/GlobalSimulationSettings.h \
     source/global/GlobalTranslators.h \
+    source/global/IdentifiableObjectsStorage.h \
     source/global/JumpDataInfoChoice.h \
     source/global/JumpsImportancePreset.h \
     source/global/PointsForPlacesPreset.h \
     source/global/TreeItem.h \
+    source/global/Uuid.h \
     source/seasons/ClassificationSingleResult.h \
     source/seasons/SaveJumpersList.h \
     source/seasons/Season.h \
@@ -282,9 +283,8 @@ HEADERS += \
     source/simulator/wind-generation/WindsGenerator.h \
     source/single-jumps/SingleJumpsManager.h \
     source/utilities/ClassWithCharacteristics.h \
-    source/utilities/ClassWithID.h \
-    source/global/IDGenerator.h \
     source/global/MyRandom.h \
+    source/utilities/Identifiable.h \
     source/utilities/functions.h
 
 FORMS += \

@@ -1,5 +1,5 @@
 #include "ClassificationSingleResult.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../global/IdentifiableObjectsStorage.h"
 #include "../seasons/Classification.h"
 #include "../competitions/CompetitionInfo.h"
 
@@ -147,17 +147,17 @@ void ClassificationSingleResult::updatePointsSum()
 QJsonObject ClassificationSingleResult::getJsonObject(ClassificationSingleResult &result)
 {
     QJsonObject object;
-    object.insert("id", QString::number(result.getID()));
-    object.insert("classification-id", QString::number(result.getClassification()->getID()));
+    object.insert("id", result.getIDStr());
+    object.insert("classification-id", result.getClassification()->getIDStr());
     if(result.getJumper() != nullptr)
-        object.insert("jumper-id", QString::number(result.getJumper()->getID()));
+        object.insert("jumper-id", result.getJumper()->getIDStr());
     if(result.getTeamCode() != "")
         object.insert("team-code", result.getTeamCode());
 
     QJsonArray competitionsResultsArray;
     for(auto & competitionResults : result.getCompetitionsResultsReference())
     {
-        competitionsResultsArray.push_back(QString::number(competitionResults->getID()));
+        competitionsResultsArray.push_back(competitionResults->getIDStr());
     }
     object.insert("competitions-results-ids", competitionsResultsArray);
 
@@ -167,12 +167,12 @@ QJsonObject ClassificationSingleResult::getJsonObject(ClassificationSingleResult
     return object;
 }
 
-ClassificationSingleResult ClassificationSingleResult::getFromJson(QJsonObject json, DatabaseObjectsManager *objectsManager)
+ClassificationSingleResult ClassificationSingleResult::getFromJson(QJsonObject json, IdentifiableObjectsStorage *storage)
 {
     ClassificationSingleResult result(nullptr);
-    result.setID(json.value("id").toString().toULong());
-    result.setClassification(static_cast<Classification *>(objectsManager->getObjectByID(json.value("classification-id").toString().toULong())));
-    result.setJumper(static_cast<Jumper *>(objectsManager->getObjectByID(json.value("jumper-id").toString().toULong())));
+    result.setID(sole::rebuild(json.value("id").toString().toStdString()));
+    result.setClassification(static_cast<Classification *>(storage->get(json.value("classification-id").toString())));
+    result.setJumper(static_cast<Jumper *>(storage->get(json.value("jumper-id").toString())));
     result.setTeamCode(json.value("team-code").toString());
 
     result.setPointsSum(json.value("points-sum").toDouble());

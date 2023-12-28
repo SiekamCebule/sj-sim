@@ -4,11 +4,11 @@
 #include "../simulator/Hill.h"
 #include "../simulator/wind-generation/WindGenerationSettings.h"
 
-#include "../global/IDGenerator.h"
+#include "../global/Uuid.h"
 #include "../global/GlobalDatabase.h"
 #include "../global/GlobalAppSettings.h"
 #include "../global/GlobalSimulationSettings.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../global/IdentifiableObjectsStorage.h"
 
 #include "../single-jumps/SingleJumpsManager.h"
 
@@ -33,8 +33,8 @@
 
 #include <dpp/dpp.h>
 
-extern IDGenerator globalIDGenerator;
-const QString appVersion = "1.1.0";
+extern Uuid globalIDGenerator;
+const QString appVersion = "1.2.0";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

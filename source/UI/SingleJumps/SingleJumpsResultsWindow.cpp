@@ -4,7 +4,7 @@
 #include "SingleJumpsResultsTableSortDialog.h"
 #include "../ResultsShowing/JumpDataDetailedInfoWindow.h"
 #include "../../global/CountryFlagsManager.h"
-#include "../../global/IDGenerator.h"
+#include "../../global/Uuid.h"
 
 #include <math.h>
 #include <QChart>
@@ -18,7 +18,7 @@
 #include <QAction>
 #include <QInputDialog>
 
-extern IDGenerator globalIDGenerator;
+extern Uuid globalIDGenerator;
 
 SingleJumpsResultsWindow::SingleJumpsResultsWindow(SingleJumpsManager *manager, QWidget *parent) :
     QDialog(parent),
@@ -410,7 +410,7 @@ void SingleJumpsResultsWindow::on_pushButton_sortTable_clicked()
          {
             std::sort(manager->getJumpsReference().begin(), manager->getJumpsReference().end(), [this, dialog](const JumpData & j1, const JumpData & j2){
                 if(j1.getDistance() == j2.getDistance())
-                    return j1.getID() > j2.getID();
+                    return j1.getIDStr() > j2.getIDStr();
                 if(dialog->sortType() == SingleJumpsResultsTableSortDialog::Descending)
                     return j1.getDistance() > j2.getDistance();
                 else
@@ -422,7 +422,7 @@ void SingleJumpsResultsWindow::on_pushButton_sortTable_clicked()
          {
             std::sort(manager->getJumpsReference().begin(), manager->getJumpsReference().end(), [this, dialog](const JumpData & j1, const JumpData & j2){
                 if(j1.getDistance() == j2.getDistance())
-                    return j1.getID() > j2.getID();
+                    return j1.getIDStr() > j2.getIDStr();
                 if(dialog->sortType() == SingleJumpsResultsTableSortDialog::Descending)
                     return j1.getPoints() > j2.getPoints();
                 else
@@ -434,7 +434,7 @@ void SingleJumpsResultsWindow::on_pushButton_sortTable_clicked()
          {
             std::sort(manager->getJumpsReference().begin(), manager->getJumpsReference().end(), [this, dialog](const JumpData & j1, const JumpData & j2){
                 if(j1.getDistance() == j2.getDistance())
-                    return j1.getID() > j2.getID();
+                    return j1.getIDStr() > j2.getIDStr();
                 if(dialog->sortType() == SingleJumpsResultsTableSortDialog::Descending)
                     return j1.getAveragedWind() > j2.getAveragedWind();
                 else
@@ -446,7 +446,7 @@ void SingleJumpsResultsWindow::on_pushButton_sortTable_clicked()
          {
             std::sort(manager->getJumpsReference().begin(), manager->getJumpsReference().end(), [this, dialog](const JumpData & j1, const JumpData & j2){
                 if(j1.getDistance() == j2.getDistance())
-                    return j1.getID() > j2.getID();
+                    return j1.getIDStr() > j2.getIDStr();
                 if(dialog->sortType() == SingleJumpsResultsTableSortDialog::Descending)
                     return j1.getJudgesPoints() > j2.getJudgesPoints();
                 else

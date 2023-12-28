@@ -15,7 +15,7 @@
 
 JumpData::JumpData(Jumper *jumper, Hill *hill) : jumper(jumper),
     hill(hill),
-    ClassWithID()
+    Identifiable()
 {
     DSQ = false;
     DNS = false;
@@ -324,7 +324,7 @@ void JumpData::setupForNextJumper()
 QJsonObject JumpData::getJsonObject(JumpData jumpData)
 {
     QJsonObject object;
-    object.insert("id", QString::number(jumpData.getID()));
+    object.insert("id", jumpData.getIDStr());
     object.insert("distance", jumpData.getDistance());
     object.insert("points", jumpData.getPoints());
     object.insert("gate", jumpData.getGate());
@@ -365,17 +365,17 @@ QJsonObject JumpData::getJsonObject(JumpData jumpData)
     }
     object.insert("winds", windsArray);
 
-    object.insert("jumper-id", QString::number(jumpData.getJumper()->getID()));
+    object.insert("jumper-id", jumpData.getJumper()->getIDStr());
     object.insert("jumper-form", jumpData.getJumperForm());
-    object.insert("hill-id", QString::number(jumpData.getHill()->getID()));
+    object.insert("hill-id", jumpData.getHill()->getIDStr());
     object.insert("in-single-jumps", jumpData.getInSingleJumps());
     return object;
 }
 
-JumpData JumpData::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
+JumpData JumpData::getFromJson(QJsonObject obj, IdentifiableObjectsStorage * storage)
 {
     JumpData jump;
-    jump.setID(obj.value("id").toString().toULong());
+    jump.setID(sole::rebuild(obj.value("id").toString().toStdString()));
     jump.setDistance(obj.value("distance").toDouble());
     jump.setPoints(obj.value("points").toDouble());
     jump.setGate(obj.value("gate").toInt());
@@ -419,9 +419,9 @@ JumpData JumpData::getFromJson(QJsonObject obj, DatabaseObjectsManager * objects
     }
     jump.setWinds(winds);
 
-    jump.setJumper(static_cast<Jumper *>(objectsManager->getObjectByID(obj.value("jumper-id").toString().toULong())));
+    jump.setJumper(static_cast<Jumper *>(storage->get(obj.value("jumper-id").toString())));
     jump.setJumperForm(obj.value("jumper-form").toDouble());
-    jump.setHill(static_cast<Hill *>(objectsManager->getObjectByID(obj.value("hill-id").toString().toULong())));
+    jump.setHill(static_cast<Hill *>(storage->get(obj.value("hill-id").toString())));
     jump.setInSingleJumps(obj.value("in-single-jumps").toBool(false));
 
     return jump;

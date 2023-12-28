@@ -2,11 +2,11 @@
 #include <QFont>
 #include <QPixmap>
 #include "../../../global/CountryFlagsManager.h"
-#include "../../../global/IDGenerator.h"
+#include "../../../global/Uuid.h"
 #include "../../../global/GlobalDatabase.h"
 #include "../../../utilities/functions.h"
 
-extern IDGenerator globalIDGenerator;
+extern Uuid globalIDGenerator;
 
 TeamResultsTreeModel::TeamResultsTreeModel(TeamCompetitionManager * manager, QObject *parent)
     : QAbstractItemModel(parent), manager(manager), lastTeam(nullptr)

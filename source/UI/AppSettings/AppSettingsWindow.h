@@ -74,6 +74,8 @@ private slots:
 
     void on_pushButton_loadJumpersWithCSV_clicked();
 
+    void on_pushButton_loadPresetsBefore120_clicked();
+
 private:
     Ui::AppSettingsWindow *ui;
 

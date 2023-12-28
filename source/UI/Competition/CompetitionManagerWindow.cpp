@@ -81,16 +81,17 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     ui->label_nameAndSurname->setText(this->manager->getActualJumper()->getNameAndSurname());
     ui->label_flag->setPixmap(CountryFlagsManager::getFlagPixmap(this->manager->getActualJumper()->getCountryCode().toLower()).scaled(ui->label_flag->size()));
     ui->label_nextJumperIMG->setPixmap(this->manager->getActualJumper()->getImagePixmap().scaled(ui->label_nextJumperIMG->size()));
+
     ui->label_personalBest->setText(QString::number(manager->getActualJumper()->getPersonalBest(), 'f', 1));
 
     if(this->manager->getCompetitionInfo()->getHill()->getHillType() == Hill::Flying){
-        ui->label_personalBestTitle->show();
         ui->label_personalBest->show();
+        ui->label_personalBestContent->show();
     }
     else
     {
-        ui->label_personalBestTitle->hide();
         ui->label_personalBest->hide();
+        ui->label_personalBestContent->hide();
     }
     ui->label_record->setText(tr("Rekord: ") + QString::number(manager->getCompetitionInfo()->getHill()->getRecord(), 'f', 1));
 
@@ -104,11 +105,14 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
 
             if(type == CompetitionRules::Individual && this->manager->getActualRound() > 1){
                 int positionInLastRound = this->manager->getResults()->getHashWithJumpersPositions(&static_cast<IndividualCompetitionManager*>(this->manager)->getActualRoundJumpersReference(), this->manager->getActualRound() - 1).value(this->manager->getActualJumper());
-                ui->label_lastRoundPosition->setText("(" + QString::number(positionInLastRound) + tr(" w poprzedniej rundzie)"));
+                ui->label_lastRoundPosition->setText(QString::number(positionInLastRound));
                 ui->label_lastRoundPosition->show();
+                ui->label_lastRoundPositionContent->show();
+                ui->label_lastRoundPositionContent->setText(QString(" po %1 serii").arg(this->manager->getActualRound() - 1));
             }
             else
             {
+                ui->label_lastRoundPositionContent->hide();
                 ui->label_lastRoundPosition->hide();
             }
 
@@ -134,7 +138,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
         teamResultsTreeView = new QTreeView();
         teamResultsTreeView->setModel(teamResultsTreeModel);
         teamResultsTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        ui->horizontalLayout_5->insertWidget(ui->horizontalLayout_5->count() - 2, teamResultsTreeView); //jako przedostatni
+        ui->horizontalLayout_main->insertWidget(ui->horizontalLayout_main->count() - 2, teamResultsTreeView); //jako przedostatni
 
         connect(teamResultsTreeView, &QTreeView::doubleClicked, this, [this](const QModelIndex & index){
             TreeItem * item = static_cast<TreeItem *>(index.internalPointer());
@@ -147,7 +151,7 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
             jumperResultsWidget->fillWidget();
         });
 
-        ui->horizontalLayout_5->removeWidget(ui->tableView_results);
+        ui->horizontalLayout_main->removeWidget(ui->tableView_results);
         delete ui->tableView_results;
     }
     else{
@@ -169,6 +173,10 @@ CompetitionManagerWindow::CompetitionManagerWindow(AbstractCompetitionManager *m
     updateAvgWindLabel();
     updateActualInrunSnowLevelLabel();
 
+    ui->label_pointsBehindLeader->hide();
+    ui->label_pointsBehindLeaderContent->hide();
+    ui->label_lastRoundPosition->hide();
+    ui->label_lastRoundPositionContent->hide();
     ui->label_pointsBehindLeader->setText("");
 
     Hill * hill = manager->getCompetitionInfo()->getHill();
@@ -249,9 +257,16 @@ void CompetitionManagerWindow::updateToAdvanceDistanceLabel()
 void CompetitionManagerWindow::updatePointsToTheLeaderLabel()
 {
     manager->updateActualCompetitorPointsToTheLeader();
-    if(manager->getActualCompetitorPointsToTheLeader() == (-1))
-        ui->label_pointsBehindLeader->setText("");
-    else ui->label_pointsBehindLeader->setText(" + " + QString::number(manager->getActualCompetitorPointsToTheLeader()) + "pkt");
+    if(manager->getActualCompetitorPointsToTheLeader() == (-1)){
+        ui->label_pointsBehindLeader->hide();
+        ui->label_pointsBehindLeaderContent->hide();
+    }
+    else{
+        ui->label_pointsBehindLeader->show();
+        ui->label_pointsBehindLeaderContent->show();
+        ui->label_pointsBehindLeader->setText(" + " + QString::number(manager->getActualCompetitorPointsToTheLeader()) + "pkt");
+    }
+
 }
 
 void CompetitionManagerWindow::updateAvgWindLabel()

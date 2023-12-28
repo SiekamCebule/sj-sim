@@ -16,15 +16,15 @@ void JumperFormGenerator::generateJumperForm()
 
     if(oldForm > 50){
         if(MyRandom::randomDouble(0, 2, 5) <= 1 - oldInstability)
-            change = MyRandom::normalDistributionRandomHalf(0, 9.5, 0);
+            change = MyRandom::normalDistributionRandomHalf(0, 11, 0);
         else
-            change = MyRandom::normalDistributionRandomHalf(0, 9.5, 1);
+            change = MyRandom::normalDistributionRandomHalf(0, 11, 1);
     }
     else{
         if(MyRandom::randomDouble(0, 2, 5) <= 1 - oldInstability)
-           change = MyRandom::normalDistributionRandomHalf(0, 9.5, 1);
+           change = MyRandom::normalDistributionRandomHalf(0, 11, 1);
         else
-           change = MyRandom::normalDistributionRandomHalf(0, 9.5, 0);
+           change = MyRandom::normalDistributionRandomHalf(0, 11, 0);
     }
     change *= settings.getFormVariability();
     if(oldForm > 50 && change > 0)

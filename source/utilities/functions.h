@@ -61,7 +61,7 @@ public:
     }
 
     template<typename T>
-    static T * getVectorItemByID(QVector<T> & vector, int ID)
+    static T * getVectorItemByID(QVector<T> & vector, sole::uuid ID)
     {
         for(auto & it : vector){
             if(it.getID() == ID)
@@ -99,7 +99,7 @@ public:
     }
 
     template<typename T>
-    static void removeFromVectorByID(QVector<T> & vector, ulong id)
+    static void removeFromVectorByID(QVector<T> & vector, sole::uuid id)
     {
         int i=0;
         for(auto & it : vector)

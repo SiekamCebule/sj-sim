@@ -1,32 +1,32 @@
 #include "CompetitionSingleResult.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../global/IdentifiableObjectsStorage.h"
 #include "../global/GlobalDatabase.h"
 #include "CompetitionInfo.h"
 
 extern const QString appVersion;
 
 CompetitionSingleResult::CompetitionSingleResult(CompetitionInfo *competition, Jumper *jumper, int type) : type(type), jumper(jumper), team(nullptr), competition(competition),
-    ClassWithID()
+    Identifiable()
 {}
 
 CompetitionSingleResult::CompetitionSingleResult(CompetitionInfo *competition, Team *team, int type) : type(type), jumper(nullptr), team(team), competition(competition),
-    ClassWithID()
+    Identifiable()
 {}
 
-CompetitionSingleResult CompetitionSingleResult::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
+CompetitionSingleResult CompetitionSingleResult::getFromJson(QJsonObject obj, IdentifiableObjectsStorage * storage)
 {
     CompetitionSingleResult result(nullptr);
-    result.setID(obj.value("id").toString().toULong());
-    //result.setCompetition(static_cast<CompetitionInfo *>(objectsManager->getObjectByID(obj.value("competition-id").toString().toULong())));
+    result.setID(sole::rebuild(obj.value("id").toString().toStdString()));
+    //result.setCompetition(static_cast<CompetitionInfo *>(storage->get(obj.value("competition-id").toString())));
     result.setPosition(obj.value("position").toInt());
     result.setPointsSum(obj.value("points-sum").toDouble());
     result.setType(obj.value("type").toInt());
-    result.setJumper(static_cast<Jumper *>(objectsManager->getObjectByID(obj.value("jumper-id").toString().toULong())));
-    result.setTeam(static_cast<Team *>(objectsManager->getObjectByID(obj.value("team-id").toString().toULong())));
+    result.setJumper(static_cast<Jumper *>(storage->get(obj.value("jumper-id").toString())));
+    result.setTeam(static_cast<Team *>(storage->get(obj.value("team-id").toString())));
 
     QJsonArray jumpsArray = obj.value("jumps").toArray();
     for(auto jump : jumpsArray){
-        result.getJumpsReference().push_back(JumpData::getFromJson(jump.toObject(), objectsManager));
+        result.getJumpsReference().push_back(JumpData::getFromJson(jump.toObject(), storage));
     }
     result.updateTeamJumpersResults();
     return result;
@@ -35,15 +35,15 @@ CompetitionSingleResult CompetitionSingleResult::getFromJson(QJsonObject obj, Da
 QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult result)
 {
     QJsonObject resultObject;
-    resultObject.insert("id", QString::number(result.getID()));
+    resultObject.insert("id", result.getIDStr());
     //resultObject.insert("competition-id", QString::number(result.getCompetition()->getID()));
     resultObject.insert("position", result.getPosition());
     resultObject.insert("points-sum", result.getPointsSum());
     resultObject.insert("type", result.getType());
     if(result.getJumper() != nullptr)
-        resultObject.insert("jumper-id", QString::number(result.getJumper()->getID()));
+        resultObject.insert("jumper-id", result.getJumper()->getIDStr());
     if(result.getTeam() != nullptr)
-        resultObject.insert("team-id", QString::number(result.getTeam()->getID()));
+        resultObject.insert("team-id", result.getTeam()->getIDStr());
 
     QJsonArray jumpsArray;
     for(auto & jump : qAsConst(result.getJumpsReference())){
@@ -55,9 +55,9 @@ QJsonObject CompetitionSingleResult::getJsonObject(CompetitionSingleResult resul
     return resultObject;
 }
 
-CompetitionSingleResult CompetitionSingleResult::getFromJsonValue(QJsonValue val, DatabaseObjectsManager *objectsManager)
+CompetitionSingleResult CompetitionSingleResult::getFromJsonValue(QJsonValue val, IdentifiableObjectsStorage *storage)
 {
-    return CompetitionSingleResult::getFromJson(val.toObject(), objectsManager);
+    return CompetitionSingleResult::getFromJson(val.toObject(), storage);
 }
 
 QVector<CompetitionSingleResult *> CompetitionSingleResult::getFilteredSingleResults(QVector<CompetitionInfo *> &competitions, Jumper *jumper, QSet<int> serieTypes, QSet<int> hillTypes, QVector<Classification *> classifications, bool skipClassifications, Hill * specificHill)

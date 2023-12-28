@@ -1,13 +1,13 @@
 #include "TreeItem.h"
 #include "../utilities/functions.h"
-#include "IDGenerator.h"
+#include "Uuid.h"
 #include <QModelIndex>
 
-extern IDGenerator globalIDGenerator;
+extern Uuid globalIDGenerator;
 
 TreeItem::TreeItem(const QVector<QVariant> &dataVector, TreeItem *parentItem) :
     parentItem(parentItem), dataVector(dataVector),
-    ClassWithID()
+    Identifiable()
 {
     if(this->parentItem)
         this->parentItem->addChild(this);

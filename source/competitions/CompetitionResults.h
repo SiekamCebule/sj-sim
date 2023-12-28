@@ -1,7 +1,7 @@
 #ifndef COMPETITIONRESULTS_H
 #define COMPETITIONRESULTS_H
 #include "CompetitionSingleResult.h"
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include <QVector>
 #include <QObject>
 #include <QDebug>
@@ -13,11 +13,11 @@
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QByteArray>
-#include "../global/DatabaseObjectsManager.h"
+#include "../global/IdentifiableObjectsStorage.h"
 
 class CompetitionInfo;
 
-class CompetitionResults : public ClassWithID
+class CompetitionResults : public Identifiable
 {
 public:
     CompetitionResults();
@@ -31,7 +31,7 @@ public:
     CompetitionResults constructRoundsResults(QVector<RoundInfo> *roundsInfos, QVector<int> rounds);
     void updateRoundsJumps();
 
-    static CompetitionResults getFromJson(QJsonObject obj, DatabaseObjectsManager *objectsManager);
+    static CompetitionResults getFromJson(QJsonObject obj, IdentifiableObjectsStorage *storage);
     static QJsonObject getJsonObject(CompetitionResults & results);
 
     QVector<int> getJumpersPositions(const QVector<Jumper *> *jumpers) const;

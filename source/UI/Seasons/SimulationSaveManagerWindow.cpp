@@ -57,6 +57,17 @@ SimulationSaveManagerWindow::SimulationSaveManagerWindow(SimulationSave *save, Q
     });
     emit ui->toolBox->currentChanged(0);
 
+    qDebug()<<simulationSave->getNextCompetitionIndex();
+
+    if(simulationSave->getActualSeason() != nullptr)
+    {
+        if(simulationSave->getActualSeason()->getActualCalendar())
+        {
+            simulationSave->getActualSeason()->getActualCalendar()->debugCalendar(simulationSave->getNextCompetition());
+        }
+    }
+
+
     //-----//
 
     jumpersListView = new DatabaseItemsListView(DatabaseItemsListView::SeasonJumpersItems, true, false, true, this);
@@ -416,27 +427,14 @@ void SimulationSaveManagerWindow::fillNextCompetitionInformations()
 {
     simulationSave->updateNextCompetitionIndex();
     SeasonCalendar * calendar = simulationSave->getActualSeason()->getActualCalendar();
-    CompetitionInfo * competition = nullptr;
-    int competitionIndex = 0;
-    int indexInCalendar=0;
-    if(calendar != nullptr){
-    for(auto & comp : calendar->getCompetitionsReference())
-    {
-        if(indexInCalendar == simulationSave->getNextCompetitionIndex()){
-            competition = comp;
-            break;
-        }
-        if(comp->getSerieType() == CompetitionInfo::Qualifications || comp->getSerieType() == CompetitionInfo::Competition){
-            competitionIndex++;
-        }
-        indexInCalendar++;
-    }
-    }
-    if(competition != nullptr){
-        QString text = QString::number(competitionIndex + 1) + ". " + competition->getHill()->getName() + " HS" + QString::number(competition->getHill()->getHSPoint());
+    CompetitionInfo * next = simulationSave->getNextCompetition();
+    if(next != nullptr){
+        int competitionIndex = calendar->getCompetitionsReference().indexOf(next);
+        int indexInCalendar = SeasonCalendar::getCompetitionMainIndex(calendar->getCompetitionsReference(), next);
+        QString text = QString::number(competitionIndex + 1) + ". " + next->getHill()->getName() + " HS" + QString::number(next->getHill()->getHSPoint());
         ui->label_nextCompetitionIndexAndHill->setText(text);
-        ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(competition->getHill()->getCountryCode().toLower()).scaled(ui->label_hillFlag->size()));
-        switch(competition->getSerieType())
+        ui->label_hillFlag->setPixmap(CountryFlagsManager::getFlagPixmap(next->getHill()->getCountryCode().toLower()).scaled(ui->label_hillFlag->size()));
+        switch(next->getSerieType())
         {
         case CompetitionInfo::Competition:
             ui->label_serieTypeAndTrainingIndex->setText(tr("Konkurs"));
@@ -448,21 +446,15 @@ void SimulationSaveManagerWindow::fillNextCompetitionInformations()
             ui->label_serieTypeAndTrainingIndex->setText(tr("Seria próbna"));
             break;
         case CompetitionInfo::Training:
-            CompetitionInfo * mainCompetition = nullptr;
-            for(int i=indexInCalendar; i<calendar->getCompetitionsReference().count(); i++)
-            {
-                CompetitionInfo * c = calendar->getCompetitionsReference()[i];
-                if(c->getSerieType() == CompetitionInfo::Qualifications || c->getSerieType() == CompetitionInfo::Competition)
-                {
-                    mainCompetition = calendar->getCompetitionsReference()[i];
-                    break;
-                }
-            }
-            int trainingIndex = 0;
-            qDebug()<<"competition: "<<competition;
-            if(mainCompetition != nullptr)
-                trainingIndex = mainCompetition->getTrainingsReference().indexOf(competition) + 1;
-            ui->label_serieTypeAndTrainingIndex->setText(tr("Trening ") + QString::number(trainingIndex));
+            CompetitionInfo * mainCompetition = SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), indexInCalendar);
+            qDebug()<<mainCompetition->getShortSerieTypeText()<<" MAIN! "<<calendar->getCompetitionsReference().indexOf(mainCompetition);
+            int trainingIndex = mainCompetition->getTrainingsReference().indexOf(next);
+            qDebug()<<"competitionIndex: "<<competitionIndex;
+            qDebug()<<"indexInCalendar; "<<indexInCalendar;
+            qDebug()<<"trngs "<<mainCompetition->getTrainingsReference();
+            qDebug()<<"next "<<next;
+            qDebug()<<"trainingIndex: "<<trainingIndex;
+            ui->label_serieTypeAndTrainingIndex->setText(tr("Trening ") + QString::number(trainingIndex + 1));
             break;
         }
         calendarTableModel->setDontModifyBefore(simulationSave->getNextCompetitionIndex());

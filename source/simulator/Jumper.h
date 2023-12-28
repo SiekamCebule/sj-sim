@@ -1,7 +1,7 @@
 #ifndef JUMPER_H
 #define JUMPER_H
 
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include "JumperSkills.h"
 
 #include <QString>
@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QJsonObject>
 
-class Jumper : public ClassWithID
+class Jumper : public Identifiable
 {
 public:
     Jumper(const QString &name = "", const QString &surname = "", const QString &countryCode = "", const JumperSkills & skills = JumperSkills());

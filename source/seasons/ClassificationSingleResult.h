@@ -4,12 +4,12 @@
 #include "../simulator/JumpData.h"
 #include "../simulator/Jumper.h"
 #include "../competitions/CompetitionResults.h"
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include <QJsonObject>
 
 class Classification;
 
-class ClassificationSingleResult : public ClassWithID
+class ClassificationSingleResult : public Identifiable
 {
 public:
     ClassificationSingleResult(Classification * classification, Jumper * jumper = nullptr);
@@ -20,7 +20,7 @@ public:
     void updatePointsSum();
 
     static QJsonObject getJsonObject(ClassificationSingleResult & result);
-    static ClassificationSingleResult getFromJson(QJsonObject json, DatabaseObjectsManager * objectsManager);
+    static ClassificationSingleResult getFromJson(QJsonObject json, IdentifiableObjectsStorage * storage);
 
 private:
     Classification * classification;
@@ -56,7 +56,7 @@ inline bool comparePointers(const ClassificationSingleResult * l, const Classifi
 {
     if(l->getPointsSum() == r->getPointsSum())
     {
-        return l->getID() > r->getID();
+        return l->getID().str() > r->getID().str();
     }
     else return l->getPointsSum() > r->getPointsSum();
 }
@@ -65,7 +65,7 @@ inline bool operator>(const ClassificationSingleResult & l, const Classification
 {
     if(l.getPointsSum() == r.getPointsSum())
     {
-        return l.getID() > r.getID();
+        return l.getID().str() > r.getID().str();
     }
     else return l.getPointsSum() > r.getPointsSum();
 }

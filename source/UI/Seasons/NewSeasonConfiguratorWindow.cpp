@@ -240,8 +240,8 @@ void NewSeasonConfiguratorWindow::on_pushButton_loadCalendarPreset_clicked()
         for(auto & presetCompetition : preset->getCalendarReference().getCompetitionsReference())
         {
             CompetitionInfo * calendarCompetition = new CompetitionInfo(*presetCompetition);
-            calendarCompetition->generateID();
-            calendarCompetition->getResultsReference().generateID();
+            calendarCompetition->reassign();
+            calendarCompetition->getResultsReference().reassign();
 
             calendarCompetition->getClassificationsReference().detach();
             calendarCompetition->getQualifyingCompetitionsReference().detach();
@@ -277,7 +277,7 @@ void NewSeasonConfiguratorWindow::on_pushButton_loadCalendarPreset_clicked()
         for(auto & presetClassification : preset->getCalendarReference().getClassificationsReference())
         {
             Classification * calendarClassification = new Classification(*presetClassification);
-            calendarClassification->regenerateID();
+            calendarClassification->reassign();
 
             calendarClassification->getPointsForPlacesReference().detach();
             calendarClassification->getResultsReference().detach();

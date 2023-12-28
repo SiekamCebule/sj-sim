@@ -18,55 +18,6 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_title">
-     <item>
-      <spacer name="horizontalSpacer_titleLeft">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_title">
-       <property name="font">
-        <font>
-         <family>Quicksand Medium</family>
-         <pointsize>23</pointsize>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-color: rgb(26, 95, 180);
-}</string>
-       </property>
-       <property name="text">
-        <string>Wyniki pojedynczych skoków</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_titleRight">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <spacer name="horizontalSpacer_2">
@@ -268,7 +219,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>541</height>
+          <height>588</height>
          </rect>
         </property>
         <attribute name="label">
@@ -290,7 +241,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>541</height>
+          <height>588</height>
          </rect>
         </property>
         <attribute name="label">
@@ -308,7 +259,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>541</height>
+          <height>588</height>
          </rect>
         </property>
         <attribute name="label">
@@ -326,7 +277,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>541</height>
+          <height>588</height>
          </rect>
         </property>
         <attribute name="label">
@@ -344,7 +295,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>541</height>
+          <height>588</height>
          </rect>
         </property>
         <attribute name="label">
@@ -362,7 +313,7 @@ color: rgb(26, 95, 180);
           <x>0</x>
           <y>0</y>
           <width>626</width>
-          <height>541</height>
+          <height>588</height>
          </rect>
         </property>
         <attribute name="label">

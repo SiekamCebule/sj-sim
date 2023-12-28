@@ -4,10 +4,10 @@
 #include "CompetitionSingleResult.h"
 #include <QtConcurrent>
 
-extern IDGenerator globalIDGenerator;
+extern Uuid globalIDGenerator;
 
 CompetitionResults::CompetitionResults() :
-    ClassWithID()
+    Identifiable()
 {
 
 }
@@ -53,22 +53,22 @@ CompetitionResults CompetitionResults::constructRoundsResults(QVector<RoundInfo>
     return results;
 }
 
-CompetitionResults CompetitionResults::getFromJson(QJsonObject obj, DatabaseObjectsManager * objectsManager)
+CompetitionResults CompetitionResults::getFromJson(QJsonObject obj, IdentifiableObjectsStorage * storage)
 {
     CompetitionResults results;
-    results.setID(obj.value("id").toString().toULong());
+    results.setID(sole::rebuild(obj.value("id").toString().toStdString()));
 
     QJsonArray resultsArray = obj.value("results").toArray();
     QVector<QJsonValue> values;
     for(auto val : resultsArray)
         values.push_back(val);
 
-    QFuture<CompetitionSingleResult> future = QtConcurrent::mapped(values, [objectsManager](const QJsonValue & value){
-        return CompetitionSingleResult::getFromJson(value.toObject(), objectsManager);
+    QFuture<CompetitionSingleResult> future = QtConcurrent::mapped(values, [storage](const QJsonValue & value){
+        return CompetitionSingleResult::getFromJson(value.toObject(), storage);
     });
     results.setResults(future.results().toVector());
 
-    objectsManager->fill(&results.getResultsReference());
+    storage->add(results.getResultsReference());
 
     return results;
 }
@@ -76,7 +76,7 @@ CompetitionResults CompetitionResults::getFromJson(QJsonObject obj, DatabaseObje
 QJsonObject CompetitionResults::getJsonObject(CompetitionResults &results)
 {
     QJsonObject object;
-    object.insert("id", QString::number(results.getID()));
+    object.insert("id", results.getIDStr());
 
     QFuture<QJsonObject> resultsFuture = QtConcurrent::mapped(results.getResultsReference(), [](const CompetitionSingleResult & p){return CompetitionSingleResult::getJsonObject(p);});
     QJsonArray resultsArray;

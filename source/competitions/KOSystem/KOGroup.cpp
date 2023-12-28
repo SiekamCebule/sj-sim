@@ -1,7 +1,7 @@
 #include "KOGroup.h"
 #include "../CompetitionInfo.h"
 #include "../RoundInfo.h"
-#include "../../global/DatabaseObjectsManager.h"
+#include "../../global/IdentifiableObjectsStorage.h"
 #include "../../global/MyRandom.h"
 #include "../../utilities/functions.h"
 
@@ -13,24 +13,24 @@ KOGroup::KOGroup()
 QJsonObject KOGroup::getJsonObject(KOGroup &group)
 {
     QJsonObject object;
-    object.insert("id", QString::number(group.getID()));
+    object.insert("id", group.getIDStr());
     object.insert("number", group.getNumber());
     QJsonArray jumpersArray;
     for(auto & jumper : group.getJumpersReference())
-        jumpersArray.push_back(QString::number(jumper->getID()));
+        jumpersArray.push_back(jumper->getIDStr());
     object.insert("jumpers-ids", jumpersArray);
 
     return object;
 }
 
-KOGroup KOGroup::getFromJson(const QJsonObject &json, DatabaseObjectsManager * objectsManager)
+KOGroup KOGroup::getFromJson(const QJsonObject &json, IdentifiableObjectsStorage * storage)
 {
     KOGroup group;
-    group.setID(json.value("id").toString().toULong());
+    group.setID(sole::rebuild(json.value("id").toString().toStdString()));
     group.setNumber(json.value("number").toInt());
     QJsonArray jumpersArray = json.value("jumpers-ids").toArray();
     for(auto val : jumpersArray)
-        group.getJumpersReference().push_back(static_cast<Jumper *>(objectsManager->getObjectByID(val.toString().toULong())));
+        group.getJumpersReference().push_back(static_cast<Jumper *>(storage->get(val.toString())));
 
     return group;
 }

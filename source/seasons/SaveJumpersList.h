@@ -5,7 +5,7 @@
 #include <QJsonObject>
 #include <QString>
 #include "../simulator/Jumper.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../global/IdentifiableObjectsStorage.h"
 
 class SaveJumpersList
 {
@@ -13,7 +13,7 @@ public:
     SaveJumpersList(QString name = "");
 
     static QJsonObject getJsonObject(const SaveJumpersList &jumpersList);
-    static SaveJumpersList getFromJson(QJsonObject object, DatabaseObjectsManager *objectsManager);
+    static SaveJumpersList getFromJson(QJsonObject object, IdentifiableObjectsStorage *storage);
 
 private:
     QVector<Jumper *> jumpers;

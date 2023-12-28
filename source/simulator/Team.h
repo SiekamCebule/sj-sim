@@ -5,10 +5,10 @@
 #include <QString>
 #include <QJsonObject>
 #include "Jumper.h"
-#include "../utilities/ClassWithID.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../utilities/Identifiable.h"
+#include "../global/IdentifiableObjectsStorage.h"
 
-class Team : public ClassWithID
+class Team : public Identifiable
 {
 public:
     Team(const QString & countryCode = "");
@@ -24,7 +24,7 @@ public:
     static bool containsTeamByCode(QVector<Team *> & teams, QString code);
 
     static QJsonObject getJsonObject(Team & team);
-    static Team getFromJson(QJsonObject json, DatabaseObjectsManager *objectsManager);
+    static Team getFromJson(QJsonObject json, IdentifiableObjectsStorage *storage);
 
 private:
     QString countryCode;

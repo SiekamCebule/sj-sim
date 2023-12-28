@@ -14,8 +14,8 @@ SeasonCalendarPreset::SeasonCalendarPreset(SeasonCalendar *seasonCalendar)
         for(auto & comp : seasonCalendar->getCompetitionsReference())
         {
             CompetitionInfo * presetCompetition = new CompetitionInfo(*comp);
-            presetCompetition->generateID();
-            presetCompetition->getResultsReference().generateID();
+            presetCompetition->reassign();
+            presetCompetition->getResultsReference().reassign();
             presetCalendar->getCompetitionsReference().push_back(presetCompetition);
             competitions.insert(comp, presetCompetition);
         }
@@ -39,7 +39,7 @@ SeasonCalendarPreset::SeasonCalendarPreset(SeasonCalendar *seasonCalendar)
         for(auto & cls : seasonCalendar->getClassificationsReference())
         {
             Classification * presetClassification = new Classification(*cls);
-            presetClassification->generateID();
+            presetClassification->reassign();
             presetCalendar->getClassificationsReference().push_back(presetClassification);
             classifications.insert(cls, presetClassification);
         }
@@ -87,11 +87,11 @@ QJsonObject SeasonCalendarPreset::getJsonObject(SeasonCalendarPreset preset)
     return object;
 }
 
-SeasonCalendarPreset SeasonCalendarPreset::getFromJson(QJsonObject json, DatabaseObjectsManager * objectsManager)
+SeasonCalendarPreset SeasonCalendarPreset::getFromJson(QJsonObject json, IdentifiableObjectsStorage * storage, QMap<ulong, Identifiable *> *before120Map)
 {
     SeasonCalendarPreset preset;
     preset.setName(json.value("name").toString());
-    preset.setCalendar(SeasonCalendar::getFromJson(json.value("calendar").toObject(), objectsManager));
+    preset.setCalendar(SeasonCalendar::getFromJson(json.value("calendar").toObject(), storage, before120Map));
     QJsonArray hillsArray = json.value("hills").toArray();
     for(auto val : hillsArray)
     {
@@ -127,7 +127,7 @@ QVector<SeasonCalendarPreset> SeasonCalendarPreset::getVectorFromJson(QByteArray
     QJsonArray array = value.toArray();
     for(const auto & val : array)
     {
-        DatabaseObjectsManager * manager = new DatabaseObjectsManager();
+        IdentifiableObjectsStorage * manager = new IdentifiableObjectsStorage();
         presets.push_back(SeasonCalendarPreset::getFromJson(val.toObject(), manager));
         delete manager;
     }

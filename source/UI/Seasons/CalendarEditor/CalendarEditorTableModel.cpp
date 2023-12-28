@@ -102,7 +102,13 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
                 return tr("NIE");
             }
             case 4:{
-                int count = 0; //Liczba treningów przed konkursem
+                CompetitionInfo* main = SeasonCalendar::getMainCompetitionByIndex(calendar->getCompetitionsReference(), index.row());
+                if(main->getTrainingsReference().isEmpty())
+                {
+                    return 0;
+                }
+                return QString::number(main->getTrainingsReference().count()) + " - " + main->getTrainingsReference().first()->getRulesPointer()->getName();
+                /*int count = 0; //Liczba treningów przed konkursem
                 int indexOfCompetition = calendar->getCompetitionsReference().indexOf(competition);
                 if(indexOfCompetition > 0){
                     if(competition->getTrialRound() != nullptr){
@@ -127,7 +133,7 @@ QVariant CalendarEditorTableModel::data(const QModelIndex &index, int role) cons
                 else if(calendar->getCompetitionsReference()[indexOfCompetition]->getTrialRound() != nullptr)
                     return QString::number(count) + " - " + calendar->getCompetitionsReference()[indexOfCompetition - 2]->getRulesPointer()->getName();
                 else
-                    return QString::number(count) + " - " + calendar->getCompetitionsReference()[indexOfCompetition - 1]->getRulesPointer()->getName();
+                    return QString::number(count) + " - " + calendar->getCompetitionsReference()[indexOfCompetition - 1]->getRulesPointer()->getName();*/
             }
             case 5:
                 return competition->getRules().getName();

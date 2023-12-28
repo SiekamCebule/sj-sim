@@ -18,7 +18,7 @@ Jumper::Jumper(const QString &name, const QString &surname, const QString &count
     surname(surname),
     countryCode(countryCode),
     jumperSkills(skills),
-    ClassWithID()
+    Identifiable()
 {
 }
 
@@ -96,7 +96,7 @@ void Jumper::setPersonalBest(double newPersonalBest)
 QJsonObject Jumper::getJsonObject(const Jumper & jumper)
 {
     QJsonObject object;
-    object.insert("id", QString::number(jumper.getID()));
+    object.insert("id", jumper.getIDStr());
     object.insert("name", jumper.getName());
     object.insert("surname", jumper.getSurname());
     object.insert("country-code", jumper.getCountryCode().toUpper());
@@ -127,7 +127,7 @@ QJsonObject Jumper::getJsonObject(const Jumper & jumper)
 Jumper Jumper::getFromJson(QJsonObject obj)
 {
     Jumper jumper;
-    jumper.setID(obj.value("id").toString().toULong());
+    jumper.setID(sole::rebuild(obj.value("id").toString().toStdString()));
     jumper.setName(obj.value("name").toString());
     jumper.setSurname(obj.value("surname").toString());
     jumper.setCountryCode(obj.value("country-code").toString());

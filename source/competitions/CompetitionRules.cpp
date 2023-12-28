@@ -10,7 +10,7 @@
 #include <QMessageBox>
 
 CompetitionRules::CompetitionRules(const QString & name) : name(name),
-    ClassWithID()
+    Identifiable()
 {
     has95HSRule = hasWindCompensations = hasGateCompensations = hasJudgesPoints = hasDsq = hillRecordBreaking = false;
     competitionType = jumpersInTeamCount = windAverageCalculatingType = 0;
@@ -80,7 +80,7 @@ void CompetitionRules::setName(const QString &newName)
 QJsonObject CompetitionRules::getJsonObject(const CompetitionRules &competitionRules)
 {
     QJsonObject object;
-    object.insert("id", QString::number(competitionRules.getID()));
+    object.insert("id", competitionRules.getIDStr());
     object.insert("name", competitionRules.getName());
     object.insert("wind-compensations", competitionRules.getHasWindCompensations());
     object.insert("gate-compensations", competitionRules.getHasGateCompensations());
@@ -143,7 +143,7 @@ QVector<CompetitionRules> CompetitionRules::getCompetitionRulesVectorFromJson(co
 CompetitionRules CompetitionRules::getFromJson(const QJsonObject &obj)
 {
     CompetitionRules rules;
-    rules.setID(obj.value("id").toString().toULong());
+    rules.setID(sole::rebuild(obj.value("id").toString().toStdString()));
     rules.setName(obj.value("name").toString());
     rules.setHas95HSRule(obj.value("95-hs-rule").toBool());
     rules.setHasWindCompensations(obj.value("wind-compensations").toBool());

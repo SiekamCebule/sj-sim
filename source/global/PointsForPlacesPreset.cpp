@@ -9,7 +9,7 @@
 #include <QMessageBox>
 #include <QByteArray>
 #include <QFile>
-#include "DatabaseObjectsManager.h"
+#include "IdentifiableObjectsStorage.h"
 
 PointsForPlacesPreset::PointsForPlacesPreset(QString name) : name(name)
 {

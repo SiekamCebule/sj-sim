@@ -2,7 +2,7 @@
 #include <QJsonArray>
 
 Team::Team(const QString &countryCode) : countryCode(countryCode),
-    ClassWithID()
+    Identifiable()
 {
 }
 
@@ -173,26 +173,26 @@ bool Team::containsTeamByCode(QVector<Team *> &teams, QString code)
 QJsonObject Team::getJsonObject(Team &team)
 {
     QJsonObject object;
-    object.insert("id", QString::number(team.getID()));
+    object.insert("id", team.getIDStr());
     object.insert("country-code", team.getCountryCode());
     QJsonArray jumpersArray;
     for(auto & jumper : team.getJumpersReference())
     {
-        jumpersArray.push_back(QString::number(jumper->getID()));
+        jumpersArray.push_back(jumper->getIDStr());
     }
     object.insert("jumpers-ids", jumpersArray);
 
     return object;
 }
 
-Team Team::getFromJson(QJsonObject json, DatabaseObjectsManager * objectsManager)
+Team Team::getFromJson(QJsonObject json, IdentifiableObjectsStorage * storage)
 {
     Team team;
-    team.setID(json.value("id").toString().toULong());
+    team.setID(sole::rebuild(json.value("id").toString().toStdString()));
     team.setCountryCode(json.value("country-code").toString());
     QJsonArray jumpersArray = json.value("jumpers-ids").toArray();
     for(auto jumperID : jumpersArray)
-        team.getJumpersReference().push_back(static_cast<Jumper*>(objectsManager->getObjectByID(jumperID.toString().toULong())));
+        team.getJumpersReference().push_back(static_cast<Jumper*>(storage->get(jumperID.toString())));
 
     return team;
 }

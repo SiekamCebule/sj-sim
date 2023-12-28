@@ -46,7 +46,7 @@ private:
 
     CompetitionInfo * actualCompetition;
     int actualCompetitionIndex;
-    ulong actualCompetitionID;
+    QString actualCompetitionID;
 
     void updateActualCompetitionByID();
     void debugCalendar();

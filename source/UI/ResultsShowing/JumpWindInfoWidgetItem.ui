@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
+    <width>332</width>
     <height>26</height>
    </rect>
   </property>
@@ -50,9 +50,9 @@
        </property>
        <property name="font">
         <font>
-         <family>Quicksand Light [PfEd]</family>
+         <family>Quicksand Medium</family>
          <pointsize>10</pointsize>
-         <bold>true</bold>
+         <bold>false</bold>
         </font>
        </property>
        <property name="styleSheet">
@@ -89,7 +89,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Quicksand Light [PfEd]</family>
+         <family>Quicksand Medium</family>
          <pointsize>10</pointsize>
          <bold>false</bold>
         </font>
@@ -129,6 +129,7 @@
        </property>
        <property name="font">
         <font>
+         <family>Quicksand</family>
          <pointsize>12</pointsize>
          <bold>true</bold>
         </font>
@@ -176,6 +177,11 @@
          <width>43</width>
          <height>22</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Quicksand Medium</family>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: black;</string>

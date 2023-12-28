@@ -8,14 +8,14 @@ class Season;
 #include "CompetitionRules.h"
 #include "CompetitionResults.h"
 #include "CompetitionInfo.h"
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include "../seasons/Classification.h"
 #include "../seasons/SeasonCalendar.h"
 #include "KOSystem/KOGroup.h"
 
 #include <QDate>
 
-class CompetitionInfo : public ClassWithID
+class CompetitionInfo : public Identifiable
 {
 public:
     CompetitionInfo(Hill * hill = nullptr);
@@ -70,7 +70,7 @@ private:
 
 public:
     static QJsonObject getJsonObject(CompetitionInfo &competition);
-    static CompetitionInfo getFromJson(const QJsonObject & json, DatabaseObjectsManager *objectsManager);
+    static CompetitionInfo getFromJson(const QJsonObject & json, IdentifiableObjectsStorage *storage, int *oldId = nullptr, QMap<ulong, Identifiable *> *before120Map = nullptr);
 
 public:
     Hill *getHill() const;

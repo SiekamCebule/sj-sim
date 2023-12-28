@@ -3,7 +3,7 @@
 
 #include <QString>
 #include "JumperFormGeneratorSettings.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../global/IdentifiableObjectsStorage.h"
 
 class JumperFormGeneratorSettingsPreset
 {

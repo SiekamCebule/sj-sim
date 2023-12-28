@@ -1,7 +1,7 @@
 #ifndef HILL_H
 #define HILL_H
 
-#include "../utilities/ClassWithID.h"
+#include "../utilities/Identifiable.h"
 #include "../utilities/ClassWithCharacteristics.h"
 #include "Characteristic.h"
 
@@ -11,7 +11,7 @@
 #include <QJsonObject>
 #include <QByteArray>
 
-class Hill : public ClassWithID, public ClassWithCharacteristics
+class Hill : public Identifiable, public ClassWithCharacteristics
 {
 public:
     Hill(const QString &name = "", const QString &countryCode = "", double KPoint = 0, double HSPoint = 0, double pointsForMeter = 0, double pointsForKPoint = 0, double pointsForFrontWind = 0, double pointsForBackWind = 0, double pointsForGate = 0, double takeoffEffect = 0, double flightEffect = 0, double realHS = 0, bool autoPointsForKPoint = false, bool autoPointsForMeter = false, bool autoPointsForBackWind = false);

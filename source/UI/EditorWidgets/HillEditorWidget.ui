@@ -34,7 +34,7 @@ color: black;</string>
         <widget class="QLabel" name="label_name">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -69,6 +69,7 @@ color: rgb(0, 0, 0);
          </property>
          <property name="font">
           <font>
+           <family>Quicksand Medium</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -99,7 +100,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label_countryCode">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -139,6 +140,7 @@ color: rgb(0, 0, 0);
            </property>
            <property name="font">
             <font>
+             <family>Quicksand Medium</family>
              <pointsize>11</pointsize>
             </font>
            </property>
@@ -223,7 +225,8 @@ border-radius: 3px;
           <widget class="QLabel" name="label_countryName">
            <property name="font">
             <font>
-             <pointsize>8</pointsize>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
             </font>
            </property>
            <property name="text">
@@ -237,7 +240,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -272,6 +275,7 @@ color: rgb(0, 0, 0);
          </property>
          <property name="font">
           <font>
+           <family>Quicksand Medium</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -311,7 +315,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label_2">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -346,6 +350,7 @@ color: rgb(0, 0, 0);
          </property>
          <property name="font">
           <font>
+           <family>Quicksand Medium</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -385,7 +390,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label_6">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -422,6 +427,7 @@ color: rgb(0, 0, 0);
            </property>
            <property name="font">
             <font>
+             <family>Quicksand Medium</family>
              <pointsize>11</pointsize>
             </font>
            </property>
@@ -482,6 +488,7 @@ border-radius: 3px;
            </property>
            <property name="font">
             <font>
+             <family>Quicksand Medium</family>
              <pointsize>7</pointsize>
             </font>
            </property>
@@ -507,7 +514,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label_7">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -544,6 +551,7 @@ color: rgb(0, 0, 0);
            </property>
            <property name="font">
             <font>
+             <family>Quicksand Medium</family>
              <pointsize>11</pointsize>
             </font>
            </property>
@@ -607,6 +615,7 @@ border-radius: 3px;
            </property>
            <property name="font">
             <font>
+             <family>Quicksand Medium</family>
              <pointsize>7</pointsize>
             </font>
            </property>
@@ -632,7 +641,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label_3">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -667,6 +676,7 @@ color: rgb(0, 0, 0);
          </property>
          <property name="font">
           <font>
+           <family>Quicksand Medium</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -709,7 +719,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label_4">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -744,6 +754,7 @@ color: rgb(0, 0, 0);
          </property>
          <property name="font">
           <font>
+           <family>Quicksand Medium</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -786,7 +797,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label_5">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -823,6 +834,7 @@ color: rgb(0, 0, 0);
            </property>
            <property name="font">
             <font>
+             <family>Quicksand Medium</family>
              <pointsize>11</pointsize>
             </font>
            </property>
@@ -886,6 +898,7 @@ border-radius: 3px;
            </property>
            <property name="font">
             <font>
+             <family>Quicksand Medium</family>
              <pointsize>7</pointsize>
             </font>
            </property>
@@ -911,7 +924,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label_9">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -946,6 +959,7 @@ color: rgb(0, 0, 0);
          </property>
          <property name="font">
           <font>
+           <family>Quicksand Medium</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -994,7 +1008,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label_10">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -1029,6 +1043,7 @@ color: rgb(0, 0, 0);
          </property>
          <property name="font">
           <font>
+           <family>Quicksand Medium</family>
            <pointsize>11</pointsize>
           </font>
          </property>
@@ -1077,7 +1092,7 @@ border-radius: 3px;
         <widget class="QLabel" name="label_8">
          <property name="font">
           <font>
-           <family>Segoe UI</family>
+           <family>Quicksand</family>
            <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
@@ -1114,6 +1129,7 @@ color: rgb(0, 0, 0);
            </property>
            <property name="font">
             <font>
+             <family>Quicksand Medium</family>
              <pointsize>11</pointsize>
             </font>
            </property>
@@ -1266,6 +1282,7 @@ border-radius: 3px;
          </property>
          <property name="font">
           <font>
+           <family>Quicksand Medium</family>
            <pointsize>18</pointsize>
           </font>
          </property>

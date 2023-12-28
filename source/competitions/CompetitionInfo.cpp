@@ -1,7 +1,7 @@
 #include "CompetitionInfo.h"
 
 #include "../simulator/Hill.h"
-#include "../global/DatabaseObjectsManager.h"
+#include "../global/IdentifiableObjectsStorage.h"
 #include "../global/GlobalAppSettings.h"
 #include "../global/GlobalDatabase.h"
 #include "CompetitionRules.h"
@@ -24,11 +24,11 @@
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QByteArray>
-extern DatabaseObjectsManager seasonObjectsManager;
+extern IdentifiableObjectsStorage seasonObjectsManager;
 extern const QString appVersion;
 
 CompetitionInfo::CompetitionInfo(Hill *hill) : hill(hill),
-    ClassWithID()
+    Identifiable()
 {
     exceptionalRoundsCount = (-1);
     cancelled = false;
@@ -493,9 +493,9 @@ CompetitionResults &CompetitionInfo::getResultsReference()
 QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
 {
     QJsonObject object;
-    object.insert("id", QString::number(competition.getID()));
+    object.insert("id", competition.getIDStr());
     if(competition.getHill() != nullptr)
-        object.insert("hill-id", QString::number(competition.getHill()->getID()));
+        object.insert("hill-id", competition.getHill()->getIDStr());
     object.insert("results", CompetitionResults::getJsonObject(competition.getResultsReference()));
     object.insert("rules", CompetitionRules::getJsonObject(competition.getRules()));
     object.insert("serie-type", competition.getSerieType());
@@ -505,24 +505,24 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     object.insert("jumps-importance", competition.getJumpsImportance());
 
     if(competition.getTrialRound() != nullptr)
-        object.insert("trial-round-id", QString::number(competition.getTrialRound()->getID()));
+        object.insert("trial-round-id", competition.getTrialRound()->getIDStr());
     QJsonArray trainingsArray;
     for(auto & t : qAsConst(competition.getTrainingsReference())){
-        trainingsArray.push_back(QString::number(t->getID()));
+        trainingsArray.push_back(t->getIDStr());
     }
     object.insert("training-ids", trainingsArray);
 
     QJsonArray classificationsArray;
     for(auto & c : qAsConst(competition.getClassificationsReference())){
         if(c != nullptr)
-            classificationsArray.push_back(QString::number(c->getID()));
+        classificationsArray.push_back(c->getIDStr());
     }
     object.insert("classifications-ids", classificationsArray);
 
     if(competition.getAdvancementClassification() != nullptr)
-        object.insert("advancement-classification-id", QString::number(competition.getAdvancementClassification()->getID()));
+        object.insert("advancement-classification-id", competition.getAdvancementClassification()->getIDStr());
     if(competition.getAdvancementCompetition() != nullptr)
-        object.insert("advancement-competition-id", QString::number(competition.getAdvancementCompetition()->getID()));
+        object.insert("advancement-competition-id", competition.getAdvancementCompetition()->getIDStr());
 
     QJsonArray teamsArray;
     for(auto & team : competition.getTeamsReference())
@@ -545,22 +545,22 @@ QJsonObject CompetitionInfo::getJsonObject(CompetitionInfo &competition)
     //qDebug()<<"slc "<<competition.getStartListReference().count();
     for(auto & j : competition.getStartList())
     {
-        startListArray.push_back(QString::number(j->getID()));
+        startListArray.push_back(j->getIDStr());
     }
     object.insert("start-list", startListArray);
 
     return object;
 }
 
-CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json, DatabaseObjectsManager * objectsManager)
+CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json, IdentifiableObjectsStorage * storage, int * oldId, QMap<ulong, Identifiable*> * before120Map)
 {
     CompetitionInfo comp;
     QJsonArray teamsArray = json.value("teams").toArray();
     for(auto val : teamsArray)
     {
-        comp.getTeamsReference().push_back(Team::getFromJson(val.toObject(), objectsManager));
+        comp.getTeamsReference().push_back(Team::getFromJson(val.toObject(), storage));
     }
-    objectsManager->fill(&comp.getTeamsReference());
+    storage->add(comp.getTeamsReference());
 
     QJsonArray KOGroupsArray = json.value("rounds-ko-groups").toArray();
     for(auto val : KOGroupsArray)
@@ -568,17 +568,23 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json, DatabaseOb
         QVector<KOGroup> groups;
         for(auto v : val.toArray())
         {
-            groups.push_back(KOGroup::getFromJson(v.toObject(), objectsManager));
+            groups.push_back(KOGroup::getFromJson(v.toObject(), storage));
         }
         comp.getRoundsKOGroupsReference().push_back(groups);
-        objectsManager->fill(&groups);
+        storage->add(groups);
     }
     //seasonObjectsManager.fill(&comp.getKOGroupsReference());
 
-    comp.setID(json.value("id").toString().toULong());
-    comp.setHill(static_cast<Hill *>(objectsManager->getObjectByID(json.value("hill-id").toString().toULong())));
-    comp.setResults(CompetitionResults::getFromJson(json.value("results").toObject(), objectsManager));
-    objectsManager->addObject(&comp.getResultsReference());
+    comp.setID(sole::rebuild(json.value("id").toString().toStdString()));
+    if(oldId)
+    {
+        *oldId = json.value("id").toString().toULong();
+    }
+    if(!before120Map)
+        comp.setHill(static_cast<Hill *>(storage->get(json.value("hill-id").toString())));
+    comp.setResults(CompetitionResults::getFromJson(json.value("results").toObject(), storage));
+    if(storage != nullptr)
+        storage->add(&comp.getResultsReference());
     for(auto & sr : comp.getResultsReference().getResultsReference()){
         sr.setCompetition(&comp);
         for(auto & j : sr.getJumpsReference()){
@@ -593,26 +599,50 @@ CompetitionInfo CompetitionInfo::getFromJson(const QJsonObject &json, DatabaseOb
     comp.setCancelled(json.value("cancelled").toBool());
     comp.setPlayed(json.value("played").toBool());
     comp.setJumpsImportance(json.value("jumps-importance").toDouble(5));
-    comp.setTrialRound(static_cast<CompetitionInfo *>(objectsManager->getObjectByID(json.value("trial-round-id").toString().toULong())));
+
+    if(before120Map)
+        comp.setTrialRound(static_cast<CompetitionInfo *>(before120Map->value(json.value("trial-round-id").toString().toULong())));
+    else
+        comp.setTrialRound(static_cast<CompetitionInfo *>(storage->get(json.value("trial-round-id").toString())));
 
     QJsonArray trainingsArray = json.value("training-ids").toArray();
     for(auto val : trainingsArray){
-        comp.getTrainingsReference().push_back(static_cast<CompetitionInfo *>(objectsManager->getObjectByID(val.toString().toULong())));
+        if(before120Map)
+            comp.getTrainingsReference().push_back(static_cast<CompetitionInfo *>(before120Map->value(val.toString().toULong())));
+        else
+            comp.getTrainingsReference().push_back(static_cast<CompetitionInfo *>(storage->get(val.toString())));
     }
 
     QJsonArray classificationsArray = json.value("classifications-ids").toArray();
     for(auto val : classificationsArray){
-        comp.getClassificationsReference().push_back(static_cast<Classification *>(objectsManager->getObjectByID(val.toString().toULong())));
+        if(before120Map)
+            comp.getClassificationsReference().push_back(static_cast<Classification *>(before120Map->value(val.toString().toULong())));
+        else
+            comp.getClassificationsReference().push_back(static_cast<Classification *>(storage->get(val.toString())));
     }
 
     QJsonArray startListArray = json.value("start-list").toArray();
     for(auto val : startListArray)
     {
-        comp.getStartListReference().push_back(static_cast<Jumper *>(objectsManager->getObjectByID(val.toString().toULong())));
+        comp.getStartListReference().push_back(static_cast<Jumper *>(storage->get(val.toString())));
     }
 
-    comp.setAdvancementClassification(static_cast<Classification *>(objectsManager->getObjectByID(json.value("advancement-classification-id").toString().toULong())));
-    comp.setAdvancementCompetition(static_cast<CompetitionInfo *>(objectsManager->getObjectByID(json.value("advancement-competition-id").toString().toULong())));
+    QString advClsVal = json.value("advancement-classification-id").toString();
+    if(!advClsVal.isEmpty())
+    {
+    if(before120Map)
+        comp.setAdvancementClassification(static_cast<Classification *>(before120Map->value(advClsVal.toULong())));
+    else
+        comp.setAdvancementClassification(static_cast<Classification *>(storage->get(advClsVal)));
+    }
+
+QString advCompVal = json.value("advancement-competition-id").toString();
+    if(advCompVal.isEmpty() == false){
+    if(before120Map)
+        comp.setAdvancementCompetition(static_cast<CompetitionInfo *>(before120Map->value(advCompVal.toULong())));
+    else
+        comp.setAdvancementCompetition(static_cast<CompetitionInfo *>(storage->get(advCompVal)));
+    }
 
     return comp;
 }

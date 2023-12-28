@@ -13,12 +13,12 @@
 #include "../../global/CountryFlagsManager.h"
 #include "../../global/GlobalSimulationSettings.h"
 #include "../../global/GlobalDatabase.h"
-#include "../../global/IDGenerator.h"
+#include "../../global/Uuid.h"
 #include "JumpDataInfoChoiceDialog.h"
 #include "NewJumpsImportancePresetDialog.h"
 #include "CountriesEditorWindow.h"
 
-extern IDGenerator globalIDGenerator;
+extern Uuid globalIDGenerator;
 
 AppSettingsWindow::AppSettingsWindow(QWidget *parent) :
     QDialog(parent),
@@ -296,8 +296,15 @@ void AppSettingsWindow::on_pushButton_loadJumpersWithCSV_clicked()
         QByteArray line = file.readLine();
             QStringList list = QString(line).split(",");
         GlobalDatabase::get()->getEditableGlobalJumpers().push_back(Jumper::loadByCSV(list));
-        GlobalDatabase::get()->getEditableGlobalJumpers().last().setID(globalIDGenerator.generateNewID());
+        GlobalDatabase::get()->getEditableGlobalJumpers().last().reassign();
     }
     QMessageBox::critical(this, tr("Abcdefghijklmnoprstuwxzs"), tr("Niestety udało się wczytać zawodników z pliku CSV :(\nJednak aby nie było ci zbyt wesoło, twój komputer został zainfekowany złośliwym oprogramowaniem, które jednak możesz usunąć wklejając ten link do wyszukiwarki: https://www.youtube.com/watch?v=CcDat9nLj7Q"), tr("Nie"));
+}
+
+
+void AppSettingsWindow::on_pushButton_loadPresetsBefore120_clicked()
+{
+    GlobalDatabase::get()->loadCalendarPresets(true);
+    GlobalDatabase::get()->writeCalendarPresets();
 }
 

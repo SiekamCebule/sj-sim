@@ -47,7 +47,7 @@ short Wind::getDirectionType() const
 
 Wind::Wind(short direction, double value) : direction(direction),
     strength(value),
-    ClassWithID()
+    Identifiable()
 {}
 
 Wind::Wind(double value) : strength(value)
